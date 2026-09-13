@@ -1,0 +1,646 @@
+{
+  "schema_version": "1.0",
+  "kind": "work-package-routing-proposal",
+  "source_revision": "12e19b167d7fd59722dc2a3194ce591f499de0e7",
+  "known_profiles": [
+    "max"
+  ],
+  "capability_scale": {
+    "1": "Highest consequence or uncertainty: architecture, security, migration, recovery, release, and independent critical evaluation.",
+    "2": "High-complexity bounded implementation against established contracts, with stronger review where hidden errors are consequential.",
+    "3": "Bounded medium-complexity, reversible work with strong deterministic verification.",
+    "4": "Wholly mechanical, low-consequence work with deterministic verification."
+  },
+  "work_packages": [
+    {
+      "id": "WP-00",
+      "author_minimum_capability": 3,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max",
+        "xhigh",
+        "high"
+      ],
+      "reviewer_minimum_capability": 2,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max",
+        "xhigh"
+      ],
+      "rationale": "The offline roster and evidence layout are bounded, reversible, and validator-backed, while C2 review protects against credential leakage or falsely qualifying an unavailable runtime."
+    },
+    {
+      "id": "WP-01",
+      "author_minimum_capability": 1,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "reviewer_minimum_capability": 1,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "rationale": "This package fixes schema ownership, command authority, three-valued logic, and effect boundaries that every later package consumes, so both contract authorship and review require C1."
+    },
+    {
+      "id": "WP-02",
+      "author_minimum_capability": 3,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max",
+        "xhigh",
+        "high"
+      ],
+      "reviewer_minimum_capability": 2,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max",
+        "xhigh"
+      ],
+      "rationale": "The synthetic-only monolith scaffold is reversible and deterministically checked by lockfile, build, dependency, startup, and credential-isolation tests, with C2 review for environment-boundary mistakes."
+    },
+    {
+      "id": "WP-03",
+      "author_minimum_capability": 2,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "reviewer_minimum_capability": 1,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "rationale": "Authentication, bootstrap, step-up, RBAC, and ActorContext are substantial implementations from locked contracts, but a hidden bypass or first-user takeover requires independent C1 security review."
+    },
+    {
+      "id": "WP-04",
+      "author_minimum_capability": 2,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "reviewer_minimum_capability": 1,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "rationale": "Identity normalization, merging, splitting, and endpoint rebinding are bounded domain implementation, yet errors could transfer permission or erase safety history and therefore demand C1 review."
+    },
+    {
+      "id": "WP-05",
+      "author_minimum_capability": 2,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "reviewer_minimum_capability": 1,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "rationale": "Implementing consent, withdrawal, preference, suppression, and reconsent against approved semantics is C2 work, while any permissive mistake directly expands communication authority and needs C1 review."
+    },
+    {
+      "id": "WP-06",
+      "author_minimum_capability": 2,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "reviewer_minimum_capability": 1,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "rationale": "The parameterized segment compiler is high-complexity implementation; UNKNOWN, negation, scope, or source-coverage defects can silently include recipients, so max effort and C1 logic/security review remain mandatory."
+    },
+    {
+      "id": "WP-07",
+      "author_minimum_capability": 2,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "reviewer_minimum_capability": 1,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "rationale": "The journal adapter is a bounded implementation, but its acknowledgement, outage, replay, and restore barriers independently preserve denials and effect evidence, warranting max effort and C1 review."
+    },
+    {
+      "id": "WP-08",
+      "author_minimum_capability": 2,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "reviewer_minimum_capability": 1,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "rationale": "Signed ingress and monotonic event reduction are complex but contract-bounded; invalid, duplicate, or out-of-order events could weaken restrictions, so C1 independently reviews negative and replay paths."
+    },
+    {
+      "id": "WP-09",
+      "author_minimum_capability": 2,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "reviewer_minimum_capability": 1,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "rationale": "Provider and fake transports are high-complexity adapters, but acceptance-unknown classification, sender scope, suppression, and quota errors can duplicate or misdirect effects and require C1 review."
+    },
+    {
+      "id": "WP-10",
+      "author_minimum_capability": 2,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max",
+        "xhigh"
+      ],
+      "reviewer_minimum_capability": 2,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max",
+        "xhigh"
+      ],
+      "rationale": "Renderer and codec work is complex but reversible and strongly verified by pinned revision, fallback, sanitization, and deterministic fixture tests, allowing only a one-step effort downshift with C2 review."
+    },
+    {
+      "id": "WP-11",
+      "author_minimum_capability": 2,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "reviewer_minimum_capability": 1,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "rationale": "Atomic reservations, current eligibility, semantic deduplication, permits, retries, and unknown outcomes form the core effect executor; implementation is C2 under settled contracts with mandatory C1 concurrency/recovery review."
+    },
+    {
+      "id": "WP-12",
+      "author_minimum_capability": 2,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "reviewer_minimum_capability": 1,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "rationale": "Forms, confirmation, and staged data movement are established C2 implementation, but replay, public identifiers, or mappings could invent permission, expose PII, or weaken denials and therefore need C1 review."
+    },
+    {
+      "id": "WP-13",
+      "author_minimum_capability": 3,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max",
+        "xhigh",
+        "high"
+      ],
+      "reviewer_minimum_capability": 2,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max",
+        "xhigh"
+      ],
+      "rationale": "The manual CRUD workspace is bounded and reversible with server-scope, keyboard, screen-reader, and deterministic-focus oracles; C2 review covers scope presentation and accessibility consequences."
+    },
+    {
+      "id": "WP-14",
+      "author_minimum_capability": 2,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "reviewer_minimum_capability": 1,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "rationale": "Campaign snapshots and lifecycle are complex bounded implementation, while partial resolution, stale approval, scheduling, cancellation, or uncertain completion defects can create unauthorized effects and require C1 review."
+    },
+    {
+      "id": "WP-15",
+      "author_minimum_capability": 2,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "reviewer_minimum_capability": 1,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "rationale": "Proposal, revision, diff, and approval services implement settled exact-envelope semantics, but stale or self-approved consequential actions would expand authority, making max effort and C1 review necessary."
+    },
+    {
+      "id": "WP-16",
+      "author_minimum_capability": 2,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "reviewer_minimum_capability": 1,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "rationale": "Instrumentation and rollups are high-complexity implementation because counters distinguish communications, interruptions, attempts, cost, weak evidence, and stale sources; C1 review guards operational and causal overclaims."
+    },
+    {
+      "id": "WP-17",
+      "author_minimum_capability": 1,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "reviewer_minimum_capability": 1,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "rationale": "This package adjudicates real sender, renderer, security, restore, canary, and accountable-owner evidence before the first live release, so both evidence assembly and independent review require C1."
+    },
+    {
+      "id": "WP-18",
+      "author_minimum_capability": 1,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "reviewer_minimum_capability": 1,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "rationale": "Although discovery is read-only, interpreting incomplete Kit topology, status classes, cursor evidence, legacy links, and cross-publication coupling defines later migration authority and needs C1 evidence reasoning and review."
+    },
+    {
+      "id": "WP-19",
+      "author_minimum_capability": 2,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "reviewer_minimum_capability": 1,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "rationale": "The approved migration state machine is C2 implementation, but freezes, drains, checkpoints, authority epochs, negative reconciliation, and repair-forward rollback prevent dual sends and require C1 review."
+    },
+    {
+      "id": "WP-20",
+      "author_minimum_capability": 1,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "reviewer_minimum_capability": 1,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "rationale": "Executing the first live authority transfer and judging canary, legacy opt-out, observation, and rollback evidence is irreversible and externally consequential, requiring C1 authorship and review."
+    },
+    {
+      "id": "WP-21",
+      "author_minimum_capability": 2,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "reviewer_minimum_capability": 1,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "rationale": "A single durable executor is high-complexity C2 implementation, while cursor, wait/timeout, replay, cascade, and provider-acceptance races can lose or duplicate effects and mandate C1 review."
+    },
+    {
+      "id": "WP-22",
+      "author_minimum_capability": 2,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "reviewer_minimum_capability": 1,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "rationale": "Sequences are bounded atop the shared runtime, but version pinning, reentry, withdrawal, reconsent, and migration-position errors can restart or rewrite recipient work and need C1 review."
+    },
+    {
+      "id": "WP-23",
+      "author_minimum_capability": 2,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "reviewer_minimum_capability": 1,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "rationale": "Typed automations and their simulator are complex C2 implementation, while UNKNOWN conditions, waits, replay, loops, and actions could create permission shortcuts or unbounded effects and require C1 review."
+    },
+    {
+      "id": "WP-24",
+      "author_minimum_capability": 2,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "reviewer_minimum_capability": 1,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "rationale": "Portfolio reuse and contextual preferences are C2 implementation, but cross-brand visibility, shared identity, fairness, and broader preference views could pool authority or leak relationships and demand C1 review."
+    },
+    {
+      "id": "WP-25",
+      "author_minimum_capability": 3,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max",
+        "xhigh",
+        "high"
+      ],
+      "reviewer_minimum_capability": 2,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max",
+        "xhigh"
+      ],
+      "rationale": "Search, resumption, Inspect, and attention views are bounded reversible UX work with offline, stable-label, keyboard, and screen-reader verification; C2 review protects accessibility and authority legibility."
+    },
+    {
+      "id": "WP-26",
+      "author_minimum_capability": 2,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "reviewer_minimum_capability": 1,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "rationale": "Goals, persistent preferences, and explicit session context are C2 implementation, while hidden memory, stale patches, or ambiguous workspace references could silently alter authoritative state and need C1 review."
+    },
+    {
+      "id": "WP-27",
+      "author_minimum_capability": 2,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "reviewer_minimum_capability": 1,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "rationale": "The assistant is a bounded proposal layer, but context assembly, invalid model output, PII, cost, grants, safety blocks, and deterministic fallback cross security and authority boundaries requiring C1 review."
+    },
+    {
+      "id": "WP-28",
+      "author_minimum_capability": 2,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "reviewer_minimum_capability": 1,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "rationale": "Delegation sessions are substantial implementation against explicit contracts, while attribution, scope, revocation, human-only approval, budget, and kill-switch failures could transfer authority and require C1 review."
+    },
+    {
+      "id": "WP-29",
+      "author_minimum_capability": 2,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "reviewer_minimum_capability": 1,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "rationale": "The API and optional thin MCP are high-complexity exposure of existing commands, but discovery filtering, authentication, revision binding, idempotency, and approval parity are security boundaries needing C1 review."
+    },
+    {
+      "id": "WP-30",
+      "author_minimum_capability": 2,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "reviewer_minimum_capability": 1,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "rationale": "Voice is complex integration over the textual assistant, while provisional transcription, ambiguity, microphone privacy, retention, cancellation, and mode handoff can create unintended authority or disclosure and need C1 review."
+    },
+    {
+      "id": "WP-31",
+      "author_minimum_capability": 1,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "reviewer_minimum_capability": 1,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "rationale": "This is an adversarial qualification of computer use, stale state, restricted delegation, stop behavior, and human-only approval rather than routine UI implementation, so C1 must author and independently review the evidence."
+    },
+    {
+      "id": "WP-32",
+      "author_minimum_capability": 1,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "reviewer_minimum_capability": 1,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "rationale": "Release qualification synthesizes red-team, privacy, vendor, accessibility, outage, operator, AI, agent, and voice evidence with a zero-invariant-breach condition, requiring C1 on both sides."
+    },
+    {
+      "id": "WP-33",
+      "author_minimum_capability": 1,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "reviewer_minimum_capability": 1,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "rationale": "Each remaining live publication transfer requires fresh topology, cursor, legacy-negative, workflow, observation, owner, and rollback judgments, so repeated execution does not reduce it below C1."
+    },
+    {
+      "id": "WP-34",
+      "author_minimum_capability": 2,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "reviewer_minimum_capability": 1,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "rationale": "Onsite placement is bounded C2 channel implementation, but personalization, tracking inference, shared devices, caching, expiration, and outage behavior can expose data or bypass consent and require C1 review."
+    },
+    {
+      "id": "WP-35",
+      "author_minimum_capability": 2,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "reviewer_minimum_capability": 1,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "rationale": "A single qualified push use case is bounded C2 implementation, while endpoint secrets, device multiplicity, permission versus consent, withdrawal, quiet hours, and replacement behavior need C1 review."
+    },
+    {
+      "id": "WP-36",
+      "author_minimum_capability": 2,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "reviewer_minimum_capability": 1,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "rationale": "Cross-channel routing is complex C2 implementation from approved semantics, but equivalence, pressure, preference, opt-out, complaints, unknown acceptance, and races could multiply or evade effects and require C1 review."
+    },
+    {
+      "id": "WP-37",
+      "author_minimum_capability": 1,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "reviewer_minimum_capability": 1,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "rationale": "The evidence determines whether broader non-email activation is justified and must distinguish recipient value from extra volume while assessing pressure, accessibility, reliability, and incident ownership, requiring C1."
+    },
+    {
+      "id": "WP-38",
+      "author_minimum_capability": 1,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "reviewer_minimum_capability": 1,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "rationale": "Choosing whether a phone or app channel is feasible joins actual demand, market law, provider rules, consent, replies, geography, cost, and product-scope constraints, so C1 authorship and review are necessary."
+    },
+    {
+      "id": "WP-39",
+      "author_minimum_capability": 2,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "reviewer_minimum_capability": 1,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "rationale": "Runbooks and deployment machinery are high-complexity implementation, while secrets, migrations, journal access, rollback, restore, and an independent send fence have production safety consequences requiring C1 review."
+    },
+    {
+      "id": "WP-40",
+      "author_minimum_capability": 1,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "reviewer_minimum_capability": 1,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "rationale": "Independent attacker-boundary review integrates authorization, rendering, ingress, dependencies, and external effects and can hold the release for critical findings, so the review package itself remains C1 with C1 verification."
+    },
+    {
+      "id": "WP-41",
+      "author_minimum_capability": 1,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "reviewer_minimum_capability": 1,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "rationale": "Restore and failure qualification must reason across PITR, independent journal replay, post-backup denials, accepted-before-crash uncertainty, RPO/RTO, and load isolation, demanding C1 authorship and review."
+    },
+    {
+      "id": "WP-42",
+      "author_minimum_capability": 1,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "reviewer_minimum_capability": 1,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "rationale": "The mature-profile release decision reconciles exact artifact identity, applicable must-pass evidence, optional-profile boundaries, owner sign-off, maintenance, incidents, and outstanding brand gates, requiring C1 throughout."
+    },
+    {
+      "id": "WP-43",
+      "author_minimum_capability": 1,
+      "author_default_profile": "max",
+      "author_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "reviewer_minimum_capability": 1,
+      "review_default_profile": "max",
+      "review_allowed_reasoning_efforts": [
+        "max"
+      ],
+      "rationale": "Measured replacement of provider, queue, analytics, cache, workflow, or service boundaries is an architectural cost/reliability decision that must preserve authority and recovery semantics, so it remains C1 despite a high risk label."
+    }
+  ]
+}

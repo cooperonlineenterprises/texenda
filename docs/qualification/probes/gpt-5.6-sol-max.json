@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0",
+  "requested_model": "gpt-5.6-sol",
+  "requested_reasoning_effort": "max",
+  "runtime_id": "codex-desktop-collaboration",
+  "client_version": "0.149.0",
+  "sign_in_mode": "subscription",
+  "billing_mode": "subscription",
+  "observed_capabilities": [
+    "read",
+    "edit",
+    "test"
+  ],
+  "read_checks": {
+    "INV-02": "Shared identity never creates shared permission, so matching a profile or endpoint cannot activate another publication, brand, purpose, or channel.",
+    "INV-12": "A timeout or outage never authorizes blind provider or channel failover; reconcile before another effect, and never evade a block or opt-out through another channel.",
+    "INV-30": "The development harness coordinates local work but cannot grant production authority for recipient sends, deployments, spending, or credential use."
+  },
+  "test_checks": [
+    {
+      "command": "env PYTHONDONTWRITEBYTECODE=1 python3 specs/texenda-handoff/10-validation/validate_package.py",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "env PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s specs/texenda-handoff/08-project-harness/tests -v",
+      "exit_code": 0,
+      "result": "PASS",
+      "tests_run": 39
+    }
+  ],
+  "no_secrets_read": true,
+  "self_reported_model_id": null,
+  "limitations": [
+    "The runtime did not independently expose its executing model ID or reasoning effort; gpt-5.6-sol and max are exact assignment-request metadata, not a self-attestation from the model runtime.",
+    "Runtime ID, client version, sign-in mode, and billing mode are inherited from the sanitized WP-00 runtime inventory; only the local Codex client version was rechecked in this probe.",
+    "This bounded offline probe demonstrates local read, edit, package-validation, and synthetic harness-test capability only; it does not qualify the Texenda application or any production, provider, security, legal, privacy, deployment, sending, billing, or external-service behavior.",
+    "Network access, external services, deployment, sending, credentials, production data, and spend were not exercised."
+  ]
+}
