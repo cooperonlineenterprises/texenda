@@ -1,0 +1,111 @@
+{
+  "schema_version": "1.0",
+  "kind": "review",
+  "task_id": "WP-00",
+  "candidate_revision": "c95d01162fb6fc7fe0a669cf213bdd73813eb7a8",
+  "summary": "Independent Tier 2 review approved the exact corrected WP-00 candidate with no findings.",
+  "changed_paths": [
+    ".gitignore",
+    "docs/qualification/README.md",
+    "docs/qualification/model-qualification-verification.md",
+    "docs/qualification/model-roster.evidence.json",
+    "docs/qualification/probes/gpt-5.6-luna.json",
+    "docs/qualification/probes/gpt-5.6-sol.json",
+    "docs/qualification/probes/gpt-5.6-terra.json",
+    "docs/qualification/probes/gpt-6-astra.json",
+    "docs/qualification/runtime-inventory.json"
+  ],
+  "checks": [
+    {
+      "id": "independent-review-log",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Independently review the exact base-to-candidate diff, all changed artifacts, scope, routing claims, limitations, invariant summaries, validation results, and diff whitespace; record the bound APPROVE decision.",
+      "evidence_path": "docs/qualification/evidence/wp00-review-verification.log",
+      "sha256": "e518542da6d15a80eaa592d4814725746ec0b235ff10fdcc4922a492394f5178"
+    },
+    {
+      "id": "committed-roster-evidence",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Parse the committed roster and recompute every embedded SHA-256 against its evidence_path.",
+      "evidence_path": "docs/qualification/model-roster.evidence.json",
+      "sha256": "2c1faf1e067e31615111b2821d687c269524390c11f1dac7c504f9fa60a84e17"
+    },
+    {
+      "id": "committed-runtime-inventory",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Inspect the sanitized committed runtime inventory for subscription-only billing, zero authorized API spend, active mappings, fallback, Spark status, expiry, and limitations.",
+      "evidence_path": "docs/qualification/runtime-inventory.json",
+      "sha256": "9a7615dbec54b796c01274315c7d345253d8a639bdfaa42d41fb425a8f39e049"
+    },
+    {
+      "id": "committed-qualification-verification",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Inspect the committed verification record for invariant preservation, 39-test report, retained model-identity limitation, and prior-candidate correction context.",
+      "evidence_path": "docs/qualification/model-qualification-verification.md",
+      "sha256": "418a84f629b8751dc22e5131ebd2fa69d88fadb86b10a3f6c80d63055373791c"
+    },
+    {
+      "id": "committed-tier-probes",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Parse and inspect each committed per-model probe for exact requested model/effort, local test commands, invariant summaries, and no-overclaim limitations.",
+      "evidence_path": "docs/qualification/probes/gpt-6-astra.json",
+      "sha256": "6ab0d7b121630937de88441c1aedf1e46de1da1d0319ac01806bb7435fdf726f"
+    },
+    {
+      "id": "committed-tier-1-fallback-probe",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Parse and inspect the committed Sol fallback probe against the roster's fallback classification and retained limitations.",
+      "evidence_path": "docs/qualification/probes/gpt-5.6-sol.json",
+      "sha256": "b3517e156c382bc9fb45ed29994a8ff573854ddcd03436fee88ed053810ae300"
+    },
+    {
+      "id": "committed-tier-2-probe",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Parse and inspect the committed Terra Tier 2 probe against its medium-effort active roster mapping and retained limitations.",
+      "evidence_path": "docs/qualification/probes/gpt-5.6-terra.json",
+      "sha256": "1c81e33c60d7da2e23b1d9f4fc1c8e8647bb26dfce3ff9fcce6dc3d1d19aeda3"
+    },
+    {
+      "id": "committed-tier-3-probe",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Parse and inspect the committed Luna Tier 3 probe against its low-effort active roster mapping and retained limitations.",
+      "evidence_path": "docs/qualification/probes/gpt-5.6-luna.json",
+      "sha256": "469723e6801d3a2c91d29d52ca3ed69c4bcdc6206d7a85cceb12c472b08ab00f"
+    },
+    {
+      "id": "package-validation",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "python3 specs/texenda-handoff/10-validation/validate_package.py returned PASS with no warnings or errors.",
+      "evidence_path": "docs/qualification/evidence/wp00-review-verification.log",
+      "sha256": "e518542da6d15a80eaa592d4814725746ec0b235ff10fdcc4922a492394f5178"
+    },
+    {
+      "id": "harness-unit-tests",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s specs/texenda-handoff/08-project-harness/tests -v ran 39 tests and returned OK.",
+      "evidence_path": "docs/qualification/evidence/wp00-review-verification.log",
+      "sha256": "e518542da6d15a80eaa592d4814725746ec0b235ff10fdcc4922a492394f5178"
+    },
+    {
+      "id": "candidate-diff-check",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "git diff --check 0cd7010242ee1ee35837aace4ea2a1f1a186777e..c95d01162fb6fc7fe0a669cf213bdd73813eb7a8 completed with no output.",
+      "evidence_path": "docs/qualification/evidence/wp00-review-verification.log",
+      "sha256": "e518542da6d15a80eaa592d4814725746ec0b235ff10fdcc4922a492394f5178"
+    }
+  ],
+  "runtime_stopped": true,
+  "scope": "Reviewer-side uncommitted evidence only; it does not alter the reviewed candidate or grant production authority.",
+  "notes": "Prior candidate f91281e71b80cf814b1576070903f9fcf4b6bea2 was rejected only for two unapproved Markdown hard-break trailing-space warnings. The corrected candidate was independently re-reviewed and approved."
+}

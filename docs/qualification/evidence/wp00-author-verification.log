@@ -1,0 +1,25 @@
+WP-00 author verification
+base_revision: 0cd7010242ee1ee35837aace4ea2a1f1a186777e
+candidate_revision: c95d01162fb6fc7fe0a669cf213bdd73813eb7a8
+fence: 1
+
+Commands and outcomes:
+- jq -e . docs/qualification/*.json docs/qualification/probes/*.json: PASS; all qualification JSON parsed.
+- Roster hash loop over docs/qualification/model-roster.evidence.json: PASS; all six referenced hashes matched.
+- env PYTHONDONTWRITEBYTECODE=1 python3 specs/texenda-handoff/10-validation/validate_package.py: PASS.
+- env PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s specs/texenda-handoff/08-project-harness/tests -v: PASS; 39/39 tests.
+- git diff --check 0cd7010242ee1ee35837aace4ea2a1f1a186777e..HEAD: PASS.
+
+Candidate changed paths:
+- .gitignore
+- docs/qualification/README.md
+- docs/qualification/model-qualification-verification.md
+- docs/qualification/model-roster.evidence.json
+- docs/qualification/probes/gpt-5.6-luna.json
+- docs/qualification/probes/gpt-5.6-sol.json
+- docs/qualification/probes/gpt-5.6-terra.json
+- docs/qualification/probes/gpt-6-astra.json
+- docs/qualification/runtime-inventory.json
+
+Limitations: Qualification establishes bounded local subscription-runtime read/edit/test capability only. It does not qualify product behavior, production, providers, sending, deployment, security, legal/privacy, billing telemetry, external services, or other external gates. Runtime model identity could not be independently introspected. gpt-5.3-codex-spark remains unqualified. Active bindings expire 2026-10-12T16:45:48Z or earlier after relevant runtime/account/model/sandbox/policy change.
+runtime_stopped: true

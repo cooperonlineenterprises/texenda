@@ -1,0 +1,15 @@
+WP-00 independent Tier 2 review: APPROVE
+Base revision: 0cd7010242ee1ee35837aace4ea2a1f1a186777e
+Candidate revision: c95d01162fb6fc7fe0a669cf213bdd73813eb7a8
+
+Findings: none.
+Changed-path scope: PASS. The candidate changes only .gitignore and docs/qualification/**, both allowed by WP-00; no normative specification changed.
+JSON and hashes: PASS. All six qualification JSON artifacts parsed with jq, and all six SHA-256 values embedded in docs/qualification/model-roster.evidence.json matched their evidence paths.
+Invariant review: PASS. Probe summaries preserve INV-02 (no shared permission from identity), INV-12 (no blind failover after timeout/outage), and INV-30 (harness grants no production authority).
+Routing/evidence review: PASS. Active Astra/T1/high, Terra/T2/medium, and Luna/T3/low mappings are internally consistent with subscription billing, zero authorized API spend, a 29-day expiry, Sol as a qualified T1 fallback, and Spark unqualified. Limitations retain that model self-identification is unavailable and that no product or external gate is qualified.
+Package validation: PASS. python3 specs/texenda-handoff/10-validation/validate_package.py returned PASS with no warnings or errors.
+Harness tests: PASS. PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s specs/texenda-handoff/08-project-harness/tests -v ran 39 tests; all passed.
+Diff quality: PASS. git diff --check 0cd7010242ee1ee35837aace4ea2a1f1a186777e..c95d01162fb6fc7fe0a669cf213bdd73813eb7a8 completed with no output.
+
+Prior candidate f91281e71b80cf814b1576070903f9fcf4b6bea2 was rejected only because git diff --check found two unapproved Markdown hard-break trailing-space warnings in model-qualification-verification.md. This candidate removes those spaces and updates the embedded verification-log hash; the correction was independently re-reviewed.
+Reviewer runtime stopped: true.
