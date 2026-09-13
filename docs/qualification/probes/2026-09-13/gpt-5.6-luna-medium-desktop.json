@@ -1,0 +1,154 @@
+{
+  "schema_version": "1.0",
+  "kind": "exact-profile-desktop-qualification-probe",
+  "observed_at": "2026-09-13T22:03:56Z",
+  "base_revision": "dfb6e0090c4f128ba2d8e16e4e3d038d632415db",
+  "dispatch": {
+    "profile_id": "gpt-5.6-luna-medium",
+    "requested_model": "gpt-5.6-luna",
+    "requested_reasoning_effort": "medium",
+    "capability_tier": 4,
+    "accepted_by_desktop_dispatcher": true,
+    "runtime_id": "codex-desktop-collaboration",
+    "client_version": "26.901.41600 (build 7982)",
+    "scope": "Only this exact model and effort through the observed desktop collaboration runtime.",
+    "self_reported_model_id": null,
+    "self_reported_reasoning_effort": null,
+    "identity_limit": "The runtime did not expose an independent executing provider-model or reasoning-effort introspection channel; requested dispatch metadata is not independent model-identity proof."
+  },
+  "runtime": {
+    "bundle_path": "/Applications/ChatGPT.app",
+    "bundle_identifier": "com.openai.codex",
+    "bundle_version": "26.901.41600",
+    "bundle_build": "7982",
+    "runtime_surface_observation_path": "docs/qualification/runtime-surface-observation-2026-09-13.json",
+    "runtime_surface_observation_sha256": "35995674a989b1b77233eafdc80ed092d0a8f8622b88990e8f7b3f8336978091",
+    "plist_inspection": "Three independent /usr/libexec/PlistBuddy field queries exited 0 and matched the hash-verified observation."
+  },
+  "repository": {
+    "branch": "qualify/desktop-luna-medium-20260913",
+    "worktree": "/private/tmp/texenda-astra-audit.kGBhLO/profile-luna-medium",
+    "report_path": "docs/qualification/probes/2026-09-13/gpt-5.6-luna-medium-desktop.json"
+  },
+  "direct_cli": {
+    "version_command": "codex --version",
+    "observed_version": "0.149.0",
+    "qualification_status": "UNQUALIFIED",
+    "astra_qualification_status": "UNQUALIFIED",
+    "astra_documented_minimum": "0.153.0",
+    "reason": "Direct CLI is a separate runtime; the installed version is below the observed documented Astra minimum and no direct-CLI exact-profile probe was run.",
+    "nonfatal_stderr": "WARNING: proceeding, even though we could not create PATH aliases: Operation not permitted (os error 1)"
+  },
+  "sign_in_mode": "subscription",
+  "billing_mode": "subscription",
+  "api_budget_authorized_usd": 0,
+  "api_spend_usd": 0,
+  "observed_capabilities": ["read", "edit", "test"],
+  "read_checks": {
+    "required_instruction_sources": [
+      "AGENTS.md",
+      "specs/texenda-handoff/README.md",
+      "specs/texenda-handoff/DECISION-STATUS.md",
+      "specs/texenda-handoff/07-agent-orchestration/project-kernel.md",
+      "specs/texenda-handoff/07-agent-orchestration/ORCHESTRATOR-START.md",
+      "docs/qualification/runtime-surface-observation-2026-09-13.json",
+      "docs/qualification/README.md",
+      "tooling/coordination/README.md",
+      "tooling/coordination/routing-policy.json"
+    ],
+    "INV-02": "Shared identity never creates shared permission, so a profile or endpoint match cannot activate another scoped communication authority.",
+    "INV-12": "A timeout or outage never authorizes blind provider or channel failover; reconciliation is required before another external effect.",
+    "INV-30": "The development harness coordinates work but cannot grant production authority, including authority to send, deploy, spend, or use credentials.",
+    "routing_policy_sha256": "5ebc903a1bd2d3e1925a01fcb1e556f0ed0a4c50682a3b3d93ccc7d7cdd6e979"
+  },
+  "edit_check": {
+    "result": "PASS; this report is the only created or edited repository path.",
+    "scope": "Created only this dated desktop qualification report in the assigned worktree.",
+    "sealed_specs_changed": false
+  },
+  "test_checks": [
+    {
+      "id": "instruction-contracts",
+      "command": "env PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=tooling/coordination/tests python3 -m unittest tooling/coordination/tests/test_instruction_contracts.py -v",
+      "exit_code": 0,
+      "result": "PASS",
+      "tests_run": 10,
+      "tests_passed": 10,
+      "scope": "Exactly the ten static instruction-contract tests; no broader coordinator suite or product test was run."
+    },
+    {
+      "id": "sealed-package-checksums",
+      "command": "env PYTHONDONTWRITEBYTECODE=1 python3 specs/texenda-handoff/10-validation/validate_package.py --checksums",
+      "exit_code": 0,
+      "result": "PASS",
+      "checks_passed": 14,
+      "errors": 0,
+      "warnings": 0,
+      "scope": "Offline sealed-package structure, traceability, links, and final checksum checks only; no product or external-gate qualification."
+    }
+  ],
+  "billing_and_authority": {
+    "credentials_read": false,
+    "production_data_accessed": false,
+    "external_effects": false,
+    "statement": "This bounded desktop probe used the subscription route. No API-billed request, API key, paid credit, account identifier, credential, or provider billing telemetry was used or read."
+  },
+  "subprocess_stop_evidence": {
+    "status": "PASS",
+    "stopped_subprocesses": [
+      "/usr/libexec/PlistBuddy bundle identifier query",
+      "/usr/libexec/PlistBuddy short version query",
+      "/usr/libexec/PlistBuddy bundle build query",
+      "codex --version",
+      "instruction-contract tests",
+      "sealed package checksum validation"
+    ],
+    "background_processes_started": false,
+    "child_agents_spawned": false,
+    "open_command_sessions": 0,
+    "parent_dispatcher_stop": "Parent supplies dispatcher-observed stop evidence for this desktop collaboration agent; this report does not claim enclosing-runtime termination."
+  },
+  "boundaries": {
+    "no_secrets_read": true,
+    "account_identifiers_recorded": false,
+    "network_used": false,
+    "dependencies_installed": false,
+    "delegation_performed": false,
+    "lease_mutation": false,
+    "ledger_mutation": false,
+    "roster_mutation": false,
+    "production_data_accessed": false,
+    "recipient_communication": false,
+    "sending_performed": false,
+    "pushed": false,
+    "deployed": false,
+    "provisioned": false,
+    "api_spend_usd": 0,
+    "external_effects": false
+  },
+  "claim_boundaries": {
+    "qualification_status": "QUALIFIED_FOR_EXACT_DESKTOP_PROFILE_ONLY",
+    "product_tests_run": false,
+    "product_acceptance_claimed": false,
+    "external_validation_gates_cleared": false,
+    "direct_cli_qualified": false,
+    "api_cloud_or_ide_runtime_qualified": false,
+    "owner_attestation_claimed": false,
+    "roster_activation_claimed": false
+  },
+  "limitations": [
+    "The exact requested model and reasoning effort are dispatch metadata; the runtime provides no independent executing provider-model or effort introspection, so self_reported_model_id and self_reported_reasoning_effort remain null.",
+    "This evidence applies only to codex-desktop-collaboration at client 26.901.41600 (build 7982). It does not qualify direct CLI, API, cloud, IDE, another desktop build, account, workspace, model, or effort.",
+    "Direct CLI remains UNQUALIFIED, including Astra. The separately observed codex-cli 0.149.0 is below the documented >=0.153.0 Astra minimum, and no direct-CLI exact-profile read/edit/test probe was run.",
+    "The ten instruction-contract tests and fourteen sealed package checks are local structural evidence only; they pass no Texenda product acceptance criterion and clear no external validation gate.",
+    "No network, dependency installation, delegation, lease or ledger mutation, credential or production-data access, API spend, sending, push, deployment, provisioning, external service use, or other external effect was performed.",
+    "This is candidate local evidence. Independent review, owner attestation, roster installation, integrated-head verification, and parent dispatcher stop observation remain separate."
+  ],
+  "verification_before_commit": {
+    "report_json_parse": {"command": "jq -e . docs/qualification/probes/2026-09-13/gpt-5.6-luna-medium-desktop.json >/dev/null", "result": "PASS"},
+    "runtime_observation_hash_recheck": {"command": "shasum -a 256 docs/qualification/runtime-surface-observation-2026-09-13.json", "result": "PASS", "sha256": "35995674a989b1b77233eafdc80ed092d0a8f8622b88990e8f7b3f8336978091"},
+    "git_diff_check": {"command": "git diff --check", "result": "PASS"},
+    "single_report_scope": {"command": "git status --short --untracked-files=all", "result": "PASS", "observed": ["?? docs/qualification/probes/2026-09-13/gpt-5.6-luna-medium-desktop.json"]},
+    "post_commit_cleanliness": "Verified after the sole-report commit and returned in the parent handoff."
+  }
+}
