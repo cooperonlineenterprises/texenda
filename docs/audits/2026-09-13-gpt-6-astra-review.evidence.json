@@ -1,0 +1,52 @@
+{
+  "schema_version": "2.0",
+  "kind": "review",
+  "task_id": "ASTRA-INSTRUCTION-AUDIT",
+  "candidate_revision": "e3def2617753dd178e7d3eebae2e548b3e2df39b",
+  "profile_id": "gpt-6-astra-max",
+  "routing_policy_digest": "61f0db448cf5ac5adad4d9340d568a7558c0369174e30aab92dd0ccf0d24bdf0",
+  "summary": "APPROVE: independent review of the exact GPT-6 Astra instruction-system candidate found no actionable findings. The required local, sealed, checksum, integrity, schema, evidence, link and bounded adversarial checks passed; product and external gates remain unqualified.",
+  "checks": [
+    {
+      "id": "independent-exact-candidate-review",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Independently inspect all 18 changed files and their complete change content against base e636a3ef4ad3c96956164e898fefeec0758d444d; review governing authority, routing, coordinator code/tests/schemas/templates and all four directly retrieved required sources; run 130 local tests, 39 sealed tests, 14 checksum-aware package checks and the read-only integrity/schema/evidence/link/adversarial checks recorded in the report; verify exact candidate/tree/diff bindings and stopped command processes.",
+      "evidence_path": "docs/audits/2026-09-13-gpt-6-astra-independent-review.md",
+      "sha256": "9bddaa709fbbc11568eccd01cf4f2c85f35ba794a315a64c119805c4ba5cd69d"
+    },
+    {
+      "id": "candidate-source-authority-disposition-audit",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Read the committed candidate audit in full and independently compare its source access/dispositions, instruction precedence, preserved authority, operational changes and stated limitations with the directly retrieved sources, actual candidate files and verification results.",
+      "evidence_path": "docs/audits/2026-09-13-gpt-6-astra-agent-system-audit.md",
+      "sha256": "7cf7dbd6741544ca77c3eee6afdcfa3001d7eeecd7870c52b3b6b686299124f5"
+    },
+    {
+      "id": "author-verification-independently-reproduced",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Read the committed author verification log in full and independently rerun its principal suites at the exact candidate: env PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tooling/coordination/tests -v; env PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s specs/texenda-handoff/08-project-harness/tests -v; env PYTHONDONTWRITEBYTECODE=1 python3 specs/texenda-handoff/10-validation/validate_package.py --checksums. Retain the author's earlier 60-JSON snapshot and record the independent candidate count of 62 in the review report.",
+      "evidence_path": "docs/audits/2026-09-13-gpt-6-astra-author-verification.log",
+      "sha256": "9d8a4168908eb4ad10c4cc4499af529ef3af881424c832d7461a80fa578d8cf8"
+    },
+    {
+      "id": "independent-instruction-audit-provenance",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Read the complete independent instruction-scope audit, assess its recommendations against the candidate and governing contracts, and compare its exact bytes with source commit 56b6ec3ea0d66447205b03f74ffd5920e783c0bf using git show.",
+      "evidence_path": "docs/qualification/analysis/2026-09-13-astra-instruction-scope-audit.json",
+      "sha256": "e90055829e619fdc41b4f50d58ea2e7114a7aeb20890042c8a9af74310b2ec8c"
+    },
+    {
+      "id": "independent-safety-usage-audit-provenance",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Read the complete independent safety/usage audit, assess adoption and explicit deferral against the candidate and original source text, and compare its exact bytes with source commit f284e5989d2eac06f7e956724ad1cc9b32fbafcd using git show.",
+      "evidence_path": "docs/qualification/analysis/2026-09-13-astra-safety-usage-audit.json",
+      "sha256": "433685da64af22e42790289a5f977caafcf5234ce0b41e1cf10a8de556274d73"
+    }
+  ],
+  "notes": "This standalone maintenance-review envelope records candidate-bound independent evidence; it does not create a WP lease, record a lifecycle transition, install a roster, qualify provider identity or clear product/external gates. Requested profile metadata is not independent executing-model introspection. The report states schema-engine and runtime-enforcement limits. These two review artifacts are uncommitted additions authorized after the read-only review; the parent must observe reviewer preparation completion before treating the reviewer as currently stopped. No candidate, historical evidence or live ledger was edited."
+}
