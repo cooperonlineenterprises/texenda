@@ -23,6 +23,8 @@ evidence and records the actual Codex desktop version/build rather than the
 separately installed CLI version. See the
 [runtime observation](runtime-surface-observation-2026-09-13.json) and
 [correction verification](runtime-surface-correction-verification-2026-09-13.md).
+The [activation receipt](runtime-surface-correction-activation-receipt.md)
+records the reviewed local ledger transition.
 The live ledger's latest `set-roster` receipt is the operational activation
 proof; always run `check` and inspect `status` before assignment.
 `probes/` contains the model/effort runs; `analysis/` and `evidence/`

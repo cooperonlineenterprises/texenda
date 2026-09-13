@@ -24,6 +24,7 @@ ACTIVE_DOCS = [
     ROOT / 'tooling/coordination/AGENTS.md', ROOT / 'tooling/coordination/README.md',
     ROOT / 'docs/decisions/ADR-0002-astra-agent-operating-guidance.md',
     ROOT / 'docs/qualification/README.md',
+    ROOT / 'docs/qualification/runtime-surface-correction-activation-receipt.md',
     ROOT / 'docs/qualification/runtime-surface-correction-plan-2026-09-13.md',
     ROOT / 'docs/qualification/runtime-surface-correction-verification-2026-09-13.md',
     ROOT / 'docs/audits/2026-09-13-gpt-6-astra-agent-system-audit.md',
