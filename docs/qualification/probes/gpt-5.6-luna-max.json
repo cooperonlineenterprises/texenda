@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0",
+  "requested_model": "gpt-5.6-luna",
+  "requested_reasoning_effort": "max",
+  "runtime_id": "codex-desktop-collaboration",
+  "client_version": "0.149.0",
+  "sign_in_mode": "subscription",
+  "billing_mode": "subscription",
+  "observed_capabilities": [
+    "read",
+    "edit",
+    "test"
+  ],
+  "read_checks": {
+    "INV-02": "Shared identity never creates shared permission, so matching a profile or endpoint cannot activate another publication, brand, purpose, or channel.",
+    "INV-12": "A timeout or outage never authorizes blind provider or channel failover; reconciliation is required before another external effect.",
+    "INV-30": "The development harness coordinates work but cannot grant production authority for sends, deployments, spending, or credential use."
+  },
+  "test_checks": [
+    {
+      "command": "env PYTHONDONTWRITEBYTECODE=1 python3 specs/texenda-handoff/10-validation/validate_package.py",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "env PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s specs/texenda-handoff/08-project-harness/tests -v",
+      "exit_code": 0,
+      "result": "PASS",
+      "tests_run": 39
+    }
+  ],
+  "no_secrets_read": true,
+  "self_reported_model_id": null,
+  "limitations": [
+    "The runtime did not independently expose its executing model identifier or reasoning effort, so the requested model and effort remain assignment metadata rather than independently verified runtime metadata.",
+    "This bounded offline probe verifies only local read, edit, package-validation, and synthetic harness-test behavior; it does not qualify the Texenda application, production systems, providers, security, legal compliance, external services, deployment readiness, sending, billing, or production authority."
+  ]
+}
