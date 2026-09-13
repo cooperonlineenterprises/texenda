@@ -1,0 +1,17 @@
+[
+  {
+    "path": "09-reference/prior-artifacts/Texenda_Product_Technical_Foundation_v1.0.md",
+    "sha256": "9105d60b98fcffa14c53b3d5c313f94b1a4df6a3e280e95c4984d65f279d31e6",
+    "bytes": 123978
+  },
+  {
+    "path": "09-reference/prior-artifacts/Texenda_Decision_Closure_v1.0.zip",
+    "sha256": "46f1c2ab5223af3ec9df11771d92aafa6e6a6ffdb944f3ffef5493d25a352c45",
+    "bytes": 85962
+  },
+  {
+    "path": "09-reference/prior-artifacts/Texenda_Implementation_Roadmap_Acceptance_v1.0.md",
+    "sha256": "988adf95f6f372ae5ea40a75563aa24994a19577a963e9d87b8b5227dfd363ec",
+    "bytes": 125701
+  }
+]

@@ -1,0 +1,369 @@
+{
+  "schema_version": "1.0",
+  "as_of": "2026-09-05",
+  "sources": [
+    {
+      "id": "S01",
+      "topic": "Payload Local API and access control",
+      "urls": [
+        "https://payloadcms.com/docs/local-api/overview",
+        "https://payloadcms.com/docs/local-api/access-control"
+      ],
+      "claim_supported": "Local API privileged defaults require explicit wrapper access enforcement",
+      "retrieval_date_reported_by_prior_artifact": "2026-09-05",
+      "current_validation": "PUBLIC DOCUMENTATION CHECKED; NOT ACCOUNT/RUNTIME QUALIFIED",
+      "copied_external_text": false,
+      "retrieval_date": "2026-09-05"
+    },
+    {
+      "id": "S02",
+      "topic": "Payload PostgreSQL adapter/custom schema",
+      "urls": [
+        "https://payloadcms.com/docs/database/postgres"
+      ],
+      "claim_supported": "Payload PostgreSQL adapter/custom schema",
+      "retrieval_date_reported_by_prior_artifact": "2026-09-05",
+      "current_validation": "INHERITED REFERENCE; verify exact account/version before activation",
+      "copied_external_text": false
+    },
+    {
+      "id": "S03",
+      "topic": "Payload transaction context",
+      "urls": [
+        "https://payloadcms.com/docs/database/transactions"
+      ],
+      "claim_supported": "Payload transaction context",
+      "retrieval_date_reported_by_prior_artifact": "2026-09-05",
+      "current_validation": "INHERITED REFERENCE; verify exact account/version before activation",
+      "copied_external_text": false
+    },
+    {
+      "id": "S04",
+      "topic": "Payload Jobs and access control",
+      "urls": [
+        "https://payloadcms.com/docs/jobs-queue/jobs"
+      ],
+      "claim_supported": "Queue wakeup/worker primitives do not supply product-state semantics",
+      "retrieval_date_reported_by_prior_artifact": "2026-09-05",
+      "current_validation": "PUBLIC DOCUMENTATION CHECKED; NOT ACCOUNT/RUNTIME QUALIFIED",
+      "copied_external_text": false,
+      "retrieval_date": "2026-09-05"
+    },
+    {
+      "id": "S05",
+      "topic": "React Email editor architecture/API",
+      "urls": [
+        "https://react.email/docs/editor/overview",
+        "https://react.email/docs/editor/api-reference/email-editor"
+      ],
+      "claim_supported": "Editor surface exists; exact compatible codec/version remains qualification-required",
+      "retrieval_date_reported_by_prior_artifact": "2026-09-05",
+      "current_validation": "PUBLIC DOCUMENTATION CHECKED; NOT ACCOUNT/RUNTIME QUALIFIED",
+      "copied_external_text": false,
+      "retrieval_date": "2026-09-05"
+    },
+    {
+      "id": "S06",
+      "topic": "Resend idempotency",
+      "urls": [
+        "https://resend.com/docs/dashboard/emails/idempotency-keys"
+      ],
+      "claim_supported": "Documented provider idempotency window is 24 hours; permanent internal keys remain required",
+      "retrieval_date_reported_by_prior_artifact": "2026-09-05",
+      "current_validation": "PUBLIC DOCUMENTATION CHECKED; NOT ACCOUNT/RUNTIME QUALIFIED",
+      "copied_external_text": false,
+      "retrieval_date": "2026-09-05"
+    },
+    {
+      "id": "S07",
+      "topic": "Resend suppression semantics",
+      "urls": [
+        "https://resend.com/docs/dashboard/emails/email-suppressions"
+      ],
+      "claim_supported": "Provider suppression can apply across a team, not only one sender domain",
+      "retrieval_date_reported_by_prior_artifact": "2026-09-05",
+      "current_validation": "PUBLIC DOCUMENTATION CHECKED; NOT ACCOUNT/RUNTIME QUALIFIED",
+      "copied_external_text": false,
+      "retrieval_date": "2026-09-05"
+    },
+    {
+      "id": "S08",
+      "topic": "Resend account rate/quota behavior",
+      "urls": [
+        "https://resend.com/docs/api-reference/rate-limit"
+      ],
+      "claim_supported": "Resend account rate/quota behavior",
+      "retrieval_date_reported_by_prior_artifact": "2026-09-05",
+      "current_validation": "INHERITED REFERENCE; verify exact account/version before activation",
+      "copied_external_text": false
+    },
+    {
+      "id": "S09",
+      "topic": "Kit subscriber listing and statuses",
+      "urls": [
+        "https://developers.kit.com/api-reference/subscribers/list-subscribers"
+      ],
+      "claim_supported": "Kit subscriber listing and statuses",
+      "retrieval_date_reported_by_prior_artifact": "2026-09-05",
+      "current_validation": "INHERITED REFERENCE; verify exact account/version before activation",
+      "copied_external_text": false
+    },
+    {
+      "id": "S10",
+      "topic": "Kit sequence subscribers",
+      "urls": [
+        "https://developers.kit.com/api-reference/sequences/list-subscribers-for-a-sequence"
+      ],
+      "claim_supported": "Membership/state/entry time response is not verified recipient step progress",
+      "retrieval_date_reported_by_prior_artifact": "2026-09-05",
+      "current_validation": "PUBLIC DOCUMENTATION CHECKED; NOT ACCOUNT/RUNTIME QUALIFIED",
+      "copied_external_text": false,
+      "retrieval_date": "2026-09-05"
+    },
+    {
+      "id": "S11",
+      "topic": "Kit API changelog and sequence content",
+      "urls": [
+        "https://developers.kit.com/changelog",
+        "https://developers.kit.com/api-reference/sequence-emails/list-sequence-emails"
+      ],
+      "claim_supported": "Kit API changelog and sequence content",
+      "retrieval_date_reported_by_prior_artifact": "2026-09-05",
+      "current_validation": "INHERITED REFERENCE; verify exact account/version before activation",
+      "copied_external_text": false
+    },
+    {
+      "id": "S12",
+      "topic": "RFC 8058 one-click unsubscribe",
+      "urls": [
+        "https://www.rfc-editor.org/rfc/rfc8058.html"
+      ],
+      "claim_supported": "RFC 8058 one-click unsubscribe",
+      "retrieval_date_reported_by_prior_artifact": "2026-09-05",
+      "current_validation": "INHERITED REFERENCE; verify exact account/version before activation",
+      "copied_external_text": false
+    },
+    {
+      "id": "S13",
+      "topic": "Gmail sender-guideline reference for live qualification",
+      "urls": [
+        "https://support.google.com/mail/answer/81126"
+      ],
+      "claim_supported": "Gmail sender-guideline reference for live qualification",
+      "retrieval_date_reported_by_prior_artifact": "2026-09-05",
+      "current_validation": "INHERITED REFERENCE; verify exact account/version before activation",
+      "copied_external_text": false
+    },
+    {
+      "id": "S14",
+      "topic": "FTC commercial-email guidance",
+      "urls": [
+        "https://www.ftc.gov/business-guidance/resources/can-spam-act-compliance-guide-business"
+      ],
+      "claim_supported": "FTC commercial-email guidance",
+      "retrieval_date_reported_by_prior_artifact": "2026-09-05",
+      "current_validation": "INHERITED REFERENCE; verify exact account/version before activation",
+      "copied_external_text": false
+    },
+    {
+      "id": "S15",
+      "topic": "Apple Mail Privacy Protection",
+      "urls": [
+        "https://www.apple.com/legal/privacy/data/en/mail-privacy-protection/"
+      ],
+      "claim_supported": "Apple Mail Privacy Protection",
+      "retrieval_date_reported_by_prior_artifact": "2026-09-05",
+      "current_validation": "INHERITED REFERENCE; verify exact account/version before activation",
+      "copied_external_text": false
+    },
+    {
+      "id": "S16",
+      "topic": "Twilio Messaging Policy",
+      "urls": [
+        "https://www.twilio.com/en-us/legal/messaging-policy"
+      ],
+      "claim_supported": "Twilio Messaging Policy",
+      "retrieval_date_reported_by_prior_artifact": "2026-09-05",
+      "current_validation": "INHERITED REFERENCE; verify exact account/version before activation",
+      "copied_external_text": false
+    },
+    {
+      "id": "S17",
+      "topic": "WebKit Web Push implementation context",
+      "urls": [
+        "https://webkit.org/blog/13878/web-push-for-web-apps-on-ios-and-ipados/"
+      ],
+      "claim_supported": "WebKit Web Push implementation context",
+      "retrieval_date_reported_by_prior_artifact": "2026-09-05",
+      "current_validation": "INHERITED REFERENCE; verify exact account/version before activation",
+      "copied_external_text": false
+    },
+    {
+      "id": "S18",
+      "topic": "OpenAI agent-safety guidance",
+      "urls": [
+        "https://developers.openai.com/api/docs/guides/agent-builder-safety"
+      ],
+      "claim_supported": "Scoped inputs and typed output validation are safety measures, not proof against all injection",
+      "retrieval_date_reported_by_prior_artifact": "2026-09-05",
+      "current_validation": "PUBLIC DOCUMENTATION CHECKED; NOT ACCOUNT/RUNTIME QUALIFIED",
+      "copied_external_text": false,
+      "retrieval_date": "2026-09-05"
+    },
+    {
+      "id": "S19",
+      "topic": "SimpleWebAuthn server documentation",
+      "urls": [
+        "https://simplewebauthn.dev/docs/packages/server"
+      ],
+      "claim_supported": "SimpleWebAuthn server documentation",
+      "retrieval_date_reported_by_prior_artifact": "2026-09-05",
+      "current_validation": "INHERITED REFERENCE; verify exact account/version before activation",
+      "copied_external_text": false
+    },
+    {
+      "id": "S20",
+      "topic": "Render worker and backup documentation",
+      "urls": [
+        "https://render.com/docs/background-workers",
+        "https://render.com/docs/postgresql-backups"
+      ],
+      "claim_supported": "Render worker and backup documentation",
+      "retrieval_date_reported_by_prior_artifact": "2026-09-05",
+      "current_validation": "INHERITED REFERENCE; verify exact account/version before activation",
+      "copied_external_text": false
+    },
+    {
+      "id": "S21",
+      "topic": "PostgreSQL SELECT/locking semantics",
+      "urls": [
+        "https://www.postgresql.org/docs/current/sql-select.html"
+      ],
+      "claim_supported": "PostgreSQL SELECT/locking semantics",
+      "retrieval_date_reported_by_prior_artifact": "2026-09-05",
+      "current_validation": "INHERITED REFERENCE; verify exact account/version before activation",
+      "copied_external_text": false
+    },
+    {
+      "id": "S22",
+      "topic": "USPTO confusing-similarity guidance",
+      "urls": [
+        "https://www.uspto.gov/trademarks/search/likelihood-confusion"
+      ],
+      "claim_supported": "USPTO confusing-similarity guidance",
+      "retrieval_date_reported_by_prior_artifact": "2026-09-05",
+      "current_validation": "INHERITED REFERENCE; verify exact account/version before activation",
+      "copied_external_text": false
+    },
+    {
+      "id": "S23",
+      "topic": "Mailpit documentation",
+      "urls": [
+        "https://mailpit.axllent.org/docs/"
+      ],
+      "claim_supported": "Mailpit documentation",
+      "retrieval_date_reported_by_prior_artifact": "2026-09-05",
+      "current_validation": "INHERITED REFERENCE; verify exact account/version before activation",
+      "copied_external_text": false
+    },
+    {
+      "id": "S24",
+      "topic": "Kit unsubscribe endpoint",
+      "urls": [
+        "https://developers.kit.com/api-reference/subscribers/unsubscribe-subscriber"
+      ],
+      "claim_supported": "Kit unsubscribe endpoint",
+      "retrieval_date_reported_by_prior_artifact": "2026-09-05",
+      "current_validation": "INHERITED REFERENCE; verify exact account/version before activation",
+      "copied_external_text": false
+    },
+    {
+      "id": "N01",
+      "topic": "Codex public models",
+      "urls": [
+        "https://developers.openai.com/codex/models"
+      ],
+      "claim_supported": "Public candidate identifiers; actual target entitlement/quality unverified. Resolved to learn.chatgpt.com/docs/models during retrieval.",
+      "retrieval_date": "2026-09-05",
+      "current_validation": "PUBLIC DOCUMENTATION CHECKED; NOT ACCOUNT/RUNTIME QUALIFIED",
+      "copied_external_text": false
+    },
+    {
+      "id": "N02",
+      "topic": "Codex project instructions",
+      "urls": [
+        "https://developers.openai.com/codex/guides/agents-md"
+      ],
+      "claim_supported": "AGENTS.md is the project-local entrypoint; keep it small and route task-specific context.",
+      "retrieval_date": "2026-09-05",
+      "current_validation": "PUBLIC DOCUMENTATION CHECKED; NOT ACCOUNT/RUNTIME QUALIFIED",
+      "copied_external_text": false
+    },
+    {
+      "id": "N03",
+      "topic": "Codex configuration",
+      "urls": [
+        "https://developers.openai.com/codex/config-reference"
+      ],
+      "claim_supported": "Example approval/sandbox controls require target-client validation; not executable authority by themselves.",
+      "retrieval_date": "2026-09-05",
+      "current_validation": "PUBLIC DOCUMENTATION CHECKED; NOT ACCOUNT/RUNTIME QUALIFIED",
+      "copied_external_text": false
+    },
+    {
+      "id": "N04",
+      "topic": "WCAG 2.2",
+      "urls": [
+        "https://www.w3.org/TR/WCAG22/"
+      ],
+      "claim_supported": "Accessibility target; automated checks plus actual manual assistive-technology review required.",
+      "retrieval_date": "2026-09-05",
+      "current_validation": "PUBLIC DOCUMENTATION CHECKED; NOT ACCOUNT/RUNTIME QUALIFIED",
+      "copied_external_text": false
+    },
+    {
+      "id": "N05",
+      "topic": "WebMCP browser tools",
+      "urls": [
+        "https://developer.chrome.com/docs/ai/webmcp"
+      ],
+      "claim_supported": "Potential browser tool adapter; target browser support remains a qualification gate, not a product dependency.",
+      "retrieval_date": "2026-09-05",
+      "current_validation": "PUBLIC DOCUMENTATION CHECKED; NOT ACCOUNT/RUNTIME QUALIFIED",
+      "copied_external_text": false
+    },
+    {
+      "id": "N06",
+      "topic": "Realtime voice",
+      "urls": [
+        "https://developers.openai.com/api/docs/guides/realtime"
+      ],
+      "claim_supported": "Candidate voice transport/service; no account, retention or real-latency qualification was executed.",
+      "retrieval_date": "2026-09-05",
+      "current_validation": "PUBLIC DOCUMENTATION CHECKED; NOT ACCOUNT/RUNTIME QUALIFIED",
+      "copied_external_text": false
+    },
+    {
+      "id": "N07",
+      "topic": "Agent safety",
+      "urls": [
+        "https://developers.openai.com/api/docs/guides/agent-builder-safety"
+      ],
+      "claim_supported": "Untrusted input and model output require typed boundaries and deterministic authorization.",
+      "retrieval_date": "2026-09-05",
+      "current_validation": "PUBLIC DOCUMENTATION CHECKED; NOT ACCOUNT/RUNTIME QUALIFIED",
+      "copied_external_text": false
+    },
+    {
+      "id": "N08",
+      "topic": "MCP authorization specification",
+      "urls": [
+        "https://modelcontextprotocol.io/specification/latest/basic/authorization"
+      ],
+      "claim_supported": "Exact protocol revision and target implementation must be checked; retrieval attempt unavailable in this packaging run. No conformance claim.",
+      "retrieval_date": "2026-09-05",
+      "current_validation": "REFERENCE UNAVAILABLE; REQUIRES EXTERNAL VALIDATION",
+      "copied_external_text": false
+    }
+  ]
+}

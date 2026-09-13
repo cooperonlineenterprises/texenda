@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0",
+  "kind": "submission",
+  "task_id": "WP-00",
+  "candidate_revision": "0000000000000000000000000000000000000000",
+  "summary": "TEMPLATE — replace with actual candidate and evidence; not executed",
+  "changed_paths": [
+    "docs/qualification/runtime.md"
+  ],
+  "checks": [
+    {
+      "id": "actual-check-id",
+      "required": true,
+      "status": "NOT_RUN"
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "package_version": "1.1.0",
+  "checked_at": "2026-09-05T17:43:37.775721+00:00",
+  "result": "PASS",
+  "checks": [
+    {
+      "check": "JSON parse",
+      "status": "PASS"
+    },
+    {
+      "check": "Prior artifacts byte integrity",
+      "status": "PASS"
+    },
+    {
+      "check": "Decision status and authority ownership",
+      "status": "PASS"
+    },
+    {
+      "check": "WP DAG, bounded contracts, gates and routing",
+      "status": "PASS"
+    },
+    {
+      "check": "Acceptance and requirement traceability, no product PASS",
+      "status": "PASS"
+    },
+    {
+      "check": "Release profile closure",
+      "status": "PASS"
+    },
+    {
+      "check": "Command authority metadata",
+      "status": "PASS"
+    },
+    {
+      "check": "ADR required fields",
+      "status": "PASS"
+    },
+    {
+      "check": "Model availability and spending truth",
+      "status": "PASS"
+    },
+    {
+      "check": "Harness non-runner boundary (static)",
+      "status": "PASS"
+    },
+    {
+      "check": "Source/archive provenance",
+      "status": "PASS"
+    },
+    {
+      "check": "Current Markdown local links and anchors",
+      "status": "PASS"
+    },
+    {
+      "check": "Manifest completeness",
+      "status": "PASS"
+    }
+  ],
+  "errors": [],
+  "warnings": [],
+  "counts": {
+    "files": 85,
+    "work_packages": 44,
+    "product_acceptance_criteria": 125,
+    "invariants": 30,
+    "adrs": 35,
+    "external_gates": 14
+  },
+  "scope": "Offline package structure/traceability/link checks only. Synthetic harness unit tests reported separately. No application/production/provider/security/legal qualification performed.",
+  "archive_limitation": "No complete verbatim conversation export; exact prior artifacts plus explicitly abridged turn record."
+}

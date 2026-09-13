@@ -1,0 +1,135 @@
+{
+  "schema_version": "1.0",
+  "decision_status_vocabulary": [
+    "AUTHORITATIVE DECISION",
+    "DECISION REQUIRED NOW",
+    "REVERSIBLE DEFAULT",
+    "DEFER UNTIL TRIGGERED",
+    "REQUIRES EXTERNAL VALIDATION"
+  ],
+  "precedence": [
+    "Latest explicit accepted user decision",
+    "Formal closure artifacts",
+    "Later authoritative analysis",
+    "Earlier exploration",
+    "Unresolved hypothesis"
+  ],
+  "current_normative_owners": [
+    {
+      "topic": "product-and-brand",
+      "path": "01-foundation/product-and-brand.md"
+    },
+    {
+      "topic": "invariants",
+      "path": "01-foundation/invariants.md"
+    },
+    {
+      "topic": "decision-records",
+      "path": "01-foundation/adr-set.md"
+    },
+    {
+      "topic": "operator-workflows",
+      "path": "02-product-and-ux/operator-workflows.md"
+    },
+    {
+      "topic": "multimodal-interaction",
+      "path": "02-product-and-ux/interaction-architecture.md"
+    },
+    {
+      "topic": "system-architecture",
+      "path": "03-domain-and-architecture/system-architecture.md"
+    },
+    {
+      "topic": "domain-semantics",
+      "path": "03-domain-and-architecture/canonical-domain.md"
+    },
+    {
+      "topic": "permission-recipient-coordination",
+      "path": "03-domain-and-architecture/permission-and-coordination.md"
+    },
+    {
+      "topic": "channels",
+      "path": "03-domain-and-architecture/channels.md"
+    },
+    {
+      "topic": "execution",
+      "path": "03-domain-and-architecture/execution-semantics.md"
+    },
+    {
+      "topic": "content",
+      "path": "03-domain-and-architecture/content.md"
+    },
+    {
+      "topic": "implementation-contract-boundaries",
+      "path": "03-domain-and-architecture/schema-and-contract-guide.md"
+    },
+    {
+      "topic": "command-metadata",
+      "path": "03-domain-and-architecture/command-catalog.json"
+    },
+    {
+      "topic": "technology",
+      "path": "03-domain-and-architecture/technology-baseline.md"
+    },
+    {
+      "topic": "providers-integrations",
+      "path": "03-domain-and-architecture/provider-integrations.md"
+    },
+    {
+      "topic": "ai-agent-authority",
+      "path": "04-security-governance-and-operations/ai-and-agent-authority.md"
+    },
+    {
+      "topic": "security-privacy",
+      "path": "04-security-governance-and-operations/security-and-privacy.md"
+    },
+    {
+      "topic": "observability",
+      "path": "04-security-governance-and-operations/observability.md"
+    },
+    {
+      "topic": "operations-procedures",
+      "path": "04-security-governance-and-operations/runbooks.md"
+    },
+    {
+      "topic": "implementation-phases",
+      "path": "05-implementation/roadmap.md"
+    },
+    {
+      "topic": "work-package-contracts",
+      "path": "05-implementation/work-packages.json"
+    },
+    {
+      "topic": "repository-layout",
+      "path": "05-implementation/repository-plan.md"
+    },
+    {
+      "topic": "kit-authority-transfer",
+      "path": "06-migration-and-production/kit-migration.md"
+    },
+    {
+      "topic": "product-acceptance",
+      "path": "06-migration-and-production/acceptance-plan.md"
+    },
+    {
+      "topic": "release-profiles",
+      "path": "06-migration-and-production/release-profiles.json"
+    },
+    {
+      "topic": "astra-orchestration",
+      "path": "07-agent-orchestration/ORCHESTRATOR-START.md"
+    },
+    {
+      "topic": "model-routing",
+      "path": "07-agent-orchestration/model-routing.md"
+    },
+    {
+      "topic": "development-harness",
+      "path": "08-project-harness/README.md"
+    }
+  ],
+  "decision_required_now": [],
+  "external_gate_register": "01-foundation/external-validation-gates.json",
+  "source_archive_complete_verbatim": false,
+  "current_baseline": "1.1.0"
+}

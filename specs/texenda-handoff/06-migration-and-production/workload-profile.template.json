@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0",
+  "status": "REQUIRES EXTERNAL VALIDATION",
+  "gate": "VAL-05",
+  "owner": null,
+  "source_observation_window": null,
+  "largest_expected_broadcast_recipients": null,
+  "dispatch_window_seconds": null,
+  "peak_form_requests_per_second": null,
+  "peak_webhook_events_per_second": null,
+  "active_workflow_count": null,
+  "normal_publication_cadence": [],
+  "provider_qualified_requests_per_second": null,
+  "headroom_fraction": 0.25,
+  "test_multiplier_for_bursts": 2,
+  "targets": {
+    "form_p95_ms": 500,
+    "safety_ingress_ack_p95_ms": 2000,
+    "restriction_apply_p95_seconds": 5,
+    "routine_queue_start_p95_seconds": 30,
+    "scheduled_start_p95_seconds": 60,
+    "typical_segment_preview_p95_seconds": 2,
+    "largest_campaign_resolution_target_seconds": 120,
+    "resolution_timeout_fuse_seconds": 900,
+    "recovery_rpo_target_seconds": 300,
+    "recovery_rto_target_seconds": 14400
+  },
+  "note": "Targets are operational acceptance proposals. Fill B and W from actual usage; required recipient throughput=B/W and qualified capacity must provide tested headroom. Do not invent enterprise load or claim an unpurchased recovery SLA."
+}

@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0",
+  "qualification_status": "UNVERIFIED",
+  "qualified_at": null,
+  "owner": null,
+  "runtime": {
+    "node": null,
+    "package_manager": null,
+    "os_image_digest": null,
+    "postgres": null
+  },
+  "packages": {
+    "payload": null,
+    "next": null,
+    "react": null,
+    "drizzle-orm": null,
+    "react-email": null,
+    "email_editor": null,
+    "otel": null,
+    "test_runner": null
+  },
+  "lockfile_sha256": null,
+  "licenses_sbom_ref": null,
+  "transaction_test_ref": null,
+  "editor_fixture_ref": null,
+  "migration_manifest_ref": null,
+  "all_enabled_adapters_qualified": false
+}

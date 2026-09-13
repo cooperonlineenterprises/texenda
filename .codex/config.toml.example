@@ -1,0 +1,8 @@
+# REVERSIBLE DEFAULT. Review against the actual installed client before copying.
+# Model omitted deliberately: qualify the target roster, then select explicitly.
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+[sandbox_workspace_write]
+network_access = false
+# Never put provider/API tokens here. Dependency download or external access requires
+# an explicit runtime approval and allowlist; this file alone is not enforcement.

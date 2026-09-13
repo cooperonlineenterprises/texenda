@@ -1,0 +1,185 @@
+{
+  "schema_version": "1.0",
+  "invariants": [
+    {
+      "id": "INV-01",
+      "requirement": "One Texenda domain model owns audience and communication truth.",
+      "implementation": "Provider contacts, analytics, CMS documents, and model output cannot independently grant communication authority.",
+      "source": "01-foundation/invariants.md"
+    },
+    {
+      "id": "INV-02",
+      "requirement": "Shared identity never creates shared permission.",
+      "implementation": "A profile/endpoint match cannot activate another publication, brand, purpose, or channel.",
+      "source": "01-foundation/invariants.md"
+    },
+    {
+      "id": "INV-03",
+      "requirement": "Reachability, identity proof, consent, and preference are distinct facts.",
+      "implementation": "A phone number, browser permission, or successful prior delivery is not a marketing grant.",
+      "source": "01-foundation/invariants.md"
+    },
+    {
+      "id": "INV-04",
+      "requirement": "Every proactive message and personalized placement passes the applicable central policy.",
+      "implementation": "No direct provider-send endpoint; service/auth/test classes use narrow policy branches, not bypass flags.",
+      "source": "01-foundation/invariants.md"
+    },
+    {
+      "id": "INV-05",
+      "requirement": "Applicable denials dominate preferences and historical approvals.",
+      "implementation": "Current opt-outs, blocks, safety holds, authority leases, and expired content are checked at final handoff.",
+      "source": "01-foundation/invariants.md"
+    },
+    {
+      "id": "INV-06",
+      "requirement": "Scope is enforced server-side and structurally in relationships.",
+      "implementation": "Composite scope keys/FKs, authorized repositories, and adversarial endpoint tests; UI filtering is insufficient.",
+      "source": "01-foundation/invariants.md"
+    },
+    {
+      "id": "INV-07",
+      "requirement": "Queues wake work; business state is durable in PostgreSQL.",
+      "implementation": "Dropped/duplicated jobs cannot lose an execution or create another logical effect.",
+      "source": "01-foundation/invariants.md"
+    },
+    {
+      "id": "INV-08",
+      "requirement": "Published campaigns/content/workflows are versioned and immutable.",
+      "implementation": "Edits create revisions; active runs pin versions; approved changes require explicit activation/migration.",
+      "source": "01-foundation/invariants.md"
+    },
+    {
+      "id": "INV-09",
+      "requirement": "Logical occurrences, channel deliveries, attempts, and observations are different objects.",
+      "implementation": "Retries do not create new communications; follow-ups consume additional interruption allowance.",
+      "source": "01-foundation/invariants.md"
+    },
+    {
+      "id": "INV-10",
+      "requirement": "Admission, deduplication, and pressure/spend reservations are atomic.",
+      "implementation": "Two workers cannot independently consume the same remaining slot.",
+      "source": "01-foundation/invariants.md"
+    },
+    {
+      "id": "INV-11",
+      "requirement": "External effects are effectively-once where qualified, otherwise explicitly uncertain and reconcilable.",
+      "implementation": "Unique semantic keys, stable payloads, provider idempotency, and `acceptance_unknown`; never claim universal exactly-once email.",
+      "source": "01-foundation/invariants.md"
+    },
+    {
+      "id": "INV-12",
+      "requirement": "A timeout or outage never authorizes blind provider/channel failover.",
+      "implementation": "Reconcile before another effect; a block or opt-out cannot trigger escape to another channel.",
+      "source": "01-foundation/invariants.md"
+    },
+    {
+      "id": "INV-13",
+      "requirement": "Every consequential effect has a decision receipt and approved authority chain.",
+      "implementation": "Record actor/configuration, revisions, eligibility evidence references, policy version, route, and timing.",
+      "source": "01-foundation/invariants.md"
+    },
+    {
+      "id": "INV-14",
+      "requirement": "AI translates intent; deterministic systems enforce truth.",
+      "implementation": "Models return typed proposals; never direct SQL, provider credentials, consent grants, or policy override.",
+      "source": "01-foundation/invariants.md"
+    },
+    {
+      "id": "INV-15",
+      "requirement": "Recipient trust outranks communication volume.",
+      "implementation": "Expire stale work; suppress duplicates; enforce caps; never flush a deferred backlog in a burst.",
+      "source": "01-foundation/invariants.md"
+    },
+    {
+      "id": "INV-16",
+      "requirement": "Imports/replays do not silently activate automations or weaken denials.",
+      "implementation": "Default `trigger_mode=historical`; negative evidence wins until an explicit valid reconsent.",
+      "source": "01-foundation/invariants.md"
+    },
+    {
+      "id": "INV-17",
+      "requirement": "Successful opt-out acknowledgment means the restriction is durably recorded and applied.",
+      "implementation": "No success response before authoritative mutation and the recovery safety evidence are durable.",
+      "source": "01-foundation/invariants.md"
+    },
+    {
+      "id": "INV-18",
+      "requirement": "Restore/recovery cannot silently revive prior permissions or repeat uncertain effects.",
+      "implementation": "Independent safety journal, deployment send gate, reconciliation, and new execution epoch before resuming.",
+      "source": "01-foundation/invariants.md"
+    },
+    {
+      "id": "INV-19",
+      "requirement": "Publication migration has one active sending authority for each scoped function/cohort.",
+      "implementation": "A Texenda worker checks an authority lease; Kit-side controls must be verified, not assumed enforceable by Texenda.",
+      "source": "01-foundation/invariants.md"
+    },
+    {
+      "id": "INV-20",
+      "requirement": "Test/development environments cannot reach real recipients through production transport.",
+      "implementation": "No production credentials, egress controls, fake providers/Mailpit; `NODE_ENV` alone is not a safety boundary.",
+      "source": "01-foundation/invariants.md"
+    },
+    {
+      "id": "INV-21",
+      "requirement": "Audit immutability is not indefinite retention of personal data.",
+      "implementation": "Append corrections; separate erasable PII; lawful retention/erasure process preserves only justified evidence.",
+      "source": "01-foundation/invariants.md"
+    },
+    {
+      "id": "INV-22",
+      "requirement": "No automatic cross-brand marketing action derives from another brand's behavior.",
+      "implementation": "Shared coordination may delay a send, but cannot supply missing permission, targeting authority, or disclosure.",
+      "source": "01-foundation/invariants.md"
+    },
+    {
+      "id": "INV-23",
+      "requirement": "Conversation is not authoritative product state.",
+      "implementation": "Durable object recovery",
+      "source": "01-foundation/invariants.md"
+    },
+    {
+      "id": "INV-24",
+      "requirement": "All interaction surfaces share command/policy contracts.",
+      "implementation": "No parallel mutations",
+      "source": "01-foundation/invariants.md"
+    },
+    {
+      "id": "INV-25",
+      "requirement": "Exact immutable approval and bounded consequences.",
+      "implementation": "Stale approval rejection",
+      "source": "01-foundation/invariants.md"
+    },
+    {
+      "id": "INV-26",
+      "requirement": "Agent actions use attributable bounded delegation.",
+      "implementation": "Revocation and scope tests",
+      "source": "01-foundation/invariants.md"
+    },
+    {
+      "id": "INV-27",
+      "requirement": "Agent legibility does not confer authority.",
+      "implementation": "Inspect/DOM tests",
+      "source": "01-foundation/invariants.md"
+    },
+    {
+      "id": "INV-28",
+      "requirement": "Core remains usable without AI/voice/realtime.",
+      "implementation": "Degradation tests",
+      "source": "01-foundation/invariants.md"
+    },
+    {
+      "id": "INV-29",
+      "requirement": "Memory cannot become policy implicitly.",
+      "implementation": "Instruction promotion tests",
+      "source": "01-foundation/invariants.md"
+    },
+    {
+      "id": "INV-30",
+      "requirement": "Development harness does not grant production authority.",
+      "implementation": "Harness/runtime isolation",
+      "source": "01-foundation/invariants.md"
+    }
+  ]
+}

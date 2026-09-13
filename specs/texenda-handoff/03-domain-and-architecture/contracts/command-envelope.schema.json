@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Texenda Command Request Envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "command",
+    "request_id",
+    "workspace_id",
+    "payload"
+  ],
+  "properties": {
+    "command": {
+      "enum": [
+        "CreateGoal",
+        "UpdateGoal",
+        "SetAssistantPreference",
+        "RequestSubscription",
+        "ConfirmSubscription",
+        "WithdrawPermission",
+        "PlaceSafetyHold",
+        "ReleaseSafetyHold",
+        "CreateSegmentDraft",
+        "UpdateSegmentDraft",
+        "AssignTag",
+        "SetAttribute",
+        "StageImport",
+        "CommitImport",
+        "RequestExport",
+        "CreateCommunicationDraft",
+        "UpdateRepresentationDraft",
+        "PublishCommunication",
+        "CreateCampaignDraft",
+        "UpdateCampaignDraft",
+        "ApproveCampaign",
+        "ScheduleCampaign",
+        "PauseScope",
+        "CancelCampaign",
+        "ResolveCampaign",
+        "CreateWorkflowDraft",
+        "PublishAutomation",
+        "EnrollSequence",
+        "CancelExecution",
+        "RecordBusinessEvent",
+        "DecideDelivery",
+        "PrepareHandoff",
+        "RecordProviderOutcome",
+        "CreateProposal",
+        "ApproveProposal",
+        "CommitProposal",
+        "CreateDelegationDraft",
+        "ActivateDelegation",
+        "RevokeDelegation",
+        "TransferSendingAuthority",
+        "ReleaseRecoveryHold"
+      ]
+    },
+    "request_id": {
+      "type": "string",
+      "minLength": 16,
+      "maxLength": 200
+    },
+    "workspace_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "expected_revision": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "approval_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "payload": {
+      "type": "object"
+    },
+    "correlation_id": {
+      "type": "string"
+    }
+  }
+}

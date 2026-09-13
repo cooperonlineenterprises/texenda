@@ -1,0 +1,44 @@
+test_activation_gate_matching_scope_completes (test_harness.HarnessTests.test_activation_gate_matching_scope_completes) ... ok
+test_activation_gate_not_assumed (test_harness.HarnessTests.test_activation_gate_not_assumed) ... ok
+test_activation_gate_scope_checked (test_harness.HarnessTests.test_activation_gate_scope_checked) ... ok
+test_api_model_requires_budget (test_harness.HarnessTests.test_api_model_requires_budget) ... ok
+test_author_cannot_review (test_harness.HarnessTests.test_author_cannot_review) ... ok
+test_baseline_change_requires_explicit_migration (test_harness.HarnessTests.test_baseline_change_requires_explicit_migration) ... ok
+test_changed_evidence_detected (test_harness.HarnessTests.test_changed_evidence_detected) ... ok
+test_checkpoint_does_not_extend_without_request (test_harness.HarnessTests.test_checkpoint_does_not_extend_without_request) ... ok
+test_complete_requires_integration (test_harness.HarnessTests.test_complete_requires_integration) ... ok
+test_context_overflow_does_not_truncate (test_harness.HarnessTests.test_context_overflow_does_not_truncate) ... ok
+test_default_writer_limit_is_enforced (test_harness.HarnessTests.test_default_writer_limit_is_enforced) ... ok
+test_deferred_requires_observed_trigger (test_harness.HarnessTests.test_deferred_requires_observed_trigger) ... ok
+test_disjoint_parallel_assignments_allowed (test_harness.HarnessTests.test_disjoint_parallel_assignments_allowed) ... ok
+test_evidence_symlink_denied (test_harness.HarnessTests.test_evidence_symlink_denied) ... ok
+test_expired_lease_cannot_submit (test_harness.HarnessTests.test_expired_lease_cannot_submit) ... ok
+test_fake_human_label_rejected (test_harness.HarnessTests.test_fake_human_label_rejected) ... ok
+test_incomplete_dependency_denied (test_harness.HarnessTests.test_incomplete_dependency_denied) ... ok
+test_init_is_non_overwriting (test_harness.HarnessTests.test_init_is_non_overwriting) ... ok
+test_initial_ready_respects_dependencies_and_deferral (test_harness.HarnessTests.test_initial_ready_respects_dependencies_and_deferral) ... ok
+test_insufficient_review_tier_denied (test_harness.HarnessTests.test_insufficient_review_tier_denied) ... ok
+test_integration_without_stop_proof_denied (test_harness.HarnessTests.test_integration_without_stop_proof_denied) ... ok
+test_lifecycle_and_dependency_release (test_harness.HarnessTests.test_lifecycle_and_dependency_release) ... ok
+test_merge_semantic_change_requires_review (test_harness.HarnessTests.test_merge_semantic_change_requires_review) ... ok
+test_missing_test_log_denied (test_harness.HarnessTests.test_missing_test_log_denied) ... ok
+test_no_path_traversal (test_harness.HarnessTests.test_no_path_traversal) ... ok
+test_not_run_cannot_pass_review (test_harness.HarnessTests.test_not_run_cannot_pass_review) ... ok
+test_out_of_scope_changed_path_denied (test_harness.HarnessTests.test_out_of_scope_changed_path_denied) ... ok
+test_overlapping_leases_block_even_expired (test_harness.HarnessTests.test_overlapping_leases_block_even_expired) ... ok
+test_qualification_expiry_denies_assignment (test_harness.HarnessTests.test_qualification_expiry_denies_assignment) ... ok
+test_qualified_model_and_budget_allow_assignment (test_harness.HarnessTests.test_qualified_model_and_budget_allow_assignment) ... ok
+test_receipt_chain_corruption_detected (test_harness.HarnessTests.test_receipt_chain_corruption_detected) ... ok
+test_recovery_increments_fence (test_harness.HarnessTests.test_recovery_increments_fence) ... ok
+test_recovery_requires_stop_and_fence (test_harness.HarnessTests.test_recovery_requires_stop_and_fence) ... ok
+test_stale_candidate_denied (test_harness.HarnessTests.test_stale_candidate_denied) ... ok
+test_state_corruption_detected (test_harness.HarnessTests.test_state_corruption_detected) ... ok
+test_unknown_package_denied (test_harness.HarnessTests.test_unknown_package_denied) ... ok
+test_unverified_model_fails_closed (test_harness.HarnessTests.test_unverified_model_fails_closed) ... ok
+test_weaker_tier_rejected (test_harness.HarnessTests.test_weaker_tier_rejected) ... ok
+test_wrong_fence_cannot_start (test_harness.HarnessTests.test_wrong_fence_cannot_start) ... ok
+
+----------------------------------------------------------------------
+Ran 39 tests in 0.105s
+
+OK

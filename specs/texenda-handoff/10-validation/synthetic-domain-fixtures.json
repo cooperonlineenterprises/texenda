@@ -1,0 +1,78 @@
+{
+  "schema_version": "1.0",
+  "authority": "TEST DESIGN; no product behavior implementation",
+  "fixtures": [
+    {
+      "id": "FX-01",
+      "setup": "One verified endpoint; OHW and HP profiles; grant only OHW/email",
+      "action": "Attempt HP campaign",
+      "expected": "DENY missing scoped permission"
+    },
+    {
+      "id": "FX-02",
+      "setup": "OHW active subscription; queued delivery; withdrawal commits before final permit",
+      "action": "Worker prepares handoff",
+      "expected": "DENY; no provider call; restriction journaled"
+    },
+    {
+      "id": "FX-03",
+      "setup": "Explicit broad withdrawal; new narrow confirmation acknowledging exact withdrawal; safety hold still present",
+      "action": "Reconsent then send",
+      "expected": "Narrow grant may apply but safety hold still denies"
+    },
+    {
+      "id": "FX-04",
+      "setup": "Two competing workers and one remaining pressure slot",
+      "action": "Reserve concurrently",
+      "expected": "Exactly one permit; other deferred/expired by policy"
+    },
+    {
+      "id": "FX-05",
+      "setup": "Provider accepts but response lost",
+      "action": "Retry or choose another channel",
+      "expected": "UNKNOWN and reconciliation; no blind second effect"
+    },
+    {
+      "id": "FX-06",
+      "setup": "Purchase source coverage stale; no recorded purchase",
+      "action": "Evaluate not-purchased branch",
+      "expected": "UNKNOWN → HOLD, not true"
+    },
+    {
+      "id": "FX-07",
+      "setup": "Signal already committed before wait registration",
+      "action": "Register matching wait concurrently with timeout sweeper",
+      "expected": "Atomic recorded-sequence check prevents lost signal; only one winner"
+    },
+    {
+      "id": "FX-08",
+      "setup": "Database backup precedes withdrawal and possible acceptance; journal survives",
+      "action": "Restore and start workers",
+      "expected": "Outbound held; restriction/erasure/effects replayed; new epoch only after review"
+    },
+    {
+      "id": "FX-09",
+      "setup": "Agent can draft but cannot approve; approval button visible",
+      "action": "Computer-use click or spoken yes",
+      "expected": "No human approval authority; proposal remains unapproved"
+    },
+    {
+      "id": "FX-10",
+      "setup": "Human edits campaign to revision18 while agent proposal references17",
+      "action": "Commit older proposal",
+      "expected": "STALE; inspect/review new diff"
+    },
+    {
+      "id": "FX-11",
+      "setup": "Kit sequence membership has added_at but no verified cursor",
+      "action": "Migrate enrollment",
+      "expected": "HOLD/explicit retirement, never inferred next step"
+    },
+    {
+      "id": "FX-12",
+      "setup": "Forwarded unsubscribe link for OHW",
+      "action": "Open preferences",
+      "expected": "Scoped stop possible; unrelated brand relationships not disclosed"
+    }
+  ]
+}

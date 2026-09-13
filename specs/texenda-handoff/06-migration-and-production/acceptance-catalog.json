@@ -1,0 +1,3521 @@
+{
+  "schema_version": "1.0",
+  "package_version": "1.1.0",
+  "product_implemented": false,
+  "criteria": [
+    {
+      "id": "AC-D01",
+      "exercise": "Create the same verified identity in two brands and multiple publications.",
+      "pass_condition": "One applicable organization identity/person relationship is recognized; separate profiles/subscriptions/grants exist; no second brand/channel becomes eligible merely through identity recognition.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-04",
+        "WP-05",
+        "WP-06",
+        "WP-12"
+      ],
+      "invariants": [
+        "INV-01",
+        "INV-02",
+        "INV-03",
+        "INV-04",
+        "INV-05",
+        "INV-06",
+        "INV-16",
+        "INV-17"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-D02",
+      "exercise": "Test normalization with email local-part case, domain case/IDNA, plus aliases, dots, invalid addresses and unsupported international local parts.",
+      "pass_condition": "Original values are preserved; identity follows the Foundation normalization policy; conservative duplicate/safety lookup does not manufacture identity or permission; unsupported rows are held with reasons.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-04",
+        "WP-05",
+        "WP-06",
+        "WP-12"
+      ],
+      "invariants": [
+        "INV-01",
+        "INV-02",
+        "INV-03",
+        "INV-04",
+        "INV-05",
+        "INV-06",
+        "INV-16",
+        "INV-17"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-D03",
+      "exercise": "Replay opt-in requests, confirmations, imports and later withdrawals in different orders.",
+      "pass_condition": "One logical request/confirmation effect per key; pending is not active; confirmation predating a withdrawal cannot reactivate it; historical import does not trigger live work or weaken denial.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-04",
+        "WP-05",
+        "WP-06",
+        "WP-12"
+      ],
+      "invariants": [
+        "INV-01",
+        "INV-02",
+        "INV-03",
+        "INV-04",
+        "INV-05",
+        "INV-06",
+        "INV-16",
+        "INV-17"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-D04",
+      "exercise": "Apply publication, brand and portfolio withdrawals, then explicit narrow confirmed reconsent.",
+      "pass_condition": "The new grant supersedes only identified prior withdrawal evidence within its explicit scope; siblings remain withdrawn; later withdrawal wins; operational/provider holds remain; cancelled old workflows do not resume.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-04",
+        "WP-05",
+        "WP-06",
+        "WP-12"
+      ],
+      "invariants": [
+        "INV-01",
+        "INV-02",
+        "INV-03",
+        "INV-04",
+        "INV-05",
+        "INV-06",
+        "INV-16",
+        "INV-17"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-D05",
+      "exercise": "Exercise hard bounce, complaint, temporary hold, invalid push endpoint and provider-program block.",
+      "pass_condition": "Suppression affects the specified endpoint/person/channel/program scope exactly; a bad email endpoint does not make a verified phone technically invalid; complaint safety holds are not fabricated legal consent events.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-04",
+        "WP-05",
+        "WP-06",
+        "WP-12"
+      ],
+      "invariants": [
+        "INV-01",
+        "INV-02",
+        "INV-03",
+        "INV-04",
+        "INV-05",
+        "INV-06",
+        "INV-16",
+        "INV-17"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-D06",
+      "exercise": "Withdraw while a campaign is queued, a recipient is reserved, and immediately before/after final handoff permission.",
+      "pass_condition": "Withdrawal committed before the permit prevents handoff; records explicitly identify any already-in-flight boundary; no claim of recalling provider-accepted mail; future equivalent actions are denied.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-04",
+        "WP-05",
+        "WP-06",
+        "WP-12"
+      ],
+      "invariants": [
+        "INV-01",
+        "INV-02",
+        "INV-03",
+        "INV-04",
+        "INV-05",
+        "INV-06",
+        "INV-16",
+        "INV-17"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-D07",
+      "exercise": "Evaluate segment ASTs against a small independently enumerated oracle, including nested Boolean rules and absent fields.",
+      "pass_condition": "SQL membership matches the oracle; UNKNOWN is not TRUE; negating an absent-field comparison does not silently include it; unsupported operators, raw SQL and cross-scope references are rejected.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-04",
+        "WP-05",
+        "WP-06",
+        "WP-12"
+      ],
+      "invariants": [
+        "INV-01",
+        "INV-02",
+        "INV-03",
+        "INV-04",
+        "INV-05",
+        "INV-06",
+        "INV-16",
+        "INV-17"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-D08",
+      "exercise": "Test negative purchase/event conditions with missing, stale, incomplete and healthy SourceCoverage.",
+      "pass_condition": "Unknown coverage produces the specified hold/UNKNOWN behavior; “no observed event” never becomes a factual claim that no purchase occurred; backdated/untrusted events do not bypass gates.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-04",
+        "WP-05",
+        "WP-06",
+        "WP-12"
+      ],
+      "invariants": [
+        "INV-01",
+        "INV-02",
+        "INV-03",
+        "INV-04",
+        "INV-05",
+        "INV-06",
+        "INV-16",
+        "INV-17"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-D09",
+      "exercise": "Resolve a changing audience, change preferences afterward, and prepare personalized content.",
+      "pass_condition": "Snapshot candidates are consistent and immutable; current safety can remove but not add recipients; frozen endpoint/content facts cannot silently retarget; missing required variables hold rather than render misleading output.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-04",
+        "WP-05",
+        "WP-06",
+        "WP-12"
+      ],
+      "invariants": [
+        "INV-01",
+        "INV-02",
+        "INV-03",
+        "INV-04",
+        "INV-05",
+        "INV-06",
+        "INV-16",
+        "INV-17"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-D10",
+      "exercise": "Read and replay decision/consent evidence; perform a scoped correction and approved erasure/reimport.",
+      "pass_condition": "Explanations cite actual rule/input versions; ordinary credentials cannot rewrite evidence; approved erasure removes covered PII, preserves only lawfully retained safety material, and cannot be undone by reimport or restore.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-04",
+        "WP-05",
+        "WP-06",
+        "WP-12"
+      ],
+      "invariants": [
+        "INV-01",
+        "INV-02",
+        "INV-03",
+        "INV-04",
+        "INV-05",
+        "INV-06",
+        "INV-16",
+        "INV-17"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-S01",
+      "exercise": "Attempt cross-workspace access through custom UI, REST, Local API, exports, relations, jobs and forged identifiers.",
+      "pass_condition": "Every unauthorized path denies; composite references cannot attach another workspace's publication/content/grant; portfolio pressure explanations reveal no unrelated brand data.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-03",
+        "WP-40"
+      ],
+      "invariants": [
+        "INV-06",
+        "INV-13",
+        "INV-20",
+        "INV-21"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-S02",
+      "exercise": "Use first-factor-only sessions against every protected route; test one-time bootstrap, public signup denial, WebAuthn challenges/origin/RP, recovery, session expiry, CSRF and step-up.",
+      "pass_condition": "Required assurance is enforced server-side, not only by navigation; challenge replay/origin substitution fails; high-risk actions cannot reuse insufficient assurance; session and recovery evidence is auditable.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-03",
+        "WP-40"
+      ],
+      "invariants": [
+        "INV-06",
+        "INV-13",
+        "INV-20",
+        "INV-21"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-S03",
+      "exercise": "Abuse public form identifiers, property keys, server API keys and revoked credentials.",
+      "pass_condition": "Browser keys cannot emit trusted purchases, select arbitrary publications/tags, export PII or mutate consent; server principals are scope/capability limited; revoked keys cease authorization; requests are rate/size limited and nonenumerating.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-03",
+        "WP-40"
+      ],
+      "invariants": [
+        "INV-06",
+        "INV-13",
+        "INV-20",
+        "INV-21"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-S04",
+      "exercise": "Test import/render/webhook/AI fetch paths with script injection, CSV formulas, SSRF, redirects, private IPs, malicious files and oversized content.",
+      "pass_condition": "Supported paths reject or safely encode payloads; outbound fetch cannot reach private/metadata destinations; exported CSV is spreadsheet-safe; typed export preserves intended exact data separately.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-03",
+        "WP-40"
+      ],
+      "invariants": [
+        "INV-06",
+        "INV-13",
+        "INV-20",
+        "INV-21"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-S05",
+      "exercise": "Inspect runtime secrets, object access, export links, audit permissions, backup identities and break-glass controls.",
+      "pass_condition": "Web/AI roles cannot access production send credentials; nonproduction cannot reach live transports; export TTLs and PII capabilities hold; incident access can pause/recover but cannot bypass recipient authority; production dependency/security findings are resolved or explicitly accepted only if noncritical.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-03",
+        "WP-40"
+      ],
+      "invariants": [
+        "INV-06",
+        "INV-13",
+        "INV-20",
+        "INV-21"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-L01",
+      "exercise": "Render every approved pilot block/template with representative personalization, optional/missing fields, links and plain text.",
+      "pass_condition": "Deterministic artifact hashes for pinned inputs; required-field failures block; no arbitrary executable content; approved facts/disclosures/CTA meaning remain intact.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-08",
+        "WP-09",
+        "WP-10",
+        "WP-11",
+        "WP-14",
+        "WP-17"
+      ],
+      "invariants": [
+        "INV-04",
+        "INV-08",
+        "INV-09",
+        "INV-10",
+        "INV-11",
+        "INV-12",
+        "INV-13",
+        "INV-17",
+        "INV-20"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-L02",
+      "exercise": "Review representative output in Gmail web/mobile, Outlook web and a supported desktop client, Apple Mail desktop/mobile, and Yahoo; include dark mode, narrow viewport, blocked images and text alternative.",
+      "pass_condition": "Main content and CTA remain usable; brand, postal/footer requirements and visible unsubscribe are legible; material client failures block affected templates. Test observations and screenshots are retained; Mailpit alone is not claimed as cross-client proof.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-08",
+        "WP-09",
+        "WP-10",
+        "WP-11",
+        "WP-14",
+        "WP-17"
+      ],
+      "invariants": [
+        "INV-04",
+        "INV-08",
+        "INV-09",
+        "INV-10",
+        "INV-11",
+        "INV-12",
+        "INV-13",
+        "INV-17",
+        "INV-20"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-L03",
+      "exercise": "Receive seed messages for each sender and inspect original headers and authentication results.",
+      "pass_condition": "Qualified sender/domain ownership, SPF/DKIM/DMARC alignment and required unsubscribe fields pass the actual account/mailbox checks; required headers are DKIM covered; no provider strips/rewrites them incompatibly.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-08",
+        "WP-09",
+        "WP-10",
+        "WP-11",
+        "WP-14",
+        "WP-17"
+      ],
+      "invariants": [
+        "INV-04",
+        "INV-08",
+        "INV-09",
+        "INV-10",
+        "INV-11",
+        "INV-12",
+        "INV-13",
+        "INV-17",
+        "INV-20"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-L04",
+      "exercise": "POST the prescribed one-click request without session/cookies, replay it, use GET/scanner requests and forward its URL.",
+      "pass_condition": "POST produces scoped withdrawal without login or redirect and acknowledges only after the safe persistence boundary; GET does not mutate; replay is harmless while withdrawn; no recipient or cross-brand PII is exposed.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-08",
+        "WP-09",
+        "WP-10",
+        "WP-11",
+        "WP-14",
+        "WP-17"
+      ],
+      "invariants": [
+        "INV-04",
+        "INV-08",
+        "INV-09",
+        "INV-10",
+        "INV-11",
+        "INV-12",
+        "INV-13",
+        "INV-17",
+        "INV-20"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-L05",
+      "exercise": "Send valid/invalid/replayed provider webhooks, including duplicates, delayed/out-of-order events and events received before API response correlation.",
+      "pass_condition": "Actual provider signature protocol is checked against the correct raw input; unknown correlations are quarantined; duplicate observations do not duplicate effects; restrictions persist/apply/journal before their success boundary.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-08",
+        "WP-09",
+        "WP-10",
+        "WP-11",
+        "WP-14",
+        "WP-17"
+      ],
+      "invariants": [
+        "INV-04",
+        "INV-08",
+        "INV-09",
+        "INV-10",
+        "INV-11",
+        "INV-12",
+        "INV-13",
+        "INV-17",
+        "INV-20"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-L06",
+      "exercise": "Retry the same semantic delivery across worker crashes, duplicate jobs and lease expiry.",
+      "pass_condition": "Exactly one intended logical delivery and one consistent provider payload/key exist; a retry cannot invent a new semantic key; definitive outcomes are reconciled; transport retries do not inflate contact-pressure counts.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-08",
+        "WP-09",
+        "WP-10",
+        "WP-11",
+        "WP-14",
+        "WP-17"
+      ],
+      "invariants": [
+        "INV-04",
+        "INV-08",
+        "INV-09",
+        "INV-10",
+        "INV-11",
+        "INV-12",
+        "INV-13",
+        "INV-17",
+        "INV-20"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-L07",
+      "exercise": "Simulate timeout after provider acceptance, lost response, late callback and retry beyond provider idempotency retention.",
+      "pass_condition": "State becomes explicit uncertainty; no blind provider/channel switch or new-key resend occurs; the reservation/claim remains conservative; a late acceptance reconciles without duplicate continuation.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-08",
+        "WP-09",
+        "WP-10",
+        "WP-11",
+        "WP-14",
+        "WP-17"
+      ],
+      "invariants": [
+        "INV-04",
+        "INV-08",
+        "INV-09",
+        "INV-10",
+        "INV-11",
+        "INV-12",
+        "INV-13",
+        "INV-17",
+        "INV-20"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-L08",
+      "exercise": "Inject rate limits, authentication failures, transient provider faults, permanent recipient failure and broad outages.",
+      "pass_condition": "Correct retry/hold/pause classification; bounded attempts within expiry; honored provider delay/caps; provider-authentication or safety incidents disable affected routes; retries do not bypass current consent.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-08",
+        "WP-09",
+        "WP-10",
+        "WP-11",
+        "WP-14",
+        "WP-17"
+      ],
+      "invariants": [
+        "INV-04",
+        "INV-08",
+        "INV-09",
+        "INV-10",
+        "INV-11",
+        "INV-12",
+        "INV-13",
+        "INV-17",
+        "INV-20"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-L09",
+      "exercise": "Pause/cancel during dispatch, exceed the approved candidate/cost bound, edit content after approval and resolve a partial failed snapshot.",
+      "pass_condition": "Unpermitted new work stops; already-in-flight limitation is visible; changed approved meaning invalidates approval; over-ceiling resolution holds; no sends begin from incomplete snapshots; counts reconcile.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-08",
+        "WP-09",
+        "WP-10",
+        "WP-11",
+        "WP-14",
+        "WP-17"
+      ],
+      "invariants": [
+        "INV-04",
+        "INV-08",
+        "INV-09",
+        "INV-10",
+        "INV-11",
+        "INV-12",
+        "INV-13",
+        "INV-17",
+        "INV-20"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-L10",
+      "exercise": "Reconcile provider suppression/account scope and qualify any batching optimization.",
+      "pass_condition": "Provider restrictions are additional denials, not grants; brand/account implications are documented; batch membership/payload/key mapping is immutable; uncertain batches cannot be blindly split or resent individually. If batching is disabled, its unavailable status is enforced.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-08",
+        "WP-09",
+        "WP-10",
+        "WP-11",
+        "WP-14",
+        "WP-17"
+      ],
+      "invariants": [
+        "INV-04",
+        "INV-08",
+        "INV-09",
+        "INV-10",
+        "INV-11",
+        "INV-12",
+        "INV-13",
+        "INV-17",
+        "INV-20"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-W01",
+      "exercise": "Run a linear sequence through the shared executor and inspect enrollment/cursor records.",
+      "pass_condition": "Enrollment has no competing execution cursor; unique active enrollment/reentry rules are enforced; one step execution/effect per semantic occurrence.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-21",
+        "WP-22",
+        "WP-23"
+      ],
+      "invariants": [
+        "INV-04",
+        "INV-05",
+        "INV-07",
+        "INV-08",
+        "INV-11",
+        "INV-13",
+        "INV-16"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-W02",
+      "exercise": "Restart workers and remove delayed wake-ups while steps wait.",
+      "pass_condition": "Indexed due-state sweeps recover work without queue history; no lost enrollment or duplicated step; queue replacement does not alter business state.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-21",
+        "WP-22",
+        "WP-23"
+      ],
+      "invariants": [
+        "INV-04",
+        "INV-05",
+        "INV-07",
+        "INV-08",
+        "INV-11",
+        "INV-13",
+        "INV-16"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-W03",
+      "exercise": "Delay, pause, resume and process overdue sends using a controlled clock.",
+      "pass_condition": "Wait anchors follow actual accepted effects/approved transitions; pause does not cause catch-up bursts; expired work skips/stops by definition; unknown acceptance does not advance as success.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-21",
+        "WP-22",
+        "WP-23"
+      ],
+      "invariants": [
+        "INV-04",
+        "INV-05",
+        "INV-07",
+        "INV-08",
+        "INV-11",
+        "INV-13",
+        "INV-16"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-W04",
+      "exercise": "Cross spring/fall DST changes and recipient/workspace timezone choices.",
+      "pass_condition": "Calendar-time and elapsed-duration semantics match the Foundation; nonexistent local time moves to the next valid time; repeated local time is scheduled once at the selected first occurrence.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-21",
+        "WP-22",
+        "WP-23"
+      ],
+      "invariants": [
+        "INV-04",
+        "INV-05",
+        "INV-07",
+        "INV-08",
+        "INV-11",
+        "INV-13",
+        "INV-16"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-W05",
+      "exercise": "Publish a new sequence version while old enrollments run.",
+      "pass_condition": "Old runs stay pinned; new runs use the published new version; compatibility checks prevent removal of required handlers; explicit run migration records node/effect mapping rather than mutating old history.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-21",
+        "WP-22",
+        "WP-23"
+      ],
+      "invariants": [
+        "INV-04",
+        "INV-05",
+        "INV-07",
+        "INV-08",
+        "INV-11",
+        "INV-13",
+        "INV-16"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-W06",
+      "exercise": "Withdraw/reconsent, purchase, cancel, or apply a safety hold during a sequence.",
+      "pass_condition": "Required exits take effect before future permits; narrow reconsent does not resurrect old cancelled runs; provider/permission holds cannot be ignored by sequence UI or queue retries.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-21",
+        "WP-22",
+        "WP-23"
+      ],
+      "invariants": [
+        "INV-04",
+        "INV-05",
+        "INV-07",
+        "INV-08",
+        "INV-11",
+        "INV-13",
+        "INV-16"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-W07",
+      "exercise": "Replay triggers, emit duplicates and feed an imported historical event into live routing.",
+      "pass_condition": "Trigger keys create at most one applicable execution; import history does not activate live marketing; authorized event-specific reentry creates only explicitly permitted new occurrences.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-21",
+        "WP-22",
+        "WP-23"
+      ],
+      "invariants": [
+        "INV-04",
+        "INV-05",
+        "INV-07",
+        "INV-08",
+        "INV-11",
+        "INV-13",
+        "INV-16"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-W08",
+      "exercise": "Publish automations with loops, unsupported actions, unbounded sends, cross-brand data, invalid fields and missing expiry/exit rules.",
+      "pass_condition": "Invalid definitions fail validation; no arbitrary code/SQL/provider endpoint can be embedded; allowed recipes show bounded consequences and require approval.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-21",
+        "WP-22",
+        "WP-23"
+      ],
+      "invariants": [
+        "INV-04",
+        "INV-05",
+        "INV-07",
+        "INV-08",
+        "INV-11",
+        "INV-13",
+        "INV-16"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-W09",
+      "exercise": "Race event registration, business-event arrival and timeout against the same execution.",
+      "pass_condition": "One terminal wait branch wins under subject serialization; the defined record-time/cursor boundary is respected; late/backdated events cannot retroactively fork or undo an external effect.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-21",
+        "WP-22",
+        "WP-23"
+      ],
+      "invariants": [
+        "INV-04",
+        "INV-05",
+        "INV-07",
+        "INV-08",
+        "INV-11",
+        "INV-13",
+        "INV-16"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-W10",
+      "exercise": "Execute tag/profile/sequence/send actions repeatedly under transaction aborts.",
+      "pass_condition": "Domain mutation, step outcome and outbox are atomic; action effects are idempotent; no hidden Payload hook produces a second workflow effect.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-21",
+        "WP-22",
+        "WP-23"
+      ],
+      "invariants": [
+        "INV-04",
+        "INV-05",
+        "INV-07",
+        "INV-08",
+        "INV-11",
+        "INV-13",
+        "INV-16"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-W11",
+      "exercise": "Quarantine unsupported state, crash at each transition and replay recovery.",
+      "pass_condition": "Invalid state is visible/quarantined, not an infinite retry; recovery preserves pinned definitions, approvals, consumed effects, current restrictions and authority epoch.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-21",
+        "WP-22",
+        "WP-23"
+      ],
+      "invariants": [
+        "INV-04",
+        "INV-05",
+        "INV-07",
+        "INV-08",
+        "INV-11",
+        "INV-13",
+        "INV-16"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-W12",
+      "exercise": "Receive a goal event while a promotion is delayed/reserved and interrupt the business-event feed.",
+      "pass_condition": "Goal completion cancels pending equivalent promotions; already-in-flight boundary is explicit; required absence-of-goal checks hold when coverage is stale rather than assuming no purchase.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-21",
+        "WP-22",
+        "WP-23"
+      ],
+      "invariants": [
+        "INV-04",
+        "INV-05",
+        "INV-07",
+        "INV-08",
+        "INV-11",
+        "INV-13",
+        "INV-16"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-C01",
+      "exercise": "Dispatch several campaigns/automations concurrently with one remaining recipient contact slot.",
+      "pass_condition": "At most the allowed number of handoff reservations commits; canonical lock ordering, whole-transaction retries and stable identities prevent oversubscription; business state never depends on cached counters alone.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-11",
+        "WP-24",
+        "WP-36"
+      ],
+      "invariants": [
+        "INV-02",
+        "INV-04",
+        "INV-05",
+        "INV-09",
+        "INV-10",
+        "INV-15",
+        "INV-22"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-C02",
+      "exercise": "Send equivalent content via broadcast, sequence and later channel variant, then a genuinely new edition.",
+      "pass_condition": "Explicit equivalence/occurrence rules suppress duplicate communication while allowing a new occurrence; subject/content similarity alone neither authorizes nor silently blocks it.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-11",
+        "WP-24",
+        "WP-36"
+      ],
+      "invariants": [
+        "INV-02",
+        "INV-04",
+        "INV-05",
+        "INV-09",
+        "INV-10",
+        "INV-15",
+        "INV-22"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-C03",
+      "exercise": "Compete promised editions, alerts, lifecycle mail and promotions across brands.",
+      "pass_condition": "Approved purpose priority, expiry and fairness produce deterministic results; a brand cannot mark a promotion “urgent” to bypass authority; no brand monopolizes capacity through queue timing alone.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-11",
+        "WP-24",
+        "WP-36"
+      ],
+      "invariants": [
+        "INV-02",
+        "INV-04",
+        "INV-05",
+        "INV-09",
+        "INV-10",
+        "INV-15",
+        "INV-22"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-C04",
+      "exercise": "Apply recipient limits, quiet hours, source publication promises and policy updates.",
+      "pass_condition": "Restrictive precedence holds; shadow-mode conflicts are resolved before enforcement; there is no unannounced promise change or accumulation of expired backlog; current stricter policy overrides older approval.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-11",
+        "WP-24",
+        "WP-36"
+      ],
+      "invariants": [
+        "INV-02",
+        "INV-04",
+        "INV-05",
+        "INV-09",
+        "INV-10",
+        "INV-15",
+        "INV-22"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-C05",
+      "exercise": "Exercise preference links under a forwarded email and a verified portfolio session.",
+      "pass_condition": "Unauthenticated scoped withdrawal remains possible; unrelated brand memberships/PII are not exposed; portfolio viewing and positive preference/grant changes require the specified stronger verification.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-11",
+        "WP-24",
+        "WP-36"
+      ],
+      "invariants": [
+        "INV-02",
+        "INV-04",
+        "INV-05",
+        "INV-09",
+        "INV-10",
+        "INV-15",
+        "INV-22"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-C06",
+      "exercise": "Coordinate reliably linked and ambiguous identities/endpoints across the portfolio.",
+      "pass_condition": "Reliable links receive appropriate shared pressure/safety checks; uncertain links do not create grants or speculative identity merges; brand operators see only permitted explanation detail; limits of unknown-device coordination are acknowledged.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-11",
+        "WP-24",
+        "WP-36"
+      ],
+      "invariants": [
+        "INV-02",
+        "INV-04",
+        "INV-05",
+        "INV-09",
+        "INV-10",
+        "INV-15",
+        "INV-22"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-A01",
+      "exercise": "Translate a representative set of operator segment/automation requests, including ambiguous terms such as “engaged.”",
+      "pass_condition": "Output is a supported typed proposal; interpretation and uncertain choices are visible; deterministic validator rejects invalid scopes/operators; no model output executes as SQL/code.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-15",
+        "WP-27",
+        "WP-32"
+      ],
+      "invariants": [
+        "INV-08",
+        "INV-13",
+        "INV-14",
+        "INV-23",
+        "INV-24",
+        "INV-25",
+        "INV-29"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "interaction-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-A02",
+      "exercise": "Prompt the assistant and poison imported/remote content to request exports, send credentials, consent grants, suppression removal or unauthorized effects.",
+      "pass_condition": "Scoping occurs before retrieval; model has no prohibited tool/credential; command authorization denies attempted escalation; external text is treated as data; the attack is logged without leaking sensitive content.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-15",
+        "WP-27",
+        "WP-32"
+      ],
+      "invariants": [
+        "INV-08",
+        "INV-13",
+        "INV-14",
+        "INV-23",
+        "INV-24",
+        "INV-25",
+        "INV-29"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "interaction-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-A03",
+      "exercise": "Adapt approved offers/claims/disclosures/CTAs across channels and brands.",
+      "pass_condition": "Unchanged protected facts are verified; disputed changes are blocked or separately reviewed; every variant remains draft until approved; no audience transfer accompanies content reuse.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-15",
+        "WP-27",
+        "WP-32"
+      ],
+      "invariants": [
+        "INV-08",
+        "INV-13",
+        "INV-14",
+        "INV-23",
+        "INV-24",
+        "INV-25",
+        "INV-29"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "interaction-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-A04",
+      "exercise": "Confirm a schedule proposal, then change audience, revision, channel, cost or authority epoch.",
+      "pass_condition": "Confirmation is bound to the exact approved digest and ceilings; stale confirmation cannot execute; repeat confirmation is idempotent; step-up does not increase the principal's authority; external actions require the current principal and assurance.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-15",
+        "WP-27",
+        "WP-32"
+      ],
+      "invariants": [
+        "INV-08",
+        "INV-13",
+        "INV-14",
+        "INV-23",
+        "INV-24",
+        "INV-25",
+        "INV-29"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "interaction-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-A05",
+      "exercise": "Exhaust budget, lose model availability, obtain malformed output and replay internal draft-generation jobs.",
+      "pass_condition": "Budget reservations/caps hold; unsafe output is rejected; retries are bounded; approved deterministic campaigns/automations continue without AI; no “best effort” unvalidated send occurs.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-15",
+        "WP-27",
+        "WP-32"
+      ],
+      "invariants": [
+        "INV-08",
+        "INV-13",
+        "INV-14",
+        "INV-23",
+        "INV-24",
+        "INV-25",
+        "INV-29"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "interaction-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-A06",
+      "exercise": "Compare summaries/explanations with source metrics and decision receipts.",
+      "pass_condition": "Every reported count has a defined denominator/window; model does not invent missing events or causal lift; retained provenance identifies inputs/model/proposal/approval without requiring private model reasoning.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-15",
+        "WP-27",
+        "WP-32"
+      ],
+      "invariants": [
+        "INV-08",
+        "INV-13",
+        "INV-14",
+        "INV-23",
+        "INV-24",
+        "INV-25",
+        "INV-29"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "interaction-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-X01",
+      "exercise": "Render contextual anonymous onsite placements and disable the audience service.",
+      "pass_condition": "Only permitted page context is used; placement fails soft without blocking the page; no cross-site identity/fingerprinting is introduced.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-34",
+        "WP-35",
+        "WP-36",
+        "WP-37",
+        "WP-38"
+      ],
+      "invariants": [
+        "INV-02",
+        "INV-03",
+        "INV-04",
+        "INV-05",
+        "INV-09",
+        "INV-10",
+        "INV-11",
+        "INV-12",
+        "INV-15",
+        "INV-22"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "qualified-channel-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-X02",
+      "exercise": "Render known-recipient placements with login/logout, account switching, shared devices and forwarded links.",
+      "pass_condition": "Identity and approved processing basis are verified; private/personalized content is not leaked through caches, URLs or stale sessions.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-34",
+        "WP-35",
+        "WP-36",
+        "WP-37",
+        "WP-38"
+      ],
+      "invariants": [
+        "INV-02",
+        "INV-03",
+        "INV-04",
+        "INV-05",
+        "INV-09",
+        "INV-10",
+        "INV-11",
+        "INV-12",
+        "INV-15",
+        "INV-22"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "qualified-channel-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-X03",
+      "exercise": "Dismiss an onsite placement, expire its offer and compete several eligible cards.",
+      "pass_condition": "Dismissal/impression policy is deterministic; expired/stale content is not shown; one approved placement outcome is explained; onsite impressions do not masquerade as outbound deliveries.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-34",
+        "WP-35",
+        "WP-36",
+        "WP-37",
+        "WP-38"
+      ],
+      "invariants": [
+        "INV-02",
+        "INV-03",
+        "INV-04",
+        "INV-05",
+        "INV-09",
+        "INV-10",
+        "INV-11",
+        "INV-12",
+        "INV-15",
+        "INV-22"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "qualified-channel-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-X04",
+      "exercise": "Review onsite SDK performance, keyboard behavior, screen-reader behavior and layout stability on the actual property.",
+      "pass_condition": "Site-specific performance/accessibility budgets are met; generic/no-card fallback remains usable; privacy/legal placement basis is documented at VAL-07.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-34",
+        "WP-35",
+        "WP-36",
+        "WP-37",
+        "WP-38"
+      ],
+      "invariants": [
+        "INV-02",
+        "INV-03",
+        "INV-04",
+        "INV-05",
+        "INV-09",
+        "INV-10",
+        "INV-11",
+        "INV-12",
+        "INV-15",
+        "INV-22"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "qualified-channel-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-X05",
+      "exercise": "Request push permission before/after an explicit recipient gesture and on representative supported devices/browsers.",
+      "pass_condition": "Only the approved interaction requests permission; browser grant and brand/purpose consent are separate; unsupported clients receive an honest fallback rather than false enrollment.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-34",
+        "WP-35",
+        "WP-36",
+        "WP-37",
+        "WP-38"
+      ],
+      "invariants": [
+        "INV-02",
+        "INV-03",
+        "INV-04",
+        "INV-05",
+        "INV-09",
+        "INV-10",
+        "INV-11",
+        "INV-12",
+        "INV-15",
+        "INV-22"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "qualified-channel-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-X06",
+      "exercise": "Rotate/revoke push endpoints, create several devices, omit email identity and switch accounts.",
+      "pass_condition": "Endpoint lifecycle is correct; a push-only subscriber is supported; one approved preferred endpoint is selected by default; an invalid token does not revoke unrelated email consent.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-34",
+        "WP-35",
+        "WP-36",
+        "WP-37",
+        "WP-38"
+      ],
+      "invariants": [
+        "INV-02",
+        "INV-03",
+        "INV-04",
+        "INV-05",
+        "INV-09",
+        "INV-10",
+        "INV-11",
+        "INV-12",
+        "INV-15",
+        "INV-22"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "qualified-channel-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-X07",
+      "exercise": "Deliver delayed/expired push, apply quiet hours and race with email pressure reservations.",
+      "pass_condition": "TTL, permission and current policy hold; stale notifications do not create fresh promotions; combined interruptive limits and logical deduplication apply.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-34",
+        "WP-35",
+        "WP-36",
+        "WP-37",
+        "WP-38"
+      ],
+      "invariants": [
+        "INV-02",
+        "INV-03",
+        "INV-04",
+        "INV-05",
+        "INV-09",
+        "INV-10",
+        "INV-11",
+        "INV-12",
+        "INV-15",
+        "INV-22"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "qualified-channel-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-X08",
+      "exercise": "Compare push-provider acceptance, device evidence and recipient interaction metrics.",
+      "pass_condition": "The platform does not label acceptance as attention; analytics expose actual observable states and missing evidence; cost/health alerts and kill switch work.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-34",
+        "WP-35",
+        "WP-36",
+        "WP-37",
+        "WP-38"
+      ],
+      "invariants": [
+        "INV-02",
+        "INV-03",
+        "INV-04",
+        "INV-05",
+        "INV-09",
+        "INV-10",
+        "INV-11",
+        "INV-12",
+        "INV-15",
+        "INV-22"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "qualified-channel-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-X09",
+      "exercise": "Run a choose-one-channel plan through every preference/eligibility combination.",
+      "pass_condition": "Selection is deterministic from approved options; no grant is inferred; no option produces a clear hold/skip; AI is not making unapproved runtime routing decisions.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-34",
+        "WP-35",
+        "WP-36",
+        "WP-37",
+        "WP-38"
+      ],
+      "invariants": [
+        "INV-02",
+        "INV-03",
+        "INV-04",
+        "INV-05",
+        "INV-09",
+        "INV-10",
+        "INV-11",
+        "INV-12",
+        "INV-15",
+        "INV-22"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "qualified-channel-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-X10",
+      "exercise": "Compare definitive transport failure, unknown acceptance, opt-out and complaint.",
+      "pass_condition": "Only an explicitly approved fallback after qualified definitive failure can proceed; unknown/withdrawal/complaint does not cause alternate-channel outreach; secondary effects consume their required allowances.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-34",
+        "WP-35",
+        "WP-36",
+        "WP-37",
+        "WP-38"
+      ],
+      "invariants": [
+        "INV-02",
+        "INV-03",
+        "INV-04",
+        "INV-05",
+        "INV-09",
+        "INV-10",
+        "INV-11",
+        "INV-12",
+        "INV-15",
+        "INV-22"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "qualified-channel-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-X11",
+      "exercise": "Combine passive companion, conditional follow-up, business completion and multiple channel representations.",
+      "pass_condition": "Each additional interruption is explicit, approved, bounded and counted; goal completion cancels pending equivalent promotions; content variants retain approved equivalent facts/CTA.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-34",
+        "WP-35",
+        "WP-36",
+        "WP-37",
+        "WP-38"
+      ],
+      "invariants": [
+        "INV-02",
+        "INV-03",
+        "INV-04",
+        "INV-05",
+        "INV-09",
+        "INV-10",
+        "INV-11",
+        "INV-12",
+        "INV-15",
+        "INV-22"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "qualified-channel-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-X12",
+      "exercise": "Race cross-channel cancellation, cost reservation and provider timeout.",
+      "pass_condition": "No double use of the primary slot or overspend authorization; uncertainty is visible and reconcilable; existing provider acceptance cannot be falsely recalled.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-34",
+        "WP-35",
+        "WP-36",
+        "WP-37",
+        "WP-38"
+      ],
+      "invariants": [
+        "INV-02",
+        "INV-03",
+        "INV-04",
+        "INV-05",
+        "INV-09",
+        "INV-10",
+        "INV-11",
+        "INV-12",
+        "INV-15",
+        "INV-22"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "qualified-channel-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-X13",
+      "exercise": "Qualify SMS program/markets, consent and STOP/revocation behavior, including actual provider-wide/program-wide restrictions.",
+      "pass_condition": "Evidence matches the registered sender/legal scope; restrictive events apply immediately under the safe persistence boundary; an email grant cannot authorize phone marketing.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-34",
+        "WP-35",
+        "WP-36",
+        "WP-37",
+        "WP-38"
+      ],
+      "invariants": [
+        "INV-02",
+        "INV-03",
+        "INV-04",
+        "INV-05",
+        "INV-09",
+        "INV-10",
+        "INV-11",
+        "INV-12",
+        "INV-15",
+        "INV-22"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "qualified-channel-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-X14",
+      "exercise": "Personalize phone content across encoding/segment boundaries and provider template/window restrictions.",
+      "pass_condition": "Cost authorization uses actual encoded units, qualified upper bounds and the approved ceiling; vendor invoice exposure remains separately reconciled; disallowed templates/markets/purposes hold; human reply/escalation ownership and provider incident playbook are verified.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-34",
+        "WP-35",
+        "WP-36",
+        "WP-37",
+        "WP-38"
+      ],
+      "invariants": [
+        "INV-02",
+        "INV-03",
+        "INV-04",
+        "INV-05",
+        "INV-09",
+        "INV-10",
+        "INV-11",
+        "INV-12",
+        "INV-15",
+        "INV-22"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "qualified-channel-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-X15",
+      "exercise": "Qualify WhatsApp or native/in-app messaging against the real application, account and current market contract.",
+      "pass_condition": "Only actually supported channel/purpose behavior is enabled; app/device identity, consent, template/service rules and reply obligations are tested; no general omnichannel capability is inferred from an adapter's existence.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-34",
+        "WP-35",
+        "WP-36",
+        "WP-37",
+        "WP-38"
+      ],
+      "invariants": [
+        "INV-02",
+        "INV-03",
+        "INV-04",
+        "INV-05",
+        "INV-09",
+        "INV-10",
+        "INV-11",
+        "INV-12",
+        "INV-15",
+        "INV-22"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "qualified-channel-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-R01",
+      "exercise": "Kill workers before/after transaction commit, outbox publication, journal intent and provider handoff.",
+      "pass_condition": "Committed work remains discoverable; incomplete transactions roll back; unique effects/leases prevent duplicate supported effects; ambiguous handoffs enter uncertainty, not blind retry.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-07",
+        "WP-11",
+        "WP-39",
+        "WP-41"
+      ],
+      "invariants": [
+        "INV-07",
+        "INV-10",
+        "INV-11",
+        "INV-12",
+        "INV-17",
+        "INV-18",
+        "INV-20",
+        "INV-21"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-R02",
+      "exercise": "Fail the independent journal during a withdrawal and during outbound preparation.",
+      "pass_condition": "Current DB denial remains; no false success acknowledgement crosses the required boundary; missing journal coverage prevents affected unsafe handoffs; recovery does not erase the pending restriction.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-07",
+        "WP-11",
+        "WP-39",
+        "WP-41"
+      ],
+      "invariants": [
+        "INV-07",
+        "INV-10",
+        "INV-11",
+        "INV-12",
+        "INV-17",
+        "INV-18",
+        "INV-20",
+        "INV-21"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-R03",
+      "exercise": "Restore an older database backup after subsequent real-format synthetic opt-outs, erasures and accepted/unknown sends.",
+      "pass_condition": "Outbound starts disabled independently of restored DB state; journal restrictions and erasures are replayed; accepted/unknown occurrence claims are reconciled before permits; no restored stale grant or worker epoch can send.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-07",
+        "WP-11",
+        "WP-39",
+        "WP-41"
+      ],
+      "invariants": [
+        "INV-07",
+        "INV-10",
+        "INV-11",
+        "INV-12",
+        "INV-17",
+        "INV-18",
+        "INV-20",
+        "INV-21"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-R04",
+      "exercise": "Resume after provider outage, backlog, delayed callbacks and obsolete schedules.",
+      "pass_condition": "Backoff/pause/circuit behavior is observed; expired work is skipped, not burst-sent; overdue required work is reviewed under its policy; no automatic provider failover.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-07",
+        "WP-11",
+        "WP-39",
+        "WP-41"
+      ],
+      "invariants": [
+        "INV-07",
+        "INV-10",
+        "INV-11",
+        "INV-12",
+        "INV-17",
+        "INV-18",
+        "INV-20",
+        "INV-21"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-R05",
+      "exercise": "Deploy and roll back application code while old workflow/content versions are active.",
+      "pass_condition": "Compatibility manifest covers active versions; incompatible release is blocked; code rollback does not rewind domain state or remove handlers still referenced by executions.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-07",
+        "WP-11",
+        "WP-39",
+        "WP-41"
+      ],
+      "invariants": [
+        "INV-07",
+        "INV-10",
+        "INV-11",
+        "INV-12",
+        "INV-17",
+        "INV-18",
+        "INV-20",
+        "INV-21"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-R06",
+      "exercise": "Perform a timed full restore drill including database, journal, encrypted objects, keys, configuration and provider reconciliation.",
+      "pass_condition": "Proposed RPO/RTO targets are measured; restored sending remains disabled until separate approval and a new epoch; inability to prove safety is a held incident, not a passed drill.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-07",
+        "WP-11",
+        "WP-39",
+        "WP-41"
+      ],
+      "invariants": [
+        "INV-07",
+        "INV-10",
+        "INV-11",
+        "INV-12",
+        "INV-17",
+        "INV-18",
+        "INV-20",
+        "INV-21"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-M01",
+      "exercise": "Inventory source accounts/publications/forms/tags/integrations and actual withdrawal/sending scope.",
+      "pass_condition": "Every source path is mapped; independently fenceable MigrationUnits or required connected waves are identified; account-wide opt-outs are not mislabeled publication-level.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-18",
+        "WP-19",
+        "WP-20",
+        "WP-33"
+      ],
+      "invariants": [
+        "INV-01",
+        "INV-02",
+        "INV-05",
+        "INV-08",
+        "INV-16",
+        "INV-17",
+        "INV-18",
+        "INV-19"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-M02",
+      "exercise": "Extract all source states/pages and available consent/suppression evidence.",
+      "pass_condition": "Source/extract totals reconcile with an explicit snapshot/watermark; active-only API defaults do not omit withdrawals/bounces/complaints; missing provenance is held, not fabricated.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-18",
+        "WP-19",
+        "WP-20",
+        "WP-33"
+      ],
+      "invariants": [
+        "INV-01",
+        "INV-02",
+        "INV-05",
+        "INV-08",
+        "INV-16",
+        "INV-17",
+        "INV-18",
+        "INV-19"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-M03",
+      "exercise": "Repeat staged imports and compare per-field/source mappings.",
+      "pass_condition": "Same input produces no duplicate person/profile/subscription/effect; stronger restrictions win; invalid/ambiguous rows have downloadable reason reports; live triggers remain disabled.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-18",
+        "WP-19",
+        "WP-20",
+        "WP-33"
+      ],
+      "invariants": [
+        "INV-01",
+        "INV-02",
+        "INV-05",
+        "INV-08",
+        "INV-16",
+        "INV-17",
+        "INV-18",
+        "INV-19"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-M04",
+      "exercise": "Disable source entry/scheduling paths and reconcile source in-flight sends.",
+      "pass_condition": "Source pause evidence is captured from the actual account; the Texenda lease is not treated as a Kit control; no overlapping authority exists for the same function/cohort; unknown source effects remain blocked.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-18",
+        "WP-19",
+        "WP-20",
+        "WP-33"
+      ],
+      "invariants": [
+        "INV-01",
+        "INV-02",
+        "INV-05",
+        "INV-08",
+        "INV-16",
+        "INV-17",
+        "INV-18",
+        "INV-19"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-M05",
+      "exercise": "Transfer current sequence/automation enrollments.",
+      "pass_condition": "Every required enrollment is mapped using verified recipient-level evidence, explicitly retired, or visibly held; aggregate stats/membership timestamps are not used to guess the next step; unresolved required runs block full migration.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-18",
+        "WP-19",
+        "WP-20",
+        "WP-33"
+      ],
+      "invariants": [
+        "INV-01",
+        "INV-02",
+        "INV-05",
+        "INV-08",
+        "INV-16",
+        "INV-17",
+        "INV-18",
+        "INV-19"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-M06",
+      "exercise": "Withdraw through old Kit links, new Texenda links and support/reply channels during and after cutover.",
+      "pass_condition": "Actual source scopes propagate into Texenda safely; no late withdrawal is lost; legacy endpoints remain functional or the limitation blocks retirement; fresh reconsent is explicit rather than a sync overwrite.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-18",
+        "WP-19",
+        "WP-20",
+        "WP-33"
+      ],
+      "invariants": [
+        "INV-01",
+        "INV-02",
+        "INV-05",
+        "INV-08",
+        "INV-16",
+        "INV-17",
+        "INV-18",
+        "INV-19"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-M07",
+      "exercise": "Transfer forms/integrations, activate a bounded canary, and reconcile recipient outcomes.",
+      "pass_condition": "Each relevant function has one authoritative system/epoch; new grants go through Texenda proof; actual recipients/cost stay within approval; outcomes and late source events are explained.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-18",
+        "WP-19",
+        "WP-20",
+        "WP-33"
+      ],
+      "invariants": [
+        "INV-01",
+        "INV-02",
+        "INV-05",
+        "INV-08",
+        "INV-16",
+        "INV-17",
+        "INV-18",
+        "INV-19"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-M08",
+      "exercise": "Rehearse pause/repair-forward and any proposed return-to-Kit procedure.",
+      "pass_condition": "No database rewind revives old permissions/effects; return is a new evidence-backed transfer; source inability to express required exclusions/cursors keeps sending paused rather than enabling unsafe rollback.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-18",
+        "WP-19",
+        "WP-20",
+        "WP-33"
+      ],
+      "invariants": [
+        "INV-01",
+        "INV-02",
+        "INV-05",
+        "INV-08",
+        "INV-16",
+        "INV-17",
+        "INV-18",
+        "INV-19"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-M09",
+      "exercise": "Complete the agreed observation period and review remaining source dependencies.",
+      "pass_condition": "Texenda owns live audience/consent/sending and all required workflows; forms/integrations are cut over; legacy opt-out intake is retained; required history is migrated or intentionally archived; incidents and unknowns are resolved or safely quarantined with documented impact and no unresolved required program.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-18",
+        "WP-19",
+        "WP-20",
+        "WP-33"
+      ],
+      "invariants": [
+        "INV-01",
+        "INV-02",
+        "INV-05",
+        "INV-08",
+        "INV-16",
+        "INV-17",
+        "INV-18",
+        "INV-19"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-P01",
+      "exercise": "Common authorized read/search API p95 ≤1 s; primary admin screen usable p95 ≤2.5 s in the agreed client/network environment",
+      "pass_condition": "Run with campaign work and ordinary event ingestion concurrently; distinguish browser/render time from API time; content-writing duration is not a metric.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-16",
+        "WP-17",
+        "WP-41"
+      ],
+      "invariants": [
+        "INV-07",
+        "INV-10",
+        "INV-17",
+        "INV-18"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-P02",
+      "exercise": "Form command durable-response p95 ≤500 ms under the qualified load; opt-out/restrictive webhook safe acknowledgement p95 ≤2 s",
+      "pass_condition": "Include required persistence/journal work in restrictive acknowledgements. A slow safe response is preferable to a falsely successful one. Provider verification callbacks may have separately documented deadlines.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-16",
+        "WP-17",
+        "WP-41"
+      ],
+      "invariants": [
+        "INV-07",
+        "INV-10",
+        "INV-17",
+        "INV-18"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-P03",
+      "exercise": "Qualifying restrictive inputs applied before acknowledgement; internal restrictive-event lag p95 ≤5 s",
+      "pass_condition": "Older restrictive work gates affected sending. This is a service target, not permission to acknowledge first and suppress later.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-16",
+        "WP-17",
+        "WP-41"
+      ],
+      "invariants": [
+        "INV-07",
+        "INV-10",
+        "INV-17",
+        "INV-18"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-P04",
+      "exercise": "Typical supported segment preview p95 ≤2 s; largest planned campaign resolution/preparation target ≤120 s",
+      "pass_condition": "Complex queries switch to visible asynchronous preview. Preparation has the Foundation's 15-minute fail/hold fuse; no partial sends. Validate at `B`, with a consistent snapshot rather than fast changing pages.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-16",
+        "WP-17",
+        "WP-41"
+      ],
+      "invariants": [
+        "INV-07",
+        "INV-10",
+        "INV-17",
+        "INV-18"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-P05",
+      "exercise": "Routine ready-work start p95 ≤30 s; eligible already-prepared scheduled campaign begins dispatch within 60 s",
+      "pass_condition": "Report separate queue classes. Audience-resolution time, explicit holds, quiet hours and disabled providers are separately observable rather than hidden exclusions.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-16",
+        "WP-17",
+        "WP-41"
+      ],
+      "invariants": [
+        "INV-07",
+        "INV-10",
+        "INV-17",
+        "INV-18"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-P06",
+      "exercise": "Sustain at least `B / W` qualified delivery handoffs per second, within provider rate/cost limits; demonstrate 25% worker-side headroom with the fake provider",
+      "pass_condition": "Test the actual planned campaign plus ordinary UI/events. Required worker throughput above provider capacity requires a revised window/provider qualification, not unbounded concurrency. Limited real canaries validate transport; do not load-test by mailing unsuspecting recipients.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-16",
+        "WP-17",
+        "WP-41"
+      ],
+      "invariants": [
+        "INV-07",
+        "INV-10",
+        "INV-17",
+        "INV-18"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-P07",
+      "exercise": "Process the agreed short burst—default twice the planned ordinary ingestion rate—without losing events or violating isolation/pressure",
+      "pass_condition": "Specify burst duration and backlog drain bound in WorkloadProfile. Validate database locks, connection pool, worker fairness and safe backpressure; avoid audience-size claims from queue-only benchmarks.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-16",
+        "WP-17",
+        "WP-41"
+      ],
+      "invariants": [
+        "INV-07",
+        "INV-10",
+        "INV-17",
+        "INV-18"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-P08",
+      "exercise": "Proposed recovery RPO ≤5 min and RTO ≤4 h; no unsafe sends after restore",
+      "pass_condition": "Timed drill AC-R06 includes journal replay, keys and provider reconciliation, not just database startup. Targets require a purchased/configured hosting plan and may be revised explicitly before launch.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-16",
+        "WP-17",
+        "WP-41"
+      ],
+      "invariants": [
+        "INV-07",
+        "INV-10",
+        "INV-17",
+        "INV-18"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-O01",
+      "exercise": "Named operational responsibilities and tested escalation destination",
+      "pass_condition": "One person may hold multiple roles, but there is a reachable owner for sending safety, incident response, data/migration and restores; critical alerts reach a destination independent of Texenda's affected sender route.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-16",
+        "WP-39",
+        "WP-42"
+      ],
+      "invariants": [
+        "INV-11",
+        "INV-12",
+        "INV-13",
+        "INV-15",
+        "INV-17",
+        "INV-18",
+        "INV-20",
+        "INV-21"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-O02",
+      "exercise": "Live dashboard and alert exercise using injected faults",
+      "pass_condition": "At least provider auth/outage, stale restrictive events, unknown acceptance, journal failure, queue delay, cost ceiling and quarantined workflow alerts are observed end-to-end; no alert claims reliable detection from absent data.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-16",
+        "WP-39",
+        "WP-42"
+      ],
+      "invariants": [
+        "INV-11",
+        "INV-12",
+        "INV-13",
+        "INV-15",
+        "INV-17",
+        "INV-18",
+        "INV-20",
+        "INV-21"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-O03",
+      "exercise": "Provider/account/sender qualification packet",
+      "pass_condition": "Current intended-use permission, suppression scope, rate/quota, signature protocol, header behavior, idempotency retention and test evidence are saved for each enabled route.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-16",
+        "WP-39",
+        "WP-42"
+      ],
+      "invariants": [
+        "INV-11",
+        "INV-12",
+        "INV-13",
+        "INV-15",
+        "INV-17",
+        "INV-18",
+        "INV-20",
+        "INV-21"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-O04",
+      "exercise": "Backup/journal/key recovery verification",
+      "pass_condition": "Actual purchased retention/PITR, independent object durability/access, key availability, deletion policy and restore drill satisfy the plan; no successful restore depends on keys lost with the database.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-16",
+        "WP-39",
+        "WP-42"
+      ],
+      "invariants": [
+        "INV-11",
+        "INV-12",
+        "INV-13",
+        "INV-15",
+        "INV-17",
+        "INV-18",
+        "INV-20",
+        "INV-21"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-O05",
+      "exercise": "Kill-switch and high-risk approval rehearsal",
+      "pass_condition": "Organization/brand/provider/channel/campaign stop controls work server-side; solo step-up/review/cooling-off path is usable; UI or AI cannot mint an approval bypass.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-16",
+        "WP-39",
+        "WP-42"
+      ],
+      "invariants": [
+        "INV-11",
+        "INV-12",
+        "INV-13",
+        "INV-15",
+        "INV-17",
+        "INV-18",
+        "INV-20",
+        "INV-21"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-O06",
+      "exercise": "Release/dependency/security operations",
+      "pass_condition": "Version manifest, SBOM/license review, active-handler compatibility, staging isolation, signed/reviewed migrations and rollback procedure exist; no untracked latest dependency is deployed.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-16",
+        "WP-39",
+        "WP-42"
+      ],
+      "invariants": [
+        "INV-11",
+        "INV-12",
+        "INV-13",
+        "INV-15",
+        "INV-17",
+        "INV-18",
+        "INV-20",
+        "INV-21"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-O07",
+      "exercise": "Operator usability session",
+      "pass_condition": "A representative routine operator completes acquisition/segment/broadcast/sequence review and interprets exclusion/cost/authority consequences. Proposed targets: ≥90% routine work without advanced settings, roughly five minutes prepared-campaign administration, and sustainable weekly operations. Failures lead to UX repair, not hidden consequences.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-16",
+        "WP-39",
+        "WP-42"
+      ],
+      "invariants": [
+        "INV-11",
+        "INV-12",
+        "INV-13",
+        "INV-15",
+        "INV-17",
+        "INV-18",
+        "INV-20",
+        "INV-21"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-O08",
+      "exercise": "Privacy/retention/export and incident documentation",
+      "pass_condition": "Applicable legal/privacy gates are satisfied; export expiry and erasure behavior are exercised; no PII in ordinary telemetry; incident playbooks state what can and cannot be recalled, retried, restored or transferred.",
+      "source": "06-migration-and-production/acceptance-plan.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "work_packages": [
+        "WP-16",
+        "WP-39",
+        "WP-42"
+      ],
+      "invariants": [
+        "INV-11",
+        "INV-12",
+        "INV-13",
+        "INV-15",
+        "INV-17",
+        "INV-18",
+        "INV-20",
+        "INV-21"
+      ],
+      "requirement_refs": [
+        "06-migration-and-production/acceptance-plan.md"
+      ],
+      "applicability": "mature-email-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-I01",
+      "exercise": "Run every interaction adapter against identical synthetic inputs.",
+      "pass_condition": "Same authorized command contract and domain result; no AI-only policy path.",
+      "source": "02-product-and-ux/interaction-architecture.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "invariants": [
+        "INV-24"
+      ],
+      "work_packages": [
+        "WP-25",
+        "WP-26",
+        "WP-27",
+        "WP-28",
+        "WP-29",
+        "WP-30",
+        "WP-31",
+        "WP-32"
+      ],
+      "requirement_refs": [
+        "02-product-and-ux/interaction-architecture.md"
+      ],
+      "applicability": "interaction-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-I02",
+      "exercise": "Edit a campaign visually then submit an older conversational patch.",
+      "pass_condition": "Stale base revision rejected; unsaved local edits explicitly reconciled, never silently overwritten.",
+      "source": "02-product-and-ux/interaction-architecture.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "invariants": [
+        "INV-24",
+        "INV-25"
+      ],
+      "work_packages": [
+        "WP-25",
+        "WP-26",
+        "WP-27",
+        "WP-28",
+        "WP-29",
+        "WP-30",
+        "WP-31",
+        "WP-32"
+      ],
+      "requirement_refs": [
+        "02-product-and-ux/interaction-architecture.md"
+      ],
+      "applicability": "interaction-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-I03",
+      "exercise": "Switch brands then use that campaign in conversation.",
+      "pass_condition": "Old referent invalidated; scope re-resolved before any consequential mutation.",
+      "source": "02-product-and-ux/interaction-architecture.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "invariants": [
+        "INV-02",
+        "INV-06",
+        "INV-23",
+        "INV-24"
+      ],
+      "work_packages": [
+        "WP-25",
+        "WP-26",
+        "WP-27",
+        "WP-28",
+        "WP-29",
+        "WP-30",
+        "WP-31",
+        "WP-32"
+      ],
+      "requirement_refs": [
+        "02-product-and-ux/interaction-architecture.md"
+      ],
+      "applicability": "interaction-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-I04",
+      "exercise": "Create goal conversationally and resume another session.",
+      "pass_condition": "Goal and linked drafts are durable and inspectable without reconstructing transcript.",
+      "source": "02-product-and-ux/interaction-architecture.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "invariants": [
+        "INV-23"
+      ],
+      "work_packages": [
+        "WP-25",
+        "WP-26",
+        "WP-27",
+        "WP-28",
+        "WP-29",
+        "WP-30",
+        "WP-31",
+        "WP-32"
+      ],
+      "requirement_refs": [
+        "02-product-and-ux/interaction-architecture.md"
+      ],
+      "applicability": "interaction-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-I05",
+      "exercise": "Mark goal achieved manually.",
+      "pass_condition": "No purchase/completion business event or send cancellation is invented.",
+      "source": "02-product-and-ux/interaction-architecture.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "invariants": [
+        "INV-23"
+      ],
+      "work_packages": [
+        "WP-25",
+        "WP-26",
+        "WP-27",
+        "WP-28",
+        "WP-29",
+        "WP-30",
+        "WP-31",
+        "WP-32"
+      ],
+      "requirement_refs": [
+        "02-product-and-ux/interaction-architecture.md"
+      ],
+      "applicability": "interaction-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-I06",
+      "exercise": "Import document demanding persistent instructions or export.",
+      "pass_condition": "Data does not change system instructions, authority, grants or available tools.",
+      "source": "02-product-and-ux/interaction-architecture.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "invariants": [
+        "INV-14",
+        "INV-29"
+      ],
+      "work_packages": [
+        "WP-25",
+        "WP-26",
+        "WP-27",
+        "WP-28",
+        "WP-29",
+        "WP-30",
+        "WP-31",
+        "WP-32"
+      ],
+      "requirement_refs": [
+        "02-product-and-ux/interaction-architecture.md"
+      ],
+      "applicability": "interaction-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-I07",
+      "exercise": "Request a material change through voice, chat and API.",
+      "pass_condition": "Typed immutable proposal, exact diff and consequence envelope precede activation.",
+      "source": "02-product-and-ux/interaction-architecture.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "invariants": [
+        "INV-24",
+        "INV-25"
+      ],
+      "work_packages": [
+        "WP-25",
+        "WP-26",
+        "WP-27",
+        "WP-28",
+        "WP-29",
+        "WP-30",
+        "WP-31",
+        "WP-32"
+      ],
+      "requirement_refs": [
+        "02-product-and-ux/interaction-architecture.md"
+      ],
+      "applicability": "interaction-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-I08",
+      "exercise": "Approve then modify content, audience, channel, sender or cost ceiling.",
+      "pass_condition": "Relevant approval stale; fresh review required, stricter live policy still applies.",
+      "source": "02-product-and-ux/interaction-architecture.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "invariants": [
+        "INV-05",
+        "INV-08",
+        "INV-25"
+      ],
+      "work_packages": [
+        "WP-25",
+        "WP-26",
+        "WP-27",
+        "WP-28",
+        "WP-29",
+        "WP-30",
+        "WP-31",
+        "WP-32"
+      ],
+      "requirement_refs": [
+        "02-product-and-ux/interaction-architecture.md"
+      ],
+      "applicability": "interaction-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-I09",
+      "exercise": "Send repeated retries for a command after response loss.",
+      "pass_condition": "Same semantic outcome returned; no duplicate product mutation or external effect.",
+      "source": "02-product-and-ux/interaction-architecture.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "invariants": [
+        "INV-10",
+        "INV-11",
+        "INV-24"
+      ],
+      "work_packages": [
+        "WP-25",
+        "WP-26",
+        "WP-27",
+        "WP-28",
+        "WP-29",
+        "WP-30",
+        "WP-31",
+        "WP-32"
+      ],
+      "requirement_refs": [
+        "02-product-and-ux/interaction-architecture.md"
+      ],
+      "applicability": "interaction-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-I10",
+      "exercise": "Let an agent control visible approval button.",
+      "pass_condition": "Delegated agent principal cannot satisfy independent human C3/C4 approval.",
+      "source": "02-product-and-ux/interaction-architecture.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "invariants": [
+        "INV-25",
+        "INV-26",
+        "INV-27"
+      ],
+      "work_packages": [
+        "WP-25",
+        "WP-26",
+        "WP-27",
+        "WP-28",
+        "WP-29",
+        "WP-30",
+        "WP-31",
+        "WP-32"
+      ],
+      "requirement_refs": [
+        "02-product-and-ux/interaction-architecture.md"
+      ],
+      "applicability": "interaction-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-I11",
+      "exercise": "Revoke/expire delegation between proposal and commit.",
+      "pass_condition": "Commit denied under current grant; pending effect governed by current live authority.",
+      "source": "02-product-and-ux/interaction-architecture.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "invariants": [
+        "INV-05",
+        "INV-26"
+      ],
+      "work_packages": [
+        "WP-25",
+        "WP-26",
+        "WP-27",
+        "WP-28",
+        "WP-29",
+        "WP-30",
+        "WP-31",
+        "WP-32"
+      ],
+      "requirement_refs": [
+        "02-product-and-ux/interaction-architecture.md"
+      ],
+      "applicability": "interaction-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-I12",
+      "exercise": "Present token issued to another resource/workspace.",
+      "pass_condition": "Token audience/resource/scope rejected; no cross-brand enumeration.",
+      "source": "02-product-and-ux/interaction-architecture.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "invariants": [
+        "INV-06",
+        "INV-26"
+      ],
+      "work_packages": [
+        "WP-25",
+        "WP-26",
+        "WP-27",
+        "WP-28",
+        "WP-29",
+        "WP-30",
+        "WP-31",
+        "WP-32"
+      ],
+      "requirement_refs": [
+        "02-product-and-ux/interaction-architecture.md"
+      ],
+      "applicability": "interaction-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-I13",
+      "exercise": "Attempt tool discovery as restricted external agent.",
+      "pass_condition": "Only authorized capability metadata and readable objects exposed; no credential leakage.",
+      "source": "02-product-and-ux/interaction-architecture.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "invariants": [
+        "INV-06",
+        "INV-26"
+      ],
+      "work_packages": [
+        "WP-25",
+        "WP-26",
+        "WP-27",
+        "WP-28",
+        "WP-29",
+        "WP-30",
+        "WP-31",
+        "WP-32"
+      ],
+      "requirement_refs": [
+        "02-product-and-ux/interaction-architecture.md"
+      ],
+      "applicability": "interaction-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-I14",
+      "exercise": "Exhaust agent spend/rate/time limits.",
+      "pass_condition": "Deterministic stop and audit; no self-expansion or fallback to human credentials.",
+      "source": "02-product-and-ux/interaction-architecture.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "invariants": [
+        "INV-10",
+        "INV-26"
+      ],
+      "work_packages": [
+        "WP-25",
+        "WP-26",
+        "WP-27",
+        "WP-28",
+        "WP-29",
+        "WP-30",
+        "WP-31",
+        "WP-32"
+      ],
+      "requirement_refs": [
+        "02-product-and-ux/interaction-architecture.md"
+      ],
+      "applicability": "interaction-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-I15",
+      "exercise": "Stop computer-use session after it becomes lost.",
+      "pass_condition": "Run stops with attributable checkpoint; no speculative retry clicking or permission expansion.",
+      "source": "02-product-and-ux/interaction-architecture.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "invariants": [
+        "INV-26",
+        "INV-27"
+      ],
+      "work_packages": [
+        "WP-25",
+        "WP-26",
+        "WP-27",
+        "WP-28",
+        "WP-29",
+        "WP-30",
+        "WP-31",
+        "WP-32"
+      ],
+      "requirement_refs": [
+        "02-product-and-ux/interaction-architecture.md"
+      ],
+      "applicability": "interaction-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-I16",
+      "exercise": "Compare normal and Inspect views for restricted principal.",
+      "pass_condition": "Inspect provides precision only, never expanded PII or command authority.",
+      "source": "02-product-and-ux/interaction-architecture.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "invariants": [
+        "INV-06",
+        "INV-27"
+      ],
+      "work_packages": [
+        "WP-25",
+        "WP-26",
+        "WP-27",
+        "WP-28",
+        "WP-29",
+        "WP-30",
+        "WP-31",
+        "WP-32"
+      ],
+      "requirement_refs": [
+        "02-product-and-ux/interaction-architecture.md"
+      ],
+      "applicability": "interaction-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-I17",
+      "exercise": "Navigate core tasks with keyboard, screen reader and zoom.",
+      "pass_condition": "WCAG2.2AA applicable criteria checked by automated plus manual testing; focus/labels/status meaningful.",
+      "source": "02-product-and-ux/interaction-architecture.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "invariants": [
+        "INV-27",
+        "INV-28"
+      ],
+      "work_packages": [
+        "WP-25",
+        "WP-26",
+        "WP-27",
+        "WP-28",
+        "WP-29",
+        "WP-30",
+        "WP-31",
+        "WP-32"
+      ],
+      "requirement_refs": [
+        "02-product-and-ux/interaction-architecture.md"
+      ],
+      "applicability": "interaction-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-I18",
+      "exercise": "Disable AI/model services entirely.",
+      "pass_condition": "Manual audience/campaign/automation management and approved deterministic executions continue.",
+      "source": "02-product-and-ux/interaction-architecture.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "invariants": [
+        "INV-28"
+      ],
+      "work_packages": [
+        "WP-25",
+        "WP-26",
+        "WP-27",
+        "WP-28",
+        "WP-29",
+        "WP-30",
+        "WP-31",
+        "WP-32"
+      ],
+      "requirement_refs": [
+        "02-product-and-ux/interaction-architecture.md"
+      ],
+      "applicability": "interaction-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-I19",
+      "exercise": "Interrupt streaming response then refresh object.",
+      "pass_condition": "Uncommitted assistant text is not state; authoritative revision and proposals recover correctly.",
+      "source": "02-product-and-ux/interaction-architecture.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "invariants": [
+        "INV-23",
+        "INV-28"
+      ],
+      "work_packages": [
+        "WP-25",
+        "WP-26",
+        "WP-27",
+        "WP-28",
+        "WP-29",
+        "WP-30",
+        "WP-31",
+        "WP-32"
+      ],
+      "requirement_refs": [
+        "02-product-and-ux/interaction-architecture.md"
+      ],
+      "applicability": "interaction-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-I20",
+      "exercise": "Use speech containing background yes, negation, similar names and dates.",
+      "pass_condition": "No ambiguous/provisional speech causes C3/C4 approval; material entities reviewed.",
+      "source": "02-product-and-ux/interaction-architecture.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "invariants": [
+        "INV-25"
+      ],
+      "work_packages": [
+        "WP-25",
+        "WP-26",
+        "WP-27",
+        "WP-28",
+        "WP-29",
+        "WP-30",
+        "WP-31",
+        "WP-32"
+      ],
+      "requirement_refs": [
+        "02-product-and-ux/interaction-architecture.md"
+      ],
+      "applicability": "interaction-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-I21",
+      "exercise": "End voice session or revoke microphone permission.",
+      "pass_condition": "Capture stops visibly; no default background listening or raw audio retention.",
+      "source": "02-product-and-ux/interaction-architecture.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "invariants": [
+        "INV-21",
+        "INV-28"
+      ],
+      "work_packages": [
+        "WP-25",
+        "WP-26",
+        "WP-27",
+        "WP-28",
+        "WP-29",
+        "WP-30",
+        "WP-31",
+        "WP-32"
+      ],
+      "requirement_refs": [
+        "02-product-and-ux/interaction-architecture.md"
+      ],
+      "applicability": "interaction-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-I22",
+      "exercise": "Fail speech recognition or synthesis provider.",
+      "pass_condition": "Typing/direct UI works; TTS failure does not lose authoritative work.",
+      "source": "02-product-and-ux/interaction-architecture.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "invariants": [
+        "INV-28"
+      ],
+      "work_packages": [
+        "WP-25",
+        "WP-26",
+        "WP-27",
+        "WP-28",
+        "WP-29",
+        "WP-30",
+        "WP-31",
+        "WP-32"
+      ],
+      "requirement_refs": [
+        "02-product-and-ux/interaction-architecture.md"
+      ],
+      "applicability": "interaction-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-I23",
+      "exercise": "Use assistive voice control to activate explicit approval.",
+      "pass_condition": "Accessible authenticated approval works without making conversational filler an approval token.",
+      "source": "02-product-and-ux/interaction-architecture.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "invariants": [
+        "INV-25",
+        "INV-27"
+      ],
+      "work_packages": [
+        "WP-25",
+        "WP-26",
+        "WP-27",
+        "WP-28",
+        "WP-29",
+        "WP-30",
+        "WP-31",
+        "WP-32"
+      ],
+      "requirement_refs": [
+        "02-product-and-ux/interaction-architecture.md"
+      ],
+      "applicability": "interaction-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-I24",
+      "exercise": "Inspect model/transcript logs under restrictive retention.",
+      "pass_condition": "PII minimization, provider retention review, transcript erasure and durable action evidence separated.",
+      "source": "02-product-and-ux/interaction-architecture.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "invariants": [
+        "INV-21",
+        "INV-29"
+      ],
+      "work_packages": [
+        "WP-25",
+        "WP-26",
+        "WP-27",
+        "WP-28",
+        "WP-29",
+        "WP-30",
+        "WP-31",
+        "WP-32"
+      ],
+      "requirement_refs": [
+        "02-product-and-ux/interaction-architecture.md"
+      ],
+      "applicability": "interaction-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-I25",
+      "exercise": "Ask why recipient was deferred and what AI changed.",
+      "pass_condition": "Explanation cites recorded predicate/revision/actor outcomes; unavailable evidence stated, no motives invented.",
+      "source": "02-product-and-ux/interaction-architecture.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "invariants": [
+        "INV-13",
+        "INV-14"
+      ],
+      "work_packages": [
+        "WP-25",
+        "WP-26",
+        "WP-27",
+        "WP-28",
+        "WP-29",
+        "WP-30",
+        "WP-31",
+        "WP-32"
+      ],
+      "requirement_refs": [
+        "02-product-and-ux/interaction-architecture.md"
+      ],
+      "applicability": "interaction-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-I26",
+      "exercise": "Flood routine successful events.",
+      "pass_condition": "Proactive attention quiet/deduplicated; only meaningful thresholds create notices; notices grant no authority.",
+      "source": "02-product-and-ux/interaction-architecture.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "invariants": [
+        "INV-15",
+        "INV-28"
+      ],
+      "work_packages": [
+        "WP-25",
+        "WP-26",
+        "WP-27",
+        "WP-28",
+        "WP-29",
+        "WP-30",
+        "WP-31",
+        "WP-32"
+      ],
+      "requirement_refs": [
+        "02-product-and-ux/interaction-architecture.md"
+      ],
+      "applicability": "interaction-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-I27",
+      "exercise": "Submit invalid or malicious structured AI output.",
+      "pass_condition": "Closed schema/authorization validation denies before product mutation; bounded repair then manual fallback.",
+      "source": "02-product-and-ux/interaction-architecture.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "invariants": [
+        "INV-14",
+        "INV-24",
+        "INV-25"
+      ],
+      "work_packages": [
+        "WP-25",
+        "WP-26",
+        "WP-27",
+        "WP-28",
+        "WP-29",
+        "WP-30",
+        "WP-31",
+        "WP-32"
+      ],
+      "requirement_refs": [
+        "02-product-and-ux/interaction-architecture.md"
+      ],
+      "applicability": "interaction-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-I28",
+      "exercise": "Mix several dependent commands in one plan with partial failure.",
+      "pass_condition": "Each effect state explicit; plan not falsely atomic across providers; no unsafe rollback or double commit.",
+      "source": "02-product-and-ux/interaction-architecture.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "invariants": [
+        "INV-11",
+        "INV-25"
+      ],
+      "work_packages": [
+        "WP-25",
+        "WP-26",
+        "WP-27",
+        "WP-28",
+        "WP-29",
+        "WP-30",
+        "WP-31",
+        "WP-32"
+      ],
+      "requirement_refs": [
+        "02-product-and-ux/interaction-architecture.md"
+      ],
+      "applicability": "interaction-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-I29",
+      "exercise": "Run public tools/API across supported version matrix.",
+      "pass_condition": "Protocol adapter is thin, result schemas/errors/capabilities versioned; no mandatory MCP/WebMCP for core.",
+      "source": "02-product-and-ux/interaction-architecture.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "invariants": [
+        "INV-24",
+        "INV-26"
+      ],
+      "work_packages": [
+        "WP-25",
+        "WP-26",
+        "WP-27",
+        "WP-28",
+        "WP-29",
+        "WP-30",
+        "WP-31",
+        "WP-32"
+      ],
+      "requirement_refs": [
+        "02-product-and-ux/interaction-architecture.md"
+      ],
+      "applicability": "interaction-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    },
+    {
+      "id": "AC-I30",
+      "exercise": "Complete common workflows with target small-team operators.",
+      "pass_condition": "At least 90% defined routine tasks without advanced controls; consequence comprehension separately evaluated.",
+      "source": "02-product-and-ux/interaction-architecture.md",
+      "execution_status": "NOT RUN",
+      "evidence": [],
+      "invariants": [
+        "INV-27",
+        "INV-28"
+      ],
+      "work_packages": [
+        "WP-25",
+        "WP-26",
+        "WP-27",
+        "WP-28",
+        "WP-29",
+        "WP-30",
+        "WP-31",
+        "WP-32"
+      ],
+      "requirement_refs": [
+        "02-product-and-ux/interaction-architecture.md"
+      ],
+      "applicability": "interaction-profile",
+      "mapping_kind": "relevant-invariant-set; pass_condition is the test oracle"
+    }
+  ]
+}

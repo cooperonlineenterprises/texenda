@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0",
+  "tests": {
+    "HT-BOUNDARY": {
+      "procedure": "10-validation/validate_package.py: Harness non-runner boundary (static)",
+      "meaning": "No networking/model subprocess imports in coordinator; not an adversarial sandbox proof"
+    },
+    "HT-UNVERIFIED-ROSTER": {
+      "procedure": "08-project-harness/tests/test_harness.py: test_unverified_model_fails_closed"
+    },
+    "HT-REVIEW": {
+      "procedure": "08-project-harness/tests/test_harness.py: test_author_cannot_review; test_stale_candidate_denied; test_not_run_cannot_pass_review"
+    },
+    "HT-PATHS": {
+      "procedure": "08-project-harness/tests/test_harness.py: test_no_path_traversal; test_evidence_symlink_denied; test_out_of_scope_changed_path_denied"
+    }
+  }
+}

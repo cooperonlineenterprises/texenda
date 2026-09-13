@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0",
+  "kernel": [
+    "07-agent-orchestration/project-kernel.md",
+    "01-foundation/invariants.md",
+    "DECISION-STATUS.md"
+  ],
+  "always_for_assignment": [
+    "07-agent-orchestration/model-routing.md",
+    "07-agent-orchestration/handoff-and-review.md"
+  ],
+  "default_reference_byte_budget": 200000,
+  "layers": [
+    "PROJECT KERNEL",
+    "DOMAIN CONTEXT",
+    "WORK-PACKAGE CONTEXT",
+    "REFERENCE CONTEXT"
+  ],
+  "archive_default": false,
+  "overflow_policy": "NEEDS_NARROWING; never silently truncate required context",
+  "requested_extra_context_requires": [
+    "reason",
+    "source path/section",
+    "task relevance"
+  ],
+  "domain_routes": {
+    "permission": [
+      "03-domain-and-architecture/permission-and-coordination.md",
+      "03-domain-and-architecture/canonical-domain.md"
+    ],
+    "effects": [
+      "03-domain-and-architecture/execution-semantics.md",
+      "03-domain-and-architecture/system-architecture.md"
+    ],
+    "interaction": [
+      "02-product-and-ux/interaction-architecture.md",
+      "04-security-governance-and-operations/ai-and-agent-authority.md"
+    ],
+    "migration": [
+      "06-migration-and-production/kit-migration.md"
+    ],
+    "security": [
+      "04-security-governance-and-operations/security-and-privacy.md"
+    ]
+  }
+}

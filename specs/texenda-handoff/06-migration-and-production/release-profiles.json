@@ -1,0 +1,283 @@
+{
+  "schema_version": "1.0",
+  "profiles": [
+    {
+      "id": "email-pilot",
+      "parents": [],
+      "required_criteria": [
+        "AC-D01",
+        "AC-D02",
+        "AC-D03",
+        "AC-D04",
+        "AC-D05",
+        "AC-D06",
+        "AC-D07",
+        "AC-D08",
+        "AC-D09",
+        "AC-D10",
+        "AC-S01",
+        "AC-S02",
+        "AC-S03",
+        "AC-S04",
+        "AC-S05",
+        "AC-L01",
+        "AC-L02",
+        "AC-L03",
+        "AC-L04",
+        "AC-L05",
+        "AC-L06",
+        "AC-L07",
+        "AC-L08",
+        "AC-L09",
+        "AC-L10",
+        "AC-C01",
+        "AC-C02",
+        "AC-C03",
+        "AC-C04",
+        "AC-C05",
+        "AC-C06",
+        "AC-R01",
+        "AC-R02",
+        "AC-R03",
+        "AC-R04",
+        "AC-R05",
+        "AC-R06",
+        "AC-M01",
+        "AC-M02",
+        "AC-M03",
+        "AC-M04",
+        "AC-M05",
+        "AC-M06",
+        "AC-M07",
+        "AC-M08",
+        "AC-M09",
+        "AC-P01",
+        "AC-P02",
+        "AC-P03",
+        "AC-P04",
+        "AC-P05",
+        "AC-P06",
+        "AC-P07",
+        "AC-P08",
+        "AC-O01",
+        "AC-O02",
+        "AC-O03",
+        "AC-O04",
+        "AC-O05",
+        "AC-O06",
+        "AC-O07",
+        "AC-O08"
+      ],
+      "requires_gates": [
+        "VAL-02",
+        "VAL-03",
+        "VAL-04",
+        "VAL-05",
+        "VAL-06",
+        "VAL-08",
+        "VAL-10"
+      ],
+      "requires_work_packages": [
+        "WP-17",
+        "WP-19"
+      ],
+      "scope": "One owner-approved publication or coupled MigrationUnit; no AI/voice/phone channel required."
+    },
+    {
+      "id": "mature-email",
+      "parents": [
+        "email-pilot"
+      ],
+      "required_criteria": [
+        "AC-W01",
+        "AC-W02",
+        "AC-W03",
+        "AC-W04",
+        "AC-W05",
+        "AC-W06",
+        "AC-W07",
+        "AC-W08",
+        "AC-W09",
+        "AC-W10",
+        "AC-W11",
+        "AC-W12"
+      ],
+      "requires_gates": [],
+      "requires_work_packages": [
+        "WP-22",
+        "WP-23",
+        "WP-24",
+        "WP-33"
+      ],
+      "scope": "Email/portfolio, sequences, automations and complete non-AI operator UX."
+    },
+    {
+      "id": "assisted-workspace",
+      "parents": [
+        "mature-email"
+      ],
+      "required_criteria": [
+        "AC-A01",
+        "AC-A02",
+        "AC-A03",
+        "AC-A04",
+        "AC-A05",
+        "AC-A06",
+        "AC-I01",
+        "AC-I02",
+        "AC-I03",
+        "AC-I04",
+        "AC-I05",
+        "AC-I06",
+        "AC-I07",
+        "AC-I08",
+        "AC-I09",
+        "AC-I17",
+        "AC-I18",
+        "AC-I19",
+        "AC-I24",
+        "AC-I25",
+        "AC-I26",
+        "AC-I27",
+        "AC-I28",
+        "AC-I30"
+      ],
+      "requires_gates": [
+        "VAL-09"
+      ],
+      "requires_work_packages": [
+        "WP-25",
+        "WP-26",
+        "WP-27"
+      ],
+      "scope": "Built-in textual assistance; all manual workflows remain complete."
+    },
+    {
+      "id": "external-agent",
+      "parents": [
+        "assisted-workspace"
+      ],
+      "required_criteria": [
+        "AC-I10",
+        "AC-I11",
+        "AC-I12",
+        "AC-I13",
+        "AC-I14",
+        "AC-I15",
+        "AC-I16",
+        "AC-I29"
+      ],
+      "requires_gates": [
+        "VAL-11",
+        "VAL-08"
+      ],
+      "requires_work_packages": [
+        "WP-28",
+        "WP-29",
+        "WP-31"
+      ],
+      "scope": "Registered delegated external tools and qualified computer-use sessions."
+    },
+    {
+      "id": "voice",
+      "parents": [
+        "assisted-workspace"
+      ],
+      "required_criteria": [
+        "AC-I20",
+        "AC-I21",
+        "AC-I22",
+        "AC-I23",
+        "AC-I24"
+      ],
+      "requires_gates": [
+        "VAL-12"
+      ],
+      "requires_work_packages": [
+        "WP-30"
+      ],
+      "scope": "Explicit PTT voice with text/manual fallback; not always-on listening."
+    },
+    {
+      "id": "onsite",
+      "parents": [
+        "mature-email"
+      ],
+      "required_criteria": [
+        "AC-X01",
+        "AC-X02",
+        "AC-X03",
+        "AC-X04"
+      ],
+      "requires_gates": [
+        "VAL-02",
+        "VAL-07"
+      ],
+      "requires_work_packages": [
+        "WP-34"
+      ],
+      "scope": "Qualified contextual or verified known-recipient placements."
+    },
+    {
+      "id": "push",
+      "parents": [
+        "mature-email"
+      ],
+      "required_criteria": [
+        "AC-X05",
+        "AC-X06",
+        "AC-X07",
+        "AC-X08"
+      ],
+      "requires_gates": [
+        "VAL-07"
+      ],
+      "requires_work_packages": [
+        "WP-35"
+      ],
+      "scope": "One explicitly requested qualified web push use case."
+    },
+    {
+      "id": "cross-channel",
+      "parents": [
+        "onsite",
+        "push"
+      ],
+      "required_criteria": [
+        "AC-X09",
+        "AC-X10",
+        "AC-X11",
+        "AC-X12"
+      ],
+      "requires_gates": [
+        "VAL-07",
+        "VAL-08"
+      ],
+      "requires_work_packages": [
+        "WP-36",
+        "WP-37"
+      ],
+      "scope": "Approved choose-one/companion/fallback plans, not send-everywhere."
+    },
+    {
+      "id": "phone-or-native-extension",
+      "parents": [
+        "cross-channel"
+      ],
+      "required_criteria": [
+        "AC-X13",
+        "AC-X14",
+        "AC-X15"
+      ],
+      "requires_gates": [
+        "VAL-02",
+        "VAL-07"
+      ],
+      "requires_work_packages": [
+        "WP-38"
+      ],
+      "scope": "Follow-on bounded implementation task required after qualification; no channel enabled by this study alone."
+    }
+  ],
+  "rule": "All enabled profiles and transitive parents must pass. Actual provider/channel-specific nonapplicability requires explicit reviewed rationale; core invariants cannot be waived."
+}

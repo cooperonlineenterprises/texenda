@@ -1,0 +1,307 @@
+{
+  "schema_version": "1.0",
+  "authority": "REFERENCE ONLY",
+  "coverage": "TURN-INDEXED PARTIAL RECONSTRUCTION; NOT A COMPLETE VERBATIM TRANSCRIPT",
+  "records": [
+    {
+      "id": "T001",
+      "role": "user",
+      "title": "Initial product question",
+      "preservation": "verbatim short message",
+      "body": "Could I build my own, simpler ConvertKit alternative?",
+      "exact_excerpt": null,
+      "timestamp": "not exported",
+      "unabridged": true
+    },
+    {
+      "id": "T002",
+      "role": "assistant",
+      "title": "Initial email-platform proposal",
+      "preservation": "faithful abridged reconstruction",
+      "body": "Recommended a focused internally operated email audience/automation application rather than cloning Kit. Proposed contacts/tags/segments/forms/broadcasts/sequences/automations; consent, suppressions, webhooks and deliverability as foundational. Delivery delegated to Resend or SES behind an adapter; no self-hosted SMTP network. Proposed TypeScript/Next.js/PostgreSQL, events, central send gate and later bounded AI. Broader audience-engine/multi-channel possibilities were exploratory, not initial feature commitments.",
+      "exact_excerpt": "You build the marketing application. You do not build the mail-delivery infrastructure.",
+      "timestamp": "not exported",
+      "unabridged": false
+    },
+    {
+      "id": "T003",
+      "role": "user",
+      "title": "Payload question",
+      "preservation": "verbatim short message",
+      "body": "Could we use Payload CMS as the frontend?",
+      "exact_excerpt": null,
+      "timestamp": "not exported",
+      "unabridged": true
+    },
+    {
+      "id": "T004",
+      "role": "assistant",
+      "title": "Payload architecture",
+      "preservation": "faithful abridged reconstruction",
+      "body": "Recommended Payload as more than the frontend: administration, auth/access, schemas/APIs, content and application framework, with a separate explicit audience domain. Suggested custom views for campaigns, audience and automations, PostgreSQL and Payload Jobs. Warned against allowing hooks to become an implicit automation engine. Later formal closure refined table ownership and separate production roles.",
+      "exact_excerpt": "Payload remains the application platform. Our domain model remains the email platform.",
+      "timestamp": "not exported",
+      "unabridged": false
+    },
+    {
+      "id": "T005",
+      "role": "user",
+      "title": "Portfolio requirement",
+      "preservation": "verbatim short message",
+      "body": "Could we set it up to use this across all our web properties including: onehappyhousewife.com, homeschoolpickle.com, endlesspopcorn.com, brewologist.com, cooperonlineenterprises.com, stavium.ai, etc.?",
+      "exact_excerpt": null,
+      "timestamp": "not exported",
+      "unabridged": true
+    },
+    {
+      "id": "T006",
+      "role": "assistant",
+      "title": "Multi-property model",
+      "preservation": "faithful abridged reconstruction",
+      "body": "Recommended a centralized organization with independent brand/workspace contexts, domains as properties rather than tenants, canonical identity with scoped brand relationships, independent publications/consent and sender identities. Existing websites need not migrate to Payload. Cross-brand insights were possibilities, not implied permission. Later clarification made these secondary to email operations.",
+      "exact_excerpt": "Identity can be global. Permission should remain contextual.",
+      "timestamp": "not exported",
+      "unabridged": false
+    },
+    {
+      "id": "T007",
+      "role": "user",
+      "title": "Open-source additions",
+      "preservation": "verbatim short message",
+      "body": "Are there any other open source tools that would be useful to add to the tech stack?",
+      "exact_excerpt": null,
+      "timestamp": "not exported",
+      "unabridged": true
+    },
+    {
+      "id": "T008",
+      "role": "assistant",
+      "title": "Open-source assessment",
+      "preservation": "faithful abridged reconstruction",
+      "body": "Favored React Email/editor, Mailpit, OpenTelemetry and potentially separate Umami; Payload Jobs initially, PostgreSQL queue escalation if needed. Deferred ClickHouse, Valkey, Svix, workflow engines and GrowthBook. Studied Plunk/listmonk/Mautic as references, not overlapping embedded authorities. This was exploratory dependency advice; the formal baseline later deferred Umami and qualified editor/provider choices.",
+      "exact_excerpt": "Add an external system only where it replaces a genuinely difficult generic infrastructure capability.",
+      "timestamp": "not exported",
+      "unabridged": false
+    },
+    {
+      "id": "T009",
+      "role": "user",
+      "title": "Scalable Kit replacement design directive",
+      "preservation": "faithful abridged reconstruction",
+      "body": "Requested a coherent practical design across product boundary, portfolio hierarchy, identity versus permission, modular architecture, technology validation, OSS reuse, canonical data/events, segmentation, sending, automations, deliverability, operator UX, measured scalability, recovery/testing, implementation phases and governing decisions. Explicitly required simplicity, deterministic correctness, one source of truth, replaceable infrastructure and no enterprise suite.",
+      "exact_excerpt": "Simple by default.",
+      "timestamp": "not exported",
+      "unabridged": false
+    },
+    {
+      "id": "T010",
+      "role": "assistant",
+      "title": "Initial complete system proposal",
+      "preservation": "faithful abridged reconstruction",
+      "body": "Produced a modular-monolith design with web and worker roles, PostgreSQL domain authority, Payload draft/admin infrastructure, snapshots/live eligibility, semantic delivery keys, explicit unknown provider acceptance, outbox/inbox, versioned sequences/automations, staged migration and acceptance. That analysis was superseded on precise state vocabulary and one-executor/journal/reconsent semantics by the later exact closure files included in this package.",
+      "exact_excerpt": "Queues wake up work; they do not define business truth.",
+      "timestamp": "not exported",
+      "unabridged": false
+    },
+    {
+      "id": "T011",
+      "role": "user",
+      "title": "First naming inquiry",
+      "preservation": "faithful abridged reconstruction",
+      "body": "Requested identity discovery before candidate generation, product truth, semantic territories, structural analogies, candidate families, linguistic/competitive screening, direct comparisons, naming architecture and a defensible winner without retrofitted etymology.",
+      "exact_excerpt": "Do not begin by generating names.",
+      "timestamp": "not exported",
+      "unabridged": false
+    },
+    {
+      "id": "T012",
+      "role": "assistant",
+      "title": "Texenda initially selected",
+      "preservation": "faithful abridged reconstruction",
+      "body": "Selected Texenda using weaving/composition/text/context roots, but overweighted portfolio-wide identity and contextual brand relationships. Compared Nectenda, Fovenda and Contexenda. Recommended an audience/messaging descriptor and separate technical names, with legal/domain clearance still outstanding. Historical public research is not a current clearance certificate.",
+      "exact_excerpt": "I would name it Texenda.",
+      "timestamp": "not exported",
+      "unabridged": false
+    },
+    {
+      "id": "T013",
+      "role": "user",
+      "title": "Corrected email-centered product emphasis",
+      "preservation": "verbatim short message",
+      "body": "Would you still prefer Texenda even with the fact that this is primarily focused on email marketing and not the cross brand relationships? These cross brand connections are a nicety but, as it stands, probably a rarely utilized feature. Would this change the recommendation, or not?",
+      "exact_excerpt": null,
+      "timestamp": "not exported",
+      "unabridged": true
+    },
+    {
+      "id": "T014",
+      "role": "assistant",
+      "title": "Reopened the name",
+      "preservation": "faithful abridged reconstruction",
+      "body": "Acknowledged that architectural elegance had been overweighted. Demoted Texenda from declared winner to strong candidate and elevated correspondence, continuity, publication, address and cultivation. Cross-property identity remained a useful architectural advantage, not the public identity driver.",
+      "exact_excerpt": "The product exists to make sustained audience communication simple.",
+      "timestamp": "not exported",
+      "unabridged": false
+    },
+    {
+      "id": "T015",
+      "role": "user",
+      "title": "Reopened email naming directive",
+      "preservation": "faithful abridged reconstruction",
+      "body": "Required naming the actual everyday email audience and automation product rather than secondary cross-brand architecture. Requested reconstructed primary/secondary/implementation/future layers, mechanisms/territories, genuinely new challengers to Texenda, renewed Fovenda evaluation, current collisions and final comparative decision without incumbent bias.",
+      "exact_excerpt": "Name the product users actually depend on, not the architecture that makes the product elegant.",
+      "timestamp": "not exported",
+      "unabridged": false
+    },
+    {
+      "id": "T016",
+      "role": "assistant",
+      "title": "Texenda survives email reconsideration",
+      "preservation": "faithful abridged reconstruction",
+      "body": "Reconfirmed Texenda on composition of audience, permission, content and timing into sustained written communication, compared Subscripta/Epistela/Fovenda/Sequenda and others. Identified Xenda/PiXENDA as material near-name concerns. Recommendation remained conditional on formal public clearance; no legal clearance performed.",
+      "exact_excerpt": "It composes audience, permission, content, and timing into sustained written communication.",
+      "timestamp": "not exported",
+      "unabridged": false
+    },
+    {
+      "id": "T017",
+      "role": "user",
+      "title": "Omnichannel expansion inquiry",
+      "preservation": "faithful abridged reconstruction",
+      "body": "Requested the smallest coherent expansion of the existing email-led platform for solopreneurs/teams ≤5: qualified channels, recipient pressure/preferences, coordination across brands, bounded AI, progressive disclosure, domain evolution, operating burden, explicit non-goals, governing decisions and staged roadmap. Required testing whether abstraction can absorb complexity instead of assuming more channels are better.",
+      "exact_excerpt": "Abstract complexity; do not conceal consequences.",
+      "timestamp": "not exported",
+      "unabridged": false
+    },
+    {
+      "id": "T018",
+      "role": "assistant",
+      "title": "Accepted email-led selective-channel direction",
+      "preservation": "faithful abridged reconstruction",
+      "body": "Recommended email core, onsite as first adjacent surface, qualified web push after pilot, SMS/WhatsApp only for actual audience/market/operational value and apps only if real. Added communication versus representation versus delivery, one primary outbound per occurrence, pressure/equivalence/expiry, current preferences, typed content variants and deterministic routing. Preserved global identity without pooled permission and existing modular monolith. AI drafts/configures through typed proposals; no independent authority. Latest closure later fixed exact states and safety numeric defaults.",
+      "exact_excerpt": "One primary outbound channel per communication occurrence.",
+      "timestamp": "not exported",
+      "unabridged": false
+    },
+    {
+      "id": "T019",
+      "role": "user",
+      "title": "Evolved product naming directive",
+      "preservation": "faithful abridged reconstruction",
+      "body": "Requested renewed naming against email-led coordinated audience communication, recipient restraint and relevant channel selection. Reassessed Texenda/composition versus fit/cadence/stewardship/permission, direct scenario tournament at 90/60/40% email and current near-name collisions. Required no forced winner.",
+      "exact_excerpt": "Shared identity does not create shared permission.",
+      "timestamp": "not exported",
+      "unabridged": false
+    },
+    {
+      "id": "T020",
+      "role": "assistant",
+      "title": "Working name but no final public commitment",
+      "preservation": "faithful abridged reconstruction",
+      "body": "Found Texenda semantically strengthened by composition of a full communication experience, but expanded scope increased Xenda/PiXENDA proximity. Congrua/Aptanda/Temperanda offered useful fit/measure concepts but were commercially compromised; Fovenda lacked mechanism breadth. Kept Texenda as provisional working name pending formal clearance, with measured appropriateness as next territory only if needed. No subsequent product decision requires a renaming exercise.",
+      "exact_excerpt": "Texenda remains the provisional semantic leader and working name, subject to formal confusing-similarity clearance.",
+      "timestamp": "not exported",
+      "unabridged": false
+    },
+    {
+      "id": "T021",
+      "role": "user",
+      "title": "Product and technical decision-closure directive",
+      "preservation": "faithful abridged reconstruction",
+      "body": "Requested two authoritative implementation bridge artifacts, preserving accepted direction and resolving upstream semantics before infrastructure. Required five exact decision statuses; product/domain/architecture/consent/coordination/execution/content/AI/UX/stack/security sections plus observability, migration, phased implementation, objective acceptance and ADRs. External validation and deferred triggers must remain explicit; no fabricated readiness.",
+      "exact_excerpt": "Freeze decisions that materially constrain product behavior, data semantics, trust boundaries, architecture, or implementation sequencing.",
+      "timestamp": "not exported",
+      "unabridged": false
+    },
+    {
+      "id": "T022",
+      "role": "assistant",
+      "title": "Delivered closure artifacts",
+      "preservation": "faithful abridged reconstruction",
+      "body": "Delivered Texenda_Product_Technical_Foundation_v1.0.md and Texenda_Implementation_Roadmap_Acceptance_v1.0.md plus ZIP. The actual bytes of all three are included unchanged in prior-artifacts. Reported22 invariants,95 acceptance checks,27 ADRs,10 external gates, and11 phases. Clarified one executor, distinct denials, independent recovery journal, fenced Kit authority, model/provider reversible defaults. No app implementation or production tests were claimed.",
+      "exact_excerpt": "The decision-closure baseline is complete.",
+      "timestamp": "not exported",
+      "unabridged": false
+    },
+    {
+      "id": "T023",
+      "role": "user",
+      "title": "Human- and agent-native interaction directive",
+      "preservation": "faithful abridged reconstruction",
+      "body": "Requested voice-forward multimodal operation with visual durable workspace, built-in AI intent discovery, external agent tools/CU, shared authoritative commands, durable goals/instructions/plans/proposals/approvals, exact authority separation, adaptive/expert agent surfaces, delegated credentials, accessibility, multimodal continuity, risk-based approval, truthful explanations, proactive restraint, technology impact, security/failure behavior and staged implementation. No chat-state authority or AI prerequisite for core platform.",
+      "exact_excerpt": "Conversation is an interface, not the source of truth.",
+      "timestamp": "not exported",
+      "unabridged": false
+    },
+    {
+      "id": "T024",
+      "role": "assistant",
+      "title": "Human and agent interaction architecture",
+      "preservation": "faithful abridged reconstruction",
+      "body": "Recommended object-first, voice-forward multimodal experience: human visual/keyboard/search workspace, chat/voice for intent, durable Goal/Proposal/Approval, explicit session refs and editable preferences, shared command/query registry, API/tools first for agents, optional browser tools, semantic Inspect and computer-use fallback. PTT default, no always-on microphone/raw audio retention, provisional transcripts not executable, exact accessible human approval. Added distinct AgentPrincipal/DelegationGrant/AgentRun, optimistic concurrency, SSE/WebRTC reversible, no vector DB/framework by default. AI failures fall back to complete manual UX. These later decisions are consolidated normatively in the handoff interaction chapter.",
+      "exact_excerpt": "Humans express outcomes; Texenda makes the underlying structure legible when needed. Agents receive structure directly. Neither receives an alternate path around authority.",
+      "timestamp": "not exported",
+      "unabridged": false
+    },
+    {
+      "id": "T025",
+      "role": "user",
+      "title": "Complete implementation handoff directive",
+      "preservation": "faithful abridged reconstruction",
+      "body": "Requested this downloadable ZIP of nonoverlapping implementation-ready artifacts and actual minimal local harness for an Astra team. Required product/domain/UX/interaction/security/operations, schema/command/state guidance, work packages/DAG, Kit authority transfer, acceptance/release, ADRs, current-aware model tiering with no fabricated access, bounded contexts, handoffs/review/recovery, source archive and consistency validation. Explicitly prohibited implementing the entire application. Final response should be a concise package summary and ZIP link, noting validation gates, actual blockers and first WP.",
+      "exact_excerpt": "Do not implement the entire Texenda application as part of this task.",
+      "timestamp": "not exported",
+      "unabridged": false
+    },
+    {
+      "id": "T026",
+      "role": "assistant",
+      "title": "Packaging progress",
+      "preservation": "verbatim short message",
+      "body": "I’ll consolidate the authoritative specifications, build Astra’s work packages and local harness, then validate the ZIP. I’ll distinguish unavailable source material from unresolved decisions.",
+      "exact_excerpt": null,
+      "timestamp": "not exported",
+      "unabridged": true
+    },
+    {
+      "id": "T027",
+      "role": "assistant",
+      "title": "Packaging progress",
+      "preservation": "verbatim short message",
+      "body": "The foundation already settles some easy-to-miss rules: one executor for sequences and automations, separate withdrawals and safety suppressions, and recovery records outside database backups. I’ll preserve those distinctions.",
+      "exact_excerpt": null,
+      "timestamp": "not exported",
+      "unabridged": true
+    },
+    {
+      "id": "T028",
+      "role": "assistant",
+      "title": "Packaging progress",
+      "preservation": "verbatim short message",
+      "body": "I verified the public Codex model documentation, but this environment has no Codex executable or authenticated target roster. I’ll include current model candidates while leaving dispatch mappings unverified until Astra checks the actual runtime. The harness will enforce task dependencies and review gates; it won’t treat a model recommendation as proof of access.",
+      "exact_excerpt": null,
+      "timestamp": "not exported",
+      "unabridged": true
+    },
+    {
+      "id": "T029",
+      "role": "assistant",
+      "title": "Packaging progress",
+      "preservation": "verbatim short message",
+      "body": "The implementation plan now has 44 bounded work packages. It puts recipient coordination before the first live send, and proposal/approval handling before writable AI. I’m adding the harness controls for edit leases, evidence-bound reviews, and safe resumption after interrupted work.",
+      "exact_excerpt": null,
+      "timestamp": "not exported",
+      "unabridged": true
+    },
+    {
+      "id": "T030",
+      "role": "assistant",
+      "title": "Packaging validation progress",
+      "preservation": "verbatim short message",
+      "body": "The specifications and harness are assembled, and the first structural check passes. I’m now testing the package from a clean directory.\n\nThe archive limitation is explicit: the prior closure files are preserved byte-for-byte, but no complete conversation export was available. The package includes a turn-by-turn reference record with abridged entries clearly labeled—not a purported verbatim transcript.",
+      "exact_excerpt": null,
+      "timestamp": "not exported",
+      "unabridged": true
+    }
+  ]
+}

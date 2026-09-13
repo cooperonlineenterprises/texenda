@@ -1,0 +1,1307 @@
+{
+  "schema_version": "1.0",
+  "commands": [
+    {
+      "name": "SearchObjects",
+      "module": "interaction",
+      "risk_class": "C0",
+      "required_capability": "object.read",
+      "actor_types": [
+        "human",
+        "builtin_assistant",
+        "external_agent"
+      ],
+      "input_required_fields": [
+        "query",
+        "workspace_id"
+      ],
+      "output_fields": [
+        "objects",
+        "cursor"
+      ],
+      "approval": "none",
+      "preview": true,
+      "expected_revision_required": false,
+      "request_idempotency_required": false,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/canonical-domain.md"
+      ]
+    },
+    {
+      "name": "GetObject",
+      "module": "interaction",
+      "risk_class": "C0",
+      "required_capability": "object.read",
+      "actor_types": [
+        "human",
+        "builtin_assistant",
+        "external_agent"
+      ],
+      "input_required_fields": [
+        "object_ref"
+      ],
+      "output_fields": [
+        "object",
+        "revision",
+        "allowed_actions"
+      ],
+      "approval": "none",
+      "preview": true,
+      "expected_revision_required": false,
+      "request_idempotency_required": false,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/canonical-domain.md"
+      ]
+    },
+    {
+      "name": "ExplainDecision",
+      "module": "operations",
+      "risk_class": "C0",
+      "required_capability": "decision.read",
+      "actor_types": [
+        "human",
+        "builtin_assistant",
+        "external_agent"
+      ],
+      "input_required_fields": [
+        "decision_receipt_id"
+      ],
+      "output_fields": [
+        "reason_codes",
+        "evidence_refs",
+        "redactions"
+      ],
+      "approval": "none",
+      "preview": true,
+      "expected_revision_required": false,
+      "request_idempotency_required": false,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/canonical-domain.md"
+      ]
+    },
+    {
+      "name": "ListAttentionItems",
+      "module": "operations",
+      "risk_class": "C0",
+      "required_capability": "operations.read",
+      "actor_types": [
+        "human",
+        "builtin_assistant",
+        "external_agent"
+      ],
+      "input_required_fields": [
+        "workspace_id"
+      ],
+      "output_fields": [
+        "items",
+        "watermark"
+      ],
+      "approval": "none",
+      "preview": true,
+      "expected_revision_required": false,
+      "request_idempotency_required": false,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/canonical-domain.md"
+      ]
+    },
+    {
+      "name": "CreateGoal",
+      "module": "interaction",
+      "risk_class": "C1",
+      "required_capability": "goal.draft",
+      "actor_types": [
+        "human",
+        "builtin_assistant",
+        "external_agent"
+      ],
+      "input_required_fields": [
+        "workspace_id",
+        "title",
+        "outcome"
+      ],
+      "output_fields": [
+        "goal_ref"
+      ],
+      "approval": "none",
+      "preview": true,
+      "expected_revision_required": false,
+      "request_idempotency_required": true,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/canonical-domain.md"
+      ]
+    },
+    {
+      "name": "UpdateGoal",
+      "module": "interaction",
+      "risk_class": "C1",
+      "required_capability": "goal.draft",
+      "actor_types": [
+        "human",
+        "builtin_assistant",
+        "external_agent"
+      ],
+      "input_required_fields": [
+        "goal_id",
+        "patch"
+      ],
+      "output_fields": [
+        "goal_ref"
+      ],
+      "approval": "none",
+      "preview": true,
+      "expected_revision_required": true,
+      "request_idempotency_required": true,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/canonical-domain.md"
+      ]
+    },
+    {
+      "name": "SetAssistantPreference",
+      "module": "interaction",
+      "risk_class": "C1",
+      "required_capability": "preference.self",
+      "actor_types": [
+        "human",
+        "builtin_assistant"
+      ],
+      "input_required_fields": [
+        "key",
+        "value"
+      ],
+      "output_fields": [
+        "preference_ref"
+      ],
+      "approval": "none",
+      "preview": true,
+      "expected_revision_required": true,
+      "request_idempotency_required": true,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/canonical-domain.md"
+      ],
+      "constraints": [
+        "Only explicit acting-user presentation/work-style preference",
+        "Never modifies recipient preference, role, approval requirement or safety policy"
+      ]
+    },
+    {
+      "name": "RequestSubscription",
+      "module": "permission",
+      "risk_class": "C2",
+      "required_capability": "subscription.request",
+      "actor_types": [
+        "public_form",
+        "human",
+        "trusted_integration"
+      ],
+      "input_required_fields": [
+        "form_or_publication_ref",
+        "endpoint",
+        "proof_context"
+      ],
+      "output_fields": [
+        "request_id",
+        "generic_status"
+      ],
+      "approval": "none",
+      "preview": true,
+      "expected_revision_required": false,
+      "request_idempotency_required": true,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/canonical-domain.md"
+      ]
+    },
+    {
+      "name": "ConfirmSubscription",
+      "module": "permission",
+      "risk_class": "C4",
+      "required_capability": "subscription.confirm",
+      "actor_types": [
+        "recipient_capability"
+      ],
+      "input_required_fields": [
+        "confirmation_token"
+      ],
+      "output_fields": [
+        "generic_status"
+      ],
+      "approval": "none",
+      "preview": true,
+      "expected_revision_required": false,
+      "request_idempotency_required": true,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/canonical-domain.md"
+      ]
+    },
+    {
+      "name": "WithdrawPermission",
+      "module": "permission",
+      "risk_class": "C4",
+      "required_capability": "permission.restrict",
+      "actor_types": [
+        "recipient_capability",
+        "human",
+        "trusted_integration"
+      ],
+      "input_required_fields": [
+        "scope",
+        "request_evidence"
+      ],
+      "output_fields": [
+        "restriction_receipt"
+      ],
+      "approval": "none",
+      "preview": true,
+      "expected_revision_required": false,
+      "request_idempotency_required": true,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/canonical-domain.md"
+      ]
+    },
+    {
+      "name": "PlaceSafetyHold",
+      "module": "permission",
+      "risk_class": "C4",
+      "required_capability": "safety.restrict",
+      "actor_types": [
+        "human",
+        "worker",
+        "trusted_integration"
+      ],
+      "input_required_fields": [
+        "scope",
+        "reason",
+        "evidence"
+      ],
+      "output_fields": [
+        "hold_ref"
+      ],
+      "approval": "none",
+      "preview": true,
+      "expected_revision_required": false,
+      "request_idempotency_required": true,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/canonical-domain.md"
+      ]
+    },
+    {
+      "name": "ReleaseSafetyHold",
+      "module": "permission",
+      "risk_class": "C4",
+      "required_capability": "safety.release",
+      "actor_types": [
+        "human"
+      ],
+      "input_required_fields": [
+        "hold_id",
+        "evidence"
+      ],
+      "output_fields": [
+        "hold_ref"
+      ],
+      "approval": "privileged_human",
+      "preview": true,
+      "expected_revision_required": true,
+      "request_idempotency_required": true,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/canonical-domain.md"
+      ]
+    },
+    {
+      "name": "CreateSegmentDraft",
+      "module": "segmentation",
+      "risk_class": "C1",
+      "required_capability": "segment.draft",
+      "actor_types": [
+        "human",
+        "builtin_assistant",
+        "external_agent"
+      ],
+      "input_required_fields": [
+        "workspace_id",
+        "expression"
+      ],
+      "output_fields": [
+        "segment_ref"
+      ],
+      "approval": "none",
+      "preview": true,
+      "expected_revision_required": false,
+      "request_idempotency_required": true,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/canonical-domain.md"
+      ]
+    },
+    {
+      "name": "UpdateSegmentDraft",
+      "module": "segmentation",
+      "risk_class": "C1",
+      "required_capability": "segment.draft",
+      "actor_types": [
+        "human",
+        "builtin_assistant",
+        "external_agent"
+      ],
+      "input_required_fields": [
+        "segment_id",
+        "expression"
+      ],
+      "output_fields": [
+        "segment_ref"
+      ],
+      "approval": "none",
+      "preview": true,
+      "expected_revision_required": true,
+      "request_idempotency_required": true,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/canonical-domain.md"
+      ]
+    },
+    {
+      "name": "PreviewSegment",
+      "module": "segmentation",
+      "risk_class": "C0",
+      "required_capability": "audience.read",
+      "actor_types": [
+        "human",
+        "builtin_assistant",
+        "external_agent"
+      ],
+      "input_required_fields": [
+        "segment_revision"
+      ],
+      "output_fields": [
+        "count",
+        "coverage",
+        "sample",
+        "exclusions"
+      ],
+      "approval": "none",
+      "preview": true,
+      "expected_revision_required": false,
+      "request_idempotency_required": false,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/canonical-domain.md"
+      ]
+    },
+    {
+      "name": "AssignTag",
+      "module": "audience",
+      "risk_class": "C2",
+      "required_capability": "audience.tag",
+      "actor_types": [
+        "human",
+        "builtin_assistant",
+        "external_agent",
+        "trusted_integration",
+        "worker"
+      ],
+      "input_required_fields": [
+        "profile_id",
+        "tag_id"
+      ],
+      "output_fields": [
+        "assignment_ref"
+      ],
+      "approval": "consequence_dependent; exact approval before newly triggered external or ongoing effects",
+      "preview": true,
+      "expected_revision_required": false,
+      "request_idempotency_required": true,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/canonical-domain.md"
+      ],
+      "constraints": [
+        "Compute transitive effects before commit",
+        "AI/external agent may prepare; live mutation requires explicit approved scope/envelope",
+        "Already approved deterministic integration/workflow may act only within its fixed authority"
+      ]
+    },
+    {
+      "name": "SetAttribute",
+      "module": "audience",
+      "risk_class": "C2",
+      "required_capability": "audience.attribute",
+      "actor_types": [
+        "human",
+        "builtin_assistant",
+        "external_agent",
+        "trusted_integration",
+        "worker"
+      ],
+      "input_required_fields": [
+        "profile_id",
+        "field_id",
+        "value",
+        "source"
+      ],
+      "output_fields": [
+        "attribute_ref"
+      ],
+      "approval": "consequence_dependent; exact approval before newly triggered external or ongoing effects",
+      "preview": true,
+      "expected_revision_required": true,
+      "request_idempotency_required": true,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/canonical-domain.md"
+      ],
+      "constraints": [
+        "Compute transitive effects before commit",
+        "AI/external agent may prepare; live mutation requires explicit approved scope/envelope",
+        "Already approved deterministic integration/workflow may act only within its fixed authority"
+      ]
+    },
+    {
+      "name": "StageImport",
+      "module": "audience",
+      "risk_class": "C2",
+      "required_capability": "audience.import",
+      "actor_types": [
+        "human",
+        "builtin_assistant",
+        "external_agent",
+        "trusted_integration"
+      ],
+      "input_required_fields": [
+        "workspace_id",
+        "source_ref",
+        "mapping"
+      ],
+      "output_fields": [
+        "import_ref",
+        "dry_run"
+      ],
+      "approval": "none",
+      "preview": true,
+      "expected_revision_required": false,
+      "request_idempotency_required": true,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/canonical-domain.md"
+      ]
+    },
+    {
+      "name": "CommitImport",
+      "module": "audience",
+      "risk_class": "C3",
+      "required_capability": "audience.import.commit",
+      "actor_types": [
+        "human"
+      ],
+      "input_required_fields": [
+        "import_id",
+        "mapping_revision",
+        "preview_digest"
+      ],
+      "output_fields": [
+        "import_run"
+      ],
+      "approval": "exact_human_approval",
+      "preview": true,
+      "expected_revision_required": true,
+      "request_idempotency_required": true,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/canonical-domain.md"
+      ]
+    },
+    {
+      "name": "RequestExport",
+      "module": "audience",
+      "risk_class": "C4",
+      "required_capability": "pii.export",
+      "actor_types": [
+        "human"
+      ],
+      "input_required_fields": [
+        "workspace_id",
+        "selection_ref",
+        "format"
+      ],
+      "output_fields": [
+        "export_job"
+      ],
+      "approval": "privileged_human",
+      "preview": true,
+      "expected_revision_required": false,
+      "request_idempotency_required": true,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/canonical-domain.md"
+      ]
+    },
+    {
+      "name": "CreateCommunicationDraft",
+      "module": "content",
+      "risk_class": "C1",
+      "required_capability": "content.draft",
+      "actor_types": [
+        "human",
+        "builtin_assistant",
+        "external_agent"
+      ],
+      "input_required_fields": [
+        "workspace_id",
+        "purpose",
+        "content"
+      ],
+      "output_fields": [
+        "communication_ref"
+      ],
+      "approval": "none",
+      "preview": true,
+      "expected_revision_required": false,
+      "request_idempotency_required": true,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/canonical-domain.md"
+      ]
+    },
+    {
+      "name": "UpdateRepresentationDraft",
+      "module": "content",
+      "risk_class": "C1",
+      "required_capability": "content.draft",
+      "actor_types": [
+        "human",
+        "builtin_assistant",
+        "external_agent"
+      ],
+      "input_required_fields": [
+        "representation_id",
+        "content_patch"
+      ],
+      "output_fields": [
+        "representation_ref"
+      ],
+      "approval": "none",
+      "preview": true,
+      "expected_revision_required": true,
+      "request_idempotency_required": true,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/canonical-domain.md"
+      ]
+    },
+    {
+      "name": "PublishCommunication",
+      "module": "content",
+      "risk_class": "C3",
+      "required_capability": "content.publish",
+      "actor_types": [
+        "human"
+      ],
+      "input_required_fields": [
+        "communication_revision",
+        "representation_revisions",
+        "preflight_ref"
+      ],
+      "output_fields": [
+        "approved_revision"
+      ],
+      "approval": "exact_human_approval",
+      "preview": true,
+      "expected_revision_required": false,
+      "request_idempotency_required": true,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/canonical-domain.md"
+      ]
+    },
+    {
+      "name": "CreateCampaignDraft",
+      "module": "campaign",
+      "risk_class": "C1",
+      "required_capability": "campaign.draft",
+      "actor_types": [
+        "human",
+        "builtin_assistant",
+        "external_agent"
+      ],
+      "input_required_fields": [
+        "workspace_id",
+        "publication_id",
+        "communication_ref"
+      ],
+      "output_fields": [
+        "campaign_ref"
+      ],
+      "approval": "none",
+      "preview": true,
+      "expected_revision_required": false,
+      "request_idempotency_required": true,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/execution-semantics.md"
+      ]
+    },
+    {
+      "name": "UpdateCampaignDraft",
+      "module": "campaign",
+      "risk_class": "C2",
+      "required_capability": "campaign.draft",
+      "actor_types": [
+        "human",
+        "builtin_assistant",
+        "external_agent"
+      ],
+      "input_required_fields": [
+        "campaign_id",
+        "patch"
+      ],
+      "output_fields": [
+        "campaign_ref"
+      ],
+      "approval": "none",
+      "preview": true,
+      "expected_revision_required": true,
+      "request_idempotency_required": true,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/execution-semantics.md"
+      ]
+    },
+    {
+      "name": "PreviewCampaign",
+      "module": "campaign",
+      "risk_class": "C0",
+      "required_capability": "campaign.read",
+      "actor_types": [
+        "human",
+        "builtin_assistant",
+        "external_agent"
+      ],
+      "input_required_fields": [
+        "campaign_revision"
+      ],
+      "output_fields": [
+        "preview",
+        "consequence_digest",
+        "coverage"
+      ],
+      "approval": "none",
+      "preview": true,
+      "expected_revision_required": false,
+      "request_idempotency_required": false,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/execution-semantics.md"
+      ]
+    },
+    {
+      "name": "ApproveCampaign",
+      "module": "campaign",
+      "risk_class": "C3",
+      "required_capability": "campaign.approve",
+      "actor_types": [
+        "human"
+      ],
+      "input_required_fields": [
+        "campaign_revision",
+        "preview_digest",
+        "ceilings"
+      ],
+      "output_fields": [
+        "approval_ref"
+      ],
+      "approval": "exact_human_approval",
+      "preview": true,
+      "expected_revision_required": false,
+      "request_idempotency_required": true,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/execution-semantics.md"
+      ]
+    },
+    {
+      "name": "ScheduleCampaign",
+      "module": "campaign",
+      "risk_class": "C3",
+      "required_capability": "campaign.schedule",
+      "actor_types": [
+        "human",
+        "approved_command_executor"
+      ],
+      "input_required_fields": [
+        "campaign_revision",
+        "approval_ref",
+        "schedule"
+      ],
+      "output_fields": [
+        "campaign_ref"
+      ],
+      "approval": "preapproved_exact_envelope",
+      "preview": true,
+      "expected_revision_required": true,
+      "request_idempotency_required": true,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/execution-semantics.md"
+      ],
+      "constraints": [
+        "Executor consumes exact approved capability; it does not impersonate human",
+        "Current authorizer permissions and approval binding revalidated"
+      ]
+    },
+    {
+      "name": "PauseScope",
+      "module": "operations",
+      "risk_class": "C2",
+      "required_capability": "operations.pause",
+      "actor_types": [
+        "human",
+        "worker"
+      ],
+      "input_required_fields": [
+        "scope",
+        "reason"
+      ],
+      "output_fields": [
+        "pause_receipt"
+      ],
+      "approval": "none",
+      "preview": true,
+      "expected_revision_required": false,
+      "request_idempotency_required": true,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/canonical-domain.md"
+      ]
+    },
+    {
+      "name": "CancelCampaign",
+      "module": "campaign",
+      "risk_class": "C3",
+      "required_capability": "campaign.cancel",
+      "actor_types": [
+        "human"
+      ],
+      "input_required_fields": [
+        "campaign_id",
+        "reason"
+      ],
+      "output_fields": [
+        "campaign_ref"
+      ],
+      "approval": "explicit_control",
+      "preview": true,
+      "expected_revision_required": true,
+      "request_idempotency_required": true,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/execution-semantics.md"
+      ]
+    },
+    {
+      "name": "ResolveCampaign",
+      "module": "campaign",
+      "risk_class": "C2",
+      "required_capability": "worker.resolve",
+      "actor_types": [
+        "worker"
+      ],
+      "input_required_fields": [
+        "campaign_revision"
+      ],
+      "output_fields": [
+        "resolution_ref"
+      ],
+      "approval": "none",
+      "preview": true,
+      "expected_revision_required": false,
+      "request_idempotency_required": true,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/execution-semantics.md"
+      ]
+    },
+    {
+      "name": "CreateWorkflowDraft",
+      "module": "workflow",
+      "risk_class": "C1",
+      "required_capability": "workflow.draft",
+      "actor_types": [
+        "human",
+        "builtin_assistant",
+        "external_agent"
+      ],
+      "input_required_fields": [
+        "workspace_id",
+        "kind",
+        "graph"
+      ],
+      "output_fields": [
+        "workflow_ref"
+      ],
+      "approval": "none",
+      "preview": true,
+      "expected_revision_required": false,
+      "request_idempotency_required": true,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/execution-semantics.md"
+      ]
+    },
+    {
+      "name": "SimulateWorkflow",
+      "module": "workflow",
+      "risk_class": "C0",
+      "required_capability": "workflow.read",
+      "actor_types": [
+        "human",
+        "builtin_assistant",
+        "external_agent"
+      ],
+      "input_required_fields": [
+        "workflow_revision",
+        "fixture_ref"
+      ],
+      "output_fields": [
+        "simulation"
+      ],
+      "approval": "none",
+      "preview": true,
+      "expected_revision_required": false,
+      "request_idempotency_required": false,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/execution-semantics.md"
+      ]
+    },
+    {
+      "name": "PublishAutomation",
+      "module": "workflow",
+      "risk_class": "C3",
+      "required_capability": "workflow.publish",
+      "actor_types": [
+        "human",
+        "approved_command_executor"
+      ],
+      "input_required_fields": [
+        "workflow_revision",
+        "simulation_ref",
+        "ceilings"
+      ],
+      "output_fields": [
+        "workflow_ref"
+      ],
+      "approval": "exact_human_approval",
+      "preview": true,
+      "expected_revision_required": false,
+      "request_idempotency_required": true,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/execution-semantics.md"
+      ],
+      "constraints": [
+        "Executor consumes exact approved capability; it does not impersonate human",
+        "Current authorizer permissions and approval binding revalidated"
+      ]
+    },
+    {
+      "name": "EnrollSequence",
+      "module": "workflow",
+      "risk_class": "C2",
+      "required_capability": "workflow.enroll",
+      "actor_types": [
+        "human",
+        "worker",
+        "trusted_integration"
+      ],
+      "input_required_fields": [
+        "profile_id",
+        "sequence_revision",
+        "occurrence_key"
+      ],
+      "output_fields": [
+        "execution_ref"
+      ],
+      "approval": "none",
+      "preview": true,
+      "expected_revision_required": false,
+      "request_idempotency_required": true,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/execution-semantics.md"
+      ]
+    },
+    {
+      "name": "CancelExecution",
+      "module": "workflow",
+      "risk_class": "C2",
+      "required_capability": "workflow.cancel",
+      "actor_types": [
+        "human",
+        "worker"
+      ],
+      "input_required_fields": [
+        "execution_id",
+        "reason"
+      ],
+      "output_fields": [
+        "execution_ref"
+      ],
+      "approval": "none",
+      "preview": true,
+      "expected_revision_required": false,
+      "request_idempotency_required": true,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/execution-semantics.md"
+      ]
+    },
+    {
+      "name": "RecordBusinessEvent",
+      "module": "integrations",
+      "risk_class": "C2",
+      "required_capability": "event.ingest",
+      "actor_types": [
+        "trusted_integration"
+      ],
+      "input_required_fields": [
+        "event_type",
+        "schema_version",
+        "source_event_id",
+        "subject",
+        "payload"
+      ],
+      "output_fields": [
+        "event_ref"
+      ],
+      "approval": "none",
+      "preview": true,
+      "expected_revision_required": false,
+      "request_idempotency_required": true,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/canonical-domain.md"
+      ]
+    },
+    {
+      "name": "DecideDelivery",
+      "module": "coordinator",
+      "risk_class": "C2",
+      "required_capability": "worker.decide",
+      "actor_types": [
+        "worker"
+      ],
+      "input_required_fields": [
+        "delivery_plan_id"
+      ],
+      "output_fields": [
+        "decision_ref"
+      ],
+      "approval": "none",
+      "preview": true,
+      "expected_revision_required": false,
+      "request_idempotency_required": true,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/execution-semantics.md"
+      ]
+    },
+    {
+      "name": "PrepareHandoff",
+      "module": "delivery",
+      "risk_class": "C3",
+      "required_capability": "worker.handoff",
+      "actor_types": [
+        "worker"
+      ],
+      "input_required_fields": [
+        "delivery_id",
+        "prepared_digest",
+        "journal_ref",
+        "fence"
+      ],
+      "output_fields": [
+        "permit_ref"
+      ],
+      "approval": "approved_business_authority",
+      "preview": true,
+      "expected_revision_required": false,
+      "request_idempotency_required": true,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/execution-semantics.md"
+      ]
+    },
+    {
+      "name": "RecordProviderOutcome",
+      "module": "delivery",
+      "risk_class": "C2",
+      "required_capability": "provider.evidence",
+      "actor_types": [
+        "worker"
+      ],
+      "input_required_fields": [
+        "provider_account_id",
+        "inbox_ref",
+        "observation"
+      ],
+      "output_fields": [
+        "delivery_facts"
+      ],
+      "approval": "none",
+      "preview": true,
+      "expected_revision_required": false,
+      "request_idempotency_required": true,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/execution-semantics.md"
+      ]
+    },
+    {
+      "name": "CreateProposal",
+      "module": "interaction",
+      "risk_class": "C1",
+      "required_capability": "proposal.draft",
+      "actor_types": [
+        "human",
+        "builtin_assistant",
+        "external_agent"
+      ],
+      "input_required_fields": [
+        "workspace_id",
+        "base_revisions",
+        "command_items",
+        "assumptions"
+      ],
+      "output_fields": [
+        "proposal_ref"
+      ],
+      "approval": "none",
+      "preview": true,
+      "expected_revision_required": false,
+      "request_idempotency_required": true,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/canonical-domain.md"
+      ]
+    },
+    {
+      "name": "ValidateProposal",
+      "module": "interaction",
+      "risk_class": "C0",
+      "required_capability": "proposal.read",
+      "actor_types": [
+        "human",
+        "builtin_assistant",
+        "external_agent"
+      ],
+      "input_required_fields": [
+        "proposal_revision"
+      ],
+      "output_fields": [
+        "validation",
+        "consequence_preview"
+      ],
+      "approval": "none",
+      "preview": true,
+      "expected_revision_required": false,
+      "request_idempotency_required": false,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/canonical-domain.md"
+      ]
+    },
+    {
+      "name": "ApproveProposal",
+      "module": "interaction",
+      "risk_class": "C3",
+      "required_capability": "proposal.approve",
+      "actor_types": [
+        "human"
+      ],
+      "input_required_fields": [
+        "proposal_revision",
+        "digest",
+        "envelope"
+      ],
+      "output_fields": [
+        "approval_ref"
+      ],
+      "approval": "exact_human_approval",
+      "preview": true,
+      "expected_revision_required": false,
+      "request_idempotency_required": true,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/canonical-domain.md"
+      ]
+    },
+    {
+      "name": "CommitProposal",
+      "module": "interaction",
+      "risk_class": "C3",
+      "required_capability": "proposal.commit",
+      "actor_types": [
+        "human",
+        "builtin_assistant",
+        "external_agent"
+      ],
+      "input_required_fields": [
+        "proposal_revision",
+        "approval_ref"
+      ],
+      "output_fields": [
+        "per_item_results"
+      ],
+      "approval": "preapproved_exact_envelope",
+      "preview": true,
+      "expected_revision_required": false,
+      "request_idempotency_required": true,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/canonical-domain.md"
+      ],
+      "constraints": [
+        "C4 human-only actions forbidden in AI/agent committable bundles",
+        "Committer initiator and human authorizer recorded separately",
+        "Execute only validated exact approved commands; no inherited broad human session"
+      ]
+    },
+    {
+      "name": "CreateDelegationDraft",
+      "module": "agent_access",
+      "risk_class": "C2",
+      "required_capability": "agent.delegate",
+      "actor_types": [
+        "human"
+      ],
+      "input_required_fields": [
+        "agent_id",
+        "requested_scope"
+      ],
+      "output_fields": [
+        "delegation_draft"
+      ],
+      "approval": "none",
+      "preview": true,
+      "expected_revision_required": false,
+      "request_idempotency_required": true,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/canonical-domain.md"
+      ]
+    },
+    {
+      "name": "ActivateDelegation",
+      "module": "agent_access",
+      "risk_class": "C4",
+      "required_capability": "agent.delegate.activate",
+      "actor_types": [
+        "human"
+      ],
+      "input_required_fields": [
+        "delegation_revision",
+        "scope",
+        "expires_at",
+        "ceilings"
+      ],
+      "output_fields": [
+        "grant_ref"
+      ],
+      "approval": "privileged_human",
+      "preview": true,
+      "expected_revision_required": false,
+      "request_idempotency_required": true,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/canonical-domain.md"
+      ]
+    },
+    {
+      "name": "RevokeDelegation",
+      "module": "agent_access",
+      "risk_class": "C4",
+      "required_capability": "agent.delegate.revoke",
+      "actor_types": [
+        "human"
+      ],
+      "input_required_fields": [
+        "grant_id",
+        "reason"
+      ],
+      "output_fields": [
+        "revocation_receipt"
+      ],
+      "approval": "explicit_control",
+      "preview": true,
+      "expected_revision_required": false,
+      "request_idempotency_required": true,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/canonical-domain.md"
+      ]
+    },
+    {
+      "name": "TransferSendingAuthority",
+      "module": "migration",
+      "risk_class": "C4",
+      "required_capability": "migration.transfer",
+      "actor_types": [
+        "human"
+      ],
+      "input_required_fields": [
+        "migration_unit",
+        "source_stop_evidence",
+        "snapshot",
+        "mapping_revision",
+        "new_epoch"
+      ],
+      "output_fields": [
+        "authority_ref"
+      ],
+      "approval": "privileged_human",
+      "preview": true,
+      "expected_revision_required": false,
+      "request_idempotency_required": true,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/canonical-domain.md"
+      ]
+    },
+    {
+      "name": "ReleaseRecoveryHold",
+      "module": "operations",
+      "risk_class": "C4",
+      "required_capability": "recovery.release",
+      "actor_types": [
+        "human"
+      ],
+      "input_required_fields": [
+        "epoch",
+        "journal_coverage",
+        "reconciliation_ref",
+        "review_ref"
+      ],
+      "output_fields": [
+        "epoch_ref"
+      ],
+      "approval": "privileged_human",
+      "preview": true,
+      "expected_revision_required": false,
+      "request_idempotency_required": true,
+      "status": "AUTHORITATIVE DECISION",
+      "domain_refs": [
+        "03-domain-and-architecture/canonical-domain.md"
+      ]
+    }
+  ]
+}

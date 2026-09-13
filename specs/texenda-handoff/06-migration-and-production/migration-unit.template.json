@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "example_only": true,
+  "migration_unit_id": null,
+  "owner": null,
+  "source_accounts": [],
+  "publications": [],
+  "coupled_rules": [],
+  "state": "discovery",
+  "target_send_epoch": null,
+  "source_snapshot": null,
+  "negative_watermark": null,
+  "cursor_proofs": [],
+  "unresolved_cohorts": [],
+  "legacy_withdrawal_routes": [],
+  "authority_transfer_approval": null,
+  "canary_ceiling": null,
+  "observation_started_at": null,
+  "ordinary_cycles": 0,
+  "completion_evidence": []
+}

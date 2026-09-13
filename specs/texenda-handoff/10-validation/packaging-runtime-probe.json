@@ -1,0 +1,41 @@
+{
+  "observed_at": "2026-09-05T17:33:23.334938+00:00",
+  "platform": "Linux",
+  "tools": {
+    "codex": {
+      "present": false,
+      "path": null,
+      "version": null
+    },
+    "node": {
+      "present": true,
+      "path": "/opt/nvm/versions/node/v22.16.0/bin/node",
+      "version": "v22.16.0",
+      "exit_code": 0
+    },
+    "pnpm": {
+      "present": false,
+      "path": null,
+      "version": null
+    },
+    "git": {
+      "present": true,
+      "path": "/usr/bin/git",
+      "version": "git version 2.47.3",
+      "exit_code": 0
+    },
+    "docker": {
+      "present": false,
+      "path": null,
+      "version": null
+    },
+    "python3": {
+      "present": true,
+      "path": "/opt/pyvenv/bin/python3",
+      "version": "Python 3.13.5",
+      "exit_code": 0
+    }
+  },
+  "authenticated_model_roster": "UNVERIFIED",
+  "note": "Tool presence/public docs do not establish model entitlement, capability or price. No credential/environment variables read."
+}

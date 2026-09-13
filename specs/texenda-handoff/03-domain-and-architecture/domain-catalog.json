@@ -1,0 +1,348 @@
+{
+  "classification": "DERIVED INDEX; canonical-domain.md owns meaning",
+  "concepts": [
+    {
+      "concept": "Organization",
+      "purpose_scope_authority": "Top-level ownership/isolation boundary; Texenda authority",
+      "identity_lifecycle": "Opaque ID; active/paused/closed. One seeded organization initially",
+      "relationships": "Owns brands, identity directory and organization policies",
+      "source": "03-domain-and-architecture/canonical-domain.md"
+    },
+    {
+      "concept": "Workspace / Brand",
+      "purpose_scope_authority": "Operational and recognizable sender boundary; organization-scoped",
+      "identity_lifecycle": "Opaque ID; unique slug per organization; draft/active/paused/archived",
+      "relationships": "Owns properties/publications, profiles, campaigns and sender bindings",
+      "source": "03-domain-and-architecture/canonical-domain.md"
+    },
+    {
+      "concept": "Property",
+      "purpose_scope_authority": "Acquisition/onsite/app surface; brand-scoped",
+      "identity_lifecycle": "ID; unique verified origin/namespace binding; pending_verification/active/disabled",
+      "relationships": "One owner workspace; multiple publications/placements allowed",
+      "source": "03-domain-and-architecture/canonical-domain.md"
+    },
+    {
+      "concept": "Publication",
+      "purpose_scope_authority": "Named recurring communication promise, purpose and frequency; brand-scoped",
+      "identity_lifecycle": "ID; unique workspace slug; draft/active/paused/retired",
+      "relationships": "Versioned disclosure/cadence; channel offerings; subscriptions",
+      "source": "03-domain-and-architecture/canonical-domain.md"
+    },
+    {
+      "concept": "Person",
+      "purpose_scope_authority": "Canonical operational subject, not infallible proof of a human",
+      "identity_lifecycle": "ID; active/restricted/merged/erasure_pending/erased",
+      "relationships": "Profiles and verified/pseudonymous identities; historical IDs preserved via restricted redirects",
+      "source": "03-domain-and-architecture/canonical-domain.md"
+    },
+    {
+      "concept": "Identity",
+      "purpose_scope_authority": "Organization-scoped identifier or trusted account subject; Texenda authority for its binding",
+      "identity_lifecycle": "`(organization, kind, issuer_namespace, normalized_value)` unique when applicable; unverified/verified/disputed/retired",
+      "relationships": "Distinct from an endpoint; bindings have evidence and validity intervals",
+      "source": "03-domain-and-architecture/canonical-domain.md"
+    },
+    {
+      "concept": "WorkspaceProfile",
+      "purpose_scope_authority": "A person's relationship to one brand",
+      "identity_lifecycle": "Unique `(organization, workspace, person)`; active/archived/restricted",
+      "relationships": "Tags, attributes, subscriptions and brand-local facts",
+      "source": "03-domain-and-architecture/canonical-domain.md"
+    },
+    {
+      "concept": "Subscription",
+      "purpose_scope_authority": "Current membership in one publication and one explicitly offered channel",
+      "identity_lifecycle": "Unique `(profile, publication, channel)`; pending/active/withdrawn/ended",
+      "relationships": "Current projection of consent events; may have eligible endpoint grants; active does not imply deliverable",
+      "source": "03-domain-and-architecture/canonical-domain.md"
+    },
+    {
+      "concept": "Audience",
+      "purpose_scope_authority": "User-facing view of relevant profiles",
+      "identity_lifecycle": "Not a second list database or independent permission object",
+      "relationships": "Publication members or a Segment result",
+      "source": "03-domain-and-architecture/canonical-domain.md"
+    },
+    {
+      "concept": "Tag",
+      "purpose_scope_authority": "Brand-local classification, never permission",
+      "identity_lifecycle": "ID + workspace-unique slug; active/retired",
+      "relationships": "Unique assignment per profile/tag",
+      "source": "03-domain-and-architecture/canonical-domain.md"
+    },
+    {
+      "concept": "Attribute",
+      "purpose_scope_authority": "Typed, scoped data with provenance",
+      "identity_lifecycle": "Definition ID + version; value per subject/field; unset/value/invalid",
+      "relationships": "Person-global fields explicitly allowlisted; most values brand-local",
+      "source": "03-domain-and-architecture/canonical-domain.md"
+    },
+    {
+      "concept": "Segment",
+      "purpose_scope_authority": "Versioned selection expression",
+      "identity_lifecycle": "ID + immutable revision; draft/published/retired",
+      "relationships": "Workspace-local fields, subscriptions and event predicates",
+      "source": "03-domain-and-architecture/canonical-domain.md"
+    },
+    {
+      "concept": "Channel",
+      "purpose_scope_authority": "Stable family of communication semantics",
+      "identity_lifecycle": "Code: `email`, `onsite`, `web_push`, later qualified codes; supported/disabled",
+      "relationships": "Not interchangeable transports",
+      "source": "03-domain-and-architecture/canonical-domain.md"
+    },
+    {
+      "concept": "CommunicationEndpoint",
+      "purpose_scope_authority": "Addressable destination or installed subscription",
+      "identity_lifecycle": "ID; unique channel-specific fingerprint in its valid namespace; unverified/ready/temporarily_unreachable/blocked/expired/retired",
+      "relationships": "Email address; push endpoint+keys+origin; phone/program binding; app token; onsite session has different semantics",
+      "source": "03-domain-and-architecture/canonical-domain.md"
+    },
+    {
+      "concept": "EndpointBinding",
+      "purpose_scope_authority": "Evidence tying an endpoint to a subject/context",
+      "identity_lifecycle": "ID + validity interval; proposed/verified/disputed/retired/shared",
+      "relationships": "A reachable endpoint alone cannot merge subjects or grant marketing permission",
+      "source": "03-domain-and-architecture/canonical-domain.md"
+    },
+    {
+      "concept": "ConsentEvent",
+      "purpose_scope_authority": "Append-only evidence of request, confirmation, grant, withdrawal or correction",
+      "identity_lifecycle": "Event ID + monotonically applied subject/scope version; recorded/invalidated-by-correction",
+      "relationships": "Original source, source time, received time, disclosure version and proof reference",
+      "source": "03-domain-and-architecture/canonical-domain.md"
+    },
+    {
+      "concept": "PermissionGrant",
+      "purpose_scope_authority": "Effective affirmative authority for a specific brand/publication-or-purpose/channel and endpoint binding",
+      "identity_lifecycle": "ID; pending/granted/revoked/expired; explicit validity",
+      "relationships": "Derived atomically from consent evidence; cannot be edited by raw CRUD",
+      "source": "03-domain-and-architecture/canonical-domain.md"
+    },
+    {
+      "concept": "Withdrawal",
+      "purpose_scope_authority": "Recipient restriction at publication, brand, organization, channel and/or endpoint scope",
+      "identity_lifecycle": "ID; effective from authoritative receipt/application; active; scoped fresh reconsent may supersede only explicitly acknowledged restrictions",
+      "relationships": "Not the same as endpoint invalidity or a provider block",
+      "source": "03-domain-and-architecture/canonical-domain.md"
+    },
+    {
+      "concept": "Preference",
+      "purpose_scope_authority": "Delivery order, cadence, pause, quiet hours, language; never creates authority",
+      "identity_lifecycle": "Subject/context + key + revision; active/expired",
+      "relationships": "Restricts eligible alternatives; more restrictive applicable limits prevail",
+      "source": "03-domain-and-architecture/canonical-domain.md"
+    },
+    {
+      "concept": "Suppression",
+      "purpose_scope_authority": "Operational/safety prohibition independent of subscription membership",
+      "identity_lifecycle": "ID; scope+reason+origin; active/released/expired for temporary holds",
+      "relationships": "Endpoint invalidity, complaint safety hold, provider block, admin hold; release requires its own authorized evidence",
+      "source": "03-domain-and-architecture/canonical-domain.md"
+    },
+    {
+      "concept": "CommunicationPolicy",
+      "purpose_scope_authority": "Versioned rules and limits",
+      "identity_lifecycle": "ID/version/effective interval; draft/active/retired",
+      "relationships": "Recipient restrictions and current safety rules can tighten prior campaign authority",
+      "source": "03-domain-and-architecture/canonical-domain.md"
+    },
+    {
+      "concept": "CommunicationIntent / Communication",
+      "purpose_scope_authority": "One brand's purpose, approved facts, CTA and constraints; the brief and its concrete approved revisions are one concept",
+      "identity_lifecycle": "ID + immutable revision; draft/review/approved/stale/retired",
+      "relationships": "One brand and publication/purpose; channel representations; equivalence family",
+      "source": "03-domain-and-architecture/canonical-domain.md"
+    },
+    {
+      "concept": "ChannelRepresentation",
+      "purpose_scope_authority": "Channel-specific expression of one approved communication",
+      "identity_lifecycle": "ID + revision + channel; draft/approved/stale/retired",
+      "relationships": "Pinned content/theme/renderer/fact references; not auto-synchronized after approval",
+      "source": "03-domain-and-architecture/canonical-domain.md"
+    },
+    {
+      "concept": "Campaign",
+      "purpose_scope_authority": "Controlled one-time audience communication program",
+      "identity_lifecycle": "ID + revision; lifecycle in section 8",
+      "relationships": "Selection spec, sending authority, content, approval, schedule and recipient records",
+      "source": "03-domain-and-architecture/canonical-domain.md"
+    },
+    {
+      "concept": "Broadcast",
+      "purpose_scope_authority": "The V1 user-facing campaign type",
+      "identity_lifecycle": "Not a second lifecycle or duplicate data model",
+      "relationships": "Campaign with one communication occurrence",
+      "source": "03-domain-and-architecture/canonical-domain.md"
+    },
+    {
+      "concept": "Sequence",
+      "purpose_scope_authority": "Restricted linear workflow optimized for operators",
+      "identity_lifecycle": "Definition ID/revision; draft/published/paused/retired",
+      "relationships": "Ordered send/wait/condition steps; no separate orchestration engine",
+      "source": "03-domain-and-architecture/canonical-domain.md"
+    },
+    {
+      "concept": "SequenceEnrollment",
+      "purpose_scope_authority": "Membership/reentry identity for a profile in a sequence program",
+      "identity_lifecycle": "Unique configured enrollment key; active/completed/cancelled/held projections",
+      "relationships": "Links one authoritative execution; does not own a second step cursor",
+      "source": "03-domain-and-architecture/canonical-domain.md"
+    },
+    {
+      "concept": "Automation",
+      "purpose_scope_authority": "Event-driven bounded workflow definition",
+      "identity_lifecycle": "Definition ID/revision; draft/published/paused/retired",
+      "relationships": "Triggers and typed graph; sequence is a restricted definition kind",
+      "source": "03-domain-and-architecture/canonical-domain.md"
+    },
+    {
+      "concept": "AutomationExecution",
+      "purpose_scope_authority": "Durable authoritative cursor/context for either workflow kind",
+      "identity_lifecycle": "Execution ID + trigger/enrollment key; ready/running/waiting/paused/completed/cancelled/expired/quarantined",
+      "relationships": "Current node, due time, pinned version, step executions, waits and delivery references",
+      "source": "03-domain-and-architecture/canonical-domain.md"
+    },
+    {
+      "concept": "CampaignRecipient",
+      "purpose_scope_authority": "Frozen selection evidence for an occurrence",
+      "identity_lifecycle": "Unique campaign occurrence/profile; selection fields immutable after finalization",
+      "relationships": "Operational delivery progress is separate or an explicitly mutable projection",
+      "source": "03-domain-and-architecture/canonical-domain.md"
+    },
+    {
+      "concept": "DeliveryPlan",
+      "purpose_scope_authority": "One subject's coordinated communication occurrence",
+      "identity_lifecycle": "Unique semantic occurrence claim; candidate/ready/deferred/reserved/in_flight/satisfied/skipped/cancelled/expired/held",
+      "relationships": "Approved routes, decisions, reservations, one primary outbound delivery by default",
+      "source": "03-domain-and-architecture/canonical-domain.md"
+    },
+    {
+      "concept": "Delivery",
+      "purpose_scope_authority": "One intended effect on one channel/endpoint",
+      "identity_lifecycle": "Permanent semantic key; prepared/in_flight/accepted/rejected/acceptance_unknown/cancelled",
+      "relationships": "Exact payload/representation; attempts and independent outcome facts",
+      "source": "03-domain-and-architecture/canonical-domain.md"
+    },
+    {
+      "concept": "DeliveryAttempt",
+      "purpose_scope_authority": "One HTTP/transport interaction",
+      "identity_lifecycle": "Attempt ID; prepared/submitted/accepted/definitely_not_accepted/unknown",
+      "relationships": "Stable request or batch key and digest; attempts are not communications",
+      "source": "03-domain-and-architecture/canonical-domain.md"
+    },
+    {
+      "concept": "SenderIdentity",
+      "purpose_scope_authority": "Recognizable, verified sender within a brand and channel program",
+      "identity_lifecycle": "ID; pending/verified/enabled/paused/revoked",
+      "relationships": "From/reply-to/domain or phone program; provider qualification and legal-sender map",
+      "source": "03-domain-and-architecture/canonical-domain.md"
+    },
+    {
+      "concept": "ProviderAccount",
+      "purpose_scope_authority": "Credential, region/team/account and quota boundary",
+      "identity_lifecycle": "ID; unqualified/qualified/degraded/paused/revoked",
+      "relationships": "Multiple sender bindings only if approved; does not own contact truth",
+      "source": "03-domain-and-architecture/canonical-domain.md"
+    },
+    {
+      "concept": "ProviderCapability",
+      "purpose_scope_authority": "Evidence of limits and behavior for a qualified route",
+      "identity_lifecycle": "Provider+API/version+account/region+qualification timestamp",
+      "relationships": "Idempotency retention, batching, status retrieval, suppression and revocation scope, pricing, markets",
+      "source": "03-domain-and-architecture/canonical-domain.md"
+    },
+    {
+      "concept": "Goal",
+      "purpose_scope_authority": "Human-owned durable outcome and related-object context",
+      "identity_lifecycle": "Organization/workspace + opaque ID + revision; active/paused/achieved/abandoned/superseded",
+      "relationships": "Not permission, workflow cursor, verified purchase or autonomous mission",
+      "source": "03-domain-and-architecture/canonical-domain.md#58-interaction-and-delegated-work-extensions-later-accepted-direction"
+    },
+    {
+      "concept": "GoalConstraint",
+      "purpose_scope_authority": "Typed bounds of an intended goal or proposal",
+      "identity_lifecycle": "Goal revision + constraint key; proposed/active/retired",
+      "relationships": "Free text is not executable policy",
+      "source": "03-domain-and-architecture/canonical-domain.md#58-interaction-and-delegated-work-extensions-later-accepted-direction"
+    },
+    {
+      "concept": "AssistantPreference",
+      "purpose_scope_authority": "Explicit user preference for explanation/style/defaults",
+      "identity_lifecycle": "Principal + optional workspace + key/revision; active/retired",
+      "relationships": "Cannot weaken organization or recipient policy",
+      "source": "03-domain-and-architecture/canonical-domain.md#58-interaction-and-delegated-work-extensions-later-accepted-direction"
+    },
+    {
+      "concept": "Proposal",
+      "purpose_scope_authority": "Reviewable non-authoritative command candidates",
+      "identity_lifecycle": "ID + immutable ProposalRevision; author/initiator/context; draft/ready_for_review/stale/approved/rejected/superseded",
+      "relationships": "“Approved” does not mean executed or indefinitely authorized",
+      "source": "03-domain-and-architecture/canonical-domain.md#58-interaction-and-delegated-work-extensions-later-accepted-direction"
+    },
+    {
+      "concept": "ApprovalRequest",
+      "purpose_scope_authority": "Required approver, scope and immutable candidate envelope",
+      "identity_lifecycle": "Proposal revision + request ID; pending/satisfied/expired/cancelled",
+      "relationships": "Not an approval record",
+      "source": "03-domain-and-architecture/canonical-domain.md#58-interaction-and-delegated-work-extensions-later-accepted-direction"
+    },
+    {
+      "concept": "Approval / ApprovalRecord",
+      "purpose_scope_authority": "Actual authenticated authority grant bound to a digest/envelope",
+      "identity_lifecycle": "ID; principal, assurance, time, expiry, use policy; granted/consumed/invalidated/expired",
+      "relationships": "AI or chat history cannot create it; same Approval concept as campaigns",
+      "source": "03-domain-and-architecture/canonical-domain.md#58-interaction-and-delegated-work-extensions-later-accepted-direction"
+    },
+    {
+      "concept": "InteractionSession",
+      "purpose_scope_authority": "Scoped conversational continuity and object refs",
+      "identity_lifecycle": "Principal + session ID; active/ended/expired",
+      "relationships": "Not domain truth or long-lived delegation",
+      "source": "03-domain-and-architecture/canonical-domain.md#58-interaction-and-delegated-work-extensions-later-accepted-direction"
+    },
+    {
+      "concept": "AgentPrincipal",
+      "purpose_scope_authority": "Identifiable built-in intermediary or external machine principal",
+      "identity_lifecycle": "Organization + opaque ID + issuer/client binding; pending/active/suspended/revoked",
+      "relationships": "Not the human, not a recipient Person, not a provider credential",
+      "source": "03-domain-and-architecture/canonical-domain.md#58-interaction-and-delegated-work-extensions-later-accepted-direction"
+    },
+    {
+      "concept": "DelegationGrant",
+      "purpose_scope_authority": "Narrow authorization from a human/authority to an agent",
+      "identity_lifecycle": "ID + revision, principal chain, workspace/resources/commands, budget/time; proposed/active/expired/revoked",
+      "relationships": "Cannot exceed delegator's current effective authority or approve itself",
+      "source": "03-domain-and-architecture/canonical-domain.md#58-interaction-and-delegated-work-extensions-later-accepted-direction"
+    },
+    {
+      "concept": "AgentRun",
+      "purpose_scope_authority": "Bounded operational run and checkpoints under a grant",
+      "identity_lifecycle": "ID + delegation ID + invocation key; admitted/running/waiting_approval/paused/completed/failed/cancelled/expired",
+      "relationships": "Not AutomationExecution; no second messaging workflow runtime",
+      "source": "03-domain-and-architecture/canonical-domain.md#58-interaction-and-delegated-work-extensions-later-accepted-direction"
+    },
+    {
+      "concept": "Task/ProposedAction",
+      "purpose_scope_authority": "A typed command item inside Proposal or an attention item",
+      "identity_lifecycle": "Proposal revision + item ID; derived from proposal/command result",
+      "relationships": "Not a new project-management task system",
+      "source": "03-domain-and-architecture/canonical-domain.md#58-interaction-and-delegated-work-extensions-later-accepted-direction"
+    },
+    {
+      "concept": "Plan",
+      "purpose_scope_authority": "Ordered proposal commands and linked goal artifacts",
+      "identity_lifecycle": "Versioned proposal data initially; proposal lifecycle",
+      "relationships": "A general planning subsystem is deferred",
+      "source": "03-domain-and-architecture/canonical-domain.md#58-interaction-and-delegated-work-extensions-later-accepted-direction"
+    },
+    {
+      "concept": "Result/Outcome",
+      "purpose_scope_authority": "Recorded command/execution result or observed business outcome",
+      "identity_lifecycle": "Command/run/receipt/event IDs; facts plus correction events",
+      "relationships": "Observation is not causation",
+      "source": "03-domain-and-architecture/canonical-domain.md#58-interaction-and-delegated-work-extensions-later-accepted-direction"
+    }
+  ]
+}

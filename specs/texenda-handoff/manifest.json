@@ -1,0 +1,633 @@
+{
+  "package_version": "1.1.0",
+  "artifact_count": 86,
+  "artifacts": [
+    {
+      "path": "01-foundation/adr-index.md",
+      "purpose": "ADR index",
+      "authority_level": "DERIVED",
+      "primary_consumers": "Astra; implementation/review agents",
+      "dependencies": [
+        "01-foundation/adr-set.md"
+      ]
+    },
+    {
+      "path": "01-foundation/adr-set.md",
+      "purpose": "Decision record / ADR set",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Astra; implementation/review agents",
+      "dependencies": []
+    },
+    {
+      "path": "01-foundation/authority-register.json",
+      "purpose": "authority-register",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Astra; validators",
+      "dependencies": []
+    },
+    {
+      "path": "01-foundation/external-validation-gates.json",
+      "purpose": "external-validation-gates",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Astra; validators",
+      "dependencies": []
+    },
+    {
+      "path": "01-foundation/invariant-index.json",
+      "purpose": "invariant-index",
+      "authority_level": "DERIVED",
+      "primary_consumers": "Astra; validators",
+      "dependencies": [
+        "01-foundation/invariants.md"
+      ]
+    },
+    {
+      "path": "01-foundation/invariants.md",
+      "purpose": "Governing principles and non-bypassable invariants",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Astra; implementation/review agents",
+      "dependencies": []
+    },
+    {
+      "path": "01-foundation/product-and-brand.md",
+      "purpose": "Product definition and boundary",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Astra; implementation/review agents",
+      "dependencies": []
+    },
+    {
+      "path": "01-foundation/section-map.md",
+      "purpose": "Foundation and roadmap section map",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Astra; implementation/review agents",
+      "dependencies": []
+    },
+    {
+      "path": "02-product-and-ux/interaction-architecture.md",
+      "purpose": "Human- and agent-native interaction architecture",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Astra; implementation/review agents",
+      "dependencies": []
+    },
+    {
+      "path": "02-product-and-ux/operator-workflows.md",
+      "purpose": "UX and information architecture",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Astra; implementation/review agents",
+      "dependencies": []
+    },
+    {
+      "path": "03-domain-and-architecture/canonical-domain.md",
+      "purpose": "Canonical domain and data model",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Astra; implementation/review agents",
+      "dependencies": []
+    },
+    {
+      "path": "03-domain-and-architecture/channels.md",
+      "purpose": "Channel strategy and abstraction",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Astra; implementation/review agents",
+      "dependencies": []
+    },
+    {
+      "path": "03-domain-and-architecture/command-catalog.json",
+      "purpose": "command-catalog",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Astra; validators",
+      "dependencies": []
+    },
+    {
+      "path": "03-domain-and-architecture/content.md",
+      "purpose": "Content and message model",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Astra; implementation/review agents",
+      "dependencies": []
+    },
+    {
+      "path": "03-domain-and-architecture/contracts/command-envelope.schema.json",
+      "purpose": "command-envelope.schema",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Astra; validators",
+      "dependencies": []
+    },
+    {
+      "path": "03-domain-and-architecture/contracts/example-command.json",
+      "purpose": "example-command",
+      "authority_level": "ILLUSTRATIVE SYNTHETIC EXAMPLE",
+      "primary_consumers": "Astra; validators",
+      "dependencies": []
+    },
+    {
+      "path": "03-domain-and-architecture/domain-catalog.json",
+      "purpose": "domain-catalog",
+      "authority_level": "DERIVED INDEX",
+      "primary_consumers": "Astra; validators",
+      "dependencies": []
+    },
+    {
+      "path": "03-domain-and-architecture/execution-semantics.md",
+      "purpose": "Campaign, sequence, and automation semantics",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Astra; implementation/review agents",
+      "dependencies": []
+    },
+    {
+      "path": "03-domain-and-architecture/permission-and-coordination.md",
+      "purpose": "Consent, eligibility, suppression, preferences, and recipient experience",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Astra; implementation/review agents",
+      "dependencies": []
+    },
+    {
+      "path": "03-domain-and-architecture/provider-integrations.md",
+      "purpose": "Provider and integration architecture",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Astra; implementation/review agents",
+      "dependencies": []
+    },
+    {
+      "path": "03-domain-and-architecture/schema-and-contract-guide.md",
+      "purpose": "Data/schema and application contract implementation guide",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Astra; implementation/review agents",
+      "dependencies": []
+    },
+    {
+      "path": "03-domain-and-architecture/state-machines.json",
+      "purpose": "state-machines",
+      "authority_level": "DERIVED INDEX",
+      "primary_consumers": "Astra; validators",
+      "dependencies": []
+    },
+    {
+      "path": "03-domain-and-architecture/system-architecture.md",
+      "purpose": "Product architecture",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Astra; implementation/review agents",
+      "dependencies": []
+    },
+    {
+      "path": "03-domain-and-architecture/technology-baseline.md",
+      "purpose": "Technology stack and infrastructure baseline",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Astra; implementation/review agents",
+      "dependencies": []
+    },
+    {
+      "path": "04-security-governance-and-operations/ai-and-agent-authority.md",
+      "purpose": "AI operating model",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Astra; implementation/review agents",
+      "dependencies": []
+    },
+    {
+      "path": "04-security-governance-and-operations/observability.md",
+      "purpose": "Analytics and operational observability",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Astra; implementation/review agents",
+      "dependencies": []
+    },
+    {
+      "path": "04-security-governance-and-operations/runbooks.md",
+      "purpose": "Operational runbooks and accountable ownership",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Astra; implementation/review agents",
+      "dependencies": []
+    },
+    {
+      "path": "04-security-governance-and-operations/security-and-privacy.md",
+      "purpose": "Security, permissions, and governance",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Astra; implementation/review agents",
+      "dependencies": []
+    },
+    {
+      "path": "05-implementation/compatibility-manifest.template.json",
+      "purpose": "compatibility-manifest.template",
+      "authority_level": "TEMPLATE; NOT QUALIFICATION",
+      "primary_consumers": "Astra; validators",
+      "dependencies": []
+    },
+    {
+      "path": "05-implementation/repository-plan.md",
+      "purpose": "Repository layout, ownership and bootstrap plan",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Astra; implementation/review agents",
+      "dependencies": []
+    },
+    {
+      "path": "05-implementation/roadmap.md",
+      "purpose": "Dependency-ordered implementation and migration roadmap",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Astra; implementation/review agents",
+      "dependencies": []
+    },
+    {
+      "path": "05-implementation/work-breakdown.md",
+      "purpose": "Work-package catalog and dependency graph",
+      "authority_level": "DERIVED",
+      "primary_consumers": "Astra; implementation/review agents",
+      "dependencies": [
+        "05-implementation/work-packages.json"
+      ]
+    },
+    {
+      "path": "05-implementation/work-packages.json",
+      "purpose": "work-packages",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Astra; validators",
+      "dependencies": []
+    },
+    {
+      "path": "06-migration-and-production/acceptance-catalog.json",
+      "purpose": "acceptance-catalog",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Astra; validators",
+      "dependencies": []
+    },
+    {
+      "path": "06-migration-and-production/acceptance-plan.md",
+      "purpose": "Production acceptance criteria",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Astra; implementation/review agents",
+      "dependencies": []
+    },
+    {
+      "path": "06-migration-and-production/kit-migration.md",
+      "purpose": "Kit migration: fenced authority transfer",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Astra; implementation/review agents",
+      "dependencies": []
+    },
+    {
+      "path": "06-migration-and-production/migration-unit.template.json",
+      "purpose": "migration-unit.template",
+      "authority_level": "TEMPLATE",
+      "primary_consumers": "Astra; validators",
+      "dependencies": []
+    },
+    {
+      "path": "06-migration-and-production/release-evidence.template.json",
+      "purpose": "release-evidence.template",
+      "authority_level": "TEMPLATE",
+      "primary_consumers": "Astra; validators",
+      "dependencies": []
+    },
+    {
+      "path": "06-migration-and-production/release-plan.md",
+      "purpose": "Production release and evidence plan",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Astra; implementation/review agents",
+      "dependencies": []
+    },
+    {
+      "path": "06-migration-and-production/release-profiles.json",
+      "purpose": "release-profiles",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Astra; validators",
+      "dependencies": []
+    },
+    {
+      "path": "06-migration-and-production/workload-profile.template.json",
+      "purpose": "workload-profile.template",
+      "authority_level": "TEMPLATE",
+      "primary_consumers": "Astra; validators",
+      "dependencies": []
+    },
+    {
+      "path": "07-agent-orchestration/ASSIGNMENT.template.md",
+      "purpose": "Assignment — <WP-ID / bounded child>",
+      "authority_level": "TEMPLATE",
+      "primary_consumers": "Astra; implementation/review agents",
+      "dependencies": []
+    },
+    {
+      "path": "07-agent-orchestration/ORCHESTRATOR-START.md",
+      "purpose": "Orchestrator team-lead start prompt",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Astra lead; accountable human",
+      "dependencies": []
+    },
+    {
+      "path": "07-agent-orchestration/context-routing.json",
+      "purpose": "context-routing",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Astra; validators",
+      "dependencies": []
+    },
+    {
+      "path": "07-agent-orchestration/handoff-and-review.md",
+      "purpose": "Agent handoff, verification and recovery protocol",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Astra; implementation/review agents",
+      "dependencies": []
+    },
+    {
+      "path": "07-agent-orchestration/model-routing.json",
+      "purpose": "model-routing",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Astra; validators",
+      "dependencies": []
+    },
+    {
+      "path": "07-agent-orchestration/model-routing.md",
+      "purpose": "Operational model-routing policy",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Astra; implementation/review agents",
+      "dependencies": []
+    },
+    {
+      "path": "07-agent-orchestration/OWNER-EXECUTION-HANDOFF.md",
+      "purpose": "Owner execution-environment, permissions and initial production-priority handoff",
+      "authority_level": "OWNER-SUPPLIED EXECUTION CONTEXT",
+      "primary_consumers": "Astra; accountable human; implementation/review agents",
+      "dependencies": [
+        "README.md",
+        "DECISION-STATUS.md",
+        "07-agent-orchestration/ORCHESTRATOR-START.md"
+      ]
+    },
+    {
+      "path": "07-agent-orchestration/project-kernel.md",
+      "purpose": "Project kernel — always read",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Every agent and reviewer",
+      "dependencies": []
+    },
+    {
+      "path": "08-project-harness/README.md",
+      "purpose": "Project-local harness — executable coordination scaffold",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Astra; implementation/review agents",
+      "dependencies": []
+    },
+    {
+      "path": "08-project-harness/codex-config.toml.example",
+      "purpose": "REVERSIBLE DEFAULT. Review against the actual installed client before copying.",
+      "authority_level": "TEMPLATE",
+      "primary_consumers": "Runtime owner; Astra",
+      "dependencies": []
+    },
+    {
+      "path": "08-project-harness/harness.py",
+      "purpose": "Executable local task/dependency/lease/evidence coordinator; no agent runner or production authority",
+      "authority_level": "EXECUTABLE SCAFFOLD",
+      "primary_consumers": "Astra; human implementation lead",
+      "dependencies": [
+        "05-implementation/work-packages.json",
+        "07-agent-orchestration/context-routing.json"
+      ]
+    },
+    {
+      "path": "08-project-harness/install.py",
+      "purpose": "Safe local installer",
+      "authority_level": "EXECUTABLE SCAFFOLD",
+      "primary_consumers": "Astra; runtime owner",
+      "dependencies": []
+    },
+    {
+      "path": "08-project-harness/probe_runtime.py",
+      "purpose": "Safe local runtime presence/version probe; not authenticated roster",
+      "authority_level": "EXECUTABLE SCAFFOLD",
+      "primary_consumers": "Astra; runtime owner",
+      "dependencies": []
+    },
+    {
+      "path": "08-project-harness/root-AGENTS.md.template",
+      "purpose": "Texenda implementation instructions",
+      "authority_level": "TEMPLATE",
+      "primary_consumers": "Astra; implementation/review agents",
+      "dependencies": []
+    },
+    {
+      "path": "08-project-harness/schemas/evidence.schema.json",
+      "purpose": "evidence.schema",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Astra; validators",
+      "dependencies": []
+    },
+    {
+      "path": "08-project-harness/schemas/work-package.schema.json",
+      "purpose": "work-package.schema",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Astra; validators",
+      "dependencies": []
+    },
+    {
+      "path": "08-project-harness/templates/evidence.json",
+      "purpose": "evidence",
+      "authority_level": "TEMPLATE",
+      "primary_consumers": "Astra; validators",
+      "dependencies": []
+    },
+    {
+      "path": "08-project-harness/templates/roster.json",
+      "purpose": "roster",
+      "authority_level": "TEMPLATE",
+      "primary_consumers": "Astra; validators",
+      "dependencies": []
+    },
+    {
+      "path": "08-project-harness/tests/test_harness.py",
+      "purpose": "Synthetic unit tests for file-native coordinator, not product acceptance",
+      "authority_level": "EXECUTABLE SCAFFOLD",
+      "primary_consumers": "Astra; quality reviewers",
+      "dependencies": [
+        "08-project-harness/harness.py"
+      ]
+    },
+    {
+      "path": "09-reference/conversation-coverage.md",
+      "purpose": "Conversation archive coverage and limitations",
+      "authority_level": "REFERENCE",
+      "primary_consumers": "Astra; implementation/review agents",
+      "dependencies": []
+    },
+    {
+      "path": "09-reference/conversation-record.json",
+      "purpose": "conversation-record",
+      "authority_level": "REFERENCE",
+      "primary_consumers": "Astra; validators",
+      "dependencies": []
+    },
+    {
+      "path": "09-reference/conversation-record.md",
+      "purpose": "Accessible conversation record",
+      "authority_level": "REFERENCE",
+      "primary_consumers": "Astra; implementation/review agents",
+      "dependencies": [
+        "09-reference/conversation-record.json"
+      ]
+    },
+    {
+      "path": "09-reference/original-artifact-integrity.json",
+      "purpose": "original-artifact-integrity",
+      "authority_level": "DERIVED SOURCE INTEGRITY",
+      "primary_consumers": "Astra; validators",
+      "dependencies": []
+    },
+    {
+      "path": "09-reference/prior-artifacts/Texenda_Decision_Closure_v1.0.zip",
+      "purpose": "Original delivered ZIP, preserved unchanged",
+      "authority_level": "HISTORICAL SOURCE",
+      "primary_consumers": "Source archivist",
+      "dependencies": []
+    },
+    {
+      "path": "09-reference/prior-artifacts/Texenda_Implementation_Roadmap_Acceptance_v1.0.md",
+      "purpose": "Byte-preserved original Texenda_Implementation_Roadmap_Acceptance_v1.0",
+      "authority_level": "HISTORICAL SOURCE; superseded by indexed normative package chapters",
+      "primary_consumers": "Astra; audit/recovery reviewers",
+      "dependencies": []
+    },
+    {
+      "path": "09-reference/prior-artifacts/Texenda_Product_Technical_Foundation_v1.0.md",
+      "purpose": "Byte-preserved original Texenda_Product_Technical_Foundation_v1.0",
+      "authority_level": "HISTORICAL SOURCE; superseded by indexed normative package chapters",
+      "primary_consumers": "Astra; audit/recovery reviewers",
+      "dependencies": []
+    },
+    {
+      "path": "09-reference/source-register.json",
+      "purpose": "source-register",
+      "authority_level": "REFERENCE",
+      "primary_consumers": "Astra; qualification owners",
+      "dependencies": []
+    },
+    {
+      "path": "09-reference/source-register.md",
+      "purpose": "External source register",
+      "authority_level": "REFERENCE",
+      "primary_consumers": "Qualification owners; reviewers",
+      "dependencies": [
+        "09-reference/source-register.json"
+      ]
+    },
+    {
+      "path": "09-reference/supersession-and-traceability.md",
+      "purpose": "Decision lineage and supersession",
+      "authority_level": "REFERENCE",
+      "primary_consumers": "Astra; implementation/review agents",
+      "dependencies": []
+    },
+    {
+      "path": "10-validation/clean-install-smoke.json",
+      "purpose": "Actual clean-install/CLI/JSON-schema packaging smoke test; not app qualification",
+      "authority_level": "VALIDATION RECORD",
+      "primary_consumers": "Astra; reviewer",
+      "dependencies": [
+        "08-project-harness/install.py",
+        "08-project-harness/harness.py"
+      ]
+    },
+    {
+      "path": "10-validation/harness-test-map.json",
+      "purpose": "harness-test-map",
+      "authority_level": "VALIDATION RECORD",
+      "primary_consumers": "Astra; validators",
+      "dependencies": []
+    },
+    {
+      "path": "10-validation/harness-tests.log",
+      "purpose": "Actual synthetic local-harness unit-test output",
+      "authority_level": "VALIDATION RECORD",
+      "primary_consumers": "Astra; reviewers",
+      "dependencies": []
+    },
+    {
+      "path": "10-validation/package-review.md",
+      "purpose": "Cross-artifact review and validation record",
+      "authority_level": "VALIDATION RECORD",
+      "primary_consumers": "Astra; owner; reviewers",
+      "dependencies": []
+    },
+    {
+      "path": "10-validation/packaging-runtime-probe.json",
+      "purpose": "Observed packaging tools; not target model availability",
+      "authority_level": "VALIDATION RECORD",
+      "primary_consumers": "Astra; reviewers",
+      "dependencies": []
+    },
+    {
+      "path": "10-validation/requirement-traceability.json",
+      "purpose": "requirement-traceability",
+      "authority_level": "DERIVED",
+      "primary_consumers": "Astra; validators",
+      "dependencies": []
+    },
+    {
+      "path": "10-validation/synthetic-domain-fixtures.json",
+      "purpose": "synthetic-domain-fixtures",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Astra; validators",
+      "dependencies": []
+    },
+    {
+      "path": "10-validation/traceability-index.md",
+      "purpose": "Requirement and decision traceability",
+      "authority_level": "DERIVED",
+      "primary_consumers": "Astra; implementation/review agents",
+      "dependencies": []
+    },
+    {
+      "path": "10-validation/validate_package.py",
+      "purpose": "Offline structural, link and traceability validator",
+      "authority_level": "EXECUTABLE SCAFFOLD",
+      "primary_consumers": "Astra; reviewers",
+      "dependencies": []
+    },
+    {
+      "path": "10-validation/validation-report.json",
+      "purpose": "validation-report",
+      "authority_level": "VALIDATION RECORD",
+      "primary_consumers": "Astra; validators",
+      "dependencies": []
+    },
+    {
+      "path": "AGENTS.md",
+      "purpose": "Instructions for agents reading this handoff",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Coding agents; Astra",
+      "dependencies": []
+    },
+    {
+      "path": "DECISION-STATUS.md",
+      "purpose": "Decision status and authority",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "All agents; owner; release reviewers",
+      "dependencies": [
+        "01-foundation/authority-register.json",
+        "01-foundation/external-validation-gates.json"
+      ]
+    },
+    {
+      "path": "MANIFEST.md",
+      "purpose": "Complete navigable artifact inventory",
+      "authority_level": "INDEX",
+      "primary_consumers": "All readers",
+      "dependencies": []
+    },
+    {
+      "path": "README.md",
+      "purpose": "Texenda Complete Implementation Handoff",
+      "authority_level": "NORMATIVE",
+      "primary_consumers": "Astra; all implementation and review agents; owner",
+      "dependencies": []
+    },
+    {
+      "path": "SHA256SUMS",
+      "purpose": "Generated at finalization; excludes itself.",
+      "authority_level": "INTEGRITY",
+      "primary_consumers": "Recipients; validators",
+      "dependencies": []
+    },
+    {
+      "path": "manifest.json",
+      "purpose": "Machine-readable inventory with ownership and dependencies",
+      "authority_level": "INDEX",
+      "primary_consumers": "Validators; Astra",
+      "dependencies": []
+    }
+  ]
+}

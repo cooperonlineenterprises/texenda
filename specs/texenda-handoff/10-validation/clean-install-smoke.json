@@ -1,0 +1,161 @@
+{
+  "result": "PASS",
+  "scope": "Clean-directory dry-run/install/refusal, init/ready/context, unverified-model denial, explicit human bootstrap and state integrity; JSON schemas/examples. No target models or application executed.",
+  "steps": [
+    {
+      "command": [
+        "python3",
+        "/mnt/data/texenda-implementation-handoff/08-project-harness/install.py",
+        "--target",
+        "/tmp/texenda-clean-install-24lzps5z/repo"
+      ],
+      "exit_code": 0,
+      "stdout": "Target: /tmp/texenda-clean-install-24lzps5z/repo \nCopy package \u2192 specs/texenda-handoff\nWrite AGENTS.md, .gitignore and .codex/config.toml.example\nNo application implementation or dependencies installed.\nDRY RUN only. Re-run with --apply after review.\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "/mnt/data/texenda-implementation-handoff/08-project-harness/install.py",
+        "--target",
+        "/tmp/texenda-clean-install-24lzps5z/repo",
+        "--apply"
+      ],
+      "exit_code": 0,
+      "stdout": "Target: /tmp/texenda-clean-install-24lzps5z/repo \nCopy package \u2192 specs/texenda-handoff\nWrite AGENTS.md, .gitignore and .codex/config.toml.example\nNo application implementation or dependencies installed.\nInstalled. Read specs/texenda-handoff/README.md and start WP-00.\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "/mnt/data/texenda-implementation-handoff/08-project-harness/install.py",
+        "--target",
+        "/tmp/texenda-clean-install-24lzps5z/repo",
+        "--apply"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "usage: install.py [-h] --target TARGET [--apply]\ninstall.py: error: target must be empty or .git-only; found: AGENTS.md, specs, .gitignore, .codex\n"
+    },
+    {
+      "command": [
+        "python3",
+        "/tmp/texenda-clean-install-24lzps5z/repo/specs/texenda-handoff/08-project-harness/harness.py",
+        "--root",
+        "/tmp/texenda-clean-install-24lzps5z/repo",
+        "init"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"initialized\": \"/tmp/texenda-clean-install-24lzps5z/repo/.texenda/state.json\",\n  \"tasks\": 44,\n  \"models_verified\": false\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "/tmp/texenda-clean-install-24lzps5z/repo/specs/texenda-handoff/08-project-harness/harness.py",
+        "--root",
+        "/tmp/texenda-clean-install-24lzps5z/repo",
+        "ready"
+      ],
+      "exit_code": 0,
+      "stdout": "[\n  \"WP-00\"\n]\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "/tmp/texenda-clean-install-24lzps5z/repo/specs/texenda-handoff/08-project-harness/harness.py",
+        "--root",
+        "/tmp/texenda-clean-install-24lzps5z/repo",
+        "context",
+        "WP-00",
+        "--out",
+        ".texenda/context/WP-00.json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"schema_version\": \"1.0\",\n  \"work_package_id\": \"WP-00\",\n  \"package_version\": \"1.1.0\",\n  \"work_package\": {\n    \"id\": \"WP-00\",\n    \"title\": \"Bootstrap runtime and evidence workspace\",\n    \"phase\": \"PH-00\",\n    \"objective\": \"Inspect the actual coding runtime, establish owner budget and tier mappings, install harness in an empty repository, and record environment without credentials.\",\n    \"scope\": \"Runtime-qualified roster or explicit unavailable tiers; read-only local probe; compatibility inventory; task evidence layout. No application code or external mutation.\",\n    \"inputs\": [\n      \"Approved package baseline 1.1.0\",\n      \"Target repository baseline revision\",\n      \"Synthetic fixtures unless the named external gates are passed\"\n    ],\n    \"authoritative_references\": [\n      \"01-foundation/product-and-brand.md\",\n      \"01-foundation/invariants.md\",\n      \"DECISION-STATUS.md\",\n      \"03-domain-and-architecture/technology-baseline.md\",\n      \"05-implementation/repository-plan.md\"\n    ],\n    \"dependencies\": [],\n    \"allowed_paths\": [\n      \"AGENTS.md\",\n      \"specs/texenda-handoff\",\n      \"tooling\",\n      \"docs/qualification\",\n      \".codex\",\n      \".gitignore\"\n    ],\n    \"forbidden_changes\": [\n      \"Unreviewed changes to governing invariants\",\n      \"Direct production sending, migration or deployment without separate owner authority\",\n      \"Scope expansion beyond this work package\"\n    ],\n    \"expected_outputs\": [\n      \"Runtime-qualified roster or explicit unavailable tiers.\",\n      \"read-only local probe.\",\n      \"compatibility inventory.\",\n      \"task evidence layout. No application code or external mutation..\"\n    ],\n    \"acceptance_criteria\": [\n      \"Runtime probe cannot leak credentials or imply model access from public docs\",\n      \"Unverified tiers remain unusable; unavailable tiers are explicit\",\n      \"Harness install/dry-run and self-tests pass in a clean directory\"\n    ],\n    \"risk_level\": \"medium\",\n    \"recommended_model_tier\": 2,\n    \"independent_review_tier\": 2,\n    \"verification_requirements\": [\n      \"Run relevant unit/integration/security tests and report exact commands, outcomes and environment\",\n      \"Bind all test evidence and review to candidate revision and artifact hashes\",\n      \"Report NOT RUN honestly; unavailable provider/production evidence is not a passing test\"\n    ],\n    \"handoff_requirements\": [\n      \"Changed files/commit and contract revisions\",\n      \"Acceptance evidence paths and hashes\",\n      \"Unresolved risks, rejected approaches and safe resumption checkpoint\"\n    ],\n    \"external_gates_for_activation\": [],\n    \"activation\": \"AUTHORITATIVE DECISION\",\n    \"triggers\": null,\n    \"acceptance_ids\": []\n  },\n  \"context_files\": [\n    {\n      \"path\": \"07-agent-orchestration/project-kernel.md\",\n      \"sha256\": \"ea8bc73aecaa82161465d5b999b26cf80f0215e950a2ce0a82789d27f1b9e062\",\n      \"bytes\": 2458\n    },\n    {\n      \"path\": \"01-foundation/invariants.md\",\n      \"sha256\": \"28962b51a3bb58c3d515384913616423c9efee5563777ce80d993f8af12b0f98\",\n      \"bytes\": 7011\n    },\n    {\n      \"path\": \"DECISION-STATUS.md\",\n      \"sha256\": \"9bf1bba6787e175def0e26b210f0c7aba8dab44ff76986983a9aa97438cee400\",\n      \"bytes\": 7955\n    },\n    {\n      \"path\": \"01-foundation/product-and-brand.md\",\n      \"sha256\": \"5c053f043e6db101a61908934481ff90c8ee336e193a32a412baa49954595c1a\",\n      \"bytes\": 7139\n    },\n    {\n      \"path\": \"03-domain-and-architecture/technology-baseline.md\",\n      \"sha256\": \"9e0ac6009d4ce360effb04209c51e35d9feead12844ce84b34e619b590ae7810\",\n      \"bytes\": 9795\n    },\n    {\n      \"path\": \"05-implementation/repository-plan.md\",\n      \"sha256\": \"18cd00d16d068c8e49cec3cef6f98d7ab95f97e47ca6c4701cb96ac280c612ef\",\n      \"bytes\": 2972\n    },\n    {\n      \"path\": \"07-agent-orchestration/model-routing.md\",\n      \"sha256\": \"7f76bc2fe26f5344d00ebc414874ec3df6799be52a35acb01fe7aea27c3fd1ee\",\n      \"bytes\": 6351\n    },\n    {\n      \"path\": \"07-agent-orchestration/handoff-and-review.md\",\n      \"sha256\": \"32e2b791f7bbb41a66d8777be1f2386e772429a7b1c98e6b289bad4131e65f25\",\n      \"bytes\": 4823\n    }\n  ],\n  \"total_reference_bytes\": 48504,\n  \"max_bytes\": 200000,\n  \"status\": \"READY\",\n  \"instructions\": \"Read referenced sections needed for this package; request a narrower approved context pack rather than silently truncate. Archive not included by default.\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "/tmp/texenda-clean-install-24lzps5z/repo/specs/texenda-handoff/08-project-harness/harness.py",
+        "--root",
+        "/tmp/texenda-clean-install-24lzps5z/repo",
+        "admit",
+        "WP-00",
+        "--actor",
+        "astra"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"ok\": true\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "/tmp/texenda-clean-install-24lzps5z/repo/specs/texenda-handoff/08-project-harness/harness.py",
+        "--root",
+        "/tmp/texenda-clean-install-24lzps5z/repo",
+        "assign",
+        "WP-00",
+        "--agent",
+        "agent:unverified",
+        "--tier",
+        "2"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\n  \"ok\": false,\n  \"error\": \"target model tier not runtime-qualified\"\n}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "/tmp/texenda-clean-install-24lzps5z/repo/specs/texenda-handoff/08-project-harness/harness.py",
+        "--root",
+        "/tmp/texenda-clean-install-24lzps5z/repo",
+        "assign",
+        "WP-00",
+        "--agent",
+        "human:owner",
+        "--tier",
+        "2",
+        "--human"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"task\": \"WP-00\",\n  \"fence\": 1,\n  \"model\": null,\n  \"paths\": [\n    \"AGENTS.md\",\n    \"specs/texenda-handoff\",\n    \"tooling\",\n    \"docs/qualification\",\n    \".codex\",\n    \".gitignore\"\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "/tmp/texenda-clean-install-24lzps5z/repo/specs/texenda-handoff/08-project-harness/harness.py",
+        "--root",
+        "/tmp/texenda-clean-install-24lzps5z/repo",
+        "start",
+        "WP-00",
+        "--actor",
+        "human:owner",
+        "--fence",
+        "1"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"ok\": true\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "/tmp/texenda-clean-install-24lzps5z/repo/specs/texenda-handoff/08-project-harness/harness.py",
+        "--root",
+        "/tmp/texenda-clean-install-24lzps5z/repo",
+        "check"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"integrity\": \"PASS\",\n  \"meaning\": \"local state/receipt integrity only; not production readiness\"\n}\n",
+      "stderr": ""
+    }
+  ],
+  "json_schema_validation": "PASS",
+  "test_directory_removed_afterward": true
+}

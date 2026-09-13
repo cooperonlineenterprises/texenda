@@ -1,0 +1,12 @@
+{
+  "command": "UpdateCampaignDraft",
+  "request_id": "example-request-000001",
+  "workspace_id": "ws_example",
+  "expected_revision": 4,
+  "payload": {
+    "campaign_id": "cmp_example",
+    "patch": {
+      "scheduled_at": "2026-10-09T14:00:00Z"
+    }
+  }
+}

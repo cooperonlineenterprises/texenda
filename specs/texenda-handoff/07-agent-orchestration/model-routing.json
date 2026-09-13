@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "status": "REVERSIBLE DEFAULT",
+  "public_documentation_checked_at": "2026-09-05",
+  "source_id": "N01",
+  "target_roster_status": "UNVERIFIED",
+  "packaging_codex_executable_present": false,
+  "qualification_gate": "VAL-13",
+  "tier_definitions": [
+    {
+      "tier": 1,
+      "candidates": [
+        "gpt-6-astra",
+        "gpt-5.6-sol"
+      ]
+    },
+    {
+      "tier": 2,
+      "candidates": [
+        "gpt-5.6-terra"
+      ]
+    },
+    {
+      "tier": 3,
+      "candidates": [
+        "gpt-5.6-luna",
+        "gpt-5.3-codex-spark"
+      ]
+    }
+  ],
+  "active_bindings": {
+    "1": null,
+    "2": null,
+    "3": null
+  },
+  "default_max_concurrent_writers": 2,
+  "new_api_spend_authorized_usd": 0,
+  "qualification_max_age_days": 30,
+  "escalate_after_substantive_failures": 2,
+  "never_silently_substitute": true
+}

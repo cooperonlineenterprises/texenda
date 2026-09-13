@@ -1,0 +1,145 @@
+{
+  "schema_version": "1.0",
+  "gates": [
+    {
+      "id": "VAL-01",
+      "title": "Brand clearance",
+      "status": "REQUIRES EXTERNAL VALIDATION",
+      "evidence_status": "UNVERIFIED",
+      "owner": "Product Owner + trademark counsel",
+      "evidence_required": "Exact/similar marks, prior Xenda/PiXENDA concerns, common-law/domain/linguistic/registry review",
+      "blocks": "Irreversible public Texenda branding",
+      "safe_behavior": "Internal descriptive repository and product implementation continue"
+    },
+    {
+      "id": "VAL-02",
+      "title": "Legal/privacy/source proof",
+      "status": "REQUIRES EXTERNAL VALIDATION",
+      "evidence_status": "UNVERIFIED",
+      "owner": "Product Owner + qualified counsel/privacy reviewer",
+      "evidence_required": "Actual jurisdictions, audience/children-related collection policy if relevant, sender identity, purpose classes, consent wording, import provenance, retention/erasure basis",
+      "blocks": "Production handling/sending for unapproved use cases",
+      "safe_behavior": "Build/test with synthetic data; hold uncertain imports; do not infer audience age/location"
+    },
+    {
+      "id": "VAL-03",
+      "title": "Stack/editor compatibility",
+      "status": "REQUIRES EXTERNAL VALIDATION",
+      "evidence_status": "UNVERIFIED",
+      "owner": "Engineering owner",
+      "evidence_required": "Locked version manifest, licenses/SBOM, Payload/domain transaction tests, migrations, editor codec/render fixtures",
+      "blocks": "First integration release and affected dependency activation",
+      "safe_behavior": "Domain work continues; replace editor/adapter if needed"
+    },
+    {
+      "id": "VAL-04",
+      "title": "Email provider/sender",
+      "status": "REQUIRES EXTERNAL VALIDATION",
+      "evidence_status": "UNVERIFIED",
+      "owner": "Deliverability owner, initially founder",
+      "evidence_required": "Intended marketing use allowed, account quotas/scope, idempotency/batch/webhook tests, DNS and raw test-message auth, suppression/reconciliation capabilities",
+      "blocks": "First real email handoff",
+      "safe_behavior": "Mailpit/fake transport; route remains disabled"
+    },
+    {
+      "id": "VAL-05",
+      "title": "Hosting/recovery/workload",
+      "status": "REQUIRES EXTERNAL VALIDATION",
+      "evidence_status": "UNVERIFIED",
+      "owner": "Engineering/operations owner",
+      "evidence_required": "Account/region/budget, measured workload profile, private networking, PITR/export/journal configuration, load and restore drill",
+      "blocks": "Production infrastructure qualification",
+      "safe_behavior": "Portable container/dev work continues; no invented scale claims"
+    },
+    {
+      "id": "VAL-06",
+      "title": "Operator usability",
+      "status": "REQUIRES EXTERNAL VALIDATION",
+      "evidence_status": "UNVERIFIED",
+      "owner": "Product Owner + routine operator",
+      "evidence_required": "Representative tasks, consequence comprehension, timing/error observations, accessibility checks",
+      "blocks": "Wider rollout if targets materially fail",
+      "safe_behavior": "Improve views/recipes; no change to permission semantics"
+    },
+    {
+      "id": "VAL-07",
+      "title": "New channel",
+      "status": "REQUIRES EXTERNAL VALIDATION",
+      "evidence_status": "UNVERIFIED",
+      "owner": "Product Owner + channel operations owner",
+      "evidence_required": "Demand, markets, consent, sender program, replies, cost, provider limits, device/site/privacy tests",
+      "blocks": "Only that channel's live activation",
+      "safe_behavior": "Core email is unaffected"
+    },
+    {
+      "id": "VAL-08",
+      "title": "Security readiness",
+      "status": "REQUIRES EXTERNAL VALIDATION",
+      "evidence_status": "UNVERIFIED",
+      "owner": "Engineering owner + competent independent review before broad production",
+      "evidence_required": "Threat model, authorization/MFA paths, secrets, SSRF/injection/IDOR tests, vulnerabilities, incident and recovery evidence",
+      "blocks": "Production/broad rollout at stated gates",
+      "safe_behavior": "No public/live audience processing until required findings close"
+    },
+    {
+      "id": "VAL-09",
+      "title": "AI qualification",
+      "status": "REQUIRES EXTERNAL VALIDATION",
+      "evidence_status": "UNVERIFIED",
+      "owner": "Engineering/Product Owner",
+      "evidence_required": "Data terms, task evaluations, prompt-injection tests, accuracy/cost caps, failure behavior",
+      "blocks": "AI feature enablement",
+      "safe_behavior": "Deterministic product remains complete"
+    },
+    {
+      "id": "VAL-10",
+      "title": "Kit migration evidence",
+      "status": "REQUIRES EXTERNAL VALIDATION",
+      "evidence_status": "UNVERIFIED",
+      "owner": "Migration owner, initially founder",
+      "evidence_required": "Real account topology, all statuses, publications mapped, source coverage, active progress/exports, stop controls and authority transfer evidence",
+      "blocks": "Each publication/cohort's cutover",
+      "safe_behavior": "Shadow read-only staging; never dual live sending or guessed progress"
+    },
+    {
+      "id": "VAL-11",
+      "title": "External-agent access qualification",
+      "status": "REQUIRES EXTERNAL VALIDATION",
+      "evidence_status": "UNVERIFIED",
+      "owner": "Security/engineering owner + delegating human",
+      "evidence_required": "Actual identity/delegation runtime, OAuth/token boundaries, tool evaluations, approval separation, revocation/rate/spend and computer-use tests",
+      "blocks": "External-agent writes and any represented human-only approval path",
+      "safe_behavior": "Manual UI and internal implementation continue; read/proposal pilot only after narrower approval"
+    },
+    {
+      "id": "VAL-12",
+      "title": "Voice and interaction privacy",
+      "status": "REQUIRES EXTERNAL VALIDATION",
+      "evidence_status": "UNVERIFIED",
+      "owner": "Product/privacy/security owners",
+      "evidence_required": "STT/TTS terms, retention/region, microphone lifecycle, critical-entity transcription, accessibility and mode-handoff usability",
+      "blocks": "Voice feature activation",
+      "safe_behavior": "Typed/manual operation remains complete"
+    },
+    {
+      "id": "VAL-13",
+      "title": "Coding-runtime and model roster",
+      "status": "REQUIRES EXTERNAL VALIDATION",
+      "evidence_status": "UNVERIFIED",
+      "owner": "Astra + repository owner",
+      "evidence_required": "Authenticated target model list/IDs, client version, tools, effort controls, billing route, sandbox/approval configuration and bounded smoke tests",
+      "blocks": "Automated model-specific agent dispatch",
+      "safe_behavior": "Harness validation, planning and manual bootstrap continue; no guessed model availability"
+    },
+    {
+      "id": "VAL-14",
+      "title": "Conversation export completeness",
+      "status": "REQUIRES EXTERNAL VALIDATION",
+      "evidence_status": "UNVERIFIED",
+      "owner": "Project owner/source archivist",
+      "evidence_required": "Raw user-visible thread export when available; reconcile against coverage ledger",
+      "blocks": "Claim of byte-complete conversation archive only",
+      "safe_behavior": "Authoritative specs and all recorded decisions remain implementable"
+    }
+  ]
+}

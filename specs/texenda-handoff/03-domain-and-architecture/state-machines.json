@@ -1,0 +1,275 @@
+{
+  "classification": "DERIVED STATE INDEX; guards in execution and interaction specifications are normative",
+  "machines": {
+    "Campaign": {
+      "initial": "draft",
+      "states": [
+        "draft",
+        "in_review",
+        "approved",
+        "scheduled",
+        "resolving",
+        "ready",
+        "dispatching",
+        "paused",
+        "cancelling",
+        "cancelled",
+        "failed",
+        "needs_attention",
+        "dispatch_complete"
+      ],
+      "transitions": [
+        [
+          "draft",
+          "in_review"
+        ],
+        [
+          "in_review",
+          "draft"
+        ],
+        [
+          "in_review",
+          "approved"
+        ],
+        [
+          "approved",
+          "scheduled"
+        ],
+        [
+          "scheduled",
+          "resolving"
+        ],
+        [
+          "resolving",
+          "ready"
+        ],
+        [
+          "ready",
+          "dispatching"
+        ],
+        [
+          "dispatching",
+          "dispatch_complete"
+        ]
+      ],
+      "guarded_common_transitions": [
+        "Pre-completion → cancelling → cancelled; current authority required.",
+        "ready/dispatching → paused; pause stops future permits; resume checks approval/current state/expiry.",
+        "Any faulty pre-completion state → failed or needs_attention; recovery records explicit prior state and evidence.",
+        "Unknown effect forbids clean completion; explicit closed_with_uncertainty preserves tombstones."
+      ]
+    },
+    "AutomationExecution": {
+      "initial": "ready",
+      "states": [
+        "ready",
+        "running",
+        "waiting",
+        "paused",
+        "completed",
+        "cancelled",
+        "expired",
+        "quarantined"
+      ],
+      "transitions": [
+        [
+          "ready",
+          "running"
+        ],
+        [
+          "running",
+          "waiting"
+        ],
+        [
+          "waiting",
+          "ready"
+        ],
+        [
+          "running",
+          "completed"
+        ],
+        [
+          "running",
+          "quarantined"
+        ]
+      ],
+      "guarded_common_transitions": [
+        "Current cursor+step uniqueness before every transition.",
+        "Wait registration and event/timeout claim serialize on subject/execution state.",
+        "Any active state → cancelled/expired/paused under explicit rule; no overdue burst on resume."
+      ]
+    },
+    "DeliveryPlan": {
+      "initial": "candidate",
+      "states": [
+        "candidate",
+        "ready",
+        "deferred",
+        "reserved",
+        "in_flight",
+        "satisfied",
+        "skipped",
+        "cancelled",
+        "expired",
+        "held"
+      ],
+      "transitions": [
+        [
+          "candidate",
+          "ready"
+        ],
+        [
+          "ready",
+          "reserved"
+        ],
+        [
+          "reserved",
+          "in_flight"
+        ],
+        [
+          "in_flight",
+          "satisfied"
+        ],
+        [
+          "ready",
+          "deferred"
+        ],
+        [
+          "deferred",
+          "ready"
+        ]
+      ],
+      "guarded_common_transitions": [
+        "Ineligible/duplicate/expired → skipped/cancelled/expired; explanation retained.",
+        "Unknown acceptance → held; not ready for another handoff.",
+        "Resumption uses same logical occurrence and current policy."
+      ]
+    },
+    "Delivery": {
+      "initial": "prepared",
+      "states": [
+        "prepared",
+        "in_flight",
+        "accepted",
+        "rejected",
+        "acceptance_unknown",
+        "cancelled"
+      ],
+      "transitions": [
+        [
+          "prepared",
+          "in_flight"
+        ],
+        [
+          "in_flight",
+          "accepted"
+        ],
+        [
+          "in_flight",
+          "rejected"
+        ],
+        [
+          "in_flight",
+          "acceptance_unknown"
+        ],
+        [
+          "prepared",
+          "cancelled"
+        ],
+        [
+          "acceptance_unknown",
+          "accepted"
+        ],
+        [
+          "acceptance_unknown",
+          "rejected"
+        ]
+      ],
+      "guarded_common_transitions": [
+        "Reconciliation transitions require qualified evidence; unsupported retrieval remains unknown.",
+        "Confirmed transient rejection may retry same delivery/key/payload under current eligibility and safe retention.",
+        "Delivered/opened/clicked/bounced/complained are independent observations, not replacement states."
+      ]
+    },
+    "Proposal": {
+      "initial": "draft",
+      "states": [
+        "draft",
+        "ready_for_review",
+        "stale",
+        "approved",
+        "rejected",
+        "superseded"
+      ],
+      "transitions": [
+        [
+          "draft",
+          "ready_for_review"
+        ],
+        [
+          "ready_for_review",
+          "approved"
+        ],
+        [
+          "ready_for_review",
+          "rejected"
+        ],
+        [
+          "ready_for_review",
+          "stale"
+        ],
+        [
+          "approved",
+          "stale"
+        ],
+        [
+          "draft",
+          "superseded"
+        ]
+      ],
+      "guarded_common_transitions": [
+        "Approved revision immutable; committed commands have separate outcomes.",
+        "Changed base/object/envelope creates new revision and reapproval."
+      ]
+    },
+    "AgentRun": {
+      "initial": "admitted",
+      "states": [
+        "admitted",
+        "running",
+        "waiting_approval",
+        "paused",
+        "completed",
+        "failed",
+        "cancelled",
+        "expired"
+      ],
+      "transitions": [
+        [
+          "admitted",
+          "running"
+        ],
+        [
+          "running",
+          "waiting_approval"
+        ],
+        [
+          "waiting_approval",
+          "running"
+        ],
+        [
+          "running",
+          "completed"
+        ],
+        [
+          "running",
+          "failed"
+        ]
+      ],
+      "guarded_common_transitions": [
+        "Revoked/expired delegation prevents new commands; no automatic renewed authority.",
+        "Development harness Task states are separate and must not be confused with this product entity."
+      ]
+    }
+  }
+}
