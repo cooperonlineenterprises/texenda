@@ -1,0 +1,239 @@
+{
+  "schema_version": "1.0",
+  "kind": "desktop-exact-profile-qualification-probe",
+  "profile_id": "gpt-5.6-luna-high",
+  "qualification_scope": "Only gpt-5.6-luna at high reasoning effort dispatched through codex-desktop-collaboration on the observed Codex desktop client. This evidence does not transfer to direct CLI, API, cloud, IDE, another desktop build, account, workspace, model, or effort.",
+  "observed_at": "2026-09-13T22:04:30Z",
+  "repository": {
+    "branch": "qualify/desktop-luna-high-20260913",
+    "base_revision": "dfb6e0090c4f128ba2d8e16e4e3d038d632415db",
+    "worktree": "/private/tmp/texenda-astra-audit.kGBhLO/profile-luna-high",
+    "report_path": "docs/qualification/probes/2026-09-13/gpt-5.6-luna-high-desktop.json"
+  },
+  "dispatch_metadata": {
+    "profile_id": "gpt-5.6-luna-high",
+    "requested_model_id": "gpt-5.6-luna",
+    "requested_reasoning_effort": "high",
+    "capability_tier": 4,
+    "runtime_id": "codex-desktop-collaboration",
+    "client_version": "26.901.41600 (build 7982)",
+    "dispatch_surface": "Codex desktop collaboration",
+    "selection_evidence": "The parent dispatched this bounded qualification with the exact requested gpt-5.6-luna/high profile through the desktop collaboration runtime.",
+    "self_reported_model_id": null,
+    "self_reported_reasoning_effort": null,
+    "identity_limit": "The runtime did not expose an independent executing provider-model or reasoning-effort introspection channel; requested dispatch metadata is not independent model-identity proof."
+  },
+  "runtime_observation": {
+    "path": "docs/qualification/runtime-surface-observation-2026-09-13.json",
+    "sha256": "35995674a989b1b77233eafdc80ed092d0a8f8622b88990e8f7b3f8336978091",
+    "source_observed_at": "2026-09-13T21:34:16Z",
+    "hash_verified": true,
+    "desktop_bundle": {
+      "bundle_path": "/Applications/ChatGPT.app",
+      "plist_path": "/Applications/ChatGPT.app/Contents/Info.plist",
+      "bundle_identifier": "com.openai.codex",
+      "version": "26.901.41600",
+      "build": "7982",
+      "inspection": "Three independent /usr/libexec/PlistBuddy field queries exited 0 and matched the hash-verified observation."
+    },
+    "direct_cli": {
+      "command": "codex --version",
+      "exit_code": 0,
+      "observed_output": "codex-cli 0.149.0",
+      "installed_version": "0.149.0",
+      "nonfatal_stderr": "WARNING: proceeding, even though we could not create PATH aliases: Operation not permitted (os error 1)",
+      "status": "UNQUALIFIED",
+      "astra_qualification": "UNQUALIFIED",
+      "minimum_documented_for_astra": "0.153.0",
+      "minimum_evidence": "docs/qualification/runtime-surface-correction-plan-2026-09-13.md",
+      "reason": "The installed direct CLI is below the observed documented >=0.153.0 minimum for Astra. No direct-CLI exact-profile read/edit/test probe was run, and desktop evidence does not qualify the CLI route."
+    },
+    "commands": [
+      {
+        "command": "/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' /Applications/ChatGPT.app/Contents/Info.plist",
+        "exit_code": 0,
+        "output": "com.openai.codex"
+      },
+      {
+        "command": "/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' /Applications/ChatGPT.app/Contents/Info.plist",
+        "exit_code": 0,
+        "output": "26.901.41600"
+      },
+      {
+        "command": "/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' /Applications/ChatGPT.app/Contents/Info.plist",
+        "exit_code": 0,
+        "output": "7982"
+      },
+      {
+        "command": "codex --version",
+        "exit_code": 0,
+        "output": "codex-cli 0.149.0",
+        "warning": "The command emitted a nonfatal PATH-alias permission warning; no credentials or configuration were changed."
+      }
+    ]
+  },
+  "read_edit_test_evidence": {
+    "read": {
+      "required_instruction_sources": [
+        "AGENTS.md",
+        "docs/qualification/runtime-surface-observation-2026-09-13.json",
+        "docs/qualification/README.md",
+        "tooling/coordination/README.md",
+        "tooling/coordination/routing-policy.json"
+      ],
+      "routing_policy_sha256": "5ebc903a1bd2d3e1925a01fcb1e556f0ed0a4c50682a3b3d93ccc7d7cdd6e979",
+      "invariants": {
+        "INV-02": "Shared identity never creates shared permission; a matching profile or endpoint cannot activate another publication, brand, purpose, or channel.",
+        "INV-12": "A timeout or outage never authorizes blind provider or channel failover; reconciliation is required before another external effect, and a block or opt-out cannot trigger escape to another channel.",
+        "INV-30": "The development harness coordinates work but cannot grant production authority; qualification evidence cannot authorize recipient sends, deployments, provisioning, spend, credential use, or external service mutation."
+      }
+    },
+    "edit": {
+      "result": "PASS",
+      "method": "apply_patch",
+      "scope": "Created only this dated desktop qualification report in the assigned worktree.",
+      "edited_paths": [
+        "docs/qualification/probes/2026-09-13/gpt-5.6-luna-high-desktop.json"
+      ],
+      "sealed_specs_changed": false,
+      "other_repository_files_changed_by_this_probe": false
+    },
+    "test": [
+      {
+        "id": "instruction-contracts",
+        "command": "env PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tooling/coordination/tests -p 'test_instruction_contracts.py' -v",
+        "result": "PASS",
+        "exit_code": 0,
+        "tests_run": 10,
+        "tests_passed": 10,
+        "scope": "Exactly the ten static instruction-contract tests; no broader coordinator suite or product test was run.",
+        "source_sha256": "62fd3753e5bfaf1574d183e8a2c0a9d463773d2543d5983767eda66ada2528aa"
+      },
+      {
+        "id": "sealed-package-checksums",
+        "command": "env PYTHONDONTWRITEBYTECODE=1 python3 specs/texenda-handoff/10-validation/validate_package.py --checksums",
+        "result": "PASS",
+        "exit_code": 0,
+        "checks_passed": 14,
+        "errors": 0,
+        "warnings": 0,
+        "scope": "Offline sealed-package structure, traceability, links, and final checksum checks only; no product, production, provider, security, legal, or external-gate qualification."
+      }
+    ]
+  },
+  "billing_and_authority": {
+    "sign_in_mode": "subscription",
+    "billing_mode": "subscription",
+    "api_budget_authorized_usd": 0,
+    "api_spend_usd": 0,
+    "api_requests_made": false,
+    "paid_credits_used": false,
+    "credentials_read": false,
+    "production_data_accessed": false,
+    "external_effects": false,
+    "statement": "This bounded desktop probe used the subscription route. No API-billed request, API key, paid credit, account identifier, credential, or provider billing telemetry was used or read."
+  },
+  "subprocess_stop_evidence": {
+    "status": "PASS",
+    "statement": "Every subprocess used for the bounded observation and required verification exited before report handoff; no background process, daemon, network job, or child agent was launched.",
+    "stopped_subprocesses": [
+      {
+        "command": "/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' /Applications/ChatGPT.app/Contents/Info.plist",
+        "exit_code": 0,
+        "state": "exited"
+      },
+      {
+        "command": "/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' /Applications/ChatGPT.app/Contents/Info.plist",
+        "exit_code": 0,
+        "state": "exited"
+      },
+      {
+        "command": "/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' /Applications/ChatGPT.app/Contents/Info.plist",
+        "exit_code": 0,
+        "state": "exited"
+      },
+      {
+        "command": "codex --version",
+        "exit_code": 0,
+        "state": "exited"
+      },
+      {
+        "command": "env PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tooling/coordination/tests -p 'test_instruction_contracts.py' -v",
+        "exit_code": 0,
+        "state": "exited"
+      },
+      {
+        "command": "env PYTHONDONTWRITEBYTECODE=1 python3 specs/texenda-handoff/10-validation/validate_package.py --checksums",
+        "exit_code": 0,
+        "state": "exited"
+      }
+    ],
+    "background_processes_started": false,
+    "child_agents_spawned": false,
+    "open_command_sessions": 0,
+    "parent_dispatcher_stop": "Parent supplies dispatcher-observed stop evidence for this desktop collaboration agent; this report does not claim enclosing-runtime termination."
+  },
+  "boundaries": {
+    "no_secrets_read": true,
+    "account_identifiers_recorded": false,
+    "credentials_accessed": false,
+    "network_used": false,
+    "dependencies_installed": false,
+    "delegation_performed": false,
+    "lease_mutation": false,
+    "ledger_mutation": false,
+    "roster_mutation": false,
+    "production_data_accessed": false,
+    "recipient_communication": false,
+    "sending_performed": false,
+    "pushed": false,
+    "deployed": false,
+    "provisioned": false,
+    "api_spend_usd": 0,
+    "external_effects": false
+  },
+  "claim_boundaries": {
+    "product_tests_run": false,
+    "product_acceptance_claimed": false,
+    "external_validation_gates_cleared": false,
+    "direct_cli_qualified": false,
+    "api_cloud_or_ide_runtime_qualified": false,
+    "owner_attestation_claimed": false,
+    "roster_activation_claimed": false
+  },
+  "limitations": [
+    "The exact requested model and reasoning effort are dispatch metadata; the runtime provides no independent executing provider-model or effort introspection, so self_reported_model_id and self_reported_reasoning_effort remain null.",
+    "This evidence applies only to codex-desktop-collaboration at client 26.901.41600 (build 7982), with the observed subscription route and local boundaries. It does not qualify direct CLI, API, cloud, IDE, another desktop build, account, workspace, sandbox, approval configuration, model, or effort.",
+    "Direct CLI remains UNQUALIFIED, including Astra. The separately observed codex-cli 0.149.0 is below the documented >=0.153.0 Astra minimum, and no direct-CLI exact-profile read/edit/test probe was run.",
+    "The ten instruction-contract tests and fourteen sealed package checks are local structural evidence only; they pass no Texenda product acceptance criterion and clear no external validation gate.",
+    "No network, dependency installation, delegation, lease or ledger mutation, credential or production-data access, API spend, sending, push, deployment, provisioning, external service use, or other external effect was performed.",
+    "This is candidate local evidence. Independent review, owner attestation, roster installation, integrated-head verification, and parent dispatcher stop observation remain separate."
+  ],
+  "verification_before_commit": {
+    "report_json_parse": {
+      "command": "jq -e . docs/qualification/probes/2026-09-13/gpt-5.6-luna-high-desktop.json >/dev/null",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    "runtime_observation_hash_recheck": {
+      "command": "shasum -a 256 docs/qualification/runtime-surface-observation-2026-09-13.json",
+      "exit_code": 0,
+      "result": "PASS",
+      "sha256": "35995674a989b1b77233eafdc80ed092d0a8f8622b88990e8f7b3f8336978091"
+    },
+    "git_diff_check": {
+      "command": "git diff --check",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    "single_report_scope": {
+      "command": "git status --short --untracked-files=all",
+      "result": "PASS",
+      "observed": [
+        "?? docs/qualification/probes/2026-09-13/gpt-5.6-luna-high-desktop.json"
+      ],
+      "statement": "The only worktree change before staging was this report."
+    },
+    "post_commit_cleanliness": "Verified after the sole-report commit and returned in the parent handoff."
+  }
+}
