@@ -43,6 +43,10 @@ QUALIFICATION_FIELDS = {'profile_id', 'capability_tier', 'model_id', 'reasoning_
                         'runtime_id', 'client_version', 'sign_in_mode', 'billing_mode',
                         'capabilities', 'verified_at', 'expires_at', 'qualification_check_ids'}
 SAFE_MIGRATION_STATES = {'planned', 'admitted', 'blocked', 'integrated', 'completed', 'cancelled'}
+BUDGET_MAX_AGE_SECONDS = 30 * 86400
+BUDGET_FIELDS = {'schema_version', 'kind', 'summary', 'checks', 'owner', 'approved_budget_usd',
+                 'scope', 'work_packages', 'roles', 'issued_at', 'expires_at',
+                 'routing_policy_digest', 'work_package_digest'}
 
 
 def unique_object(pairs):
@@ -217,7 +221,8 @@ class Harness(legacy.Harness):
         fields = self.evidence_fields
         if envelope['schema_version'] == '2.0':
             fields = fields | {'routing_policy_digest', 'profile_id', 'role', 'capability_tier',
-                               'work_package_digest', 'fence', 'rationale', 'reasoning_demand', *CONDITIONS}
+                               'work_package_digest', 'fence', 'rationale', 'reasoning_demand',
+                               'owner', 'approved_budget_usd', 'issued_at', 'roles', *CONDITIONS}
         if set(envelope) - fields:
             raise Denied('unknown evidence fields; use the local v2 schema for routing metadata')
         if kind and envelope.get('kind') != kind:
@@ -456,14 +461,94 @@ class Harness(legacy.Harness):
                         used += allocated
         return used
 
-    def _recheck_allocation(self, record):
+    def _budget_authorization(self, envelope, approved_usd, wid=None, role=None, owner=None):
+        if (envelope.get('schema_version') != '2.0' or envelope.get('kind') != 'budget'
+                or set(envelope) - {'notes'} != BUDGET_FIELDS):
+            raise Denied('paid v2 work requires a closed version-2 budget authorization')
+        if amount(envelope['approved_budget_usd']) != amount(approved_usd):
+            raise Denied('budget authorization amount differs from the exact approved USD')
+        principal = envelope['owner']
+        if (not isinstance(principal, str) or not principal.startswith('human:')
+                or not principal[6:].strip() or (owner is not None and principal != owner)):
+            raise Denied('budget authorization must bind the accountable owner')
+        if not isinstance(envelope['scope'], str) or not envelope['scope'].strip():
+            raise Denied('nonempty budget scope required')
+        if (envelope['work_package_digest'] != self.package_hash
+                or envelope['routing_policy_digest'] != self.policy_hash):
+            raise Denied('budget authorization baseline/policy mismatch')
+        wps, roles = envelope['work_packages'], envelope['roles']
+        if (not isinstance(wps, list) or not wps or not all(isinstance(w, str) for w in wps)
+                or len(set(wps)) != len(wps) or not set(wps).issubset(self.work)
+                or not isinstance(roles, list) or not roles or not all(isinstance(r, str) for r in roles)
+                or len(set(roles)) != len(roles) or not set(roles).issubset({'author', 'reviewer'})
+                or (wid is not None and wid not in wps) or (role is not None and role not in roles)):
+            raise Denied('budget authorization does not cover the exact task/role scope')
+        issued, expires = parse_time(envelope['issued_at']), parse_time(envelope['expires_at'])
+        if not 0 < expires - issued <= BUDGET_MAX_AGE_SECONDS:
+            raise Denied('budget validity must be positive and at most 30 days')
+        if not issued <= self.clock() < expires:
+            raise Denied('budget authorization not yet valid or expired')
+        check_fields = {'id', 'required', 'status', 'command_or_procedure', 'evidence_path', 'sha256'}
+        if ('notes' in envelope and not isinstance(envelope['notes'], str)):
+            raise Denied('budget notes must be text')
+        if any(set(check) - check_fields or not isinstance(check['id'], str) or not check['id'].strip()
+               or any(key in check and not isinstance(check[key], str)
+                      for key in ('command_or_procedure', 'evidence_path', 'sha256'))
+               for check in envelope['checks']):
+            raise Denied('unknown budget evidence check fields')
+        return envelope
+
+    def _legacy_allocation(self, state, wid, role, fence, record):
+        if type(fence) is not int:
+            raise Denied('legacy allocation requires its exact integer task fence')
+        migration = state.get('routing_migration') or {}
+        authorization = migration.get('legacy_budget_authorization') or {}
+        matches = [entry for entry in authorization.get('allocations', [])
+                   if entry.get('work_package_id') == wid and entry.get('role') == role
+                   and type(entry.get('fence')) is int and entry['fence'] == fence
+                   and entry.get('record_digest') == digest(record)]
+        if len(matches) != 1 or 'budget_approval' in record:
+            raise Denied('allocation is not an exact retained v1 record; fresh v2 authorization required')
+        raw = under(self.root, migration.get('backup_path', '')).read_bytes()
+        if hashlib.sha256(raw).hexdigest() != migration.get('source_sha256'):
+            raise Denied('legacy budget source checkpoint hash mismatch')
+        source = load_json(raw)
+        legacy.Harness._check(self, source)
+        check_receipts(source)
+        if (source.get('budget_approval') != authorization.get('evidence')
+                or amount(source['budget_usd']) != amount(authorization.get('approved_budget_usd'))):
+            raise Denied('legacy budget authority differs from the migration source')
+        entry = matches[0]
+        path = entry.get('source_path', [])
+        if path[:2] != ['tasks', wid]:
+            raise Denied('legacy allocation source task mismatch')
+        original = source
+        for part in path:
+            original = original[part]
+        if original != record or amount(entry['budget_usd']) != amount(record['budget_usd']):
+            raise Denied('legacy allocation differs from its preserved source record')
+        if amount(record['budget_usd']) > amount(authorization['approved_budget_usd']):
+            raise Denied('legacy allocation exceeds its retained authorization')
+        evidence = self.recheck(authorization.get('evidence'), kind='budget', require_pass=True)
+        if evidence['schema_version'] != '1.0':
+            raise Denied('legacy budget compatibility requires its original v1 evidence')
+        # This is historical proof for an already retained allocation, never a new grant.
+
+    def _recheck_allocation(self, state, wid, role, fence, record):
         allocated = amount(record.get('budget_usd', 0))
         if (record.get('qualification') or {}).get('billing_mode') == 'api' and allocated <= 0:
             raise Denied('API work requires a positive owner-authorized allocation')
         if allocated:
-            self.recheck(record.get('budget_approval'), kind='budget', require_pass=True)
+            if 'budget_approval' not in record:
+                self._legacy_allocation(state, wid, role, fence, record)
+                return
+            evidence = self.recheck(record['budget_approval'], kind='budget', require_pass=True)
+            approved = record.get('budget_approved_usd')
+            self._budget_authorization(evidence, approved, wid, role)
+            if allocated > amount(approved):
+                raise Denied('allocation exceeds its exact approved budget')
 
-    def _allocate(self, state, binding, budget_usd, max_tokens, max_seconds):
+    def _allocate(self, state, wid, role, binding, budget_usd, max_tokens, max_seconds):
         requested, approved = amount(budget_usd), amount(state['budget_usd'])
         if (type(max_tokens) is not int or not 0 < max_tokens <= 1000000
                 or type(max_seconds) is not int or not 0 < max_seconds <= 28800):
@@ -471,8 +556,10 @@ class Harness(legacy.Harness):
         if self._declared_spend(state) + requested > approved:
             raise Denied('development allowance exhausted; owner must increase')
         allocation = {'budget_usd': budget_usd, 'max_tokens': max_tokens, 'max_seconds': max_seconds,
-                      'budget_approval': copy.deepcopy(state['budget_approval']) if requested else None}
-        self._recheck_allocation(dict(binding, **allocation))
+                      'budget_approval': copy.deepcopy(state['budget_approval']) if requested else None,
+                      'budget_approved_usd': state['budget_usd'] if requested else None}
+        # Always use the current exact v2 record for new allocations. No legacy fallback.
+        self._recheck_allocation(state, wid, role, None, dict(binding, **allocation))
         return allocation
 
     def budget(self, actor, usd, record):
@@ -481,7 +568,8 @@ class Harness(legacy.Harness):
         approved = amount(usd)
 
         def apply(state):
-            ref, _ = self.evidence(record, 'budget', require_pass=True)
+            ref, envelope = self.evidence(record, 'budget', require_pass=True)
+            self._budget_authorization(envelope, usd, owner=actor)
             if approved < self._declared_spend(state):
                 raise Denied('budget cannot be reduced below retained author/reviewer allocations')
             state.update(budget_usd=usd, budget_approval=ref)
@@ -493,9 +581,9 @@ class Harness(legacy.Harness):
                 current = self.task(state, task)
                 if self._declared_spend(state) > amount(state['budget_usd']):
                     raise Denied('retained allocations exceed the owner development allowance')
-                for record in (current.get('assignment'), current.get('review')):
+                for role, record in (('author', current.get('assignment')), ('reviewer', current.get('review'))):
                     if record:
-                        self._recheck_allocation(record)
+                        self._recheck_allocation(state, task, role, current['fence'], record)
             return fn(state)
         return super().change(actor, op, guarded, task)
 
@@ -508,7 +596,7 @@ class Harness(legacy.Harness):
                 raise Denied('explicit human assignment must match human: principal')
             binding = self._select(state, wid, 'author', tier, human, profile_id,
                                    fallback, fallback_reason, routing_record)
-            allocation = self._allocate(state, binding, budget_usd, max_tokens, max_seconds)
+            allocation = self._allocate(state, wid, 'author', binding, budget_usd, max_tokens, max_seconds)
             if sum(bool(t['lease']) for t in state['tasks'].values()) >= state['max_concurrent_writers']:
                 raise Denied('writer concurrency limit reached')
             paths = [safe_rel(path) for path in self.work[wid]['allowed_paths']]
@@ -529,7 +617,7 @@ class Harness(legacy.Harness):
             task = self.task(state, wid, 'assigned')
             self.owned(task, actor, fence)
             self._recheck_binding(state, wid, 'author', task['assignment'])
-            self._recheck_allocation(task['assignment'])
+            self._recheck_allocation(state, wid, 'author', task['fence'], task['assignment'])
             task['state'] = 'running'
         return self.change(actor, 'start', apply, wid)
 
@@ -547,10 +635,10 @@ class Harness(legacy.Harness):
             if human != actor.startswith('human:'):
                 raise Denied('human review flag/principal mismatch')
             self._recheck_binding(state, wid, 'author', task['assignment'])
-            self._recheck_allocation(task['assignment'])
+            self._recheck_allocation(state, wid, 'author', task['fence'], task['assignment'])
             binding = self._select(state, wid, 'reviewer', tier, human, profile_id,
                                    fallback, fallback_reason, routing_record, candidate)
-            allocation = self._allocate(state, binding, budget_usd, max_tokens, max_seconds)
+            allocation = self._allocate(state, wid, 'reviewer', binding, budget_usd, max_tokens, max_seconds)
             self.recheck(task['submission'], kind='submission', task=wid,
                          candidate=candidate, require_pass=approve)
             ref, envelope = self.evidence(record, 'review', wid, candidate, require_pass=approve)
@@ -578,6 +666,9 @@ class Harness(legacy.Harness):
                     or evidence['previous_fence'] != task['fence']):
                 raise Denied('recovery requires current fence and actual runtime-stop evidence')
             revision(evidence.get('observed_revision', ''))
+            for role, allocation in (('author', task.get('assignment')), ('reviewer', task.get('review'))):
+                if allocation and amount(allocation.get('budget_usd', 0)) and 'budget_approval' not in allocation:
+                    self._legacy_allocation(state, wid, role, task['fence'], allocation)
             task['history'].append({key: task.get(key) for key in
                                     ('candidate', 'assignment', 'submission', 'review', 'integration', 'checkpoint', 'fence')}
                                    | {'review_history': task.get('review_history', []), 'recovery': ref})
@@ -599,6 +690,13 @@ class Harness(legacy.Harness):
             profiles.append(dict(profile, available=available, unavailable_reason=reason,
                                  expires_at=q['expires_at'] if q else None))
         available_ids = {row['profile_id'] for row in profiles if row['available']}
+        try:
+            authorization = self.recheck(state['budget_approval'], kind='budget', require_pass=True)
+            self._budget_authorization(authorization, state['budget_usd'])
+            budget_status = {'available_for_new_paid_work': True, 'scope': authorization['scope'],
+                             'expires_at': authorization['expires_at'], 'unavailable_reason': None}
+        except (Denied, OSError, ValueError, KeyError, TypeError) as exc:
+            budget_status = {'available_for_new_paid_work': False, 'unavailable_reason': str(exc)}
         tasks = {}
         for wid, task in state['tasks'].items():
             assignment = task['assignment'] or {}
@@ -610,6 +708,7 @@ class Harness(legacy.Harness):
         return {'version': '2.0', 'routing_policy_digest': self.policy_hash,
                 'budget_usd': state['budget_usd'], 'declared_spend_usd': float(self._declared_spend(state)),
                 'remaining_budget_usd': float(amount(state['budget_usd']) - self._declared_spend(state)),
+                'budget_authorization': budget_status,
                 'profiles': profiles,
                 'verified_tiers': [tier for tier, row in self.tiers.items()
                                    if row['default_profile_id'] in available_ids],
@@ -712,6 +811,34 @@ class Harness(legacy.Harness):
                 revision(evidence.get('observed_revision', ''))
                 self._retained_bundle(wid, entry)
 
+    def _capture_legacy_budget(self, state):
+        approved = amount(state['budget_usd'])
+        ref = state.get('budget_approval')
+        if ref:
+            envelope = self.recheck(ref, kind='budget', require_pass=True)
+            if envelope['schema_version'] != '1.0':
+                raise Denied('v1 migration must retain its original legacy budget envelope')
+        elif approved or self._declared_spend(state):
+            raise Denied('legacy paid work requires its retained global budget approval')
+        allocations = []
+        for wid, task in state['tasks'].items():
+            bundles = [(task, task['fence'], ['tasks', wid])]
+            for index, previous in enumerate(task['history']):
+                recovery = self.recheck(previous['recovery'], kind='recovery', task=wid, require_pass=True)
+                bundles.append((previous, recovery['previous_fence'], ['tasks', wid, 'history', index]))
+            for bundle, fence, path in bundles:
+                records = [('author', bundle.get('assignment'), path + ['assignment']),
+                           ('reviewer', bundle.get('review'), path + ['review'])]
+                records += [('reviewer', review, path + ['review_history', index])
+                            for index, review in enumerate(bundle.get('review_history', []))]
+                for role, record, source_path in records:
+                    if record and amount(record.get('budget_usd', 0)) and 'budget_approval' not in record:
+                        allocations.append({'work_package_id': wid, 'role': role, 'fence': fence,
+                                            'record_digest': digest(record), 'budget_usd': record['budget_usd'],
+                                            'source_path': source_path})
+        return {'evidence': copy.deepcopy(ref), 'approved_budget_usd': state['budget_usd'],
+                'scope': 'retained-v1-allocations-only', 'allocations': allocations}
+
     def migrate_v1(self, actor, apply=False):
         """Dry-run first; preserve old bytes, tasks and receipts, then append one receipt."""
         if not actor.startswith('human:'):
@@ -745,6 +872,7 @@ class Harness(legacy.Harness):
                     if evidence.get('runtime_stopped') is not True:
                         raise Denied('migration requires retained runtime-stop evidence: ' + wid)
             self._validate_retained_evidence(old)
+            legacy_budget = self._capture_legacy_budget(old)
             source_hash = hashlib.sha256(raw).hexdigest()
             backup = self.dir / ('state.v1.' + source_hash + '.json')
             result = {'migrated': False, 'dry_run': not apply, 'from_version': '1.0', 'to_version': '2.0',
@@ -765,6 +893,7 @@ class Harness(legacy.Harness):
                 'backup_path': str(backup.relative_to(self.root)), 'old_roster_digest': digest(old['roster']),
                 'policy_digest': self.policy_hash,
                 'roster_invalidation_reason': 'v1 tier bindings do not qualify exact v2 model/effort profiles',
+                'legacy_budget_authorization': legacy_budget,
             }
             self._event(state, actor, 'migrate-routing-v1-to-v2')
             event = state['events'][-1]

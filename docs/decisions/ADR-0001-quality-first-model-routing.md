@@ -130,3 +130,22 @@ or changed proof before writing. Routing tier/fence fields require actual intege
 These corrections enforce the accepted policy; they do not change its model
 matrix, production authority, or the sealed package. V1 facts that were never
 recorded cannot be reconstructed or qualified by this migration.
+
+Re-review of `7ffeb4779bd8560237f4a0682197fd214e699fb6` identified two remaining
+budget contract gaps. New paid v2 work now requires a closed schema-2 owner
+record binding the exact approved USD, WP/role scope, policy/catalog, and an
+explicitly zoned issued/expiry window of at most 30 days. Expiry at equality
+denies allocation and later paid start/review/integration/completion; historical
+allocations remain counted. The current budget cannot silently renew a prior
+allocation's immutable authorization.
+
+Valid paid v1 work remains resumable without changing task/history/receipt
+contents. Migration binds its verified global budget proof and amount plus a
+manifest of the exact positive legacy records and their source locations,
+digests, roles, WPs, and fences. Only those records lacking per-allocation proof
+may use the compatibility reference for retained work's completion/recovery.
+The original checkpoint and evidence hashes are rechecked. This path cannot
+expand an amount or fund a new assignment/review, and remains separate from
+later v2 budget replacement or expiry. New paid work always needs the fresh v2
+authorization. Both rejected candidates remain in Git history; this is another
+corrective enforcement change, not a new model-routing or production decision.

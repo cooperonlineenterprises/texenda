@@ -68,6 +68,22 @@ def register(test, pids=None, billing='subscription', rows=None):
     return record
 
 
+def budget_record(test, usd, **overrides):
+    fields = {'schema_version': '2.0', 'owner': 'human:owner', 'approved_budget_usd': usd,
+              'scope': 'Synthetic local Texenda author and reviewer allocations only.',
+              'work_packages': list(test.h.work), 'roles': ['author', 'reviewer'],
+              'issued_at': hm.utc(test.clock[0]), 'expires_at': hm.utc(test.clock[0] + 86400),
+              'work_package_digest': test.h.package_hash, 'routing_policy_digest': test.h.policy_hash}
+    fields.update(overrides)
+    record = test.ev('budget', **fields)
+    path = test.root / record
+    envelope = json.loads(path.read_text())
+    envelope.pop('task_id', None)
+    envelope.pop('candidate_revision', None)
+    path.write_text(json.dumps(envelope))
+    return record
+
+
 class LegacyLifecycleTests(old_tests.HarnessTests):
     """Run all 39 sealed lifecycle cases through the v2 adapter, with v2 roster data."""
     def setUp(self):
@@ -78,7 +94,7 @@ class LegacyLifecycleTests(old_tests.HarnessTests):
 
     def test_qualified_model_and_budget_allow_assignment(self):
         self.roster()
-        self.h.budget('human:owner', 5, self.ev('budget'))
+        self.h.budget('human:owner', 5, budget_record(self, 5))
         self.h.admit('WP-00', 'astra')
         result = self.h.assign('WP-00', 'astra', 'agent:a', 2, budget_usd=1)
         self.assertEqual(result['model'], 'gpt-5.6-sol')
@@ -398,7 +414,7 @@ class RoutingTests(unittest.TestCase):
         register(self, billing='api')
         self.h.admit('WP-00', 'astra')
         self.deny(lambda: self.assign())
-        self.h.budget('human:owner', 2, self.ev('budget'))
+        self.h.budget('human:owner', 2, budget_record(self, 2))
         self.deny(lambda: self.assign())
         result = self.assign(budget_usd=2)
         self.release('WP-00', result)
@@ -425,7 +441,7 @@ class RoutingTests(unittest.TestCase):
         review = lambda **kw: self.h.review('WP-00', 'agent:reviewer', 1, self.cand, record, **kw)
         self.deny(review)
         self.deny(lambda: review(budget_usd=1))
-        self.h.budget('human:owner', 2, self.ev('budget'))
+        self.h.budget('human:owner', 2, budget_record(self, 2))
         for allocation in (0, -1, 3, True, float('nan'), float('inf')):
             self.deny(lambda: review(budget_usd=allocation))
         self.deny(lambda: review(budget_usd=1, max_tokens=0))
@@ -437,11 +453,11 @@ class RoutingTests(unittest.TestCase):
         self.assertEqual(recorded['max_seconds'], 300)
         self.assertEqual(recorded['budget_approval'], self.state()['budget_approval'])
         self.assertEqual(self.h.status()['declared_spend_usd'], 1)
-        self.deny(lambda: self.h.budget('human:owner', 0, self.ev('budget')))
+        self.deny(lambda: self.h.budget('human:owner', 0, budget_record(self, 0)))
 
     def test_review_rejection_and_recovery_preserve_shared_allowance_once(self):
         register(self, billing='api')
-        self.h.budget('human:owner', 4, self.ev('budget'))
+        self.h.budget('human:owner', 4, budget_record(self, 4))
         assigned = self.assign(budget_usd=1)
         self.h.start('WP-00', 'agent:author', assigned['fence'])
         checkpoint = self.ev('checkpoint')
@@ -474,7 +490,7 @@ class RoutingTests(unittest.TestCase):
 
     def test_api_review_budget_is_wired_through_cli(self):
         record = self.api_reviewer()
-        self.h.budget('human:owner', 1, self.ev('budget'))
+        self.h.budget('human:owner', 1, budget_record(self, 1))
         argv = ['--root', str(self.root), 'review', 'WP-00', '--actor', 'agent:reviewer',
                 '--tier', '1', '--candidate', self.cand, '--record', record,
                 '--budget-usd', '1', '--max-tokens', '1234', '--max-seconds', '321']
@@ -485,7 +501,7 @@ class RoutingTests(unittest.TestCase):
 
     def test_unbudgeted_older_api_approval_cannot_integrate_or_escape_through_recovery(self):
         record = self.api_reviewer()
-        self.h.budget('human:owner', 1, self.ev('budget'))
+        self.h.budget('human:owner', 1, budget_record(self, 1))
         self.h.review('WP-00', 'agent:reviewer', 1, self.cand, record, budget_usd=1)
         self.h.change('fixture', 'simulate-pre-fix-review',
                       lambda s: s['tasks']['WP-00']['review'].pop('budget_usd'))
@@ -496,7 +512,7 @@ class RoutingTests(unittest.TestCase):
 
     def test_budget_evidence_is_rechecked_before_paid_work_and_approval(self):
         register(self, billing='api')
-        budget = self.ev('budget')
+        budget = budget_record(self, 2)
         self.h.budget('human:owner', 2, budget)
         assigned = self.assign(budget_usd=1)
         path = self.root / budget
@@ -517,6 +533,130 @@ class RoutingTests(unittest.TestCase):
         for field in ('capability_tier', 'fence'):
             record = self.route('gpt-6-astra-high', **{field: True})
             self.deny(lambda: self.assign(profile_id='gpt-6-astra-high', routing_record=record))
+
+    def test_budget_record_is_closed_amount_owner_scope_and_time_bound(self):
+        now = self.clock[0]
+        changes = [
+            {'schema_version': '1.0'}, {'approved_budget_usd': True}, {'approved_budget_usd': float('nan')},
+            {'approved_budget_usd': float('inf')}, {'approved_budget_usd': -1}, {'approved_budget_usd': 100001},
+            {'approved_budget_usd': 3}, {'owner': 'human:someone-else'}, {'owner': 'agent:author'},
+            {'scope': ''}, {'scope': '   '}, {'scope': False}, {'roles': []}, {'roles': ['deploy']},
+            {'work_packages': []}, {'work_packages': ['WP-99']}, {'work_package_digest': '0' * 64},
+            {'routing_policy_digest': '0' * 64}, {'issued_at': hm.utc(now + 1)},
+            {'issued_at': hm.utc(now - 10), 'expires_at': hm.utc(now - 1)},
+            {'issued_at': hm.utc(now - 10), 'expires_at': hm.utc(now)},
+            {'issued_at': hm.utc(now - 31 * 86400), 'expires_at': hm.utc(now + 1)},
+            {'expires_at': hm.utc(now + 31 * 86400)}, {'expires_at': '2030-01-01T00:00:00'},
+            {'issued_at': '2023-11-14T22:13:20'}, {'profile_id': 'gpt-6-astra-max'}, {'status': 'NOT_RUN'},
+            {'notes': True},
+        ]
+        for change in changes:
+            with self.subTest(change=change):
+                record = budget_record(self, 2, **change)
+                self.deny(lambda: self.h.budget('human:owner', 2, record))
+        self.deny(lambda: self.h.budget('human:owner', 3, budget_record(self, 2)))
+        self.deny(lambda: self.h.budget('human:owner', True, budget_record(self, 1)))
+        self.deny(lambda: self.h.budget('human:owner', 2, self.ev('budget')))
+
+    def test_budget_scope_limits_each_paid_role_and_work_package(self):
+        record = self.api_reviewer()
+        self.h.budget('human:owner', 2, budget_record(self, 2, roles=['author']))
+        self.deny(lambda: self.h.review('WP-00', 'agent:reviewer', 1, self.cand, record, budget_usd=1), 'scope')
+        self.h.budget('human:owner', 2, budget_record(self, 2, work_packages=['WP-03']))
+        self.deny(lambda: self.h.review('WP-00', 'agent:reviewer', 1, self.cand, record, budget_usd=1), 'scope')
+        self.h.budget('human:owner', 2, budget_record(self, 2, work_packages=['WP-00'], roles=['reviewer']))
+        self.h.review('WP-00', 'agent:reviewer', 1, self.cand, record, budget_usd=1)
+
+    def test_budget_expiry_blocks_new_author_allocation_at_and_after_deadline(self):
+        register(self, billing='api')
+        now = self.clock[0]
+        self.h.budget('human:owner', 3, budget_record(self, 3, expires_at=hm.utc(now + 10)))
+        self.clock[0] = now + 9
+        assignment = self.assign(budget_usd=1)
+        self.release('WP-00', assignment)
+        for at in (now + 10, now + 11):
+            self.clock[0] = at
+            self.deny(lambda: self.assign(budget_usd=1), 'expired')
+            status = self.h.status()
+            self.assertEqual(status['declared_spend_usd'], 1)
+            self.assertFalse(status['budget_authorization']['available_for_new_paid_work'])
+
+    def test_budget_expiry_blocks_new_reviewer_allocation(self):
+        record = self.api_reviewer()
+        self.h.budget('human:owner', 2, budget_record(self, 2, expires_at=hm.utc(self.clock[0] + 10)))
+        self.clock[0] += 10
+        self.deny(lambda: self.h.review('WP-00', 'agent:reviewer', 1, self.cand, record, budget_usd=1), 'expired')
+
+    def test_budget_expiry_blocks_start_of_paid_author(self):
+        register(self, billing='api')
+        self.h.budget('human:owner', 2, budget_record(self, 2, expires_at=hm.utc(self.clock[0] + 10)))
+        assignment = self.assign(budget_usd=1)
+        self.clock[0] += 10
+        self.deny(lambda: self.h.start('WP-00', 'agent:author', assignment['fence']), 'expired')
+        # Stopping/archiving a v2 run does not create a new paid authorization.
+        self.release('WP-00', assignment)
+        self.assertEqual(self.h.status()['declared_spend_usd'], 1)
+
+    def test_budget_expiry_blocks_review_of_paid_author_even_after_new_global_budget(self):
+        register(self, billing='api')
+        self.h.budget('human:owner', 2, budget_record(self, 2, expires_at=hm.utc(self.clock[0] + 10)))
+        assignment = self.assign(budget_usd=1)
+        self.h.start('WP-00', 'agent:author', assignment['fence'])
+        self.h.submit('WP-00', 'agent:author', assignment['fence'], self.cand,
+                      self.ev('submission', changed_paths=['src/a/result']))
+        self.clock[0] += 10
+        self.h.budget('human:owner', 3, budget_record(self, 3))
+        self.deny(lambda: self.h.review('WP-00', 'agent:reviewer', 1, self.cand,
+                                       self.review_record(), budget_usd=1), 'expired')
+
+    def paid_review_with_deadline(self):
+        record = self.api_reviewer()
+        self.h.budget('human:owner', 1, budget_record(self, 1, expires_at=hm.utc(self.clock[0] + 10)))
+        self.h.review('WP-00', 'agent:reviewer', 1, self.cand, record, budget_usd=1)
+
+    def test_budget_expiry_blocks_integration_of_paid_review(self):
+        self.paid_review_with_deadline()
+        self.clock[0] += 10
+        self.deny(lambda: self.h.integrate('WP-00', 'astra', self.cand, self.head,
+                                           self.ev('integration', integrated_revision=self.head, runtime_stopped=True)), 'expired')
+
+    def test_budget_expiry_blocks_completion_of_v2_paid_work(self):
+        self.paid_review_with_deadline()
+        self.h.integrate('WP-00', 'astra', self.cand, self.head,
+                         self.ev('integration', integrated_revision=self.head, runtime_stopped=True))
+        self.clock[0] += 10
+        self.deny(lambda: self.h.complete('WP-00', 'astra'), 'expired')
+        self.h.budget('human:owner', 2, budget_record(self, 2))
+        self.deny(lambda: self.h.complete('WP-00', 'astra'), 'expired')
+        self.assertEqual(self.h.status()['declared_spend_usd'], 1)
+
+    def test_budget_amount_scope_and_hash_tampering_cannot_authorize_new_work(self):
+        register(self, billing='api')
+        record = budget_record(self, 2)
+        self.h.budget('human:owner', 2, record)
+        self.h.admit('WP-00', 'astra')
+        path = self.root / record
+        original = path.read_text()
+        for change in ({'approved_budget_usd': 3}, {'scope': 'Different owner scope'}, {'roles': ['reviewer']}):
+            envelope = json.loads(original)
+            envelope.update(change)
+            path.write_text(json.dumps(envelope))
+            self.deny(lambda: self.assign(budget_usd=1))
+        path.write_text(original + ' ')
+        self.deny(lambda: self.assign(budget_usd=1))
+
+    def test_valid_exact_budget_covers_full_paid_lifecycle(self):
+        register(self, billing='api')
+        self.h.budget('human:owner', 2, budget_record(self, 2, work_packages=['WP-00']))
+        assignment = self.assign(budget_usd=1)
+        self.h.start('WP-00', 'agent:author', assignment['fence'])
+        self.h.submit('WP-00', 'agent:author', assignment['fence'], self.cand,
+                      self.ev('submission', changed_paths=['src/a/result']))
+        self.h.review('WP-00', 'agent:reviewer', 1, self.cand, self.review_record(), budget_usd=1)
+        self.h.integrate('WP-00', 'astra', self.cand, self.head,
+                         self.ev('integration', integrated_revision=self.head, runtime_stopped=True))
+        self.h.complete('WP-00', 'astra')
+        self.assertEqual(self.h.status()['declared_spend_usd'], 2)
 
     def test_canonical_policy_digest_ignores_formatting_but_denies_semantic_change(self):
         register(self)
@@ -762,6 +902,127 @@ class MigrationTests(unittest.TestCase):
         path = self.root / recovery
         path.write_text(path.read_text() + ' ')
         self.deny(lambda: self.v2.rollback_v2('human:owner', apply=True, runtime_stopped=True))
+
+    def legacy_paid(self, finish='integrated'):
+        old_tests.HarnessTests.roster(self)
+        record = self.ev('budget')
+        self.h.budget('human:owner', 5, record)
+        self.h.admit('WP-00', 'astra')
+        assignment = self.h.assign('WP-00', 'astra', 'agent:legacy-api', 2, budget_usd=1)
+        self.h.start('WP-00', 'agent:legacy-api', assignment['fence'])
+        self.h.submit('WP-00', 'agent:legacy-api', assignment['fence'], self.cand,
+                      self.ev('submission', changed_paths=['src/a/legacy']))
+        self.h.review('WP-00', 'human:reviewer', 1, self.cand, self.ev('review'), human=True)
+        self.h.integrate('WP-00', 'astra', self.cand, self.head,
+                         self.ev('integration', integrated_revision=self.head, runtime_stopped=True))
+        if finish == 'completed':
+            self.h.complete('WP-00', 'astra')
+        if finish in ('recovered', 'cancelled'):
+            self.h.recover('WP-00', 'astra', self.ev('recovery', previous_fence=assignment['fence'],
+                                                   runtime_stopped=True, observed_revision=self.head),
+                           cancel=finish == 'cancelled')
+        return record, json.loads(self.h.statefile.read_text())
+
+    def migrate_paid(self, finish='integrated'):
+        record, source = self.legacy_paid(finish)
+        self.v2.migrate_v1('human:owner', apply=True)
+        migrated = json.loads(self.h.statefile.read_text())
+        self.assertEqual(migrated['tasks'], source['tasks'])
+        self.assertEqual(migrated['events'][:-1], source['events'])
+        authorization = migrated['routing_migration']['legacy_budget_authorization']
+        self.assertEqual(authorization['evidence'], source['budget_approval'])
+        self.assertEqual(authorization['approved_budget_usd'], 5)
+        self.assertEqual(len(authorization['allocations']), 1)
+        self.assertEqual(authorization['allocations'][0]['budget_usd'], 1)
+        self.assertEqual(self.v2.status()['declared_spend_usd'], 1)
+        self.h = self.v2
+        return record, source
+
+    def test_exact_legacy_api_integrated_case_can_complete_after_migration(self):
+        _, source = self.migrate_paid()
+        self.h.complete('WP-00', 'astra')
+        current = json.loads(self.h.statefile.read_text())['tasks']['WP-00']
+        self.assertEqual(current['state'], 'completed')
+        for key in ('assignment', 'review', 'integration', 'history'):
+            self.assertEqual(current[key], source['tasks']['WP-00'][key])
+        self.assertNotIn('budget_approval', current['assignment'])
+        self.assertFalse(self.h.status()['budget_authorization']['available_for_new_paid_work'])
+
+    def test_legacy_completed_api_history_and_allocations_are_preserved(self):
+        self.migrate_paid('completed')
+        self.assertEqual(self.h.status()['tasks']['WP-00']['state'], 'completed')
+
+    def test_legacy_recovered_api_history_and_allocations_are_preserved(self):
+        self.migrate_paid('recovered')
+        self.assertEqual(self.h.status()['tasks']['WP-00']['state'], 'admitted')
+        register(self, billing='api')
+        self.deny(lambda: self.h.assign('WP-00', 'astra', 'agent:new-api', 2, budget_usd=1))
+
+    def test_legacy_cancelled_api_history_and_allocations_are_preserved(self):
+        self.migrate_paid('cancelled')
+        self.assertEqual(self.h.status()['tasks']['WP-00']['state'], 'cancelled')
+
+    def test_legacy_proof_survives_new_budget_replacement_and_expiry_only_for_old_work(self):
+        self.migrate_paid()
+        register(self, billing='api')
+        self.h.budget('human:owner', 2, budget_record(self, 2, expires_at=hm.utc(self.clock[0] + 10)))
+        self.clock[0] += 10
+        self.h.complete('WP-00', 'astra')
+        self.h.admit('WP-03', 'astra')
+        self.deny(lambda: self.h.assign('WP-03', 'astra', 'agent:new-api', 2, budget_usd=1))
+        self.assertEqual(self.h.status()['declared_spend_usd'], 1)
+
+    def test_legacy_budget_cannot_fund_new_v2_author_or_reviewer(self):
+        self.migrate_paid()
+        register(self, billing='api')
+        self.h.admit('WP-03', 'astra')
+        self.deny(lambda: self.h.assign('WP-03', 'astra', 'agent:new-api', 2, budget_usd=1))
+        assignment = self.h.assign('WP-03', 'astra', 'human:author', 2, human=True)
+        self.h.start('WP-03', 'human:author', assignment['fence'])
+        self.h.submit('WP-03', 'human:author', assignment['fence'], self.cand,
+                      self.ev('submission', 'WP-03', changed_paths=['src/c/new']))
+        review = self.ev('review', 'WP-03', schema_version='2.0', profile_id='gpt-6-astra-max',
+                         routing_policy_digest=self.h.policy_hash)
+        self.deny(lambda: self.h.review('WP-03', 'agent:new-reviewer', 1, self.cand, review, budget_usd=1))
+        self.h.budget('human:owner', 2, budget_record(self, 2, work_packages=['WP-03'], roles=['reviewer']))
+        self.h.review('WP-03', 'agent:new-reviewer', 1, self.cand, review, budget_usd=1)
+        self.assertEqual(self.h.status()['declared_spend_usd'], 2)
+
+    def test_missing_or_tampered_legacy_budget_blocks_migration(self):
+        _, source = self.legacy_paid()
+        self.corrupt_reference(source['budget_approval'])
+        self.assertTrue(self.v2.migrate_v1('human:owner', apply=True)['migrated'])
+
+    def test_replaced_budget_cannot_hide_missing_or_tampered_legacy_proof(self):
+        record, _ = self.migrate_paid()
+        self.h.budget('human:owner', 2, budget_record(self, 2))
+        path = self.root / record
+        original = path.read_bytes()
+        path.unlink()
+        self.deny(lambda: self.h.complete('WP-00', 'astra'))
+        path.write_bytes(original + b' ')
+        self.deny(lambda: self.h.complete('WP-00', 'astra'))
+        path.write_bytes(original)
+        self.h.complete('WP-00', 'astra')
+
+    def test_legacy_compatibility_cannot_expand_an_allocation(self):
+        self.migrate_paid()
+        self.h.change('fixture', 'attempt-legacy-expansion',
+                      lambda s: s['tasks']['WP-00']['assignment'].update(budget_usd=2))
+        self.deny(lambda: self.h.complete('WP-00', 'astra'))
+
+    def test_legacy_recovery_preserves_old_allocation_but_new_fence_requires_v2_proof(self):
+        self.migrate_paid()
+        register(self, billing='api')
+        self.h.recover('WP-00', 'astra', self.ev('recovery', previous_fence=1,
+                                               runtime_stopped=True, observed_revision=self.head))
+        self.assertEqual(self.h.status()['declared_spend_usd'], 1)
+        self.deny(lambda: self.h.assign('WP-00', 'astra', 'agent:new-api', 2, budget_usd=1))
+        self.h.budget('human:owner', 2, budget_record(self, 2))
+        assigned = self.h.assign('WP-00', 'astra', 'agent:new-api', 2, budget_usd=1)
+        self.h.change('fixture', 'attempt-borrow-legacy-proof',
+                      lambda s: s['tasks']['WP-00']['assignment'].pop('budget_approval'))
+        self.deny(lambda: self.h.start('WP-00', 'agent:new-api', assigned['fence']))
 
     def test_cli_init_context_check_and_dry_run_migration(self):
         root = self.base / 'cli-root'

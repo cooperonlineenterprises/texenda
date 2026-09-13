@@ -24,6 +24,8 @@ lease/fence state. `declared_spend_usd` and `remaining_budget_usd` include autho
 and reviewer allocations across current tasks and retained history; these are
 declared allowances, not measured provider charges. A missing default does not
 select a downshift or fallback.
+`budget_authorization.available_for_new_paid_work` separately reports whether
+the current budget is usable; a positive remaining amount alone is not permission.
 Capabilities use T1–T4, strongest first; they are distinct from product command
 consequence classes C0–C4. Use the canonical digest printed by the harness,
 not a raw `shasum` of the policy file.
@@ -57,6 +59,18 @@ Rollback revalidates the source evidence too. V1 did not archive every supersede
 checkpoint; the adapter validates all retained references and cannot reconstruct
 records the old harness never retained. V2 recovery preserves checkpoint and
 fence references with the candidate history going forward.
+
+For positive v1 allocations that lack per-allocation budget fields, migration
+binds the original verified global budget reference and amount in
+`routing_migration.legacy_budget_authorization` and the migration receipt. Its
+manifest identifies each eligible original record by WP, role, fence, record
+digest, amount, and source checkpoint path. This preserves every original task,
+history item, and receipt. Completion/recovery of matching retained v1 work
+rechecks the original checkpoint and budget evidence; changing the current v2
+budget does not replace that historical proof. It cannot expand an allocation,
+fund another fence, or authorize any new v2 author/reviewer work. Missing or
+changed legacy proof blocks the compatibility path. Historical compatibility
+does not qualify a model or clear a product gate.
 
 Immediate rollback is limited to the migration with no later v2 receipts or
 leases, and requires the owner's actual runtime-stop attestation:
@@ -124,6 +138,30 @@ so reassigning or resubmitting cannot erase spending or charge an allocation
 twice. The owner cannot lower the cap below retained allocations. An older
 API-tagged review with no positive allocation requires reviewed accounting
 repair; its missing amount is never inferred as zero or erased by recovery.
+
+Use [templates/budget.json](templates/budget.json) and the v2 evidence schema for
+all new paid work. The closed record requires `owner` (matching the `human:`
+actor), `approved_budget_usd` (exactly equal to `set-budget --usd`), a nonempty
+descriptive `scope`, explicit `work_packages` and `roles` (`author`/`reviewer`),
+the current policy/catalog digests, `issued_at`, `expires_at`, summary, and
+required PASS checks. Only `notes` is optional. Amounts must be finite numbers
+from zero through 100000; booleans are invalid. Both timestamps require explicit
+timezones, with `issued_at <= now < expires_at` and a positive validity window
+no longer than 30 days. The template is deliberately expired and NOT_RUN.
+
+```sh
+# Only with separately obtained owner approval; the evidence amount must equal --usd.
+python3 tooling/coordination/harness.py --root . set-budget --actor human:owner --usd 1 --record docs/qualification/development-budget.evidence.json
+```
+
+Each positive allocation binds its exact budget reference and approved cap.
+New allocations enforce WP/role scope; start, review, integration, and completion
+recheck the same unexpired v2 authorization. Equality at expiry denies. A newer
+global budget does not silently renew an old v2 allocation. Expired spending
+remains in the cumulative ledger; stopping/recovering work does not refund or
+renew it. Use proved recovery, a new fence, and explicit fresh authorization
+when paid v2 work must be reassigned. Legacy compatibility is limited to the
+exact already retained v1 records and never supplies this new authorization.
 
 A lower effort also requires `--routing-record`, using
 [templates/routing.json](templates/routing.json). The record binds the task,

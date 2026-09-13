@@ -112,7 +112,8 @@
       "type": "string"
     },
     "expires_at": {
-      "type": "string"
+      "type": "string",
+      "format": "date-time"
     },
     "work_packages": {
       "type": "array",
@@ -175,6 +176,30 @@
     },
     "deterministic_verification": {
       "type": "boolean"
+    },
+    "owner": {
+      "type": "string",
+      "pattern": "^human:.+"
+    },
+    "approved_budget_usd": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100000
+    },
+    "issued_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "roles": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "author",
+          "reviewer"
+        ]
+      }
     }
   },
   "allOf": [
@@ -251,6 +276,66 @@
             }
           }
         ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "budget"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "schema_version",
+          "kind",
+          "summary",
+          "checks",
+          "owner",
+          "approved_budget_usd",
+          "scope",
+          "work_packages",
+          "roles",
+          "issued_at",
+          "expires_at",
+          "routing_policy_digest",
+          "work_package_digest"
+        ],
+        "propertyNames": {
+          "enum": [
+            "schema_version",
+            "kind",
+            "summary",
+            "checks",
+            "owner",
+            "approved_budget_usd",
+            "scope",
+            "work_packages",
+            "roles",
+            "issued_at",
+            "expires_at",
+            "routing_policy_digest",
+            "work_package_digest",
+            "notes"
+          ]
+        },
+        "properties": {
+          "scope": {
+            "type": "string",
+            "pattern": "\\S"
+          },
+          "work_packages": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^WP-[0-9]{2}$"
+            }
+          }
+        },
+        "description": "Runtime also enforces exact CLI amount/owner, current task and role coverage, matching policy/catalog, explicit timezone, issued_at <= now < expires_at, and a maximum 30-day window."
       }
     }
   ]

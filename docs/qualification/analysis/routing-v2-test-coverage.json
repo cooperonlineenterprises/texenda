@@ -3,7 +3,7 @@
   "plan": "docs/qualification/analysis/routing-v2-test-plan.md",
   "test_file": "tooling/coordination/tests/test_routing_v2.py",
   "frozen_clock_unix": 1700000000,
-  "adapter_tests_passed": 95,
+  "adapter_tests_passed": 115,
   "sealed_tests_passed": 39,
   "representative_fixture": "docs/qualification/evidence/routing-v2-migration-fixture.json",
   "cases": [
@@ -173,8 +173,8 @@
     "Declared actor labels are the identity boundary under test; these tests do not prove physical actor identity.",
     "Synthetic fixtures verify bookkeeping and fail-closed behavior only. They do not clear a product or external gate."
   ],
-  "latest_verification_log": "docs/qualification/evidence/routing-v2-correction-verification.log",
-  "reviewed_candidate_requiring_correction": "61d921aeeb7b386e442dbdf8d1db91f1d6be0a81",
+  "latest_verification_log": "docs/qualification/evidence/routing-v2-budget-authorization-verification.log",
+  "reviewed_candidate_requiring_correction": "7ffeb4779bd8560237f4a0682197fd214e699fb6",
   "review_corrections": [
     {
       "id": "review-budget-accounting",
@@ -205,6 +205,42 @@
       "tests": [
         "RoutingTests.test_boolean_routing_tier_and_fence_are_not_integer_one"
       ]
+    },
+    {
+      "id": "exact-expiring-owner-budget",
+      "execution_status": "PASS",
+      "tests": [
+        "RoutingTests.test_budget_record_is_closed_amount_owner_scope_and_time_bound",
+        "RoutingTests.test_budget_scope_limits_each_paid_role_and_work_package",
+        "RoutingTests.test_budget_expiry_blocks_new_author_allocation_at_and_after_deadline",
+        "RoutingTests.test_budget_expiry_blocks_new_reviewer_allocation",
+        "RoutingTests.test_budget_expiry_blocks_start_of_paid_author",
+        "RoutingTests.test_budget_expiry_blocks_review_of_paid_author_even_after_new_global_budget",
+        "RoutingTests.test_budget_expiry_blocks_integration_of_paid_review",
+        "RoutingTests.test_budget_expiry_blocks_completion_of_v2_paid_work",
+        "RoutingTests.test_budget_amount_scope_and_hash_tampering_cannot_authorize_new_work",
+        "RoutingTests.test_valid_exact_budget_covers_full_paid_lifecycle"
+      ]
+    },
+    {
+      "id": "legacy-allocation-compatibility-without-new-authority",
+      "execution_status": "PASS",
+      "tests": [
+        "MigrationTests.test_exact_legacy_api_integrated_case_can_complete_after_migration",
+        "MigrationTests.test_legacy_completed_api_history_and_allocations_are_preserved",
+        "MigrationTests.test_legacy_recovered_api_history_and_allocations_are_preserved",
+        "MigrationTests.test_legacy_cancelled_api_history_and_allocations_are_preserved",
+        "MigrationTests.test_legacy_proof_survives_new_budget_replacement_and_expiry_only_for_old_work",
+        "MigrationTests.test_legacy_budget_cannot_fund_new_v2_author_or_reviewer",
+        "MigrationTests.test_missing_or_tampered_legacy_budget_blocks_migration",
+        "MigrationTests.test_replaced_budget_cannot_hide_missing_or_tampered_legacy_proof",
+        "MigrationTests.test_legacy_compatibility_cannot_expand_an_allocation",
+        "MigrationTests.test_legacy_recovery_preserves_old_allocation_but_new_fence_requires_v2_proof"
+      ]
     }
+  ],
+  "prior_reviewed_candidates": [
+    "61d921aeeb7b386e442dbdf8d1db91f1d6be0a81",
+    "7ffeb4779bd8560237f4a0682197fd214e699fb6"
   ]
 }
