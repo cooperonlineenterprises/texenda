@@ -1,0 +1,213 @@
+{
+  "schema_version": "2.0",
+  "kind": "review",
+  "task_id": "RUNTIME-SURFACE-CORRECTION-2026-09-13",
+  "candidate_revision": "d08f3da49a043ee9f62555b6098276ac05ed87f5",
+  "profile_id": "gpt-6-astra-max",
+  "routing_policy_digest": "61f0db448cf5ac5adad4d9340d568a7558c0369174e30aab92dd0ccf0d24bdf0",
+  "summary": "APPROVE: independent review of the exact desktop runtime correction candidate found no actionable findings. All 131 local tests, 39 sealed tests, 14 checksum-aware checks, required integrity/schema/provenance checks, eight targeted tests and 66 actual-profile drift/expiry denials passed. Live activation and product/external gates remain separate.",
+  "checks": [
+    {
+      "id": "independent-exact-candidate-review",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Independently review all 17 changed files against base 0a72aba450c76e318b02f22c49133b406da7d4ef, including all eleven dated probes, governing authority, historical evidence and exact candidate/tree/diff bindings. Candidate tree 9172cd72b2c15cabd0b147c24fa5e8a2939d8b71; full no-ext-diff/no-textconv/full-index/binary diff SHA-256 06018da8f7d249c89852d8d0eaf8bb86590903b6450994c908c15c88eb238fbc, 128724 bytes.",
+      "evidence_path": "docs/qualification/evidence/runtime-surface-correction-independent-review.md",
+      "sha256": "30df3eee1f938fdc1ebfa6784eeaf338b70c209b01d8ddbe6d2b019037be6aee"
+    },
+    {
+      "id": "local-coordinator-unit-tests",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "env PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tooling/coordination/tests -v: exit 0, 131 tests passed in 1.426s.",
+      "evidence_path": "docs/qualification/evidence/runtime-surface-correction-independent-review.md",
+      "sha256": "30df3eee1f938fdc1ebfa6784eeaf338b70c209b01d8ddbe6d2b019037be6aee"
+    },
+    {
+      "id": "sealed-coordinator-unit-tests",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "env PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s specs/texenda-handoff/08-project-harness/tests -v: exit 0, 39 tests passed in 0.164s.",
+      "evidence_path": "docs/qualification/evidence/runtime-surface-correction-independent-review.md",
+      "sha256": "30df3eee1f938fdc1ebfa6784eeaf338b70c209b01d8ddbe6d2b019037be6aee"
+    },
+    {
+      "id": "sealed-package-checksums",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "env PYTHONDONTWRITEBYTECODE=1 python3 specs/texenda-handoff/10-validation/validate_package.py --checksums: exit 0, 14 checks passed, zero errors or warnings; 86 sealed files also compared byte-for-byte with the base.",
+      "evidence_path": "docs/qualification/evidence/runtime-surface-correction-independent-review.md",
+      "sha256": "30df3eee1f938fdc1ebfa6784eeaf338b70c209b01d8ddbe6d2b019037be6aee"
+    },
+    {
+      "id": "eight-targeted-contract-negative-tests",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "env PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=tooling/coordination/tests python3 -m unittest -v test_instruction_contracts.InstructionContracts.test_current_roster_binds_exact_profiles_to_observed_desktop_not_cli test_routing_v2.RoutingTests.test_roster_rejects_duplicate_and_mismatched_exact_profiles test_routing_v2.RoutingTests.test_roster_bytes_and_logs_rechecked test_routing_v2.RoutingTests.test_explicit_fallback_only_sol_max_with_flag_and_reason test_routing_v2.RoutingTests.test_usage_pressure_text_cannot_supply_downshift_conditions test_routing_v2.RoutingTests.test_budget_amount_scope_and_hash_tampering_cannot_authorize_new_work test_routing_v2.MigrationTests.test_migration_refuses_live_and_expired_leases test_routing_v2.RoutingTests.test_untrusted_review_text_cannot_make_required_not_run_pass: exit 0, eight tests passed in 0.064s.",
+      "evidence_path": "docs/qualification/evidence/runtime-surface-correction-independent-review.md",
+      "sha256": "30df3eee1f938fdc1ebfa6784eeaf338b70c209b01d8ddbe6d2b019037be6aee"
+    },
+    {
+      "id": "syntax-schema-link-hash-and-provenance",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Read-only programs parsed all 76 JSON files with duplicate-key/nonfinite-value rejection, all three TOML/config examples and all eight Python files; validated 12 evidence/template records against actual repository schema keywords plus harness validators, eight envelopes and 80 hash references; resolved 69 local Markdown links; compared 163 tracked candidate files, 86 sealed files, 39 historical files and all eleven single-report source commits; reconstructed all fourteen added-file diff bodies. jsonschema was unavailable; no dependency installed.",
+      "evidence_path": "docs/qualification/evidence/runtime-surface-correction-independent-review.md",
+      "sha256": "30df3eee1f938fdc1ebfa6784eeaf338b70c209b01d8ddbe6d2b019037be6aee"
+    },
+    {
+      "id": "actual-profile-drift-and-expiry-denials",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "For each of the eleven actual replacement qualification snapshots, independently reject runtime-to-CLI drift, desktop-version-to-CLI drift, model drift, effort drift, billing drift, and expiry at equality. All 66 in-memory negative cases denied; input objects preserved; no live state operation.",
+      "evidence_path": "docs/qualification/evidence/runtime-surface-correction-independent-review.md",
+      "sha256": "30df3eee1f938fdc1ebfa6784eeaf338b70c209b01d8ddbe6d2b019037be6aee"
+    },
+    {
+      "id": "luna-low-correction-original-byte-reconstruction",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Reverse only the disclosed profile_id and expires_at replacements in memory. Reconstructed original bytes hash to 1d40c826248911c1c98c70c9d9ddccfac436b5583f1b706b26bfd6ae0cbecacf, exactly matching the original dispatcher handoff. Corrected bytes hash to d223cfcda3e8232fd0610fc8d0c11f89f7d7c91d9c3eeca92bd48a2cd4cf0975 and match the parent source commit; all other bytes preserved.",
+      "evidence_path": "docs/qualification/evidence/runtime-surface-correction-independent-review.md",
+      "sha256": "30df3eee1f938fdc1ebfa6784eeaf338b70c209b01d8ddbe6d2b019037be6aee"
+    },
+    {
+      "id": "probe-dispatcher-completion-boundary",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Verify parent-supplied dispatcher task identities and completed observations for all eleven exact probes and compare source-commit bytes/scopes independently. Directly observe the still-listed Luna/medium and Luna/low agents as completed with collaboration.list_agents. Retain the other nine historical stop observations as parent-supplied evidence, separate from subprocess exit and provider identity.",
+      "evidence_path": "docs/qualification/evidence/runtime-surface-correction-independent-review.md",
+      "sha256": "30df3eee1f938fdc1ebfa6784eeaf338b70c209b01d8ddbe6d2b019037be6aee"
+    },
+    {
+      "id": "live-ledger-read-only-integrity",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "At 2026-09-13T22:26:37.487605+00:00, directly read the installed texenda-app ledger and v1 checkpoint without lock/write methods. Verify state SHA-256 43cf040755cc587373fcddd9c7ff7727d41ccecbc260e9043869c3797a1a82fb, receipt 12/head a60e550b634c28cdfdab677e44481bc5fb5803d2056c10f6787df35fefe05092, historical roster, eleven profiles, zero leases/API budget/declared spend, intact ten-receipt source prefix and task/history equality. Re-read bytes unchanged.",
+      "evidence_path": "docs/qualification/evidence/runtime-surface-correction-independent-review.md",
+      "sha256": "30df3eee1f938fdc1ebfa6784eeaf338b70c209b01d8ddbe6d2b019037be6aee"
+    },
+    {
+      "id": "desktop-runtime-observation",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Independently inspect public bundle fields and CLI version: com.openai.codex 26.901.41600 build 7982; separate codex-cli 0.149.0. Verify the dated runtime observation hash and scope. No model, network, credential or billing operation.",
+      "evidence_path": "docs/qualification/runtime-surface-observation-2026-09-13.json",
+      "sha256": "35995674a989b1b77233eafdc80ed092d0a8f8622b88990e8f7b3f8336978091"
+    },
+    {
+      "id": "replacement-roster-envelope",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Independently validate all eleven closed exact-profile rows, twelve required PASS checks, model/effort/native-tier correspondence, desktop client, subscription mode, capabilities, current per-report timestamps and 29-day expiry. This check does not install or owner-attest the roster.",
+      "evidence_path": "docs/qualification/model-roster-v2.1.evidence.json",
+      "sha256": "8e44034e6247ea47b3f0002100e6a343cfa6685d56138a24f55e8a13054173c0"
+    },
+    {
+      "id": "historical-roster-preservation",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Compare the historical v2 roster byte-for-byte with the exact base and revalidate all referenced evidence hashes; retain its receipt-12 binding. Its CLI-number attribution is preserved as history, not reused as corrected desktop evidence.",
+      "evidence_path": "docs/qualification/model-roster-v2.evidence.json",
+      "sha256": "dbfd99b98edc134c1e202c0b48145141f967718194b67012f75a3868bf4ef6a1"
+    },
+    {
+      "id": "exact-desktop-probe-gpt-6-astra-max",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Read the complete gpt-6-astra/max desktop report; verify profile/native tier T1, requested dispatch metadata, desktop build, bounded local read/edit/test, ten then-current instruction tests and sealed checksum validation, exact source commit e86099271cdf0810185ae563f73128c90c68c4de, report hash, verified time 2026-09-13T21:44:31Z, expiry 2026-10-12T21:44:31Z, and recorded stop/identity limits.",
+      "evidence_path": "docs/qualification/probes/2026-09-13/gpt-6-astra-max-desktop.json",
+      "sha256": "e62f78f3930ffd840c0d5d596a910a87187fe26bdad314b925711a0d39ab8df0"
+    },
+    {
+      "id": "exact-desktop-probe-gpt-6-astra-high",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Read the complete gpt-6-astra/high desktop report; verify profile/native tier T1, requested dispatch metadata, desktop build, bounded local read/edit/test, ten then-current instruction tests and sealed checksum validation, exact source commit baa5e350d3b27326ec4f405858ecb56ff9d53a57, report hash, verified time 2026-09-13T21:37:21Z, expiry 2026-10-12T21:37:21Z, and recorded stop/identity limits.",
+      "evidence_path": "docs/qualification/probes/2026-09-13/gpt-6-astra-high-desktop.json",
+      "sha256": "39667e91d35f6f538338047ecac039a9b282bc41b842cb7789fb8b863ac19e55"
+    },
+    {
+      "id": "exact-desktop-probe-gpt-5.6-sol-max",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Read the complete gpt-5.6-sol/max desktop report; verify profile/native tier T2, requested dispatch metadata, desktop build, bounded local read/edit/test, ten then-current instruction tests and sealed checksum validation, exact source commit f6427f98b3bd3899215b77413b56c651f19c3280, report hash, verified time 2026-09-13T21:45:13Z, expiry 2026-10-12T21:45:13Z, and recorded stop/identity limits.",
+      "evidence_path": "docs/qualification/probes/2026-09-13/gpt-5.6-sol-max-desktop.json",
+      "sha256": "bade3a896b777d08d134b596edef0c95ee80fa59df81e7c95a3ec3985346c429"
+    },
+    {
+      "id": "exact-desktop-probe-gpt-5.6-sol-high",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Read the complete gpt-5.6-sol/high desktop report; verify profile/native tier T2, requested dispatch metadata, desktop build, bounded local read/edit/test, ten then-current instruction tests and sealed checksum validation, exact source commit 304f63cf7bee4b3980b00a370a91cca1c3442ca3, report hash, verified time 2026-09-13T21:37:53Z, expiry 2026-10-12T21:37:53Z, and recorded stop/identity limits.",
+      "evidence_path": "docs/qualification/probes/2026-09-13/gpt-5.6-sol-high-desktop.json",
+      "sha256": "bfeb7d4639e2af5fd1d686a599e8c5ae4165b645bfd84bbcc90384c7ab62bc70"
+    },
+    {
+      "id": "exact-desktop-probe-gpt-5.6-terra-max",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Read the complete gpt-5.6-terra/max desktop report; verify profile/native tier T3, requested dispatch metadata, desktop build, bounded local read/edit/test, ten then-current instruction tests and sealed checksum validation, exact source commit 702314d59500d3b5dcd1bf5cb0e8dc7a055338bf, report hash, verified time 2026-09-13T21:51:56Z, expiry 2026-10-12T21:51:56Z, and recorded stop/identity limits.",
+      "evidence_path": "docs/qualification/probes/2026-09-13/gpt-5.6-terra-max-desktop.json",
+      "sha256": "0e8e8d8b5e1027b18fde140f7e207c7bab7cb0daea79fae714dd55a5cbb48f66"
+    },
+    {
+      "id": "exact-desktop-probe-gpt-5.6-terra-high",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Read the complete gpt-5.6-terra/high desktop report; verify profile/native tier T3, requested dispatch metadata, desktop build, bounded local read/edit/test, ten then-current instruction tests and sealed checksum validation, exact source commit 358bc0a6a057d969f3ac313cbe9832f9520274f2, report hash, verified time 2026-09-13T21:51:17Z, expiry 2026-10-12T21:51:17Z, and recorded stop/identity limits.",
+      "evidence_path": "docs/qualification/probes/2026-09-13/gpt-5.6-terra-high-desktop.json",
+      "sha256": "763d6ca28031640217699b00157d45c636b4abe7829cfd7e980b7aee287dbf6a"
+    },
+    {
+      "id": "exact-desktop-probe-gpt-5.6-terra-medium",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Read the complete gpt-5.6-terra/medium desktop report; verify profile/native tier T3, requested dispatch metadata, desktop build, bounded local read/edit/test, ten then-current instruction tests and sealed checksum validation, exact source commit e83cfc7fd64cd3c4997bb8fff1e831d335ded92b, report hash, verified time 2026-09-13T21:58:11Z, expiry 2026-10-12T21:58:11Z, and recorded stop/identity limits.",
+      "evidence_path": "docs/qualification/probes/2026-09-13/gpt-5.6-terra-medium-desktop.json",
+      "sha256": "5ce0c586e5506c78643b86850620804fe534c6017690f5b4ab4718c30ce3e61d"
+    },
+    {
+      "id": "exact-desktop-probe-gpt-5.6-luna-max",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Read the complete gpt-5.6-luna/max desktop report; verify profile/native tier T4, requested dispatch metadata, desktop build, bounded local read/edit/test, ten then-current instruction tests and sealed checksum validation, exact source commit a3449b3a4ee60dba3476df50d1cb9999189075d4, report hash, verified time 2026-09-13T21:59:22Z, expiry 2026-10-12T21:59:22Z, and recorded stop/identity limits.",
+      "evidence_path": "docs/qualification/probes/2026-09-13/gpt-5.6-luna-max-desktop.json",
+      "sha256": "73e6370836289af4babb18c0f0ffffb8b2b853a5e6ffabadec31bcca691dbd44"
+    },
+    {
+      "id": "exact-desktop-probe-gpt-5.6-luna-high",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Read the complete gpt-5.6-luna/high desktop report; verify profile/native tier T4, requested dispatch metadata, desktop build, bounded local read/edit/test, ten then-current instruction tests and sealed checksum validation, exact source commit 05ca53bc88a998a2e020c53081d89b3bd65e3156, report hash, verified time 2026-09-13T22:04:30Z, expiry 2026-10-12T22:04:30Z, and recorded stop/identity limits.",
+      "evidence_path": "docs/qualification/probes/2026-09-13/gpt-5.6-luna-high-desktop.json",
+      "sha256": "a4b4b39af3e27ce36d8e7b368d6e5fa7508a9088d6409ce42717e7fede54a5db"
+    },
+    {
+      "id": "exact-desktop-probe-gpt-5.6-luna-medium",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Read the complete gpt-5.6-luna/medium desktop report; verify profile/native tier T4, requested dispatch metadata, desktop build, bounded local read/edit/test, ten then-current instruction tests and sealed checksum validation, exact source commit 7f7176d76465c9b66057af5ec53a817e07afedf6, report hash, verified time 2026-09-13T22:03:56Z, expiry 2026-10-12T22:03:56Z, and recorded stop/identity limits.",
+      "evidence_path": "docs/qualification/probes/2026-09-13/gpt-5.6-luna-medium-desktop.json",
+      "sha256": "f4bbaf3d7ef77cb946a44b9fdb69591eac01f9ef8c5ed0bac6d94352c47f78be"
+    },
+    {
+      "id": "exact-desktop-probe-gpt-5.6-luna-low",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Read the complete gpt-5.6-luna/low desktop report; verify profile/native tier T4, requested dispatch metadata, desktop build, bounded local read/edit/test, ten then-current instruction tests and sealed checksum validation, exact source commit 0f0f4a97151a2f17c9831069f1f86fcbb2345550, report hash, verified time 2026-09-13T22:07:26Z, expiry 2026-10-12T22:07:26Z, and recorded stop/identity limits.",
+      "evidence_path": "docs/qualification/probes/2026-09-13/gpt-5.6-luna-low-desktop.json",
+      "sha256": "d223cfcda3e8232fd0610fc8d0c11f89f7d7c91d9c3eeca92bd48a2cd4cf0975"
+    },
+    {
+      "id": "reviewer-command-stop-and-candidate-preservation",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Collect every review command and the yielded unit-test session to terminal exit; verify no background job, server, child agent or lease was started, no .texenda state exists in the review checkout, and all tracked bytes remain the exact candidate before adding only the two review artifacts. Parent must separately observe final reviewer task completion.",
+      "evidence_path": "docs/qualification/evidence/runtime-surface-correction-independent-review.md",
+      "sha256": "30df3eee1f938fdc1ebfa6784eeaf338b70c209b01d8ddbe6d2b019037be6aee"
+    }
+  ],
+  "scope": "Independent review of the exact local runtime-attribution correction only. The two review artifacts are uncommitted additions; no candidate file or live ledger was edited, and no roster activation occurred.",
+  "notes": "Reviewer task /root/review_runtime_correction is independent of the candidate author. Parent supplied requested dispatch gpt-6-astra/max, exact profile gpt-6-astra-max, and dispatcher acceptance; executing provider model and effort introspection remain unavailable/null. Surface: codex-desktop-collaboration. Public bundle metadata independently inspected: com.openai.codex, version 26.901.41600, build 7982, client 26.901.41600 (build 7982). Separate CLI: codex-cli 0.149.0, unqualified. Subscription mode by assignment; API allowance/spend 0; numeric reviewer time/token allocation not supplied. Base 0a72aba450c76e318b02f22c49133b406da7d4ef; candidate d08f3da49a043ee9f62555b6098276ac05ed87f5; tree 9172cd72b2c15cabd0b147c24fa5e8a2939d8b71; exact full binary diff SHA-256 06018da8f7d249c89852d8d0eaf8bb86590903b6450994c908c15c88eb238fbc. All profile inventory, dates, hashes, source commits, commands/results, schema-engine limitations and parent-versus-direct stop observations are recorded in the hash-bound report. Runtime subprocesses completed; this envelope does not attest its author's future task termination, so parent must observe final completion. NOT RUN: fresh model dispatch repetition, independent provider identity/entitlement/billing inspection, physical sandbox/egress enforcement, new-session config loading, direct CLI qualification, live activation, product acceptance and external gates. No network, secrets, credentials, production data, account/reset action, API spend, push, deploy, provision or send occurred. Approval is exact-candidate only; later semantic candidate changes require review."
+}
