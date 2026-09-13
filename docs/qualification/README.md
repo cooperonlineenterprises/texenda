@@ -17,7 +17,7 @@ The four capability tiers default to max reasoning:
 
 Sol/max is also the sole explicit T1 fallback. The fallback requires an explicit flag and reason and is never selected automatically. Lower effort requires a current task/role/profile/fence-bound routing record proving bounded, reversible, fully specified work with deterministic verification. No existing whole parent WP has a T4 floor; T4 is reserved for separately fenced mechanical subtasks and future reviewed routes.
 
-Use [model-roster-v2.evidence.json](model-roster-v2.evidence.json) for the current exact-profile roster, [routing-v2-activation-verification.md](routing-v2-activation-verification.md) for integrated and live-migration evidence, `probes/` for the model/effort runs, and `analysis/` plus `evidence/` for author and independent review records. Profiles expire on `2026-10-12T19:51:23Z`, or earlier after a relevant model, client, account, sandbox, or policy change.
+Use [model-roster-v2.evidence.json](model-roster-v2.evidence.json) for the current exact-profile roster, [routing-v2-activation-verification.md](routing-v2-activation-verification.md) for the independently reviewed pre-installation snapshot, and [routing-v2-activation-receipt.md](routing-v2-activation-receipt.md) for the installed live-ledger state. `probes/` contains the model/effort runs; `analysis/` and `evidence/` retain author and independent review records. Profiles expire on `2026-10-12T19:51:23Z`, or earlier after a relevant model, client, account, sandbox, or policy change.
 
 ## Historical v1 evidence
 
