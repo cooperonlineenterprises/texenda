@@ -1,0 +1,142 @@
+{
+  "schema_version": "1.0",
+  "kind": "desktop-exact-profile-qualification-probe",
+  "profile_id": "gpt-5.6-terra-max",
+  "qualification_scope": "Only gpt-5.6-terra at max reasoning effort dispatched through the exact Codex desktop collaboration runtime and observed client build recorded here. This report does not transfer to direct CLI, API, cloud, IDE, another desktop build, account, workspace, model, or effort.",
+  "observed_at": "2026-09-13T21:51:56Z",
+  "repository": {
+    "branch": "qualify/desktop-terra-max-20260913",
+    "base_revision": "dfb6e0090c4f128ba2d8e16e4e3d038d632415db",
+    "worktree": "/private/tmp/texenda-astra-audit.kGBhLO/profile-terra-max"
+  },
+  "dispatch_metadata": {
+    "requested_model_id": "gpt-5.6-terra",
+    "requested_reasoning_effort": "max",
+    "runtime_id": "codex-desktop-collaboration",
+    "client_version": "26.901.41600 (build 7982)",
+    "dispatch_surface": "Codex desktop collaboration",
+    "self_reported_model_id": null,
+    "self_reported_reasoning_effort": null,
+    "identity_limit": "The runtime did not independently expose the executing provider model ID or reasoning effort. Requested dispatch metadata is not independent model-identity proof."
+  },
+  "runtime_observation": {
+    "path": "docs/qualification/runtime-surface-observation-2026-09-13.json",
+    "sha256": "35995674a989b1b77233eafdc80ed092d0a8f8622b88990e8f7b3f8336978091",
+    "source_observed_at": "2026-09-13T21:34:16Z",
+    "desktop_bundle": {
+      "path": "/Applications/ChatGPT.app/Contents/Info.plist",
+      "bundle_identifier": "com.openai.codex",
+      "short_version": "26.901.41600",
+      "build": "7982",
+      "inspection": "Independently read with three /usr/libexec/PlistBuddy field queries; each exited 0."
+    },
+    "direct_cli": {
+      "command": "codex --version",
+      "observed_output": "codex-cli 0.149.0",
+      "exit_code": 0,
+      "qualification": "UNQUALIFIED",
+      "astra_qualification": "UNQUALIFIED",
+      "reason": "The observed 0.149.0 direct CLI is below the runtime observation's documented >=0.153.0 minimum for Astra, and no direct-CLI exact-profile read/edit/test probe was run. Desktop evidence is not transferable to CLI."
+    }
+  },
+  "read_edit_test_evidence": {
+    "read": {
+      "required_instruction_sources": [
+        "AGENTS.md",
+        "docs/qualification/runtime-surface-observation-2026-09-13.json",
+        "docs/qualification/README.md",
+        "tooling/coordination/README.md",
+        "tooling/coordination/routing-policy.json"
+      ],
+      "invariants": {
+        "INV-02": "Shared identity never creates shared permission; a matching profile or endpoint cannot activate another publication, brand, purpose, or channel.",
+        "INV-12": "A timeout or outage never authorizes blind provider or channel failover; reconciliation is required before another external effect.",
+        "INV-30": "The development harness coordinates work but cannot grant production authority for sends, deployments, spending, credential use, or external service mutation."
+      }
+    },
+    "edit": {
+      "result": "Created only this dated probe record with apply_patch.",
+      "edited_paths": [
+        "docs/qualification/probes/2026-09-13/gpt-5.6-terra-max-desktop.json"
+      ],
+      "sealed_specs_changed": false,
+      "other_repository_files_changed_by_this_probe": false
+    },
+    "test": [
+      {
+        "command": "env PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tooling/coordination/tests -p 'test_instruction_contracts.py' -v",
+        "result": "PASS",
+        "exit_code": 0,
+        "tests_run": 10,
+        "scope": "Exactly the 10 instruction-contract tests; no broader coordinator or product suite was run."
+      },
+      {
+        "command": "env PYTHONDONTWRITEBYTECODE=1 python3 specs/texenda-handoff/10-validation/validate_package.py --checksums",
+        "result": "PASS",
+        "exit_code": 0,
+        "scope": "Sealed package validation with checksum checks; it reported offline package structure/traceability/link checks only."
+      }
+    ]
+  },
+  "billing_and_authority": {
+    "sign_in_mode": "subscription",
+    "billing_mode": "subscription",
+    "api_spend_usd": 0,
+    "api_requests_made": false,
+    "paid_credits_used": false,
+    "production_data_accessed": false,
+    "credentials_read": false,
+    "external_effects": false,
+    "statement": "This bounded desktop probe used the subscription route and made no API-billed request or API spend. It did not send, deploy, provision, push, expose data, or mutate an external account."
+  },
+  "limitations": [
+    "Model self-identification is unavailable: both self-reported identity fields are null, so the report limits itself to requested dispatch metadata and observed desktop surface data.",
+    "The direct CLI remains unqualified, including Astra; its 0.149.0 version is below the documented >=0.153.0 Astra minimum recorded by the runtime observation, and it received no separate exact-profile probe.",
+    "This record does not qualify the Texenda application, product behavior, providers, security, legal/privacy posture, deployment, sender readiness, migration, external agents, or any production service.",
+    "No product acceptance criterion, external validation gate, roster activation, lease, state mutation, or owner approval is claimed by this probe.",
+    "No network access, dependency installation, delegation, credential access, production-data access, API spend, recipient communication, push, deploy, provision, or send was performed."
+  ],
+  "subprocess_stop_evidence": {
+    "status": "PASS",
+    "statement": "Every subprocess used for the bounded observation and required verification exited before this report was written; no background process, daemon, network job, or child agent was launched.",
+    "stopped_subprocesses": [
+      {
+        "command": "/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' /Applications/ChatGPT.app/Contents/Info.plist",
+        "exit_code": 0,
+        "state": "exited"
+      },
+      {
+        "command": "/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' /Applications/ChatGPT.app/Contents/Info.plist",
+        "exit_code": 0,
+        "state": "exited"
+      },
+      {
+        "command": "/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' /Applications/ChatGPT.app/Contents/Info.plist",
+        "exit_code": 0,
+        "state": "exited"
+      },
+      {
+        "command": "codex --version",
+        "exit_code": 0,
+        "state": "exited"
+      },
+      {
+        "command": "env PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tooling/coordination/tests -p 'test_instruction_contracts.py' -v",
+        "exit_code": 0,
+        "state": "exited"
+      },
+      {
+        "command": "env PYTHONDONTWRITEBYTECODE=1 python3 specs/texenda-handoff/10-validation/validate_package.py --checksums",
+        "exit_code": 0,
+        "state": "exited"
+      }
+    ],
+    "enclosing_agent_runtime": "Not attested by this probe. The parent dispatcher must separately supply any dispatcher-observed agent-stop evidence; this report does not claim the enclosing agent has stopped."
+  },
+  "verification_before_commit": {
+    "json_parse": "PASS",
+    "observation_hash_recheck": "PASS",
+    "git_diff_check": "PASS",
+    "staged_scope": "PASS: exactly this report was staged before commit. The post-commit clean check is reported by the committing agent."
+  }
+}
