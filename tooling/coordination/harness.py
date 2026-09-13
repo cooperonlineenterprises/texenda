@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import copy
+from decimal import Decimal
 import hashlib
 import importlib.util
 import json
@@ -55,6 +56,15 @@ def unique_object(pairs):
 
 def load_json(raw):
     return json.loads(raw, object_pairs_hook=unique_object)
+
+
+def amount(value):
+    if type(value) not in (int, float):
+        raise Denied('development allocation must be a finite number')
+    result = Decimal(str(value))
+    if not result.is_finite() or not Decimal(0) <= result <= Decimal(100000):
+        raise Denied('development allocation must be bounded and nonnegative')
+    return result
 
 
 def check_receipts(state):
@@ -367,6 +377,8 @@ class Harness(legacy.Harness):
         ref, envelope = self.evidence(record, 'routing', wid, candidate, require_pass=True)
         if (envelope['schema_version'] != '2.0'
                 or envelope.get('role') != role or envelope.get('profile_id') != profile_id
+                or type(envelope.get('capability_tier')) is not int
+                or type(envelope.get('fence')) is not int
                 or envelope.get('capability_tier') != tier
                 or envelope.get('work_package_digest') != self.package_hash
                 or envelope.get('fence') != fence
@@ -431,6 +443,62 @@ class Harness(legacy.Harness):
         if any(binding.get(key) != value for key, value in actual.items()):
             raise Denied('assigned exact profile/runtime/evidence changed; recover and assign a new fence')
 
+    def _declared_spend(self, state):
+        used = Decimal(0)
+        for task in state['tasks'].values():
+            for bundle in [task, *task['history']]:
+                records = [bundle.get('assignment'), bundle.get('review'), *bundle.get('review_history', [])]
+                for record in records:
+                    if record:
+                        allocated = amount(record.get('budget_usd', 0))
+                        if (record.get('qualification') or {}).get('billing_mode') == 'api' and allocated <= 0:
+                            raise Denied('retained API work lacks a positive allocation; reviewed accounting repair required')
+                        used += allocated
+        return used
+
+    def _recheck_allocation(self, record):
+        allocated = amount(record.get('budget_usd', 0))
+        if (record.get('qualification') or {}).get('billing_mode') == 'api' and allocated <= 0:
+            raise Denied('API work requires a positive owner-authorized allocation')
+        if allocated:
+            self.recheck(record.get('budget_approval'), kind='budget', require_pass=True)
+
+    def _allocate(self, state, binding, budget_usd, max_tokens, max_seconds):
+        requested, approved = amount(budget_usd), amount(state['budget_usd'])
+        if (type(max_tokens) is not int or not 0 < max_tokens <= 1000000
+                or type(max_seconds) is not int or not 0 < max_seconds <= 28800):
+            raise Denied('invalid task budget or bounds')
+        if self._declared_spend(state) + requested > approved:
+            raise Denied('development allowance exhausted; owner must increase')
+        allocation = {'budget_usd': budget_usd, 'max_tokens': max_tokens, 'max_seconds': max_seconds,
+                      'budget_approval': copy.deepcopy(state['budget_approval']) if requested else None}
+        self._recheck_allocation(dict(binding, **allocation))
+        return allocation
+
+    def budget(self, actor, usd, record):
+        if not actor.startswith('human:'):
+            raise Denied('bounded owner-approved development budget required')
+        approved = amount(usd)
+
+        def apply(state):
+            ref, _ = self.evidence(record, 'budget', require_pass=True)
+            if approved < self._declared_spend(state):
+                raise Denied('budget cannot be reduced below retained author/reviewer allocations')
+            state.update(budget_usd=usd, budget_approval=ref)
+        return self.change(actor, 'set-budget', apply)
+
+    def change(self, actor, op, fn, task=None):
+        def guarded(state):
+            if op in ('record-integration', 'complete'):
+                current = self.task(state, task)
+                if self._declared_spend(state) > amount(state['budget_usd']):
+                    raise Denied('retained allocations exceed the owner development allowance')
+                for record in (current.get('assignment'), current.get('review')):
+                    if record:
+                        self._recheck_allocation(record)
+            return fn(state)
+        return super().change(actor, op, guarded, task)
+
     def assign(self, wid, actor, agent, tier=None, human=False, budget_usd=0,
                max_tokens=50000, max_seconds=3600, *, profile_id=None, fallback=False,
                fallback_reason=None, routing_record=None):
@@ -440,17 +508,7 @@ class Harness(legacy.Harness):
                 raise Denied('explicit human assignment must match human: principal')
             binding = self._select(state, wid, 'author', tier, human, profile_id,
                                    fallback, fallback_reason, routing_record)
-            if (not 0 <= budget_usd <= state['budget_usd'] or not 0 < max_tokens <= 1000000
-                    or not 0 < max_seconds <= 28800):
-                raise Denied('invalid task budget or bounds')
-            used = sum((t['assignment'] or {}).get('budget_usd', 0)
-                       + sum((h.get('assignment') or {}).get('budget_usd', 0) for h in t['history'])
-                       for t in state['tasks'].values())
-            if used + budget_usd > state['budget_usd']:
-                raise Denied('development allowance exhausted; owner must increase')
-            q = binding['qualification']
-            if q and q['billing_mode'] == 'api' and budget_usd <= 0:
-                raise Denied('API work needs positive owner-authorized development spend allowance')
+            allocation = self._allocate(state, binding, budget_usd, max_tokens, max_seconds)
             if sum(bool(t['lease']) for t in state['tasks'].values()) >= state['max_concurrent_writers']:
                 raise Denied('writer concurrency limit reached')
             paths = [safe_rel(path) for path in self.work[wid]['allowed_paths']]
@@ -461,8 +519,7 @@ class Harness(legacy.Harness):
             task['fence'] += 1
             task['lease'] = {'paths': paths, 'owner': agent,
                              'expires_at': self.clock() + max_seconds, 'fence': task['fence']}
-            task['assignment'] = dict(binding, agent=agent, budget_usd=budget_usd,
-                                      max_tokens=max_tokens, max_seconds=max_seconds)
+            task['assignment'] = dict(binding, agent=agent, **allocation)
             task['state'] = 'assigned'
             return dict(binding, task=wid, fence=task['fence'], paths=paths)
         return self.change(actor, 'assign', apply, wid)
@@ -472,11 +529,13 @@ class Harness(legacy.Harness):
             task = self.task(state, wid, 'assigned')
             self.owned(task, actor, fence)
             self._recheck_binding(state, wid, 'author', task['assignment'])
+            self._recheck_allocation(task['assignment'])
             task['state'] = 'running'
         return self.change(actor, 'start', apply, wid)
 
     def review(self, wid, actor, tier, candidate, record, approve=True, human=False, *,
-               profile_id=None, fallback=False, fallback_reason=None, routing_record=None):
+               profile_id=None, fallback=False, fallback_reason=None, routing_record=None,
+               budget_usd=0, max_tokens=50000, max_seconds=3600):
         candidate = revision(candidate)
 
         def apply(state):
@@ -488,8 +547,10 @@ class Harness(legacy.Harness):
             if human != actor.startswith('human:'):
                 raise Denied('human review flag/principal mismatch')
             self._recheck_binding(state, wid, 'author', task['assignment'])
+            self._recheck_allocation(task['assignment'])
             binding = self._select(state, wid, 'reviewer', tier, human, profile_id,
                                    fallback, fallback_reason, routing_record, candidate)
+            allocation = self._allocate(state, binding, budget_usd, max_tokens, max_seconds)
             self.recheck(task['submission'], kind='submission', task=wid,
                          candidate=candidate, require_pass=approve)
             ref, envelope = self.evidence(record, 'review', wid, candidate, require_pass=approve)
@@ -497,12 +558,33 @@ class Harness(legacy.Harness):
                               or envelope.get('profile_id') != binding['profile_id']
                               or envelope.get('routing_policy_digest') != self.policy_hash):
                 raise Denied('review evidence must bind the exact reviewer profile and policy')
-            task['review'] = dict(binding, actor=actor, candidate=candidate, evidence=ref, approved=approve)
+            task['review'] = dict(binding, actor=actor, candidate=candidate, evidence=ref,
+                                  approved=approve, fence=task['fence'], **allocation)
             task['state'] = 'reviewed' if approve else 'running'
             if not approve:
+                task.setdefault('review_history', []).append(task['review'])
                 task['review'] = None
                 task['integration'] = None
         return self.change(actor, 'approve-review' if approve else 'request-changes', apply, wid)
+
+    def recover(self, wid, actor, record, cancel=False):
+        def apply(state):
+            task = self.task(state, wid)
+            if task['state'] in ('completed', 'cancelled', 'planned'):
+                raise Denied('cannot recover terminal or never-admitted task')
+            ref, evidence = self.evidence(record, 'recovery', wid, require_pass=True)
+            if (evidence.get('runtime_stopped') is not True
+                    or type(evidence.get('previous_fence')) is not int
+                    or evidence['previous_fence'] != task['fence']):
+                raise Denied('recovery requires current fence and actual runtime-stop evidence')
+            revision(evidence.get('observed_revision', ''))
+            task['history'].append({key: task.get(key) for key in
+                                    ('candidate', 'assignment', 'submission', 'review', 'integration', 'checkpoint', 'fence')}
+                                   | {'review_history': task.get('review_history', []), 'recovery': ref})
+            task.update(state='cancelled' if cancel else 'admitted', lease=None, assignment=None,
+                        candidate=None, submission=None, review=None, integration=None, review_history=[])
+            task['fence'] += 1
+        return self.change(actor, 'cancel' if cancel else 'recover', apply, wid)
 
     def status(self):
         with self.locked():
@@ -526,7 +608,9 @@ class Harness(legacy.Harness):
                           'fallback': assignment.get('fallback', False),
                           'expired_lease': bool(task['lease'] and task['lease']['expires_at'] <= self.clock())}
         return {'version': '2.0', 'routing_policy_digest': self.policy_hash,
-                'budget_usd': state['budget_usd'], 'profiles': profiles,
+                'budget_usd': state['budget_usd'], 'declared_spend_usd': float(self._declared_spend(state)),
+                'remaining_budget_usd': float(amount(state['budget_usd']) - self._declared_spend(state)),
+                'profiles': profiles,
                 'verified_tiers': [tier for tier, row in self.tiers.items()
                                    if row['default_profile_id'] in available_ids],
                 'capability_defaults': [dict(row, default_available=row['default_profile_id'] in available_ids)
@@ -551,6 +635,82 @@ class Harness(legacy.Harness):
         if out:
             atomic_write(under(self.root, out, False), pack)
         return pack
+
+    def _retained_review(self, wid, review, candidate=None):
+        reviewed = revision(review.get('candidate', ''))
+        if candidate is not None and reviewed != candidate:
+            raise Denied('retained review candidate mismatch: ' + wid)
+        self.recheck(review.get('evidence'), kind='review', task=wid, candidate=reviewed,
+                     require_pass=review.get('approved') is True)
+        if review.get('budget_approval'):
+            self.recheck(review['budget_approval'], kind='budget', require_pass=True)
+
+    def _retained_bundle(self, wid, bundle):
+        candidate = revision(bundle['candidate']) if bundle.get('candidate') is not None else None
+        review, integration = bundle.get('review'), bundle.get('integration')
+        if bundle.get('checkpoint'):
+            # A checkpoint may truthfully report NOT_RUN; its file/log integrity is still required.
+            self.recheck(bundle['checkpoint'], kind='checkpoint', task=wid)
+        if bundle.get('submission'):
+            if candidate is None:
+                raise Denied('retained submission lacks a candidate: ' + wid)
+            self.recheck(bundle['submission'], kind='submission', task=wid, candidate=candidate,
+                         require_pass=bool(integration or (review and review.get('approved') is True)))
+        if review:
+            if candidate is None:
+                raise Denied('retained review lacks a candidate: ' + wid)
+            self._retained_review(wid, review, candidate)
+        for previous_review in bundle.get('review_history', []):
+            self._retained_review(wid, previous_review)
+        assignment = bundle.get('assignment')
+        if assignment and assignment.get('budget_approval'):
+            self.recheck(assignment['budget_approval'], kind='budget', require_pass=True)
+        if integration:
+            if (candidate is None or integration.get('candidate') != candidate
+                    or not bundle.get('submission') or not review or review.get('approved') is not True):
+                raise Denied('retained integration lacks its approved candidate chain: ' + wid)
+            evidence = self.recheck(integration.get('evidence'), kind='integration', task=wid,
+                                    candidate=candidate, require_pass=True)
+            if (evidence.get('runtime_stopped') is not True
+                    or evidence.get('integrated_revision') != revision(integration.get('integrated_revision', ''))
+                    or evidence.get('conflict_resolution_changed_semantics', False)):
+                raise Denied('retained integration stop/head evidence is unsafe: ' + wid)
+
+    def _validate_retained_evidence(self, state):
+        # In v1, init starts at zero and only assign/recover/cancel increment a task fence.
+        # Its receipts therefore recover exact previous_fence values without rewriting history.
+        fences = {wid: 0 for wid in self.work}
+        recoveries = {wid: [] for wid in self.work}
+        for event in state['events']:
+            if event['operation'] in ('assign', 'recover', 'cancel'):
+                wid = event.get('task_id')
+                if wid not in fences:
+                    raise Denied('receipt references an unknown task fence')
+                if event['operation'] in ('recover', 'cancel'):
+                    recoveries[wid].append(fences[wid])
+                fences[wid] += 1
+        if state.get('budget_approval'):
+            self.recheck(state['budget_approval'], kind='budget', require_pass=True)
+        if self._declared_spend(state) > amount(state['budget_usd']):
+            raise Denied('retained allocations exceed the owner development allowance')
+        for wid, task in state['tasks'].items():
+            if type(task.get('fence')) is not int or task['fence'] != fences[wid]:
+                raise Denied('task fence differs from retained receipt operations: ' + wid)
+            history = task.get('history')
+            if not isinstance(history, list) or len(history) != len(recoveries[wid]):
+                raise Denied('retained recovery history differs from receipts: ' + wid)
+            self._retained_bundle(wid, task)
+            if task.get('trigger'):
+                self.recheck(task['trigger'], kind='trigger', task=wid, require_pass=True)
+            for previous_fence, entry in zip(recoveries[wid], history):
+                evidence = self.recheck(entry.get('recovery'), kind='recovery', task=wid, require_pass=True)
+                if (evidence.get('runtime_stopped') is not True
+                        or type(evidence.get('previous_fence')) is not int
+                        or evidence['previous_fence'] != previous_fence
+                        or ('fence' in entry and (type(entry['fence']) is not int or entry['fence'] != previous_fence))):
+                    raise Denied('retained recovery stop/fence evidence is unsafe: ' + wid)
+                revision(evidence.get('observed_revision', ''))
+                self._retained_bundle(wid, entry)
 
     def migrate_v1(self, actor, apply=False):
         """Dry-run first; preserve old bytes, tasks and receipts, then append one receipt."""
@@ -584,6 +744,7 @@ class Harness(legacy.Harness):
                                             candidate=task['candidate'], require_pass=True)
                     if evidence.get('runtime_stopped') is not True:
                         raise Denied('migration requires retained runtime-stop evidence: ' + wid)
+            self._validate_retained_evidence(old)
             source_hash = hashlib.sha256(raw).hexdigest()
             backup = self.dir / ('state.v1.' + source_hash + '.json')
             result = {'migrated': False, 'dry_run': not apply, 'from_version': '1.0', 'to_version': '2.0',
@@ -630,6 +791,7 @@ class Harness(legacy.Harness):
             old = load_json(raw)
             legacy.Harness._check(self, old)
             check_receipts(old)
+            self._validate_retained_evidence(old)
             if old['events'] != state['events'][:-1] or old['tasks'] != state['tasks']:
                 raise Denied('checkpoint no longer matches the migration boundary')
             current_raw = self.statefile.read_bytes()
@@ -676,11 +838,11 @@ def main(argv=None):
             command.add_argument('--fallback', action='store_true')
             command.add_argument('--fallback-reason')
             command.add_argument('--routing-record')
-        if name == 'assign':
-            command.add_argument('--agent', required=True)
             command.add_argument('--budget-usd', type=float, default=0)
             command.add_argument('--max-tokens', type=int, default=50000)
             command.add_argument('--max-seconds', type=int, default=3600)
+        if name == 'assign':
+            command.add_argument('--agent', required=True)
         if name in ('start', 'checkpoint', 'submit'):
             command.add_argument('--fence', type=int, required=True)
         if name in ('checkpoint', 'submit', 'review', 'integrate', 'block', 'recover', 'cancel'):
@@ -716,7 +878,7 @@ def main(argv=None):
         elif op == 'start': result = harness.start(args.task, args.actor, args.fence)
         elif op == 'checkpoint': result = harness.checkpoint(args.task, args.actor, args.fence, args.record, args.extend_seconds)
         elif op == 'submit': result = harness.submit(args.task, args.actor, args.fence, args.candidate, args.record)
-        elif op == 'review': result = harness.review(args.task, args.actor, args.tier, args.candidate, args.record, not args.reject, args.human, **options)
+        elif op == 'review': result = harness.review(args.task, args.actor, args.tier, args.candidate, args.record, not args.reject, args.human, budget_usd=args.budget_usd, max_tokens=args.max_tokens, max_seconds=args.max_seconds, **options)
         elif op == 'integrate': result = harness.integrate(args.task, args.actor, args.candidate, args.integrated, args.record)
         elif op == 'complete': result = harness.complete(args.task, args.actor)
         elif op == 'block': result = harness.block(args.task, args.actor, args.record)

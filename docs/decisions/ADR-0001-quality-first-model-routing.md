@@ -117,3 +117,16 @@ deploy, provision, expose production data, read credentials, or spend.
 The development API budget remains zero unless separately owner-authorized;
 subscription work has explicit time/token bounds. None of the 125 product
 acceptance criteria or external production gates is passed by these local tests.
+
+Independent candidate review of `61d921aeeb7b386e442dbdf8d1db91f1d6be0a81`
+identified missing reviewer-budget enforcement, incomplete historical stop-proof
+validation at migration, and Python boolean/integer aliasing in routing records.
+The corrective commit preserves that candidate in history. Author and reviewer
+allocations now share one bounded owner-approved allowance, including rejected
+reviews and recovered history, with evidence rechecks at later acceptance steps.
+Migration and immediate rollback validate retained stop/recovery/candidate and
+checkpoint references, reconstruct prior fences from receipts, and refuse missing
+or changed proof before writing. Routing tier/fence fields require actual integers.
+These corrections enforce the accepted policy; they do not change its model
+matrix, production authority, or the sealed package. V1 facts that were never
+recorded cannot be reconstructed or qualified by this migration.

@@ -3,7 +3,7 @@
   "plan": "docs/qualification/analysis/routing-v2-test-plan.md",
   "test_file": "tooling/coordination/tests/test_routing_v2.py",
   "frozen_clock_unix": 1700000000,
-  "adapter_tests_passed": 83,
+  "adapter_tests_passed": 95,
   "sealed_tests_passed": 39,
   "representative_fixture": "docs/qualification/evidence/routing-v2-migration-fixture.json",
   "cases": [
@@ -172,5 +172,39 @@
   "limitations": [
     "Declared actor labels are the identity boundary under test; these tests do not prove physical actor identity.",
     "Synthetic fixtures verify bookkeeping and fail-closed behavior only. They do not clear a product or external gate."
+  ],
+  "latest_verification_log": "docs/qualification/evidence/routing-v2-correction-verification.log",
+  "reviewed_candidate_requiring_correction": "61d921aeeb7b386e442dbdf8d1db91f1d6be0a81",
+  "review_corrections": [
+    {
+      "id": "review-budget-accounting",
+      "execution_status": "PASS",
+      "tests": [
+        "RoutingTests.test_api_review_requires_positive_owner_allocation_and_records_bounds",
+        "RoutingTests.test_api_review_budget_is_wired_through_cli",
+        "RoutingTests.test_review_rejection_and_recovery_preserve_shared_allowance_once",
+        "RoutingTests.test_unbudgeted_older_api_approval_cannot_integrate_or_escape_through_recovery",
+        "RoutingTests.test_budget_evidence_is_rechecked_before_paid_work_and_approval"
+      ]
+    },
+    {
+      "id": "retained-stop-evidence",
+      "execution_status": "PASS",
+      "tests": [
+        "MigrationTests.test_migration_rechecks_missing_and_tampered_historical_recovery",
+        "MigrationTests.test_migration_rechecks_missing_and_tampered_historical_integration_chain",
+        "MigrationTests.test_migration_rechecks_retained_checkpoint_and_its_log_after_recovery",
+        "MigrationTests.test_migration_validates_derived_recovery_fence_and_boolean_alias",
+        "MigrationTests.test_migration_requires_true_historical_integration_stop_proof",
+        "MigrationTests.test_rollback_rechecks_retained_source_recovery_evidence"
+      ]
+    },
+    {
+      "id": "strict-integer-routing-fields",
+      "execution_status": "PASS",
+      "tests": [
+        "RoutingTests.test_boolean_routing_tier_and_fence_are_not_integer_one"
+      ]
+    }
   ]
 }

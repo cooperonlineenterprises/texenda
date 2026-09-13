@@ -20,7 +20,10 @@ python3 tooling/coordination/harness.py --root . context WP-00
 
 `status` reports the policy digest, all exact profiles with availability/reasons,
 default availability per capability tier, active assignment effort/fallback, and
-lease/fence state. A missing default does not select a downshift or fallback.
+lease/fence state. `declared_spend_usd` and `remaining_budget_usd` include author
+and reviewer allocations across current tasks and retained history; these are
+declared allowances, not measured provider charges. A missing default does not
+select a downshift or fallback.
 Capabilities use T1–T4, strongest first; they are distinct from product command
 consequence classes C0–C4. Use the canonical digest printed by the harness,
 not a raw `shasum` of the policy file.
@@ -43,6 +46,17 @@ source hash/tip and old-roster invalidation reason, clears the active roster,
 and adds one boundary receipt. No old effort is promoted to max. Idempotent
 repetition does not touch state or a newly qualified v2 roster. The migration
 does not reassign tasks, complete work, clear external gates, or execute models.
+
+Before writing, migration rechecks every retained recovery and relevant
+checkpoint, submission, review, integration, trigger, and budget reference and
+its logs. Recovery must retain required PASS checks, exact boolean stop proof,
+and the integer previous fence derived from the receipt sequence. Integration
+must retain its approved candidate, matching integrated head, and exact stop
+proof. Missing/tampered history blocks migration with the v1 bytes unchanged.
+Rollback revalidates the source evidence too. V1 did not archive every superseded
+checkpoint; the adapter validates all retained references and cannot reconstruct
+records the old harness never retained. V2 recovery preserves checkpoint and
+fence references with the candidate history going forward.
 
 Immediate rollback is limited to the migration with no later v2 receipts or
 leases, and requires the owner's actual runtime-stop attestation:
@@ -98,6 +112,18 @@ only one when prerequisites are complete and the task is admitted. Actual
 runtime dispatch must request the returned exact model and effort; this CLI does
 not dispatch. Human bootstrap remains explicit through `--agent human:owner
 --human` and cannot claim a model profile or fallback.
+
+Author and reviewer allocations share the same owner-approved development cap.
+Any API-billed assignment or review requires a positive `--budget-usd`; model
+review also accepts `--max-tokens` and `--max-seconds`, with the same bounded
+defaults as author work. Subscription review can allocate zero. Each allocation
+retains the owner budget evidence; changed or missing authorization blocks paid
+work and later approval/integration/completion. A rejected review still consumes
+its allocation. Recovery moves rejected and accepted reviews into history once,
+so reassigning or resubmitting cannot erase spending or charge an allocation
+twice. The owner cannot lower the cap below retained allocations. An older
+API-tagged review with no positive allocation requires reviewed accounting
+repair; its missing amount is never inferred as zero or erased by recovery.
 
 A lower effort also requires `--routing-record`, using
 [templates/routing.json](templates/routing.json). The record binds the task,

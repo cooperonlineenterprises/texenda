@@ -1,6 +1,8 @@
 """Deterministic coordination tests only. No model calls, network, or product acceptance."""
 import copy
+import contextlib
 import importlib.util
+import io
 import json
 from pathlib import Path
 import subprocess
@@ -383,6 +385,8 @@ class RoutingTests(unittest.TestCase):
         register(self)
         result = self.submitted()
         self.h.review('WP-00', 'agent:reviewer', 1, self.cand, self.review_record())
+        self.assertEqual(self.state()['tasks']['WP-00']['review']['budget_usd'], 0)
+        self.assertEqual(self.h.status()['declared_spend_usd'], 0)
         self.h.integrate('WP-00', 'astra', self.cand, self.head,
                          self.ev('integration', integrated_revision=self.head, runtime_stopped=True))
         self.h.complete('WP-00', 'astra')
@@ -406,6 +410,113 @@ class RoutingTests(unittest.TestCase):
         self.deny(lambda: self.assign(max_tokens=0))
         self.deny(lambda: self.assign(max_seconds=28801))
         self.deny(lambda: self.assign(budget_usd=1))
+
+    def api_reviewer(self):
+        rows = qualifications(self)
+        for row in rows:
+            if row['profile_id'] == 'gpt-6-astra-max':
+                row['billing_mode'] = 'api'
+        register(self, rows=rows)
+        self.submitted()
+        return self.review_record()
+
+    def test_api_review_requires_positive_owner_allocation_and_records_bounds(self):
+        record = self.api_reviewer()
+        review = lambda **kw: self.h.review('WP-00', 'agent:reviewer', 1, self.cand, record, **kw)
+        self.deny(review)
+        self.deny(lambda: review(budget_usd=1))
+        self.h.budget('human:owner', 2, self.ev('budget'))
+        for allocation in (0, -1, 3, True, float('nan'), float('inf')):
+            self.deny(lambda: review(budget_usd=allocation))
+        self.deny(lambda: review(budget_usd=1, max_tokens=0))
+        self.deny(lambda: review(budget_usd=1, max_seconds=28801))
+        review(budget_usd=1, max_tokens=1000, max_seconds=300)
+        recorded = self.state()['tasks']['WP-00']['review']
+        self.assertEqual(recorded['budget_usd'], 1)
+        self.assertEqual(recorded['max_tokens'], 1000)
+        self.assertEqual(recorded['max_seconds'], 300)
+        self.assertEqual(recorded['budget_approval'], self.state()['budget_approval'])
+        self.assertEqual(self.h.status()['declared_spend_usd'], 1)
+        self.deny(lambda: self.h.budget('human:owner', 0, self.ev('budget')))
+
+    def test_review_rejection_and_recovery_preserve_shared_allowance_once(self):
+        register(self, billing='api')
+        self.h.budget('human:owner', 4, self.ev('budget'))
+        assigned = self.assign(budget_usd=1)
+        self.h.start('WP-00', 'agent:author', assigned['fence'])
+        checkpoint = self.ev('checkpoint')
+        self.h.checkpoint('WP-00', 'agent:author', assigned['fence'], checkpoint)
+        self.h.submit('WP-00', 'agent:author', assigned['fence'], self.cand,
+                      self.ev('submission', changed_paths=['src/a/result']))
+        self.h.review('WP-00', 'agent:reviewer', 1, self.cand, self.review_record(),
+                       approve=False, budget_usd=1)
+        self.assertEqual(self.h.status()['declared_spend_usd'], 2)
+        self.assertIsNone(self.state()['tasks']['WP-00']['review'])
+        self.h.submit('WP-00', 'agent:author', assigned['fence'], self.cand,
+                      self.ev('submission', changed_paths=['src/a/revised']))
+        self.h.review('WP-00', 'agent:reviewer', 1, self.cand, self.review_record(), budget_usd=1)
+        self.assertEqual(self.h.status()['declared_spend_usd'], 3)
+        self.release('WP-00', assigned)
+        task = self.state()['tasks']['WP-00']
+        self.assertEqual(task['review_history'], [])
+        self.assertEqual(task['history'][0]['review_history'][0]['budget_usd'], 1)
+        self.assertEqual(task['history'][0]['review']['budget_usd'], 1)
+        self.assertEqual(task['history'][0]['checkpoint']['path'], checkpoint)
+        self.assertEqual(task['history'][0]['fence'], assigned['fence'])
+        self.assertEqual(self.h.status()['declared_spend_usd'], 3)
+        assigned = self.assign(budget_usd=1)
+        self.assertEqual(self.h.status()['declared_spend_usd'], 4)
+        self.h.start('WP-00', 'agent:author', assigned['fence'])
+        self.h.submit('WP-00', 'agent:author', assigned['fence'], self.cand,
+                      self.ev('submission', changed_paths=['src/a/again']))
+        self.deny(lambda: self.h.review('WP-00', 'agent:reviewer', 1, self.cand,
+                                       self.review_record(), budget_usd=1), 'exhausted')
+
+    def test_api_review_budget_is_wired_through_cli(self):
+        record = self.api_reviewer()
+        self.h.budget('human:owner', 1, self.ev('budget'))
+        argv = ['--root', str(self.root), 'review', 'WP-00', '--actor', 'agent:reviewer',
+                '--tier', '1', '--candidate', self.cand, '--record', record,
+                '--budget-usd', '1', '--max-tokens', '1234', '--max-seconds', '321']
+        with mock.patch.object(hm, 'Harness', return_value=self.h), contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(hm.main(argv), 0)
+        review = self.state()['tasks']['WP-00']['review']
+        self.assertEqual((review['budget_usd'], review['max_tokens'], review['max_seconds']), (1, 1234, 321))
+
+    def test_unbudgeted_older_api_approval_cannot_integrate_or_escape_through_recovery(self):
+        record = self.api_reviewer()
+        self.h.budget('human:owner', 1, self.ev('budget'))
+        self.h.review('WP-00', 'agent:reviewer', 1, self.cand, record, budget_usd=1)
+        self.h.change('fixture', 'simulate-pre-fix-review',
+                      lambda s: s['tasks']['WP-00']['review'].pop('budget_usd'))
+        self.deny(lambda: self.h.integrate('WP-00', 'astra', self.cand, self.head,
+                                           self.ev('integration', integrated_revision=self.head, runtime_stopped=True)))
+        self.release('WP-00', {'fence': self.state()['tasks']['WP-00']['fence']})
+        self.deny(lambda: self.assign())
+
+    def test_budget_evidence_is_rechecked_before_paid_work_and_approval(self):
+        register(self, billing='api')
+        budget = self.ev('budget')
+        self.h.budget('human:owner', 2, budget)
+        assigned = self.assign(budget_usd=1)
+        path = self.root / budget
+        original = path.read_text()
+        path.write_text(original + ' ')
+        self.deny(lambda: self.h.start('WP-00', 'agent:author', assigned['fence']))
+        path.write_text(original)
+        self.h.start('WP-00', 'agent:author', assigned['fence'])
+        self.h.submit('WP-00', 'agent:author', assigned['fence'], self.cand,
+                      self.ev('submission', changed_paths=['src/a/result']))
+        path.write_text(original + ' ')
+        self.deny(lambda: self.h.review('WP-00', 'agent:reviewer', 1, self.cand,
+                                       self.review_record(), budget_usd=1))
+
+    def test_boolean_routing_tier_and_fence_are_not_integer_one(self):
+        register(self)
+        self.h.admit('WP-00', 'astra')
+        for field in ('capability_tier', 'fence'):
+            record = self.route('gpt-6-astra-high', **{field: True})
+            self.deny(lambda: self.assign(profile_id='gpt-6-astra-high', routing_record=record))
 
     def test_canonical_policy_digest_ignores_formatting_but_denies_semantic_change(self):
         register(self)
@@ -577,6 +688,80 @@ class MigrationTests(unittest.TestCase):
         path = self.root / task['integration']['evidence']['path']
         path.write_text(path.read_text() + ' ')
         self.deny(lambda: self.v2.migrate_v1('human:owner', apply=True))
+
+    def corrupt_reference(self, reference):
+        path = self.root / reference['path']
+        original = path.read_bytes()
+        path.unlink()
+        self.deny(lambda: self.v2.migrate_v1('human:owner', apply=True))
+        path.write_bytes(original + b' ')
+        self.deny(lambda: self.v2.migrate_v1('human:owner', apply=True))
+        path.write_bytes(original)
+
+    def test_migration_rechecks_missing_and_tampered_historical_recovery(self):
+        fence = self.begin()
+        self.h.recover('WP-00', 'astra', self.ev('recovery', previous_fence=fence,
+                                               runtime_stopped=True, observed_revision=self.cand))
+        task = json.loads(self.h.statefile.read_text())['tasks']['WP-00']
+        self.corrupt_reference(task['history'][0]['recovery'])
+        self.assertTrue(self.v2.migrate_v1('human:owner', apply=True)['migrated'])
+
+    def test_migration_rechecks_missing_and_tampered_historical_integration_chain(self):
+        self.integrated()
+        fence = json.loads(self.h.statefile.read_text())['tasks']['WP-00']['fence']
+        self.h.recover('WP-00', 'astra', self.ev('recovery', previous_fence=fence,
+                                               runtime_stopped=True, observed_revision=self.head))
+        history = json.loads(self.h.statefile.read_text())['tasks']['WP-00']['history'][0]
+        for reference in (history['integration']['evidence'], history['review']['evidence'], history['submission']):
+            self.corrupt_reference(reference)
+        self.assertTrue(self.v2.migrate_v1('human:owner', apply=True)['migrated'])
+
+    def test_migration_rechecks_retained_checkpoint_and_its_log_after_recovery(self):
+        fence = self.begin()
+        checkpoint = self.ev('checkpoint')
+        self.h.checkpoint('WP-00', 'human:author', fence, checkpoint)
+        self.h.recover('WP-00', 'astra', self.ev('recovery', previous_fence=fence,
+                                               runtime_stopped=True, observed_revision=self.cand))
+        task = json.loads(self.h.statefile.read_text())['tasks']['WP-00']
+        self.corrupt_reference(task['checkpoint'])
+        check = json.loads((self.root / checkpoint).read_text())['checks'][0]
+        (self.root / check['evidence_path']).write_text('Tampered checkpoint oracle.')
+        self.deny(lambda: self.v2.migrate_v1('human:owner', apply=True))
+
+    def test_migration_validates_derived_recovery_fence_and_boolean_alias(self):
+        fence = self.begin()
+        # The sealed v1 method accepted True == 1. V2 migration must reject that old ambiguity.
+        self.h.recover('WP-00', 'astra', self.ev('recovery', previous_fence=True,
+                                               runtime_stopped=True, observed_revision=self.cand))
+        self.deny(lambda: self.v2.migrate_v1('human:owner', apply=True))
+        bad = self.ev('recovery', previous_fence=99, runtime_stopped=True, observed_revision=self.cand)
+        ref, _ = self.h.evidence(bad)
+        self.h.change('fixture', 'replace-retained-recovery-reference',
+                      lambda s: s['tasks']['WP-00']['history'][0].update(recovery=ref))
+        self.deny(lambda: self.v2.migrate_v1('human:owner', apply=True))
+        good = self.ev('recovery', previous_fence=fence, runtime_stopped=True, observed_revision=self.cand)
+        ref, _ = self.h.evidence(good)
+        self.h.change('fixture', 'restore-correct-recovery-reference',
+                      lambda s: s['tasks']['WP-00']['history'][0].update(recovery=ref))
+        self.assertTrue(self.v2.migrate_v1('human:owner', apply=True)['migrated'])
+
+    def test_migration_requires_true_historical_integration_stop_proof(self):
+        self.reviewed()
+        record = self.ev('integration', integrated_revision=self.head, runtime_stopped=1)
+        # V1's truthiness check admitted this; retaining it in history cannot make it safe.
+        self.h.integrate('WP-00', 'astra', self.cand, self.head, record)
+        self.h.recover('WP-00', 'astra', self.ev('recovery', previous_fence=1,
+                                               runtime_stopped=True, observed_revision=self.head))
+        self.deny(lambda: self.v2.migrate_v1('human:owner', apply=True))
+
+    def test_rollback_rechecks_retained_source_recovery_evidence(self):
+        fence = self.begin()
+        recovery = self.ev('recovery', previous_fence=fence, runtime_stopped=True, observed_revision=self.cand)
+        self.h.recover('WP-00', 'astra', recovery)
+        self.v2.migrate_v1('human:owner', apply=True)
+        path = self.root / recovery
+        path.write_text(path.read_text() + ' ')
+        self.deny(lambda: self.v2.rollback_v2('human:owner', apply=True, runtime_stopped=True))
 
     def test_cli_init_context_check_and_dry_run_migration(self):
         root = self.base / 'cli-root'
