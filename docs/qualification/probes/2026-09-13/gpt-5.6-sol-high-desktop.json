@@ -1,0 +1,108 @@
+{
+  "schema_version": "1.0",
+  "kind": "exact-profile-desktop-runtime-qualification",
+  "observed_at": "2026-09-13T21:37:53Z",
+  "source_revision": "dfb6e0090c4f128ba2d8e16e4e3d038d632415db",
+  "qualification_result": "PASS",
+  "requested_model": "gpt-5.6-sol",
+  "requested_reasoning_effort": "high",
+  "self_reported_model_id": null,
+  "runtime_id": "codex-desktop-collaboration",
+  "desktop_client": {
+    "bundle_path": "/Applications/ChatGPT.app",
+    "bundle_identifier": "com.openai.codex",
+    "version": "26.901.41600",
+    "build": "7982",
+    "client_version_for_qualification": "26.901.41600 (build 7982)",
+    "metadata_checks": [
+      {
+        "command": "/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' /Applications/ChatGPT.app/Contents/Info.plist",
+        "exit_code": 0,
+        "observed_value": "com.openai.codex",
+        "result": "PASS"
+      },
+      {
+        "command": "/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' /Applications/ChatGPT.app/Contents/Info.plist",
+        "exit_code": 0,
+        "observed_value": "26.901.41600",
+        "result": "PASS"
+      },
+      {
+        "command": "/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' /Applications/ChatGPT.app/Contents/Info.plist",
+        "exit_code": 0,
+        "observed_value": "7982",
+        "result": "PASS"
+      }
+    ]
+  },
+  "direct_cli": {
+    "version_command": "codex --version",
+    "exit_code": 0,
+    "observed_output": "codex-cli 0.149.0",
+    "installed_version": "0.149.0",
+    "qualification_status": "UNQUALIFIED",
+    "astra_qualified": false,
+    "reason": "Direct CLI is a separate runtime path, its installed version is below the documented Astra minimum recorded by the bound observation, and no direct-CLI exact-profile probe was run.",
+    "warning": "The command also emitted a nonfatal PATH-alias creation permission warning; no runtime configuration was changed."
+  },
+  "runtime_observation": {
+    "path": "docs/qualification/runtime-surface-observation-2026-09-13.json",
+    "sha256": "35995674a989b1b77233eafdc80ed092d0a8f8622b88990e8f7b3f8336978091",
+    "hash_check": {
+      "command": "shasum -a 256 docs/qualification/runtime-surface-observation-2026-09-13.json",
+      "exit_code": 0,
+      "result": "PASS"
+    }
+  },
+  "observed_capabilities": [
+    "read",
+    "edit",
+    "test"
+  ],
+  "read_checks": {
+    "INV-02": "Shared identity never creates shared permission; a profile or endpoint match cannot activate another publication, brand, purpose, or channel.",
+    "INV-12": "A timeout or outage never authorizes blind provider or channel failover; reconcile before another effect, and never use another channel to escape a block or opt-out.",
+    "INV-30": "The development harness coordinates work but cannot grant production authority; a planning receipt cannot authorize recipient sends, deployments, spend, or credential use."
+  },
+  "edit_check": {
+    "result": "PASS",
+    "scope": "Created only this project-local qualification report with apply_patch.",
+    "path": "docs/qualification/probes/2026-09-13/gpt-5.6-sol-high-desktop.json"
+  },
+  "test_checks": [
+    {
+      "command": "env PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tooling/coordination/tests -p 'test_instruction_contracts.py' -v",
+      "exit_code": 0,
+      "result": "PASS",
+      "tests_run": 10
+    },
+    {
+      "command": "env PYTHONDONTWRITEBYTECODE=1 python3 specs/texenda-handoff/10-validation/validate_package.py --checksums",
+      "exit_code": 0,
+      "result": "PASS",
+      "checks_passed": 14,
+      "errors": 0,
+      "warnings": 0
+    }
+  ],
+  "safety_boundaries": {
+    "no_secrets_read": true,
+    "network_used": false,
+    "dependencies_installed": false,
+    "credentials_accessed": false,
+    "production_data_accessed": false,
+    "external_effects": false,
+    "push_performed": false,
+    "deployment_performed": false,
+    "api_spend_authorized_usd": 0,
+    "delegation_performed": false
+  },
+  "qualification_scope": "Exact gpt-5.6-sol/high assignment through codex-desktop-collaboration for bounded local repository reading, editing, instruction-contract testing, and sealed-package checksum validation.",
+  "limitations": [
+    "The requested model and high reasoning effort are exact desktop collaboration assignment metadata. This runtime exposed no independent executing-model or effort introspection channel, so self_reported_model_id remains null.",
+    "The freshly inspected desktop bundle metadata identifies the installed client used to scope this qualification; it does not transfer qualification to direct CLI, API, cloud, IDE, another desktop build, or another account or workspace.",
+    "The separately observed codex-cli 0.149.0 path remains unqualified, including for Astra. Desktop qualification does not qualify that CLI path.",
+    "This bounded offline probe demonstrates only local read, edit, instruction-contract test, and sealed-package validation capability. It does not qualify the Texenda application or any production, provider, security, legal, privacy, deployment, sending, billing, or external-service behavior.",
+    "No network, external service, credential, production data, deployment, sending, provisioning, push, or spend operation was exercised."
+  ]
+}
