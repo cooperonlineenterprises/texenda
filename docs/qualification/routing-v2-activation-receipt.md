@@ -1,6 +1,6 @@
 # Routing v2 activation receipt
 
-Installed at `2026-09-13T20:04:57Z` from committed roster evidence SHA-256 `dbfd99b98edc134c1e202c0b48145141f967718194b67012f75a3868bf4ef6a1`.
+The ledger installed the roster at `2026-09-13T20:04:08.716379Z`; this receipt was verified at `2026-09-13T20:04:57Z`. The committed roster evidence SHA-256 is `dbfd99b98edc134c1e202c0b48145141f967718194b67012f75a3868bf4ef6a1`.
 
 - Ledger version: `2.0`.
 - Canonical routing-policy digest: `61f0db448cf5ac5adad4d9340d568a7558c0369174e30aab92dd0ccf0d24bdf0`.
