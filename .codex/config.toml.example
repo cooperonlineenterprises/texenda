@@ -1,13 +1,20 @@
-# REVERSIBLE DEFAULT. Review against the actual installed client before copying.
-# Model omitted deliberately: qualify the exact target profile, then select explicitly.
+# REVERSIBLE DEFAULT. Keep semantic defaults aligned with config.toml.
+# Project configuration loads in new trusted-project sessions; verify effective
+# settings on the actual route. It does not reconfigure an existing session.
+# Model omitted deliberately: dispatch the exact qualified assignment profile.
 # Read docs/decisions/ADR-0001-quality-first-model-routing.md and use
 # tooling/coordination/harness.py with tooling/coordination/routing-policy.json.
 # Every T1-T4 default uses max. Dispatch the exact model + effort in the assignment;
 # a qualified downshift or explicit Sol/max T1 fallback must have its own receipt.
+# Desktop collaboration qualification does not qualify direct CLI execution.
+# 2026-09-13: installed CLI 0.149.0 is below Astra's documented 0.153.0 minimum.
+# Direct Astra CLI remains unqualified pending update and exact route tests.
+# See docs/qualification/runtime-surface-correction-plan-2026-09-13.md and
+# https://help.openai.com/en/articles/20001275-chatgpt-work-and-codex
 model_reasoning_effort = "max"
 approval_policy = "on-request"
 sandbox_mode = "workspace-write"
 [sandbox_workspace_write]
 network_access = false
-# Never put provider/API tokens here. Dependency download or external access requires
-# an explicit runtime approval and allowlist; this file alone is not enforcement.
+# Never put provider/API tokens here. Runtime sandbox/approval controls still apply
+# to allowed network work; local work authority does not approve external mutation.

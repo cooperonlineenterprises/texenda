@@ -1,0 +1,10 @@
+# Project defaults for new trusted-project sessions. Verify effective runtime
+# loading/settings; this file does not reconfigure existing sessions or qualify
+# any model, account, billing mode, tool capability or direct CLI route.
+# The assignment selects an exact qualified model/effort; model is omitted here.
+# See docs/agents/operating-guide.md and the dated runtime correction plan.
+model_reasoning_effort = "max"
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+[sandbox_workspace_write]
+network_access = false

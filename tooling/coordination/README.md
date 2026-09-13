@@ -6,6 +6,12 @@ Python standard-library adapter reuses the sealed lifecycle scaffold. It does
 not launch a model, call a network service, authenticate actors, enforce a
 sandbox, merge Git, meter usage, or grant production authority.
 
+For new dispatch prompts use the [operating guide](../../docs/agents/operating-guide.md)
+and the local [assignment](templates/ASSIGNMENT.md), [review](templates/REVIEW.md)
+or [resumption](templates/RESUME.md) template. The generated `context` manifest
+must be supplemented with the applicable local instruction/template hashes.
+The sealed generic assignment prompt remains package reference.
+
 Use Python 3.10+ on a single POSIX host. No dependency installation is needed.
 Every command takes `--root`; the normal target is the repository root. Never
 initialize over an existing ledger or use the sealed v1 CLI on a v2 ledger.
@@ -100,12 +106,20 @@ never follows merely from a policy entry or a template. Validity is at most 30
 days; stale or changed evidence makes the profile unavailable.
 
 ```sh
-# Only after integrated verification and accountable owner attestation:
-python3 tooling/coordination/harness.py --root . set-roster --actor human:owner --record docs/qualification/model-roster-v2.evidence.json
+# Replace the example path with the separately reviewed, owner-attested record:
+python3 tooling/coordination/harness.py --root . set-roster --actor human:owner --record path/to/reviewed-roster.evidence.json
 ```
 
-No active v2 roster is shipped with this candidate. The old
-`docs/qualification/model-roster.evidence.json` is historical v1 evidence and is
+For the installed roster's dated history, see the
+[activation receipt](../../docs/qualification/routing-v2-activation-receipt.md);
+inspect live `status` rather than assuming that snapshot is current. Before any
+roster replacement, follow the [runtime correction plan](../../docs/qualification/runtime-surface-correction-plan-2026-09-13.md):
+desktop collaboration and direct CLI execution require separate qualification,
+and the historical CLI 0.149.0 field does not identify the desktop app version.
+The source workspace installed a v2 roster; a fresh Git worktree carries these
+committed evidence files but no ignored `.texenda/` ledger. Do not initialize or
+copy state merely to make a read-only audit's `status` succeed.
+The old `docs/qualification/model-roster.evidence.json` is historical v1 evidence and is
 refused as a v2 roster. In v2 a Sol/max qualification has native capability 2,
 whether it is used as the T2 default or explicitly selected as the T1 fallback.
 
