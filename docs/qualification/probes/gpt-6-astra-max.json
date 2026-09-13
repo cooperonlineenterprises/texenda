@@ -46,6 +46,21 @@
       "exit_code": 0,
       "result": "PASS",
       "tests_run": 83
+    },
+    {
+      "command": "rg --files docs/qualification tooling/coordination -g '*.json' -0 | xargs -0 -n 1 jq -e . > /dev/null",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "git diff --cached --check",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "git diff --exit-code 12e19b167d7fd59722dc2a3194ce591f499de0e7 -- specs/texenda-handoff",
+      "exit_code": 0,
+      "result": "PASS"
     }
   ],
   "evidence_log": "docs/qualification/evidence/routing-v2-author-verification.log",
