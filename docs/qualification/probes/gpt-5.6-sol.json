@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "requested_model": "gpt-5.6-sol",
+  "requested_reasoning_effort": "high",
+  "runtime_id": "codex-desktop-collaboration",
+  "client_version": "0.149.0",
+  "sign_in_mode": "subscription",
+  "billing_mode": "subscription",
+  "observed_capabilities": [
+    "read",
+    "edit",
+    "test"
+  ],
+  "read_checks": {
+    "INV-02": "A shared identity never grants shared permission, so matching a profile or endpoint cannot activate another publication, brand, purpose, or channel.",
+    "INV-12": "A timeout or outage never permits blind provider or channel failover, and reconciliation is required before another external effect.",
+    "INV-30": "The development harness coordinates local work but cannot authorize production sends, deployments, spending, or credential use."
+  },
+  "test_checks": [
+    {
+      "command": "env PYTHONDONTWRITEBYTECODE=1 python3 specs/texenda-handoff/10-validation/validate_package.py",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "env PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s specs/texenda-handoff/08-project-harness/tests -v",
+      "exit_code": 0,
+      "result": "PASS"
+    }
+  ],
+  "no_secrets_read": true,
+  "self_reported_model_id": null,
+  "limitations": [
+    "The runtime did not independently expose a self-reported model identifier, so the requested model identity was not verified from runtime metadata.",
+    "This bounded probe verifies only local read, edit, package-validation, and harness-test behavior; it does not qualify the Texenda application, production systems, providers, security, legal compliance, external services, or deployment readiness."
+  ]
+}

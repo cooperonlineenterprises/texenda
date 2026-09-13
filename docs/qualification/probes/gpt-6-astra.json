@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0",
+  "requested_model": "gpt-6-astra",
+  "requested_reasoning_effort": "high",
+  "runtime_id": "codex-desktop-collaboration",
+  "client_version": "0.149.0",
+  "sign_in_mode": "subscription",
+  "billing_mode": "subscription",
+  "observed_capabilities": ["read", "edit", "test"],
+  "read_checks": {
+    "INV-02": "Shared identity never creates shared permission, so matching a profile or endpoint cannot activate another publication, brand, purpose, or channel.",
+    "INV-12": "A timeout or outage never authorizes blind provider or channel failover; reconcile before another effect, and never evade a block or opt-out through another channel.",
+    "INV-30": "The development harness coordinates work but grants no production authority, so a planning receipt cannot authorize recipient sends, deployments, spend, or credential use."
+  },
+  "test_checks": [
+    {
+      "command": "env PYTHONDONTWRITEBYTECODE=1 python3 specs/texenda-handoff/10-validation/validate_package.py",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "env PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s specs/texenda-handoff/08-project-harness/tests -v",
+      "exit_code": 0,
+      "result": "PASS",
+      "tests_run": 39
+    }
+  ],
+  "no_secrets_read": true,
+  "self_reported_model_id": null,
+  "limitations": [
+    "The runtime did not independently expose its actual executing model ID or reasoning effort to this probe; requested values are assignment metadata.",
+    "Runtime ID, client version, sign-in mode, and billing mode are supplied assignment metadata and were not independently verified by this probe.",
+    "Validation covers offline package checks and synthetic local harness tests only; no Texenda application, production, provider, security, legal, or external gate qualification was performed.",
+    "Network access, external services, deployment, sending, credentials, billing behavior, sandbox enforcement, and production authority were not exercised or verified."
+  ]
+}

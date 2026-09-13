@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "requested_model": "gpt-5.6-terra",
+  "requested_reasoning_effort": "medium",
+  "runtime_id": "codex-desktop-collaboration",
+  "client_version": "0.149.0",
+  "sign_in_mode": "subscription",
+  "billing_mode": "subscription",
+  "observed_capabilities": [
+    "read",
+    "edit",
+    "test"
+  ],
+  "read_checks": {
+    "INV-02": "Shared identity never creates shared permission, so a profile or endpoint match cannot activate another scoped communication authority.",
+    "INV-12": "A timeout or outage never authorizes blind provider or channel failover; reconciliation is required before another external effect.",
+    "INV-30": "The development harness coordinates work but cannot grant production authority, including authority to send, deploy, spend, or use credentials."
+  },
+  "test_checks": [
+    {
+      "command": "env PYTHONDONTWRITEBYTECODE=1 python3 specs/texenda-handoff/10-validation/validate_package.py",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "env PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s specs/texenda-handoff/08-project-harness/tests -v",
+      "exit_code": 0,
+      "result": "PASS"
+    }
+  ],
+  "no_secrets_read": true,
+  "self_reported_model_id": null,
+  "limitations": [
+    "The runtime did not independently expose a self-reported model identifier.",
+    "This probe exercised only local package validation and synthetic harness unit tests; it did not qualify application, production, provider, security, legal, deployment, sending, billing, or external-service behavior."
+  ]
+}

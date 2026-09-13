@@ -1,0 +1,75 @@
+{
+  "schema_version": "1.0",
+  "observed_at": "2026-09-13T16:45:44Z",
+  "repository": {
+    "remote": "https://github.com/cooperonlineenterprises/texenda",
+    "visibility": "private",
+    "baseline_revision": "0cd7010242ee1ee35837aace4ea2a1f1a186777e",
+    "remote_mutated": false
+  },
+  "host": {
+    "platform": "Darwin 25.6.0 arm64",
+    "macos_version": "26.6.2",
+    "execution_environment": "local Codex desktop collaboration runtime",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request"
+  },
+  "tools": {
+    "codex": "codex-cli 0.149.0",
+    "python3": "Python 3.14.0",
+    "node": "v24.10.0",
+    "npm": "11.6.0",
+    "pnpm": "10.20.0",
+    "yarn": "1.22.22",
+    "git": "git version 2.51.1",
+    "docker": "Docker version 28.3.2, build 578ccf6"
+  },
+  "account": {
+    "sign_in_mode": "subscription",
+    "plan_type": "pro",
+    "api_spend_authorized_usd": 0,
+    "paid_credits_available": false,
+    "account_identifier_recorded": false
+  },
+  "qualification_scope": {
+    "runtime_id": "codex-desktop-collaboration",
+    "capabilities_exercised": [
+      "read",
+      "edit",
+      "test"
+    ],
+    "network_exercised_by_test_agents": false,
+    "external_services_exercised": false,
+    "credentials_read": false,
+    "official_model_guidance": "https://developers.openai.com/api/docs/guides/latest-model"
+  },
+  "active_bindings": {
+    "tier_1": {
+      "model_id": "gpt-6-astra",
+      "reasoning_effort": "high"
+    },
+    "tier_2": {
+      "model_id": "gpt-5.6-terra",
+      "reasoning_effort": "medium"
+    },
+    "tier_3": {
+      "model_id": "gpt-5.6-luna",
+      "reasoning_effort": "low"
+    }
+  },
+  "qualified_fallbacks": [
+    {
+      "tier": 1,
+      "model_id": "gpt-5.6-sol",
+      "reasoning_effort": "high"
+    }
+  ],
+  "unqualified_candidates": [
+    "gpt-5.3-codex-spark"
+  ],
+  "limitations": [
+    "The collaboration runtime accepted exact model and reasoning-effort overrides, but agents could not independently introspect their executing model identifiers.",
+    "Context-window size, data-retention behavior, and provider-side billing telemetry were not exposed to the probes.",
+    "The probes establish bounded local read/edit/test capability only; they do not clear a Texenda production or external-validation gate."
+  ]
+}

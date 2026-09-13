@@ -1,0 +1,106 @@
+{
+  "schema_version": "1.0",
+  "kind": "roster",
+  "summary": "Bounded local Codex model-tier qualification for Texenda WP-00; subscription runtime only, zero API spend.",
+  "checks": [
+    {
+      "id": "sanitized-runtime-inventory",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Inspect local tool versions, repository state, sandbox/approval behavior, and sanitized Codex usage metadata without reading credentials.",
+      "evidence_path": "docs/qualification/runtime-inventory.json",
+      "sha256": "9a7615dbec54b796c01274315c7d345253d8a639bdfaa42d41fb425a8f39e049"
+    },
+    {
+      "id": "tier-1-model-tool-smoke",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Dispatch gpt-6-astra at high effort in an isolated worktree; read governing invariants, write a scoped report, validate the package, and run all harness tests.",
+      "evidence_path": "docs/qualification/probes/gpt-6-astra.json",
+      "sha256": "6ab0d7b121630937de88441c1aedf1e46de1da1d0319ac01806bb7435fdf726f"
+    },
+    {
+      "id": "tier-1-fallback-model-tool-smoke",
+      "required": false,
+      "status": "PASS",
+      "command_or_procedure": "Dispatch gpt-5.6-sol at high effort in an isolated worktree using the same bounded read/edit/test oracle.",
+      "evidence_path": "docs/qualification/probes/gpt-5.6-sol.json",
+      "sha256": "b3517e156c382bc9fb45ed29994a8ff573854ddcd03436fee88ed053810ae300"
+    },
+    {
+      "id": "tier-2-model-tool-smoke",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Dispatch gpt-5.6-terra at medium effort in an isolated worktree; read governing invariants, write a scoped report, validate the package, and run all harness tests.",
+      "evidence_path": "docs/qualification/probes/gpt-5.6-terra.json",
+      "sha256": "1c81e33c60d7da2e23b1d9f4fc1c8e8647bb26dfce3ff9fcce6dc3d1d19aeda3"
+    },
+    {
+      "id": "tier-3-model-tool-smoke",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Dispatch gpt-5.6-luna at low effort in an isolated worktree; read governing invariants, write a scoped report, validate the package, and run all harness tests.",
+      "evidence_path": "docs/qualification/probes/gpt-5.6-luna.json",
+      "sha256": "469723e6801d3a2c91d29d52ca3ed69c4bcdc6206d7a85cceb12c472b08ab00f"
+    },
+    {
+      "id": "orchestrator-independent-verification",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Parse and inspect all probe artifacts, check invariant summaries and command results, recompute hashes after integration, and retain all limitations.",
+      "evidence_path": "docs/qualification/model-qualification-verification.md",
+      "sha256": "29168ce388589408024a7313dde9752623d98ac40a59e76f809eb18a415edaea"
+    }
+  ],
+  "qualifications": [
+    {
+      "tier": 1,
+      "model_id": "gpt-6-astra",
+      "runtime_id": "codex-desktop-collaboration",
+      "client_version": "0.149.0",
+      "sign_in_mode": "subscription",
+      "reasoning_effort": "high",
+      "capabilities": [
+        "read",
+        "edit",
+        "test"
+      ],
+      "billing_mode": "subscription",
+      "verified_at": "2026-09-13T16:45:44Z",
+      "expires_at": "2026-10-12T16:45:48Z"
+    },
+    {
+      "tier": 2,
+      "model_id": "gpt-5.6-terra",
+      "runtime_id": "codex-desktop-collaboration",
+      "client_version": "0.149.0",
+      "sign_in_mode": "subscription",
+      "reasoning_effort": "medium",
+      "capabilities": [
+        "read",
+        "edit",
+        "test"
+      ],
+      "billing_mode": "subscription",
+      "verified_at": "2026-09-13T16:45:44Z",
+      "expires_at": "2026-10-12T16:45:48Z"
+    },
+    {
+      "tier": 3,
+      "model_id": "gpt-5.6-luna",
+      "runtime_id": "codex-desktop-collaboration",
+      "client_version": "0.149.0",
+      "sign_in_mode": "subscription",
+      "reasoning_effort": "low",
+      "capabilities": [
+        "read",
+        "edit",
+        "test"
+      ],
+      "billing_mode": "subscription",
+      "verified_at": "2026-09-13T16:45:44Z",
+      "expires_at": "2026-10-12T16:45:48Z"
+    }
+  ],
+  "notes": "The owner explicitly authorized this bounded qualification. The collaboration dispatch API accepted each exact model/effort override. Agents could not independently self-report model IDs; gpt-5.6-sol passed as a documented Tier 1 fallback but is not an active harness binding. GPT-5.3 Codex Spark remains unqualified. Requalify after any relevant runtime/account/model/policy change or by expiry."
+}
