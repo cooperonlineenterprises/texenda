@@ -1,0 +1,1114 @@
+{
+  "schema_version": "1.0",
+  "report_type": "repository_instruction_scope_audit",
+  "audit_date": "2026-09-13",
+  "base_revision": "e636a3ef4ad3c96956164e898fefeec0758d444d",
+  "worktree": "/private/tmp/texenda-astra-audit.kGBhLO/instructions",
+  "scope": {
+    "included": [
+      "Repository-controlled instructions, prompts, configuration, templates, routing, qualification, operator guidance, and harness surfaces.",
+      "The four required external pages, retrieved directly on the audit date as advisory material.",
+      "Static and synthetic local validation only."
+    ],
+    "excluded": [
+      "Product implementation.",
+      "Production data, credentials, API billing, deployment, sending, provisioning, pushes, and external mutations.",
+      "Changes to the sealed handoff or historical evidence."
+    ],
+    "audit_runtime_stop_confirmation": {
+      "status": "CONFIRMED_NOT_APPLICABLE",
+      "detail": "This audit spawned no subagents, launched no model runtime through the harness, created no ledger, and held no harness lease. The audit worktree has no .texenda state because that state is ignored and was not initialized."
+    }
+  },
+  "classification_legend": {
+    "applicable now": "A bounded repository-owned improvement is justified now, subject to ordinary review.",
+    "already implemented": "The repository already satisfies the recommendation materially.",
+    "useful deferred": "Potentially valuable, but needs a later scoped evaluation, owner decision, or a versioned handoff update.",
+    "inapplicable": "Does not fit the current repository, task, or product scope.",
+    "conflicting": "Would conflict with a current authoritative decision, or records a controlled superseded difference."
+  },
+  "external_guidance": {
+    "authority_rule": "All external pages are advisory. They do not amend Texenda decisions, authorize model access, clear VAL-13 or any product gate, grant spend, or supersede current owner authority.",
+    "retrievals": [
+      {
+        "id": "EXT-01",
+        "url": "https://developers.openai.com/blog/rethinking-skills-and-prompts-for-gpt-6-astra",
+        "title": "Rethinking skills and prompts for GPT-6 Astra",
+        "retrieved_on": "2026-09-13",
+        "access_status": "accessible; direct HTML retrieved and reviewed",
+        "relevant_observations": [
+          "Use narrowly scoped, short skill descriptions and progressive disclosure.",
+          "Avoid context-heavy, universal pre-edit reading requirements and elaborate recipe-like instructions.",
+          "Make safe local-test authority and task completion boundaries explicit.",
+          "Revisit instructions when a more capable model makes older scaffolding counterproductive."
+        ],
+        "recommendations": [
+          {
+            "recommendation": "Keep repository skill descriptions short, precise, and task-triggered.",
+            "classification": "inapplicable",
+            "affected_surfaces": [
+              "repository SKILL.md inventory"
+            ],
+            "reason": "No repository-controlled SKILL.md or repository skill resource exists at this revision. Do not add a skill merely to react to the article."
+          },
+          {
+            "recommendation": "Use progressive disclosure instead of loading broad guidance for every task.",
+            "classification": "applicable now",
+            "affected_surfaces": [
+              "AGENTS.md",
+              "tooling/coordination/harness.py context output",
+              "docs/qualification/README.md"
+            ],
+            "reason": "The repository already has context routing, but WP-00's returned pack is 103401 bytes and includes the full 44691-byte routing policy plus the superseded sealed routing document. A small clarification can keep the current safety boundary while making the intended current routing source unambiguous."
+          },
+          {
+            "recommendation": "Do not force a stack of unrelated documents before every small change.",
+            "classification": "applicable now",
+            "affected_surfaces": [
+              "AGENTS.md"
+            ],
+            "reason": "The root file requires three handoff documents before every implementation. That is reasonable for product work, but it has no explicit narrow-analysis or documentation exception even though it also says to read only relevant context."
+          },
+          {
+            "recommendation": "Grant permission to run safe local tests without repeated confirmation.",
+            "classification": "already implemented",
+            "affected_surfaces": [
+              "specs/texenda-handoff/07-agent-orchestration/ORCHESTRATOR-START.md",
+              "specs/texenda-handoff/07-agent-orchestration/OWNER-EXECUTION-HANDOFF.md",
+              "specs/texenda-handoff/08-project-harness/README.md"
+            ],
+            "reason": "The owner handoff authorizes ordinary bounded local work, and the orchestrator explicitly distinguishes local tests from external effects."
+          },
+          {
+            "recommendation": "Define completion rather than stopping after a first pass.",
+            "classification": "already implemented",
+            "affected_surfaces": [
+              "specs/texenda-handoff/07-agent-orchestration/ORCHESTRATOR-START.md",
+              "specs/texenda-handoff/07-agent-orchestration/handoff-and-review.md",
+              "specs/texenda-handoff/07-agent-orchestration/ASSIGNMENT.template.md"
+            ],
+            "reason": "Acceptance, integrated-head checks, external-gate separation, a handoff packet, and runtime-stop proof are all explicit."
+          },
+          {
+            "recommendation": "Remove ceremony only after checking that it no longer protects a needed behavior.",
+            "classification": "useful deferred",
+            "affected_surfaces": [
+              "AGENTS.md",
+              "specs/texenda-handoff/07-agent-orchestration/context-routing.json",
+              "tooling/coordination/harness.py"
+            ],
+            "reason": "Texenda has unusually consequential permission, effect-recovery, and migration invariants. Any reduction should be evaluated against representative WPs and negative tests, not made wholesale."
+          }
+        ]
+      },
+      {
+        "id": "EXT-02",
+        "url": "https://developers.openai.com/blog/architectural-visualization-with-astra",
+        "title": "Architectural visualization with Astra",
+        "retrieved_on": "2026-09-13",
+        "access_status": "accessible; direct HTML retrieved and reviewed",
+        "relevant_observations": [
+          "The described workflow moves from a brief to inspectable intermediate representations and previews before costly final output.",
+          "Different visual views reveal different defects; renders and geometry inspection complement rather than replace one another.",
+          "The article explicitly treats a concept visualization as requiring professional validation before real-world construction."
+        ],
+        "recommendations": [
+          {
+            "recommendation": "Use a small inspectable visual only when it materially clarifies a relationship, state transition, or design decision.",
+            "classification": "already implemented",
+            "affected_surfaces": [
+              "specs/texenda-handoff/05-implementation/work-breakdown.md",
+              "specs/texenda-handoff/05-implementation/roadmap.md"
+            ],
+            "reason": "The work-package DAG is a Mermaid diagram, and PH-00 calls for annotated operator prototypes while explicitly rejecting an elaborate visual builder."
+          },
+          {
+            "recommendation": "Treat visual artifacts as review inputs rather than authority or proof of safety.",
+            "classification": "already implemented",
+            "affected_surfaces": [
+              "specs/texenda-handoff/02-product-and-ux/operator-workflows.md",
+              "specs/texenda-handoff/06-migration-and-production/acceptance-plan.md",
+              "specs/texenda-handoff/06-migration-and-production/release-plan.md"
+            ],
+            "reason": "Texenda requires deterministic commands, explicit approval, tests, external gates, and operator validation; visual UI and generated artifacts do not create authority."
+          },
+          {
+            "recommendation": "Create 3D scenes, cinematic renders, Blender workflows, or Unreal walkthroughs for this audit or current handoff.",
+            "classification": "inapplicable",
+            "affected_surfaces": [
+              "current audit",
+              "repository scope"
+            ],
+            "reason": "They would add speculative tooling, assets, and scope without helping validate instruction precedence, routing, or governance."
+          },
+          {
+            "recommendation": "For a future UX work package, use staged low-fidelity prototypes and inspect consequence views before polished visual output.",
+            "classification": "useful deferred",
+            "affected_surfaces": [
+              "future PH-00 and operator-UX assignments"
+            ],
+            "reason": "This fits the existing annotated-prototype requirement, but should be invoked only by a scoped UX assignment with accessibility and authority tests."
+          }
+        ]
+      },
+      {
+        "id": "EXT-03",
+        "url": "https://help.openai.com/en/articles/20001516-managing-usage-with-gpt-6-astra-in-work-and-codex",
+        "title": "Managing usage with GPT-6 Astra in Work and Codex",
+        "retrieved_on": "2026-09-13",
+        "access_status": "accessible; direct HTML retrieved and reviewed",
+        "relevant_observations": [
+          "Model availability varies by plan, workspace, and rollout.",
+          "Work and Codex usage is shared and task-dependent; higher effort can consume more usage and is not a guarantee of a better result.",
+          "The article directs users to inspect current usage and availability before large tasks."
+        ],
+        "recommendations": [
+          {
+            "recommendation": "Treat public model information and nominal model names as candidates rather than proof of account access.",
+            "classification": "already implemented",
+            "affected_surfaces": [
+              "AGENTS.md",
+              "specs/texenda-handoff/DECISION-STATUS.md",
+              "specs/texenda-handoff/07-agent-orchestration/model-routing.md",
+              "docs/qualification/model-roster-v2.evidence.json"
+            ],
+            "reason": "VAL-13, exact-profile probes, expiry, and the owner-attested roster already fail closed."
+          },
+          {
+            "recommendation": "Bound subscription usage and select model and effort based on the actual task.",
+            "classification": "already implemented",
+            "affected_surfaces": [
+              "docs/decisions/ADR-0001-quality-first-model-routing.md",
+              "tooling/coordination/routing-policy.json",
+              "tooling/coordination/README.md"
+            ],
+            "reason": "The accepted routing policy binds exact model and effort, task fences, time/budget evidence, and an explicit no-new-API-spend default."
+          },
+          {
+            "recommendation": "Lower effort when that makes a large task economical.",
+            "classification": "conflicting",
+            "affected_surfaces": [
+              "docs/decisions/ADR-0001-quality-first-model-routing.md",
+              "tooling/coordination/routing-policy.json"
+            ],
+            "reason": "A blanket usage-driven downshift would conflict with the owner-accepted max-default policy. Lower effort remains allowed only with the existing bounded, reversible, fully specified, deterministic-oracle attestation."
+          },
+          {
+            "recommendation": "Inspect current allowance before a large subscription task and do not assume a reset, credit, or model switch restores it.",
+            "classification": "useful deferred",
+            "affected_surfaces": [
+              "future assignment admission checklist",
+              "operator report"
+            ],
+            "reason": "The repository records zero API budget and bounded subscription work, but it cannot read account allowance or consume resets. This audit did neither."
+          }
+        ]
+      },
+      {
+        "id": "EXT-04",
+        "url": "https://deploymentsafety.openai.com/gpt-6-astra",
+        "title": "GPT-6 Astra System Card",
+        "retrieved_on": "2026-09-13",
+        "access_status": "accessible; direct HTML retrieved and reviewed",
+        "relevant_observations": [
+          "The system card describes stronger alignment and prompt-injection resistance, while retaining monitoring and generalization limitations.",
+          "It emphasizes respecting approval barriers and warnings rather than trying to bypass them.",
+          "It does not make model behavior a substitute for scoped access controls, sandboxing, independent review, or runtime enforcement."
+        ],
+        "recommendations": [
+          {
+            "recommendation": "Keep restrictions, sandboxing, approvals, and external-effect boundaries enforceable outside model judgment.",
+            "classification": "already implemented",
+            "affected_surfaces": [
+              "AGENTS.md",
+              "specs/texenda-handoff/07-agent-orchestration/ORCHESTRATOR-START.md",
+              "specs/texenda-handoff/08-project-harness/README.md",
+              "specs/texenda-handoff/04-security-governance-and-operations/ai-and-agent-authority.md"
+            ],
+            "reason": "The repository repeatedly says its harness is not enforcement and that runtime controls plus accountable owners provide real authority."
+          },
+          {
+            "recommendation": "Treat retrieved text, tools, and model output as untrusted and resist prompt injection.",
+            "classification": "already implemented",
+            "affected_surfaces": [
+              "specs/texenda-handoff/04-security-governance-and-operations/ai-and-agent-authority.md",
+              "specs/texenda-handoff/04-security-governance-and-operations/runbooks.md",
+              "specs/texenda-handoff/06-migration-and-production/acceptance-plan.md"
+            ],
+            "reason": "The product guidance labels retrieved material untrusted, uses typed DTO/authorization boundaries, and includes prompt-injection and malicious-output tests."
+          },
+          {
+            "recommendation": "Respect an approval, auto-review, warning, or sandbox denial without attempting a substantively similar bypass.",
+            "classification": "applicable now",
+            "affected_surfaces": [
+              "AGENTS.md",
+              "future assignment and operator reports"
+            ],
+            "reason": "The repository bans external effects without authorization, but a short explicit anti-circumvention sentence in the root operational instructions would make this runtime behavior visible without changing product semantics."
+          },
+          {
+            "recommendation": "Rely on model alignment or chain-of-thought monitoring as proof that an agent acted safely.",
+            "classification": "inapplicable",
+            "affected_surfaces": [
+              "qualification and production evidence"
+            ],
+            "reason": "The system card itself retains limitations; Texenda correctly records observable evidence and explicitly avoids collecting hidden model reasoning."
+          }
+        ]
+      }
+    ]
+  },
+  "inventory": {
+    "method": "Inventory was made from tracked paths and a repository filesystem scan at the stated base. The following groups are exhaustive for the requested instruction, skill, prompt, configuration, routing, qualification, operator, and harness categories; ordinary product-spec owners are referenced only when they govern one of those categories.",
+    "agents_markdown": [
+      {
+        "path": "AGENTS.md",
+        "role": "Repository-root operational instructions and current local-routing overlay pointer.",
+        "authority": "Repository-controlled instructions; cannot amend sealed product semantics."
+      },
+      {
+        "path": "specs/texenda-handoff/AGENTS.md",
+        "role": "Nested handoff-reader instructions.",
+        "authority": "Normative within the sealed handoff when working in that subtree."
+      }
+    ],
+    "skills": {
+      "SKILL_md_paths": [],
+      "skill_resource_paths": [],
+      "agent_definition_paths": [],
+      "disposition": "No repository-owned skill, skill resource, .codex/agents definition, or .agents definition exists. System- or plugin-provided skills are outside this repository audit."
+    },
+    "codex_configuration": [
+      {
+        "path": ".codex/config.toml.example",
+        "role": "Project-local reversible default: max effort, on-request approval, workspace-write sandbox, network disabled.",
+        "authority": "Example only; explicitly says to review the actual installed client before copying."
+      },
+      {
+        "path": "specs/texenda-handoff/08-project-harness/codex-config.toml.example",
+        "role": "Sealed handoff reversible Codex configuration example.",
+        "authority": "Template only; preserve byte-for-byte."
+      }
+    ],
+    "prompts_assignments_handoffs_and_resumption": [
+      {
+        "path": "specs/texenda-handoff/07-agent-orchestration/ORCHESTRATOR-START.md",
+        "role": "Normative implementation-lead start prompt, admission loop, authority, execution boundaries, review, resumption, and operator reporting."
+      },
+      {
+        "path": "specs/texenda-handoff/07-agent-orchestration/ASSIGNMENT.template.md",
+        "role": "Bounded parent or child assignment contract template."
+      },
+      {
+        "path": "specs/texenda-handoff/07-agent-orchestration/OWNER-EXECUTION-HANDOFF.md",
+        "role": "Owner-supplied workspace, permission, external-service, and initial-priority handoff."
+      },
+      {
+        "path": "specs/texenda-handoff/07-agent-orchestration/handoff-and-review.md",
+        "role": "Normative completion packet, independent-review, lease, recovery, and definition-of-done protocol."
+      },
+      {
+        "path": "specs/texenda-handoff/08-project-harness/root-AGENTS.md.template",
+        "role": "Installer-produced root instruction template for a genuinely empty app repository."
+      },
+      {
+        "path": "specs/texenda-handoff/08-project-harness/templates/evidence.json",
+        "role": "Sealed submission-evidence template."
+      },
+      {
+        "path": "specs/texenda-handoff/08-project-harness/templates/roster.json",
+        "role": "Sealed runtime-roster template."
+      },
+      {
+        "path": "tooling/coordination/templates/budget.json",
+        "role": "Current local budget-evidence template."
+      },
+      {
+        "path": "tooling/coordination/templates/review.json",
+        "role": "Current local independent-review template."
+      },
+      {
+        "path": "tooling/coordination/templates/roster.json",
+        "role": "Current local exact-profile roster template."
+      },
+      {
+        "path": "tooling/coordination/templates/routing.json",
+        "role": "Current local lower-effort routing-attestation template."
+      },
+      {
+        "path": "specs/texenda-handoff/05-implementation/compatibility-manifest.template.json",
+        "role": "Technology compatibility template, explicitly not a qualification."
+      },
+      {
+        "path": "specs/texenda-handoff/06-migration-and-production/migration-unit.template.json",
+        "role": "Migration-unit template."
+      },
+      {
+        "path": "specs/texenda-handoff/06-migration-and-production/release-evidence.template.json",
+        "role": "Release-evidence template."
+      },
+      {
+        "path": "specs/texenda-handoff/06-migration-and-production/workload-profile.template.json",
+        "role": "External-validation workload-profile template."
+      }
+    ],
+    "resumption_specific_disposition": {
+      "standalone_template_present": false,
+      "governing_surfaces": [
+        "specs/texenda-handoff/07-agent-orchestration/ORCHESTRATOR-START.md",
+        "specs/texenda-handoff/07-agent-orchestration/handoff-and-review.md",
+        "specs/texenda-handoff/08-project-harness/README.md",
+        "tooling/coordination/README.md",
+        "tooling/coordination/harness.py"
+      ],
+      "assessment": "The resumption protocol is substantive and includes state, receipt, lease, runtime-stop, fence, and evidence checks. A standalone template is optional rather than missing authority."
+    },
+    "routing_and_context": [
+      {
+        "path": "docs/decisions/ADR-0001-quality-first-model-routing.md",
+        "role": "Current owner-accepted project-local four-tier, max-default routing decision."
+      },
+      {
+        "path": "tooling/coordination/routing-policy.json",
+        "role": "Current machine policy: 11 exact profiles, 44 work-package author/reviewer routes, two-writer default, zero new API spend."
+      },
+      {
+        "path": "tooling/coordination/README.md",
+        "role": "Current local coordination operator guide."
+      },
+      {
+        "path": "tooling/coordination/harness.py",
+        "role": "Current local adapter and context output; explicitly not a model runner or authority system."
+      },
+      {
+        "path": "tooling/coordination/schemas/evidence.schema.json",
+        "role": "Current v2 coordination evidence schema."
+      },
+      {
+        "path": "tooling/coordination/schemas/profile-qualification.schema.json",
+        "role": "Exact-profile qualification contract."
+      },
+      {
+        "path": "tooling/coordination/tests/test_routing_v2.py",
+        "role": "Current routing, qualification, budget, migration, and negative-test suite."
+      },
+      {
+        "path": "specs/texenda-handoff/07-agent-orchestration/context-routing.json",
+        "role": "Sealed context layer, 200000-byte reference budget, archive exclusion, and no-silent-truncation policy."
+      },
+      {
+        "path": "specs/texenda-handoff/07-agent-orchestration/model-routing.md",
+        "role": "Sealed three-tier public-candidate routing guidance; controlled superseded scope for tier recommendations."
+      },
+      {
+        "path": "specs/texenda-handoff/07-agent-orchestration/model-routing.json",
+        "role": "Sealed unverified/null three-tier candidate record."
+      },
+      {
+        "path": "specs/texenda-handoff/07-agent-orchestration/project-kernel.md",
+        "role": "Always-read normative kernel and authority boundary."
+      },
+      {
+        "path": "specs/texenda-handoff/05-implementation/work-packages.json",
+        "role": "Normative 44-work-package contract source."
+      },
+      {
+        "path": "specs/texenda-handoff/05-implementation/work-breakdown.md",
+        "role": "Derived work-package reading view and dependency graph."
+      }
+    ],
+    "qualification_evidence_and_analysis": [
+      "docs/qualification/README.md",
+      "docs/qualification/runtime-inventory.json",
+      "docs/qualification/model-qualification-verification.md",
+      "docs/qualification/model-roster.evidence.json",
+      "docs/qualification/model-roster-v2.evidence.json",
+      "docs/qualification/routing-v2-activation-verification.md",
+      "docs/qualification/routing-v2-activation-receipt.md",
+      "docs/qualification/analysis/routing-v2-test-coverage.json",
+      "docs/qualification/analysis/routing-v2-test-plan.md",
+      "docs/qualification/analysis/work-package-routing-proposal.json",
+      "docs/qualification/analysis/work-package-routing-review.json",
+      "docs/qualification/evidence/routing-v2-author-verification.log",
+      "docs/qualification/evidence/routing-v2-budget-authorization-verification.log",
+      "docs/qualification/evidence/routing-v2-correction-verification.log",
+      "docs/qualification/evidence/routing-v2-migration-fixture.json",
+      "docs/qualification/evidence/routing-v2-review-verification.log",
+      "docs/qualification/evidence/routing-v2-review.evidence.json",
+      "docs/qualification/evidence/routing-v2-submission.evidence.json",
+      "docs/qualification/evidence/wp00-author-verification.log",
+      "docs/qualification/evidence/wp00-review-verification.log",
+      "docs/qualification/evidence/wp00-review.evidence.json",
+      "docs/qualification/evidence/wp00-submission.evidence.json",
+      "docs/qualification/probes/gpt-6-astra-max.json",
+      "docs/qualification/probes/gpt-6-astra.json",
+      "docs/qualification/probes/gpt-5.6-sol-max.json",
+      "docs/qualification/probes/gpt-5.6-sol.json",
+      "docs/qualification/probes/gpt-5.6-terra-max.json",
+      "docs/qualification/probes/gpt-5.6-terra-high.json",
+      "docs/qualification/probes/gpt-5.6-terra.json",
+      "docs/qualification/probes/gpt-5.6-luna-max.json",
+      "docs/qualification/probes/gpt-5.6-luna-high.json",
+      "docs/qualification/probes/gpt-5.6-luna-medium.json",
+      "docs/qualification/probes/gpt-5.6-luna.json"
+    ],
+    "operator_and_product_authority_documents": [
+      {
+        "path": "specs/texenda-handoff/02-product-and-ux/operator-workflows.md",
+        "role": "Normative operator flows, consequence visibility, approval, accessibility, and no opaque AI automation mode."
+      },
+      {
+        "path": "specs/texenda-handoff/02-product-and-ux/interaction-architecture.md",
+        "role": "Normative human, voice, AI, agent, approval, and inspect-mode interaction architecture."
+      },
+      {
+        "path": "specs/texenda-handoff/04-security-governance-and-operations/ai-and-agent-authority.md",
+        "role": "Normative product AI and external-agent authority, data minimization, typed-output, and anti-injection guidance."
+      },
+      {
+        "path": "specs/texenda-handoff/04-security-governance-and-operations/runbooks.md",
+        "role": "Normative operational ownership, incident, prompt-injection, recovery, and release procedures."
+      },
+      {
+        "path": "specs/texenda-handoff/05-implementation/roadmap.md",
+        "role": "Normative dependency order, PH-00 visual-prototype scope, and gate discipline."
+      },
+      {
+        "path": "specs/texenda-handoff/06-migration-and-production/acceptance-plan.md",
+        "role": "Normative product acceptance, negative/concurrency/recovery/operator tests, all initially NOT RUN."
+      },
+      {
+        "path": "specs/texenda-handoff/06-migration-and-production/release-plan.md",
+        "role": "Normative separation of specified, implemented, tested, externally qualified, and released."
+      },
+      {
+        "path": "specs/texenda-handoff/06-migration-and-production/release-profiles.json",
+        "role": "Normative release-profile applicability data."
+      }
+    ],
+    "harness_and_package_validation": [
+      "specs/texenda-handoff/08-project-harness/README.md",
+      "specs/texenda-handoff/08-project-harness/harness.py",
+      "specs/texenda-handoff/08-project-harness/install.py",
+      "specs/texenda-handoff/08-project-harness/probe_runtime.py",
+      "specs/texenda-handoff/08-project-harness/schemas/evidence.schema.json",
+      "specs/texenda-handoff/08-project-harness/schemas/work-package.schema.json",
+      "specs/texenda-handoff/08-project-harness/tests/test_harness.py",
+      "specs/texenda-handoff/10-validation/validate_package.py",
+      "specs/texenda-handoff/10-validation/package-review.md",
+      "specs/texenda-handoff/10-validation/harness-test-map.json",
+      "specs/texenda-handoff/10-validation/clean-install-smoke.json",
+      "specs/texenda-handoff/10-validation/validation-report.json",
+      "specs/texenda-handoff/SHA256SUMS"
+    ],
+    "historical_and_reference_boundaries": [
+      {
+        "paths": [
+          "specs/texenda-handoff/09-reference/conversation-coverage.md",
+          "specs/texenda-handoff/09-reference/conversation-record.json",
+          "specs/texenda-handoff/09-reference/conversation-record.md",
+          "specs/texenda-handoff/09-reference/original-artifact-integrity.json",
+          "specs/texenda-handoff/09-reference/prior-artifacts/Texenda_Decision_Closure_v1.0.zip",
+          "specs/texenda-handoff/09-reference/prior-artifacts/Texenda_Implementation_Roadmap_Acceptance_v1.0.md",
+          "specs/texenda-handoff/09-reference/prior-artifacts/Texenda_Product_Technical_Foundation_v1.0.md",
+          "specs/texenda-handoff/09-reference/source-register.json",
+          "specs/texenda-handoff/09-reference/source-register.md",
+          "specs/texenda-handoff/09-reference/supersession-and-traceability.md"
+        ],
+        "disposition": "Reference, archive, or integrity evidence only. Preserve unchanged; do not load wholesale or treat as executable instructions."
+      }
+    ]
+  },
+  "instruction_precedence": {
+    "repository_declared_order": [
+      {
+        "rank": 1,
+        "source": "Actual runtime system, user, and enforced approval/sandbox boundaries plus bounded accountable-owner authority.",
+        "effect": "Repository text cannot grant external authority, bypass an approval denial, or make an unavailable model available."
+      },
+      {
+        "rank": 2,
+        "source": "Latest accepted Texenda decision and current normative topic owner, using DECISION-STATUS.md.",
+        "effect": "Binding product semantics and gates; contradictions escalate rather than being silently reconciled."
+      },
+      {
+        "rank": 3,
+        "source": "Current project-local ADR-0001 and tooling/coordination/routing-policy.json.",
+        "effect": "Supersedes only the sealed handoff's coding-tier/routing recommendations and related local coordinator contract."
+      },
+      {
+        "rank": 4,
+        "source": "Owner execution handoff and an accepted bounded assignment.",
+        "effect": "Define workspace execution scope and task fence; cannot amend product semantics or external gates."
+      },
+      {
+        "rank": 5,
+        "source": "Handoff templates, reversible configuration examples, derived catalogs, and local coordinator output.",
+        "effect": "Guide or validate work but do not independently create authority."
+      },
+      {
+        "rank": 6,
+        "source": "Qualification probes, logs, retrievals, model/provider output, source register, and historical archive.",
+        "effect": "Evidence or reference only; factual conflict is reported to the accountable owner."
+      }
+    ],
+    "AGENTS_discovery_observation": {
+      "repository_files": [
+        "AGENTS.md",
+        "specs/texenda-handoff/AGENTS.md"
+      ],
+      "override_files_found": [],
+      "interpretation": "The root AGENTS.md is the general repository layer. The nested handoff AGENTS.md becomes relevant when the active working directory is inside specs/texenda-handoff. No repository override or fallback instruction file was found."
+    },
+    "controlled_supersession_rule": "The old sealed routing documents remain byte-preserved evidence and normative for all non-routing content. The current local ADR and policy replace only the sealed routing/tier recommendation fields. This is a documented controlled difference, not permission to rewrite the handoff."
+  },
+  "contradictions_duplication_and_overbreadth": [
+    {
+      "id": "F-01",
+      "classification": "conflicting",
+      "severity": "medium",
+      "sources": [
+        "specs/texenda-handoff/07-agent-orchestration/model-routing.md",
+        "specs/texenda-handoff/07-agent-orchestration/model-routing.json",
+        "docs/decisions/ADR-0001-quality-first-model-routing.md",
+        "tooling/coordination/routing-policy.json"
+      ],
+      "finding": "The sealed package says three candidate tiers with Terra at tier 2 and Luna at tier 3. The accepted local overlay says four max-default tiers with Sol at tier 2 and Luna at tier 4.",
+      "impact": "A reader can select the wrong profile if the sealed model-routing document is read without the overlay.",
+      "current_mitigation": "The root AGENTS.md, ADR, and local context output say the numeric routing recommendations are superseded.",
+      "minimal_response": "Retain sealed files byte-for-byte. Make the current qualification README state the chronology and current-source rule more prominently; do not attempt a silent sealed-package edit."
+    },
+    {
+      "id": "F-02",
+      "classification": "conflicting",
+      "severity": "medium",
+      "sources": [
+        "specs/texenda-handoff/08-project-harness/root-AGENTS.md.template",
+        "docs/decisions/ADR-0001-quality-first-model-routing.md"
+      ],
+      "finding": "The sealed root-AGENTS template says to select the least costly qualified model tier, while the accepted project routing decision defaults every tier to max and limits downshifts.",
+      "impact": "A future empty-repository installation could receive a prospective instruction that does not accurately describe the current quality-first routing overlay.",
+      "current_mitigation": "The current repository root AGENTS.md points to ADR-0001 and the current policy.",
+      "minimal_response": "Defer correction to a versioned handoff successor or explicit owner-approved amendment; the present audit must not change sealed template bytes."
+    },
+    {
+      "id": "F-03",
+      "classification": "conflicting",
+      "severity": "medium",
+      "sources": [
+        "docs/qualification/runtime-inventory.json",
+        "docs/qualification/model-qualification-verification.md",
+        "docs/qualification/model-roster-v2.evidence.json",
+        "docs/qualification/routing-v2-activation-receipt.md",
+        "tooling/coordination/README.md"
+      ],
+      "finding": "The 16:45 pre-v2 inventory maps Astra/high, Terra/medium, Luna/low, and Sol/high fallback. Later v2 evidence maps all four default profiles to max and records an activation at 20:04. The operator README says no active v2 roster ships, which is true for a fresh ignored ledger but is easy to confuse with the source-workspace activation receipt.",
+      "impact": "Chronological evidence can be mistaken for one current runtime statement.",
+      "current_mitigation": "The v2 roster and activation receipt include their exact timestamp, profile list, expiry, policy digest, and local-only scope.",
+      "minimal_response": "Add one explicit chronology paragraph to docs/qualification/README.md: pre-v2 inventory is historical, no .texenda state is shipped, and each worktree must use status/check plus current exact-profile evidence."
+    },
+    {
+      "id": "F-04",
+      "classification": "useful deferred",
+      "severity": "low",
+      "sources": [
+        "AGENTS.md",
+        "specs/texenda-handoff/07-agent-orchestration/ORCHESTRATOR-START.md",
+        "specs/texenda-handoff/07-agent-orchestration/project-kernel.md",
+        "specs/texenda-handoff/07-agent-orchestration/handoff-and-review.md"
+      ],
+      "finding": "The same core safety, no-authority, and evidence language is repeated across the root instructions, kernel, orchestrator start prompt, and handoff protocol.",
+      "impact": "The repetition improves safety but raises context and ceremony cost, especially for a narrow documentation change.",
+      "current_mitigation": "Context routing excludes the archive by default and states a no-silent-truncation rule.",
+      "minimal_response": "Do not delete invariant reminders. Later consolidate cross-links and move detailed mechanics into the applicable protocol after representative-task evaluation."
+    },
+    {
+      "id": "F-05",
+      "classification": "applicable now",
+      "severity": "low",
+      "sources": [
+        "AGENTS.md"
+      ],
+      "finding": "The root instruction pairs a universal product-implementation preflight with a relevant-context rule, but does not explicitly say how a bounded analysis, qualification report, or documentation-only task should select its smaller pack.",
+      "impact": "A capable agent can spend context rereading product material unrelated to a report.",
+      "current_mitigation": "The word before implementation narrows the literal scope, and the task-specific context rule is present.",
+      "minimal_response": "Add a one-sentence task-type router rather than weakening the product-work preflight."
+    }
+  ],
+  "autonomy_and_clarification_gaps": {
+    "strengths": [
+      "Ordinary local work is authorized by the owner handoff; external effects remain separately gated.",
+      "The orchestrator asks the owner only for genuinely required access, budget, validation, or a material choice.",
+      "Completion, stop/escalate conditions, and recovery evidence are explicit."
+    ],
+    "gaps": [
+      {
+        "id": "A-01",
+        "classification": "applicable now",
+        "finding": "The root operational instructions do not explicitly distinguish a routine reversible local assumption from a material product, authority, budget, or write-scope choice.",
+        "affected_surfaces": [
+          "AGENTS.md"
+        ],
+        "recommendation": "State that agents may proceed with routine reversible local work inside the assigned fence and should ask only when a choice changes authority, external effect, product semantics, budget, or edit scope.",
+        "reason": "This aligns the owner handoff and current runtime practices without broadening authority."
+      },
+      {
+        "id": "A-02",
+        "classification": "already implemented",
+        "finding": "A model cannot self-approve a consequential product or routing decision.",
+        "affected_surfaces": [
+          "specs/texenda-handoff/DECISION-STATUS.md",
+          "specs/texenda-handoff/07-agent-orchestration/ORCHESTRATOR-START.md",
+          "specs/texenda-handoff/04-security-governance-and-operations/ai-and-agent-authority.md"
+        ],
+        "reason": "Authoritative changes and external validation have defined owner/reviewer routes."
+      },
+      {
+        "id": "A-03",
+        "classification": "useful deferred",
+        "finding": "There is no standalone one-page resumption form for a human to fill in after a cancelled runtime.",
+        "affected_surfaces": [
+          "specs/texenda-handoff/07-agent-orchestration/handoff-and-review.md",
+          "tooling/coordination/templates"
+        ],
+        "recommendation": "Evaluate a compact resume checklist only if repeated recoveries show that the existing state/receipt/handoff protocol is too difficult to apply.",
+        "reason": "The existing protocol is already detailed and should not be duplicated preemptively."
+      }
+    ]
+  },
+  "approval_pauses": {
+    "already_correct": [
+      "No production data, API spending, source-account mutation, DNS/cloud change, deployment, provisioning, sending, destructive reset, or governing-decision amendment occurs without explicit bounded owner authority.",
+      "The local coordinator cannot grant runtime sandbox, actor identity, model launch, or production authority.",
+      "A negative test confirms unverified models, missing budget, incomplete integration, missing runtime-stop proof, stale candidates, and activation gates fail closed."
+    ],
+    "gaps_or_risks": [
+      {
+        "id": "P-01",
+        "classification": "applicable now",
+        "finding": "The root instructions do not explicitly say that a runtime approval or warning must not be bypassed by retrying a substantively similar command through another path.",
+        "affected_surfaces": [
+          "AGENTS.md"
+        ],
+        "recommendation": "Add a concise anti-circumvention rule tied to the actual runtime approval system.",
+        "reason": "It reinforces the existing no-external-effect boundary and the Astra system-card guidance without making model behavior the control."
+      },
+      {
+        "id": "P-02",
+        "classification": "already implemented",
+        "finding": "The repository distinguishes ordinary local test work from external effects.",
+        "affected_surfaces": [
+          "specs/texenda-handoff/07-agent-orchestration/OWNER-EXECUTION-HANDOFF.md",
+          "specs/texenda-handoff/08-project-harness/README.md"
+        ],
+        "reason": "This supports autonomous local validation without creating a production authorization loophole."
+      },
+      {
+        "id": "P-03",
+        "classification": "useful deferred",
+        "finding": "Subscription usage has an owner-approved time/token boundary but no repository-visible live allowance snapshot.",
+        "affected_surfaces": [
+          "assignment admission",
+          "operator report"
+        ],
+        "recommendation": "For unusually large tasks, ask the accountable runtime owner to attach a sanitized current usage observation rather than try to infer or query account status through repository tooling.",
+        "reason": "The task has no authorization to spend, buy credits, reset usage, or treat an API budget as subscription entitlement."
+      }
+    ]
+  },
+  "delegation_and_parallelism_risks": {
+    "current_controls": [
+      "The sealed handoff limits active writers, requires dependency independence and disjoint active write scopes, uses leases and worktrees, and serializes integration.",
+      "A subtask cannot gain its own parent lease or authority merely by being described as mechanical.",
+      "Review is independent and candidate-bound; the harness tests overlap, expiry, fence, recovery, and semantic-merge failures."
+    ],
+    "findings": [
+      {
+        "id": "D-01",
+        "classification": "already implemented",
+        "finding": "Parallel write-risk handling is materially stronger than a generic proactive-delegation rule.",
+        "affected_surfaces": [
+          "specs/texenda-handoff/07-agent-orchestration/handoff-and-review.md",
+          "specs/texenda-handoff/07-agent-orchestration/ORCHESTRATOR-START.md",
+          "tooling/coordination/routing-policy.json"
+        ],
+        "reason": "It requires a bounded assignment, disjoint scope, at-most-two writer default, and serialized integration."
+      },
+      {
+        "id": "D-02",
+        "classification": "useful deferred",
+        "finding": "The repository does not state a minimal threshold for when read-only delegation is worth the extra tokens and coordination.",
+        "affected_surfaces": [
+          "AGENTS.md",
+          "future assignment guidance"
+        ],
+        "recommendation": "If delegation guidance is revised, say to use a subagent only for independently useful bounded work whose time or quality gain exceeds its context and coordination cost; do not delegate a small single-source task.",
+        "reason": "This is consistent with the external subagent guidance and avoids a broad automatic-delegation mandate."
+      },
+      {
+        "id": "D-03",
+        "classification": "already implemented",
+        "finding": "This audit did not need parallelism.",
+        "affected_surfaces": [
+          "current audit execution"
+        ],
+        "reason": "The task explicitly prohibited delegation, and all evidence could be examined serially without a quality or timing loss."
+      }
+    ]
+  },
+  "context_loading_and_truncation": {
+    "observed": {
+      "context_policy": "specs/texenda-handoff/07-agent-orchestration/context-routing.json has a 200000-byte default reference budget, excludes the archive by default, and requires narrowing rather than silent truncation.",
+      "WP-00_context_command": {
+        "total_reference_bytes": 103401,
+        "max_bytes": 200000,
+        "status": "READY",
+        "notable_components": [
+          "44691-byte full current routing-policy.json",
+          "10206-byte current ADR-0001",
+          "6351-byte sealed model-routing.md",
+          "4823-byte sealed handoff-and-review.md"
+        ],
+        "overlay_notice_present": true
+      },
+      "orientation_document_size_observation": "The root AGENTS.md plus README, decision status, kernel, orchestrator start, owner handoff, review protocol, sealed routing policy, and invariants total 49391 bytes before task-specific owner documents."
+    },
+    "assessment": [
+      {
+        "classification": "already implemented",
+        "finding": "No silent truncation and archive exclusion are correctly explicit.",
+        "affected_surfaces": [
+          "specs/texenda-handoff/07-agent-orchestration/context-routing.json",
+          "specs/texenda-handoff/07-agent-orchestration/ORCHESTRATOR-START.md",
+          "specs/texenda-handoff/08-project-harness/tests/test_harness.py"
+        ],
+        "reason": "The sealed harness has a context-overflow negative test and the policy tells the agent to narrow instead of pretending required context was read."
+      },
+      {
+        "classification": "applicable now",
+        "finding": "Current routing is supplied as a full policy and an old sealed routing document for a small WP.",
+        "affected_surfaces": [
+          "tooling/coordination/harness.py context output",
+          "docs/qualification/README.md"
+        ],
+        "reason": "The output correctly describes supersession, but a reader still has to reconcile two routing sources and a 44-route policy for a single package."
+      },
+      {
+        "classification": "useful deferred",
+        "finding": "A route-slice or layered context manifest could reduce unnecessary routing text.",
+        "affected_surfaces": [
+          "tooling/coordination/harness.py",
+          "tooling/coordination/tests/test_routing_v2.py"
+        ],
+        "recommendation": "Only after an evaluation, expose the selected WP route and a canonical policy digest by default, with the full policy on request; retain the explicit current-overlay warning and all sealed non-routing context.",
+        "reason": "A code change needs new negative tests for stale digest, missing policy, unqualified profile, and no-silent-truncation behavior."
+      }
+    ]
+  },
+  "testing_completion_and_reporting": {
+    "assessment": [
+      {
+        "classification": "already implemented",
+        "finding": "The package cleanly distinguishes specified, implemented, tests executed, externally qualified, and released.",
+        "affected_surfaces": [
+          "specs/texenda-handoff/06-migration-and-production/release-plan.md",
+          "specs/texenda-handoff/07-agent-orchestration/handoff-and-review.md",
+          "specs/texenda-handoff/07-agent-orchestration/ORCHESTRATOR-START.md"
+        ],
+        "reason": "Completion needs an integrated candidate, actual commands/results, independent review, runtime-stop evidence, and applicable gates."
+      },
+      {
+        "classification": "already implemented",
+        "finding": "Negative, concurrent, expiry, tamper, recovery, and external-gate cases are first-class rather than merely happy-path tests.",
+        "affected_surfaces": [
+          "tooling/coordination/tests/test_routing_v2.py",
+          "specs/texenda-handoff/08-project-harness/tests/test_harness.py",
+          "specs/texenda-handoff/06-migration-and-production/acceptance-plan.md"
+        ],
+        "reason": "The suites reject unsafe routing, stale or altered evidence, missing stop proof, invalid approval, and incomplete gates."
+      },
+      {
+        "classification": "useful deferred",
+        "finding": "The root instruction has no explicit sentence calibrating verification to a documentation-only or reversible low-impact edit.",
+        "affected_surfaces": [
+          "AGENTS.md"
+        ],
+        "recommendation": "State that tests should be proportionate to the requested change and that broad reruns need a changed risk, failure, or unresolved concern.",
+        "reason": "This adopts the useful part of the Astra guidance without weakening required package or affected tests."
+      }
+    ],
+    "executed_for_this_audit": [
+      {
+        "command": "env PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tooling/coordination/tests -v",
+        "result": "PASS; 115 tests",
+        "scope_note": "Synthetic local coordination/routing tests only."
+      },
+      {
+        "command": "env PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s specs/texenda-handoff/08-project-harness/tests -v",
+        "result": "PASS; 39 tests",
+        "scope_note": "Sealed package harness tests only."
+      },
+      {
+        "command": "env PYTHONDONTWRITEBYTECODE=1 python3 specs/texenda-handoff/10-validation/validate_package.py --checksums",
+        "result": "PASS; 14 package checks including final checksums",
+        "scope_note": "Offline structure, integrity, traceability, and package checks only; no product acceptance or external gate was qualified."
+      }
+    ]
+  },
+  "prompt_verbosity_and_ceremony": {
+    "assessment": [
+      {
+        "classification": "already implemented",
+        "finding": "The root AGENTS.md is compact at 2696 bytes and directs relevant, rather than full-archive, context.",
+        "affected_surfaces": [
+          "AGENTS.md"
+        ],
+        "reason": "It is dense but not an indiscriminate repo manual."
+      },
+      {
+        "classification": "useful deferred",
+        "finding": "The lead/start, handoff, and context documents repeat important safety language and can collectively read as an elaborate itinerary.",
+        "affected_surfaces": [
+          "specs/texenda-handoff/07-agent-orchestration/ORCHESTRATOR-START.md",
+          "specs/texenda-handoff/07-agent-orchestration/handoff-and-review.md",
+          "specs/texenda-handoff/07-agent-orchestration/context-routing.json"
+        ],
+        "reason": "The text protects significant safety properties. Consolidation should occur only after a task-family evaluation proves the invariants remain salient."
+      },
+      {
+        "classification": "applicable now",
+        "finding": "The current root file can make task category and ordinary-local autonomy clearer with two short lines.",
+        "affected_surfaces": [
+          "AGENTS.md"
+        ],
+        "reason": "That reduces clarification pauses without removing consequence-specific controls."
+      }
+    ]
+  },
+  "hidden_authority_and_untrusted_context": {
+    "assessment": [
+      {
+        "classification": "already implemented",
+        "finding": "Historical conversation, archived messages, provider/model output, retrieved pages, generated catalogues, and model proposals are explicitly prevented from becoming product authority.",
+        "affected_surfaces": [
+          "specs/texenda-handoff/DECISION-STATUS.md",
+          "specs/texenda-handoff/07-agent-orchestration/OWNER-EXECUTION-HANDOFF.md",
+          "specs/texenda-handoff/04-security-governance-and-operations/ai-and-agent-authority.md",
+          "specs/texenda-handoff/09-reference/conversation-coverage.md"
+        ],
+        "reason": "The sources specify their evidence/reference status and require typed deterministic authorization after model output."
+      },
+      {
+        "classification": "already implemented",
+        "finding": "The coordinator records claims and receipts but disclaims authenticating actors, enforcing sandboxing, spending control, or external authority.",
+        "affected_surfaces": [
+          "AGENTS.md",
+          "tooling/coordination/README.md",
+          "specs/texenda-handoff/08-project-harness/README.md"
+        ],
+        "reason": "This prevents a local JSON record from being mistaken for real enforcement."
+      },
+      {
+        "classification": "useful deferred",
+        "finding": "Current qualification artifacts are trustworthy only as retained local evidence, not as proof of the model actually executing every future task.",
+        "affected_surfaces": [
+          "docs/qualification/model-roster-v2.evidence.json",
+          "docs/qualification/probes",
+          "future admission reports"
+        ],
+        "recommendation": "Keep the existing expiry/requalification rule and consider a compact report field that states the exact runtime observation date and known self-identification limitation.",
+        "reason": "The model probes already disclose the limitation, but a future operator can miss it when reading only a task receipt."
+      }
+    ]
+  },
+  "skills_disposition": {
+    "finding": "There are no repository-owned skills to simplify, disable, or rewrite.",
+    "classification": "inapplicable",
+    "decision": "Do not introduce an Astra-specific skill, a generic instruction-audit skill, or a visualization skill at this time.",
+    "reason": "Adding a skill would create a new trigger description and instruction surface without a recurring specialized workflow. If a future workflow needs one, its root should be a minimal router with narrowly scoped resources and scripts."
+  },
+  "config_and_runtime_mismatch": {
+    "observed_runtime": {
+      "codex_cli_version": "0.149.0",
+      "worktree_harness_state": "No state initialized; status and check correctly returned run init first.",
+      "tracked_runtime_evidence": "The v2 roster evidence records exact subscription profiles verified at 2026-09-13T19:51:23Z and expiry at 2026-10-12T19:51:23Z, but each worktree must still validate its current state and runtime."
+    },
+    "findings": [
+      {
+        "id": "C-01",
+        "classification": "already implemented",
+        "finding": "Both tracked TOML files are explicitly examples, omit an actual model selection, and warn that they are not enforcement.",
+        "affected_surfaces": [
+          ".codex/config.toml.example",
+          "specs/texenda-handoff/08-project-harness/codex-config.toml.example"
+        ],
+        "reason": "The actual audit runtime had network access for the user-requested direct retrievals; that is not a contradiction because the TOML is not active configuration."
+      },
+      {
+        "id": "C-02",
+        "classification": "conflicting",
+        "finding": "The sealed configuration and sealed routing templates predate the quality-first v2 overlay, while the root example adds max effort and current local routing pointers.",
+        "affected_surfaces": [
+          ".codex/config.toml.example",
+          "specs/texenda-handoff/08-project-harness/codex-config.toml.example",
+          "specs/texenda-handoff/08-project-harness/root-AGENTS.md.template"
+        ],
+        "reason": "The mismatch is deliberate historical preservation but should be clarified in a future handoff version rather than silently repaired in the sealed package."
+      },
+      {
+        "id": "C-03",
+        "classification": "applicable now",
+        "finding": "The qualification chronology is not immediately clear from the README alone.",
+        "affected_surfaces": [
+          "docs/qualification/README.md"
+        ],
+        "recommendation": "Add an explicit pre-v2 versus v2 and source-worktree versus fresh-worktree statement, with a status/check instruction.",
+        "reason": "It reduces the chance that obsolete high/medium/low records or an ignored source ledger are treated as current active bindings."
+      },
+      {
+        "id": "C-04",
+        "classification": "already implemented",
+        "finding": "The project does not use an actual committed .codex/config.toml or custom agent file.",
+        "affected_surfaces": [
+          ".codex"
+        ],
+        "reason": "There is no hidden repository configuration that could silently override the examples."
+      }
+    ]
+  },
+  "architectural_visualization_policy": {
+    "current_repository_policy": [
+      "Use the existing Mermaid dependency graph where hierarchy and dependencies need a visual.",
+      "Use annotated prototypes for campaign review, opt-out, and audience interpretation when a future scoped UX task needs them.",
+      "Keep visual output subordinate to deterministic commands, approval, accessibility, validation, and external-gate evidence.",
+      "Do not create elaborate visual builders, 3D scenes, or media assets merely to make a planning or audit artifact look complete."
+    ],
+    "applicable_now": [
+      "For a future complex operator flow, a small labeled state or consequence diagram can be attached to the scoped assignment when prose would obscure approval, current-policy recheck, or recovery sequencing.",
+      "Label it as a design/review aid and pair it with the authoritative text, test oracle, and accessibility review."
+    ],
+    "inapplicable_now": [
+      "Architectural renders, Blender, Unreal Engine, camera tours, generative images, and visual asset pipelines are outside this instruction audit and current handoff scope.",
+      "A visualization cannot prove consent, provider acceptance, accessibility, security, migration correctness, or production readiness."
+    ],
+    "classification": "already implemented",
+    "affected_surfaces": [
+      "specs/texenda-handoff/05-implementation/work-breakdown.md",
+      "specs/texenda-handoff/05-implementation/roadmap.md",
+      "specs/texenda-handoff/02-product-and-ux/operator-workflows.md"
+    ]
+  },
+  "minimal_recommended_file_changes": [
+    {
+      "id": "R-01",
+      "classification": "applicable now",
+      "path": "AGENTS.md",
+      "change": "Add a two-sentence task-type and autonomy router: product implementation uses the listed orientation documents; bounded analysis/documentation work reads the applicable authority source and its task context. Proceed with routine reversible local work inside the assigned fence; ask only when a choice changes authority, external effect, product semantics, budget, or edit scope. Also say not to bypass a runtime approval or warning through a substantively similar path.",
+      "why_minimal": "It resolves the only material clarity gaps without deleting safety invariants, changing routing, or enlarging authority.",
+      "status_in_this_audit": "Not performed; this audit was authorized to create only this report."
+    },
+    {
+      "id": "R-02",
+      "classification": "applicable now",
+      "path": "docs/qualification/README.md",
+      "change": "Add a short chronology: runtime-inventory.json and model-qualification-verification.md are pre-v2 historical evidence; model-roster-v2.evidence.json and routing-v2-activation-receipt.md describe the later source-workspace v2 evidence. No .texenda ledger ships with a fresh worktree, so status/check and current profile expiry/requalification remain required.",
+      "why_minimal": "It resolves the active-versus-historical roster ambiguity without modifying evidence files or sealed specifications.",
+      "status_in_this_audit": "Not performed; this audit was authorized to create only this report."
+    },
+    {
+      "id": "R-03",
+      "classification": "useful deferred",
+      "paths": [
+        "tooling/coordination/harness.py",
+        "tooling/coordination/tests/test_routing_v2.py"
+      ],
+      "change": "Evaluate a context-output mode that exposes the selected work-package routing slice and canonical digest before the full 44-route policy, while preserving the current overlay warning and all sealed non-routing context.",
+      "why_deferred": "The current output is correct and fail-closed. A context-size change must prove it does not hide required routing or weaken no-silent-truncation behavior."
+    },
+    {
+      "id": "R-04",
+      "classification": "useful deferred",
+      "paths": [
+        "specs/texenda-handoff/08-project-harness/root-AGENTS.md.template",
+        "specs/texenda-handoff/08-project-harness/codex-config.toml.example",
+        "specs/texenda-handoff/07-agent-orchestration/model-routing.md",
+        "specs/texenda-handoff/07-agent-orchestration/model-routing.json"
+      ],
+      "change": "In a separately approved versioned handoff release, reconcile the template wording and sealed routing history with the quality-first v2 overlay or add a formal forward-pointer.",
+      "why_deferred": "The current package is intentionally byte-preserved; this audit must not alter historical or sealed evidence."
+    }
+  ],
+  "static_and_negative_tests": {
+    "executed": [
+      {
+        "id": "T-01",
+        "test": "Repository skill and configuration inventory",
+        "result": "PASS",
+        "evidence": "Filesystem scan found exactly two AGENTS.md files, one .codex/config.toml.example, no AGENTS.override.md, no repository SKILL.md/resource, and no custom agent definition."
+      },
+      {
+        "id": "T-02",
+        "test": "Current context metadata",
+        "result": "PASS",
+        "evidence": "tooling/coordination/harness.py --root . context WP-00 returned READY, 103401 of 200000 bytes, archive exclusion, and an explicit statement that the local routing overlay supersedes only sealed numeric routing recommendations."
+      },
+      {
+        "id": "T-03",
+        "test": "Local routing harness",
+        "result": "PASS",
+        "evidence": "115 synthetic tests passed, including exact profile, fallback, expiry, budget, tamper, migration, rollback, and negative lifecycle cases."
+      },
+      {
+        "id": "T-04",
+        "test": "Sealed package harness",
+        "result": "PASS",
+        "evidence": "39 synthetic tests passed, including no-silent-context-truncation, no unverified model, lease overlap, review, recovery, and gate-negative cases."
+      },
+      {
+        "id": "T-05",
+        "test": "Sealed package validator and checksums",
+        "result": "PASS",
+        "evidence": "14 offline structural, traceability, integrity, and final-checksum checks passed."
+      }
+    ],
+    "recommended_if_R-01_or_R-02_is_implemented": [
+      {
+        "id": "N-01",
+        "test": "Instruction-scope static check",
+        "assertion": "The root AGENTS.md retains all external-effect prohibitions, the current ADR/policy pointer, and an explicit task-type router; it does not grant production or governing-decision authority."
+      },
+      {
+        "id": "N-02",
+        "test": "Qualification chronology static check",
+        "assertion": "The README names the v2 roster and activation receipt as later evidence while saying no ignored ledger transfers to a fresh worktree."
+      },
+      {
+        "id": "N-03",
+        "test": "No sealed or historical mutation",
+        "assertion": "git diff -- specs/texenda-handoff must remain empty for a root-instruction or qualification-README-only change; checksum validation still passes."
+      },
+      {
+        "id": "N-04",
+        "test": "No hidden instruction surface",
+        "assertion": "A filesystem scan continues to find no newly added SKILL.md, AGENTS.override.md, .codex agent definition, or credential-bearing config unless explicitly reviewed."
+      }
+    ],
+    "not_qualified": [
+      "Texenda application behavior.",
+      "Any of the 125 product acceptance criteria.",
+      "Model identity introspection for every future task.",
+      "External model entitlement, usage allowance, billing, production provider, legal, security, migration, or release gates."
+    ]
+  },
+  "final_assessment": {
+    "result": "PASS_WITH_TARGETED_DOCUMENTATION_RECOMMENDATIONS",
+    "key_findings": [
+      "The strongest risks are controlled chronology and routing ambiguity, not missing safety rules.",
+      "No repository-owned skills or hidden custom agent definitions exist.",
+      "Authority, approval, recovery, negative testing, and reporting controls are unusually explicit and should be preserved.",
+      "Use a small task-type/autonomy clarification and a v1-versus-v2 qualification chronology note before considering larger instruction or context-loader changes.",
+      "Architectural visualization offers a useful staged-review analogy, but no visual-media work is warranted for this audit or current repository scope."
+    ],
+    "runtime_stop_confirmation": "No audit-launched runtime required stopping; no delegation, production operation, credentials, spend, push, deployment, or external mutation occurred."
+  }
+}
