@@ -1,0 +1,176 @@
+{
+  "schema_version": "2.0",
+  "plan": "docs/qualification/analysis/routing-v2-test-plan.md",
+  "test_file": "tooling/coordination/tests/test_routing_v2.py",
+  "frozen_clock_unix": 1700000000,
+  "adapter_tests_passed": 83,
+  "sealed_tests_passed": 39,
+  "representative_fixture": "docs/qualification/evidence/routing-v2-migration-fixture.json",
+  "cases": [
+    {
+      "id": "RV2-01",
+      "execution_status": "PASS",
+      "tests": [
+        "RoutingTests.test_profile_catalog_mutations_and_duplicate_default_deny",
+        "RoutingTests.test_duplicate_json_policy_keys_are_denied"
+      ]
+    },
+    {
+      "id": "RV2-02",
+      "execution_status": "PASS",
+      "tests": [
+        "RoutingTests.test_all_four_max_defaults_and_exact_binding",
+        "RoutingTests.test_missing_default_never_selects_available_downshift"
+      ]
+    },
+    {
+      "id": "RV2-03",
+      "execution_status": "PASS",
+      "tests": [
+        "RoutingTests.test_all_four_max_defaults_and_exact_binding",
+        "RoutingTests.test_roster_rejects_duplicate_and_mismatched_exact_profiles"
+      ]
+    },
+    {
+      "id": "RV2-04",
+      "execution_status": "PASS",
+      "tests": [
+        "RoutingTests.test_each_allowed_lower_effort_requires_and_accepts_exact_attestation"
+      ]
+    },
+    {
+      "id": "RV2-05",
+      "execution_status": "PASS",
+      "tests": [
+        "RoutingTests.test_attestation_fields_and_checks_are_exact",
+        "RoutingTests.test_attestation_log_and_record_tamper_deny_at_start"
+      ]
+    },
+    {
+      "id": "RV2-06",
+      "execution_status": "PASS",
+      "tests": [
+        "RoutingTests.test_explicit_stronger_substitution_preserves_floor"
+      ]
+    },
+    {
+      "id": "RV2-07",
+      "execution_status": "PASS",
+      "tests": [
+        "RoutingTests.test_insufficient_capability_or_unknown_profile_deny",
+        "RoutingTests.test_actual_policy_covers_44_routes_and_limits_parent_downshifts"
+      ]
+    },
+    {
+      "id": "RV2-08",
+      "execution_status": "PASS",
+      "tests": [
+        "RoutingTests.test_explicit_fallback_only_sol_max_with_flag_and_reason",
+        "RoutingTests.test_unavailable_primary_never_silently_falls_back",
+        "RoutingTests.test_explicit_reviewer_fallback_is_recorded"
+      ]
+    },
+    {
+      "id": "RV2-09",
+      "execution_status": "PASS",
+      "tests": [
+        "RoutingTests.test_exact_profile_removal_or_same_tier_replacement_denies_start",
+        "RoutingTests.test_renewed_same_profile_requires_new_assignment_fence",
+        "RoutingTests.test_roster_bytes_and_logs_rechecked",
+        "RoutingTests.test_review_checks_exact_author_qualification_and_independence"
+      ]
+    },
+    {
+      "id": "RV2-10",
+      "execution_status": "PASS",
+      "tests": [
+        "RoutingTests.test_profile_expiry_boundaries_and_over_age",
+        "RoutingTests.test_attestation_expiry_boundary_and_new_fence",
+        "RoutingTests.test_review_rejects_wrong_reviewer_profile_or_expired_qualification"
+      ]
+    },
+    {
+      "id": "RV2-11",
+      "execution_status": "PASS",
+      "tests": [
+        "RoutingTests.test_review_checks_exact_author_qualification_and_independence"
+      ]
+    },
+    {
+      "id": "RV2-12",
+      "execution_status": "PASS",
+      "tests": [
+        "RoutingTests.test_api_budget_is_retained_through_recovery",
+        "RoutingTests.test_subscription_bounds_remain_enforced"
+      ]
+    },
+    {
+      "id": "RV2-M01",
+      "execution_status": "PASS",
+      "tests": [
+        "MigrationTests.test_migration_dry_run_then_preserves_history_and_receipt_prefix",
+        "MigrationTests.test_migration_boundary_proof_must_remain_present"
+      ]
+    },
+    {
+      "id": "RV2-M02",
+      "execution_status": "PASS",
+      "tests": [
+        "MigrationTests.test_migration_refuses_live_and_expired_leases",
+        "MigrationTests.test_migration_refuses_uncertain_states_even_without_lease",
+        "MigrationTests.test_migration_refuses_unrecovered_blocked_assignment"
+      ]
+    },
+    {
+      "id": "RV2-M03",
+      "execution_status": "PASS",
+      "tests": [
+        "MigrationTests.test_old_roster_is_invalidated_not_promoted"
+      ]
+    },
+    {
+      "id": "RV2-M04",
+      "execution_status": "PASS",
+      "tests": [
+        "MigrationTests.test_migration_idempotency_preserves_fresh_v2_roster"
+      ]
+    },
+    {
+      "id": "RV2-M05",
+      "execution_status": "PASS",
+      "tests": [
+        "MigrationTests.test_failed_migration_retains_exact_v1_and_checkpoint",
+        "MigrationTests.test_immediate_rollback_keeps_both_checkpoints_and_restores_exact_bytes",
+        "MigrationTests.test_rollback_refuses_after_any_later_v2_receipt"
+      ]
+    },
+    {
+      "id": "RV2-P01",
+      "execution_status": "PASS",
+      "tests": [
+        "RoutingTests.test_canonical_policy_digest_ignores_formatting_but_denies_semantic_change"
+      ]
+    },
+    {
+      "id": "RV2-P02",
+      "execution_status": "PASS",
+      "tests": [
+        "RoutingTests.test_full_model_lifecycle_and_dependency_release",
+        "LegacyLifecycleTests"
+      ]
+    },
+    {
+      "id": "RV2-P03",
+      "execution_status": "PASS",
+      "tests": [
+        "RoutingTests.test_v2_fields_cannot_be_smuggled_into_v1_evidence",
+        "RoutingTests.test_review_downshift_requires_candidate_bound_attestation",
+        "LegacyLifecycleTests"
+      ]
+    }
+  ],
+  "limitations": [
+    "Declared actor labels are the identity boundary under test; these tests do not prove physical actor identity.",
+    "Synthetic fixtures verify bookkeeping and fail-closed behavior only. They do not clear a product or external gate."
+  ]
+}

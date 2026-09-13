@@ -1,0 +1,15 @@
+{
+  "scope": "deterministic synthetic migration fixture only",
+  "frozen_timestamp": 1700000000,
+  "policy_digest": "4827cf5880ee73e286ae9fcd1733fe7cd8572db4baf0e7e007311c9838603357",
+  "v1_state_sha256": "60545d1d5cca5da1a9df04e50378eb22b7e52794f5f225e3d4abe02abcfae922",
+  "v1_receipt_tip": "58b0140a5346de9358562907cea6654c02ccccdf7e4a4f73853f432bf6ab7b72",
+  "v1_receipt_count": 12,
+  "v2_state_sha256": "7a3e577afa530c1ee9f538fb5133225e4c2b59baf7a7475aeb25e5c6c75b8c8d",
+  "v2_receipt_tip": "39b494b0c18870fd0565dfdd20820247ee802e93cca4ef367574ead9cb15a4a4",
+  "checkpoint_sha256": "60545d1d5cca5da1a9df04e50378eb22b7e52794f5f225e3d4abe02abcfae922",
+  "tasks_preserved": true,
+  "history_preserved": true,
+  "receipt_prefix_preserved": true,
+  "notes": "Representative recovered and completed v1 fixture from MigrationTests, executed separately with the same fixed clock. All denial cases assert byte-identical state in the unit suite. Temporary fixture files were removed after verification."
+}

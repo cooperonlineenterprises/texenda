@@ -1,5 +1,10 @@
 # REVERSIBLE DEFAULT. Review against the actual installed client before copying.
-# Model omitted deliberately: qualify the target roster, then select explicitly.
+# Model omitted deliberately: qualify the exact target profile, then select explicitly.
+# Read docs/decisions/ADR-0001-quality-first-model-routing.md and use
+# tooling/coordination/harness.py with tooling/coordination/routing-policy.json.
+# Every T1-T4 default uses max. Dispatch the exact model + effort in the assignment;
+# a qualified downshift or explicit Sol/max T1 fallback must have its own receipt.
+model_reasoning_effort = "max"
 approval_policy = "on-request"
 sandbox_mode = "workspace-write"
 [sandbox_workspace_write]

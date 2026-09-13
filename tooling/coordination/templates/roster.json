@@ -1,0 +1,14 @@
+{
+  "schema_version": "2.0",
+  "kind": "roster",
+  "summary": "TEMPLATE — no runtime qualified. Replace only with observed exact profiles and accountable owner attestation after integrated verification.",
+  "routing_policy_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+  "checks": [
+    {
+      "id": "exact-profile-read-edit-test",
+      "required": true,
+      "status": "NOT_RUN"
+    }
+  ],
+  "qualifications": []
+}

@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:texenda:local-harness:profile-qualification:2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "profile_id",
+    "capability_tier",
+    "model_id",
+    "reasoning_effort",
+    "runtime_id",
+    "client_version",
+    "sign_in_mode",
+    "billing_mode",
+    "capabilities",
+    "verified_at",
+    "expires_at",
+    "qualification_check_ids"
+  ],
+  "properties": {
+    "profile_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "capability_tier": {
+      "type": "integer",
+      "enum": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "model_id": {
+      "enum": [
+        "gpt-6-astra",
+        "gpt-5.6-sol",
+        "gpt-5.6-terra",
+        "gpt-5.6-luna"
+      ]
+    },
+    "reasoning_effort": {
+      "enum": [
+        "max",
+        "high",
+        "medium",
+        "low"
+      ]
+    },
+    "runtime_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "client_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sign_in_mode": {
+      "type": "string",
+      "minLength": 1
+    },
+    "billing_mode": {
+      "enum": [
+        "subscription",
+        "api"
+      ]
+    },
+    "capabilities": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      },
+      "allOf": [
+        {
+          "contains": {
+            "const": "read"
+          }
+        },
+        {
+          "contains": {
+            "const": "edit"
+          }
+        },
+        {
+          "contains": {
+            "const": "test"
+          }
+        }
+      ]
+    },
+    "verified_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "qualification_check_ids": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "description": "Exact ID/model/effort/tier correspondence, qualified checks, policy identity, and expiry are additionally enforced by harness.py."
+}

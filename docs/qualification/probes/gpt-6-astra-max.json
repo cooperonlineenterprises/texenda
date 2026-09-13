@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0",
+  "requested_model": "gpt-6-astra",
+  "requested_reasoning_effort": "max",
+  "runtime_id": "codex-desktop-collaboration",
+  "client_version": "0.149.0",
+  "sign_in_mode": "subscription",
+  "billing_mode": "subscription",
+  "api_budget_authorized_usd": 0,
+  "observed_capabilities": [
+    "read",
+    "edit",
+    "test"
+  ],
+  "python_version_observed": "3.13.9",
+  "read_checks": {
+    "INV-02": "Shared identity never creates shared permission. A profile or endpoint match cannot activate another publication, brand, purpose, or channel.",
+    "INV-12": "A timeout or outage never authorizes blind provider or channel failover. Reconcile unknown acceptance before another effect; a block or opt-out cannot be escaped through another channel.",
+    "INV-30": "The development harness coordinates work but cannot grant production authority. Planning, routing, migration and review receipts cannot authorize recipient sends, deployment, spending, credential use, or external service mutation."
+  },
+  "edit_check": {
+    "result": "PASS",
+    "scope": "Project-local routing policy, adapter, tests, ADR, operator instructions and templates in an isolated worktree; sealed specs preserved.",
+    "paths": [
+      "tooling/coordination",
+      "docs/decisions/ADR-0001-quality-first-model-routing.md",
+      "AGENTS.md",
+      ".codex/config.toml.example"
+    ]
+  },
+  "test_checks": [
+    {
+      "command": "env PYTHONDONTWRITEBYTECODE=1 python3 specs/texenda-handoff/10-validation/validate_package.py --checksums",
+      "exit_code": 0,
+      "result": "PASS",
+      "checks_passed": 14
+    },
+    {
+      "command": "env PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s specs/texenda-handoff/08-project-harness/tests -v",
+      "exit_code": 0,
+      "result": "PASS",
+      "tests_run": 39
+    },
+    {
+      "command": "env PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tooling/coordination/tests -v",
+      "exit_code": 0,
+      "result": "PASS",
+      "tests_run": 83
+    }
+  ],
+  "evidence_log": "docs/qualification/evidence/routing-v2-author-verification.log",
+  "no_secrets_read": true,
+  "self_reported_model_id": null,
+  "network_used": false,
+  "dependencies_installed": false,
+  "external_services_used": false,
+  "delegation_performed": false,
+  "live_state_migrated": false,
+  "limitations": [
+    "Requested model and max effort are the exact parent assignment/dispatch metadata. This runtime did not expose an independent executing model ID or effort introspection channel; self_reported_model_id remains null.",
+    "Runtime ID, subscription sign-in and billing mode are scoped assignment metadata, not independently inspected account credentials or provider telemetry. The local client version and Python version were checked directly.",
+    "codex --version returned 0.149.0 with a nonfatal PATH-alias creation permission warning; no credentials were read and no runtime configuration was changed.",
+    "All verification covers the local coordination adapter, temporary synthetic ledgers, and offline sealed-package checks. No Texenda application acceptance, production, provider, legal/privacy, deployment, sending, spending, or other external gate was qualified.",
+    "This author produced a candidate and cannot independently approve it. Final review, integrated-head verification, and accountable owner activation of a version-2 roster remain separate."
+  ]
+}

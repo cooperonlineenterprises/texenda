@@ -1,0 +1,26 @@
+{
+  "schema_version": "2.0",
+  "kind": "routing",
+  "task_id": "WP-00",
+  "summary": "TEMPLATE — replace every binding from the actual bounded assignment; this is not passing evidence.",
+  "profile_id": "gpt-5.6-terra-high",
+  "role": "author",
+  "capability_tier": 3,
+  "routing_policy_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+  "work_package_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+  "fence": 1,
+  "expires_at": "1970-01-01T00:00:00Z",
+  "rationale": "Replace with the bounded scope, verification oracle and why this effort suffices.",
+  "reasoning_demand": "bounded",
+  "bounded": false,
+  "reversible": false,
+  "fully_specified": false,
+  "deterministic_verification": false,
+  "checks": [
+    {
+      "id": "deterministic-oracle",
+      "required": true,
+      "status": "NOT_RUN"
+    }
+  ]
+}

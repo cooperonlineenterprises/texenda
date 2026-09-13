@@ -1,0 +1,1250 @@
+{
+  "schema_version": "2.0",
+  "kind": "reconciled-independent-routing-analysis",
+  "source_revision": "12e19b167d7fd59722dc2a3194ce591f499de0e7",
+  "independent_mapper_commit": "5df52bb20a3c93d4baeb896846a62e47140be733",
+  "status": "Independent proposal adopted for candidate; candidate implementation still requires independent review.",
+  "normalization": "Capability labels changed from C1-C4 to T1-T4 to distinguish product command consequences. Unsupported xhigh entries were replaced with high and deduplicated under the accepted model/effort matrix.",
+  "counts": {
+    "author": {
+      "T1": 13,
+      "T2": 27,
+      "T3": 4,
+      "T4": 0
+    },
+    "reviewer": {
+      "T1": 39,
+      "T2": 5,
+      "T3": 0,
+      "T4": 0
+    }
+  },
+  "work_packages": [
+    {
+      "work_package_id": "WP-00",
+      "title": "Bootstrap runtime and evidence workspace",
+      "author": {
+        "capability_floor": 3,
+        "default_profile_id": "gpt-5.6-terra-max",
+        "allowed_reasoning_efforts": [
+          "max",
+          "high"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-6-astra-high",
+          "gpt-5.6-sol-max",
+          "gpt-5.6-sol-high",
+          "gpt-5.6-terra-max",
+          "gpt-5.6-terra-high"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 2,
+        "default_profile_id": "gpt-5.6-sol-max",
+        "allowed_reasoning_efforts": [
+          "max",
+          "high"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-6-astra-high",
+          "gpt-5.6-sol-max",
+          "gpt-5.6-sol-high"
+        ]
+      },
+      "rationale": "The offline roster and evidence layout are bounded, reversible, and validator-backed, while T2 review protects against credential leakage or falsely qualifying an unavailable runtime."
+    },
+    {
+      "work_package_id": "WP-01",
+      "title": "Lock module, schema and command contracts",
+      "author": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "rationale": "This package fixes schema ownership, command authority, three-valued logic, and effect boundaries that every later package consumes, so both contract authorship and review require T1."
+    },
+    {
+      "work_package_id": "WP-02",
+      "title": "Create runnable repository and isolated development stack",
+      "author": {
+        "capability_floor": 3,
+        "default_profile_id": "gpt-5.6-terra-max",
+        "allowed_reasoning_efforts": [
+          "max",
+          "high"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-6-astra-high",
+          "gpt-5.6-sol-max",
+          "gpt-5.6-sol-high",
+          "gpt-5.6-terra-max",
+          "gpt-5.6-terra-high"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 2,
+        "default_profile_id": "gpt-5.6-sol-max",
+        "allowed_reasoning_efforts": [
+          "max",
+          "high"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-6-astra-high",
+          "gpt-5.6-sol-max",
+          "gpt-5.6-sol-high"
+        ]
+      },
+      "rationale": "The synthetic-only monolith scaffold is reversible and deterministically checked by lockfile, build, dependency, startup, and credential-isolation tests, with T2 review for environment-boundary mistakes."
+    },
+    {
+      "work_package_id": "WP-03",
+      "title": "Implement human authentication and server authorization",
+      "author": {
+        "capability_floor": 2,
+        "default_profile_id": "gpt-5.6-sol-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "rationale": "Authentication, bootstrap, step-up, RBAC, and ActorContext are substantial implementations from locked contracts, but a hidden bypass or first-user takeover requires independent T1 security review."
+    },
+    {
+      "work_package_id": "WP-04",
+      "title": "Implement identity, profiles and endpoint bindings",
+      "author": {
+        "capability_floor": 2,
+        "default_profile_id": "gpt-5.6-sol-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "rationale": "Identity normalization, merging, splitting, and endpoint rebinding are bounded domain implementation, yet errors could transfer permission or erase safety history and therefore demand T1 review."
+    },
+    {
+      "work_package_id": "WP-05",
+      "title": "Implement permission, withdrawal, preference and suppression policy",
+      "author": {
+        "capability_floor": 2,
+        "default_profile_id": "gpt-5.6-sol-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "rationale": "Implementing consent, withdrawal, preference, suppression, and reconsent against approved semantics is T2 work, while any permissive mistake directly expands communication authority and needs T1 review."
+    },
+    {
+      "work_package_id": "WP-06",
+      "title": "Implement typed audiences and safe segmentation",
+      "author": {
+        "capability_floor": 2,
+        "default_profile_id": "gpt-5.6-sol-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "rationale": "The parameterized segment compiler is high-complexity implementation; UNKNOWN, negation, scope, or source-coverage defects can silently include recipients, so max effort and T1 logic/security review remain mandatory."
+    },
+    {
+      "work_package_id": "WP-07",
+      "title": "Implement independent recovery journal and restrictive ingress",
+      "author": {
+        "capability_floor": 2,
+        "default_profile_id": "gpt-5.6-sol-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "rationale": "The journal adapter is a bounded implementation, but its acknowledgement, outage, replay, and restore barriers independently preserve denials and effect evidence, warranting max effort and T1 review."
+    },
+    {
+      "work_package_id": "WP-08",
+      "title": "Implement verified inbound provider events",
+      "author": {
+        "capability_floor": 2,
+        "default_profile_id": "gpt-5.6-sol-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "rationale": "Signed ingress and monotonic event reduction are complex but contract-bounded; invalid, duplicate, or out-of-order events could weaken restrictions, so T1 independently reviews negative and replay paths."
+    },
+    {
+      "work_package_id": "WP-09",
+      "title": "Implement email provider and sender readiness adapter",
+      "author": {
+        "capability_floor": 2,
+        "default_profile_id": "gpt-5.6-sol-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "rationale": "Provider and fake transports are high-complexity adapters, but acceptance-unknown classification, sender scope, suppression, and quota errors can duplicate or misdirect effects and require T1 review."
+    },
+    {
+      "work_package_id": "WP-10",
+      "title": "Implement email content revisions and rendering",
+      "author": {
+        "capability_floor": 2,
+        "default_profile_id": "gpt-5.6-sol-max",
+        "allowed_reasoning_efforts": [
+          "max",
+          "high"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-6-astra-high",
+          "gpt-5.6-sol-max",
+          "gpt-5.6-sol-high"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 2,
+        "default_profile_id": "gpt-5.6-sol-max",
+        "allowed_reasoning_efforts": [
+          "max",
+          "high"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-6-astra-high",
+          "gpt-5.6-sol-max",
+          "gpt-5.6-sol-high"
+        ]
+      },
+      "rationale": "Renderer and codec work is complex but reversible and strongly verified by pinned revision, fallback, sanitization, and deterministic fixture tests, allowing only a one-step effort downshift with T2 review."
+    },
+    {
+      "work_package_id": "WP-11",
+      "title": "Implement delivery plans, atomic coordination and effect executor",
+      "author": {
+        "capability_floor": 2,
+        "default_profile_id": "gpt-5.6-sol-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "rationale": "Atomic reservations, current eligibility, semantic deduplication, permits, retries, and unknown outcomes form the core effect executor; implementation is T2 under settled contracts with mandatory T1 concurrency/recovery review."
+    },
+    {
+      "work_package_id": "WP-12",
+      "title": "Implement forms, confirmation and staged imports/exports",
+      "author": {
+        "capability_floor": 2,
+        "default_profile_id": "gpt-5.6-sol-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "rationale": "Forms, confirmation, and staged data movement are established T2 implementation, but replay, public identifiers, or mappings could invent permission, expose PII, or weaken denials and therefore need T1 review."
+    },
+    {
+      "work_package_id": "WP-13",
+      "title": "Implement audience and message operator workspace",
+      "author": {
+        "capability_floor": 3,
+        "default_profile_id": "gpt-5.6-terra-max",
+        "allowed_reasoning_efforts": [
+          "max",
+          "high"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-6-astra-high",
+          "gpt-5.6-sol-max",
+          "gpt-5.6-sol-high",
+          "gpt-5.6-terra-max",
+          "gpt-5.6-terra-high"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 2,
+        "default_profile_id": "gpt-5.6-sol-max",
+        "allowed_reasoning_efforts": [
+          "max",
+          "high"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-6-astra-high",
+          "gpt-5.6-sol-max",
+          "gpt-5.6-sol-high"
+        ]
+      },
+      "rationale": "The manual CRUD workspace is bounded and reversible with server-scope, keyboard, screen-reader, and deterministic-focus oracles; T2 review covers scope presentation and accessibility consequences."
+    },
+    {
+      "work_package_id": "WP-14",
+      "title": "Implement campaign approval, recipient resolution and lifecycle",
+      "author": {
+        "capability_floor": 2,
+        "default_profile_id": "gpt-5.6-sol-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "rationale": "Campaign snapshots and lifecycle are complex bounded implementation, while partial resolution, stale approval, scheduling, cancellation, or uncertain completion defects can create unauthorized effects and require T1 review."
+    },
+    {
+      "work_package_id": "WP-15",
+      "title": "Implement proposal, preview and approval foundation",
+      "author": {
+        "capability_floor": 2,
+        "default_profile_id": "gpt-5.6-sol-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "rationale": "Proposal, revision, diff, and approval services implement settled exact-envelope semantics, but stale or self-approved consequential actions would expand authority, making max effort and T1 review necessary."
+    },
+    {
+      "work_package_id": "WP-16",
+      "title": "Implement metrics, operational dashboards and workload harness",
+      "author": {
+        "capability_floor": 2,
+        "default_profile_id": "gpt-5.6-sol-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "rationale": "Instrumentation and rollups are high-complexity implementation because counters distinguish communications, interruptions, attempts, cost, weak evidence, and stale sources; T1 review guards operational and causal overclaims."
+    },
+    {
+      "work_package_id": "WP-17",
+      "title": "Qualify sender, renderer and first email release",
+      "author": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "rationale": "This package adjudicates real sender, renderer, security, restore, canary, and accountable-owner evidence before the first live release, so both evidence assembly and independent review require T1."
+    },
+    {
+      "work_package_id": "WP-18",
+      "title": "Inventory Kit and prove migration topology",
+      "author": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "rationale": "Although discovery is read-only, interpreting incomplete Kit topology, status classes, cursor evidence, legacy links, and cross-publication coupling defines later migration authority and needs T1 evidence reasoning and review."
+    },
+    {
+      "work_package_id": "WP-19",
+      "title": "Implement migration staging, fencing and authority transfer",
+      "author": {
+        "capability_floor": 2,
+        "default_profile_id": "gpt-5.6-sol-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "rationale": "The approved migration state machine is T2 implementation, but freezes, drains, checkpoints, authority epochs, negative reconciliation, and repair-forward rollback prevent dual sends and require T1 review."
+    },
+    {
+      "work_package_id": "WP-20",
+      "title": "Migrate the first publication and observe",
+      "author": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "rationale": "Executing the first live authority transfer and judging canary, legacy opt-out, observation, and rollback evidence is irreversible and externally consequential, requiring T1 authorship and review."
+    },
+    {
+      "work_package_id": "WP-21",
+      "title": "Implement single durable workflow runtime",
+      "author": {
+        "capability_floor": 2,
+        "default_profile_id": "gpt-5.6-sol-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "rationale": "A single durable executor is high-complexity T2 implementation, while cursor, wait/timeout, replay, cascade, and provider-acceptance races can lose or duplicate effects and mandate T1 review."
+    },
+    {
+      "work_package_id": "WP-22",
+      "title": "Implement restricted sequences and enrollment",
+      "author": {
+        "capability_floor": 2,
+        "default_profile_id": "gpt-5.6-sol-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "rationale": "Sequences are bounded atop the shared runtime, but version pinning, reentry, withdrawal, reconsent, and migration-position errors can restart or rewrite recipient work and need T1 review."
+    },
+    {
+      "work_package_id": "WP-23",
+      "title": "Implement bounded event-driven automations",
+      "author": {
+        "capability_floor": 2,
+        "default_profile_id": "gpt-5.6-sol-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "rationale": "Typed automations and their simulator are complex T2 implementation, while UNKNOWN conditions, waits, replay, loops, and actions could create permission shortcuts or unbounded effects and require T1 review."
+    },
+    {
+      "work_package_id": "WP-24",
+      "title": "Implement portfolio administration and contextual preferences",
+      "author": {
+        "capability_floor": 2,
+        "default_profile_id": "gpt-5.6-sol-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "rationale": "Portfolio reuse and contextual preferences are T2 implementation, but cross-brand visibility, shared identity, fairness, and broader preference views could pool authority or leak relationships and demand T1 review."
+    },
+    {
+      "work_package_id": "WP-25",
+      "title": "Refine human UX, search, Inspect and attention views",
+      "author": {
+        "capability_floor": 3,
+        "default_profile_id": "gpt-5.6-terra-max",
+        "allowed_reasoning_efforts": [
+          "max",
+          "high"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-6-astra-high",
+          "gpt-5.6-sol-max",
+          "gpt-5.6-sol-high",
+          "gpt-5.6-terra-max",
+          "gpt-5.6-terra-high"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 2,
+        "default_profile_id": "gpt-5.6-sol-max",
+        "allowed_reasoning_efforts": [
+          "max",
+          "high"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-6-astra-high",
+          "gpt-5.6-sol-max",
+          "gpt-5.6-sol-high"
+        ]
+      },
+      "rationale": "Search, resumption, Inspect, and attention views are bounded reversible UX work with offline, stable-label, keyboard, and screen-reader verification; T2 review protects accessibility and authority legibility."
+    },
+    {
+      "work_package_id": "WP-26",
+      "title": "Implement goals, scoped preferences and interaction context",
+      "author": {
+        "capability_floor": 2,
+        "default_profile_id": "gpt-5.6-sol-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "rationale": "Goals, persistent preferences, and explicit session context are T2 implementation, while hidden memory, stale patches, or ambiguous workspace references could silently alter authoritative state and need T1 review."
+    },
+    {
+      "work_package_id": "WP-27",
+      "title": "Implement built-in textual assistant",
+      "author": {
+        "capability_floor": 2,
+        "default_profile_id": "gpt-5.6-sol-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "rationale": "The assistant is a bounded proposal layer, but context assembly, invalid model output, PII, cost, grants, safety blocks, and deterministic fallback cross security and authority boundaries requiring T1 review."
+    },
+    {
+      "work_package_id": "WP-28",
+      "title": "Implement external-agent principals and delegation",
+      "author": {
+        "capability_floor": 2,
+        "default_profile_id": "gpt-5.6-sol-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "rationale": "Delegation sessions are substantial implementation against explicit contracts, while attribution, scope, revocation, human-only approval, budget, and kill-switch failures could transfer authority and require T1 review."
+    },
+    {
+      "work_package_id": "WP-29",
+      "title": "Expose structured external tools and API",
+      "author": {
+        "capability_floor": 2,
+        "default_profile_id": "gpt-5.6-sol-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "rationale": "The API and optional thin MCP are high-complexity exposure of existing commands, but discovery filtering, authentication, revision binding, idempotency, and approval parity are security boundaries needing T1 review."
+    },
+    {
+      "work_package_id": "WP-30",
+      "title": "Implement voice-forward interaction",
+      "author": {
+        "capability_floor": 2,
+        "default_profile_id": "gpt-5.6-sol-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "rationale": "Voice is complex integration over the textual assistant, while provisional transcription, ambiguity, microphone privacy, retention, cancellation, and mode handoff can create unintended authority or disclosure and need T1 review."
+    },
+    {
+      "work_package_id": "WP-31",
+      "title": "Qualify computer use and agent/expert surface",
+      "author": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "rationale": "This is an adversarial qualification of computer use, stale state, restricted delegation, stop behavior, and human-only approval rather than routine UI implementation, so T1 must author and independently review the evidence."
+    },
+    {
+      "work_package_id": "WP-32",
+      "title": "Qualify interaction release and accessibility",
+      "author": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "rationale": "Release qualification synthesizes red-team, privacy, vendor, accessibility, outage, operator, AI, agent, and voice evidence with a zero-invariant-breach condition, requiring T1 on both sides."
+    },
+    {
+      "work_package_id": "WP-33",
+      "title": "Roll out portfolio publication by publication",
+      "author": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "rationale": "Each remaining live publication transfer requires fresh topology, cursor, legacy-negative, workflow, observation, owner, and rollback judgments, so repeated execution does not reduce it below T1."
+    },
+    {
+      "work_package_id": "WP-34",
+      "title": "Implement bounded onsite placements",
+      "author": {
+        "capability_floor": 2,
+        "default_profile_id": "gpt-5.6-sol-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "rationale": "Onsite placement is bounded T2 channel implementation, but personalization, tracking inference, shared devices, caching, expiration, and outage behavior can expose data or bypass consent and require T1 review."
+    },
+    {
+      "work_package_id": "WP-35",
+      "title": "Implement qualified web push",
+      "author": {
+        "capability_floor": 2,
+        "default_profile_id": "gpt-5.6-sol-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "rationale": "A single qualified push use case is bounded T2 implementation, while endpoint secrets, device multiplicity, permission versus consent, withdrawal, quiet hours, and replacement behavior need T1 review."
+    },
+    {
+      "work_package_id": "WP-36",
+      "title": "Implement approved cross-channel plans",
+      "author": {
+        "capability_floor": 2,
+        "default_profile_id": "gpt-5.6-sol-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "rationale": "Cross-channel routing is complex T2 implementation from approved semantics, but equivalence, pressure, preference, opt-out, complaints, unknown acceptance, and races could multiply or evade effects and require T1 review."
+    },
+    {
+      "work_package_id": "WP-37",
+      "title": "Qualify multi-channel recipient experience",
+      "author": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "rationale": "The evidence determines whether broader non-email activation is justified and must distinguish recipient value from extra volume while assessing pressure, accessibility, reliability, and incident ownership, requiring T1."
+    },
+    {
+      "work_package_id": "WP-38",
+      "title": "Qualify optional phone or app channels",
+      "author": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "rationale": "Choosing whether a phone or app channel is feasible joins actual demand, market law, provider rules, consent, replies, geography, cost, and product-scope constraints, so T1 authorship and review are necessary."
+    },
+    {
+      "work_package_id": "WP-39",
+      "title": "Implement operations and production runbooks",
+      "author": {
+        "capability_floor": 2,
+        "default_profile_id": "gpt-5.6-sol-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "rationale": "Runbooks and deployment machinery are high-complexity implementation, while secrets, migrations, journal access, rollback, restore, and an independent send fence have production safety consequences requiring T1 review."
+    },
+    {
+      "work_package_id": "WP-40",
+      "title": "Perform independent core security and invariant review",
+      "author": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "rationale": "Independent attacker-boundary review integrates authorization, rendering, ingress, dependencies, and external effects and can hold the release for critical findings, so the review package itself remains T1 with T1 verification."
+    },
+    {
+      "work_package_id": "WP-41",
+      "title": "Run restore, failure and workload qualification",
+      "author": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "rationale": "Restore and failure qualification must reason across PITR, independent journal replay, post-backup denials, accepted-before-crash uncertainty, RPO/RTO, and load isolation, demanding T1 authorship and review."
+    },
+    {
+      "work_package_id": "WP-42",
+      "title": "Release selected mature platform profiles",
+      "author": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "rationale": "The mature-profile release decision reconciles exact artifact identity, applicable must-pass evidence, optional-profile boundaries, owner sign-off, maintenance, incidents, and outstanding brand gates, requiring T1 throughout."
+    },
+    {
+      "work_package_id": "WP-43",
+      "title": "Evaluate triggered infrastructure optimization",
+      "author": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "reviewer": {
+        "capability_floor": 1,
+        "default_profile_id": "gpt-6-astra-max",
+        "allowed_reasoning_efforts": [
+          "max"
+        ],
+        "allowed_profile_ids": [
+          "gpt-6-astra-max",
+          "gpt-5.6-sol-max"
+        ]
+      },
+      "rationale": "Measured replacement of provider, queue, analytics, cache, workflow, or service boundaries is an architectural cost/reliability decision that must preserve authority and recovery semantics, so it remains T1 despite a high risk label."
+    }
+  ]
+}

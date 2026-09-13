@@ -1,0 +1,257 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:texenda:local-harness:evidence:2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "kind",
+    "summary",
+    "checks"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "2.0"
+    },
+    "kind": {
+      "enum": [
+        "submission",
+        "review",
+        "integration",
+        "checkpoint",
+        "recovery",
+        "roster",
+        "budget",
+        "gate",
+        "trigger",
+        "routing"
+      ]
+    },
+    "task_id": {
+      "type": "string"
+    },
+    "candidate_revision": {
+      "type": "string",
+      "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "required",
+          "status"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "status": {
+            "enum": [
+              "PASS",
+              "FAIL",
+              "NOT_RUN",
+              "NOT_APPLICABLE"
+            ]
+          },
+          "command_or_procedure": {
+            "type": "string"
+          },
+          "evidence_path": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        }
+      }
+    },
+    "changed_paths": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "integrated_revision": {
+      "type": "string"
+    },
+    "runtime_stopped": {
+      "type": "boolean"
+    },
+    "conflict_resolution_changed_semantics": {
+      "type": "boolean"
+    },
+    "previous_fence": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "observed_revision": {
+      "type": "string"
+    },
+    "qualifications": {
+      "type": "array",
+      "items": {
+        "$ref": "profile-qualification.schema.json"
+      }
+    },
+    "gate_id": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "string"
+    },
+    "expires_at": {
+      "type": "string"
+    },
+    "work_packages": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "notes": {
+      "type": "string"
+    },
+    "routing_policy_digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "work_package_digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "profile_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "role": {
+      "enum": [
+        "author",
+        "reviewer"
+      ]
+    },
+    "capability_tier": {
+      "type": "integer",
+      "enum": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "fence": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "rationale": {
+      "type": "string",
+      "minLength": 1
+    },
+    "reasoning_demand": {
+      "enum": [
+        "bounded",
+        "mechanical"
+      ]
+    },
+    "bounded": {
+      "type": "boolean"
+    },
+    "reversible": {
+      "type": "boolean"
+    },
+    "fully_specified": {
+      "type": "boolean"
+    },
+    "deterministic_verification": {
+      "type": "boolean"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "roster"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "routing_policy_digest",
+          "qualifications"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "review"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "routing_policy_digest",
+          "profile_id",
+          "task_id",
+          "candidate_revision"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "routing"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "routing_policy_digest",
+          "work_package_digest",
+          "profile_id",
+          "role",
+          "task_id",
+          "capability_tier",
+          "fence",
+          "expires_at",
+          "rationale",
+          "reasoning_demand",
+          "bounded",
+          "reversible",
+          "fully_specified",
+          "deterministic_verification"
+        ],
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "role": {
+                  "const": "reviewer"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "candidate_revision"
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
