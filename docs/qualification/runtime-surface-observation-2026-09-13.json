@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0",
+  "kind": "runtime-surface-observation",
+  "observed_at": "2026-09-13T21:34:16Z",
+  "source_revision": "0a72aba450c76e318b02f22c49133b406da7d4ef",
+  "desktop_runtime": {
+    "runtime_id": "codex-desktop-collaboration",
+    "bundle_path": "/Applications/ChatGPT.app",
+    "bundle_identifier": "com.openai.codex",
+    "version": "26.901.41600",
+    "build": "7982",
+    "client_version_for_qualification": "26.901.41600 (build 7982)",
+    "observation_procedure": [
+      "/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' /Applications/ChatGPT.app/Contents/Info.plist",
+      "/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' /Applications/ChatGPT.app/Contents/Info.plist",
+      "/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' /Applications/ChatGPT.app/Contents/Info.plist"
+    ],
+    "qualification_scope": "Only exact model/effort agents dispatched through this desktop collaboration runtime."
+  },
+  "direct_cli": {
+    "installed_version": "0.149.0",
+    "version_command": "codex --version",
+    "astra_qualified": false,
+    "current_documented_minimum": "0.153.0",
+    "minimum_source": "https://help.openai.com/en/articles/20001275-chatgpt-work-and-codex",
+    "source_retrieved_on": "2026-09-13",
+    "reason": "The installed CLI is below the current documented Astra minimum and no direct-CLI exact-profile probe was run."
+  },
+  "account_and_usage_snapshot": {
+    "sign_in_mode": "subscription",
+    "plan_type": "pro",
+    "window": "Codex weekly display",
+    "used_percent": 9,
+    "window_duration_minutes": 10080,
+    "resets_at": "2026-09-20T16:24:59Z",
+    "paid_credits_available": false,
+    "credit_balance": "0",
+    "api_budget_usd": 0,
+    "disposition": "Transient admission evidence only; refresh before large or parallel work and never embed these quota values as policy."
+  },
+  "effective_boundaries": {
+    "model_self_identification": "UNAVAILABLE",
+    "account_identifier_recorded": false,
+    "credentials_read": false,
+    "production_data_accessed": false,
+    "external_effects": false,
+    "notes": [
+      "The runtime dispatcher accepted the requested model and effort for each probe, but agents could not independently introspect the executing provider model.",
+      "Repository config is a new-session default and was not treated as proof of effective permissions in this session.",
+      "Desktop qualification does not transfer to direct CLI, API, cloud, IDE, or another account/workspace."
+    ]
+  }
+}
