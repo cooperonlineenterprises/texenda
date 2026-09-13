@@ -1,7 +1,7 @@
 # Model qualification verification
 
-Verified at: `2026-09-13T16:45:44Z`  
-Baseline revision: `0cd7010242ee1ee35837aace4ea2a1f1a186777e`  
+Verified at: `2026-09-13T16:45:44Z`
+Baseline revision: `0cd7010242ee1ee35837aace4ea2a1f1a186777e`
 Runtime: `codex-desktop-collaboration` via `codex-cli 0.149.0`
 
 The owner authorized a bounded model-tier qualification in the interactive Codex task. Four isolated agents were dispatched through the runtime with exact model and reasoning-effort overrides. Each agent read the project kernel and invariants, wrote one scoped JSON artifact, parsed it with `jq`, ran the offline package validator, and ran all 39 synthetic harness tests. No agent used network access, installed dependencies, read credentials, contacted an external service, committed, pushed, deployed, or sent communications.

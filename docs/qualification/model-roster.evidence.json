@@ -49,7 +49,7 @@
       "status": "PASS",
       "command_or_procedure": "Parse and inspect all probe artifacts, check invariant summaries and command results, recompute hashes after integration, and retain all limitations.",
       "evidence_path": "docs/qualification/model-qualification-verification.md",
-      "sha256": "29168ce388589408024a7313dde9752623d98ac40a59e76f809eb18a415edaea"
+      "sha256": "418a84f629b8751dc22e5131ebd2fa69d88fadb86b10a3f6c80d63055373791c"
     }
   ],
   "qualifications": [
