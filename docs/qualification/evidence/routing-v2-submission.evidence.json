@@ -1,0 +1,89 @@
+{
+  "schema_version": "2.0",
+  "kind": "submission",
+  "candidate_revision": "4ce1be33ea3d9e86e6806d992b4bdb7224ab3014",
+  "summary": "Author submission audit for the exact Texenda routing-v2 candidate, including the project-local policy/adapter, preserving state migration, independent analyses, qualification probes, and reviewed corrective changes. All listed verification evidence is local and synthetic.",
+  "changed_paths": [
+    ".codex/config.toml.example",
+    "AGENTS.md",
+    "docs/decisions/ADR-0001-quality-first-model-routing.md",
+    "docs/qualification/analysis/routing-v2-test-coverage.json",
+    "docs/qualification/analysis/routing-v2-test-plan.md",
+    "docs/qualification/analysis/work-package-routing-proposal.json",
+    "docs/qualification/analysis/work-package-routing-review.json",
+    "docs/qualification/evidence/routing-v2-author-verification.log",
+    "docs/qualification/evidence/routing-v2-budget-authorization-verification.log",
+    "docs/qualification/evidence/routing-v2-correction-verification.log",
+    "docs/qualification/evidence/routing-v2-migration-fixture.json",
+    "docs/qualification/probes/gpt-5.6-luna-high.json",
+    "docs/qualification/probes/gpt-5.6-luna-max.json",
+    "docs/qualification/probes/gpt-5.6-luna-medium.json",
+    "docs/qualification/probes/gpt-5.6-sol-max.json",
+    "docs/qualification/probes/gpt-5.6-terra-high.json",
+    "docs/qualification/probes/gpt-5.6-terra-max.json",
+    "docs/qualification/probes/gpt-6-astra-max.json",
+    "tooling/coordination/README.md",
+    "tooling/coordination/harness.py",
+    "tooling/coordination/routing-policy.json",
+    "tooling/coordination/schemas/evidence.schema.json",
+    "tooling/coordination/schemas/profile-qualification.schema.json",
+    "tooling/coordination/templates/budget.json",
+    "tooling/coordination/templates/review.json",
+    "tooling/coordination/templates/roster.json",
+    "tooling/coordination/templates/routing.json",
+    "tooling/coordination/tests/test_routing_v2.py"
+  ],
+  "routing_policy_digest": "61f0db448cf5ac5adad4d9340d568a7558c0369174e30aab92dd0ccf0d24bdf0",
+  "checks": [
+    {
+      "id": "initial-author-verification",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Verify the recorded initial author checks and their exact output: 83 adapter tests, 39 sealed tests, package validation with checksums, and local tool/diff checks; bind this historical verification log by SHA-256.",
+      "evidence_path": "docs/qualification/evidence/routing-v2-author-verification.log",
+      "sha256": "9462c9da71843e12b6724f8282669f89d5ffc860edbdeeb2727d1bd9cb9cf6ed"
+    },
+    {
+      "id": "review-budget-and-history-correction",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Verify the first corrective verification record, including 95 adapter tests, 39 sealed tests, package/checksum/JSON/TOML/diff checks, and the API reviewer accounting, historical evidence, and integer-field regressions.",
+      "evidence_path": "docs/qualification/evidence/routing-v2-correction-verification.log",
+      "sha256": "4cd83417f42061b78a63f0f0dee3de7e0db41b2fe55da92c3d5c610fcbac0210"
+    },
+    {
+      "id": "exact-budget-and-legacy-compatibility-correction",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Verify the final corrective verification record: 115 adapter tests, 39 sealed tests, all 14 package/checksum checks, 26 JSON artifacts, TOML parsing, and diff checks; confirm expiring exact budget authorization and retained v1 allocation compatibility.",
+      "evidence_path": "docs/qualification/evidence/routing-v2-budget-authorization-verification.log",
+      "sha256": "5fac2f5955b395dbf8e9359e380e633c05bb6cafa6eef5b1dbad8a05d362f97e"
+    },
+    {
+      "id": "routing-test-coverage",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Parse the coverage JSON, verify its SHA-256, and confirm the mapped independent review findings and deterministic tests are recorded as passing with the final 115-test count.",
+      "evidence_path": "docs/qualification/analysis/routing-v2-test-coverage.json",
+      "sha256": "30fa2b439df7ac8a60d2319a5f15e4aeadb8ca6344b0893de22a6541c2ef9ca8"
+    },
+    {
+      "id": "representative-migration-fixture",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Parse and hash the retained representative fixed-clock migration audit, which records original state/checkpoint hashes and unchanged task, history, and receipt-prefix assertions. This is historical synthetic evidence, not a live ledger migration.",
+      "evidence_path": "docs/qualification/evidence/routing-v2-migration-fixture.json",
+      "sha256": "29577c44f6d31eafc10f66b787bc0f8f691ab3c3f0d5773e48519f44ccf77211"
+    },
+    {
+      "id": "astra-max-read-edit-test-probe",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Parse and hash the exact requested gpt-6-astra/max probe; verify INV-02/12/30 read checks, local read/edit/test results, no-secret assertions, and the retained null self-reported model identifier limitation.",
+      "evidence_path": "docs/qualification/probes/gpt-6-astra-max.json",
+      "sha256": "d5ca2d2136c8ea958069a6cc4af3604b839b6b78dc58250f171b0be03691c021"
+    }
+  ],
+  "runtime_stopped": true,
+  "notes": "Changed paths are the complete diff from base 12e19b167d7fd59722dc2a3194ce591f499de0e7 to candidate 4ce1be33ea3d9e86e6806d992b4bdb7224ab3014. Rejected predecessors 61d921aeeb7b386e442dbdf8d1db91f1d6be0a81 and 7ffeb4779bd8560237f4a0682197fd214e699fb6 remain unchanged in history; their findings are addressed in later commits and retained verification records. Candidate authoring/testing commands and subprocesses have stopped, with no author background jobs remaining. This audit-only envelope is deliberately uncommitted and is not part of the candidate. No live ledger migration, active roster change, network call, external effect, or new API spending occurred. Model identity introspection remains unavailable; no product or external activation gate is cleared by these local tests."
+}

@@ -1,0 +1,235 @@
+Texenda routing-v2 independent implementation review
+
+Decision: APPROVE
+Base revision: 12e19b167d7fd59722dc2a3194ce591f499de0e7
+Approved candidate: 4ce1be33ea3d9e86e6806d992b4bdb7224ab3014
+Rejected first candidate: 61d921aeeb7b386e442dbdf8d1db91f1d6be0a81
+Rejected second candidate: 7ffeb4779bd8560237f4a0682197fd214e699fb6
+Reviewer task: /root/review_routing_v2
+Requested reviewer profile: gpt-6-astra-max
+Requested model: gpt-6-astra
+Requested reasoning effort: max
+Canonical routing policy SHA-256: 61f0db448cf5ac5adad4d9340d568a7558c0369174e30aab92dd0ccf0d24bdf0
+Sealed package Git tree at base and approved candidate: 40b57b491b89b95e3668654194dfaa2c22f916a9
+Review worktree: /private/tmp/texenda-routing-upgrade.3NQlhF/review
+Review verification completed and runtimes stopped at: 2026-09-13T19:39:51Z
+Audit artifact preparation began at: 2026-09-13T19:42:18Z
+
+This is the separate reviewer's audit record. The reviewer did not author or
+modify the candidate implementation. The two audit files were requested after
+the final verdict and remain uncommitted additions; they are not part of the
+approved candidate. No live coordination ledger was read or migrated.
+
+The requested profile/model/effort are parent dispatch metadata. This reviewer
+had no independent provider introspection channel establishing the executing
+model ID or effort. Those limits are not converted into stronger qualification.
+
+REVIEW SCOPE
+
+Read the root AGENTS instructions, sealed orientation/kernel/model-routing and
+handoff documents, ADR-0001, local operator guide, complete local and imported
+sealed harness, schemas/templates, independent routing analysis, tests, probes,
+and verification evidence. Reviewed the full base-to-candidate change and both
+complete corrective diffs. Checked the accepted four-tier/11-profile matrix,
+all 44 author and reviewer floors, max defaults, allowed downshifts, explicit
+stronger substitutions, sole Sol/max T1 fallback, and T4 parent boundary.
+
+The independent matrix oracle confirmed author counts T1=13, T2=27, T3=4,
+T4=0 and reviewer counts T1=39, T2=5, T3=0, T4=0. Only WP-00/02/10/13/25
+allow high effort on whole-parent roles. Capability T1-T4 remains distinct
+from product command consequence C0-C4. No exact runtime qualification was
+inferred from a former tier, different effort, public model list, or template.
+
+Checked exact qualification/evidence/fence/candidate bindings, expiry and hash
+rechecks, all four downshift conditions, author/reviewer separation, spending,
+leases, scope, recovery, migration/rollback, atomicity, and external-effect
+boundaries. The new budget schema/template matches executable closed fields.
+Only a current, valid v2 budget permits new paid allocations. Legacy budget
+compatibility binds retained v1 records to the byte-exact source checkpoint.
+
+FINDINGS AND CLOSURE
+
+F1 / P2 / first rejected candidate: API reviewer budget bypass.
+Original reproduction: actual-policy WP-00, human author, API-billed Sol/max
+reviewer, owner budget 0 and task allocation 0; review appended an approval.
+The v1 reviewer path also had this limitation. Final reproduction now denies
+with "API work requires a positive owner-authorized allocation" and unchanged
+state. Positive author/reviewer allocations share one cumulative cap, including
+rejected reviews and recovered/cancelled history. CLOSED.
+
+F2 / P2 / first rejected candidate: missing historical recovery stop proof.
+Original reproduction: valid v1 recovery of actual-policy WP-00, then removal
+of the retained recovery evidence file; migration dry-run and apply succeeded.
+Both now deny before checkpoint creation and preserve original state bytes.
+Migration and rollback recheck retained envelopes/logs and reconstruct recovery
+fences from receipt operations. Expanded recovered/cancelled/integrated/completed
+evidence probes also pass. CLOSED.
+
+F3 / P3 / first rejected candidate: Python boolean/integer routing aliasing.
+Original reproduction: capability_tier:true or fence:true accepted as integer
+one in a lower-effort routing attestation. Both now deny with unchanged state;
+actual integer types are required. CLOSED.
+
+F4 / P2 / second rejected candidate: budget expiry ignored.
+Original actual-policy reproduction used clock 1700000000, a 0.20 USD budget
+expiring at 1700000001, Terra/max author allocation 0.10, and Sol/max reviewer
+allocation 0.10. At exact expiry, start, review, integration, and completion all
+succeeded. Final independent probes use valid closed v2 budget records and
+deny at exact expiry and after expiry across assignment, start, paid-author
+review, paid-reviewer review, integration, and completion: 12 cases. Historical
+allocations remain counted; replacing the global budget cannot silently renew
+an old v2 allocation's immutable proof. CLOSED.
+
+F5 / P2 / second rejected candidate: valid paid v1 integrated work stranded.
+Original actual-policy reproduction used API-billed Terra/medium, a 1 USD
+owner allowance and assignment, independent human review, and valid integration
+stop evidence. A v1 copy completed; migration succeeded but v2 completion denied
+"missing evidence" because v1 never stored per-allocation budget_approval.
+Final reproduction now completes under both v1 control and migrated v2. Every
+original task/history/receipt object and checkpoint byte remains unchanged at
+migration. The migration-only manifest records exact WP, role, fence, record
+digest, amount, and source path with the original verified global budget proof.
+It cannot fund a new/expanded allocation or substitute a later v2 budget. CLOSED.
+
+No new actionable finding remained in the final candidate.
+
+REQUIRED FINAL-CANDIDATE COMMANDS AND RESULTS
+
+Command: env PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tooling/coordination/tests -v
+Exit code: 0
+Result: Ran 115 tests in 1.271s; OK.
+These include the retained lifecycle cases, routing/evidence negative cases,
+review-budget accounting, expiring exact authority, and legacy compatibility.
+
+Command: env PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s specs/texenda-handoff/08-project-harness/tests -v
+Exit code: 0
+Result: Ran 39 tests in 0.156s; OK.
+
+Command: env PYTHONDONTWRITEBYTECODE=1 python3 specs/texenda-handoff/10-validation/validate_package.py --checksums
+Exit code: 0
+Result: PASS; 14 checks, zero errors, zero warnings; checked at 2026-09-13T19:32:49.540067+00:00.
+Counts: 86 package files, 44 WPs, 125 product acceptance criteria, 30 invariants,
+35 ADRs, and 14 external gates. This command validates package structure and
+checksums; its counts do not indicate product tests were executed.
+
+Command: git diff --check 12e19b167d7fd59722dc2a3194ce591f499de0e7..4ce1be33ea3d9e86e6806d992b4bdb7224ab3014
+Exit code: 0
+Result: No whitespace errors.
+
+Command: git diff --exit-code 12e19b167d7fd59722dc2a3194ce591f499de0e7..4ce1be33ea3d9e86e6806d992b4bdb7224ab3014 -- specs/texenda-handoff
+Exit code: 0
+Result: No sealed package changes.
+
+Command: git ls-tree 4ce1be33ea3d9e86e6806d992b4bdb7224ab3014 specs/texenda-handoff
+Exit code: 0
+Result: 040000 tree 40b57b491b89b95e3668654194dfaa2c22f916a9 specs/texenda-handoff; identical to base.
+
+Command: git status --short --untracked-files=all
+Command: git rev-parse HEAD
+Exit codes: 0, 0
+Final review result: Clean worktree; HEAD 4ce1be33ea3d9e86e6806d992b4bdb7224ab3014.
+The subsequently requested audit files are the only intended additions.
+
+Procedure: env PYTHONDONTWRITEBYTECODE=1 python3 - (inline read-only artifact verification)
+Exit code: 0
+Enumerate git ls-files -z; parse all tracked JSON with json.loads and TOML with
+tomllib.loads; independently construct the accepted model/effort and WP-role
+matrix; compare all reconciled analysis rows and normalized original proposal;
+canonicalize policy JSON with sorted keys and compact separators; recompute
+all envelope evidence_path SHA-256 references; compare closed budget schema,
+template, and executable required/optional fields.
+Result: 57 tracked JSON and 2 TOML files parsed; all 11 profiles and 88 role
+routes matched; all 25 evidence hash references matched; closed budget parity
+passed; template is deliberately expired, zero-amount, and NOT_RUN.
+
+ADDITIONAL INDEPENDENT FINAL-CANDIDATE PROBES
+
+All probes were executed with env PYTHONDONTWRITEBYTECODE=1 python3 - using
+inline standard-library scripts, temporary roots, and fixed clock 1700000000
+unless explicitly advanced for expiry. Final probe scripts exited 0. They
+used the committed harness/test fixture loaders; expected values, perturbations,
+state-byte assertions, and process races were independently specified. No probe
+called a model or external service. Scripts and outputs are retained in the
+review task tool transcript; no additional test source was added to the candidate.
+
+Original failure reproductions: zero-budget API review denied; missing recovery
+evidence denied in both dry-run/apply with no checkpoint; both boolean routing
+fields denied; 12 exact/post-expiry budget cases denied; actual-policy paid v1
+control and migrated v2 completion passed with exact manifest and preservation.
+
+Closed budget additions: 26 missing-field, malformed type/scope/owner, duplicate
+key, and unknown-field cases denied without state changes. Exactly 30 days of
+validity was accepted. Owner/amount/catalog/policy/role/WP bindings, nonfinite
+values, required PASS evidence, and time boundaries are also covered by the
+115-test suite.
+
+Legacy manifest additions: two identical assignment records at fences 1 and 3
+shared a record digest yet remained distinct eligible records. Six mismatched
+WP/role/fence/record/proof cases denied. Completion succeeded with cumulative
+spend 2, counted once. A v1 current cap below retained allocations denied before
+checkpoint creation.
+
+Legacy checkpoint additions: conflicting content-addressed checkpoint and
+symlink targets denied without overwriting; modified source bytes denied
+completion and rollback. Four negative cases passed. Restoring valid bytes
+allowed exact rollback and retained the complete v2 checkpoint.
+
+Legacy proof after v2 budget replacement/expiry: four missing/tampered original
+envelope/log cases denied completion; restored proof allowed retained legacy
+completion. A new paid assignment remained denied. The current v2 budget did
+not replace the original proof, expand legacy allocation, or qualify a model.
+
+Concurrent subprocess races, 10 repetitions per scenario (40 total):
+- Nested/disjoint assignment race: exactly two compatible writers, overlap denied.
+- Duplicate migration race: one migration receipt and one exact checkpoint.
+- Rollback versus later receipt: one operation wins; later receipts never discarded.
+- API-review allocation race: 0.30 total cap, two 0.10 author allocations, competing
+  0.10 reviewer allocations; exactly one reviewer succeeds and total remains 0.30.
+All chains validated and every child process exited.
+
+Actual os.replace fault injection: migration raised before replacement; original
+v1 bytes and byte-exact checkpoint remained, no partial .write-* file remained,
+and retry succeeded. This independently tested the real atomic replacement
+operation, not only a replacement of the whole writer function.
+
+Retained-evidence matrix: recovered, cancelled, integrated, and completed v1
+states with recovery/checkpoint/submission/review/integration/trigger/budget
+references. Removed or changed each retained envelope and PASS log in turn.
+104 cases denied with original state bytes and no migration checkpoint. After
+restoring evidence, four exact migration/rollback round trips passed.
+
+Decimal accounting: 0.10 author + 0.20 rejected reviewer + 0.30 accepted reviewer
+remained exactly 0.60 after recovery; no double count or refund. A new 0.01
+allocation denied with unchanged state. Reassignment/cancellation/history and
+acceptance-boundary evidence rechecks are additionally covered by the suite.
+
+EVIDENCE PROVENANCE AND LIMITATIONS
+
+The committed initial and first corrective logs report their respective 83-test
+and 95-test candidate checks; they are historical evidence. The final committed
+author log and current coverage report identify 115 tests. The committed
+routing-v2-migration-fixture.json is a historical representative synthetic
+fixture, not a current live ledger or the final candidate's migrated-state hash.
+Current migration behavior was independently exercised as described above.
+Probe files retain their requested-model/effort and self-identification limits;
+their hashes establish byte identity, not provider/model truth or entitlement.
+
+Actor labels, owner attestations, runtime stop assertions, and test reports
+require accountable runtime controls. The harness does not launch models,
+authenticate physical actors, enforce a filesystem sandbox, meter a provider,
+or grant production authority. No active v2 roster was installed by this review.
+Integrated-head verification and final owner roster attestation remain separate.
+Product acceptance: NOT RUN (125 criteria). Production/provider/legal/privacy/
+security/deployment/sending/spending and other external qualification: NOT RUN.
+No credentials, production data, network, API calls, external services, pushes,
+commits, deployment, or real-ledger migration were performed by the reviewer.
+
+RUNTIME STOP
+
+runtime_stopped: true
+All independent review commands and child test processes completed. Temporary
+fixtures were cleaned by teardown. No subagents were delegated, no background
+jobs remain, and no implementation writes are pending. The review stopped at
+the exact candidate and time stated above. The later authorized artifact-writing
+follow-up creates only this log and its JSON envelope for Astra to bind; it does
+not reopen or modify the approved candidate.

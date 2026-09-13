@@ -1,0 +1,166 @@
+{
+  "schema_version": "2.0",
+  "kind": "review",
+  "task_id": "ROUTING-V2",
+  "candidate_revision": "4ce1be33ea3d9e86e6806d992b4bdb7224ab3014",
+  "profile_id": "gpt-6-astra-max",
+  "routing_policy_digest": "61f0db448cf5ac5adad4d9340d568a7558c0369174e30aab92dd0ccf0d24bdf0",
+  "summary": "APPROVE: independent review of the exact routing-v2 candidate. All five prior findings are closed, 115 local tests and 39 sealed tests passed, and no new actionable finding remained.",
+  "checks": [
+    {
+      "id": "independent-final-candidate-review",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Independently read the full base-to-candidate change and both corrective diffs, inspect the governing policy/code/docs/evidence, and approve only candidate 4ce1be33ea3d9e86e6806d992b4bdb7224ab3014.",
+      "evidence_path": "docs/qualification/evidence/routing-v2-review-verification.log",
+      "sha256": "55d589efec4f65567d7a1bc310c15af9604772c2246f8bf4c653a29b596fd83b"
+    },
+    {
+      "id": "local-harness-unit-tests",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "env PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tooling/coordination/tests -v: 115 tests passed, exit 0, on the exact approved candidate.",
+      "evidence_path": "docs/qualification/evidence/routing-v2-review-verification.log",
+      "sha256": "55d589efec4f65567d7a1bc310c15af9604772c2246f8bf4c653a29b596fd83b"
+    },
+    {
+      "id": "sealed-harness-unit-tests",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "env PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s specs/texenda-handoff/08-project-harness/tests -v: 39 tests passed, exit 0.",
+      "evidence_path": "docs/qualification/evidence/routing-v2-review-verification.log",
+      "sha256": "55d589efec4f65567d7a1bc310c15af9604772c2246f8bf4c653a29b596fd83b"
+    },
+    {
+      "id": "package-checksums-and-exact-range",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Run the package validator with --checksums (14 checks, zero errors/warnings), the exact base-to-candidate git diff --check, and sealed-package equality/tree checks; all exited 0.",
+      "evidence_path": "docs/qualification/evidence/routing-v2-review-verification.log",
+      "sha256": "55d589efec4f65567d7a1bc310c15af9604772c2246f8bf4c653a29b596fd83b"
+    },
+    {
+      "id": "prior-findings-and-adversarial-boundaries",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Reproduce all five prior findings and their closure; independently run 12 expiry cases, 40 process races, 104 retained-evidence negative cases, closed-budget and legacy-manifest tamper/fence/cap probes, decimal accounting, exact rollback, and actual os.replace fault/retry.",
+      "evidence_path": "docs/qualification/evidence/routing-v2-review-verification.log",
+      "sha256": "55d589efec4f65567d7a1bc310c15af9604772c2246f8bf4c653a29b596fd83b"
+    },
+    {
+      "id": "policy-schema-and-artifact-consistency",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Parse 57 tracked JSON and 2 TOML files, independently compare all 11 profiles and 88 WP role routes, verify 25 existing envelope references, and compare closed budget schema/template/runtime fields.",
+      "evidence_path": "docs/qualification/evidence/routing-v2-review-verification.log",
+      "sha256": "55d589efec4f65567d7a1bc310c15af9604772c2246f8bf4c653a29b596fd83b"
+    },
+    {
+      "id": "reviewer-runtime-stop",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Verify all review commands and child test processes exited, temporary fixtures were cleaned, no delegated or background work remained, and the final clean HEAD matched the exact candidate at 2026-09-13T19:39:51Z.",
+      "evidence_path": "docs/qualification/evidence/routing-v2-review-verification.log",
+      "sha256": "55d589efec4f65567d7a1bc310c15af9604772c2246f8bf4c653a29b596fd83b"
+    },
+    {
+      "id": "initial-author-evidence",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Inspect and hash the committed initial author verification log as historical 83-test candidate evidence; do not substitute its results for the final independent 115-test run.",
+      "evidence_path": "docs/qualification/evidence/routing-v2-author-verification.log",
+      "sha256": "9462c9da71843e12b6724f8282669f89d5ffc860edbdeeb2727d1bd9cb9cf6ed"
+    },
+    {
+      "id": "first-correction-author-evidence",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Inspect and hash the committed first correction verification log as historical 95-test candidate evidence, retaining the subsequent rejection and remaining findings.",
+      "evidence_path": "docs/qualification/evidence/routing-v2-correction-verification.log",
+      "sha256": "4cd83417f42061b78a63f0f0dee3de7e0db41b2fe55da92c3d5c610fcbac0210"
+    },
+    {
+      "id": "final-correction-author-evidence",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Inspect and hash the committed exact-budget/legacy-allocation author verification log and compare its 115-test report, checksum checks, scope, and limitations with independent results.",
+      "evidence_path": "docs/qualification/evidence/routing-v2-budget-authorization-verification.log",
+      "sha256": "5fac2f5955b395dbf8e9359e380e633c05bb6cafa6eef5b1dbad8a05d362f97e"
+    },
+    {
+      "id": "final-test-coverage",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Inspect and hash the committed test-coverage mapping, including all five review findings and their regression tests; verify the final local/sealed counts are 115/39.",
+      "evidence_path": "docs/qualification/analysis/routing-v2-test-coverage.json",
+      "sha256": "30fa2b439df7ac8a60d2319a5f15e4aeadb8ca6344b0893de22a6541c2ef9ca8"
+    },
+    {
+      "id": "historical-migration-fixture",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Inspect and hash the historical representative synthetic migration fixture and its provenance/limitations; independently validate current-candidate migration and rollback as recorded in the review log, without treating this historical fixture as live state.",
+      "evidence_path": "docs/qualification/evidence/routing-v2-migration-fixture.json",
+      "sha256": "29577c44f6d31eafc10f66b787bc0f8f691ab3c3f0d5773e48519f44ccf77211"
+    },
+    {
+      "id": "astra-max-author-probe",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Inspect and hash the committed requested gpt-6-astra/max author probe, exact request metadata, local test results, and explicit lack of independent executing-model introspection or external qualification.",
+      "evidence_path": "docs/qualification/probes/gpt-6-astra-max.json",
+      "sha256": "d5ca2d2136c8ea958069a6cc4af3604b839b6b78dc58250f171b0be03691c021"
+    },
+    {
+      "id": "sol-max-probe",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Inspect and hash the committed requested gpt-5.6-sol/max probe and preserve its bounded local capability and model-identity limitations; this check does not activate a T1 fallback or T2 roster binding.",
+      "evidence_path": "docs/qualification/probes/gpt-5.6-sol-max.json",
+      "sha256": "d53046c0c75c549ab6ce41c9385f6f13cf8d69b9a6dfd3addfff68fa934605ad"
+    },
+    {
+      "id": "terra-max-probe",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Inspect and hash the committed requested gpt-5.6-terra/max probe, test procedures, and qualification limitations; do not infer qualification for another effort.",
+      "evidence_path": "docs/qualification/probes/gpt-5.6-terra-max.json",
+      "sha256": "2cd4aa563083a29b00b3a0fa9481ef9a19101cc5e126f6268fbb23990139431c"
+    },
+    {
+      "id": "terra-high-probe",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Inspect and hash the committed requested gpt-5.6-terra/high probe and retain its request-metadata, local-only, and model-introspection limitations.",
+      "evidence_path": "docs/qualification/probes/gpt-5.6-terra-high.json",
+      "sha256": "4bf17a79ae8bcc32bcbb38e49d9ed295e4743808126bd4716d70c65cfd5db267"
+    },
+    {
+      "id": "luna-max-probe",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Inspect and hash the committed requested gpt-5.6-luna/max probe and retain its bounded local test and model-identity limitations; it does not authorize a T4 parent assignment.",
+      "evidence_path": "docs/qualification/probes/gpt-5.6-luna-max.json",
+      "sha256": "5b8beec0eefc42830da3097f10f817f765034b4e72594f6c2b23bc817cd2a09e"
+    },
+    {
+      "id": "luna-high-probe",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Inspect and hash the committed requested gpt-5.6-luna/high probe, exact effort metadata, and non-production qualification limits.",
+      "evidence_path": "docs/qualification/probes/gpt-5.6-luna-high.json",
+      "sha256": "f47fcc9a55cb7702ec8896919eaacc289bbe0b69e783dc132eaa9657cc1a0322"
+    },
+    {
+      "id": "luna-medium-probe",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Inspect and hash the committed requested gpt-5.6-luna/medium probe, exact effort metadata, and non-production qualification limits.",
+      "evidence_path": "docs/qualification/probes/gpt-5.6-luna-medium.json",
+      "sha256": "9ca408754af445cfdd40f4753a239b89e026a2ab9d109f013d63692346758160"
+    }
+  ],
+  "runtime_stopped": true,
+  "scope": "Independent review of the local Texenda routing/coordination implementation only; audit artifacts remain uncommitted and do not alter the approved candidate or real ledger.",
+  "notes": "Base: 12e19b167d7fd59722dc2a3194ce591f499de0e7. Rejected candidates: 61d921aeeb7b386e442dbdf8d1db91f1d6be0a81 and 7ffeb4779bd8560237f4a0682197fd214e699fb6. Final approval applies only to 4ce1be33ea3d9e86e6806d992b4bdb7224ab3014. Reviewer profile/model/effort are exact parent dispatch metadata, not independently introspected provider identity. Runtime stop was confirmed at 2026-09-13T19:39:51Z; the later owner-requested follow-up only creates these audit artifacts. No model roster activation, integrated-head verification, product acceptance, external qualification, sending, deployment, credential access, network access, or spending is authorized or claimed by this record."
+}
