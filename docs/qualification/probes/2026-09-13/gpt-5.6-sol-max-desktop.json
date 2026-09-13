@@ -1,0 +1,225 @@
+{
+  "schema_version": "1.0",
+  "kind": "exact-profile-desktop-qualification-probe",
+  "profile_id": "gpt-5.6-sol-max",
+  "qualification_result": "PASS",
+  "requested_model": "gpt-5.6-sol",
+  "requested_reasoning_effort": "max",
+  "capability_tier": 2,
+  "source_revision": "dfb6e0090c4f128ba2d8e16e4e3d038d632415db",
+  "branch": "qualify/desktop-sol-max-20260913",
+  "verified_at": "2026-09-13T21:45:13Z",
+  "sign_in_mode": "subscription",
+  "billing_mode": "subscription",
+  "runtime": {
+    "runtime_id": "codex-desktop-collaboration",
+    "qualification_scope": "Only gpt-5.6-sol at max reasoning dispatched through this desktop collaboration runtime.",
+    "desktop_client": {
+      "bundle_path": "/Applications/ChatGPT.app",
+      "bundle_identifier": "com.openai.codex",
+      "version": "26.901.41600",
+      "build": "7982",
+      "client_version": "26.901.41600 (build 7982)"
+    },
+    "direct_cli": {
+      "version_command": "codex --version",
+      "installed_version": "0.149.0",
+      "current_documented_astra_minimum": "0.153.0",
+      "astra_qualified": false,
+      "qualification_scope": "NONE",
+      "reason": "The separately installed direct CLI is below the documented Astra minimum. This probe did not dispatch through the CLI and transfers no desktop evidence to it."
+    }
+  },
+  "runtime_observation": {
+    "path": "docs/qualification/runtime-surface-observation-2026-09-13.json",
+    "sha256": "35995674a989b1b77233eafdc80ed092d0a8f8622b88990e8f7b3f8336978091",
+    "hash_verified": true
+  },
+  "routing_policy": {
+    "assignment_requested_path": "policy/model-routing-v2.json",
+    "assignment_requested_path_present_at_source_revision": false,
+    "authoritative_path": "tooling/coordination/routing-policy.json",
+    "sha256": "5ebc903a1bd2d3e1925a01fcb1e556f0ed0a4c50682a3b3d93ccc7d7cdd6e979",
+    "path_correction": "The assignment-named path is absent at the source revision; the repository README and ADR identify tooling/coordination/routing-policy.json as the authoritative machine policy."
+  },
+  "observed_capabilities": [
+    "read",
+    "edit",
+    "test"
+  ],
+  "bounded_exercise": {
+    "bounds": "Offline inspection of the assigned revision, creation of exactly this report, the ten instruction-contract unit tests, and checksum-aware sealed-package validation. No other repository path was modified.",
+    "read": {
+      "result": "PASS",
+      "paths": [
+        "AGENTS.md",
+        "docs/qualification/runtime-surface-observation-2026-09-13.json",
+        "docs/qualification/README.md",
+        "docs/qualification/runtime-surface-correction-plan-2026-09-13.md",
+        "docs/decisions/ADR-0001-quality-first-model-routing.md",
+        "tooling/coordination/AGENTS.md",
+        "tooling/coordination/README.md",
+        "tooling/coordination/routing-policy.json",
+        "tooling/coordination/tests/test_instruction_contracts.py",
+        "specs/texenda-handoff/01-foundation/invariants.md"
+      ],
+      "evidence": "The probe located and accurately restated the authoritative INV-02, INV-12, and INV-30 text and distinguished desktop from direct CLI runtime evidence."
+    },
+    "edit": {
+      "result": "PASS",
+      "operation": "Create one versioned JSON qualification report.",
+      "path": "docs/qualification/probes/2026-09-13/gpt-5.6-sol-max-desktop.json",
+      "changed_paths_expected": 1
+    },
+    "test": {
+      "result": "PASS",
+      "instruction_contract_tests_run": 10,
+      "instruction_contract_tests_passed": 10,
+      "sealed_package_checks_passed": 14,
+      "product_tests_run": false
+    }
+  },
+  "invariant_evidence": {
+    "source": "specs/texenda-handoff/01-foundation/invariants.md",
+    "source_sha256": "28962b51a3bb58c3d515384913616423c9efee5563777ce80d993f8af12b0f98",
+    "INV-02": {
+      "result": "PASS",
+      "statement": "Shared identity never creates shared permission; a profile or endpoint match cannot activate another publication, brand, purpose, or channel."
+    },
+    "INV-12": {
+      "result": "PASS",
+      "statement": "A timeout or outage never authorizes blind provider or channel failover; reconcile before another effect, and never use a block or opt-out to escape through another channel."
+    },
+    "INV-30": {
+      "result": "PASS",
+      "statement": "The development harness coordinates work but cannot grant production authority; a planning receipt cannot authorize recipient sends, deployments, spend, or credential use."
+    }
+  },
+  "commands_and_results": [
+    {
+      "command": "/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' /Applications/ChatGPT.app/Contents/Info.plist",
+      "exit_code": 0,
+      "result": "PASS",
+      "observed": "com.openai.codex"
+    },
+    {
+      "command": "/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' /Applications/ChatGPT.app/Contents/Info.plist",
+      "exit_code": 0,
+      "result": "PASS",
+      "observed": "26.901.41600"
+    },
+    {
+      "command": "/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' /Applications/ChatGPT.app/Contents/Info.plist",
+      "exit_code": 0,
+      "result": "PASS",
+      "observed": "7982"
+    },
+    {
+      "command": "codex --version",
+      "exit_code": 0,
+      "result": "PASS",
+      "observed": "codex-cli 0.149.0",
+      "note": "The command emitted a nonfatal PATH-alias permission warning; no configuration or credentials were changed."
+    },
+    {
+      "command": "shasum -a 256 docs/qualification/runtime-surface-observation-2026-09-13.json",
+      "exit_code": 0,
+      "result": "PASS",
+      "observed": "35995674a989b1b77233eafdc80ed092d0a8f8622b88990e8f7b3f8336978091"
+    },
+    {
+      "command": "env PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tooling/coordination/tests -p 'test_instruction_contracts.py' -v",
+      "exit_code": 0,
+      "result": "PASS",
+      "tests_run": 10,
+      "tests_passed": 10
+    },
+    {
+      "command": "env PYTHONDONTWRITEBYTECODE=1 python3 specs/texenda-handoff/10-validation/validate_package.py --checksums",
+      "exit_code": 0,
+      "result": "PASS",
+      "checks_passed": 14,
+      "errors": 0,
+      "warnings": 0
+    }
+  ],
+  "post_write_verification": [
+    {
+      "command": "jq -e . docs/qualification/probes/2026-09-13/gpt-5.6-sol-max-desktop.json",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "shasum -a 256 docs/qualification/probes/2026-09-13/gpt-5.6-sol-max-desktop.json",
+      "exit_code": 0,
+      "result": "PASS",
+      "note": "The final digest is returned with the commit handoff rather than self-embedded, because embedding it would change the report bytes."
+    },
+    {
+      "command": "git diff --cached --check",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "git diff --exit-code dfb6e0090c4f128ba2d8e16e4e3d038d632415db -- specs/texenda-handoff",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "git diff --name-only dfb6e0090c4f128ba2d8e16e4e3d038d632415db",
+      "exit_code": 0,
+      "result": "PASS",
+      "observed": [
+        "docs/qualification/probes/2026-09-13/gpt-5.6-sol-max-desktop.json"
+      ]
+    },
+    {
+      "command": "git status --porcelain",
+      "exit_code": 0,
+      "result": "PASS",
+      "observed_after_commit": "empty"
+    }
+  ],
+  "runtime_stop_proof": {
+    "result": "PASS",
+    "runtime_stopped": true,
+    "synchronous_commands_completed": true,
+    "open_command_sessions": 0,
+    "background_or_persistent_processes_started": 0,
+    "delegated_or_child_runtimes_started": 0,
+    "proof_boundary": "Every command completed without a retained session identifier; no delegation or background process was started; delivery of the final commit/hash handoff terminates this exact desktop collaboration probe runtime.",
+    "claim_limit": "This proves bounded local runtime completion at handoff, not provider-side model identity or telemetry."
+  },
+  "safety_accounting": {
+    "no_secrets_or_credentials_read": true,
+    "no_account_identifiers_recorded": true,
+    "no_reset_identifiers_recorded": true,
+    "network_used": false,
+    "dependencies_installed": false,
+    "delegation_performed": false,
+    "leases_or_ledger_mutated": false,
+    "api_spend_incurred_usd": 0,
+    "push_performed": false,
+    "deployment_performed": false,
+    "provisioning_performed": false,
+    "production_data_accessed": false,
+    "external_effects": false,
+    "repository_effect": "One local commit containing only this report."
+  },
+  "claim_boundaries": {
+    "product_tests_run": false,
+    "product_acceptance_claimed": false,
+    "external_gate_cleared": false,
+    "direct_cli_qualified": false,
+    "api_cloud_or_ide_runtime_qualified": false
+  },
+  "self_reported_model_id": null,
+  "limitations": [
+    "The parent desktop dispatcher accepted the exact gpt-5.6-sol/max assignment, but this runtime exposes no independent executing-model or reasoning-effort introspection channel; self_reported_model_id remains null.",
+    "The qualification is confined to codex-desktop-collaboration on desktop client 26.901.41600 build 7982. It does not transfer to direct CLI, API, cloud, IDE, another account/workspace, or another client build.",
+    "Direct CLI Astra remains explicitly unqualified: codex-cli 0.149.0 is below the documented minimum 0.153.0, and no direct-CLI read/edit/test probe was run.",
+    "The bounded tests cover instruction contracts and offline sealed-package structure, traceability, links, and checksums. They are not Texenda product tests and pass none of the 125 product acceptance criteria or 14 external gates.",
+    "No network, external service, credentials, production data, sending, deployment, provisioning, ledger mutation, lease, dependency installation, API spend, push, or other external effect was exercised.",
+    "This probe is candidate evidence. Independent review, roster construction, accountable owner attestation, live installation, and integrated-head verification remain separate."
+  ]
+}
