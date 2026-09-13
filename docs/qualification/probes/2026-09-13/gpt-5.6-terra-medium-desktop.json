@@ -1,0 +1,74 @@
+{
+  "schema_version": "1.0",
+  "kind": "exact-profile-desktop-qualification-probe",
+  "observed_at": "2026-09-13T21:58:11Z",
+  "base_revision": "dfb6e0090c4f128ba2d8e16e4e3d038d632415db",
+  "dispatch": {
+    "requested_model": "gpt-5.6-terra",
+    "requested_reasoning_effort": "medium",
+    "accepted_by_desktop_dispatcher": true,
+    "scope": "Only this exact model and effort through the observed desktop collaboration runtime."
+  },
+  "runtime": {
+    "runtime_id": "codex-desktop-collaboration",
+    "client_version": "26.901.41600 (build 7982)",
+    "bundle_path": "/Applications/ChatGPT.app",
+    "bundle_identifier": "com.openai.codex",
+    "bundle_version": "26.901.41600",
+    "bundle_build": "7982",
+    "runtime_surface_observation_path": "docs/qualification/runtime-surface-observation-2026-09-13.json",
+    "runtime_surface_observation_sha256": "35995674a989b1b77233eafdc80ed092d0a8f8622b88990e8f7b3f8336978091"
+  },
+  "direct_cli": {
+    "version_command": "codex --version",
+    "observed_version": "0.149.0",
+    "qualification_status": "UNQUALIFIED",
+    "astra_qualification_status": "UNQUALIFIED",
+    "astra_documented_minimum": "0.153.0",
+    "reason": "Direct CLI is a separate runtime; the installed version is below the observed documented Astra minimum and no direct-CLI exact-profile probe was run."
+  },
+  "sign_in_mode": "subscription",
+  "billing_mode": "subscription",
+  "api_spend_usd": 0,
+  "observed_capabilities": [
+    "read",
+    "edit",
+    "test"
+  ],
+  "read_checks": {
+    "INV-02": "Shared identity never creates shared permission, so a profile or endpoint match cannot activate another scoped communication authority.",
+    "INV-12": "A timeout or outage never authorizes blind provider or channel failover; reconciliation is required before another external effect.",
+    "INV-30": "The development harness coordinates work but cannot grant production authority, including authority to send, deploy, spend, or use credentials."
+  },
+  "edit_check": {
+    "scoped_path": "docs/qualification/probes/2026-09-13/gpt-5.6-terra-medium-desktop.json",
+    "result": "PASS; this report is the only created or edited repository path."
+  },
+  "test_checks": [
+    {
+      "command": "env PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tooling/coordination/tests -p 'test_instruction_contracts.py' -v",
+      "exit_code": 0,
+      "result": "PASS",
+      "tests_run": 10
+    },
+    {
+      "command": "env PYTHONDONTWRITEBYTECODE=1 python3 specs/texenda-handoff/10-validation/validate_package.py --checksums",
+      "exit_code": 0,
+      "result": "PASS; 14 checks, zero errors, zero warnings."
+    }
+  ],
+  "safety_and_identity": {
+    "credentials_read": false,
+    "production_data_accessed": false,
+    "external_effects": false,
+    "self_reported_model_id": null,
+    "stopped_subprocesses": true
+  },
+  "qualification_status": "QUALIFIED_FOR_EXACT_DESKTOP_PROFILE_ONLY",
+  "limitations": [
+    "The runtime dispatcher accepted the requested model and effort, but the agent had no independent self-identification channel; self_reported_model_id is null.",
+    "This qualification does not transfer to direct CLI, API, cloud, IDE, another account/workspace, another desktop client version, or another model/effort profile.",
+    "No product behavior, production service, provider, security, legal/privacy, deployment, sending, migration, billing, or external gate is qualified or claimed.",
+    "No network access, dependency installation, delegation, ledger or lease mutation, credential access, production action, push, deploy, provision, send, or paid API spend occurred."
+  ]
+}
