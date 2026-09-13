@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "profile_id": "gpt-5.6-luna-low",
+  "requested_model": "gpt-5.6-luna",
+  "requested_reasoning_effort": "low",
+  "model_id": "gpt-5.6-luna",
+  "reasoning_effort": "low",
+  "capability_tier": 4,
+  "runtime_id": "codex-desktop-collaboration",
+  "dispatch_surface": "desktop-collaboration",
+  "client_version": "26.901.41600 (build 7982)",
+  "desktop_runtime_observation": {
+    "bundle_path": "/Applications/ChatGPT.app",
+    "bundle_identifier": "com.openai.codex",
+    "version": "26.901.41600",
+    "build": "7982",
+    "observation_path": "docs/qualification/runtime-surface-observation-2026-09-13.json",
+    "observation_sha256": "35995674a989b1b77233eafdc80ed092d0a8f8622b88990e8f7b3f8336978091"
+  },
+  "direct_cli": {
+    "version_command": "codex --version",
+    "installed_version": "0.149.0",
+    "qualification": "UNQUALIFIED",
+    "reason": "The installed CLI is below the observed documented minimum 0.153.0; this desktop qualification does not transfer to direct CLI use."
+  },
+  "sign_in_mode": "subscription",
+  "billing_mode": "subscription",
+  "api_spend_usd": 0,
+  "observed_capabilities": ["read", "edit", "test"],
+  "read_checks": {
+    "INV-02": "Shared identity never creates shared permission, so a profile or endpoint match cannot activate another scoped communication authority.",
+    "INV-12": "A timeout or outage never authorizes blind provider or channel failover; reconciliation is required before another external effect.",
+    "INV-30": "The development harness coordinates work but cannot grant production authority, including authority to send, deploy, spend, or use credentials."
+  },
+  "test_checks": [
+    {
+      "check_id": "instruction-contracts",
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tooling/coordination/tests -p 'test_instruction_contracts.py' -v",
+      "exit_code": 0,
+      "result": "PASS",
+      "tests_run": 10
+    },
+    {
+      "check_id": "sealed-package-validation-checksums",
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 specs/texenda-handoff/10-validation/validate_package.py --checksums",
+      "exit_code": 0,
+      "result": "PASS"
+    }
+  ],
+  "self_reported_model_id": null,
+  "self_reported_reasoning_effort": null,
+  "no_secrets_read": true,
+  "credentials_read": false,
+  "production_data_accessed": false,
+  "external_effects": false,
+  "stopped_subprocesses": true,
+  "verified_at": "2026-09-13T22:07:26Z",
+  "expires_at": "2026-10-12T22:07:26Z",
+  "limitations": [
+    "The runtime dispatcher accepted the exact requested model and low reasoning-effort override, but the runtime did not independently expose the executing provider model or effort; self-identification remains null.",
+    "This offline probe qualifies only bounded local read, edit, and test behavior. It does not qualify the Texenda application, production systems, providers, security, legal compliance, deployment, sending, billing, or external-service behavior.",
+    "Desktop qualification does not transfer to direct CLI, API, cloud, IDE, another account, or another workspace."
+  ]
+}
