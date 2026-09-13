@@ -18,11 +18,14 @@ import test_routing_v2 as routing
 ROOT = Path(__file__).resolve().parents[3]
 GUIDE = ROOT / 'docs/agents/operating-guide.md'
 TEMPLATES = ROOT / 'tooling/coordination/templates'
+CURRENT_ROSTER = ROOT / 'docs/qualification/model-roster-v2.1.evidence.json'
 ACTIVE_DOCS = [
     ROOT / 'AGENTS.md', GUIDE, ROOT / 'docs/agents/visualization.md',
     ROOT / 'tooling/coordination/AGENTS.md', ROOT / 'tooling/coordination/README.md',
     ROOT / 'docs/decisions/ADR-0002-astra-agent-operating-guidance.md',
+    ROOT / 'docs/qualification/README.md',
     ROOT / 'docs/qualification/runtime-surface-correction-plan-2026-09-13.md',
+    ROOT / 'docs/qualification/runtime-surface-correction-verification-2026-09-13.md',
     ROOT / 'docs/audits/2026-09-13-gpt-6-astra-agent-system-audit.md',
     *(TEMPLATES / name for name in ('ASSIGNMENT.md', 'REVIEW.md', 'RESUME.md')),
 ]
@@ -116,6 +119,51 @@ class InstructionContracts(unittest.TestCase):
         self.assertIn('0.153.0', plan)
         self.assertIn('com.openai.codex', plan)
         self.assertIn('does not establish which app build executed an earlier probe', plan)
+
+    def test_current_roster_binds_exact_profiles_to_observed_desktop_not_cli(self):
+        roster = json.loads(CURRENT_ROSTER.read_text())
+        observation = json.loads(
+            (ROOT / 'docs/qualification/runtime-surface-observation-2026-09-13.json')
+            .read_text()
+        )
+        policy = json.loads((ROOT / 'tooling/coordination/routing-policy.json').read_text())
+        expected = {row['profile_id']: row for row in policy['profiles']}
+        checks = {check['id']: check for check in roster['checks']}
+        qualifications = {row['profile_id']: row for row in roster['qualifications']}
+        client = observation['desktop_runtime']['client_version_for_qualification']
+
+        self.assertEqual(set(qualifications), set(expected))
+        self.assertEqual(roster['routing_policy_digest'], hashlib.sha256(
+            json.dumps(policy, sort_keys=True, separators=(',', ':')).encode()
+        ).hexdigest())
+        self.assertFalse(observation['direct_cli']['astra_qualified'])
+        self.assertNotEqual(client, observation['direct_cli']['installed_version'])
+
+        for profile_id, qualification in qualifications.items():
+            with self.subTest(profile_id=profile_id):
+                profile = expected[profile_id]
+                self.assertEqual(set(qualification), routing.hm.QUALIFICATION_FIELDS)
+                self.assertEqual(qualification['model_id'], profile['model_id'])
+                self.assertEqual(
+                    qualification['reasoning_effort'], profile['reasoning_effort']
+                )
+                self.assertEqual(
+                    qualification['capability_tier'], profile['capability_tier']
+                )
+                self.assertEqual(
+                    qualification['runtime_id'], observation['desktop_runtime']['runtime_id']
+                )
+                self.assertEqual(qualification['client_version'], client)
+                self.assertEqual(qualification['billing_mode'], 'subscription')
+                self.assertEqual(qualification['capabilities'], ['read', 'edit', 'test'])
+                self.assertEqual(len(qualification['qualification_check_ids']), 1)
+                check_id = qualification['qualification_check_ids'][0]
+                check = checks[check_id]
+                self.assertTrue(check['required'])
+                self.assertEqual(check['status'], 'PASS')
+                self.assertEqual(
+                    Path(check['evidence_path']).name, profile_id + '-desktop.json'
+                )
 
     def test_existing_qualification_envelope_hashes_and_profile_schema(self):
         count = 0

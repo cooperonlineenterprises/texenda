@@ -1,0 +1,261 @@
+{
+  "schema_version": "2.0",
+  "kind": "roster",
+  "summary": "Owner-attested quality-first Texenda coding roster requalified on the observed Codex desktop collaboration runtime, with four max-default capability tiers and exact qualified downshift profiles.",
+  "routing_policy_digest": "61f0db448cf5ac5adad4d9340d568a7558c0369174e30aab92dd0ccf0d24bdf0",
+  "checks": [
+    {
+      "id": "desktop-runtime-observation",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Inspect the Codex desktop application bundle identifier, version and build separately from the installed direct CLI; record current subscription admission data without account or reset identifiers.",
+      "evidence_path": "docs/qualification/runtime-surface-observation-2026-09-13.json",
+      "sha256": "35995674a989b1b77233eafdc80ed092d0a8f8622b88990e8f7b3f8336978091"
+    },
+    {
+      "id": "desktop-profile-gpt-6-astra-max",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Dispatch gpt-6-astra at max effort through the observed desktop collaboration runtime for a bounded read/edit/test exercise, then verify local instruction contracts and sealed package checksums.",
+      "evidence_path": "docs/qualification/probes/2026-09-13/gpt-6-astra-max-desktop.json",
+      "sha256": "e62f78f3930ffd840c0d5d596a910a87187fe26bdad314b925711a0d39ab8df0"
+    },
+    {
+      "id": "desktop-profile-gpt-6-astra-high",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Dispatch gpt-6-astra at high effort through the observed desktop collaboration runtime for a bounded read/edit/test exercise, then verify local instruction contracts and sealed package checksums.",
+      "evidence_path": "docs/qualification/probes/2026-09-13/gpt-6-astra-high-desktop.json",
+      "sha256": "39667e91d35f6f538338047ecac039a9b282bc41b842cb7789fb8b863ac19e55"
+    },
+    {
+      "id": "desktop-profile-gpt-5.6-sol-max",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Dispatch gpt-5.6-sol at max effort through the observed desktop collaboration runtime for a bounded read/edit/test exercise, then verify local instruction contracts and sealed package checksums.",
+      "evidence_path": "docs/qualification/probes/2026-09-13/gpt-5.6-sol-max-desktop.json",
+      "sha256": "bade3a896b777d08d134b596edef0c95ee80fa59df81e7c95a3ec3985346c429"
+    },
+    {
+      "id": "desktop-profile-gpt-5.6-sol-high",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Dispatch gpt-5.6-sol at high effort through the observed desktop collaboration runtime for a bounded read/edit/test exercise, then verify local instruction contracts and sealed package checksums.",
+      "evidence_path": "docs/qualification/probes/2026-09-13/gpt-5.6-sol-high-desktop.json",
+      "sha256": "bfeb7d4639e2af5fd1d686a599e8c5ae4165b645bfd84bbcc90384c7ab62bc70"
+    },
+    {
+      "id": "desktop-profile-gpt-5.6-terra-max",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Dispatch gpt-5.6-terra at max effort through the observed desktop collaboration runtime for a bounded read/edit/test exercise, then verify local instruction contracts and sealed package checksums.",
+      "evidence_path": "docs/qualification/probes/2026-09-13/gpt-5.6-terra-max-desktop.json",
+      "sha256": "0e8e8d8b5e1027b18fde140f7e207c7bab7cb0daea79fae714dd55a5cbb48f66"
+    },
+    {
+      "id": "desktop-profile-gpt-5.6-terra-high",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Dispatch gpt-5.6-terra at high effort through the observed desktop collaboration runtime for a bounded read/edit/test exercise, then verify local instruction contracts and sealed package checksums.",
+      "evidence_path": "docs/qualification/probes/2026-09-13/gpt-5.6-terra-high-desktop.json",
+      "sha256": "763d6ca28031640217699b00157d45c636b4abe7829cfd7e980b7aee287dbf6a"
+    },
+    {
+      "id": "desktop-profile-gpt-5.6-terra-medium",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Dispatch gpt-5.6-terra at medium effort through the observed desktop collaboration runtime for a bounded read/edit/test exercise, then verify local instruction contracts and sealed package checksums.",
+      "evidence_path": "docs/qualification/probes/2026-09-13/gpt-5.6-terra-medium-desktop.json",
+      "sha256": "5ce0c586e5506c78643b86850620804fe534c6017690f5b4ab4718c30ce3e61d"
+    },
+    {
+      "id": "desktop-profile-gpt-5.6-luna-max",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Dispatch gpt-5.6-luna at max effort through the observed desktop collaboration runtime for a bounded read/edit/test exercise, then verify local instruction contracts and sealed package checksums.",
+      "evidence_path": "docs/qualification/probes/2026-09-13/gpt-5.6-luna-max-desktop.json",
+      "sha256": "73e6370836289af4babb18c0f0ffffb8b2b853a5e6ffabadec31bcca691dbd44"
+    },
+    {
+      "id": "desktop-profile-gpt-5.6-luna-high",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Dispatch gpt-5.6-luna at high effort through the observed desktop collaboration runtime for a bounded read/edit/test exercise, then verify local instruction contracts and sealed package checksums.",
+      "evidence_path": "docs/qualification/probes/2026-09-13/gpt-5.6-luna-high-desktop.json",
+      "sha256": "a4b4b39af3e27ce36d8e7b368d6e5fa7508a9088d6409ce42717e7fede54a5db"
+    },
+    {
+      "id": "desktop-profile-gpt-5.6-luna-medium",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Dispatch gpt-5.6-luna at medium effort through the observed desktop collaboration runtime for a bounded read/edit/test exercise, then verify local instruction contracts and sealed package checksums.",
+      "evidence_path": "docs/qualification/probes/2026-09-13/gpt-5.6-luna-medium-desktop.json",
+      "sha256": "f4bbaf3d7ef77cb946a44b9fdb69591eac01f9ef8c5ed0bac6d94352c47f78be"
+    },
+    {
+      "id": "desktop-profile-gpt-5.6-luna-low",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Dispatch gpt-5.6-luna at low effort through the observed desktop collaboration runtime for a bounded read/edit/test exercise, then verify local instruction contracts and sealed package checksums.",
+      "evidence_path": "docs/qualification/probes/2026-09-13/gpt-5.6-luna-low-desktop.json",
+      "sha256": "d223cfcda3e8232fd0610fc8d0c11f89f7d7c91d9c3eeca92bd48a2cd4cf0975"
+    }
+  ],
+  "qualifications": [
+    {
+      "profile_id": "gpt-6-astra-max",
+      "capability_tier": 1,
+      "model_id": "gpt-6-astra",
+      "reasoning_effort": "max",
+      "runtime_id": "codex-desktop-collaboration",
+      "client_version": "26.901.41600 (build 7982)",
+      "sign_in_mode": "subscription",
+      "billing_mode": "subscription",
+      "capabilities": ["read", "edit", "test"],
+      "verified_at": "2026-09-13T21:44:31Z",
+      "expires_at": "2026-10-12T21:44:31Z",
+      "qualification_check_ids": ["desktop-profile-gpt-6-astra-max"]
+    },
+    {
+      "profile_id": "gpt-6-astra-high",
+      "capability_tier": 1,
+      "model_id": "gpt-6-astra",
+      "reasoning_effort": "high",
+      "runtime_id": "codex-desktop-collaboration",
+      "client_version": "26.901.41600 (build 7982)",
+      "sign_in_mode": "subscription",
+      "billing_mode": "subscription",
+      "capabilities": ["read", "edit", "test"],
+      "verified_at": "2026-09-13T21:37:21Z",
+      "expires_at": "2026-10-12T21:37:21Z",
+      "qualification_check_ids": ["desktop-profile-gpt-6-astra-high"]
+    },
+    {
+      "profile_id": "gpt-5.6-sol-max",
+      "capability_tier": 2,
+      "model_id": "gpt-5.6-sol",
+      "reasoning_effort": "max",
+      "runtime_id": "codex-desktop-collaboration",
+      "client_version": "26.901.41600 (build 7982)",
+      "sign_in_mode": "subscription",
+      "billing_mode": "subscription",
+      "capabilities": ["read", "edit", "test"],
+      "verified_at": "2026-09-13T21:45:13Z",
+      "expires_at": "2026-10-12T21:45:13Z",
+      "qualification_check_ids": ["desktop-profile-gpt-5.6-sol-max"]
+    },
+    {
+      "profile_id": "gpt-5.6-sol-high",
+      "capability_tier": 2,
+      "model_id": "gpt-5.6-sol",
+      "reasoning_effort": "high",
+      "runtime_id": "codex-desktop-collaboration",
+      "client_version": "26.901.41600 (build 7982)",
+      "sign_in_mode": "subscription",
+      "billing_mode": "subscription",
+      "capabilities": ["read", "edit", "test"],
+      "verified_at": "2026-09-13T21:37:53Z",
+      "expires_at": "2026-10-12T21:37:53Z",
+      "qualification_check_ids": ["desktop-profile-gpt-5.6-sol-high"]
+    },
+    {
+      "profile_id": "gpt-5.6-terra-max",
+      "capability_tier": 3,
+      "model_id": "gpt-5.6-terra",
+      "reasoning_effort": "max",
+      "runtime_id": "codex-desktop-collaboration",
+      "client_version": "26.901.41600 (build 7982)",
+      "sign_in_mode": "subscription",
+      "billing_mode": "subscription",
+      "capabilities": ["read", "edit", "test"],
+      "verified_at": "2026-09-13T21:51:56Z",
+      "expires_at": "2026-10-12T21:51:56Z",
+      "qualification_check_ids": ["desktop-profile-gpt-5.6-terra-max"]
+    },
+    {
+      "profile_id": "gpt-5.6-terra-high",
+      "capability_tier": 3,
+      "model_id": "gpt-5.6-terra",
+      "reasoning_effort": "high",
+      "runtime_id": "codex-desktop-collaboration",
+      "client_version": "26.901.41600 (build 7982)",
+      "sign_in_mode": "subscription",
+      "billing_mode": "subscription",
+      "capabilities": ["read", "edit", "test"],
+      "verified_at": "2026-09-13T21:51:17Z",
+      "expires_at": "2026-10-12T21:51:17Z",
+      "qualification_check_ids": ["desktop-profile-gpt-5.6-terra-high"]
+    },
+    {
+      "profile_id": "gpt-5.6-terra-medium",
+      "capability_tier": 3,
+      "model_id": "gpt-5.6-terra",
+      "reasoning_effort": "medium",
+      "runtime_id": "codex-desktop-collaboration",
+      "client_version": "26.901.41600 (build 7982)",
+      "sign_in_mode": "subscription",
+      "billing_mode": "subscription",
+      "capabilities": ["read", "edit", "test"],
+      "verified_at": "2026-09-13T21:58:11Z",
+      "expires_at": "2026-10-12T21:58:11Z",
+      "qualification_check_ids": ["desktop-profile-gpt-5.6-terra-medium"]
+    },
+    {
+      "profile_id": "gpt-5.6-luna-max",
+      "capability_tier": 4,
+      "model_id": "gpt-5.6-luna",
+      "reasoning_effort": "max",
+      "runtime_id": "codex-desktop-collaboration",
+      "client_version": "26.901.41600 (build 7982)",
+      "sign_in_mode": "subscription",
+      "billing_mode": "subscription",
+      "capabilities": ["read", "edit", "test"],
+      "verified_at": "2026-09-13T21:59:22Z",
+      "expires_at": "2026-10-12T21:59:22Z",
+      "qualification_check_ids": ["desktop-profile-gpt-5.6-luna-max"]
+    },
+    {
+      "profile_id": "gpt-5.6-luna-high",
+      "capability_tier": 4,
+      "model_id": "gpt-5.6-luna",
+      "reasoning_effort": "high",
+      "runtime_id": "codex-desktop-collaboration",
+      "client_version": "26.901.41600 (build 7982)",
+      "sign_in_mode": "subscription",
+      "billing_mode": "subscription",
+      "capabilities": ["read", "edit", "test"],
+      "verified_at": "2026-09-13T22:04:30Z",
+      "expires_at": "2026-10-12T22:04:30Z",
+      "qualification_check_ids": ["desktop-profile-gpt-5.6-luna-high"]
+    },
+    {
+      "profile_id": "gpt-5.6-luna-medium",
+      "capability_tier": 4,
+      "model_id": "gpt-5.6-luna",
+      "reasoning_effort": "medium",
+      "runtime_id": "codex-desktop-collaboration",
+      "client_version": "26.901.41600 (build 7982)",
+      "sign_in_mode": "subscription",
+      "billing_mode": "subscription",
+      "capabilities": ["read", "edit", "test"],
+      "verified_at": "2026-09-13T22:03:56Z",
+      "expires_at": "2026-10-12T22:03:56Z",
+      "qualification_check_ids": ["desktop-profile-gpt-5.6-luna-medium"]
+    },
+    {
+      "profile_id": "gpt-5.6-luna-low",
+      "capability_tier": 4,
+      "model_id": "gpt-5.6-luna",
+      "reasoning_effort": "low",
+      "runtime_id": "codex-desktop-collaboration",
+      "client_version": "26.901.41600 (build 7982)",
+      "sign_in_mode": "subscription",
+      "billing_mode": "subscription",
+      "capabilities": ["read", "edit", "test"],
+      "verified_at": "2026-09-13T22:07:26Z",
+      "expires_at": "2026-10-12T22:07:26Z",
+      "qualification_check_ids": ["desktop-profile-gpt-5.6-luna-low"]
+    }
+  ],
+  "notes": "All bindings are subscription-only and use zero API budget. Each exact profile was freshly dispatched through Codex desktop collaboration and observed against com.openai.codex 26.901.41600 build 7982. The separately installed direct CLI 0.149.0 is not qualified, including for Astra, and no desktop evidence transfers to it. Dispatch metadata is not independent provider-model introspection. Sol/max remains native T2 and the sole explicitly selectable T1 fallback. Requalify after any relevant model, desktop client, account, sandbox or policy change, or by each row's expiry. Historical rosters, probes and receipts remain unchanged."
+}

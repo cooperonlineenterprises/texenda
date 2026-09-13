@@ -17,10 +17,29 @@ The four capability tiers default to max reasoning:
 
 Sol/max is also the sole explicit T1 fallback. The fallback requires an explicit flag and reason and is never selected automatically. Lower effort requires a current task/role/profile/fence-bound routing record proving bounded, reversible, fully specified work with deterministic verification. No existing whole parent WP has a T4 floor; T4 is reserved for separately fenced mechanical subtasks and future reviewed routes.
 
-Use [model-roster-v2.evidence.json](model-roster-v2.evidence.json) for the current exact-profile roster, [routing-v2-activation-verification.md](routing-v2-activation-verification.md) for the independently reviewed pre-installation snapshot, and [routing-v2-activation-receipt.md](routing-v2-activation-receipt.md) for the installed live-ledger state. `probes/` contains the model/effort runs; `analysis/` and `evidence/` retain author and independent review records. Profiles expire on `2026-10-12T19:51:23Z`, or earlier after a relevant model, client, account, sandbox, or policy change.
+Use [model-roster-v2.1.evidence.json](model-roster-v2.1.evidence.json) for the
+current exact-profile roster. It binds every profile to fresh desktop-runtime
+evidence and records the actual Codex desktop version/build rather than the
+separately installed CLI version. See the
+[runtime observation](runtime-surface-observation-2026-09-13.json) and
+[correction verification](runtime-surface-correction-verification-2026-09-13.md).
+The live ledger's latest `set-roster` receipt is the operational activation
+proof; always run `check` and inspect `status` before assignment.
+`probes/` contains the model/effort runs; `analysis/` and `evidence/`
+retain author and independent review records. Profiles expire individually on
+the timestamps in the roster, or earlier after a relevant model, desktop
+client, account, sandbox or policy change. Direct CLI use remains unqualified.
 
-## Historical v1 evidence
+## Historical v1 and original v2 evidence
 
-The original [v1 roster](model-roster.evidence.json), verification record, and WP-00 evidence are retained unchanged because the v1 receipt chain references their exact hashes. The v1 roster was invalidated during migration and cannot qualify a v2 profile. A byte-exact v1 state checkpoint is retained under the ignored `.texenda/` ledger.
+The original [v1 roster](model-roster.evidence.json), verification record and
+WP-00 evidence remain unchanged because the v1 receipt chain references their
+exact hashes. The v1 roster was invalidated during migration and cannot qualify
+a v2 profile. The original
+[v2 roster](model-roster-v2.evidence.json), activation evidence and receipt also
+remain unchanged because receipt 12 binds that roster's hash. Its
+`client_version: 0.149.0` values are historical attribution evidence, not
+current desktop qualification. A byte-exact v1 state checkpoint remains under
+the ignored `.texenda/` ledger.
 
 Before routing work, run `python3 tooling/coordination/harness.py --root . check` and inspect `status`. Missing, expired, changed, or unqualified exact profiles fail closed. The API development budget remains zero; subscription usage remains bounded by assignments.

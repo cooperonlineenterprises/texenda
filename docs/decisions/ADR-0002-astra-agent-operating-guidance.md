@@ -1,9 +1,11 @@
 # ADR-0002: Astra agent operating guidance
 
 Status: AUTHORITATIVE DECISION — owner accepted the repository-local operating
-guidance through the 2026-09-13 audit instruction. Implementation status:
-candidate; independent implementation review and integration remain pending.
-Acceptance of this local policy does not amend product authority or
+guidance through the 2026-09-13 audit instruction. The instruction-system
+candidate `e3def2617753dd178e7d3eebae2e548b3e2df39b` was independently approved
+and integrated; its review evidence was recorded at
+`0a72aba450c76e318b02f22c49133b406da7d4ef`. Acceptance of this local policy
+does not amend product authority or
 [ADR-0001](ADR-0001-quality-first-model-routing.md).
 
 The [source audit](../audits/2026-09-13-gpt-6-astra-agent-system-audit.md) found
