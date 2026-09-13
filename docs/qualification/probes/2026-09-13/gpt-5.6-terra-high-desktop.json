@@ -1,0 +1,122 @@
+{
+  "schema_version": "1.0",
+  "kind": "desktop-exact-profile-qualification-probe",
+  "observed_at": "2026-09-13T21:51:17Z",
+  "base_revision": "dfb6e0090c4f128ba2d8e16e4e3d038d632415db",
+  "branch": "qualify/desktop-terra-high-20260913",
+  "dispatch_metadata": {
+    "profile_id": "gpt-5.6-terra-high",
+    "requested_model_id": "gpt-5.6-terra",
+    "requested_reasoning_effort": "high",
+    "capability_tier": 3,
+    "runtime_id": "codex-desktop-collaboration",
+    "client_version": "26.901.41600 (build 7982)",
+    "selection_evidence": "The parent dispatched this bounded qualification with the exact requested desktop collaboration model and effort. The probe has no independent provider-model or effort introspection channel."
+  },
+  "runtime_observation": {
+    "path": "docs/qualification/runtime-surface-observation-2026-09-13.json",
+    "sha256": "35995674a989b1b77233eafdc80ed092d0a8f8622b88990e8f7b3f8336978091",
+    "desktop_bundle_path": "/Applications/ChatGPT.app",
+    "bundle_identifier": "com.openai.codex",
+    "bundle_version": "26.901.41600",
+    "bundle_build": "7982",
+    "independent_observation_procedure": [
+      "/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' /Applications/ChatGPT.app/Contents/Info.plist => com.openai.codex (exit 0)",
+      "/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' /Applications/ChatGPT.app/Contents/Info.plist => 26.901.41600 (exit 0)",
+      "/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' /Applications/ChatGPT.app/Contents/Info.plist => 7982 (exit 0)"
+    ]
+  },
+  "direct_cli": {
+    "command": "codex --version",
+    "output": "codex-cli 0.149.0",
+    "exit_code": 0,
+    "nonfatal_stderr": "PATH-alias permission warning",
+    "status": "UNQUALIFIED",
+    "minimum_documented_for_astra": "0.153.0",
+    "conclusion": "Direct CLI is not qualified for this profile or any other model profile by this desktop probe. Astra direct CLI use is separately unqualified because 0.149.0 is below the documented >=0.153.0 minimum and no direct-CLI exact-profile probe ran."
+  },
+  "read_evidence": {
+    "required_context_read": [
+      "AGENTS.md",
+      "README.md",
+      "DECISION-STATUS.md",
+      "07-agent-orchestration/project-kernel.md",
+      "07-agent-orchestration/ORCHESTRATOR-START.md",
+      "docs/qualification/runtime-surface-observation-2026-09-13.json",
+      "docs/qualification/README.md",
+      "tooling/coordination/README.md",
+      "tooling/coordination/routing-policy.json"
+    ],
+    "policy_profile": {
+      "routing_policy_sha256": "5ebc903a1bd2d3e1925a01fcb1e556f0ed0a4c50682a3b3d93ccc7d7cdd6e979",
+      "profile_id": "gpt-5.6-terra-high",
+      "capability_tier": 3,
+      "policy_eligibility_only": true
+    },
+    "invariants_read": {
+      "INV-02": "Shared identity never creates shared permission; a profile or endpoint match cannot activate another publication, brand, purpose, or channel.",
+      "INV-12": "A timeout or outage never authorizes blind provider/channel failover; reconcile before another effect, and a block or opt-out cannot trigger escape to another channel.",
+      "INV-30": "The development harness coordinates work but cannot grant production authority; no recipient sends, deployments, spend, or credential use from a planning receipt."
+    }
+  },
+  "edit_evidence": {
+    "permitted_write_scope": [
+      "docs/qualification/probes/2026-09-13/gpt-5.6-terra-high-desktop.json"
+    ],
+    "actual_changed_paths": [
+      "docs/qualification/probes/2026-09-13/gpt-5.6-terra-high-desktop.json"
+    ],
+    "sealed_specs_edited": false,
+    "coordination_state_mutated": false,
+    "external_or_product_state_mutated": false
+  },
+  "test_evidence": [
+    {
+      "id": "instruction-contracts",
+      "command": "env PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tooling/coordination/tests -p 'test_instruction_contracts.py' -v",
+      "result": "PASS",
+      "exit_code": 0,
+      "tests_run": 10,
+      "scope": "Static operating-contract and synthetic manifest checks; not model evaluation or product qualification."
+    },
+    {
+      "id": "sealed-package-checksums",
+      "command": "env PYTHONDONTWRITEBYTECODE=1 python3 specs/texenda-handoff/10-validation/validate_package.py --checksums",
+      "result": "PASS",
+      "exit_code": 0,
+      "scope": "Offline sealed-package structure, traceability, and checksum checks; not product, production, provider, security, legal, or external-gate qualification."
+    }
+  ],
+  "verification_evidence": {
+    "json_parse": "PASS: python3 parsed this report as JSON after writing.",
+    "observation_hash": "PASS: shasum -a 256 matched the required runtime-observation SHA-256.",
+    "git_diff_check": "PASS: git diff --check produced no diagnostics before commit.",
+    "precommit_scope_check": "PASS: git status --short listed only this new report path before staging.",
+    "git_clean_after_commit": "PASS: the initial commit contained only this report and git status --porcelain returned empty; this same sole-report commit is amended to retain that result."
+  },
+  "account_and_spend": {
+    "sign_in_mode": "subscription",
+    "billing_mode": "subscription",
+    "api_spend_usd": 0,
+    "api_spend_authorized": false,
+    "subscription_usage": "The bounded desktop-dispatch probe used subscription mode; no API call, API key, paid credit, or provider billing telemetry was used or read."
+  },
+  "self_reported_model_id": null,
+  "runtime_stop": {
+    "subprocesses_observed_stopped": [
+      "Three PlistBuddy Info.plist reads exited 0.",
+      "codex --version exited 0.",
+      "The single 10-test instruction-contract unittest process exited 0.",
+      "The sealed validate_package.py --checksums process exited 0."
+    ],
+    "qualifying_agent_dispatcher_stop": "NOT ATTESTED HERE; the parent supplies the dispatcher-observed agent-stop evidence.",
+    "no_background_processes_started": true
+  },
+  "limitations": [
+    "Requested model and effort are dispatch metadata; the runtime did not expose an independently verifiable executing provider model ID or effort, so self_reported_model_id is null.",
+    "This exact-profile result applies only to codex-desktop-collaboration at client 26.901.41600 (build 7982), with the observed subscription mode and current local boundaries. It does not transfer to direct CLI, API, cloud, IDE, another desktop build, account, workspace, sandbox, or approval configuration.",
+    "Direct CLI remains UNQUALIFIED. In particular, direct Astra CLI use remains UNQUALIFIED because codex-cli 0.149.0 is below the observation's documented >=0.153.0 minimum; no direct-CLI exact-profile read/edit/test probe ran.",
+    "This report creates no roster entry, lease, assignment, routing record, budget authorization, activation receipt, or external qualification."
+  ],
+  "scope_boundary": "This is bounded local read/edit/test evidence only. It makes no Texenda product, production, provider, security, legal, privacy, deployment, sending, migration, external-gate, credential, or spend claim."
+}
