@@ -1,0 +1,269 @@
+{
+  "schema_version": "2.0",
+  "kind": "roster",
+  "summary": "Owner-attested quality-first Texenda coding roster with four max-default capability tiers and exact qualified downshift profiles.",
+  "routing_policy_digest": "61f0db448cf5ac5adad4d9340d568a7558c0369174e30aab92dd0ccf0d24bdf0",
+  "checks": [
+    {
+      "id": "routing-v2-independent-review",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Independently review the exact routing-v2 candidate, every correction, the 11-profile matrix, all 88 WP role routes, state migration, budget boundaries, concurrency and evidence tamper cases.",
+      "evidence_path": "docs/qualification/evidence/routing-v2-review.evidence.json",
+      "sha256": "880caab21053225cfa848dd9c3ccd47df7eddd2910f453e6fb1c9f02ee031620"
+    },
+    {
+      "id": "routing-v2-live-activation",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Verify the integrated head, sealed package checks, live v1-to-v2 checkpointed migration, preserved receipt prefix/tasks, zero API budget, and exact probe inventory.",
+      "evidence_path": "docs/qualification/routing-v2-activation-verification.md",
+      "sha256": "56eac15cf277651f9e06a2e8d5c4152b5f807a27e454ffd60a8fa40dfe107077"
+    },
+    {
+      "id": "profile-gpt-6-astra-max",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Dispatch gpt-6-astra at max effort for the bounded routing-v2 implementation; read governing context, edit the project-local policy/adapter/tests/ADR/instructions/templates and its probe, and run the complete local and sealed validation suites.",
+      "evidence_path": "docs/qualification/probes/gpt-6-astra-max.json",
+      "sha256": "d5ca2d2136c8ea958069a6cc4af3604b839b6b78dc58250f171b0be03691c021"
+    },
+    {
+      "id": "profile-gpt-6-astra-high",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Dispatch gpt-6-astra at high effort in the bounded subscription runtime; read project invariants, edit only its scoped report, and run local validation/tests.",
+      "evidence_path": "docs/qualification/probes/gpt-6-astra.json",
+      "sha256": "6ab0d7b121630937de88441c1aedf1e46de1da1d0319ac01806bb7435fdf726f"
+    },
+    {
+      "id": "profile-gpt-5.6-sol-max",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Dispatch gpt-5.6-sol at max effort in the bounded subscription runtime; read project invariants, edit only its scoped report, and run local validation/tests.",
+      "evidence_path": "docs/qualification/probes/gpt-5.6-sol-max.json",
+      "sha256": "d53046c0c75c549ab6ce41c9385f6f13cf8d69b9a6dfd3addfff68fa934605ad"
+    },
+    {
+      "id": "profile-gpt-5.6-sol-high",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Dispatch gpt-5.6-sol at high effort in the bounded subscription runtime; read project invariants, edit only its scoped report, and run local validation/tests.",
+      "evidence_path": "docs/qualification/probes/gpt-5.6-sol.json",
+      "sha256": "b3517e156c382bc9fb45ed29994a8ff573854ddcd03436fee88ed053810ae300"
+    },
+    {
+      "id": "profile-gpt-5.6-terra-max",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Dispatch gpt-5.6-terra at max effort in the bounded subscription runtime; read project invariants, edit only its scoped report, and run local validation/tests.",
+      "evidence_path": "docs/qualification/probes/gpt-5.6-terra-max.json",
+      "sha256": "2cd4aa563083a29b00b3a0fa9481ef9a19101cc5e126f6268fbb23990139431c"
+    },
+    {
+      "id": "profile-gpt-5.6-terra-high",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Dispatch gpt-5.6-terra at high effort in the bounded subscription runtime; read project invariants, edit only its scoped report, and run local validation/tests.",
+      "evidence_path": "docs/qualification/probes/gpt-5.6-terra-high.json",
+      "sha256": "4bf17a79ae8bcc32bcbb38e49d9ed295e4743808126bd4716d70c65cfd5db267"
+    },
+    {
+      "id": "profile-gpt-5.6-terra-medium",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Dispatch gpt-5.6-terra at medium effort in the bounded subscription runtime; read project invariants, edit only its scoped report, and run local validation/tests.",
+      "evidence_path": "docs/qualification/probes/gpt-5.6-terra.json",
+      "sha256": "1c81e33c60d7da2e23b1d9f4fc1c8e8647bb26dfce3ff9fcce6dc3d1d19aeda3"
+    },
+    {
+      "id": "profile-gpt-5.6-luna-max",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Dispatch gpt-5.6-luna at max effort in the bounded subscription runtime; read project invariants, edit only its scoped report, and run local validation/tests.",
+      "evidence_path": "docs/qualification/probes/gpt-5.6-luna-max.json",
+      "sha256": "5b8beec0eefc42830da3097f10f817f765034b4e72594f6c2b23bc817cd2a09e"
+    },
+    {
+      "id": "profile-gpt-5.6-luna-high",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Dispatch gpt-5.6-luna at high effort in the bounded subscription runtime; read project invariants, edit only its scoped report, and run local validation/tests.",
+      "evidence_path": "docs/qualification/probes/gpt-5.6-luna-high.json",
+      "sha256": "f47fcc9a55cb7702ec8896919eaacc289bbe0b69e783dc132eaa9657cc1a0322"
+    },
+    {
+      "id": "profile-gpt-5.6-luna-medium",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Dispatch gpt-5.6-luna at medium effort in the bounded subscription runtime; read project invariants, edit only its scoped report, and run local validation/tests.",
+      "evidence_path": "docs/qualification/probes/gpt-5.6-luna-medium.json",
+      "sha256": "9ca408754af445cfdd40f4753a239b89e026a2ab9d109f013d63692346758160"
+    },
+    {
+      "id": "profile-gpt-5.6-luna-low",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Dispatch gpt-5.6-luna at low effort in the bounded subscription runtime; read project invariants, edit only its scoped report, and run local validation/tests.",
+      "evidence_path": "docs/qualification/probes/gpt-5.6-luna.json",
+      "sha256": "469723e6801d3a2c91d29d52ca3ed69c4bcdc6206d7a85cceb12c472b08ab00f"
+    }
+  ],
+  "qualifications": [
+    {
+      "profile_id": "gpt-6-astra-max",
+      "capability_tier": 1,
+      "model_id": "gpt-6-astra",
+      "reasoning_effort": "max",
+      "runtime_id": "codex-desktop-collaboration",
+      "client_version": "0.149.0",
+      "sign_in_mode": "subscription",
+      "billing_mode": "subscription",
+      "capabilities": ["read", "edit", "test"],
+      "verified_at": "2026-09-13T19:51:23Z",
+      "expires_at": "2026-10-12T19:51:23Z",
+      "qualification_check_ids": ["profile-gpt-6-astra-max"]
+    },
+    {
+      "profile_id": "gpt-6-astra-high",
+      "capability_tier": 1,
+      "model_id": "gpt-6-astra",
+      "reasoning_effort": "high",
+      "runtime_id": "codex-desktop-collaboration",
+      "client_version": "0.149.0",
+      "sign_in_mode": "subscription",
+      "billing_mode": "subscription",
+      "capabilities": ["read", "edit", "test"],
+      "verified_at": "2026-09-13T19:51:23Z",
+      "expires_at": "2026-10-12T19:51:23Z",
+      "qualification_check_ids": ["profile-gpt-6-astra-high"]
+    },
+    {
+      "profile_id": "gpt-5.6-sol-max",
+      "capability_tier": 2,
+      "model_id": "gpt-5.6-sol",
+      "reasoning_effort": "max",
+      "runtime_id": "codex-desktop-collaboration",
+      "client_version": "0.149.0",
+      "sign_in_mode": "subscription",
+      "billing_mode": "subscription",
+      "capabilities": ["read", "edit", "test"],
+      "verified_at": "2026-09-13T19:51:23Z",
+      "expires_at": "2026-10-12T19:51:23Z",
+      "qualification_check_ids": ["profile-gpt-5.6-sol-max"]
+    },
+    {
+      "profile_id": "gpt-5.6-sol-high",
+      "capability_tier": 2,
+      "model_id": "gpt-5.6-sol",
+      "reasoning_effort": "high",
+      "runtime_id": "codex-desktop-collaboration",
+      "client_version": "0.149.0",
+      "sign_in_mode": "subscription",
+      "billing_mode": "subscription",
+      "capabilities": ["read", "edit", "test"],
+      "verified_at": "2026-09-13T19:51:23Z",
+      "expires_at": "2026-10-12T19:51:23Z",
+      "qualification_check_ids": ["profile-gpt-5.6-sol-high"]
+    },
+    {
+      "profile_id": "gpt-5.6-terra-max",
+      "capability_tier": 3,
+      "model_id": "gpt-5.6-terra",
+      "reasoning_effort": "max",
+      "runtime_id": "codex-desktop-collaboration",
+      "client_version": "0.149.0",
+      "sign_in_mode": "subscription",
+      "billing_mode": "subscription",
+      "capabilities": ["read", "edit", "test"],
+      "verified_at": "2026-09-13T19:51:23Z",
+      "expires_at": "2026-10-12T19:51:23Z",
+      "qualification_check_ids": ["profile-gpt-5.6-terra-max"]
+    },
+    {
+      "profile_id": "gpt-5.6-terra-high",
+      "capability_tier": 3,
+      "model_id": "gpt-5.6-terra",
+      "reasoning_effort": "high",
+      "runtime_id": "codex-desktop-collaboration",
+      "client_version": "0.149.0",
+      "sign_in_mode": "subscription",
+      "billing_mode": "subscription",
+      "capabilities": ["read", "edit", "test"],
+      "verified_at": "2026-09-13T19:51:23Z",
+      "expires_at": "2026-10-12T19:51:23Z",
+      "qualification_check_ids": ["profile-gpt-5.6-terra-high"]
+    },
+    {
+      "profile_id": "gpt-5.6-terra-medium",
+      "capability_tier": 3,
+      "model_id": "gpt-5.6-terra",
+      "reasoning_effort": "medium",
+      "runtime_id": "codex-desktop-collaboration",
+      "client_version": "0.149.0",
+      "sign_in_mode": "subscription",
+      "billing_mode": "subscription",
+      "capabilities": ["read", "edit", "test"],
+      "verified_at": "2026-09-13T19:51:23Z",
+      "expires_at": "2026-10-12T19:51:23Z",
+      "qualification_check_ids": ["profile-gpt-5.6-terra-medium"]
+    },
+    {
+      "profile_id": "gpt-5.6-luna-max",
+      "capability_tier": 4,
+      "model_id": "gpt-5.6-luna",
+      "reasoning_effort": "max",
+      "runtime_id": "codex-desktop-collaboration",
+      "client_version": "0.149.0",
+      "sign_in_mode": "subscription",
+      "billing_mode": "subscription",
+      "capabilities": ["read", "edit", "test"],
+      "verified_at": "2026-09-13T19:51:23Z",
+      "expires_at": "2026-10-12T19:51:23Z",
+      "qualification_check_ids": ["profile-gpt-5.6-luna-max"]
+    },
+    {
+      "profile_id": "gpt-5.6-luna-high",
+      "capability_tier": 4,
+      "model_id": "gpt-5.6-luna",
+      "reasoning_effort": "high",
+      "runtime_id": "codex-desktop-collaboration",
+      "client_version": "0.149.0",
+      "sign_in_mode": "subscription",
+      "billing_mode": "subscription",
+      "capabilities": ["read", "edit", "test"],
+      "verified_at": "2026-09-13T19:51:23Z",
+      "expires_at": "2026-10-12T19:51:23Z",
+      "qualification_check_ids": ["profile-gpt-5.6-luna-high"]
+    },
+    {
+      "profile_id": "gpt-5.6-luna-medium",
+      "capability_tier": 4,
+      "model_id": "gpt-5.6-luna",
+      "reasoning_effort": "medium",
+      "runtime_id": "codex-desktop-collaboration",
+      "client_version": "0.149.0",
+      "sign_in_mode": "subscription",
+      "billing_mode": "subscription",
+      "capabilities": ["read", "edit", "test"],
+      "verified_at": "2026-09-13T19:51:23Z",
+      "expires_at": "2026-10-12T19:51:23Z",
+      "qualification_check_ids": ["profile-gpt-5.6-luna-medium"]
+    },
+    {
+      "profile_id": "gpt-5.6-luna-low",
+      "capability_tier": 4,
+      "model_id": "gpt-5.6-luna",
+      "reasoning_effort": "low",
+      "runtime_id": "codex-desktop-collaboration",
+      "client_version": "0.149.0",
+      "sign_in_mode": "subscription",
+      "billing_mode": "subscription",
+      "capabilities": ["read", "edit", "test"],
+      "verified_at": "2026-09-13T19:51:23Z",
+      "expires_at": "2026-10-12T19:51:23Z",
+      "qualification_check_ids": ["profile-gpt-5.6-luna-low"]
+    }
+  ],
+  "notes": "All bindings are subscription-only and use zero API budget. The collaboration runtime accepted each exact model/effort override, but agents could not independently introspect their executing model IDs. Sol/max remains native T2 and is the sole explicitly selectable T1 fallback under the routing policy. Requalify after any relevant model, client, account, sandbox or policy change, or by expiry."
+}

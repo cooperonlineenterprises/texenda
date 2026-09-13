@@ -1,9 +1,26 @@
-# WP-00 runtime qualification
+# Runtime and routing qualification
 
-This directory is the local, sanitized evidence index for the bounded Codex runtime qualification required by WP-00 / VAL-13. It establishes only read, edit, and test capability in the subscription runtime; it does not pass any product, production, provider, legal, privacy, security, deployment, sending, billing, or other external gate.
+This directory contains sanitized local evidence for the Texenda coding runtime. It does not qualify the Texenda application, production services, providers, legal/privacy posture, security readiness, deployment, sending, migration accounts, or any product acceptance criterion.
 
-Active bindings are `gpt-6-astra` (Tier 1, high), `gpt-5.6-terra` (Tier 2, medium), and `gpt-5.6-luna` (Tier 3, low). `gpt-5.6-sol` is a qualified Tier 1 fallback, not an active binding. `gpt-5.3-codex-spark` is unqualified and must not be routed. All active bindings expire exactly `2026-10-12T16:45:48Z`, or earlier upon a relevant model, client, account, sandbox, or policy change.
+## Active routing policy
 
-Use [runtime-inventory.json](runtime-inventory.json) for sanitized runtime facts, [model-roster.evidence.json](model-roster.evidence.json) for active binding metadata and expected hashes, [model-qualification-verification.md](model-qualification-verification.md) for the verification record, and `probes/` for the per-model bounded task evidence. Before resuming automated routing, parse every JSON artifact and recompute its SHA-256 against the roster; if any mismatch, expiry, or material runtime change is found, treat the binding as unavailable pending requalification.
+The project-local [quality-first routing decision](../decisions/ADR-0001-quality-first-model-routing.md) and [machine policy](../../tooling/coordination/routing-policy.json) supersede only the sealed handoff's coding-model tier recommendations. Use `tooling/coordination/harness.py`; the package under `specs/texenda-handoff/` remains byte-for-byte unchanged.
 
-No harness submission evidence is created here; Astra binds the committed candidate separately.
+The four capability tiers default to max reasoning:
+
+| Tier | Default | Qualified downshifts |
+|---|---|---|
+| T1 | `gpt-6-astra-max` | `gpt-6-astra-high` |
+| T2 | `gpt-5.6-sol-max` | `gpt-5.6-sol-high` |
+| T3 | `gpt-5.6-terra-max` | `gpt-5.6-terra-high`, `gpt-5.6-terra-medium` |
+| T4 | `gpt-5.6-luna-max` | `gpt-5.6-luna-high`, `gpt-5.6-luna-medium`, `gpt-5.6-luna-low` |
+
+Sol/max is also the sole explicit T1 fallback. The fallback requires an explicit flag and reason and is never selected automatically. Lower effort requires a current task/role/profile/fence-bound routing record proving bounded, reversible, fully specified work with deterministic verification. No existing whole parent WP has a T4 floor; T4 is reserved for separately fenced mechanical subtasks and future reviewed routes.
+
+Use [model-roster-v2.evidence.json](model-roster-v2.evidence.json) for the current exact-profile roster, [routing-v2-activation-verification.md](routing-v2-activation-verification.md) for integrated and live-migration evidence, `probes/` for the model/effort runs, and `analysis/` plus `evidence/` for author and independent review records. Profiles expire on `2026-10-12T19:51:23Z`, or earlier after a relevant model, client, account, sandbox, or policy change.
+
+## Historical v1 evidence
+
+The original [v1 roster](model-roster.evidence.json), verification record, and WP-00 evidence are retained unchanged because the v1 receipt chain references their exact hashes. The v1 roster was invalidated during migration and cannot qualify a v2 profile. A byte-exact v1 state checkpoint is retained under the ignored `.texenda/` ledger.
+
+Before routing work, run `python3 tooling/coordination/harness.py --root . check` and inspect `status`. Missing, expired, changed, or unqualified exact profiles fail closed. The API development budget remains zero; subscription usage remains bounded by assignments.
