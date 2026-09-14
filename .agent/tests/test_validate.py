@@ -81,7 +81,11 @@ class FacadeIntegratedFixtureTests(unittest.TestCase):
         subprocess.run(['git', 'config', 'user.name', 'Synthetic Facade Test'], cwd=cls.fixture, check=True)
         subprocess.run(['git', 'config', 'user.email', 'fixture@example.invalid'], cwd=cls.fixture, check=True)
         subprocess.run(['git', 'add', '-A'], cwd=cls.fixture, check=True)
-        subprocess.run(['git', 'commit', '--quiet', '-m', 'synthetic mapped facade fixture'],
+        # The source may already be a fully committed final tip. An empty commit still
+        # provides a deterministic fixture revision without weakening any copied-byte
+        # or generated-source-scope assertion.
+        subprocess.run(['git', 'commit', '--quiet', '--allow-empty',
+                        '-m', 'synthetic mapped facade fixture'],
                        cwd=cls.fixture, check=True)
         harness_spec = importlib.util.spec_from_file_location(
             'fixture_harness', cls.fixture / 'tooling/coordination/harness.py')
