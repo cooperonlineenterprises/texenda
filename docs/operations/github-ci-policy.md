@@ -44,6 +44,27 @@ artifact-storage behavior. Revisit the design using actual runs. A quota warning
 stops new nonessential dispatch and preserves required evidence. It cannot
 change a required test to NOT RUN and still authorize merge or release.
 
+## AI review and local integration
+
+A qualified AI author may hand a local candidate to a different qualified AI
+reviewer, and an AI implementation lead may integrate an approved candidate
+into local main without operator involvement. Follow the current model-routing,
+lease/fence, evidence, runtime-stop and serialized-integration contracts.
+
+Review must identify the exact candidate and base, inspect the real diff and
+changed paths, recompute referenced hashes, run contract-required checks and
+record actionable findings or approval. Integration is denied if the candidate
+changed, evidence is missing, a required check did not pass, either write scope
+is still active, main is dirty, or conflict resolution would change semantics.
+Rerun affected checks after integration.
+
+Local integration authority ends at the repository boundary. It cannot push the
+branch, enable a workflow, change visibility/settings, configure secrets or
+spending, provision a runner/environment, deploy, publish or clear an external
+gate. An operator is unnecessary for the deterministic local review/integration
+path but remains required wherever project authority assigns an external or
+human-owned decision.
+
 ## Trigger and concurrency contract
 
 WP-02 should implement one coherent verification path:

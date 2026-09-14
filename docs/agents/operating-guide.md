@@ -77,6 +77,11 @@ Author completion is a candidate handoff. Independent acceptance, integration
 and release are separate. A reviewer must be a different actor and bind the
 exact candidate and evidence hashes. Semantic conflict resolution creates a new
 candidate requiring review. No agent approves its own consequential change.
+Qualified AI agents may perform that independent review and the implementation
+lead may integrate the accepted candidate into local main without operator
+involvement. Human participation is required only where the governing contract
+assigns a human decision or authorizes an external effect; see
+[ADR-0003](../decisions/ADR-0003-private-repository-and-bounded-github-actions.md).
 
 ## Delegation and prompt maintenance
 

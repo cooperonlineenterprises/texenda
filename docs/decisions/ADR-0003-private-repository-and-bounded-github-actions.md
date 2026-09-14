@@ -43,6 +43,40 @@ retention. Workflow permissions are read-only by default and third-party
 actions are pinned to immutable commits. Production credentials, production
 data and ignored local inputs never enter CI.
 
+## AI review and local integration
+
+Qualified AI agents may complete independent review and local integration
+without operator involvement. This is ordinary repository work already within
+the owner handoff; it does not require a human to repeat deterministic review
+or merge steps.
+
+The authorization is conditional:
+
+- the reviewer is a different actor from the candidate author and uses the
+  exact qualified reviewer profile required by the current routing policy;
+- review binds the exact base, candidate revision, changed paths, evidence
+  hashes and required checks, and records findings honestly;
+- the author runtime and reviewer runtime are observed stopped or isolated
+  before their write scopes are released;
+- the integration head and worktree are clean, the candidate has not changed,
+  and the integrator introduces no semantic conflict resolution;
+- affected checks rerun on the integrated revision and the local receipt or
+  handoff evidence is updated when the governing workflow requires it; and
+- any failure, conflict, changed authority, missing evidence or out-of-scope
+  effect stops integration rather than being inferred away.
+
+The AI integrator may fast-forward, cherry-pick or perform an already reviewed
+mechanical merge into local main. A semantic conflict resolution is a new
+candidate and needs new independent review. An agent never approves its own
+consequential candidate.
+
+This authorization does not permit pushing, changing repository visibility or
+GitHub settings, enabling Actions, increasing budgets, adding secrets,
+provisioning runners or environments, deploying, publishing, accessing
+production data, sending, clearing an external gate, accepting a security
+exception or performing a destructive operation. Those actions retain their
+existing accountable-human boundaries.
+
 Do not introduce a self-hosted runner merely to avoid minute charges. It is
 deferred until measured hosted-runner use justifies its operational burden and
 WP-39 plus VAL-08 cover isolation, patching, ephemeral execution, credentials,

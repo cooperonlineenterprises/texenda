@@ -130,6 +130,11 @@ class InstructionContracts(unittest.TestCase):
             'pull_request_target',
             'WP-39',
             'VAL-08',
+            'without operator involvement',
+            'different actor from the candidate author',
+            'An agent never approves its own consequential candidate',
+            'introduces no semantic conflict resolution',
+            'Local integration authority ends at the repository boundary',
         ):
             self.assertIn(contract, text)
         self.assertNotIn('2,000', text)
