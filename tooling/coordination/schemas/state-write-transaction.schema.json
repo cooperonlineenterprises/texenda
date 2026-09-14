@@ -1,0 +1,186 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:texenda:coordination:state-write-transaction:v1",
+  "title": "Texenda local state-write recovery transaction",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "phase",
+    "token",
+    "operation",
+    "state_name",
+    "candidate_name",
+    "repository_root",
+    "state_root",
+    "repository_identity",
+    "state_root_identity",
+    "lock_identity",
+    "binding",
+    "routing_policy_digest",
+    "old_state",
+    "new_state"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "texenda.state-write-transaction.v1"
+    },
+    "phase": {
+      "enum": ["preparing", "ready"]
+    },
+    "token": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{24}$"
+    },
+    "operation": {
+      "enum": ["initialize", "replace"]
+    },
+    "state_name": {
+      "const": "state.json"
+    },
+    "candidate_name": {
+      "type": "string",
+      "pattern": "^\\.state-write-candidate-[0-9a-f]{24}\\.json$"
+    },
+    "repository_root": {
+      "type": "string",
+      "pattern": "^/"
+    },
+    "state_root": {
+      "type": "string",
+      "pattern": "^/"
+    },
+    "repository_identity": {
+      "$ref": "#/$defs/identity"
+    },
+    "state_root_identity": {
+      "$ref": "#/$defs/identity"
+    },
+    "lock_identity": {
+      "$ref": "#/$defs/identity"
+    },
+    "binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "sha256", "identity"],
+      "properties": {
+        "kind": {
+          "enum": ["absent", "present"]
+        },
+        "sha256": {
+          "type": ["string", "null"],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "identity": {
+          "oneOf": [
+            {"$ref": "#/$defs/identity"},
+            {"type": "null"}
+          ]
+        }
+      }
+    },
+    "routing_policy_digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "old_state": {
+      "oneOf": [
+        {"$ref": "#/$defs/state_value"},
+        {"type": "null"}
+      ]
+    },
+    "new_state": {
+      "$ref": "#/$defs/state_value"
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"phase": {"const": "preparing"}}},
+      "then": {
+        "properties": {
+          "new_state": {
+            "properties": {"identity": {"type": "null"}}
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "new_state": {
+            "properties": {"identity": {"$ref": "#/$defs/identity"}}
+          }
+        }
+      }
+    },
+    {
+      "if": {"properties": {"operation": {"const": "initialize"}}},
+      "then": {"properties": {"old_state": {"type": "null"}}},
+      "else": {"properties": {"old_state": {"$ref": "#/$defs/state_value"}}}
+    },
+    {
+      "if": {
+        "properties": {
+          "binding": {"properties": {"kind": {"const": "absent"}}}
+        }
+      },
+      "then": {
+        "properties": {
+          "binding": {
+            "properties": {
+              "sha256": {"type": "null"},
+              "identity": {"type": "null"}
+            }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "binding": {
+            "properties": {
+              "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+              "identity": {"$ref": "#/$defs/identity"}
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "device",
+        "inode",
+        "file_type",
+        "size",
+        "mtime_ns",
+        "observed_ctime_ns"
+      ],
+      "properties": {
+        "device": {"type": "integer", "minimum": 0},
+        "inode": {"type": "integer", "minimum": 0},
+        "file_type": {"type": "integer", "minimum": 0},
+        "size": {"type": "integer", "minimum": 0},
+        "mtime_ns": {"type": "integer", "minimum": 0},
+        "observed_ctime_ns": {"type": "integer", "minimum": 0}
+      }
+    },
+    "state_value": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sha256", "identity"],
+      "properties": {
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "identity": {
+          "oneOf": [
+            {"$ref": "#/$defs/identity"},
+            {"type": "null"}
+          ]
+        }
+      }
+    }
+  }
+}

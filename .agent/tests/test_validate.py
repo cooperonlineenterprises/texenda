@@ -50,6 +50,8 @@ class FacadeUnitTests(unittest.TestCase):
         extension = common.load_json(ROOT / '.agent/extensions/texenda-coordination/extension.json')
         self.assertFalse(extension['may_expand_authority'])
         self.assertFalse(extension['live_roster_copied'])
+        self.assertIn('tooling/coordination/schemas/state-write-transaction.schema.json',
+                      {row['path'] for row in extension['bindings']})
 
     def test_validation_registry_delegates_all_existing_suites(self):
         registry = validate.validate_registry(ROOT)
@@ -61,9 +63,15 @@ class FacadeUnitTests(unittest.TestCase):
     def test_only_activation_transaction_temp_not_generated_source_is_ignored(self):
         ignored = subprocess.run(['git', 'check-ignore', '-q',
                                   '.texenda-location.activation-deadbeef'], cwd=ROOT)
+        state_transaction = subprocess.run(['git', 'check-ignore', '-q',
+                                            '.texenda/.state-write-transaction.json'], cwd=ROOT)
+        state_archive = subprocess.run(['git', 'check-ignore', '-q',
+                                        '.texenda/state-write-committed-synthetic.json'], cwd=ROOT)
         generated_source = subprocess.run(['git', 'check-ignore', '-q',
                                            '.agent/generated/synthetic_implementation.py'], cwd=ROOT)
         self.assertEqual(ignored.returncode, 0)
+        self.assertEqual(state_transaction.returncode, 0)
+        self.assertEqual(state_archive.returncode, 0)
         self.assertNotEqual(generated_source.returncode, 0)
 
     def test_check_all_never_dispatches_refresh_writers_and_resolves_context(self):
@@ -165,6 +173,7 @@ class FacadeIntegratedFixtureTests(unittest.TestCase):
         for name in ('.agent/tasks/active.json',
                      'docs/qualification/evidence/synthetic-untracked.tmp',
                      '.agent/generated/synthetic_implementation.py',
+                     '.texenda/.state-write-transaction.json',
                      'synthetic-cache.pyc'):
             path = self.fixture / name
             if path.exists():
@@ -290,6 +299,15 @@ class FacadeIntegratedFixtureTests(unittest.TestCase):
                 validate.validate(self.fixture, run_all=True)
         refresh.refresh(self.fixture, recover_interrupted=True)
         self.assertEqual(self.run_check().returncode, 0)
+
+    def test_pending_state_write_transaction_blocks_facade_check_without_reads_or_writes(self):
+        marker = self.fixture / '.texenda/.state-write-transaction.json'
+        marker.write_text('{}\n')
+        before = self.snapshot()
+        result = self.run_check()
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('state-write transaction is pending', result.stderr)
+        self.assertEqual(before, self.snapshot())
 
     def test_private_fixture_is_excluded_without_content_fingerprinting(self):
         private = self.fixture / '.texenda/private-inputs/kit/synthetic.csv'
@@ -422,6 +440,26 @@ class FacadeIntegratedFixtureTests(unittest.TestCase):
             with mock.patch.object(common, 'stable_file_bytes', side_effect=guarded_read), \
                     self.assertRaisesRegex(common.ValidationError, 'pending recovery'):
                 common.ledger_facts(repository, external)
+
+    def test_agent_ledger_facts_reject_pending_state_write_before_state_read(self):
+        with tempfile.TemporaryDirectory() as directory:
+            repository = (Path(directory) / 'repo').resolve()
+            repository.mkdir()
+            harness = self.harness_module.Harness(repository)
+            harness.init('human:fixture')
+            state = repository / '.texenda/state.json'
+            marker = repository / '.texenda/.state-write-transaction.json'
+            marker.write_text('{}\n')
+            original = common.stable_file_bytes
+
+            def guarded_read(path, label):
+                if Path(path) == state:
+                    raise AssertionError('state was read before transaction denial')
+                return original(path, label)
+
+            with mock.patch.object(common, 'stable_file_bytes', side_effect=guarded_read), \
+                    self.assertRaisesRegex(common.ValidationError, 'state-write transaction'):
+                common.ledger_facts(repository)
 
     def test_duplicate_owner_and_origin_overclaim_are_rejected(self):
         crosswalk_path = self.fixture / 'project-dossier/transition/blueprint-adoption-crosswalk.json'

@@ -22,6 +22,7 @@ from pathlib import Path
 from pathlib import PurePosixPath
 import re
 import secrets
+import stat
 import sys
 import tempfile
 import time
@@ -32,6 +33,18 @@ POLICY = Path(__file__).with_name('routing-policy.json')
 BINDING_NAME = '.texenda-location.json'
 BINDING_SCHEMA = Path(__file__).with_name('schemas') / 'state-location.schema.json'
 BINDING_VERSION = 'texenda.state-location.v1'
+STATE_TRANSACTION_SCHEMA = (Path(__file__).with_name('schemas')
+                            / 'state-write-transaction.schema.json')
+STATE_TRANSACTION_VERSION = 'texenda.state-write-transaction.v1'
+STATE_TRANSACTION_PENDING = '.state-write-transaction.json'
+STATE_TRANSACTION_TOKEN = re.compile(r'^[0-9a-f]{24}$')
+STATE_IDENTITY_FIELDS = {'device', 'inode', 'file_type', 'size', 'mtime_ns',
+                         'observed_ctime_ns'}
+STATE_TRANSACTION_FIELDS = {
+    'schema_version', 'phase', 'token', 'operation', 'state_name', 'candidate_name',
+    'repository_root', 'state_root', 'repository_identity', 'state_root_identity',
+    'lock_identity', 'binding', 'routing_policy_digest', 'old_state', 'new_state',
+}
 LEGACY_PATH = PACKAGE / '08-project-harness/harness.py'
 LEGACY_DIGEST = '226a4a14b3a795b24354eb90e51a50067fd27fe809423b30b9fa1551f3ce72d6'
 if hashlib.sha256(LEGACY_PATH.read_bytes()).hexdigest() != LEGACY_DIGEST:
@@ -276,6 +289,143 @@ def renameat_state(source_fd, source_name, destination_fd, destination_name, fla
         raise OSError(error, os.strerror(error), source_name, destination_name)
 
 
+def state_identity_record(signature):
+    """Closed exact identity observed before a namespace transition."""
+    return {
+        'device': signature[0],
+        'inode': signature[1],
+        'file_type': stat.S_IFMT(signature[2]),
+        'size': signature[3],
+        'mtime_ns': signature[4],
+        'observed_ctime_ns': signature[5],
+    }
+
+
+def stat_signature(value):
+    return (value.st_dev, value.st_ino, value.st_mode, value.st_size,
+            value.st_mtime_ns, value.st_ctime_ns)
+
+
+def valid_identity_record(value, *, file_type=None):
+    return (isinstance(value, dict) and set(value) == STATE_IDENTITY_FIELDS
+            and all(type(value[key]) is int and value[key] >= 0
+                    for key in STATE_IDENTITY_FIELDS)
+            and (file_type is None or value['file_type'] == file_type))
+
+
+def identity_matches(signature, recorded, *, observed_ctime=False, inode_only=False):
+    actual = state_identity_record(signature)
+    if inode_only:
+        fields = {'device', 'inode', 'file_type'}
+    else:
+        fields = STATE_IDENTITY_FIELDS if observed_ctime else (
+            STATE_IDENTITY_FIELDS - {'observed_ctime_ns'})
+    return all(actual[key] == recorded[key] for key in fields)
+
+
+def stable_at(directory_fd, name, label, *, missing_ok=False):
+    """Read a descriptor-relative regular file twice without following aliases."""
+    if not isinstance(name, str) or not name or '/' in name or name in ('.', '..'):
+        raise Denied(label + ' has an unsafe descriptor-relative name')
+    flags = os.O_RDONLY | getattr(os, 'O_NOFOLLOW', 0)
+
+    def once():
+        try:
+            descriptor = os.open(name, flags, dir_fd=directory_fd)
+        except FileNotFoundError:
+            if missing_ok:
+                return None
+            raise Denied(label + ' is missing')
+        except OSError as exc:
+            raise Denied(label + ' cannot be opened without following an alias') from exc
+        try:
+            before = os.fstat(descriptor)
+            if not stat.S_ISREG(before.st_mode):
+                raise Denied(label + ' must be a regular non-symlink file')
+            chunks = []
+            while True:
+                chunk = os.read(descriptor, 1024 * 1024)
+                if not chunk:
+                    break
+                chunks.append(chunk)
+            after = os.fstat(descriptor)
+            current = os.stat(name, dir_fd=directory_fd, follow_symlinks=False)
+        finally:
+            os.close(descriptor)
+        before_signature = stat_signature(before)
+        if (before_signature != stat_signature(after)
+                or (after.st_dev, after.st_ino) != (current.st_dev, current.st_ino)):
+            raise Denied(label + ' changed during anchored read')
+        return b''.join(chunks), before_signature
+
+    first = once()
+    if first is None:
+        return None
+    second = once()
+    if first != second:
+        raise Denied(label + ' changed or was replaced during anchored read')
+    return first
+
+
+def write_at_exclusive(directory_fd, name, raw, label, *, interleave=None):
+    if not isinstance(name, str) or not name or '/' in name or name in ('.', '..'):
+        raise Denied(label + ' has an unsafe descriptor-relative name')
+    staging = 'state-write-staging-' + secrets.token_hex(12) + '.tmp'
+    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, 'O_NOFOLLOW', 0)
+    descriptor = os.open(staging, flags, 0o600, dir_fd=directory_fd)
+    try:
+        midpoint = max(1, len(raw) // 2)
+        for index, chunk in enumerate((raw[:midpoint], raw[midpoint:])):
+            offset = 0
+            while offset < len(chunk):
+                written = os.write(descriptor, chunk[offset:])
+                if written <= 0:
+                    raise OSError('state-write control staging made no write progress')
+                offset += written
+            if index == 0 and interleave:
+                interleave('state_write_after_control_staging_partial',
+                           {'target': name, 'staging': staging})
+        os.fsync(descriptor)
+        os.close(descriptor)
+        descriptor = None
+        os.fsync(directory_fd)
+        renameat_state(directory_fd, staging, directory_fd, name, 'exclusive')
+        if interleave:
+            interleave('state_write_after_control_publish_before_fsync',
+                       {'target': name, 'staging': staging})
+        os.fsync(directory_fd)
+    except BaseException:
+        # An incomplete non-operational staging file never masquerades as a
+        # published phase. A published target is always complete and parseable.
+        raise
+    finally:
+        if descriptor is not None:
+            os.close(descriptor)
+
+
+def state_transaction_blocker_names(state_root):
+    """Return operational state-write material; archives are non-blocking history."""
+    root = Path(state_root)
+    if not root.exists() and not root.is_symlink():
+        return []
+    resolved_directory(root, 'state transaction root', absolute=True)
+    flags = os.O_RDONLY | getattr(os, 'O_DIRECTORY', 0) | getattr(os, 'O_NOFOLLOW', 0)
+    descriptor = os.open(root, flags)
+    try:
+        opened = os.fstat(descriptor)
+        names = os.listdir(descriptor)
+        blockers = []
+        for name in names:
+            if name.startswith('.state-write-'):
+                blockers.append(name)
+        current = root.lstat()
+        if (opened.st_dev, opened.st_ino) != (current.st_dev, current.st_ino):
+            raise Denied('state transaction root changed during recovery scan')
+        return sorted(blockers)
+    finally:
+        os.close(descriptor)
+
+
 def check_receipts(state):
     events = state.get('events')
     if not isinstance(events, list) or not events:
@@ -325,10 +475,11 @@ def restore_bytes(path, raw):
 
 class Harness(legacy.Harness):
     def __init__(self, root, package=PACKAGE, clock=time.time, policy=POLICY, state_root=None,
-                 interleave=None):
+                 interleave=None, allow_state_recovery=False):
         repository_root = resolved_directory(root, 'repository root')
         super().__init__(repository_root, Path(package), clock)
         self.interleave = interleave
+        self.allow_state_recovery = allow_state_recovery
         self.root_identity = inode_identity(self.root)
         self.binding_path = self.root / BINDING_NAME
         self.binding, self.binding_identity = binding_snapshot(self.binding_path, self.root)
@@ -344,7 +495,8 @@ class Harness(legacy.Harness):
         self.unbound_external = self.binding is None and requested_state_root is not None
         default_root = self.root / '.texenda'
         if self.binding:
-            if self.binding['status'] != 'active':
+            if (self.binding['status'] != 'active'
+                    and not (allow_state_recovery and self.binding['status'] == 'moving')):
                 raise Denied('state relocation is moving; verified recovery is required')
             if requested_state_root is None:
                 raise Denied('bound projects require explicit --state-root')
@@ -367,6 +519,9 @@ class Harness(legacy.Harness):
         self.state_root_identity = inode_identity(self.dir) if self.dir.exists() else None
         if self.statefile.is_symlink() or self.lockfile.is_symlink():
             raise Denied('state files cannot be symlinks')
+        blockers = state_transaction_blocker_names(self.dir)
+        if blockers and not allow_state_recovery:
+            raise Denied('state-write transaction is pending explicit recovery')
         self.policy_path = Path(policy)
         self.policy = load_json(stable_file_bytes(self.policy_path, 'routing policy'))
         self.policy_hash = digest(self.policy)
@@ -396,6 +551,10 @@ class Harness(legacy.Harness):
         elif identity != self.state_root_identity:
             raise Denied('state root identity changed during this session')
 
+    def _state_transaction_clear(self):
+        if state_transaction_blocker_names(self.dir):
+            raise Denied('state-write transaction is pending explicit recovery')
+
     def _read_state_once(self):
         """Return bytes and an identity signature from one no-follow read."""
         self._validate_state_root_current()
@@ -419,10 +578,8 @@ class Harness(legacy.Harness):
             after = os.fstat(descriptor)
         finally:
             os.close(descriptor)
-        signature = (before.st_dev, before.st_ino, before.st_size, before.st_mtime_ns,
-                     before.st_ctime_ns)
-        after_signature = (after.st_dev, after.st_ino, after.st_size, after.st_mtime_ns,
-                           after.st_ctime_ns)
+        signature = stat_signature(before)
+        after_signature = stat_signature(after)
         if signature != after_signature:
             raise Denied('state changed during read')
         return b''.join(chunks), signature
@@ -438,10 +595,12 @@ class Harness(legacy.Harness):
         return self._stable_state_snapshot()[0]
 
     @contextlib.contextmanager
-    def locked(self):
+    def locked(self, *, allow_state_recovery=False):
         """Serialize mutations only; read-only commands never create/open a lock for write."""
         self._binding_current()
         self._interleave('locked_after_initial_binding_check')
+        if not allow_state_recovery:
+            self._state_transaction_clear()
         if self.unbound_external:
             raise Denied('an unbound explicit state root is read-only')
         self._validate_state_root_current()
@@ -493,7 +652,11 @@ class Harness(legacy.Harness):
                 'lock_identity': inode_identity(self.lockfile),
                 'lock_created': created,
                 'lock_created_identity': created_identity,
+                'state_transaction_started': False,
             }
+            if allow_state_recovery and created:
+                self._cleanup_speculative_lock(token)
+                raise Denied('state-write recovery requires the preserved existing lock')
             try:
                 self._interleave('locked_after_lock_acquired', token)
                 self._continuity(token)
@@ -516,7 +679,7 @@ class Harness(legacy.Harness):
             os.close(root_descriptor)
 
     def _cleanup_speculative_lock(self, token):
-        if not token['lock_created']:
+        if not token['lock_created'] or token.get('state_transaction_started'):
             return
         try:
             current = os.stat('state.lock', dir_fd=token['dir_fd'], follow_symlinks=False)
@@ -563,57 +726,583 @@ class Harness(legacy.Harness):
         # binding/root/lock/policy change at that exact boundary cannot commit.
         self._identity_continuity(token)
 
+    def _binding_transaction_record(self):
+        if self.binding_identity == ('absent',):
+            return {'kind': 'absent', 'sha256': None, 'identity': None}
+        raw = stable_file_bytes(self.binding_path, 'state-location binding')
+        observed = (*path_identity(self.binding_path), hashlib.sha256(raw).hexdigest())
+        if observed != self.binding_identity:
+            raise Denied('state-location binding changed before state transaction preparation')
+        return {
+            'kind': 'present',
+            'sha256': hashlib.sha256(raw).hexdigest(),
+            'identity': state_identity_record(stat_signature(self.binding_path.lstat())),
+        }
+
+    def _state_value_record(self, raw, signature):
+        return {'sha256': hashlib.sha256(raw).hexdigest(),
+                'identity': state_identity_record(signature)}
+
+    def _validate_state_value_record(self, value, label, *, preparing=False):
+        if (not isinstance(value, dict) or set(value) != {'sha256', 'identity'}
+                or not isinstance(value.get('sha256'), str)
+                or re.fullmatch(r'[0-9a-f]{64}', value['sha256']) is None):
+            raise Denied(label + ' state transaction value is invalid')
+        if preparing:
+            if value.get('identity') is not None:
+                raise Denied(label + ' preparation identity must not be guessed')
+        elif not valid_identity_record(value.get('identity'), file_type=stat.S_IFREG):
+            raise Denied(label + ' state transaction identity is invalid')
+
+    def _validate_state_transaction(self, value):
+        schema = load_json(stable_file_bytes(STATE_TRANSACTION_SCHEMA,
+                                             'state-write transaction schema'))
+        if (schema.get('additionalProperties') is not False
+                or set(schema.get('required', [])) != STATE_TRANSACTION_FIELDS
+                or set(schema.get('properties', {})) != STATE_TRANSACTION_FIELDS):
+            raise Denied('state-write transaction schema changed; explicit review required')
+        if (not isinstance(value, dict) or set(value) != STATE_TRANSACTION_FIELDS
+                or value.get('schema_version') != STATE_TRANSACTION_VERSION
+                or value.get('phase') not in ('preparing', 'ready')
+                or not isinstance(value.get('token'), str)
+                or STATE_TRANSACTION_TOKEN.fullmatch(value['token']) is None
+                or value.get('operation') not in ('initialize', 'replace')
+                or value.get('state_name') != 'state.json'
+                or value.get('candidate_name') != '.state-write-candidate-'
+                + value.get('token', '') + '.json'
+                or value.get('repository_root') != str(self.root)
+                or value.get('state_root') != str(self.dir)
+                or value.get('routing_policy_digest') != self.policy_hash
+                or not valid_identity_record(value.get('repository_identity'),
+                                             file_type=stat.S_IFDIR)
+                or not valid_identity_record(value.get('state_root_identity'),
+                                             file_type=stat.S_IFDIR)
+                or not valid_identity_record(value.get('lock_identity'),
+                                             file_type=stat.S_IFREG)):
+            raise Denied('state-write transaction violates its closed contract')
+        binding = value.get('binding')
+        if (not isinstance(binding, dict) or set(binding) != {'kind', 'sha256', 'identity'}
+                or binding.get('kind') not in ('absent', 'present')):
+            raise Denied('state-write transaction binding identity is invalid')
+        if binding['kind'] == 'absent':
+            if binding['sha256'] is not None or binding['identity'] is not None:
+                raise Denied('absent transaction binding carries an identity')
+        elif (not isinstance(binding['sha256'], str)
+              or re.fullmatch(r'[0-9a-f]{64}', binding['sha256']) is None
+              or not valid_identity_record(binding['identity'], file_type=stat.S_IFREG)):
+            raise Denied('present transaction binding identity is invalid')
+        self._validate_state_value_record(value.get('new_state'), 'new',
+                                          preparing=value['phase'] == 'preparing')
+        if value['operation'] == 'initialize':
+            if value.get('old_state') is not None:
+                raise Denied('initialization transaction cannot claim previous state bytes')
+        else:
+            self._validate_state_value_record(value.get('old_state'), 'old')
+        return value
+
+    def _transaction_environment(self, token, transaction):
+        for signature, recorded, label in (
+                (stat_signature(os.fstat(token['root_fd'])),
+                 transaction['repository_identity'], 'repository'),
+                (stat_signature(os.fstat(token['dir_fd'])),
+                 transaction['state_root_identity'], 'state root'),
+                (stat_signature(os.fstat(token['lock_fd'])),
+                 transaction['lock_identity'], 'state lock')):
+            if not identity_matches(signature, recorded,
+                                    inode_only=label in ('repository', 'state root')):
+                raise Denied(label + ' identity differs from state-write transaction')
+        if self.policy_hash != transaction['routing_policy_digest']:
+            raise Denied('routing policy differs from state-write transaction')
+        binding = transaction['binding']
+        raw = stable_file_bytes(self.binding_path, 'state-location binding', missing_ok=True)
+        if binding['kind'] == 'absent':
+            return raw is None
+        if raw is None:
+            return False
+        signature = stat_signature(self.binding_path.lstat())
+        return (hashlib.sha256(raw).hexdigest() == binding['sha256']
+                and identity_matches(signature, binding['identity']))
+
+    def _transaction_controls(self, directory_fd):
+        names = os.listdir(directory_fd)
+        sentinel = STATE_TRANSACTION_PENDING in names
+        controls = []
+        candidates = []
+        extras = []
+        for name in names:
+            if re.fullmatch(r'\.state-write-(?:ready|commit-cleanup|rollback-cleanup)-[0-9a-f]{24}\.json', name):
+                controls.append(name)
+            elif re.fullmatch(r'\.state-write-candidate-[0-9a-f]{24}\.json', name):
+                candidates.append(name)
+            elif name.startswith('.state-write-') and name != STATE_TRANSACTION_PENDING:
+                extras.append(name)
+        return sentinel, sorted(controls), sorted(candidates), sorted(extras)
+
+    def _preparation_matches_ready(self, preparation, ready):
+        projected = copy.deepcopy(ready)
+        projected['phase'] = 'preparing'
+        projected['new_state']['identity'] = None
+        return projected == preparation
+
+    def _load_state_transaction(self, token):
+        sentinel, controls, candidates, extras = self._transaction_controls(token['dir_fd'])
+        if not sentinel:
+            raise Denied('state-write recovery preparation control is missing')
+        if extras:
+            raise Denied('state-write recovery material is missing, corrupt, or ambiguous: '
+                         'unresolved operational material')
+        preparation_raw, _signature = stable_at(
+            token['dir_fd'], STATE_TRANSACTION_PENDING,
+            'state-write preparation control')
+        preparation = self._validate_state_transaction(load_json(preparation_raw))
+        if preparation['phase'] != 'preparing':
+            raise Denied('fixed state-write control is not a preparation record')
+        token_value = preparation['token']
+        expected_candidate = preparation['candidate_name']
+        if any(name != expected_candidate for name in candidates):
+            raise Denied('state-write recovery has ambiguous candidate material')
+        if len(controls) > 1:
+            raise Denied('state-write recovery has ambiguous phase controls')
+        archive_names = [name for name in os.listdir(token['dir_fd'])
+                         if name in {
+                             'state-write-committed-' + token_value + '.json',
+                             'state-write-recovered-' + token_value + '.json',
+                         }]
+        if len(archive_names) > 1 or (controls and archive_names):
+            raise Denied('state-write recovery has ambiguous archived outcomes')
+        if not controls:
+            if archive_names:
+                archived_raw, _archived_signature = stable_at(
+                    token['dir_fd'], archive_names[0], 'archived state-write transaction')
+                ready = self._validate_state_transaction(load_json(archived_raw))
+                if ready['phase'] != 'ready' or not self._preparation_matches_ready(
+                        preparation, ready):
+                    raise Denied('archived state-write outcome differs from preparation')
+                return ready, archive_names[0], preparation
+            return preparation, STATE_TRANSACTION_PENDING, preparation
+        control = controls[0]
+        raw, _signature = stable_at(token['dir_fd'], control,
+                                    'state-write phase control')
+        transaction = self._validate_state_transaction(load_json(raw))
+        if transaction['phase'] != 'ready' or not self._preparation_matches_ready(
+                preparation, transaction):
+            raise Denied('state-write ready record differs from preparation')
+        allowed_controls = {
+            '.state-write-ready-' + token_value + '.json',
+            '.state-write-commit-cleanup-' + token_value + '.json',
+            '.state-write-rollback-cleanup-' + token_value + '.json',
+        }
+        if control not in allowed_controls:
+            raise Denied('state-write recovery control does not match its transaction')
+        return transaction, control, preparation
+
+    def _entry(self, token, name, label):
+        return stable_at(token['dir_fd'], name, label, missing_ok=True)
+
+    def _entry_matches(self, entry, record):
+        return (entry is not None
+                and hashlib.sha256(entry[0]).hexdigest() == record['sha256']
+                and identity_matches(entry[1], record['identity']))
+
+    def _rename_transaction_entry(self, token, source, destination):
+        renameat_state(token['dir_fd'], source, token['dir_fd'], destination, 'exclusive')
+        os.fsync(token['dir_fd'])
+
+    def _checkpoint_name(self, transaction, role, expected):
+        return ('state-write-checkpoint-' + role + '-' + expected['sha256'] + '-'
+                + transaction['token'] + '.json')
+
+    def _capture_transaction_candidate(self, token, transaction, expected, role, label):
+        source = transaction['candidate_name']
+        destination = self._checkpoint_name(transaction, role, expected)
+        source_entry = self._entry(token, source, label)
+        checkpoint_entry = self._entry(token, destination, label + ' checkpoint')
+        if source_entry is not None and checkpoint_entry is not None:
+            raise Denied(label + ' exists at both candidate and checkpoint names')
+        if source_entry is not None:
+            self._interleave('state_write_before_candidate_capture',
+                             {'transaction': transaction, 'role': role,
+                              'destination': destination})
+            renameat_state(token['dir_fd'], source, token['dir_fd'], destination,
+                           'exclusive')
+            self._interleave('state_write_after_candidate_capture_before_fsync',
+                             {'transaction': transaction, 'role': role,
+                              'destination': destination})
+            os.fsync(token['dir_fd'])
+            checkpoint_entry = self._entry(token, destination, label + ' checkpoint')
+        if checkpoint_entry is None:
+            raise Denied(label + ' recovery checkpoint is missing')
+        matches = hashlib.sha256(checkpoint_entry[0]).hexdigest() == expected['sha256']
+        if expected.get('identity') is not None:
+            matches = matches and identity_matches(checkpoint_entry[1], expected['identity'])
+        if not matches:
+            self._record_state_conflict(token, transaction, self._entry(
+                token, 'state.json', 'active state during cleanup'), checkpoint_entry)
+            raise Denied(label + ' checkpoint differs after atomic capture')
+        self._interleave('state_write_after_candidate_capture',
+                         {'transaction': transaction, 'role': role,
+                          'destination': destination})
+        return destination
+
+    def _archive_state_transaction(self, token, control, transaction, outcome):
+        destination = 'state-write-' + outcome + '-' + transaction['token'] + '.json'
+        if control != destination:
+            self._rename_transaction_entry(token, control, destination)
+        self._interleave('state_write_after_outcome_archive', transaction)
+        preparation_archive = ('state-write-preparation-' + outcome + '-'
+                               + transaction['token'] + '.json')
+        self._rename_transaction_entry(token, STATE_TRANSACTION_PENDING,
+                                       preparation_archive)
+        self._interleave('state_write_after_preparation_archive', transaction)
+        return destination
+
+    def _begin_rollback_cleanup(self, token, control, transaction):
+        rollback = '.state-write-rollback-cleanup-' + transaction['token'] + '.json'
+        if control != rollback:
+            self._rename_transaction_entry(token, control, rollback)
+        self._interleave('state_write_after_rollback_cleanup_marker', transaction)
+        return rollback
+
+    def _finish_rollback_cleanup(self, token, control, transaction):
+        state_entry = self._entry(token, 'state.json', 'restored state')
+        old = transaction['old_state']
+        if transaction['operation'] == 'initialize':
+            if state_entry is not None:
+                raise Denied('initialization rollback did not restore state absence')
+        elif not self._entry_matches(state_entry, old):
+            raise Denied('rollback did not restore the exact previous state')
+        self._capture_transaction_candidate(token, transaction, transaction['new_state'],
+                                            'attempted', 'rolled-back new state')
+        self._interleave('state_write_after_recovery_candidate_cleanup', transaction)
+        archived = self._archive_state_transaction(token, control, transaction, 'recovered')
+        self._interleave('state_write_after_recovery_archive', transaction)
+        token['state_transaction_started'] = False
+        return {
+            'recovered': True,
+            'outcome': 'previous_state_restored',
+            'previous_state_sha256': old['sha256'] if old else None,
+            'attempted_state_sha256': transaction['new_state']['sha256'],
+            'receipt_bytes_rewritten': False,
+            'transaction_archive': str(self.dir / archived),
+        }
+
+    def _finish_commit_cleanup(self, token, control, transaction):
+        state_entry = self._entry(token, 'state.json', 'committed state')
+        if not self._entry_matches(state_entry, transaction['new_state']):
+            raise Denied('commit cleanup cannot validate the exact new state')
+        candidate = self._entry(token, transaction['candidate_name'],
+                                'displaced previous state')
+        if transaction['operation'] == 'replace':
+            self._capture_transaction_candidate(token, transaction,
+                                                transaction['old_state'], 'previous',
+                                                'displaced previous state')
+        elif candidate is not None:
+            raise Denied('initialization commit has unexpected candidate material')
+        self._interleave('state_write_after_commit_candidate_cleanup', transaction)
+        archived = self._archive_state_transaction(token, control, transaction, 'committed')
+        self._interleave('state_write_after_commit_archive', transaction)
+        token['state_transaction_started'] = False
+        return {
+            'recovered': True,
+            'outcome': 'durable_commit_cleanup_completed',
+            'previous_state_sha256': (transaction['old_state']['sha256']
+                                      if transaction['old_state'] else None),
+            'attempted_state_sha256': transaction['new_state']['sha256'],
+            'receipt_bytes_rewritten': False,
+            'transaction_archive': str(self.dir / archived),
+        }
+
+    def _record_state_conflict(self, token, transaction, state_entry, candidate_entry):
+        name = '.state-write-conflict-' + transaction['token'] + '.json'
+        value = {
+            'schema_version': 'texenda.state-write-conflict.v1',
+            'token': transaction['token'],
+            'reason': 'displaced_state_differs_from_prepared_previous_state',
+            'observed_state_sha256': (hashlib.sha256(state_entry[0]).hexdigest()
+                                      if state_entry else None),
+            'observed_candidate_sha256': (hashlib.sha256(candidate_entry[0]).hexdigest()
+                                          if candidate_entry else None),
+        }
+        raw = json.dumps(value, indent=2, sort_keys=True, allow_nan=False).encode() + b'\n'
+        try:
+            write_at_exclusive(token['dir_fd'], name, raw, 'state-write conflict record')
+        except (FileExistsError, OSError, Denied):
+            pass
+
+    def _recover_state_write_transaction(self, token, *, prefer_previous=True):
+        transaction, control, preparation = self._load_state_transaction(token)
+        token['state_transaction_started'] = True
+        binding_same = self._transaction_environment(token, transaction)
+        state_entry = self._entry(token, 'state.json', 'active state')
+        candidate_entry = self._entry(token, transaction['candidate_name'],
+                                      'state transaction candidate')
+        old, new = transaction['old_state'], transaction['new_state']
+        rollback_control = '.state-write-rollback-cleanup-' + transaction['token'] + '.json'
+        commit_control = '.state-write-commit-cleanup-' + transaction['token'] + '.json'
+
+        if transaction['phase'] == 'preparing':
+            previous_layout = ((transaction['operation'] == 'initialize' and state_entry is None)
+                               or (transaction['operation'] == 'replace'
+                                   and self._entry_matches(state_entry, old)))
+            if not previous_layout or not binding_same:
+                raise Denied('state-write preparation environment changed before recovery')
+            if candidate_entry is not None:
+                self._capture_transaction_candidate(token, transaction, new, 'attempted',
+                                                    'incomplete prepared state')
+            archive = ('state-write-preparation-recovered-' + transaction['token']
+                       + '.json')
+            self._rename_transaction_entry(token, STATE_TRANSACTION_PENDING, archive)
+            token['state_transaction_started'] = False
+            return {
+                'recovered': True,
+                'outcome': 'previous_state_restored',
+                'previous_state_sha256': old['sha256'] if old else None,
+                'attempted_state_sha256': new['sha256'],
+                'receipt_bytes_rewritten': False,
+                'transaction_archive': str(self.dir / archive),
+            }
+
+        if control == 'state-write-recovered-' + transaction['token'] + '.json':
+            return self._finish_rollback_cleanup(token, control, transaction)
+        if control == 'state-write-committed-' + transaction['token'] + '.json':
+            return self._finish_commit_cleanup(token, control, transaction)
+
+        if control == rollback_control:
+            return self._finish_rollback_cleanup(token, control, transaction)
+
+        if transaction['operation'] == 'initialize':
+            previous_layout = state_entry is None and self._entry_matches(candidate_entry, new)
+            exchanged_layout = (self._entry_matches(state_entry, new)
+                                and candidate_entry is None)
+            if previous_layout:
+                rollback = self._begin_rollback_cleanup(token, control, transaction)
+                return self._finish_rollback_cleanup(token, rollback, transaction)
+            if exchanged_layout and (prefer_previous or control != commit_control
+                                     or not binding_same):
+                renameat_state(token['dir_fd'], 'state.json', token['dir_fd'],
+                               transaction['candidate_name'], 'exclusive')
+                self._interleave('state_write_after_rollback_exchange_before_fsync', transaction)
+                os.fsync(token['dir_fd'])
+                self._interleave('state_write_after_rollback_durable', transaction)
+                rollback = self._begin_rollback_cleanup(token, control, transaction)
+                return self._finish_rollback_cleanup(token, rollback, transaction)
+            if exchanged_layout and control == commit_control and binding_same:
+                return self._finish_commit_cleanup(token, control, transaction)
+            raise Denied('initialization recovery material is missing, corrupt, or ambiguous')
+
+        previous_layout = (self._entry_matches(state_entry, old)
+                           and self._entry_matches(candidate_entry, new))
+        exchanged_layout = (self._entry_matches(state_entry, new)
+                            and self._entry_matches(candidate_entry, old))
+        previous_checkpoint_name = self._checkpoint_name(
+            transaction, 'previous', old)
+        previous_checkpoint = self._entry(token, previous_checkpoint_name,
+                                          'preserved previous-state checkpoint')
+        checkpoint_rollback_layout = (
+            self._entry_matches(state_entry, old) and candidate_entry is None
+            and self._entry_matches(previous_checkpoint, new))
+        if checkpoint_rollback_layout:
+            renameat_state(token['dir_fd'], previous_checkpoint_name, token['dir_fd'],
+                           transaction['candidate_name'], 'exclusive')
+            self._interleave('state_write_after_checkpoint_rollback_restore_before_fsync',
+                             transaction)
+            os.fsync(token['dir_fd'])
+            candidate_entry = self._entry(token, transaction['candidate_name'],
+                                          'checkpoint-restored attempted state')
+            if not self._entry_matches(candidate_entry, new):
+                raise Denied('checkpoint-backed rollback candidate could not be restored')
+            rollback = self._begin_rollback_cleanup(token, control, transaction)
+            return self._finish_rollback_cleanup(token, rollback, transaction)
+        if previous_layout:
+            rollback = self._begin_rollback_cleanup(token, control, transaction)
+            return self._finish_rollback_cleanup(token, rollback, transaction)
+        if exchanged_layout and (prefer_previous or control != commit_control
+                                 or not binding_same):
+            renameat_state(token['dir_fd'], 'state.json', token['dir_fd'],
+                           transaction['candidate_name'], 'exchange')
+            self._interleave('state_write_after_rollback_exchange_before_fsync', transaction)
+            os.fsync(token['dir_fd'])
+            self._interleave('state_write_after_rollback_durable', transaction)
+            restored = self._entry(token, 'state.json', 'restored previous state')
+            attempted = self._entry(token, transaction['candidate_name'],
+                                    'rolled-back attempted state')
+            if (not self._entry_matches(restored, old)
+                    or not self._entry_matches(attempted, new)):
+                raise Denied('state-write rollback exchange could not be validated')
+            rollback = self._begin_rollback_cleanup(token, control, transaction)
+            return self._finish_rollback_cleanup(token, rollback, transaction)
+        if (control == commit_control and prefer_previous
+                and self._entry_matches(state_entry, new) and candidate_entry is None
+                and self._entry_matches(previous_checkpoint, old)):
+            renameat_state(token['dir_fd'], 'state.json', token['dir_fd'],
+                           previous_checkpoint_name, 'exchange')
+            self._interleave('state_write_after_rollback_exchange_before_fsync', transaction)
+            os.fsync(token['dir_fd'])
+            self._interleave('state_write_after_checkpoint_rollback_exchange_fsync',
+                             transaction)
+            renameat_state(token['dir_fd'], previous_checkpoint_name, token['dir_fd'],
+                           transaction['candidate_name'], 'exclusive')
+            os.fsync(token['dir_fd'])
+            restored = self._entry(token, 'state.json', 'restored previous state')
+            attempted = self._entry(token, transaction['candidate_name'],
+                                    'rolled-back attempted state')
+            if (not self._entry_matches(restored, old)
+                    or not self._entry_matches(attempted, new)):
+                raise Denied('checkpoint-backed state rollback could not be validated')
+            rollback = self._begin_rollback_cleanup(token, control, transaction)
+            return self._finish_rollback_cleanup(token, rollback, transaction)
+        if control == commit_control and binding_same:
+            # Forward cleanup is allowed only when recovery was explicitly invoked
+            # for a previously archived commit decision.
+            if self._entry_matches(state_entry, new) and candidate_entry is None:
+                return self._finish_commit_cleanup(token, control, transaction)
+        raise Denied('state-write recovery material is missing, corrupt, or ambiguous')
+
     def _atomic_state_bytes(self, token, raw, *, expected_state=None,
                             expect_state_absent=False):
-        temporary = '.state-write-' + secrets.token_hex(12)
-        flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, 'O_NOFOLLOW', 0)
-        descriptor = os.open(temporary, flags, 0o600, dir_fd=token['dir_fd'])
-        created_state_identity = os.fstat(descriptor)
+        transaction_token = secrets.token_hex(12)
+        temporary = '.state-write-candidate-' + transaction_token + '.json'
+        transaction_started = False
+        preserve_conflict = False
         try:
+            old_record = None
+            if expected_state is not None:
+                current = stable_at(token['dir_fd'], 'state.json', 'previous state')
+                if current[0] != expected_state[0] or current[1] != expected_state[1]:
+                    raise Denied('previous state identity changed before transaction preparation')
+                old_record = self._state_value_record(*current)
+            preparation = {
+                'schema_version': STATE_TRANSACTION_VERSION,
+                'phase': 'preparing',
+                'token': transaction_token,
+                'operation': 'replace' if expected_state is not None else 'initialize',
+                'state_name': 'state.json',
+                'candidate_name': temporary,
+                'repository_root': str(self.root),
+                'state_root': str(self.dir),
+                'repository_identity': state_identity_record(
+                    stat_signature(os.fstat(token['root_fd']))),
+                'state_root_identity': state_identity_record(
+                    stat_signature(os.fstat(token['dir_fd']))),
+                'lock_identity': state_identity_record(
+                    stat_signature(os.fstat(token['lock_fd']))),
+                'binding': self._binding_transaction_record(),
+                'routing_policy_digest': self.policy_hash,
+                'old_state': old_record,
+                'new_state': {
+                    'sha256': hashlib.sha256(raw).hexdigest(),
+                    'identity': None,
+                },
+            }
+            self._validate_state_transaction(preparation)
+            preparation_raw = json.dumps(preparation, indent=2, sort_keys=True,
+                                         ensure_ascii=False, allow_nan=False).encode() + b'\n'
+            write_at_exclusive(token['dir_fd'], STATE_TRANSACTION_PENDING,
+                               preparation_raw, 'state-write preparation control',
+                               interleave=self._interleave)
+            transaction_started = True
+            token['state_transaction_started'] = True
+            self._interleave('state_write_after_preparation_control', preparation)
+
+            flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, 'O_NOFOLLOW', 0)
+            descriptor = os.open(temporary, flags, 0o600, dir_fd=token['dir_fd'])
             with os.fdopen(descriptor, 'wb') as stream:
                 stream.write(raw)
                 stream.flush()
+                self._interleave('state_write_before_candidate_file_fsync', preparation)
                 os.fsync(stream.fileno())
+                self._interleave('state_write_after_candidate_file_fsync', preparation)
+            os.fsync(token['dir_fd'])
+            self._interleave('state_write_after_candidate_directory_fsync', preparation)
+            candidate_entry = stable_at(token['dir_fd'], temporary,
+                                        'new state transaction candidate')
+            candidate_record = self._state_value_record(*candidate_entry)
+            transaction = copy.deepcopy(preparation)
+            transaction['phase'] = 'ready'
+            transaction['new_state'] = candidate_record
+            self._validate_state_transaction(transaction)
+            transaction_raw = json.dumps(transaction, indent=2, sort_keys=True,
+                                         ensure_ascii=False, allow_nan=False).encode() + b'\n'
+            ready_control = '.state-write-ready-' + transaction_token + '.json'
+            write_at_exclusive(token['dir_fd'], ready_control,
+                               transaction_raw, 'state-write ready control',
+                               interleave=self._interleave)
+            self._interleave('state_write_after_transaction_prepared', transaction)
             self._interleave('before_state_commit', token)
             self._continuity(token, expected_state, expect_state_absent)
+            if not self._transaction_environment(token, transaction):
+                raise Denied('state-location binding differs at state exchange boundary')
+            self._interleave('state_write_before_exchange', transaction)
             if expected_state is None:
                 renameat_state(token['dir_fd'], temporary, token['dir_fd'],
                                'state.json', 'exclusive')
             else:
                 renameat_state(token['dir_fd'], temporary, token['dir_fd'],
                                'state.json', 'exchange')
+            self._interleave('state_write_after_exchange_before_fsync', transaction)
             os.fsync(token['dir_fd'])
-            try:
-                self._interleave('after_state_replacement_before_validation', token)
-                self._identity_continuity(token)
-            except BaseException:
-                if expected_state is None:
-                    current = os.stat('state.json', dir_fd=token['dir_fd'],
-                                      follow_symlinks=False)
-                    if ((current.st_dev, current.st_ino)
-                            != (created_state_identity.st_dev, created_state_identity.st_ino)):
-                        raise Denied('new state identity changed; cannot safely roll back')
-                    os.unlink('state.json', dir_fd=token['dir_fd'])
-                else:
+            self._interleave('state_write_after_exchange_fsync', transaction)
+            state_entry = self._entry(token, 'state.json', 'new active state')
+            displaced_entry = self._entry(token, temporary, 'displaced previous state')
+            if not self._entry_matches(state_entry, transaction['new_state']):
+                preserve_conflict = True
+                self._record_state_conflict(token, transaction, state_entry, displaced_entry)
+                raise Denied('new state identity differs after atomic exchange')
+            if expected_state is not None and not self._entry_matches(displaced_entry, old_record):
+                # The syscall displaced a different valid/invalid inode than the
+                # prepared old state. Restore it atomically and retain both it and
+                # the attempted new ledger under the still-pending transaction.
+                try:
                     renameat_state(token['dir_fd'], temporary, token['dir_fd'],
                                    'state.json', 'exchange')
-                    restored = self._stable_state_snapshot()
-                    if (restored[0] != expected_state[0]
-                            or restored[1][0:2] != expected_state[1][0:2]):
-                        raise Denied('previous state could not be restored after boundary failure')
-                os.fsync(token['dir_fd'])
-                raise
-            if expected_state is not None:
-                # The previous state is now the exclusively owned transaction
-                # temporary. Commit is durable before removing that old inode.
-                os.unlink(temporary, dir_fd=token['dir_fd'])
-                os.fsync(token['dir_fd'])
-        finally:
-            try:
-                os.unlink(temporary, dir_fd=token['dir_fd'])
-                os.fsync(token['dir_fd'])
-            except FileNotFoundError:
-                pass
+                    os.fsync(token['dir_fd'])
+                    state_entry = self._entry(token, 'state.json', 'restored competing state')
+                    displaced_entry = self._entry(token, temporary,
+                                                  'preserved attempted state')
+                finally:
+                    preserve_conflict = True
+                    self._record_state_conflict(token, transaction,
+                                                state_entry, displaced_entry)
+                raise Denied('atomic exchange displaced a state other than the prepared previous state')
+            if expected_state is None and displaced_entry is not None:
+                preserve_conflict = True
+                self._record_state_conflict(token, transaction, state_entry, displaced_entry)
+                raise Denied('initialization exchange produced unexpected displaced material')
+            self._interleave('state_write_after_displaced_validation', transaction)
+            self._interleave('after_state_replacement_before_validation', token)
+            self._identity_continuity(token)
+            if not self._transaction_environment(token, transaction):
+                raise Denied('state-location binding differs after state exchange')
+            commit_control = '.state-write-commit-cleanup-' + transaction_token + '.json'
+            self._rename_transaction_entry(token, ready_control, commit_control)
+            self._interleave('state_write_after_commit_cleanup_marker', transaction)
+            self._finish_commit_cleanup(token, commit_control, transaction)
+        except BaseException as original_error:
+            sentinel, _controls, _candidates, _extras = self._transaction_controls(
+                token['dir_fd'])
+            transaction_started = transaction_started or sentinel
+            token['state_transaction_started'] = transaction_started
+            if transaction_started and not preserve_conflict:
+                try:
+                    self._recover_state_write_transaction(token, prefer_previous=True)
+                except BaseException as recovery_error:
+                    raise Denied(
+                        'state write failed and recovery could not be proved; all recovery material is retained'
+                    ) from recovery_error
+            raise original_error
+        else:
+            token['state_transaction_started'] = False
+
+    def recover_state_write(self, actor, runtime_stopped=False):
+        if (not isinstance(actor, str) or not actor.startswith('human:')
+                or runtime_stopped is not True):
+            raise Denied('state-write recovery requires owner authority and runtime-stop attestation')
+        blockers = state_transaction_blocker_names(self.dir)
+        if not blockers:
+            raise Denied('no state-write transaction requires recovery')
+        with self.locked(allow_state_recovery=True) as token:
+            result = self._recover_state_write_transaction(token, prefer_previous=True)
+        return result
 
     def _atomic_state_json(self, token, value, **continuity):
         raw = json.dumps(value, indent=2, ensure_ascii=False, allow_nan=False).encode() + b'\n'
@@ -783,10 +1472,13 @@ class Harness(legacy.Harness):
 
     def _read(self):
         self._binding_current()
+        self._state_transaction_clear()
         raw = self._stable_state_bytes()
         state = load_json(raw)
         self._check(state)
         self._check_binding_baseline(state, raw)
+        self._state_transaction_clear()
+        self._binding_current()
         return state
 
     def init(self, actor='human:owner'):
@@ -1492,6 +2184,9 @@ def main(argv=None):
     command.add_argument('--actor', required=True)
     command.add_argument('--apply', action='store_true')
     command.add_argument('--runtime-stopped', action='store_true')
+    command = sub.add_parser('recover-state-write')
+    command.add_argument('--actor', required=True)
+    command.add_argument('--runtime-stopped', action='store_true')
     for name in ('set-roster', 'record-gate', 'set-budget'):
         command = sub.add_parser(name)
         command.add_argument('--actor', required=True)
@@ -1534,7 +2229,8 @@ def main(argv=None):
             command.add_argument('--max-bytes', type=int, default=200000)
     args = parser.parse_args(argv)
     try:
-        harness = Harness(args.root, args.package, state_root=args.state_root)
+        harness = Harness(args.root, args.package, state_root=args.state_root,
+                          allow_state_recovery=args.cmd == 'recover-state-write')
         op = args.cmd
         options = {key: getattr(args, key) for key in ('profile_id', 'fallback', 'fallback_reason', 'routing_record')} if op in ('assign', 'review') else {}
         if op == 'init': result = harness.init(args.actor)
@@ -1544,6 +2240,8 @@ def main(argv=None):
             result = {'integrity': 'PASS', 'meaning': 'local state/receipt/policy integrity only; not production readiness'}
         elif op == 'migrate-v1': result = harness.migrate_v1(args.actor, args.apply)
         elif op == 'rollback-v2': result = harness.rollback_v2(args.actor, args.apply, args.runtime_stopped)
+        elif op == 'recover-state-write': result = harness.recover_state_write(
+            args.actor, args.runtime_stopped)
         elif op == 'set-roster': result = harness.roster(args.actor, args.record)
         elif op == 'record-gate': result = harness.gate(args.actor, args.record)
         elif op == 'set-budget': result = harness.budget(args.actor, args.usd, args.record)

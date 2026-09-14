@@ -41,6 +41,7 @@ SOURCE_SCOPE_EXCLUSIONS = [
     },
 ]
 MIGRATION_ID = re.compile(r'^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$')
+STATE_TRANSACTION_PENDING = '.state-write-transaction.json'
 
 
 class ValidationError(ValueError):
@@ -115,6 +116,27 @@ def resolved_directory(path, label):
     resolved = candidate.resolve(strict=True)
     require(resolved == candidate, label + ' must use its canonical absolute path')
     return resolved
+
+
+def state_transaction_blockers(state_root):
+    root = Path(state_root)
+    if not root.exists() and not root.is_symlink():
+        return []
+    root = resolved_directory(root, 'state transaction root')
+    flags = os.O_RDONLY | getattr(os, 'O_DIRECTORY', 0) | getattr(os, 'O_NOFOLLOW', 0)
+    descriptor = os.open(root, flags)
+    try:
+        opened = os.fstat(descriptor)
+        blockers = []
+        for name in os.listdir(descriptor):
+            if name.startswith('.state-write-'):
+                blockers.append(name)
+        current = root.lstat()
+        require((opened.st_dev, opened.st_ino) == (current.st_dev, current.st_ino),
+                'state transaction root changed during scan')
+        return sorted(blockers)
+    finally:
+        os.close(descriptor)
 
 
 def git(*arguments, root=ROOT, text=True):
@@ -289,6 +311,8 @@ def ledger_facts(root=ROOT, state_root=None, fallback_state_root=None):
         require(selected == Path(location['state_root']), 'state root does not match active binding')
         require(not (root / '.texenda/state.json').exists()
                 and not (root / '.texenda/state.lock').exists(), 'competing default state remains')
+    require(not state_transaction_blockers(selected),
+            'state-write transaction is pending explicit recovery')
     raw = stable_bytes(selected / 'state.json')
     state = loads(raw)
     check_receipts(state)
@@ -301,6 +325,8 @@ def ledger_facts(root=ROOT, state_root=None, fallback_state_root=None):
         if len(state['events']) == baseline['receipt_count']:
             require(sha(raw) == baseline['state_sha256'],
                     'bound state bytes differ at unchanged receipt count')
+    require(not state_transaction_blockers(selected),
+            'state-write transaction appeared during ledger read')
     return {
         'state_root': str(selected),
         'ledger_sha256': sha(raw),

@@ -1,6 +1,9 @@
 """Synthetic tests for the optional external coordination-state root."""
+import copy
+import contextlib
 import fcntl
 import importlib.util
+import io
 import json
 import os
 from pathlib import Path
@@ -40,6 +43,25 @@ class StateRootTests(unittest.TestCase):
         raw = (path or (self.default / 'state.json')).read_bytes()
         state = json.loads(raw)
         return raw, state
+
+    def hard_exit_admit(self, stage, exit_code=74):
+        pid = os.fork()
+        if pid == 0:
+            def interrupt(observed, _harness, _detail):
+                if observed == stage:
+                    os._exit(exit_code)
+            try:
+                hm.Harness(self.root, interleave=interrupt).admit('WP-00', 'fixture')
+            except BaseException:
+                os._exit(98)
+            os._exit(0)
+        _pid, status = os.waitpid(pid, 0)
+        self.assertTrue(os.WIFEXITED(status))
+        self.assertEqual(os.WEXITSTATUS(status), exit_code)
+
+    def recover_state_write(self):
+        harness = hm.Harness(self.root, allow_state_recovery=True)
+        return harness.recover_state_write('human:owner', runtime_stopped=True)
 
     def relocate_synthetic(self, *, status='active', keep_default=False):
         self.external.mkdir(parents=True)
@@ -464,6 +486,522 @@ class StateRootTests(unittest.TestCase):
         self.assertEqual((self.external / 'state.json').read_bytes(), raw)
         self.assertEqual(len(json.loads(raw)['events']), 1)
         self.assertFalse(any(path.name.startswith('.state-write-') for path in self.external.iterdir()))
+
+    def test_post_exchange_directory_fsync_failure_restores_exact_previous_state(self):
+        original_raw = (self.default / 'state.json').read_bytes()
+        original_fsync = hm.os.fsync
+        armed = [False]
+        failed = [False]
+
+        def interleave(stage, _harness, _detail):
+            if stage == 'state_write_after_exchange_before_fsync':
+                armed[0] = True
+
+        def fail_once(descriptor):
+            metadata = os.fstat(descriptor)
+            if (armed[0] and not failed[0] and hm.stat.S_ISDIR(metadata.st_mode)
+                    and (metadata.st_dev, metadata.st_ino)
+                    == (self.default.stat().st_dev, self.default.stat().st_ino)):
+                failed[0] = True
+                raise OSError('synthetic post-exchange directory fsync failure')
+            return original_fsync(descriptor)
+
+        harness = hm.Harness(self.root, interleave=interleave)
+        with mock.patch.object(hm.os, 'fsync', side_effect=fail_once):
+            with self.assertRaisesRegex(OSError, 'post-exchange directory fsync failure'):
+                harness.admit('WP-00', 'fixture')
+        self.assertTrue(failed[0])
+        self.assertEqual((self.default / 'state.json').read_bytes(), original_raw)
+        self.assertEqual(hm.state_transaction_blocker_names(self.default), [])
+        self.assertTrue(list(self.default.glob('state-write-recovered-*.json')))
+
+    def test_post_exchange_and_rollback_fsync_failures_preserve_both_byte_sets(self):
+        original_raw = (self.default / 'state.json').read_bytes()
+        original_fsync = hm.os.fsync
+        armed = [False]
+        failures = [0]
+
+        def interleave(stage, _harness, _detail):
+            if stage == 'state_write_after_exchange_before_fsync':
+                armed[0] = True
+
+        def fail_twice(descriptor):
+            metadata = os.fstat(descriptor)
+            if (armed[0] and failures[0] < 2 and hm.stat.S_ISDIR(metadata.st_mode)
+                    and (metadata.st_dev, metadata.st_ino)
+                    == (self.default.stat().st_dev, self.default.stat().st_ino)):
+                failures[0] += 1
+                raise OSError('synthetic exchange/rollback fsync failure')
+            return original_fsync(descriptor)
+
+        harness = hm.Harness(self.root, interleave=interleave)
+        with mock.patch.object(hm.os, 'fsync', side_effect=fail_twice):
+            with self.assertRaisesRegex(hm.Denied, 'all recovery material is retained'):
+                harness.admit('WP-00', 'fixture')
+        self.assertEqual(failures[0], 2)
+        transaction = json.loads((self.default / hm.STATE_TRANSACTION_PENDING).read_text())
+        candidate = self.default / transaction['candidate_name']
+        self.assertEqual((self.default / 'state.json').read_bytes(), original_raw)
+        self.assertEqual(hm.hashlib.sha256(candidate.read_bytes()).hexdigest(),
+                         transaction['new_state']['sha256'])
+        with self.assertRaisesRegex(hm.Denied, 'pending explicit recovery'):
+            hm.Harness(self.root).status()
+        result = self.recover_state_write()
+        self.assertEqual(result['outcome'], 'previous_state_restored')
+        self.assertFalse(candidate.exists())
+
+    def test_rollback_exchange_failure_preserves_both_ledgers_and_transaction(self):
+        original_raw = (self.default / 'state.json').read_bytes()
+        original_binding = None
+        self.external.mkdir(parents=True)
+        original_rename = hm.renameat_state
+        exchanges = [0]
+
+        def interleave(stage, _harness, _detail):
+            nonlocal original_binding
+            if stage != 'after_state_replacement_before_validation':
+                return
+            binding = {
+                'schema_version': hm.BINDING_VERSION,
+                'migration_id': 'synthetic-state-write-rollback-failure',
+                'repository_root': str(self.root),
+                'state_root': str(self.external),
+                'status': 'moving',
+                'baseline': {
+                    'state_sha256': hm.hashlib.sha256(original_raw).hexdigest(),
+                    'receipt_count': len(json.loads(original_raw)['events']),
+                    'receipt_tip': json.loads(original_raw)['events'][-1]['hash'],
+                },
+            }
+            original_binding = json.dumps(binding).encode()
+            (self.root / hm.BINDING_NAME).write_bytes(original_binding)
+
+        def fail_second_exchange(*arguments):
+            if arguments[-1] == 'exchange':
+                exchanges[0] += 1
+                if exchanges[0] == 2:
+                    raise OSError('synthetic rollback exchange failure')
+            return original_rename(*arguments)
+
+        harness = hm.Harness(self.root, interleave=interleave)
+        with mock.patch.object(hm, 'renameat_state', side_effect=fail_second_exchange):
+            with self.assertRaisesRegex(hm.Denied, 'all recovery material is retained'):
+                harness.admit('WP-00', 'fixture')
+        transaction = json.loads((self.default / hm.STATE_TRANSACTION_PENDING).read_text())
+        candidate = self.default / transaction['candidate_name']
+        self.assertEqual(hm.hashlib.sha256((self.default / 'state.json').read_bytes()).hexdigest(),
+                         transaction['new_state']['sha256'])
+        self.assertEqual(hm.hashlib.sha256(candidate.read_bytes()).hexdigest(),
+                         transaction['old_state']['sha256'])
+        self.assertTrue(self.default.joinpath(hm.STATE_TRANSACTION_PENDING).is_file())
+        # Restore only the synthetic binding fixture, then exercise the explicit
+        # lock-held rollback of the preserved transaction.
+        (self.root / hm.BINDING_NAME).unlink()
+        result = self.recover_state_write()
+        self.assertEqual(result['outcome'], 'previous_state_restored')
+        self.assertEqual((self.default / 'state.json').read_bytes(), original_raw)
+        self.assertFalse(candidate.exists())
+
+    def test_competing_valid_inode_at_exchange_is_restored_and_both_chains_survive(self):
+        original_raw = (self.default / 'state.json').read_bytes()
+        competing = copy.deepcopy(json.loads(original_raw))
+        competing['tasks']['WP-00']['state'] = 'admitted'
+        self.harness._event(competing, 'human:competing-writer', 'admit', 'WP-00')
+        self.harness._check(competing)
+        competing_raw = (json.dumps(competing, indent=2, ensure_ascii=False,
+                                    allow_nan=False).encode() + b'\n')
+
+        def substitute(stage, _harness, _detail):
+            if stage != 'state_write_before_exchange':
+                return
+            replacement = self.default / '.synthetic-competing-state'
+            replacement.write_bytes(competing_raw)
+            os.replace(replacement, self.default / 'state.json')
+
+        harness = hm.Harness(self.root, interleave=substitute)
+        with self.assertRaisesRegex(hm.Denied, 'displaced a state other than'):
+            harness.admit('WP-00', 'fixture')
+        transaction = json.loads((self.default / hm.STATE_TRANSACTION_PENDING).read_text())
+        candidate = self.default / transaction['candidate_name']
+        self.assertEqual((self.default / 'state.json').read_bytes(), competing_raw)
+        self.assertEqual(hm.hashlib.sha256(candidate.read_bytes()).hexdigest(),
+                         transaction['new_state']['sha256'])
+        hm.check_receipts(json.loads((self.default / 'state.json').read_bytes()))
+        hm.check_receipts(json.loads(candidate.read_bytes()))
+        with self.assertRaisesRegex(hm.Denied, 'missing, corrupt, or ambiguous'):
+            self.recover_state_write()
+        self.assertEqual((self.default / 'state.json').read_bytes(), competing_raw)
+        self.assertTrue(candidate.is_file())
+
+    def test_cleanup_atomic_capture_never_unlinks_a_raced_competing_inode(self):
+        original_raw = (self.default / 'state.json').read_bytes()
+        competing = copy.deepcopy(json.loads(original_raw))
+        competing['tasks']['WP-01']['state'] = 'admitted'
+        self.harness._event(competing, 'human:cleanup-racer', 'admit', 'WP-01')
+        self.harness._check(competing)
+        competing_raw = (json.dumps(competing, indent=2, ensure_ascii=False,
+                                    allow_nan=False).encode() + b'\n')
+        preserved = {}
+
+        def race(stage, _harness, detail):
+            if stage != 'state_write_before_candidate_capture' or detail['role'] != 'previous':
+                return
+            transaction = detail['transaction']
+            candidate = self.default / transaction['candidate_name']
+            preserved_path = self.default / ('.state-write-raced-preserved-'
+                                             + transaction['token'] + '.json')
+            os.rename(candidate, preserved_path)
+            candidate.write_bytes(competing_raw)
+            preserved['path'] = preserved_path
+            preserved['checkpoint'] = self.default / detail['destination']
+
+        harness = hm.Harness(self.root, interleave=race)
+        with self.assertRaisesRegex(hm.Denied, 'all recovery material is retained'):
+            harness.admit('WP-00', 'fixture')
+        transaction = json.loads((self.default / hm.STATE_TRANSACTION_PENDING).read_text())
+        active_raw = (self.default / 'state.json').read_bytes()
+        self.assertEqual(hm.hashlib.sha256(active_raw).hexdigest(),
+                         transaction['new_state']['sha256'])
+        self.assertEqual(preserved['path'].read_bytes(), original_raw)
+        self.assertEqual(preserved['checkpoint'].read_bytes(), competing_raw)
+        hm.check_receipts(json.loads(active_raw))
+        hm.check_receipts(json.loads(preserved['path'].read_bytes()))
+        hm.check_receipts(json.loads(preserved['checkpoint'].read_bytes()))
+        self.assertTrue(hm.state_transaction_blocker_names(self.default))
+
+    def test_hard_interruptions_recover_previous_state_at_every_precleanup_phase(self):
+        stages = (
+            'state_write_after_preparation_control',
+            'state_write_before_candidate_file_fsync',
+            'state_write_after_candidate_file_fsync',
+            'state_write_after_candidate_directory_fsync',
+            'state_write_after_transaction_prepared',
+            'state_write_after_exchange_before_fsync',
+            'state_write_after_exchange_fsync',
+            'state_write_after_displaced_validation',
+            'after_state_replacement_before_validation',
+            'state_write_after_commit_cleanup_marker',
+            'state_write_before_candidate_capture',
+            'state_write_after_candidate_capture_before_fsync',
+            'state_write_after_candidate_capture',
+        )
+        original_raw = (self.default / 'state.json').read_bytes()
+        for stage in stages:
+            with self.subTest(stage=stage):
+                self.hard_exit_admit(stage)
+                with self.assertRaisesRegex(hm.Denied, 'pending explicit recovery'):
+                    hm.Harness(self.root).status()
+                result = self.recover_state_write()
+                self.assertEqual(result['outcome'], 'previous_state_restored')
+                self.assertEqual((self.default / 'state.json').read_bytes(), original_raw)
+                self.assertEqual(hm.state_transaction_blocker_names(self.default), [])
+
+    def test_hard_exit_after_commit_candidate_capture_still_restores_previous_state(self):
+        self.hard_exit_admit('state_write_after_commit_candidate_cleanup')
+        with self.assertRaisesRegex(hm.Denied, 'pending explicit recovery'):
+            hm.Harness(self.root).status()
+        result = self.recover_state_write()
+        self.assertEqual(result['outcome'], 'previous_state_restored')
+        status = hm.Harness(self.root).status()
+        self.assertEqual(status['tasks']['WP-00']['state'], 'planned')
+        self.assertEqual(status['receipt_count'], 1)
+        self.assertEqual(hm.state_transaction_blocker_names(self.default), [])
+
+    def test_hard_exit_after_commit_archive_needs_no_recovery(self):
+        self.hard_exit_admit('state_write_after_commit_archive')
+        status = hm.Harness(self.root).status()
+        self.assertEqual(status['tasks']['WP-00']['state'], 'admitted')
+        self.assertEqual(status['receipt_count'], 2)
+        self.assertEqual(hm.state_transaction_blocker_names(self.default), [])
+
+    def test_hard_exit_after_durable_outcome_archive_finishes_forward(self):
+        self.hard_exit_admit('state_write_after_outcome_archive')
+        with self.assertRaisesRegex(hm.Denied, 'pending explicit recovery'):
+            hm.Harness(self.root).status()
+        result = self.recover_state_write()
+        self.assertEqual(result['outcome'], 'durable_commit_cleanup_completed')
+        status = hm.Harness(self.root).status()
+        self.assertEqual(status['tasks']['WP-00']['state'], 'admitted')
+        self.assertEqual(status['receipt_count'], 2)
+
+    def test_hard_interruptions_during_rollback_recovery_resume_deterministically(self):
+        stages = (
+            'state_write_after_rollback_exchange_before_fsync',
+            'state_write_after_rollback_durable',
+            'state_write_after_rollback_cleanup_marker',
+            'state_write_after_candidate_capture_before_fsync',
+            'state_write_after_candidate_capture',
+            'state_write_after_recovery_candidate_cleanup',
+            'state_write_after_outcome_archive',
+            'state_write_after_preparation_archive',
+            'state_write_after_recovery_archive',
+        )
+        for stage in stages:
+            with self.subTest(stage=stage), tempfile.TemporaryDirectory() as directory:
+                root = (Path(directory) / 'repo').resolve()
+                root.mkdir()
+                hm.Harness(root).init('human:fixture')
+                original = (root / '.texenda/state.json').read_bytes()
+                pid = os.fork()
+                if pid == 0:
+                    def stop_write(observed, _harness, _detail):
+                        if observed == 'state_write_after_exchange_fsync':
+                            os._exit(77)
+                    try:
+                        hm.Harness(root, interleave=stop_write).admit('WP-00', 'fixture')
+                    except BaseException:
+                        os._exit(98)
+                    os._exit(0)
+                _pid, status = os.waitpid(pid, 0)
+                self.assertEqual(os.WEXITSTATUS(status), 77)
+
+                pid = os.fork()
+                if pid == 0:
+                    def stop_recovery(observed, _harness, _detail):
+                        if observed == stage:
+                            os._exit(78)
+                    try:
+                        recovery = hm.Harness(root, interleave=stop_recovery,
+                                              allow_state_recovery=True)
+                        recovery.recover_state_write('human:owner', runtime_stopped=True)
+                    except BaseException:
+                        os._exit(99)
+                    os._exit(0)
+                _pid, status = os.waitpid(pid, 0)
+                self.assertEqual(os.WEXITSTATUS(status), 78)
+                blockers = hm.state_transaction_blocker_names(root / '.texenda')
+                if blockers:
+                    result = hm.Harness(root, allow_state_recovery=True).recover_state_write(
+                        'human:owner', runtime_stopped=True)
+                    self.assertEqual(result['outcome'], 'previous_state_restored')
+                self.assertEqual((root / '.texenda/state.json').read_bytes(), original)
+                self.assertEqual(hm.state_transaction_blocker_names(root / '.texenda'), [])
+
+    def test_checkpoint_backed_rollback_resumes_after_exchange_boundaries(self):
+        for stage in ('state_write_after_rollback_exchange_before_fsync',
+                      'state_write_after_checkpoint_rollback_exchange_fsync'):
+            with self.subTest(stage=stage), tempfile.TemporaryDirectory() as directory:
+                root = (Path(directory) / 'repo').resolve()
+                root.mkdir()
+                hm.Harness(root).init('human:fixture')
+                original = (root / '.texenda/state.json').read_bytes()
+                pid = os.fork()
+                if pid == 0:
+                    def stop_commit(observed, _harness, _detail):
+                        if observed == 'state_write_after_commit_candidate_cleanup':
+                            os._exit(79)
+                    hm.Harness(root, interleave=stop_commit).admit('WP-00', 'fixture')
+                    os._exit(0)
+                _pid, status = os.waitpid(pid, 0)
+                self.assertEqual(os.WEXITSTATUS(status), 79)
+
+                pid = os.fork()
+                if pid == 0:
+                    def stop_rollback(observed, _harness, _detail):
+                        if observed == stage:
+                            os._exit(80)
+                    recovery = hm.Harness(root, interleave=stop_rollback,
+                                          allow_state_recovery=True)
+                    recovery.recover_state_write('human:owner', runtime_stopped=True)
+                    os._exit(0)
+                _pid, status = os.waitpid(pid, 0)
+                self.assertEqual(os.WEXITSTATUS(status), 80)
+                result = hm.Harness(root, allow_state_recovery=True).recover_state_write(
+                    'human:owner', runtime_stopped=True)
+                self.assertEqual(result['outcome'], 'previous_state_restored')
+                self.assertEqual((root / '.texenda/state.json').read_bytes(), original)
+                self.assertEqual(hm.state_transaction_blocker_names(root / '.texenda'), [])
+
+    def test_interrupted_initialization_restores_absence_then_can_reinitialize(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = (Path(directory) / 'repo').resolve()
+            root.mkdir()
+            pid = os.fork()
+            if pid == 0:
+                def interrupt(stage, _harness, _detail):
+                    if stage == 'state_write_after_exchange_before_fsync':
+                        os._exit(75)
+                try:
+                    hm.Harness(root, interleave=interrupt).init('human:fixture')
+                except BaseException:
+                    os._exit(98)
+                os._exit(0)
+            _pid, status = os.waitpid(pid, 0)
+            self.assertEqual(os.WEXITSTATUS(status), 75)
+            with self.assertRaisesRegex(hm.Denied, 'pending explicit recovery'):
+                hm.Harness(root)
+            recovery = hm.Harness(root, allow_state_recovery=True).recover_state_write(
+                'human:owner', runtime_stopped=True)
+            self.assertEqual(recovery['outcome'], 'previous_state_restored')
+            self.assertFalse((root / '.texenda/state.json').exists())
+            hm.Harness(root).init('human:fixture')
+            self.assertEqual(hm.Harness(root).status()['receipt_count'], 1)
+
+    def test_first_init_candidate_fsync_failure_has_a_recoverable_preparation_control(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = (Path(directory) / 'repo').resolve()
+            root.mkdir()
+            original_fsync = hm.os.fsync
+            armed = [False]
+            failed = [False]
+
+            def interleave(stage, _harness, _detail):
+                if stage == 'state_write_before_candidate_file_fsync':
+                    armed[0] = True
+
+            def fail_candidate_once(descriptor):
+                metadata = os.fstat(descriptor)
+                if armed[0] and not failed[0] and hm.stat.S_ISREG(metadata.st_mode):
+                    failed[0] = True
+                    raise OSError('synthetic first-init candidate fsync failure')
+                return original_fsync(descriptor)
+
+            harness = hm.Harness(root, interleave=interleave)
+            with mock.patch.object(hm.os, 'fsync', side_effect=fail_candidate_once):
+                with self.assertRaisesRegex(OSError, 'first-init candidate fsync failure'):
+                    harness.init('human:fixture')
+            self.assertTrue(failed[0])
+            self.assertEqual(hm.state_transaction_blocker_names(root / '.texenda'), [])
+            self.assertFalse((root / '.texenda/state.json').exists())
+            self.assertFalse((root / '.texenda/state.lock').exists())
+            hm.Harness(root).init('human:fixture')
+            self.assertEqual(hm.Harness(root).status()['receipt_count'], 1)
+
+    def test_partial_staging_never_publishes_a_phase_control(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = (Path(directory) / 'repo').resolve()
+            root.mkdir()
+            pid = os.fork()
+            if pid == 0:
+                def stop_preparation(stage, _harness, detail):
+                    if (stage == 'state_write_after_control_staging_partial'
+                            and detail['target'] == hm.STATE_TRANSACTION_PENDING):
+                        os._exit(81)
+                hm.Harness(root, interleave=stop_preparation).init('human:fixture')
+                os._exit(0)
+            _pid, status = os.waitpid(pid, 0)
+            self.assertEqual(os.WEXITSTATUS(status), 81)
+            self.assertFalse((root / '.texenda/.state-write-transaction.json').exists())
+            self.assertEqual(hm.state_transaction_blocker_names(root / '.texenda'), [])
+            self.assertTrue(list((root / '.texenda').glob('state-write-staging-*.tmp')))
+            hm.Harness(root).init('human:fixture')
+            self.assertEqual(hm.Harness(root).status()['receipt_count'], 1)
+
+        original = (self.default / 'state.json').read_bytes()
+        pid = os.fork()
+        if pid == 0:
+            def stop_ready(stage, _harness, detail):
+                if (stage == 'state_write_after_control_staging_partial'
+                        and detail['target'].startswith('.state-write-ready-')):
+                    os._exit(82)
+            hm.Harness(self.root, interleave=stop_ready).admit('WP-00', 'fixture')
+            os._exit(0)
+        _pid, status = os.waitpid(pid, 0)
+        self.assertEqual(os.WEXITSTATUS(status), 82)
+        blockers = hm.state_transaction_blocker_names(self.default)
+        self.assertIn(hm.STATE_TRANSACTION_PENDING, blockers)
+        self.assertFalse(any(name.startswith('.state-write-ready-') for name in blockers))
+        result = self.recover_state_write()
+        self.assertEqual(result['outcome'], 'previous_state_restored')
+        self.assertEqual((self.default / 'state.json').read_bytes(), original)
+        self.assertEqual(hm.state_transaction_blocker_names(self.default), [])
+
+    def test_corrupt_missing_and_ambiguous_recovery_material_fail_closed(self):
+        for mutation in ('corrupt-transaction', 'missing-candidate', 'symlink-candidate',
+                         'ambiguous-control'):
+            with self.subTest(mutation=mutation), tempfile.TemporaryDirectory() as directory:
+                root = (Path(directory) / 'repo').resolve()
+                root.mkdir()
+                harness = hm.Harness(root)
+                harness.init('human:fixture')
+                original = (root / '.texenda/state.json').read_bytes()
+                pid = os.fork()
+                if pid == 0:
+                    def interrupt(stage, _harness, _detail):
+                        if stage == 'state_write_after_exchange_fsync':
+                            os._exit(76)
+                    try:
+                        hm.Harness(root, interleave=interrupt).admit('WP-00', 'fixture')
+                    except BaseException:
+                        os._exit(98)
+                    os._exit(0)
+                _pid, status = os.waitpid(pid, 0)
+                self.assertEqual(os.WEXITSTATUS(status), 76)
+                state_root = root / '.texenda'
+                pending = state_root / hm.STATE_TRANSACTION_PENDING
+                value = json.loads(pending.read_text())
+                candidate = state_root / value['candidate_name']
+                if mutation == 'corrupt-transaction':
+                    pending.write_text('{}\n')
+                elif mutation == 'missing-candidate':
+                    candidate.unlink()
+                elif mutation == 'symlink-candidate':
+                    candidate.unlink()
+                    candidate.symlink_to(state_root / 'state.json')
+                else:
+                    duplicate = state_root / ('.state-write-commit-cleanup-'
+                                              + value['token'] + '.json')
+                    duplicate.write_bytes(pending.read_bytes())
+                recovery = hm.Harness(root, allow_state_recovery=True)
+                with self.assertRaises(hm.Denied):
+                    recovery.recover_state_write('human:owner', runtime_stopped=True)
+                self.assertTrue(pending.is_file())
+                self.assertNotEqual((state_root / 'state.json').read_bytes(), original)
+
+    def test_state_transaction_schema_is_closed_and_identity_bound(self):
+        self.hard_exit_admit('state_write_after_transaction_prepared')
+        schema = json.loads(hm.STATE_TRANSACTION_SCHEMA.read_text())
+        self.assertFalse(schema['additionalProperties'])
+        self.assertEqual(set(schema['required']), hm.STATE_TRANSACTION_FIELDS)
+        self.assertEqual(len(schema['allOf']), 3)
+        pending = self.default / hm.STATE_TRANSACTION_PENDING
+        original = json.loads(pending.read_text())
+        recovery = hm.Harness(self.root, allow_state_recovery=True)
+        mutations = [
+            lambda value: value.update(extra='forbidden'),
+            lambda value: value.update(token='../../escaped'),
+            lambda value: value.update(repository_root=str(self.base)),
+            lambda value: value['old_state']['identity'].update(inode=-1),
+            lambda value: value['new_state'].update(sha256='0' * 63),
+            lambda value: value.update(old_state=None),
+            lambda value: value['binding'].update(kind='present'),
+        ]
+        for mutate in mutations:
+            with self.subTest(mutation=mutations.index(mutate)):
+                value = copy.deepcopy(original)
+                mutate(value)
+                with self.assertRaises(hm.Denied):
+                    recovery._validate_state_transaction(value)
+        result = recovery.recover_state_write('human:owner', runtime_stopped=True)
+        self.assertEqual(result['outcome'], 'previous_state_restored')
+
+    def test_recovery_cli_requires_owner_stop_and_uses_no_receipt_rewrite(self):
+        original = (self.default / 'state.json').read_bytes()
+        self.hard_exit_admit('state_write_after_exchange_fsync')
+        with contextlib.redirect_stdout(io.StringIO()), \
+                contextlib.redirect_stderr(io.StringIO()):
+            self.assertEqual(hm.main(['--root', str(self.root), 'recover-state-write',
+                                     '--actor', 'human:owner']), 2)
+            self.assertEqual(hm.main(['--root', str(self.root), 'recover-state-write',
+                                     '--actor', 'human:owner', '--runtime-stopped']), 0)
+        self.assertEqual((self.default / 'state.json').read_bytes(), original)
+        self.assertEqual(len(json.loads(original)['events']), 1)
+
+    def test_successful_state_transaction_leaves_sanitized_records_and_nonactive_checkpoint(self):
+        self.harness.admit('WP-00', 'fixture')
+        self.assertEqual(hm.state_transaction_blocker_names(self.default), [])
+        archives = list(self.default.glob('state-write-committed-*.json'))
+        self.assertGreaterEqual(len(archives), 2)  # init plus admit
+        for archive in archives:
+            value = json.loads(archive.read_text())
+            self.assertEqual(value['schema_version'], hm.STATE_TRANSACTION_VERSION)
+            self.assertNotIn('events', value)
+            self.assertNotIn('tasks', value)
+        checkpoints = list(self.default.glob('state-write-checkpoint-previous-*.json'))
+        self.assertEqual(len(checkpoints), 1)
+        self.assertEqual(len(json.loads(checkpoints[0].read_bytes())['events']), 1)
+        self.assertFalse(any(path.name.startswith('.state-write-')
+                             for path in self.default.iterdir()))
 
 
 if __name__ == '__main__':

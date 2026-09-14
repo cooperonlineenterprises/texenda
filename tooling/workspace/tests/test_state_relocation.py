@@ -213,6 +213,14 @@ class StateRelocationTests(unittest.TestCase):
         self.assertFalse((self.repo / hm.BINDING_NAME).exists())
         self.assertTrue(self.source_state.exists())
 
+    def test_pending_state_write_transaction_blocks_relocation_before_marker(self):
+        pending = self.repo / '.texenda/.state-write-transaction.json'
+        pending.write_text('{}\n')
+        with self.assertRaisesRegex(hm.Denied, 'state-write transaction'):
+            self.prepare()
+        self.assertFalse((self.repo / hm.BINDING_NAME).exists())
+        self.assertEqual(self.source_state.read_bytes(), self.original_state)
+
     def test_changed_state_after_prepare_stops_before_rename(self):
         self.prepare()
         state = json.loads(self.source_state.read_text())

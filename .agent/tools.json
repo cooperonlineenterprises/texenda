@@ -9,7 +9,7 @@
       "path": "tooling/coordination/harness.py",
       "availability_check": "python3 -B tooling/coordination/harness.py --root . [--state-root ABSOLUTE_BOUND_ROOT] status",
       "side_effects": "command_dependent",
-      "constraints": "existing leases receipts evidence routing budget and external gates"
+      "constraints": "existing leases receipts evidence routing budget external gates and explicit owner/runtime-stopped state-write recovery"
     },
     {
       "id": "facade-validator",

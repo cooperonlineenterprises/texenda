@@ -1,4 +1,8 @@
 .texenda/
+# Explicit compatibility guards; these records remain inside the already ignored
+# default state directory or the external state root outside Git.
+.texenda/.state-write-*
+.texenda/state-write-*.json
 .texenda-location.json
 .texenda-location.activation-*
 .agent/generated/.refresh-*

@@ -10,7 +10,7 @@
   "bindings": [
     {
       "path": "tooling/coordination/harness.py",
-      "sha256": "10f420afb2e30b0681e4eab09ed4ef589627315c660532ba8268460c81ae6e77",
+      "sha256": "7716434e37119efbc494400ad6121e819f5785b62bbf370ec50a9abb24ee5b38",
       "role": "wp_lifecycle_receipt_and_state_root_adapter"
     },
     {
@@ -29,8 +29,13 @@
       "role": "closed_external_state_binding_contract"
     },
     {
+      "path": "tooling/coordination/schemas/state-write-transaction.schema.json",
+      "sha256": "a6533f9b79544def01b737744d9b365be48e402f9ce080f43cfe70be95486878",
+      "role": "closed_local_state_write_recovery_contract"
+    },
+    {
       "path": "tooling/workspace/relocate_state.py",
-      "sha256": "9e2dc0a908c8619e69490e470758baf292863b528b889259a4af147167529c8e",
+      "sha256": "2691baf5917a501ad7eb38ea78e77fc4163fa4607c27b233f76f79c15b48db12",
       "role": "reviewed_noncopying_state_relocation_adapter"
     },
     {

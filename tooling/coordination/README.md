@@ -44,9 +44,17 @@ removed only when acquisition or later commit continuity fails. The final state
 comparison is followed by a binding/root/lock/policy identity recheck at the
 replacement boundary. Existing-state writes use an atomic exchange so a
 post-replacement identity failure restores the exact previous state bytes before
-returning denial. Any pending state-location activation transaction blocks all
-ordinary harness and facade ledger access until the relocation helper recovers it.
-Repository-relative
+returning denial. Before candidate creation, the harness publishes a closed
+preparation control; a second closed
+[state-write transaction](schemas/state-write-transaction.schema.json) binds the
+exact old/new hashes and inode identities, repository/state-root/lock identities,
+binding identity and routing-policy digest before exchange. Controls are fully
+written/fsynced under a non-operational staging name before descriptor-relative
+no-replace publication, so a partial file never masquerades as an active phase.
+The harness validates the complete displaced old bytes and prepared inode after
+exchange. Any pending state-write or
+state-location activation transaction blocks all ordinary harness and facade
+ledger access until its dedicated recovery path completes. Repository-relative
 evidence always stays under `--root`.
 Bound reads and writes also enforce the migration receipt count/prefix and exact
 state bytes while the receipt count is unchanged; later valid appended receipts
@@ -123,6 +131,28 @@ Any later v2 operation blocks rollback so it cannot discard audit history or
 work. Use a separately reviewed forward migration then. Neither command proves
 runtime termination itself. After safe rollback, use the v1 CLI for that v1
 ledger until the amendment is reapplied. Never delete `.texenda/` to clear state.
+
+A process or durability failure during a local state replacement is recovered
+separately from WP lifecycle recovery. Stop every runtime and use the exact
+selected state root:
+
+```sh
+python3 tooling/coordination/harness.py --root . [--state-root ABSOLUTE_BOUND_ROOT] \
+  recover-state-write --actor human:owner --runtime-stopped
+```
+
+The command acquires the preserved state lock and uses only descriptor-relative
+operations. For each still-pending exchange it validates the immutable
+transaction, environment and both byte sets, then restores the previous state as
+the safest default without reserializing receipts. A fully archived durable commit
+outcome can finish forward; earlier commit-cleanup phases still restore the prior
+checkpoint. Missing, corrupt, ambiguous or substituted recovery material fails
+closed. If rollback exchange or directory sync cannot be proved, the active and
+candidate/checkpoint bytes plus both blocking controls remain. Candidate cleanup
+is an atomic no-replace capture into a content-addressed, non-active checkpoint;
+the harness never unlinks ledger bytes. Completed/recovered transaction records
+retain sanitized hashes and identities. Ordinary success leaves no hidden
+candidate or cleanup control and exactly one active `state.json` ledger.
 
 Exact runtime qualification uses [schemas/evidence.schema.json](schemas/evidence.schema.json)
 and [templates/roster.json](templates/roster.json). Version-2 roster records must

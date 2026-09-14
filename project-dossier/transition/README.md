@@ -133,6 +133,18 @@ The frozen external-state interface is deliberately narrow:
   explicit `already_completed` result. Missing, duplicate, symlinked, corrupt or
   ambiguous completion evidence stops recovery; it is never inferred from a
   missing source path.
+- Coordinator receipt writes use a separate selected-state-root transaction.
+  A closed preparation control precedes candidate creation; a complete staged and
+  atomically published ready control then binds exact old/new hashes and inode
+  identities plus repository, state-root, lock, binding and policy identity before
+  exchange. Ordinary Harness and facade checks stop on pending/candidate/cleanup
+  material. The explicit
+  owner/runtime-stopped recovery command holds the state lock and restores the
+  previous byte-exact ledger by default; a competing displaced ledger and the
+  attempted new ledger are both retained if prepared-old identity cannot be
+  proved. Cleanup moves ledger bytes through descriptor-relative no-replace
+  capture into content-addressed non-active checkpoints; it never unlinks them.
+  No recovery path reserializes or splices receipt chains.
 
 The implementation's required test contract includes default/external roots,
 missing state, conflicting roots/bindings, symlink and traversal escapes,

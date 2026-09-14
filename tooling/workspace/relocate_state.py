@@ -675,6 +675,9 @@ def held_relocation_lock(paths):
         current = lock_path.lstat()
         if (opened.st_dev, opened.st_ino) != (current.st_dev, current.st_ino):
             raise Denied('state lock was substituted during acquisition')
+        for state_directory in (paths['default_root'], paths['state_root']):
+            if coordination.state_transaction_blocker_names(state_directory):
+                raise Denied('state-write transaction must be recovered before relocation')
         yield lock_path, descriptor
     finally:
         try:
