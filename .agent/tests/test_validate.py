@@ -334,6 +334,22 @@ class FacadeIntegratedFixtureTests(unittest.TestCase):
         with self.assertRaisesRegex(common.ValidationError, 'second active record store'):
             validate.validate_indexes(self.fixture)
 
+    def test_registry_rejects_mislabeled_refresh_and_mutating_state_command(self):
+        path = self.fixture / '.agent/validators.json'
+        original = path.read_bytes()
+        value = json.loads(original)
+        next(row for row in value['commands'] if row['id'] == 'facade-refresh')['mode'] = 'read_only'
+        path.write_text(json.dumps(value))
+        with self.assertRaisesRegex(common.ValidationError, 'mislabeled'):
+            validate.validate_registry(self.fixture)
+        value = json.loads(original)
+        state = next(row for row in value['commands'] if row['id'] == 'coordination-state-check')
+        state['argv'][-1] = 'init'
+        path.write_text(json.dumps(value))
+        with self.assertRaisesRegex(common.ValidationError, 'could mutate'):
+            validate.validate_registry(self.fixture)
+        path.write_bytes(original)
+
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)

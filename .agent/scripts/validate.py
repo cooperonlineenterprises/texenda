@@ -63,14 +63,15 @@ def strict_parsing(root=ROOT):
             continue
         if name.startswith('.agent/tests/fixtures/invalid/'):
             continue
+        raw = stable_file_bytes(path, 'parse candidate')
         if path.suffix == '.json':
-            loads(path.read_bytes())
+            loads(raw)
             counts['json'] += 1
         elif path.suffix == '.toml':
-            tomllib.loads(path.read_text())
+            tomllib.loads(raw.decode())
             counts['toml'] += 1
         elif path.suffix == '.py':
-            ast.parse(path.read_text(), filename=name)
+            ast.parse(raw.decode(), filename=name)
             counts['python'] += 1
     return counts
 
@@ -133,7 +134,7 @@ def validate_instruction_scope(root=ROOT):
         path = root / name
         no_symlink_components(path.absolute(), 'instruction file')
         require(path.is_file(), 'instruction file must be regular')
-        validate_nested_instruction_text(path.read_text())
+        validate_nested_instruction_text(stable_file_bytes(path, 'instruction file').decode())
         count += 1
     return count
 
@@ -243,7 +244,7 @@ def validate_extension(root=ROOT):
                 'extension binding escapes confined paths: ' + name)
         path = root / name
         no_symlink_components(path.absolute(), 'extension binding')
-        require(path.is_file() and sha(path.read_bytes()) == row['sha256'],
+        require(path.is_file() and sha(stable_file_bytes(path, 'extension binding')) == row['sha256'],
                 'extension binding hash mismatch: ' + name)
 
 
@@ -286,10 +287,21 @@ def validate_registry(root=ROOT):
         if '{project_home}' in tokens:
             require('project_home' in row['context_parameters'],
                     'project-home token lacks declared parameterization')
+        names_refresh = any(item.endswith('.agent/scripts/refresh.py') for item in row['argv'])
+        require(names_refresh is (row['mode'] == 'refresh_writer'),
+                'refresh command mode is mislabeled')
+        if row['mode'] == 'refresh_writer':
+            require(row['id'] in {'facade-refresh', 'facade-refresh-recovery'}
+                    and row['run_in_check'] is False,
+                    'refresh writer cannot be registered as a check')
     check = next((row for row in rows if row['id'] == 'facade-check'), None)
     refresh = next((row for row in rows if row['id'] == 'facade-refresh'), None)
     require(check and check['mode'] == 'read_only' and refresh and refresh['mode'] == 'refresh_writer',
             'check/refresh command contract missing')
+    state_check = next((row for row in rows if row['id'] == 'coordination-state-check'), None)
+    require(state_check and state_check['argv'][-1] == 'check'
+            and 'init' not in state_check['argv'],
+            'coordination check registry could mutate state')
     return registry
 
 
@@ -332,6 +344,24 @@ def resolve_command(row, context):
                 'unresolved or unsafe validator argv')
         resolved.append(item)
     require(resolved[0] in ('python3', 'git'), 'validator executable is not allowlisted')
+    if resolved[0] == 'python3':
+        require(len(resolved) >= 3 and resolved[1] == '-B',
+                'Python validator commands must disable bytecode writes')
+        if resolved[2] == '-m':
+            require(len(resolved) > 3 and resolved[3] == 'unittest',
+                    'only the standard-library unittest module may be delegated')
+        else:
+            script = Path(resolved[2])
+            script = script if script.is_absolute() else Path(context['repository_root']) / script
+            script = Path(os.path.abspath(script))
+            repository = Path(context['repository_root'])
+            project_home = Path(context['project_home'])
+            require(script.is_relative_to(repository)
+                    or script.is_relative_to(project_home / 'sources'),
+                    'validator script escapes the validated repository/source roots')
+            reject_private_name(script.as_posix(), 'validator script')
+            no_symlink_components(script, 'validator script')
+            require(script.is_file(), 'validator script is missing')
     if row['id'] == 'coordination-state-check' and context['state_root'] is not None:
         state_index = resolved.index('--state-root')
         require(state_index < resolved.index('check'),
@@ -397,7 +427,8 @@ def validate_links(root=ROOT, *, allow_generated_missing=False):
         no_symlink_components(path.absolute(), 'Markdown path')
         if not path.is_file():
             continue
-        for target in re.findall(r'\[[^\]]+\]\(([^)]+)\)', path.read_text()):
+        markdown = stable_file_bytes(path, 'Markdown path').decode()
+        for target in re.findall(r'\[[^\]]+\]\(([^)]+)\)', markdown):
             target = urllib.parse.unquote(target.split('#', 1)[0])
             if not target or '://' in target or target.startswith('mailto:'):
                 continue
@@ -463,7 +494,7 @@ def validate_evidence_records(root=ROOT):
             target = root / evidence_path
             no_symlink_components(target.absolute(), 'qualification evidence path')
             require(target.is_file() and valid_sha(check.get('sha256'))
-                    and sha(target.read_bytes()) == check['sha256'],
+                    and sha(stable_file_bytes(target, 'qualification evidence path')) == check['sha256'],
                     'PASS/FAIL evidence hash mismatch: ' + evidence_path)
             count += 1
     return count
@@ -567,7 +598,8 @@ def validate_generated(root=ROOT, state_root=None):
             'evidence mirror is stale')
     findings = load_json(root / 'project-dossier/conformance/findings.json')
     findings_mirror = load_json(root / 'project-dossier/machine-readable/findings.json')
-    require(findings_mirror['source_sha256'] == sha((root / 'project-dossier/conformance/findings.json').read_bytes())
+    require(findings_mirror['source_sha256'] == sha(stable_file_bytes(
+                root / 'project-dossier/conformance/findings.json', 'conformance findings'))
             and findings_mirror['findings'] == findings['findings'], 'findings mirror is stale')
     # Reconstruct every generated byte from validated sources, the recorded
     # source identity/time, and the stable ledger. This covers all eleven

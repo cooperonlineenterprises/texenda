@@ -295,7 +295,9 @@ class Harness(legacy.Harness):
         self.policy_path = Path(policy)
         self.policy = load_json(stable_file_bytes(self.policy_path, 'routing policy'))
         self.policy_hash = digest(self.policy)
-        self.evidence_fields = set(load_json((PACKAGE / '08-project-harness/schemas/evidence.schema.json').read_text())['properties'])
+        evidence_schema = PACKAGE / '08-project-harness/schemas/evidence.schema.json'
+        self.evidence_fields = set(load_json(stable_file_bytes(evidence_schema,
+                                                               'sealed evidence schema'))['properties'])
         self._validate_policy()
 
     def _binding_current(self):
@@ -462,7 +464,8 @@ class Harness(legacy.Harness):
         """Retain v1 lifecycle envelopes; new routing metadata uses the local v2 schema."""
         safe = safe_public_rel(rel, 'coordination evidence')
         path = under(self.root, safe)
-        envelope = load_json(path.read_text())
+        envelope_raw = stable_file_bytes(path, 'coordination evidence')
+        envelope = load_json(envelope_raw)
         if not isinstance(envelope, dict) or envelope.get('schema_version') not in ('1.0', '2.0'):
             raise Denied('invalid evidence envelope')
         fields = self.evidence_fields
@@ -495,7 +498,8 @@ class Harness(legacy.Harness):
             if check['status'] in ('PASS', 'FAIL'):
                 log_rel = safe_public_rel(check.get('evidence_path', ''), 'evidence check log')
                 log = under(self.root, log_rel)
-                if file_hash(log) != check.get('sha256'):
+                log_raw = stable_file_bytes(log, 'evidence check log')
+                if hashlib.sha256(log_raw).hexdigest() != check.get('sha256'):
                     raise Denied('test log hash mismatch')
                 if not check.get('command_or_procedure'):
                     raise Denied('test command/procedure required')
@@ -503,7 +507,7 @@ class Harness(legacy.Harness):
             required = [check for check in checks if check['required']]
             if not required or any(check['status'] != 'PASS' for check in required):
                 raise Denied('all required checks must have PASS evidence; NOT RUN cannot pass')
-        return {'path': safe_rel(rel), 'sha256': file_hash(path)}, envelope
+        return {'path': safe, 'sha256': hashlib.sha256(envelope_raw).hexdigest()}, envelope
 
     def _check(self, state):
         self._policy_current()

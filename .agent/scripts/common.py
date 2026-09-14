@@ -144,7 +144,8 @@ def is_generated(path):
 
 def source_rows(root=ROOT):
     rows = []
-    for name in candidate_paths(root):
+    inventory = candidate_paths(root)
+    for name in inventory:
         if is_generated(name) or name.startswith(EVIDENCE_PREFIX):
             continue
         parts = PurePosixPath(name).parts
@@ -154,7 +155,8 @@ def source_rows(root=ROOT):
         path = root / name
         no_symlink_components(path.absolute(), 'source path')
         require(path.is_file(), 'source path is not a regular file: ' + name)
-        rows.append({'path': name, 'sha256': sha(path.read_bytes())})
+        rows.append({'path': name, 'sha256': sha(stable_file_bytes(path, 'source path'))})
+    require(candidate_paths(root) == inventory, 'candidate path inventory changed during source scan')
     return rows
 
 
@@ -182,7 +184,9 @@ def evidence_rows(root=ROOT):
         path = root / name
         no_symlink_components(path.absolute(), 'evidence path')
         require(path.is_file(), 'evidence path is not regular: ' + name)
-        rows.append({'path': name, 'sha256': sha(path.read_bytes())})
+        rows.append({'path': name, 'sha256': sha(stable_file_bytes(path, 'evidence path'))})
+    require(git('ls-files', '-z', EVIDENCE_PREFIX, root=root).split('\0') == names,
+            'evidence path inventory changed during scan')
     return rows
 
 

@@ -13,7 +13,7 @@ import tempfile
 sys.dont_write_bytecode = True
 from common import (ROOT, SOURCE_SCOPE_EXCLUSIONS, canonical, evidence_rows, git_identity,
                     ledger_facts, load_json, require, revision_source_rows, scope_digest, sha,
-                    source_rows)
+                    source_rows, stable_file_bytes)
 import validate as checker
 
 
@@ -155,7 +155,8 @@ def build(root=ROOT, state_root=None, *, generated_at=None, source_identity=None
         'generation_id': generation_id,
         'generated_at': generated_at,
         'authority': 'generated_from_project-dossier/ARTIFACT_CATALOG.json',
-        'source_sha256': sha((root / 'project-dossier/ARTIFACT_CATALOG.json').read_bytes()),
+        'source_sha256': sha(stable_file_bytes(root / 'project-dossier/ARTIFACT_CATALOG.json',
+                                               'artifact catalog')),
         'paths': [{key: row[key] for key in ('path', 'classification', 'owner_path', 'concern_id')}
                   for row in catalog['artifacts']],
     }
@@ -166,7 +167,7 @@ def build(root=ROOT, state_root=None, *, generated_at=None, source_identity=None
         'generation_id': generation_id,
         'generated_at': generated_at,
         'authority': 'generated_from_project-dossier/conformance/findings.json',
-        'source_sha256': sha(findings_source.read_bytes()),
+        'source_sha256': sha(stable_file_bytes(findings_source, 'conformance findings')),
         'findings': findings['findings'],
     }
     evidence_index = {
