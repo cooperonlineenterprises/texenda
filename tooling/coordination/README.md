@@ -12,9 +12,13 @@ or [resumption](templates/RESUME.md) template. The generated `context` manifest
 must be supplemented with the applicable local instruction/template hashes.
 The sealed generic assignment prompt remains package reference.
 
-Use Python 3.10+ on a single POSIX host. No dependency installation is needed.
-Every command takes `--root`; the normal target is the repository root. Never
-initialize over an existing ledger or use the sealed v1 CLI on a v2 ledger.
+Use Python 3.11+ on a single POSIX host. No dependency installation is needed.
+Every command takes `--root`; it remains the repository/evidence root. Before a
+state-location binding exists, omitted `--state-root` retains the `.texenda`
+default. An active ignored `.texenda-location.json` requires the exact absolute
+`--state-root`; a moving, missing, wrong, relative, symlinked, traversing, or
+competing root fails closed. Never initialize after binding, initialize over an
+existing ledger, or use the sealed v1 CLI on a v2 ledger.
 
 ```sh
 # Empty ledger only; init is non-overwriting and starts with no qualified profiles.
@@ -23,6 +27,14 @@ python3 tooling/coordination/harness.py --root . status
 python3 tooling/coordination/harness.py --root . check
 python3 tooling/coordination/harness.py --root . context WP-00
 ```
+
+`status`, `ready`, and `check` use stable repeated reads and never create/open a
+lock for write, initialize state, or update caches/reports. Mutations use the
+selected state root's nonblocking exclusive lock and recheck the source bytes
+before replacement. Repository-relative evidence always stays under `--root`.
+The independently reviewed [state relocation helper](../workspace/relocate_state.py)
+provides prepare/apply/resume/reverse-rename/verify operations; only the T1 move
+lead uses it after the required freeze and exact approval.
 
 `status` reports the policy digest, all exact profiles with availability/reasons,
 default availability per capability tier, active assignment effort/fallback, and
@@ -199,12 +211,10 @@ runtime-stop evidence retain their sealed behavior. V2 approvals are recorded
 at the review boundary; integration rechecks the approved candidate and evidence
 but does not launch/requalify an already completed reviewer runtime.
 
-```sh
-env PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tooling/coordination/tests -v
-env PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s specs/texenda-handoff/08-project-harness/tests -v
-env PYTHONDONTWRITEBYTECODE=1 python3 specs/texenda-handoff/10-validation/validate_package.py --checksums
-git diff --check
-```
+The authoritative project validation commands now live in the single
+[`.agent/validators.json`](../../.agent/validators.json) registry. Execute its
+exact argv entries with `PYTHONDONTWRITEBYTECODE=1` where shown; this guide does
+not independently own or redefine the suite.
 
 The [independent test plan](../../docs/qualification/analysis/routing-v2-test-plan.md)
 is a design input. Its illustrative C labels and short profile IDs map to T1–T4

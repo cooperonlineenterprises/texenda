@@ -1,0 +1,94 @@
+{
+  "schema_version": "texenda.agent.v1",
+  "authority": "Single project validation command registry after the reviewed facade cutover. Commands delegate existing validators; a PASS is scoped evidence, not permission or product readiness.",
+  "commands": [
+    {
+      "id": "facade-check",
+      "argv": ["python3", "-B", ".agent/scripts/validate.py", "--check"],
+      "mode": "read_only",
+      "required": true,
+      "run_in_check": false,
+      "purpose": "Validate mapped authority, strict records, links, hashes, state projection, and generated freshness without writes."
+    },
+    {
+      "id": "facade-refresh",
+      "argv": ["python3", "-B", ".agent/scripts/refresh.py", "--refresh"],
+      "mode": "refresh_writer",
+      "required": true,
+      "run_in_check": false,
+      "purpose": "Explicitly refresh only generated non-authoritative views."
+    },
+    {
+      "id": "workspace-contract",
+      "argv": ["python3", "-B", "tooling/workspace/validate_contract.py", "--check", "--audit"],
+      "mode": "read_only",
+      "required": true,
+      "run_in_check": true,
+      "purpose": "Delegate the reviewed workspace/crosswalk contract validator."
+    },
+    {
+      "id": "facade-tests",
+      "argv": ["python3", "-B", "-m", "unittest", "discover", "-s", ".agent/tests", "-p", "test_*.py", "-v"],
+      "mode": "synthetic_writes_only",
+      "required": true,
+      "run_in_check": false,
+      "purpose": "Run facade mutation, stale-view, interruption, and read-only proofs in synthetic fixtures."
+    },
+    {
+      "id": "workspace-tests",
+      "argv": ["python3", "-B", "-m", "unittest", "discover", "-s", "tooling/workspace/tests", "-p", "test_*.py", "-v"],
+      "mode": "synthetic_writes_only",
+      "required": true,
+      "run_in_check": false,
+      "purpose": "Run mapped workspace and state-relocation recovery tests."
+    },
+    {
+      "id": "coordination-tests",
+      "argv": ["python3", "-B", "-m", "unittest", "discover", "-s", "tooling/coordination/tests", "-p", "test_*.py", "-v"],
+      "mode": "synthetic_writes_only",
+      "required": true,
+      "run_in_check": false,
+      "purpose": "Run the local coordinator routing, state-root, and instruction suites."
+    },
+    {
+      "id": "sealed-harness-tests",
+      "argv": ["python3", "-B", "-m", "unittest", "discover", "-s", "specs/texenda-handoff/08-project-harness/tests", "-p", "test_*.py", "-v"],
+      "mode": "synthetic_writes_only",
+      "required": true,
+      "run_in_check": false,
+      "purpose": "Run all 39 unchanged sealed lifecycle tests."
+    },
+    {
+      "id": "sealed-package-checksums",
+      "argv": ["python3", "-B", "specs/texenda-handoff/10-validation/validate_package.py", "--checksums"],
+      "mode": "read_only",
+      "required": true,
+      "run_in_check": false,
+      "purpose": "Run all 14 sealed implementation-package checks including checksums."
+    },
+    {
+      "id": "source-package-checksums",
+      "argv": ["python3", "-B", "../sources/handoff-1.1.0-20260914/10-validation/validate_package.py", "--checksums"],
+      "mode": "read_only",
+      "required": true,
+      "run_in_check": false,
+      "purpose": "Run all 14 preserved source-package checks from the canonical repo layout."
+    },
+    {
+      "id": "coordination-state-check",
+      "argv": ["python3", "-B", "tooling/coordination/harness.py", "--root", ".", "check"],
+      "mode": "read_only",
+      "required": true,
+      "run_in_check": false,
+      "purpose": "Validate the live receipt/state/policy integrity; add exact --state-root after binding."
+    },
+    {
+      "id": "git-diff-check",
+      "argv": ["git", "diff", "--check"],
+      "mode": "read_only",
+      "required": true,
+      "run_in_check": false,
+      "purpose": "Reject whitespace errors in the candidate diff."
+    }
+  ]
+}

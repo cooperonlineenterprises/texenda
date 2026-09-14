@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:texenda:project-blueprint-origin:v2",
+  "title": "Texenda mapped-existing Project Blueprint origin",
+  "description": "Deliberate local successor to the installed closed origin.v1 schema. Adds mapped-existing and structural-reference qualification without implying generation or authority transfer.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "blueprint_name",
+    "selected_version",
+    "selected_source",
+    "selected_reference_descriptor_sha256",
+    "profile",
+    "adoption_mode",
+    "generated_new_project",
+    "reference_qualification",
+    "newer_candidate",
+    "transfer_boundary",
+    "schema_provenance",
+    "adoption_contract"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "texenda.project-blueprint-origin.v2"
+    },
+    "blueprint_name": {
+      "const": "project-blueprint"
+    },
+    "selected_version": {
+      "const": "1.0.0"
+    },
+    "selected_source": {
+      "const": "/Users/jamesryancooper/.codex/skills/project-bootstrap/assets/blueprint-source"
+    },
+    "selected_reference_descriptor_sha256": {
+      "const": "40a9361ca19a809f5f54d0cabf35756110f88839584344cfea009912544ad5ce"
+    },
+    "profile": {
+      "const": "high-assurance"
+    },
+    "adoption_mode": {
+      "const": "mapped-existing"
+    },
+    "generated_new_project": {
+      "const": false
+    },
+    "reference_qualification": {
+      "const": "inspected_structural_reference_only"
+    },
+    "newer_candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "declared_version",
+        "revision",
+        "tree",
+        "dirty_entry_count",
+        "working_tree",
+        "qualified"
+      ],
+      "properties": {
+        "path": {
+          "const": "/Users/jamesryancooper/Projects/octon-mini"
+        },
+        "declared_version": {
+          "const": "4.3.0"
+        },
+        "revision": {
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "tree": {
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "dirty_entry_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "working_tree": {
+          "const": "dirty"
+        },
+        "qualified": {
+          "const": false
+        }
+      }
+    },
+    "transfer_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "project_facts",
+        "permissions",
+        "accepted_decisions",
+        "evidence",
+        "status",
+        "readiness"
+      ],
+      "properties": {
+        "project_facts": {"const": false},
+        "permissions": {"const": false},
+        "accepted_decisions": {"const": false},
+        "evidence": {"const": false},
+        "status": {"const": false},
+        "readiness": {"const": false}
+      }
+    },
+    "schema_provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "supersedes_schema",
+        "predecessor_path",
+        "predecessor_sha256",
+        "reason",
+        "decision"
+      ],
+      "properties": {
+        "supersedes_schema": {
+          "const": "project-blueprint-origin.v1"
+        },
+        "predecessor_path": {
+          "const": "/Users/jamesryancooper/.codex/skills/project-bootstrap/assets/blueprint-source/shared/schemas/project-blueprint-origin.schema.json"
+        },
+        "predecessor_sha256": {
+          "const": "42726c4542fddbc63f3d149c2582a5ef76f2c545b7283c4f043f4542b6e3c7a1"
+        },
+        "reason": {
+          "const": "add_mapped_existing_without_generation_claim"
+        },
+        "decision": {
+          "const": "docs/decisions/ADR-0004-mapped-project-workspace.md"
+        }
+      }
+    },
+    "adoption_contract": {
+      "const": "project-dossier/transition/blueprint-adoption-crosswalk.json"
+    }
+  }
+}

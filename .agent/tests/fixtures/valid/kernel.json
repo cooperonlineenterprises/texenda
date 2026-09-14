@@ -1,0 +1,6 @@
+{
+  "schema_version": "fixture.v1",
+  "may_expand_authority": false,
+  "generated_is_authoritative": false,
+  "check_writes": false
+}

@@ -8,13 +8,16 @@ Actor labels and evidence attestations require accountable runtime/reviewer cont
 from __future__ import annotations
 
 import argparse
+import contextlib
 import copy
 from decimal import Decimal
+import fcntl
 import hashlib
 import importlib.util
 import json
 import os
 from pathlib import Path
+from pathlib import PurePosixPath
 import sys
 import tempfile
 import time
@@ -22,6 +25,9 @@ import time
 PROJECT = Path(__file__).resolve().parents[2]
 PACKAGE = PROJECT / 'specs/texenda-handoff'
 POLICY = Path(__file__).with_name('routing-policy.json')
+BINDING_NAME = '.texenda-location.json'
+BINDING_SCHEMA = Path(__file__).with_name('schemas') / 'state-location.schema.json'
+BINDING_VERSION = 'texenda.state-location.v1'
 LEGACY_PATH = PACKAGE / '08-project-harness/harness.py'
 LEGACY_DIGEST = '226a4a14b3a795b24354eb90e51a50067fd27fe809423b30b9fa1551f3ce72d6'
 if hashlib.sha256(LEGACY_PATH.read_bytes()).hexdigest() != LEGACY_DIGEST:
@@ -47,6 +53,9 @@ BUDGET_MAX_AGE_SECONDS = 30 * 86400
 BUDGET_FIELDS = {'schema_version', 'kind', 'summary', 'checks', 'owner', 'approved_budget_usd',
                  'scope', 'work_packages', 'roles', 'issued_at', 'expires_at',
                  'routing_policy_digest', 'work_package_digest'}
+BINDING_FIELDS = {'schema_version', 'migration_id', 'repository_root', 'state_root',
+                  'status', 'baseline'}
+BINDING_BASELINE_FIELDS = {'state_sha256', 'receipt_count', 'receipt_tip'}
 
 
 def unique_object(pairs):
@@ -69,6 +78,77 @@ def amount(value):
     if not result.is_finite() or not Decimal(0) <= result <= Decimal(100000):
         raise Denied('development allocation must be bounded and nonnegative')
     return result
+
+
+def resolved_directory(value, label, *, absolute=False, component_symlinks=False):
+    """Resolve an existing directory while rejecting lexical and symlink escapes."""
+    path = Path(value)
+    if absolute and not path.is_absolute():
+        raise Denied(label + ' must be absolute')
+    if '..' in path.parts:
+        raise Denied(label + ' traversal is forbidden')
+    candidate = path if path.is_absolute() else Path.cwd() / path
+    # Resolve only after proving that no supplied path component is a symlink.
+    if candidate.is_symlink():
+        raise Denied(label + ' symlink path is forbidden')
+    if component_symlinks:
+        current = Path(candidate.anchor)
+        for part in candidate.parts[1:] if candidate.is_absolute() else candidate.parts:
+            current = current / part
+            try:
+                if current.is_symlink():
+                    raise Denied(label + ' symlink path is forbidden')
+            except OSError as exc:
+                raise Denied(label + ' path cannot be inspected') from exc
+    try:
+        resolved = candidate.resolve(strict=True)
+    except (OSError, RuntimeError) as exc:
+        raise Denied(label + ' directory is missing') from exc
+    if not resolved.is_dir():
+        raise Denied(label + ' must be a directory')
+    return resolved
+
+
+def load_binding(path, repository_root):
+    """Load the ignored, closed state-location descriptor without broadening it."""
+    schema = load_json(BINDING_SCHEMA.read_text())
+    if (schema.get('additionalProperties') is not False
+            or set(schema.get('properties', {})) != BINDING_FIELDS):
+        raise Denied('state-location binding schema changed; explicit review required')
+    if path.is_symlink():
+        raise Denied('state-location binding cannot be a symlink')
+    try:
+        value = load_json(path.read_text())
+    except FileNotFoundError:
+        return None
+    if (not isinstance(value, dict) or set(value) != BINDING_FIELDS
+            or value.get('schema_version') != BINDING_VERSION
+            or not isinstance(value.get('migration_id'), str) or not value['migration_id']
+            or value.get('status') not in ('moving', 'active')
+            or not isinstance(value.get('baseline'), dict)
+            or set(value['baseline']) != BINDING_BASELINE_FIELDS):
+        raise Denied('state-location binding violates the closed schema')
+    baseline = value['baseline']
+    if (not isinstance(baseline['state_sha256'], str) or len(baseline['state_sha256']) != 64
+            or any(char not in '0123456789abcdef' for char in baseline['state_sha256'])
+            or type(baseline['receipt_count']) is not int or baseline['receipt_count'] < 1
+            or not isinstance(baseline['receipt_tip'], str) or len(baseline['receipt_tip']) != 64
+            or any(char not in '0123456789abcdef' for char in baseline['receipt_tip'])):
+        raise Denied('state-location binding baseline is invalid')
+    try:
+        recorded_repository = Path(value['repository_root'])
+        recorded_state = Path(value['state_root'])
+    except TypeError as exc:
+        raise Denied('state-location binding paths must be strings') from exc
+    if (not recorded_repository.is_absolute() or '..' in recorded_repository.parts
+            or not recorded_state.is_absolute() or '..' in recorded_state.parts):
+        raise Denied('state-location binding paths must be absolute and traversal-free')
+    if recorded_repository != repository_root:
+        raise Denied('state-location binding repository mismatch')
+    expected_state = repository_root.parent / 'local/agent-state/texenda'
+    if recorded_state != expected_state:
+        raise Denied('state-location binding differs from the frozen project workspace root')
+    return value
 
 
 def check_receipts(state):
@@ -119,8 +199,44 @@ def restore_bytes(path, raw):
 
 
 class Harness(legacy.Harness):
-    def __init__(self, root, package=PACKAGE, clock=time.time, policy=POLICY):
-        super().__init__(Path(root), Path(package), clock)
+    def __init__(self, root, package=PACKAGE, clock=time.time, policy=POLICY, state_root=None):
+        repository_root = resolved_directory(root, 'repository root')
+        super().__init__(repository_root, Path(package), clock)
+        self.binding_path = self.root / BINDING_NAME
+        self.binding = load_binding(self.binding_path, self.root)
+        requested_state_root = None
+        if state_root is not None:
+            raw_state_root = Path(state_root)
+            if not raw_state_root.is_absolute() or '..' in raw_state_root.parts:
+                raise Denied('state root must be absolute and traversal-free')
+            requested_state_root = resolved_directory(raw_state_root, 'state root', absolute=True,
+                                                       component_symlinks=True)
+            if requested_state_root == self.root or self.root in requested_state_root.parents:
+                raise Denied('explicit state root must be external to the repository')
+        default_root = self.root / '.texenda'
+        if self.binding:
+            if self.binding['status'] != 'active':
+                raise Denied('state relocation is moving; verified recovery is required')
+            if requested_state_root is None:
+                raise Denied('bound projects require explicit --state-root')
+            bound = Path(self.binding['state_root'])
+            if requested_state_root != bound:
+                raise Denied('explicit state root does not match the active binding')
+            if (default_root / 'state.json').exists() or (default_root / 'state.lock').exists():
+                raise Denied('competing default and external state stores are forbidden')
+            self.dir = requested_state_root
+        elif requested_state_root is not None:
+            if (default_root / 'state.json').exists() or (default_root / 'state.lock').exists():
+                raise Denied('competing default and explicit state stores are forbidden')
+            self.dir = requested_state_root
+        else:
+            if default_root.is_symlink():
+                raise Denied('state directory cannot be a symlink')
+            self.dir = default_root
+        self.statefile = self.dir / 'state.json'
+        self.lockfile = self.dir / 'state.lock'
+        if self.statefile.is_symlink() or self.lockfile.is_symlink():
+            raise Denied('state files cannot be symlinks')
         self.policy_path = Path(policy)
         if self.policy_path.is_symlink():
             raise Denied('routing policy cannot be a symlink')
@@ -128,6 +244,74 @@ class Harness(legacy.Harness):
         self.policy_hash = digest(self.policy)
         self.evidence_fields = set(load_json((PACKAGE / '08-project-harness/schemas/evidence.schema.json').read_text())['properties'])
         self._validate_policy()
+
+    def _binding_current(self):
+        current = load_binding(self.binding_path, self.root)
+        if current != self.binding:
+            raise Denied('state-location binding changed during this session; reload safely')
+
+    def _read_state_once(self):
+        """Return bytes and an identity signature from one no-follow read."""
+        if self.statefile.is_symlink():
+            raise Denied('state file cannot be a symlink')
+        flags = os.O_RDONLY
+        if hasattr(os, 'O_NOFOLLOW'):
+            flags |= os.O_NOFOLLOW
+        try:
+            descriptor = os.open(self.statefile, flags)
+        except FileNotFoundError as exc:
+            raise Denied('run init first') from exc
+        try:
+            before = os.fstat(descriptor)
+            chunks = []
+            while True:
+                chunk = os.read(descriptor, 1024 * 1024)
+                if not chunk:
+                    break
+                chunks.append(chunk)
+            after = os.fstat(descriptor)
+        finally:
+            os.close(descriptor)
+        signature = (before.st_dev, before.st_ino, before.st_size, before.st_mtime_ns,
+                     before.st_ctime_ns)
+        after_signature = (after.st_dev, after.st_ino, after.st_size, after.st_mtime_ns,
+                           after.st_ctime_ns)
+        if signature != after_signature:
+            raise Denied('state changed during read')
+        return b''.join(chunks), signature
+
+    def _stable_state_bytes(self):
+        first, first_signature = self._read_state_once()
+        second, second_signature = self._read_state_once()
+        if first_signature != second_signature or first != second:
+            raise Denied('state changed or was replaced during read')
+        return first
+
+    @contextlib.contextmanager
+    def locked(self):
+        """Serialize mutations only; read-only commands never create/open a lock for write."""
+        self._binding_current()
+        if not self.dir.is_dir():
+            raise Denied('state root is missing')
+        if self.dir.is_symlink() or self.lockfile.is_symlink() or self.statefile.is_symlink():
+            raise Denied('state paths cannot be symlinks')
+        flags = os.O_RDWR | os.O_CREAT
+        if hasattr(os, 'O_NOFOLLOW'):
+            flags |= os.O_NOFOLLOW
+        descriptor = os.open(self.lockfile, flags, 0o600)
+        try:
+            with os.fdopen(descriptor, 'a+') as stream:
+                try:
+                    fcntl.flock(stream, fcntl.LOCK_EX | fcntl.LOCK_NB)
+                except BlockingIOError as exc:
+                    raise Denied('state lock is held by another writer') from exc
+                try:
+                    yield
+                finally:
+                    fcntl.flock(stream, fcntl.LOCK_UN)
+        except BaseException:
+            # os.fdopen owns the descriptor once constructed.
+            raise
 
     def _validate_policy(self):
         p = self.policy
@@ -214,6 +398,10 @@ class Harness(legacy.Harness):
 
     def evidence(self, rel, kind=None, task=None, candidate=None, require_pass=False):
         """Retain v1 lifecycle envelopes; new routing metadata uses the local v2 schema."""
+        safe = safe_rel(rel)
+        parts = PurePosixPath(safe).parts
+        if 'private-inputs' in parts or safe.lower().endswith('.csv'):
+            raise Denied('private inputs cannot be coordination evidence')
         path = under(self.root, rel)
         envelope = load_json(path.read_text())
         if not isinstance(envelope, dict) or envelope.get('schema_version') not in ('1.0', '2.0'):
@@ -276,13 +464,20 @@ class Harness(legacy.Harness):
                 raise Denied('migration boundary proof missing or inconsistent')
 
     def _read(self):
-        if not self.statefile.is_file():
-            raise Denied('run init first')
-        state = load_json(self.statefile.read_text())
+        self._binding_current()
+        state = load_json(self._stable_state_bytes())
         self._check(state)
         return state
 
     def init(self, actor='human:owner'):
+        self._binding_current()
+        if self.binding:
+            raise Denied('default or external initialization is denied after state binding')
+        if not self.dir.is_dir():
+            if self.dir == self.root / '.texenda':
+                self.dir.mkdir(mode=0o700)
+            else:
+                raise Denied('explicit state root must exist before init')
         with self.locked():
             self._policy_current()
             if self.statefile.exists():
@@ -585,7 +780,17 @@ class Harness(legacy.Harness):
                     if record:
                         self._recheck_allocation(state, task, role, current['fence'], record)
             return fn(state)
-        return super().change(actor, op, guarded, task)
+        with self.locked():
+            source = self._stable_state_bytes()
+            state = load_json(source)
+            self._check(state)
+            updated = copy.deepcopy(state)
+            result = guarded(updated)
+            self._event(updated, actor, op, task)
+            if self._stable_state_bytes() != source:
+                raise Denied('state changed before replacement')
+            atomic_write(self.statefile, updated)
+            return result
 
     def assign(self, wid, actor, agent, tier=None, human=False, budget_usd=0,
                max_tokens=50000, max_seconds=3600, *, profile_id=None, fallback=False,
@@ -678,8 +883,7 @@ class Harness(legacy.Harness):
         return self.change(actor, 'cancel' if cancel else 'recover', apply, wid)
 
     def status(self):
-        with self.locked():
-            state = self._read()
+        state = self._read()
         profiles = []
         for pid, profile in self.profiles.items():
             try:
@@ -716,8 +920,20 @@ class Harness(legacy.Harness):
                                         for row in self.tiers.values()],
                 'tasks': tasks, 'receipt_count': len(state['events'])}
 
+    def ready(self):
+        state = self._read()
+        return [wid for wid, task in state['tasks'].items()
+                if task['state'] == 'planned'
+                and all(state['tasks'][dependency]['state'] == 'completed'
+                        for dependency in self.work[wid]['dependencies'])
+                and self.work[wid]['activation'] != 'DEFER UNTIL TRIGGERED']
+
     def context(self, wid, out=None, max_bytes=200000):
         self._policy_current()
+        if out:
+            safe = safe_rel(out)
+            if 'private-inputs' in PurePosixPath(safe).parts or safe.lower().endswith('.csv'):
+                raise Denied('context output cannot target private inputs')
         pack = super().context(wid, max_bytes=max_bytes)
         pack.update(schema_version='2.0', routing_policy_digest=self.policy_hash,
                     routing_policy_path=str(self.policy_path), routing=self.routes[wid],
@@ -847,7 +1063,7 @@ class Harness(legacy.Harness):
             self._policy_current()
             if not self.statefile.is_file():
                 raise Denied('no v1 state to migrate; use init for an empty ledger')
-            raw = self.statefile.read_bytes()
+            raw = self._stable_state_bytes()
             old = load_json(raw)
             if old.get('version') == '2.0':
                 self._check(old)
@@ -900,6 +1116,8 @@ class Harness(legacy.Harness):
             event['migration'] = copy.deepcopy(state['routing_migration'])
             event['hash'] = digest({key: value for key, value in event.items() if key != 'hash'})
             self._check(state)
+            if self._stable_state_bytes() != raw:
+                raise Denied('state changed before migration replacement')
             atomic_write(self.statefile, state)
             return dict(result, migrated=True, dry_run=False)
 
@@ -923,10 +1141,12 @@ class Harness(legacy.Harness):
             self._validate_retained_evidence(old)
             if old['events'] != state['events'][:-1] or old['tasks'] != state['tasks']:
                 raise Denied('checkpoint no longer matches the migration boundary')
-            current_raw = self.statefile.read_bytes()
+            current_raw = self._stable_state_bytes()
             retained = self.dir / ('state.v2.' + hashlib.sha256(current_raw).hexdigest() + '.json')
             if apply:
                 checkpoint_bytes(retained, current_raw)
+                if self._stable_state_bytes() != current_raw:
+                    raise Denied('state changed before rollback replacement')
                 restore_bytes(self.statefile, raw)
             return {'rolled_back': apply, 'dry_run': not apply, 'version': '1.0' if apply else '2.0',
                     'restored_sha256': migration['source_sha256'], 'retained_v2_checkpoint': str(retained)}
@@ -935,6 +1155,8 @@ class Harness(legacy.Harness):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root', type=Path, required=True)
+    parser.add_argument('--state-root', type=Path,
+                        help='absolute external state directory; required by an active binding')
     parser.add_argument('--package', type=Path, default=PACKAGE)
     sub = parser.add_subparsers(dest='cmd', required=True)
     for name in ('init', 'status', 'ready', 'check'):
@@ -989,7 +1211,7 @@ def main(argv=None):
             command.add_argument('--max-bytes', type=int, default=200000)
     args = parser.parse_args(argv)
     try:
-        harness = Harness(args.root, args.package)
+        harness = Harness(args.root, args.package, state_root=args.state_root)
         op = args.cmd
         options = {key: getattr(args, key) for key in ('profile_id', 'fallback', 'fallback_reason', 'routing_record')} if op in ('assign', 'review') else {}
         if op == 'init': result = harness.init(args.actor)

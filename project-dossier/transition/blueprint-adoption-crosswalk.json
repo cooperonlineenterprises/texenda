@@ -23,9 +23,10 @@
     "generated_new_project": false,
     "newer_candidate_version": "4.3.0",
     "newer_candidate_qualified": false,
-    "origin_schema_supports_mapped_existing": false,
-    "origin_record_created": false,
-    "limitation": "Installed source validator/acceptance fail on source-layout assumptions. A dirty Octon Mini 4.3.0 candidate is not fully qualified. No facts, accepted decisions, permissions, evidence or status are imported from either source."
+    "origin_schema_supports_mapped_existing": true,
+    "origin_record_created": true,
+    "origin_schema": ".agent/schemas/project-blueprint-origin.v2.schema.json",
+    "limitation": "A deliberate local origin.v2 successor now records mapped-existing truthfully. Installed source validator/acceptance still fail on source-layout assumptions, and a dirty Octon Mini 4.3.0 candidate remains unqualified. No facts, accepted decisions, permissions, evidence or status are imported from either source."
   },
   "roles": [
     "authoritative",
@@ -883,12 +884,12 @@
     },
     {
       "blueprint_path": ".agent/schemas/project-blueprint-origin.schema.json",
-      "mapped_path": null,
+      "mapped_path": ".agent/schemas/project-blueprint-origin.v2.schema.json",
       "concern_id": "generic_record_vocabulary",
-      "role": "deferred",
+      "role": "adapter",
       "equivalence": "functional",
       "materialize_phase": "phase_3",
-      "reason": "Installed origin.v1 is closed and cannot truthfully encode mapped-existing; a deliberate local schema successor must be reviewed first."
+      "reason": "The deliberately versioned local successor adds mapped-existing and structural-reference-only qualification without copying the installed closed origin.v1 schema or importing project facts."
     },
     {
       "blueprint_path": ".agent/scripts/refresh.py",
@@ -1105,12 +1106,12 @@
     },
     {
       "blueprint_path": ".project-blueprint-origin.json",
-      "mapped_path": null,
+      "mapped_path": ".project-blueprint-origin.json",
       "concern_id": "adoption_provenance",
-      "role": "deferred",
+      "role": "historical_source",
       "equivalence": "functional",
       "materialize_phase": "phase_3",
-      "reason": "Do not create with installed origin.v1. A reviewed schema must explicitly support mapped-existing, structural-reference-only qualification and a truthful selected source/version."
+      "reason": "The local origin.v2 record truthfully identifies 1.0.0 as inspected structural reference only, high-assurance mapped-existing adoption, and 4.3.0 as dirty/unqualified. The adoption provenance registry remains the mutable owner."
     },
     {
       "blueprint_path": "AGENTS.md",
@@ -1474,6 +1475,14 @@
       "equivalence": "new",
       "materialize_phase": "phase_3",
       "reason": "Compact direct observation projection with exact source hashes and freshness."
+    },
+    {
+      "mapped_path": "project-dossier/evidence/README.md",
+      "concern_id": "qualification_evidence",
+      "role": "index",
+      "equivalence": "new",
+      "materialize_phase": "phase_3",
+      "reason": "Owner-request correction: add dossier navigation to docs/qualification/evidence without copying evidence or creating another mutable store."
     }
   ],
   "supplemental_high_assurance_types": [

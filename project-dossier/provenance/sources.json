@@ -1,0 +1,66 @@
+{
+  "schema_version": "texenda.dossier-provenance.v1",
+  "authority": "Authoritative for mapped-adoption and source-variant provenance only; no imported source grants permission or current status.",
+  "sources": [
+    {
+      "id": "SRC-0001",
+      "kind": "structural_reference",
+      "path": "/Users/jamesryancooper/.codex/skills/project-bootstrap/assets/blueprint-source",
+      "version": "1.0.0",
+      "profile": "high-assurance",
+      "qualification": "inspected_structural_reference_only",
+      "descriptor_sha256": "40a9361ca19a809f5f54d0cabf35756110f88839584344cfea009912544ad5ce",
+      "limitation": "Installed-layout source validator and acceptance runner do not qualify this bundle as an intended source checkout."
+    },
+    {
+      "id": "SRC-0002",
+      "kind": "unqualified_newer_candidate",
+      "path": "/Users/jamesryancooper/Projects/octon-mini",
+      "version": "4.3.0",
+      "revision": "5e2d3025aea6b1574ab984e5ebb89b5602a38535",
+      "tree": "3c732979e580c80b020d09c22ce86f5202110518",
+      "dirty_entry_count": 218,
+      "qualification": "unqualified_candidate",
+      "limitation": "Dirty source with interrupted full qualification; not selected or adopted."
+    },
+    {
+      "id": "SRC-0003",
+      "kind": "implementation_repository_sealed_authority",
+      "path": "specs/texenda-handoff/",
+      "version": "1.1.0",
+      "manifest_sha256": "bcb7488ecf2ac42b4b33e478918e7ce6c35d0bdc04b208ddd9ed66622b468b7f",
+      "checksums_sha256": "37fffb1a165cfa6b907e7433d617c06e1c64ff09cd282173f7d791cace2ac07e",
+      "path_nul_sha256": "0b672e476b38a99bfbdcd3b9dbfca1baa2f1fcdc7329410986caefa9e5421336",
+      "canonical_array_sha256": "83cceb48e29bd3d070856976abe5aa2f5559d5479c5a0d1485d2d12c326de1c8",
+      "qualification": "14_package_checks_pass_at_phase_0",
+      "limitation": "Preserved byte-for-byte; test freshness must be re-established on the exact candidate."
+    },
+    {
+      "id": "SRC-0004",
+      "kind": "historical_source_unpromoted_variant",
+      "path": "/Users/jamesryancooper/Projects/texenda/sources/handoff-1.1.0-20260914/",
+      "version": "1.1.0",
+      "manifest_sha256": "bcb7488ecf2ac42b4b33e478918e7ce6c35d0bdc04b208ddd9ed66622b468b7f",
+      "checksums_sha256": "8576bf08ec4f2a4718476eca70e6d1d5cb2b6be1af550bf5c20c692bcbaff715",
+      "path_nul_sha256": "c3b25ae42e74324fedd3f4d545fe4105e9a2607c2f777afe049af10e75d9fe98",
+      "canonical_array_sha256": "26fa6487334c2782bdff8e98c49963e6720228824f6b91a9a7126e0d6cec2131",
+      "qualification": "14_package_checks_pass_at_phase_0",
+      "limitation": "Eleven authoritative files differ from the sealed variant; no semantic selection or merge."
+    }
+  ],
+  "package_difference_count": 11,
+  "package_differing_paths": [
+    "01-foundation/adr-index.md",
+    "01-foundation/adr-set.md",
+    "03-domain-and-architecture/content.md",
+    "03-domain-and-architecture/technology-baseline.md",
+    "05-implementation/compatibility-manifest.template.json",
+    "05-implementation/work-breakdown.md",
+    "05-implementation/work-packages.json",
+    "09-reference/source-register.json",
+    "09-reference/source-register.md",
+    "DECISION-STATUS.md",
+    "SHA256SUMS"
+  ],
+  "difference_owner": "docs/qualification/evidence/2026-09-14-workspace-phase-0-baseline.json"
+}

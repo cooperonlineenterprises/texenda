@@ -1,4 +1,5 @@
 .texenda/
+.texenda-location.json
 .env
 .env.*
 !.env.example

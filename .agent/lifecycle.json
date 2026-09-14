@@ -1,0 +1,32 @@
+{
+  "schema_version": "texenda.agent.v1",
+  "authority": "Generic record-metadata lifecycle only. It does not execute or redefine Texenda work packages, leases, receipts, gates, or artifact promotion.",
+  "scope": "generic_record_metadata_only",
+  "transitions": {
+    "task_metadata": {
+      "proposed": ["ready", "cancelled"],
+      "ready": ["in_progress", "blocked", "cancelled"],
+      "in_progress": ["validating", "blocked", "cancelled"],
+      "validating": ["review", "in_progress", "blocked"],
+      "review": ["completed", "in_progress", "blocked"],
+      "completed": ["reopened"],
+      "blocked": ["ready", "in_progress", "cancelled"],
+      "cancelled": [],
+      "reopened": ["in_progress", "blocked", "cancelled"]
+    },
+    "decision_metadata": {
+      "proposed": ["accepted", "rejected"],
+      "accepted": ["superseded", "deprecated"],
+      "rejected": [],
+      "superseded": [],
+      "deprecated": []
+    }
+  },
+  "exclusions": [
+    "texenda_wp_state_machine",
+    "live_leases_and_fences",
+    "receipt_chain",
+    "external_gate_state",
+    "product_artifact_lifecycle"
+  ]
+}

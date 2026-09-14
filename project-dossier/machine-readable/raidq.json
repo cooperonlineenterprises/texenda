@@ -1,0 +1,41 @@
+{
+  "schema_version": "texenda.dossier-raidq.v1",
+  "authority": "Authoritative only for consolidated mapped-workspace adoption RAIDQ; product gates retain sealed owners.",
+  "items": [
+    {
+      "id": "RAIDQ-0001",
+      "type": "risk",
+      "status": "controlled",
+      "statement": "A generated facade could accidentally duplicate live tasks, receipts, routing, decisions, or evidence.",
+      "control": "Index-only stores, restriction-only extension, single-owner validator, and mutation tests."
+    },
+    {
+      "id": "RAIDQ-0002",
+      "type": "risk",
+      "status": "gated",
+      "statement": "Interrupted live-state relocation could leave ambiguous active stores.",
+      "control": "Closed moving marker, exactly-one-location checks, stable bytes, and verified resume/reverse rename."
+    },
+    {
+      "id": "RAIDQ-0003",
+      "type": "dependency",
+      "status": "open",
+      "statement": "Consequential candidate and final integrated head require distinct Astra/max review.",
+      "control": "Do not integrate or execute live moves before exact approval."
+    },
+    {
+      "id": "RAIDQ-0004",
+      "type": "question",
+      "status": "deferred",
+      "statement": "Whether to reconcile the later @react-email/editor wording remains unresolved.",
+      "control": "Preserve both packages and open a separate project-local amendment only if requested."
+    },
+    {
+      "id": "RAIDQ-0005",
+      "type": "issue",
+      "status": "deferred",
+      "statement": "A clean current Project Blueprint source newer than 1.0.0 is not qualified.",
+      "control": "Retain structural-reference-only provenance and make no 4.3.0 adoption claim."
+    }
+  ]
+}

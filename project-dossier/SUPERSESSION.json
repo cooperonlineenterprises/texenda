@@ -1,0 +1,11 @@
+{
+  "schema_version": "texenda.dossier-supersession.v1",
+  "authority": "Dossier artifact replacement metadata only; accepted decisions and sealed authority retain their existing owners.",
+  "current_version": "1.0.0-mapped-existing",
+  "records": [],
+  "rules": {
+    "silent_replacement": false,
+    "successor_required": true,
+    "history_retained": true
+  }
+}

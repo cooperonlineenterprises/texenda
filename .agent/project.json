@@ -1,0 +1,27 @@
+{
+  "schema_version": "texenda.agent.v1",
+  "project_id": "texenda",
+  "adoption_mode": "mapped-existing",
+  "profile": "high-assurance",
+  "repository_role": "canonical_git_checkout_and_integration_worktree_under_project_home",
+  "dossier": {
+    "path": "project-dossier/",
+    "permission_channel": false,
+    "canonical_product_material_copied": false
+  },
+  "extensions": [
+    {
+      "id": "texenda-coordination",
+      "config": ".agent/extensions/texenda-coordination/extension.json",
+      "authority_effect": "restrictions_only",
+      "enabled": true
+    }
+  ],
+  "external_state": {
+    "binding": ".texenda-location.json",
+    "binding_tracked": false,
+    "default_before_binding": ".texenda",
+    "explicit_after_binding": true,
+    "generated_state_is_authority": false
+  }
+}

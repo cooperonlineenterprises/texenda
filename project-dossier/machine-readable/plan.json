@@ -1,0 +1,51 @@
+{
+  "schema_version": "texenda.dossier-adoption-plan.v1",
+  "authority": "Future mapped-adoption dependency plan only; not an active task ledger, assignment, lease, receipt, or permission source.",
+  "items": [
+    {
+      "id": "PLAN-0001",
+      "status": "review_required",
+      "objective": "Independently review and locally integrate the exact mapped facade and external-state code candidate.",
+      "dependencies": [],
+      "acceptance": [
+        "distinct qualified gpt-6-astra-max reviewer",
+        "exact candidate and evidence hashes bound",
+        "all registered required checks pass"
+      ]
+    },
+    {
+      "id": "PLAN-0002",
+      "status": "gated",
+      "objective": "Move live state and private-input directory through the reviewed helper without byte or receipt change.",
+      "dependencies": ["PLAN-0001"],
+      "acceptance": [
+        "all affected runtimes leases and locks proved stopped",
+        "moving marker precedes renames",
+        "state hash receipt tip roster and budget preserved",
+        "private input verified by location existence ignore and tracking only"
+      ]
+    },
+    {
+      "id": "PLAN-0003",
+      "status": "gated",
+      "objective": "Demonstrate one real mapped maintenance lifecycle using the existing ledger and evidence owners.",
+      "dependencies": ["PLAN-0002"],
+      "acceptance": [
+        "existing coordinator records assignment review integration and handoff",
+        "no second task review or receipt store",
+        "no external effect"
+      ]
+    },
+    {
+      "id": "PLAN-0004",
+      "status": "gated",
+      "objective": "Obtain final exact integrated-head read-only review after review evidence is added.",
+      "dependencies": ["PLAN-0003"],
+      "acceptance": [
+        "generated integrity refreshed",
+        "final check read-only proof passes",
+        "all reviewer runtimes stopped and clean temporary worktrees reconciled"
+      ]
+    }
+  ]
+}

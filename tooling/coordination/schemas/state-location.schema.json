@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:texenda:coordination:state-location:v1",
+  "title": "Texenda external coordination state location",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "migration_id",
+    "repository_root",
+    "state_root",
+    "status",
+    "baseline"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "texenda.state-location.v1"
+    },
+    "migration_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "repository_root": {
+      "type": "string",
+      "pattern": "^/"
+    },
+    "state_root": {
+      "type": "string",
+      "pattern": "^/"
+    },
+    "status": {
+      "enum": [
+        "moving",
+        "active"
+      ]
+    },
+    "baseline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state_sha256",
+        "receipt_count",
+        "receipt_tip"
+      ],
+      "properties": {
+        "state_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "receipt_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "receipt_tip": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    }
+  }
+}

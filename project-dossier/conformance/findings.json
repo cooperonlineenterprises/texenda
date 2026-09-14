@@ -1,0 +1,56 @@
+{
+  "schema_version": "texenda.dossier-conformance.v1",
+  "authority": "Authoritative only for new workspace and mapped-adoption conformance findings; no product or external gate assessment.",
+  "findings": [
+    {
+      "id": "FIND-0001",
+      "classification": "transitional",
+      "subject": "mapped .agent and dossier facade",
+      "basis": "docs/decisions/ADR-0004-mapped-project-workspace.md",
+      "observation": "The facade and external-state code are a bounded candidate pending exact independent review and integration.",
+      "evidence": "project-dossier/transition/blueprint-adoption-crosswalk.json",
+      "disposition": "review_required",
+      "limitations": "No operational adoption or product readiness claim."
+    },
+    {
+      "id": "FIND-0002",
+      "classification": "deferred",
+      "subject": "Project Blueprint source qualification",
+      "basis": "docs/qualification/evidence/2026-09-14-workspace-phase-0-baseline.json",
+      "observation": "Installed 1.0.0 is structural-reference-only; the dirty 4.3.0 candidate is unqualified.",
+      "evidence": ".project-blueprint-origin.json",
+      "disposition": "future_clean_source_qualification",
+      "limitations": "No newer blueprint version is adopted."
+    },
+    {
+      "id": "FIND-0003",
+      "classification": "deferred",
+      "subject": "handoff package editor wording divergence",
+      "basis": "docs/qualification/evidence/2026-09-14-workspace-phase-0-baseline.json",
+      "observation": "The two preserved 1.1.0 variants still differ in eleven authoritative files.",
+      "evidence": "project-dossier/provenance/sources.json",
+      "disposition": "future_project_local_amendment_if_requested",
+      "limitations": "Neither package is modified, selected, or semantically merged."
+    },
+    {
+      "id": "FIND-0004",
+      "classification": "gated",
+      "subject": "external live state and private-input relocation",
+      "basis": "project-dossier/transition/workspace-move-manifest.json",
+      "observation": "Code and synthetic recovery tests do not execute the live move.",
+      "evidence": "tooling/workspace/relocate_state.py",
+      "disposition": "requires_T1_exact_review_freeze_and_serial_execution",
+      "limitations": "Private-input content remains outside every inspection scope."
+    },
+    {
+      "id": "FIND-0005",
+      "classification": "not_applicable",
+      "subject": "generic .agents capability packages",
+      "basis": "project-dossier/transition/blueprint-adoption-crosswalk.json",
+      "observation": "Existing operating guides and templates are functional equivalents; no recurring gap justifies copied generic capabilities.",
+      "evidence": "docs/agents/operating-guide.md",
+      "disposition": "deferred_until_concrete_recurring_need",
+      "limitations": "Absence is deliberate and does not waive required independent review."
+    }
+  ]
+}

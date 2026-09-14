@@ -1,0 +1,36 @@
+{
+  "schema_version": "texenda.project-blueprint-origin.v2",
+  "blueprint_name": "project-blueprint",
+  "selected_version": "1.0.0",
+  "selected_source": "/Users/jamesryancooper/.codex/skills/project-bootstrap/assets/blueprint-source",
+  "selected_reference_descriptor_sha256": "40a9361ca19a809f5f54d0cabf35756110f88839584344cfea009912544ad5ce",
+  "profile": "high-assurance",
+  "adoption_mode": "mapped-existing",
+  "generated_new_project": false,
+  "reference_qualification": "inspected_structural_reference_only",
+  "newer_candidate": {
+    "path": "/Users/jamesryancooper/Projects/octon-mini",
+    "declared_version": "4.3.0",
+    "revision": "5e2d3025aea6b1574ab984e5ebb89b5602a38535",
+    "tree": "3c732979e580c80b020d09c22ce86f5202110518",
+    "dirty_entry_count": 218,
+    "working_tree": "dirty",
+    "qualified": false
+  },
+  "transfer_boundary": {
+    "project_facts": false,
+    "permissions": false,
+    "accepted_decisions": false,
+    "evidence": false,
+    "status": false,
+    "readiness": false
+  },
+  "schema_provenance": {
+    "supersedes_schema": "project-blueprint-origin.v1",
+    "predecessor_path": "/Users/jamesryancooper/.codex/skills/project-bootstrap/assets/blueprint-source/shared/schemas/project-blueprint-origin.schema.json",
+    "predecessor_sha256": "42726c4542fddbc63f3d149c2582a5ef76f2c545b7283c4f043f4542b6e3c7a1",
+    "reason": "add_mapped_existing_without_generation_claim",
+    "decision": "docs/decisions/ADR-0004-mapped-project-workspace.md"
+  },
+  "adoption_contract": "project-dossier/transition/blueprint-adoption-crosswalk.json"
+}

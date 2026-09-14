@@ -20,7 +20,7 @@ affected schemas, templates, docs and negative tests together when it changes.
 
 Run the local coordinator suite, sealed suite and checksum-aware package
 validation for material coordinator or instruction-contract changes, using the
-README commands. Add no model, network, credential or production dependency to
+single [validation registry](../../.agent/validators.json). Add no model, network, credential or production dependency to
 these tests. Recheck existing evidence hashes, parse changed JSON/TOML, validate
 local links, and run `git diff --check`. Once required checks pass, broaden only
 for a new change, failure or unresolved concern. Passing checks do not attest

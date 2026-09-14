@@ -1,0 +1,82 @@
+{
+  "schema_version": "texenda.agent.v1",
+  "authority": "Machine-readable owner of project-wide agent action classes and deny boundaries after the reviewed facade cutover. This file cannot override higher authority or authorize an action by itself.",
+  "default_posture": "deny_unless_current_higher_authority_and_scope_allow",
+  "action_classes": [
+    {
+      "id": "local_read_only",
+      "baseline": "allowed_when_relevant_and_within_scope",
+      "examples": [
+        "inspect repository files",
+        "read Git metadata",
+        "run declared read-only checks"
+      ]
+    },
+    {
+      "id": "reversible_repository_local",
+      "baseline": "requires_current_implementation_scope",
+      "examples": [
+        "edit assigned paths",
+        "run synthetic tests",
+        "create bounded local commits and worktrees"
+      ]
+    },
+    {
+      "id": "consequential_local_migration",
+      "baseline": "requires_exact_plan_t1_floor_independent_review_and_runtime_stop",
+      "examples": [
+        "filesystem relocation",
+        "live-state movement",
+        "authority cutover",
+        "private-input directory movement"
+      ]
+    },
+    {
+      "id": "external_or_high_impact",
+      "baseline": "denied_without_separate_explicit_current_owner_authority",
+      "examples": [
+        "push or publish",
+        "deploy or send",
+        "spend",
+        "production or account mutation",
+        "destructive cleanup"
+      ]
+    }
+  ],
+  "hard_denials": [
+    "push_or_remote_branch",
+    "github_or_actions_mutation",
+    "external_spend",
+    "deployment_publication_or_sending",
+    "production_or_personal_data_access",
+    "private_input_content_access",
+    "secret_or_credential_access",
+    "external_gate_clearance",
+    "receipt_or_git_history_rewrite",
+    "package_variant_modification_or_deletion",
+    "destructive_cleanup",
+    "symlink_state_bridge",
+    "silent_model_or_effort_substitution",
+    "self_review_of_consequential_candidate"
+  ],
+  "escalation": {
+    "stop_when": [
+      "current evidence materially differs from the accepted baseline",
+      "required runtime stop or lease safety cannot be proved",
+      "a destination would be overwritten",
+      "private-input content inspection would be required",
+      "receipt integrity would change or break",
+      "semantic authority has two unresolved owners",
+      "required independent reviewer is unavailable",
+      "new external or destructive authority is required"
+    ],
+    "routine_local_work": "continue_within_assigned_scope_and_required_verification"
+  },
+  "enforcement": {
+    "declarative_only": true,
+    "higher_authority_always_applies": true,
+    "extensions_may_only_restrict": true,
+    "documentation_is_permission": false,
+    "evidence_is_approval": false
+  }
+}

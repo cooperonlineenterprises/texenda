@@ -97,8 +97,9 @@ def validate(crosswalk, baseline, manifest):
             source['qualification'] == 'inspected_structural_reference_only' and
             source['generated_new_project'] is False and
             source['newer_candidate_qualified'] is False and
-            source['origin_record_created'] is False and
-            source['origin_schema_supports_mapped_existing'] is False,
+            source['origin_record_created'] is True and
+            source['origin_schema_supports_mapped_existing'] is True and
+            source['origin_schema'] == '.agent/schemas/project-blueprint-origin.v2.schema.json',
             'false blueprint provenance')
     require(set(crosswalk['roles']) == ROLES, 'role vocabulary changed')
     epochs = ['baseline', 'facade', 'external_state']
@@ -175,6 +176,12 @@ def validate(crosswalk, baseline, manifest):
         if row.get('blueprint_path') in {'.agent/tasks/README.md', '.agent/decisions/README.md',
                                           '.agent/evidence/README.md', '.agent/reviews/README.md'}:
             require(row['role'] == 'index', 'second task/decision/evidence/review store')
+    dossier_evidence = [row for row in crosswalk['supplemental_mappings']
+                        if row.get('mapped_path') == 'project-dossier/evidence/README.md']
+    require(len(dossier_evidence) == 1 and
+            dossier_evidence[0]['concern_id'] == 'qualification_evidence' and
+            dossier_evidence[0]['role'] == 'index',
+            'owner-request dossier evidence index correction missing')
     projection = crosswalk['projection_contract']
     require(projection['authority'] == 'generated_non_authoritative' and
             projection['check_writes'] is False and projection['refresh_only_writer'] is True,
@@ -312,10 +319,15 @@ def verify_actual_stores(root):
     origin = root / '.project-blueprint-origin.json'
     if origin.exists():
         value = loads(origin.read_text())
+        schema = root / '.agent/schemas/project-blueprint-origin.v2.schema.json'
+        require(schema.is_file() and not schema.is_symlink(), 'origin schema successor missing')
+        schema_value = loads(schema.read_text())
         require(value.get('schema_version') == 'texenda.project-blueprint-origin.v2' and
                 value.get('adoption_mode') == 'mapped-existing' and
                 value.get('generated_new_project') is False and
-                value.get('reference_qualification') == 'inspected_structural_reference_only',
+                value.get('reference_qualification') == 'inspected_structural_reference_only' and
+                schema_value.get('$id') == 'urn:texenda:project-blueprint-origin:v2' and
+                schema_value.get('additionalProperties') is False,
                 'origin schema cannot truthfully represent mapped-existing')
 
 
@@ -367,6 +379,8 @@ def audit_candidate(root, baseline):
                 'private/local input entered candidate inspection scope')
         path = root / name
         require(not path.is_symlink(), 'candidate inspection refuses symlinks')
+        if name.startswith('.agent/tests/fixtures/invalid/'):
+            continue
         if path.suffix == '.json':
             loads(path.read_text())
             counts['JSON'] += 1

@@ -758,7 +758,9 @@ class RoutingTests(unittest.TestCase):
         self.deny(lambda: self.h.evidence(record), 'unknown evidence fields')
 
     def test_actual_policy_covers_44_routes_and_limits_parent_downshifts(self):
-        harness = hm.Harness(self.base / 'actual-policy', hm.PACKAGE)
+        root = self.base / 'actual-policy'
+        root.mkdir()
+        harness = hm.Harness(root, hm.PACKAGE)
         self.assertEqual(len(harness.routes), 44)
         counts = {tier: sum(r['author']['capability_floor'] == tier for r in harness.routes.values())
                   for tier in range(1, 5)}

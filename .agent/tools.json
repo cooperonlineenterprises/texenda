@@ -1,0 +1,36 @@
+{
+  "schema_version": "texenda.agent.v1",
+  "authority": "Tool contract metadata only. Installation or availability never grants permission, qualification, identity, budget, or external authority.",
+  "availability_source": "live_coordination_status",
+  "permission_source": ".agent/policy.json",
+  "tools": [
+    {
+      "id": "texenda-coordinator",
+      "path": "tooling/coordination/harness.py",
+      "availability_check": "python3 -B tooling/coordination/harness.py --root . [--state-root ABSOLUTE_BOUND_ROOT] status",
+      "side_effects": "command_dependent",
+      "constraints": "existing leases receipts evidence routing budget and external gates"
+    },
+    {
+      "id": "facade-validator",
+      "path": ".agent/scripts/validate.py",
+      "availability_check": "python3 -B .agent/scripts/validate.py --check",
+      "side_effects": "none",
+      "constraints": "read_only_no_cache_lock_timestamp_or_generated_writes"
+    },
+    {
+      "id": "facade-refresh",
+      "path": ".agent/scripts/refresh.py",
+      "availability_check": "python3 -B .agent/scripts/refresh.py --refresh",
+      "side_effects": "tracked_generated_views_only",
+      "constraints": "explicit_refresh_atomic_files_interruption_marker"
+    },
+    {
+      "id": "state-relocation-helper",
+      "path": "tooling/workspace/relocate_state.py",
+      "availability_check": "python3 -B tooling/workspace/relocate_state.py --help",
+      "side_effects": "explicit_prepare_apply_or_recovery_only",
+      "constraints": "T1_floor_exact_review_runtime_stop_nonoverwriting_renames_no_private_content_access"
+    }
+  ]
+}

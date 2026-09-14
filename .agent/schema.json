@@ -1,0 +1,43 @@
+{
+  "schema_version": "texenda.agent.v1",
+  "authority": "Universal facade record metadata only; Texenda product schemas, work-package IDs, evidence envelopes, and receipt formats retain their existing owners.",
+  "record_ids": {
+    "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)*-[0-9]{4}$",
+    "scope": "new generic facade and dossier records only",
+    "existing_id_compatibility": "preserve_existing_Texenda_ADR_WP_VAL_and_receipt_identifiers"
+  },
+  "status_vocabularies": {
+    "generic_task_metadata": [
+      "proposed",
+      "ready",
+      "in_progress",
+      "validating",
+      "review",
+      "completed",
+      "blocked",
+      "cancelled",
+      "reopened"
+    ],
+    "generic_decision_metadata": [
+      "proposed",
+      "accepted",
+      "rejected",
+      "superseded",
+      "deprecated"
+    ],
+    "generic_artifact_metadata": [
+      "scratch",
+      "draft",
+      "reviewed",
+      "approved",
+      "final",
+      "archived"
+    ]
+  },
+  "compatibility": {
+    "texenda_wp_statuses_owned_by": "tooling/coordination/harness.py",
+    "texenda_product_schemas_owned_by": "specs/texenda-handoff/",
+    "evidence_schema_owned_by": "tooling/coordination/schemas/evidence.schema.json",
+    "unknown_values_fail_closed": true
+  }
+}
