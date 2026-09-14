@@ -1,0 +1,466 @@
+{
+  "schema_version": "texenda.workspace-relocation-evidence.v1",
+  "id": "EVD-WSM-0003",
+  "information_role": "immutable_point_in_time_evidence",
+  "status": "candidate_for_independent_review",
+  "authority": "Observation only. This record is not permission, a live ledger, model qualification, independent approval, an authority cutover, or product readiness.",
+  "observed_at": "2026-09-14T16:22:07.080983+00:00",
+  "actor": "/root/workspace_relocation_author",
+  "requested_profile": "gpt-6-astra-max",
+  "reasoning_effort": "max",
+  "capability_floor": "T1",
+  "runtime_id": "codex-desktop-collaboration",
+  "client_version": "26.901.41600 (build 7982)",
+  "client_version_source": "Revalidated exact-profile qualification and assigned desktop route; direct app-bundle path probe was unavailable.",
+  "billing_mode": "subscription",
+  "api_budget_usd": 0,
+  "api_spend_usd": 0,
+  "bounds": {
+    "max_seconds": 2400,
+    "max_tokens": 70000,
+    "provider_token_meter": "unavailable"
+  },
+  "subject": {
+    "base_revision": "b99f71fbaba0183fa2857016819fb410cabc1160",
+    "base_tree": "24fdd3f5c7e9b8b1a03c854210d2cc6427620477",
+    "branch": "migration/workspace-relocation-evidence-20260914",
+    "worktree": "/Users/jamesryancooper/Projects/texenda/worktrees/workspace-relocation-evidence",
+    "canonical_repository": "/Users/jamesryancooper/Projects/texenda/repo",
+    "canonical_git_observation": {
+      "revision": "b99f71fbaba0183fa2857016819fb410cabc1160",
+      "tree": "24fdd3f5c7e9b8b1a03c854210d2cc6427620477",
+      "remote": "https://github.com/cooperonlineenterprises/texenda.git",
+      "clean": true,
+      "linked_worktrees": [
+        "/Users/jamesryancooper/Projects/texenda/repo",
+        "/Users/jamesryancooper/Projects/texenda/worktrees/workspace-relocation-evidence"
+      ],
+      "all_refs_sha256": "a8adbd12be78f0e84c54d79e6a20a740b3c7de9fab4be783fb40548365c8e1b4",
+      "fresh_bundle_ref_count": 34,
+      "preserved_bundled_refs": 29,
+      "archived_worktree_heads": {
+        "worktrees/texenda-workspace-architecture-20260914/HEAD": "b99f71fbaba0183fa2857016819fb410cabc1160",
+        "worktrees/texenda-workspace-architecture-final-review-20260914/HEAD": "b99f71fbaba0183fa2857016819fb410cabc1160",
+        "worktrees/texenda-workspace-architecture-review-20260914/HEAD": "609ddda6da96ddf2460925cc759db724acd70d59",
+        "worktrees/texenda-workspace-architecture-rereview-20260914/HEAD": "c6220627cb84ea0862323d14dda2a1b72e466e01"
+      }
+    }
+  },
+  "candidate_binding": "The author handoff and distinct reviewer bind the final containing commit/tree and full diff. Output hashes bind every candidate file except this report. Source observations remain explicitly at the approved Phase-1 revision.",
+  "bound_inputs": [
+    {
+      "sha256": "943546a8681acd761e262352be139cca18f178ad954d4990b154254f8c6ff951",
+      "path": "docs/qualification/evidence/2026-09-14-workspace-phase-0-baseline.json"
+    },
+    {
+      "sha256": "7bfd1930821cc695eca854e98ed1c0b347c076ebf5fb735a272108387eb6d4f0",
+      "path": "project-dossier/transition/blueprint-adoption-crosswalk.json"
+    },
+    {
+      "sha256": "b11e8d683cb29c262c9c8ff032864932ccfba6b04c0bbd219f6ac3c803a4b22b",
+      "path": "project-dossier/transition/workspace-move-manifest.json"
+    }
+  ],
+  "output_hashes": [
+    {
+      "sha256": "77b55c489a37ac4eed405aedb6ac54e32eed9c6d0ad1a247c21ea9326dcc7acb",
+      "path": "docs/qualification/evidence/2026-09-14-workspace-relocation-validation.log"
+    },
+    {
+      "sha256": "fa3144f5a622d1fcaffaa768d74e2f9b50d520f8614401fe5af87a4503710c15",
+      "path": "project-dossier/transition/post-relocation-adoption-plan.json"
+    },
+    {
+      "sha256": "ca23dfb45ad29f20cc846a5edfb7625b418bb7293f351bdfaeaa3f9444b064f1",
+      "path": "project-dossier/transition/workspace-relocation-receipt.md"
+    },
+    {
+      "sha256": "8d688b46b93a58d0531061ccdca38f4cb8cb43eb9461f51b7ad29cb0d6acbb98",
+      "path": "project-dossier/transition/README.md"
+    },
+    {
+      "sha256": "e1b3ed194b3bbc06626cfb21124ac0fff13cacf049d03c6efbf2e88bd8061e0c",
+      "path": "tooling/workspace/validate_relocation.py"
+    },
+    {
+      "sha256": "f87269d8e7b13de69481f65550817c3d4c29b76dc28de607cac73758369e8251",
+      "path": "tooling/workspace/tests/test_relocation.py"
+    }
+  ],
+  "relocation": {
+    "execution_actor": "/root",
+    "author_executed_moves": false,
+    "old_repository": "/Users/jamesryancooper/Projects/texenda-app",
+    "new_repository": "/Users/jamesryancooper/Projects/texenda/repo",
+    "project_home_git_repository": false,
+    "workspace_notice_sha256": "21873739871a3e8469dd6d5134d5d0cac4ec9d02716cfc1775143a634a4b7bb5",
+    "journal": {
+      "path": "/Users/jamesryancooper/Projects/texenda/local/logs/workspace-relocation/phase-1-journal.json",
+      "sha256": "807bc10b7d66dc60c807152db374b85fbe308e94fcc0a97ab8839f011f5c51c8",
+      "completed_moves": 18
+    },
+    "free_bytes_at_observation": 344454086656,
+    "source": {
+      "path": "/Users/jamesryancooper/Projects/texenda/sources/handoff-1.1.0-20260914",
+      "role": "historical_source_unpromoted_variant",
+      "file_count": 86,
+      "manifest_sha256": "bcb7488ecf2ac42b4b33e478918e7ce6c35d0bdc04b208ddd9ed66622b468b7f",
+      "checksums_sha256": "8576bf08ec4f2a4718476eca70e6d1d5cb2b6be1af550bf5c20c692bcbaff715",
+      "path_nul_sha256": "c3b25ae42e74324fedd3f4d545fe4105e9a2607c2f777afe049af10e75d9fe98",
+      "canonical_array_sha256": "26fa6487334c2782bdff8e98c49963e6720228824f6b91a9a7126e0d6cec2131",
+      "preserved_regular_files": 88,
+      "all_files_canonical_sha256": "9be3c385dccdcb6f735993dc0fe24a6dcab07f8af4fcf1bd2c5fac58786ee4c4",
+      "top_level_entries": 16
+    },
+    "sealed": {
+      "path": "/Users/jamesryancooper/Projects/texenda/repo/specs/texenda-handoff",
+      "role": "implementation_repository_sealed_authority",
+      "file_count": 86,
+      "manifest_sha256": "bcb7488ecf2ac42b4b33e478918e7ce6c35d0bdc04b208ddd9ed66622b468b7f",
+      "checksums_sha256": "37fffb1a165cfa6b907e7433d617c06e1c64ff09cd282173f7d791cace2ac07e",
+      "path_nul_sha256": "0b672e476b38a99bfbdcd3b9dbfca1baa2f1fcdc7329410986caefa9e5421336",
+      "canonical_array_sha256": "83cceb48e29bd3d070856976abe5aa2f5559d5479c5a0d1485d2d12c326de1c8"
+    },
+    "difference_count": 11,
+    "differences_binding": "Unchanged exact paths and before/after hashes in the bound Phase-0 baseline; recomputed values in the validation log. No variant semantics selected or merged.",
+    "archive": {
+      "path": "/Users/jamesryancooper/Projects/texenda/archive/checkpoints/phase-0-20260914",
+      "artifacts": [
+        {
+          "path": "coordination-state-no-private-inputs.tar",
+          "sha256": "0fe841098a8ba9bc672744eb53ca9dd72eed4e34921f257a74663616410228aa"
+        },
+        {
+          "path": "reviewer-cache-artifacts/architecture-author/harness.cpython-313.pyc",
+          "sha256": "0cfaa9af2c7cfbb13b01365d9f7cdd98d8084db1d8b3cbfae98544bf0a489c5c"
+        },
+        {
+          "path": "reviewer-cache-artifacts/final-review/harness.cpython-313.pyc",
+          "sha256": "d5cad3c55dcf0344bfd58dca405a862f3c9a36c68e70d7f78c8a590ca4d85574"
+        },
+        {
+          "path": "reviewer-cache-artifacts/rejected-review/harness.cpython-313.pyc",
+          "sha256": "794df95a2d33a88efaf56f841ea06d35a0a789058683eb61472340470df88e25"
+        },
+        {
+          "path": "state-b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235.json",
+          "sha256": "b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235"
+        },
+        {
+          "path": "texenda-git-36b74e9.bundle",
+          "sha256": "3103a9877f36c8b4b5535fe28e3bd9fe3814f0f045cd878efd374d5e357e3b71"
+        },
+        {
+          "path": "texenda-git-b99f71f.bundle",
+          "sha256": "f94b0e81858197e5d0419cf7170650f889263602aa35b1d1e7e8710468064897"
+        }
+      ]
+    },
+    "state": {
+      "old_path": "/Users/jamesryancooper/Projects/texenda-app/.texenda/state.json",
+      "phase_1_path": "/Users/jamesryancooper/Projects/texenda/repo/.texenda/state.json",
+      "later_planned_path": "/Users/jamesryancooper/Projects/texenda/local/agent-state/texenda/state.json",
+      "before_sha256": "b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235",
+      "after": {
+        "path": "/Users/jamesryancooper/Projects/texenda/repo/.texenda/state.json",
+        "sha256": "b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235",
+        "version": "2.0",
+        "receipt_count": 13,
+        "receipt_tip": "f39249184757101b108ea7ec5ea0ffebdd8237315b8ac3cad3ad0cc6ab3e827e",
+        "roster_canonical_sha256": "a23705178b39e8d0dd194abd4cf6e42fc20be404739d0e28e0ca9b221c80ddcf",
+        "qualified_profile_count": 11,
+        "lease_count": 0,
+        "api_budget_usd": 0,
+        "declared_api_allocations_usd": 0,
+        "cleared_external_gate_count": 0,
+        "earliest_profile_expiry": "2026-10-12T21:37:21Z",
+        "latest_profile_expiry": "2026-10-12T22:07:26Z",
+        "author_qualification": {
+          "profile_id": "gpt-6-astra-max",
+          "model_id": "gpt-6-astra",
+          "reasoning_effort": "max",
+          "runtime_id": "codex-desktop-collaboration",
+          "client_version": "26.901.41600 (build 7982)",
+          "billing_mode": "subscription",
+          "verified_at": "2026-09-13T21:44:31Z",
+          "expires_at": "2026-10-12T21:44:31Z",
+          "evidence": {
+            "path": "docs/qualification/model-roster-v2.1.evidence.json",
+            "sha256": "8e44034e6247ea47b3f0002100e6a343cfa6685d56138a24f55e8a13054173c0"
+          }
+        }
+      },
+      "bytes_changed": false,
+      "receipt_appended": false
+    },
+    "private_input": {
+      "path": "/Users/jamesryancooper/Projects/texenda/repo/.texenda/private-inputs/kit/ohw/2026-09-14/subscribers.csv",
+      "exists": true,
+      "ignored": true,
+      "tracked": false,
+      "content_accessed": false,
+      "content_hashed": false,
+      "content_parsed": false,
+      "content_copied": false,
+      "content_logged": false
+    },
+    "external_state_cutover_started": false
+  },
+  "blueprint": {
+    "version": "1.0.0",
+    "profile": "high-assurance",
+    "adoption_mode": "mapped-existing",
+    "qualification": "inspected_structural_reference_only",
+    "selected_reference": "/Users/jamesryancooper/.codex/skills/project-bootstrap/assets/blueprint-source",
+    "planner": {
+      "path": "project-dossier/transition/post-relocation-adoption-plan.json",
+      "sha256": "fa3144f5a622d1fcaffaa768d74e2f9b50d520f8614401fe5af87a4503710c15"
+    },
+    "crosswalk": {
+      "sha256": "7bfd1930821cc695eca854e98ed1c0b347c076ebf5fb735a272108387eb6d4f0",
+      "path": "project-dossier/transition/blueprint-adoption-crosswalk.json"
+    },
+    "stock_generator_run": false,
+    "origin_record_created": false,
+    "newer_source_qualified": false
+  },
+  "runtime_stop_provenance": {
+    "pre_move_observer": "/root dispatcher; attributed observation, not witnessed retrospectively by this author",
+    "pre_move_completed_actors": [
+      "/root/workspace_architecture_author",
+      "/root/review_workspace_architecture",
+      "/root/review_workspace_architecture_final",
+      "/root/workspace_inventory",
+      "/root/blueprint_source_audit"
+    ],
+    "pre_move_observation_id": "not exposed by collaboration.list_agents",
+    "pre_move_observation_time": "immediately before serial relocation, as reported by parent; API did not expose a timestamp",
+    "supporting_observations": "Parent reports zero lsof holders for state/lock, zero leases, canonical-only worktree and exact clean approved revision; lsof and lease absence do not themselves prove runtime stop.",
+    "author_current_observation": "collaboration.list_agents returned parent and this author running; architecture author and final architecture reviewer completed. Earlier runtime entries absent from this snapshot are not independently reconstructed.",
+    "evidence_path": "docs/qualification/evidence/2026-09-14-workspace-relocation-validation.log",
+    "sha256": "77b55c489a37ac4eed405aedb6ac54e32eed9c6d0ad1a247c21ea9326dcc7acb"
+  },
+  "codex": {
+    "saved_project": {
+      "projectId": "8445df3c-0057-4a15-a026-9ee972cc1293",
+      "projectKind": "local",
+      "label": "texenda",
+      "path": "/Users/jamesryancooper/Projects/texenda",
+      "hostId": "local",
+      "hostDisplayName": null,
+      "isGitRepository": false
+    },
+    "safe_project_path_update_api_exposed": false,
+    "manual_action": "Use the supported Codex project open/add action to select /Users/jamesryancooper/Projects/texenda/repo, then begin repository work there. Keep the parent as workspace navigation.",
+    "app_storage_edited": false,
+    "project_reopened_by_author": false,
+    "evidence_path": "docs/qualification/evidence/2026-09-14-workspace-relocation-validation.log",
+    "sha256": "77b55c489a37ac4eed405aedb6ac54e32eed9c6d0ad1a247c21ea9326dcc7acb"
+  },
+  "github": {
+    "visibility": "private",
+    "is_private": true,
+    "branches": [],
+    "configured_default_branch_name": "main",
+    "hosted_workflow_count": 0,
+    "tracked_workflow_count": 0,
+    "actions_enabled": true,
+    "allowed_actions": "all",
+    "sha_pinning_required": false,
+    "methods": [
+      "GET"
+    ],
+    "writes": false,
+    "pushed": false,
+    "evidence_path": "docs/qualification/evidence/2026-09-14-workspace-relocation-validation.log",
+    "sha256": "77b55c489a37ac4eed405aedb6ac54e32eed9c6d0ad1a247c21ea9326dcc7acb"
+  },
+  "checks": [
+    {
+      "id": "CHK-WSR-0001",
+      "name": "workspace_layout_git_refs_and_journal",
+      "required": true,
+      "status": "PASS",
+      "procedure": "Physical validator: unchanged approved main/tree/remote, non-Git parent, absent old checkout, exact worktree set, 29 preserved ordinary refs, four retained detached worktree-head commits, 18 completed journal moves.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-workspace-relocation-validation.log",
+      "sha256": "77b55c489a37ac4eed405aedb6ac54e32eed9c6d0ad1a247c21ea9326dcc7acb"
+    },
+    {
+      "id": "CHK-WSR-0002",
+      "name": "package_preservation",
+      "required": true,
+      "status": "PASS",
+      "procedure": "Physical validator: all sixteen source entries/88 files, 86 sealed files and identical eleven baseline differences; both checksum sets equal the Phase-0 hashes.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-workspace-relocation-validation.log",
+      "sha256": "77b55c489a37ac4eed405aedb6ac54e32eed9c6d0ad1a247c21ea9326dcc7acb"
+    },
+    {
+      "id": "CHK-WSR-0003",
+      "name": "checkpoint_preservation",
+      "required": true,
+      "status": "PASS",
+      "procedure": "Physical validator: seven exact archived artifacts; both Git bundles verify; fresh bundle retains 34 heads including HEAD and four historical worktree-head pseudo-refs.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-workspace-relocation-validation.log",
+      "sha256": "77b55c489a37ac4eed405aedb6ac54e32eed9c6d0ad1a247c21ea9326dcc7acb"
+    },
+    {
+      "id": "CHK-WSR-0004",
+      "name": "live_state_receipts_qualification",
+      "required": true,
+      "status": "PASS",
+      "procedure": "Existing unchanged validation methods: whole-state hash, complete receipt chain and historical evidence, thirteen receipts, eleven unexpired exact profiles, zero leases/budget/allocations/gates.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-workspace-relocation-validation.log",
+      "sha256": "77b55c489a37ac4eed405aedb6ac54e32eed9c6d0ad1a247c21ea9326dcc7acb"
+    },
+    {
+      "id": "CHK-WSR-0005",
+      "name": "private_input_exclusion",
+      "required": true,
+      "status": "PASS",
+      "procedure": "Exact-path existence, git check-ignore, git ls-files and git status only; state checkpoints exclude private-input archive members; contents never accessed.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-workspace-relocation-validation.log",
+      "sha256": "77b55c489a37ac4eed405aedb6ac54e32eed9c6d0ad1a247c21ea9326dcc7acb"
+    },
+    {
+      "id": "CHK-WSR-0006",
+      "name": "workspace_contract_and_mutation_tests",
+      "required": true,
+      "status": "PASS",
+      "procedure": "43 tests passed: 36 existing static-contract tests and seven physical-audit read-boundary tests.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-workspace-relocation-validation.log",
+      "sha256": "77b55c489a37ac4eed405aedb6ac54e32eed9c6d0ad1a247c21ea9326dcc7acb"
+    },
+    {
+      "id": "CHK-WSR-0007",
+      "name": "local_coordination_suite",
+      "required": true,
+      "status": "PASS",
+      "procedure": "132 existing coordinator tests passed using synthetic temporary fixtures.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-workspace-relocation-validation.log",
+      "sha256": "77b55c489a37ac4eed405aedb6ac54e32eed9c6d0ad1a247c21ea9326dcc7acb"
+    },
+    {
+      "id": "CHK-WSR-0008",
+      "name": "sealed_harness_suite",
+      "required": true,
+      "status": "PASS",
+      "procedure": "39 unchanged sealed harness tests passed.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-workspace-relocation-validation.log",
+      "sha256": "77b55c489a37ac4eed405aedb6ac54e32eed9c6d0ad1a247c21ea9326dcc7acb"
+    },
+    {
+      "id": "CHK-WSR-0009",
+      "name": "package_validators",
+      "required": true,
+      "status": "PASS",
+      "procedure": "Fourteen checks passed for each package, with --checksums.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-workspace-relocation-validation.log",
+      "sha256": "77b55c489a37ac4eed405aedb6ac54e32eed9c6d0ad1a247c21ea9326dcc7acb"
+    },
+    {
+      "id": "CHK-WSR-0010",
+      "name": "static_parse_links_owner_map_evidence_and_bytes",
+      "required": true,
+      "status": "PASS",
+      "procedure": "Static audit passed: 42 concerns, 85 blueprint paths, 35 catalog types, no duplicate owners; initial audit parsed 85 JSON/1 TOML/12 Python and verified 128 qualification bindings, 11 links, 86 sealed/88 source files. Final added envelope is rechecked before author handoff.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-workspace-relocation-validation.log",
+      "sha256": "77b55c489a37ac4eed405aedb6ac54e32eed9c6d0ad1a247c21ea9326dcc7acb"
+    },
+    {
+      "id": "CHK-WSR-0011",
+      "name": "read_only_physical_audit",
+      "required": true,
+      "status": "PASS",
+      "procedure": "No mode/size/mtime/ctime change across 288 scoped files, with state bytes unchanged; whole private-input subtree excluded. Access-time equality and the future .agent check are not claimed.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-workspace-relocation-validation.log",
+      "sha256": "77b55c489a37ac4eed405aedb6ac54e32eed9c6d0ad1a247c21ea9326dcc7acb"
+    },
+    {
+      "id": "CHK-WSR-0012",
+      "name": "active_absolute_dependencies",
+      "required": true,
+      "status": "PASS",
+      "procedure": "21 tracked operational instruction/config/coordinator sources scanned; zero active old-checkout absolute dependencies.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-workspace-relocation-validation.log",
+      "sha256": "77b55c489a37ac4eed405aedb6ac54e32eed9c6d0ad1a247c21ea9326dcc7acb"
+    },
+    {
+      "id": "CHK-WSR-0013",
+      "name": "github_read_only_observations",
+      "required": true,
+      "status": "PASS",
+      "procedure": "Four GET calls: private true, no branches, zero hosted workflows, Actions enabled/all actions/SHA-pinning setting unchanged. The configured default-branch name remains main although no hosted branch exists.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-workspace-relocation-validation.log",
+      "sha256": "77b55c489a37ac4eed405aedb6ac54e32eed9c6d0ad1a247c21ea9326dcc7acb"
+    },
+    {
+      "id": "CHK-WSR-0014",
+      "name": "git_diff_and_sealed_comparison",
+      "required": true,
+      "status": "PASS",
+      "procedure": "git diff --check and sealed-package comparison against the original main revision exited zero.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-workspace-relocation-validation.log",
+      "sha256": "77b55c489a37ac4eed405aedb6ac54e32eed9c6d0ad1a247c21ea9326dcc7acb"
+    },
+    {
+      "id": "CHK-WSR-0015",
+      "name": "post_relocation_adoption_planner",
+      "required": true,
+      "status": "PASS",
+      "procedure": "Read-only installed planner against canonical repo: 1.0.0 high-assurance, exact collisions AGENTS.md and project-dossier/transition/README.md, 83 other literal paths; the reviewed functional crosswalk remains controlling.",
+      "evidence_path": "project-dossier/transition/post-relocation-adoption-plan.json",
+      "sha256": "fa3144f5a622d1fcaffaa768d74e2f9b50d520f8614401fe5af87a4503710c15"
+    }
+  ],
+  "execution_findings": [
+    {
+      "id": "FIND-WSR-0001",
+      "status": "resolved_in_candidate",
+      "finding": "Initial new ref-preservation assertion treated archived worktree HEAD pseudo-refs as current refs; a follow-up assertion incorrectly required the detached review evidence commit to be integrated.",
+      "resolution": "Verified normal refs byte-exact (later main only by ancestry); verified every pseudo-ref commit still exists locally and is named in the unchanged verified bundle. Detached review evidence remains preserved without implied acceptance.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-workspace-relocation-validation.log",
+      "sha256": "77b55c489a37ac4eed405aedb6ac54e32eed9c6d0ad1a247c21ea9326dcc7acb"
+    },
+    {
+      "id": "FIND-WSR-0002",
+      "status": "implementation_deferred",
+      "finding": "The current harness CLI status/check opens state.lock with a+.",
+      "resolution": "This read-only audit uses unchanged validation methods and stable state hashes. Phase-4 code work retains the required read-only CLI repair.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-workspace-relocation-validation.log",
+      "sha256": "77b55c489a37ac4eed405aedb6ac54e32eed9c6d0ad1a247c21ea9326dcc7acb"
+    }
+  ],
+  "not_run": [
+    {
+      "check": "independent review and local integration of this exact candidate",
+      "reason": "Separate distinct Astra/max reviewer and serial integrator operations; no self-approval."
+    },
+    {
+      "check": "facade/origin schema, generated projections, external state/private-input movement and operational lifecycle",
+      "reason": "Later phases under the reviewed architecture contract; no state-root or authority cutover in this candidate."
+    },
+    {
+      "check": "existing write-opening live CLI check",
+      "reason": "Read-only methods verify unchanged ledger/receipt/evidence/qualification semantics without opening a writable lock."
+    },
+    {
+      "check": "app project reopen and direct installed-app version observation",
+      "reason": "No safe path-update tool exposed; direct guessed app-bundle location absent. The exact desktop profile is revalidated through its existing qualification."
+    },
+    {
+      "check": "future .agent check full timestamp/no-write proof and product/external gates",
+      "reason": "Outside Phase-1 evidence; scoped physical-audit proof does not establish these."
+    }
+  ],
+  "deferred_semantic_work": [
+    "Separate project-local amendment to assess the two package editor wordings if warranted.",
+    "Qualify a newer canonical blueprint or deliberately reviewed origin-schema successor for mapped-existing adoption."
+  ],
+  "forbidden_effects_performed": [],
+  "runtime_stop": {
+    "at_recording": "author preparing final commit; no child agent or background command remains",
+    "protocol": "Author ends after final commit/tree/diff handoff. Parent must observe completion before releasing the scope or removing the worktree.",
+    "self_attestation_is_not_independent_stop_proof": true
+  },
+  "resumption": "Review the exact candidate with a distinct qualified Astra/max actor, preserve review evidence, observe author/reviewer completion, integrate only accepted content serially into local main, and continue later phases under ADR-0004."
+}

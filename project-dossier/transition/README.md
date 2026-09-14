@@ -6,8 +6,9 @@ It routes to the [accepted structural decision](../../docs/decisions/ADR-0004-ma
 [move manifest](workspace-move-manifest.json) and immutable
 [Phase-0 baseline](../../docs/qualification/evidence/2026-09-14-workspace-phase-0-baseline.json).
 Documentation is not permission, runtime-stop proof, live state or a product
-readiness result. This candidate freezes contracts; it executes no move or
-authority cutover.
+readiness result. The [Phase-1 receipt](workspace-relocation-receipt.md) records
+the physical relocation and [post-relocation planner inventory](post-relocation-adoption-plan.json).
+Facade adoption and external live-state cutover remain subsequent reviewed work.
 
 1. Review the exact architecture candidate and evidence with a distinct
    qualified Astra/max actor. Preserve its commit, review and branch. Recheck
@@ -132,7 +133,7 @@ python3 -B -m unittest discover -s tooling/workspace/tests -v
 python3 -B -m unittest discover -s tooling/coordination/tests -v
 python3 -B -m unittest discover -s specs/texenda-handoff/08-project-harness/tests -v
 python3 -B specs/texenda-handoff/10-validation/validate_package.py --checksums
-python3 -B /Users/jamesryancooper/Projects/texenda/10-validation/validate_package.py --checksums
+python3 -B /Users/jamesryancooper/Projects/texenda/sources/handoff-1.1.0-20260914/10-validation/validate_package.py --checksums
 git diff --check
 ```
 
