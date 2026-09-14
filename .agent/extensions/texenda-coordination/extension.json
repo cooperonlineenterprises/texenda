@@ -10,7 +10,7 @@
   "bindings": [
     {
       "path": "tooling/coordination/harness.py",
-      "sha256": "e5a06ecb79569f598be03bbcded3167e5d02769ed97befe326f3cadf4382d99f",
+      "sha256": "a146e993ec866cfd165372650f77c2a75d67329148477c32cb424100345ad91e",
       "role": "wp_lifecycle_receipt_and_state_root_adapter"
     },
     {
@@ -30,7 +30,7 @@
     },
     {
       "path": "tooling/workspace/relocate_state.py",
-      "sha256": "fee0f7622358cf89f2b2d53aeb8f8ba5428d671fc72a093399c821f0a26410ce",
+      "sha256": "7786d9483e4bd3f0f3754e96944c53cc4e41351b2ce190c5744942262d8a4aad",
       "role": "reviewed_noncopying_state_relocation_adapter"
     },
     {

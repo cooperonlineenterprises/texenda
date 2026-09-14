@@ -19,6 +19,7 @@ import os
 from pathlib import Path
 from pathlib import PurePosixPath
 import re
+import secrets
 import sys
 import tempfile
 import time
@@ -205,6 +206,27 @@ def safe_public_rel(value, label):
     return rel
 
 
+def path_identity(path):
+    value = Path(path).lstat()
+    return (value.st_dev, value.st_ino, value.st_mode, value.st_size,
+            value.st_mtime_ns, value.st_ctime_ns)
+
+
+def inode_identity(path):
+    value = Path(path).lstat()
+    return (value.st_dev, value.st_ino, value.st_mode & 0o170000)
+
+
+def binding_snapshot(path, repository_root):
+    raw = stable_file_bytes(path, 'state-location binding', missing_ok=True)
+    if raw is None:
+        return None, ('absent',)
+    value = load_binding(path, repository_root)
+    if stable_file_bytes(path, 'state-location binding') != raw:
+        raise Denied('state-location binding changed during snapshot')
+    return value, (*path_identity(path), hashlib.sha256(raw).hexdigest())
+
+
 def check_receipts(state):
     events = state.get('events')
     if not isinstance(events, list) or not events:
@@ -253,11 +275,14 @@ def restore_bytes(path, raw):
 
 
 class Harness(legacy.Harness):
-    def __init__(self, root, package=PACKAGE, clock=time.time, policy=POLICY, state_root=None):
+    def __init__(self, root, package=PACKAGE, clock=time.time, policy=POLICY, state_root=None,
+                 interleave=None):
         repository_root = resolved_directory(root, 'repository root')
         super().__init__(repository_root, Path(package), clock)
+        self.interleave = interleave
+        self.root_identity = inode_identity(self.root)
         self.binding_path = self.root / BINDING_NAME
-        self.binding = load_binding(self.binding_path, self.root)
+        self.binding, self.binding_identity = binding_snapshot(self.binding_path, self.root)
         requested_state_root = None
         if state_root is not None:
             raw_state_root = Path(state_root)
@@ -290,6 +315,7 @@ class Harness(legacy.Harness):
             self.dir = default_root
         self.statefile = self.dir / 'state.json'
         self.lockfile = self.dir / 'state.lock'
+        self.state_root_identity = inode_identity(self.dir) if self.dir.exists() else None
         if self.statefile.is_symlink() or self.lockfile.is_symlink():
             raise Denied('state files cannot be symlinks')
         self.policy_path = Path(policy)
@@ -301,14 +327,25 @@ class Harness(legacy.Harness):
         self._validate_policy()
 
     def _binding_current(self):
-        current = load_binding(self.binding_path, self.root)
-        if current != self.binding:
+        current, identity = binding_snapshot(self.binding_path, self.root)
+        if current != self.binding or identity != self.binding_identity:
             raise Denied('state-location binding changed during this session; reload safely')
 
+    def _interleave(self, stage, detail=None):
+        if self.interleave:
+            self.interleave(stage, self, detail)
+
     def _validate_state_root_current(self):
+        if inode_identity(self.root) != self.root_identity:
+            raise Denied('repository root identity changed during this session')
         current = resolved_directory(self.dir, 'state root', absolute=True)
         if current != self.dir:
             raise Denied('state root changed during this session')
+        identity = inode_identity(self.dir)
+        if self.state_root_identity is None:
+            self.state_root_identity = identity
+        elif identity != self.state_root_identity:
+            raise Denied('state root identity changed during this session')
 
     def _read_state_once(self):
         """Return bytes and an identity signature from one no-follow read."""
@@ -341,17 +378,21 @@ class Harness(legacy.Harness):
             raise Denied('state changed during read')
         return b''.join(chunks), signature
 
-    def _stable_state_bytes(self):
+    def _stable_state_snapshot(self):
         first, first_signature = self._read_state_once()
         second, second_signature = self._read_state_once()
         if first_signature != second_signature or first != second:
             raise Denied('state changed or was replaced during read')
-        return first
+        return first, first_signature
+
+    def _stable_state_bytes(self):
+        return self._stable_state_snapshot()[0]
 
     @contextlib.contextmanager
     def locked(self):
         """Serialize mutations only; read-only commands never create/open a lock for write."""
         self._binding_current()
+        self._interleave('locked_after_initial_binding_check')
         if self.unbound_external:
             raise Denied('an unbound explicit state root is read-only')
         self._validate_state_root_current()
@@ -359,23 +400,112 @@ class Harness(legacy.Harness):
             raise Denied('state root is missing')
         if self.dir.is_symlink() or self.lockfile.is_symlink() or self.statefile.is_symlink():
             raise Denied('state paths cannot be symlinks')
-        flags = os.O_RDWR | os.O_CREAT
-        if hasattr(os, 'O_NOFOLLOW'):
-            flags |= os.O_NOFOLLOW
-        descriptor = os.open(self.lockfile, flags, 0o600)
+        directory_flags = os.O_RDONLY | getattr(os, 'O_DIRECTORY', 0) | getattr(os, 'O_NOFOLLOW', 0)
+        root_descriptor = os.open(self.root, directory_flags)
+        directory_descriptor = os.open(self.dir, directory_flags)
+        lock_existed = True
         try:
-            with os.fdopen(descriptor, 'a+') as stream:
-                try:
-                    fcntl.flock(stream, fcntl.LOCK_EX | fcntl.LOCK_NB)
-                except BlockingIOError as exc:
-                    raise Denied('state lock is held by another writer') from exc
-                try:
-                    yield
-                finally:
-                    fcntl.flock(stream, fcntl.LOCK_UN)
-        except BaseException:
-            # os.fdopen owns the descriptor once constructed.
-            raise
+            os.stat('state.lock', dir_fd=directory_descriptor, follow_symlinks=False)
+        except FileNotFoundError:
+            lock_existed = False
+        flags = os.O_RDWR | os.O_CREAT | getattr(os, 'O_NOFOLLOW', 0)
+        descriptor = os.open('state.lock', flags, 0o600, dir_fd=directory_descriptor)
+        created_identity = path_identity(self.lockfile) if not lock_existed else None
+        acquired = False
+        try:
+            try:
+                fcntl.flock(descriptor, fcntl.LOCK_EX | fcntl.LOCK_NB)
+                acquired = True
+            except BlockingIOError as exc:
+                raise Denied('state lock is held by another writer') from exc
+            token = {
+                'root_fd': root_descriptor,
+                'dir_fd': directory_descriptor,
+                'lock_fd': descriptor,
+                'lock_identity': inode_identity(self.lockfile),
+                'lock_created': not lock_existed,
+                'lock_created_identity': created_identity,
+            }
+            try:
+                self._interleave('locked_after_lock_acquired', token)
+                self._continuity(token)
+            except BaseException:
+                self._cleanup_speculative_lock(token)
+                raise
+            yield token
+        finally:
+            if acquired:
+                fcntl.flock(descriptor, fcntl.LOCK_UN)
+            os.close(descriptor)
+            os.close(directory_descriptor)
+            os.close(root_descriptor)
+
+    def _cleanup_speculative_lock(self, token):
+        if not token['lock_created']:
+            return
+        try:
+            current = os.stat('state.lock', dir_fd=token['dir_fd'], follow_symlinks=False)
+        except FileNotFoundError:
+            return
+        opened = os.fstat(token['lock_fd'])
+        current_identity = (current.st_dev, current.st_ino, current.st_mode, current.st_size,
+                            current.st_mtime_ns, current.st_ctime_ns)
+        if (current_identity == token['lock_created_identity']
+                and (opened.st_dev, opened.st_ino) == (current.st_dev, current.st_ino)
+                and current.st_size == 0):
+            os.unlink('state.lock', dir_fd=token['dir_fd'])
+
+    def _continuity(self, token, expected_state=None, expect_state_absent=False):
+        self._binding_current()
+        self._policy_current()
+        self._validate_state_root_current()
+        root_now = os.fstat(token['root_fd'])
+        dir_now = os.fstat(token['dir_fd'])
+        lock_now = os.fstat(token['lock_fd'])
+        lock_path = os.stat('state.lock', dir_fd=token['dir_fd'], follow_symlinks=False)
+        if ((root_now.st_dev, root_now.st_ino, root_now.st_mode & 0o170000) != self.root_identity
+                or (dir_now.st_dev, dir_now.st_ino, dir_now.st_mode & 0o170000)
+                != self.state_root_identity
+                or (lock_now.st_dev, lock_now.st_ino, lock_now.st_mode & 0o170000)
+                != token['lock_identity']
+                or (lock_path.st_dev, lock_path.st_ino) != (lock_now.st_dev, lock_now.st_ino)):
+            raise Denied('repository/state/lock identity changed during mutation')
+        if expect_state_absent:
+            try:
+                os.stat('state.json', dir_fd=token['dir_fd'], follow_symlinks=False)
+            except FileNotFoundError:
+                pass
+            else:
+                raise Denied('state appeared before initialization commit')
+        if expected_state is not None and self._stable_state_snapshot() != expected_state:
+            raise Denied('state changed or was replaced before commit')
+
+    def _atomic_state_bytes(self, token, raw, *, expected_state=None,
+                            expect_state_absent=False):
+        temporary = '.state-write-' + secrets.token_hex(12)
+        flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, 'O_NOFOLLOW', 0)
+        descriptor = os.open(temporary, flags, 0o600, dir_fd=token['dir_fd'])
+        try:
+            with os.fdopen(descriptor, 'wb') as stream:
+                stream.write(raw)
+                stream.flush()
+                os.fsync(stream.fileno())
+            self._interleave('before_state_commit', token)
+            self._continuity(token, expected_state, expect_state_absent)
+            os.replace(temporary, 'state.json', src_dir_fd=token['dir_fd'],
+                       dst_dir_fd=token['dir_fd'])
+            os.fsync(token['dir_fd'])
+            self._binding_current()
+            self._validate_state_root_current()
+        finally:
+            try:
+                os.unlink(temporary, dir_fd=token['dir_fd'])
+            except FileNotFoundError:
+                pass
+
+    def _atomic_state_json(self, token, value, **continuity):
+        raw = json.dumps(value, indent=2, ensure_ascii=False, allow_nan=False).encode() + b'\n'
+        self._atomic_state_bytes(token, raw, **continuity)
 
     def _validate_policy(self):
         p = self.policy
@@ -558,7 +688,7 @@ class Harness(legacy.Harness):
                 self.dir.mkdir(mode=0o700)
             else:
                 raise Denied('explicit state root must exist before init')
-        with self.locked():
+        with self.locked() as token:
             self._policy_current()
             if self.statefile.exists():
                 raise Denied('state already exists; never overwrite to resume')
@@ -574,7 +704,7 @@ class Harness(legacy.Harness):
                 } for wid in self.work},
             }
             self._event(state, actor, 'init')
-            atomic_write(self.statefile, state)
+            self._atomic_state_json(token, state, expect_state_absent=True)
         return {'initialized': str(self.statefile), 'version': '2.0',
                 'tasks': len(self.work), 'routing_policy_digest': self.policy_hash, 'models_verified': False}
 
@@ -860,17 +990,16 @@ class Harness(legacy.Harness):
                     if record:
                         self._recheck_allocation(state, task, role, current['fence'], record)
             return fn(state)
-        with self.locked():
-            source = self._stable_state_bytes()
+        with self.locked() as token:
+            source_snapshot = self._stable_state_snapshot()
+            source = source_snapshot[0]
             state = load_json(source)
             self._check(state)
             self._check_binding_baseline(state, source)
             updated = copy.deepcopy(state)
             result = guarded(updated)
             self._event(updated, actor, op, task)
-            if self._stable_state_bytes() != source:
-                raise Denied('state changed before replacement')
-            atomic_write(self.statefile, updated)
+            self._atomic_state_json(token, updated, expected_state=source_snapshot)
             return result
 
     def assign(self, wid, actor, agent, tier=None, human=False, budget_usd=0,
@@ -1140,11 +1269,12 @@ class Harness(legacy.Harness):
         """Dry-run first; preserve old bytes, tasks and receipts, then append one receipt."""
         if not actor.startswith('human:'):
             raise Denied('an accountable owner must authorize state migration')
-        with self.locked():
+        with self.locked() as token:
             self._policy_current()
             if not self.statefile.is_file():
                 raise Denied('no v1 state to migrate; use init for an empty ledger')
-            raw = self._stable_state_bytes()
+            source_snapshot = self._stable_state_snapshot()
+            raw = source_snapshot[0]
             old = load_json(raw)
             if old.get('version') == '2.0':
                 self._check(old)
@@ -1199,23 +1329,22 @@ class Harness(legacy.Harness):
             event['migration'] = copy.deepcopy(state['routing_migration'])
             event['hash'] = digest({key: value for key, value in event.items() if key != 'hash'})
             self._check(state)
-            if self._stable_state_bytes() != raw:
-                raise Denied('state changed before migration replacement')
-            atomic_write(self.statefile, state)
+            self._atomic_state_json(token, state, expected_state=source_snapshot)
             return dict(result, migrated=True, dry_run=False)
 
     def rollback_v2(self, actor, apply=False, runtime_stopped=False):
         """Only the immediate migration can be rolled back; all later v2 work is retained."""
         if not actor.startswith('human:') or runtime_stopped is not True:
             raise Denied('rollback requires accountable owner attestation that all runtimes stopped')
-        with self.locked():
+        with self.locked() as token:
             state = self._read()
             migration = state.get('routing_migration')
             if (not migration or state['events'][-1]['operation'] != 'migrate-routing-v1-to-v2'
                     or len(state['events']) != migration['source_receipt_count'] + 1
                     or any(task['lease'] is not None for task in state['tasks'].values())):
                 raise Denied('rollback would discard later receipts/work; reviewed forward migration required')
-            raw = under(self.root, migration['backup_path']).read_bytes()
+            backup_path = under(self.root, migration['backup_path'])
+            raw = stable_file_bytes(backup_path, 'v1 rollback checkpoint')
             if hashlib.sha256(raw).hexdigest() != migration['source_sha256']:
                 raise Denied('original v1 checkpoint hash mismatch')
             old = load_json(raw)
@@ -1224,13 +1353,12 @@ class Harness(legacy.Harness):
             self._validate_retained_evidence(old)
             if old['events'] != state['events'][:-1] or old['tasks'] != state['tasks']:
                 raise Denied('checkpoint no longer matches the migration boundary')
-            current_raw = self._stable_state_bytes()
+            current_snapshot = self._stable_state_snapshot()
+            current_raw = current_snapshot[0]
             retained = self.dir / ('state.v2.' + hashlib.sha256(current_raw).hexdigest() + '.json')
             if apply:
                 checkpoint_bytes(retained, current_raw)
-                if self._stable_state_bytes() != current_raw:
-                    raise Denied('state changed before rollback replacement')
-                restore_bytes(self.statefile, raw)
+                self._atomic_state_bytes(token, raw, expected_state=current_snapshot)
             return {'rolled_back': apply, 'dry_run': not apply, 'version': '1.0' if apply else '2.0',
                     'restored_sha256': migration['source_sha256'], 'retained_v2_checkpoint': str(retained)}
 

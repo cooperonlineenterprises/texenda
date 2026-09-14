@@ -11,25 +11,13 @@ import sys
 import tempfile
 
 sys.dont_write_bytecode = True
-from common import (ROOT, SOURCE_SCOPE_EXCLUSIONS, canonical, evidence_rows, git_identity,
+from common import (GENERATED_OUTPUT_PATHS, ROOT, SOURCE_SCOPE_EXCLUSIONS, canonical, evidence_rows, git_identity,
                     ledger_facts, load_json, require, revision_source_rows, scope_digest, sha,
                     source_rows, stable_file_bytes)
 import validate as checker
 
 
-OUTPUTS = (
-    '.agent/generated/manifest.json',
-    '.agent/generated/validation-report.json',
-    '.agent/state/current.json',
-    '.agent/state/RESUME.md',
-    'project-dossier/CANONICAL_SOURCE_MAP.md',
-    'project-dossier/current-state/current.json',
-    'project-dossier/current-state/README.md',
-    'project-dossier/handoff/START_HERE.md',
-    'project-dossier/machine-readable/evidence-index.json',
-    'project-dossier/machine-readable/findings.json',
-    'project-dossier/machine-readable/path-authority.json',
-)
+OUTPUTS = GENERATED_OUTPUT_PATHS
 
 
 def json_bytes(value):

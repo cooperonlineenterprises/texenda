@@ -15,3 +15,9 @@ repository/project-home/state-root context. It categorically skips every
 `refresh_writer`; state-root options precede coordinator subcommands. Both check
 modes reject an interrupted-refresh marker before delegation and deterministically
 reconstruct all eleven generated outputs byte-for-byte.
+
+Only those exact eleven paths are excluded from the source fingerprint.
+`.agent/generated/README.md` and any additional implementation file under that
+directory remain source; adding one makes an unrefreshed or uncommitted
+projection stale. Complete synthetic check-all proofs cover both the default
+pre-binding layout and an active external binding.

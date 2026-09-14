@@ -114,6 +114,14 @@ The frozen external-state interface is deliberately narrow:
   binding activation or rollback archival. State, lock, private-directory and
   rollback-record moves use the platform's atomic no-replace primitive and fail
   closed when unavailable or when a concurrent destination appears.
+- Binding activation uses a descriptor-anchored atomic exchange, verifies the
+  displaced moving descriptor, archives it on success, and swaps back on a race
+  or injected interruption. The raced descriptor remains at the binding path;
+  the active candidate and transaction record are preserved for deterministic
+  recovery. A hard-interrupted exchange is replayed under the destination lock;
+  its exact repository temporary name is ignored while transaction/completion/
+  conflict records remain under `local/logs/workspace-relocation/`. No
+  compare-then-unconditional replacement is used.
 
 The implementation's required test contract includes default/external roots,
 missing state, conflicting roots/bindings, symlink and traversal escapes,

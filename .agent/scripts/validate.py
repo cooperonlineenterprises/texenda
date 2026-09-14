@@ -15,7 +15,7 @@ import tomllib
 import urllib.parse
 
 sys.dont_write_bytecode = True
-from common import (EVIDENCE_PREFIX, GENERATED_PATHS, ROOT, SOURCE_SCOPE_EXCLUSIONS,
+from common import (EVIDENCE_PREFIX, GENERATED_OUTPUT_PATHS, ROOT, SOURCE_SCOPE_EXCLUSIONS,
                     ValidationError, binding, candidate_paths, canonical, evidence_rows,
                     git, git_identity, ledger_facts, load_json, loads, require, resolved_directory, sha,
                     no_symlink_components, reject_private_name, revision_source_rows,
@@ -37,19 +37,7 @@ KERNEL_KEYS = {
                      'repository_role', 'dossier', 'extensions', 'external_state'},
 }
 INDEX_STORES = ('tasks', 'decisions', 'evidence', 'reviews')
-GENERATED_FILES = (
-    '.agent/generated/manifest.json',
-    '.agent/generated/validation-report.json',
-    '.agent/state/current.json',
-    '.agent/state/RESUME.md',
-    'project-dossier/CANONICAL_SOURCE_MAP.md',
-    'project-dossier/current-state/current.json',
-    'project-dossier/current-state/README.md',
-    'project-dossier/handoff/START_HERE.md',
-    'project-dossier/machine-readable/evidence-index.json',
-    'project-dossier/machine-readable/findings.json',
-    'project-dossier/machine-readable/path-authority.json',
-)
+GENERATED_FILES = GENERATED_OUTPUT_PATHS
 RECORD_ID = re.compile(r'^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)*-[0-9]{4}$')
 
 
@@ -523,9 +511,12 @@ def run_registry_checks(registry, root=ROOT, state_root=None, *, all_commands=Fa
         if not allow_refresh_marker:
             ensure_no_interrupted_refresh(root)
         argv = resolve_command(row, context)
+        environment = {**dict(os.environ), 'PYTHONDONTWRITEBYTECODE': '1'}
+        if all_commands:
+            environment['TEXENDA_CHECK_ALL_ACTIVE'] = '1'
         result = subprocess.run(argv, cwd=context['repository_root'],
                                 capture_output=True, text=True, check=False,
-                                env={**dict(__import__('os').environ), 'PYTHONDONTWRITEBYTECODE': '1'})
+                                env=environment)
         require(result.returncode == 0,
                 'registered command failed: ' + row['id'] + '\n' + result.stdout + result.stderr)
         results.append({'id': row['id'], 'returncode': result.returncode})

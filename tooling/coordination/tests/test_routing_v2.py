@@ -873,7 +873,8 @@ class MigrationTests(unittest.TestCase):
 
     def test_failed_migration_retains_exact_v1_and_checkpoint(self):
         before = self.h.statefile.read_bytes()
-        with mock.patch.object(hm, 'atomic_write', side_effect=OSError('injected replace failure')):
+        with mock.patch.object(self.v2, '_atomic_state_json',
+                               side_effect=OSError('injected replace failure')):
             with self.assertRaises(OSError):
                 self.v2.migrate_v1('human:owner', apply=True)
         self.assertEqual(before, self.h.statefile.read_bytes())

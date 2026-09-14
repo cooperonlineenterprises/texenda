@@ -297,6 +297,84 @@ class StateRelocationTests(unittest.TestCase):
             relocation.apply(self.repo, self.state_root, interleave=substitute)
         self.assertEqual(json.loads((self.repo / hm.BINDING_NAME).read_text())['status'], 'moving')
 
+    def test_binding_activation_exchange_preserves_a_raced_valid_descriptor(self):
+        self.prepare()
+        raced = {}
+
+        def race(binding_path, _unused):
+            value = json.loads(binding_path.read_text())
+            value['migration_id'] = 'synthetic-raced-binding'
+            replacement = binding_path.with_name('.synthetic-raced-binding')
+            replacement.write_text(json.dumps(value))
+            os.replace(replacement, binding_path)
+            raced['raw'] = binding_path.read_bytes()
+
+        with self.assertRaisesRegex(hm.Denied, 'raced state binding'):
+            relocation.apply(self.repo, self.state_root, race_hooks={'binding_swap': race})
+        self.assertEqual((self.repo / hm.BINDING_NAME).read_bytes(), raced['raw'])
+        self.assertEqual(json.loads(raced['raw'])['status'], 'moving')
+        conflicts = list((self.home / 'local/logs/workspace-relocation').glob(
+            'synthetic-migration.activation-conflict.*.json'))
+        self.assertEqual(len(conflicts), 1)
+        self.assertEqual(json.loads(conflicts[0].read_text())['status'], 'active')
+        # Recovery uses the preserved raced moving descriptor; nothing was discarded.
+        self.assertEqual(relocation.apply(self.repo, self.state_root)['status'], 'active')
+
+    def test_binding_activation_interruption_rolls_back_and_resumes(self):
+        self.prepare()
+        interrupted = [False]
+
+        def interrupt(stage, _paths, _raw):
+            if stage == 'binding_after_exchange' and not interrupted[0]:
+                interrupted[0] = True
+                raise RuntimeError('synthetic activation interruption')
+
+        with self.assertRaisesRegex(RuntimeError, 'activation interruption'):
+            relocation.apply(self.repo, self.state_root, interleave=interrupt)
+        binding = json.loads((self.repo / hm.BINDING_NAME).read_text())
+        self.assertEqual(binding['status'], 'moving')
+        conflicts = list((self.home / 'local/logs/workspace-relocation').glob(
+            'synthetic-migration.activation-conflict.*.json'))
+        self.assertEqual(len(conflicts), 1)
+        self.assertEqual(relocation.apply(self.repo, self.state_root)['status'], 'active')
+
+    def test_persisted_post_exchange_transaction_is_recovered_under_lock(self):
+        self.prepare()
+        with self.assertRaisesRegex(RuntimeError, 'private-input'):
+            relocation.apply(self.repo, self.state_root, stop_after='private')
+        binding_path = self.repo / hm.BINDING_NAME
+        moving_raw = binding_path.read_bytes()
+        moving = json.loads(moving_raw)
+        active_raw = (json.dumps(dict(moving, status='active'), indent=2,
+                                 ensure_ascii=False, allow_nan=False).encode() + b'\n')
+        token = 'a' * 16
+        temporary_name = '.texenda-location.activation-' + token
+        recovery = self.home / 'local/logs/workspace-relocation'
+        recovery.mkdir(exist_ok=True)
+        transaction = {
+            'schema_version': 'texenda.state-location-activation.v1',
+            'migration_id': 'synthetic-migration',
+            'temporary_name': temporary_name,
+            'expected_moving_sha256': relocation.sha(moving_raw),
+            'candidate_active_sha256': relocation.sha(active_raw),
+            'token': token,
+        }
+        (recovery / 'synthetic-migration.activation-transaction.json').write_text(
+            json.dumps(transaction, indent=2, sort_keys=True) + '\n')
+        (self.repo / temporary_name).write_bytes(active_raw)
+        flags = os.O_RDONLY | getattr(os, 'O_DIRECTORY', 0)
+        descriptor = os.open(self.repo, flags)
+        try:
+            relocation._exchange_rename_syscall(
+                descriptor, temporary_name, descriptor, hm.BINDING_NAME)
+        finally:
+            os.close(descriptor)
+        self.assertEqual(json.loads(binding_path.read_text())['status'], 'active')
+        result = relocation.apply(self.repo, self.state_root)
+        self.assertEqual(result['status'], 'active')
+        self.assertEqual(json.loads(binding_path.read_text())['status'], 'active')
+        self.assertTrue(list(recovery.glob('synthetic-migration.activation-conflict.*.json')))
+
     def test_rollback_parent_symlink_substitution_is_denied_before_moves(self):
         self.prepare()
         with self.assertRaisesRegex(RuntimeError, 'private-input'):
@@ -322,6 +400,47 @@ class StateRelocationTests(unittest.TestCase):
         self.assertTrue((self.repo / hm.BINDING_NAME).is_file())
         record = self.home / 'local/logs/workspace-relocation/synthetic-migration.rolled-back.json'
         self.assertEqual(record.read_text(), 'concurrent rollback record')
+
+    def test_descriptor_relative_rename_blocks_late_ancestor_redirection_for_every_type(self):
+        original_syscall = relocation._exclusive_rename_syscall
+        for label, is_directory in (
+                ('state', False), ('lock', False), ('private', True), ('binding', False)):
+            with self.subTest(label=label):
+                base = self.home / ('late-' + label)
+                source_parent = base / 'source'
+                destination_parent = base / 'destination'
+                unrelated = base / 'unrelated'
+                source_parent.mkdir(parents=True)
+                destination_parent.mkdir()
+                unrelated.mkdir()
+                source = source_parent / label
+                destination = destination_parent / label
+                unrelated_source = unrelated / label
+                if is_directory:
+                    source.mkdir()
+                    (source / 'reviewed.txt').write_text('reviewed')
+                    unrelated_source.mkdir()
+                    (unrelated_source / 'unrelated.txt').write_text('unrelated')
+                else:
+                    source.write_text('reviewed')
+                    unrelated_source.write_text('unrelated')
+                preserved = base / 'preserved-source'
+
+                def late_swap(*arguments):
+                    os.rename(source_parent, preserved)
+                    source_parent.symlink_to(unrelated, target_is_directory=True)
+                    original_syscall(*arguments)
+
+                with mock.patch.object(relocation, '_exclusive_rename_syscall',
+                                       side_effect=late_swap):
+                    with self.assertRaisesRegex(hm.Denied, 'syscall boundary'):
+                        relocation.rename_no_replace(source, destination, label)
+                if is_directory:
+                    self.assertEqual((destination / 'reviewed.txt').read_text(), 'reviewed')
+                    self.assertEqual((unrelated_source / 'unrelated.txt').read_text(), 'unrelated')
+                else:
+                    self.assertEqual(destination.read_text(), 'reviewed')
+                    self.assertEqual(unrelated_source.read_text(), 'unrelated')
 
 
 if __name__ == '__main__':

@@ -36,7 +36,12 @@ python3 tooling/coordination/harness.py --root . context WP-00
 `status`, `ready`, and `check` use stable repeated reads and never create/open a
 lock for write, initialize state, or update caches/reports. Mutations use the
 selected state root's nonblocking exclusive lock and recheck the source bytes
-before replacement. Repository-relative evidence always stays under `--root`.
+before replacement. Lock acquisition and the final descriptor-relative state
+commit recheck binding, repository/state-root/lock identity and routing policy.
+A stale pre-cutover harness cannot recreate default state or leave a speculative
+lock after a cooperative cutover; an unchanged newly-created lock inode is
+removed only when acquisition continuity itself fails. Repository-relative
+evidence always stays under `--root`.
 Bound reads and writes also enforce the migration receipt count/prefix and exact
 state bytes while the receipt count is unchanged; later valid appended receipts
 remain permitted. Evidence envelopes and their PASS/FAIL log paths reject private

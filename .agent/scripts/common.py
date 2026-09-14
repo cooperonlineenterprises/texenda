@@ -13,31 +13,24 @@ import tarfile
 
 
 ROOT = Path(__file__).resolve().parents[2]
-GENERATED_PATHS = (
-    '.agent/generated/',
+GENERATED_OUTPUT_PATHS = (
+    '.agent/generated/manifest.json',
+    '.agent/generated/validation-report.json',
     '.agent/state/current.json',
     '.agent/state/RESUME.md',
     'project-dossier/CANONICAL_SOURCE_MAP.md',
-    'project-dossier/current-state/',
-    'project-dossier/handoff/',
+    'project-dossier/current-state/current.json',
+    'project-dossier/current-state/README.md',
+    'project-dossier/handoff/START_HERE.md',
     'project-dossier/machine-readable/evidence-index.json',
     'project-dossier/machine-readable/findings.json',
     'project-dossier/machine-readable/path-authority.json',
 )
 EVIDENCE_PREFIX = 'docs/qualification/evidence/'
 SOURCE_SCOPE_EXCLUSIONS = [
-    {
-        'path': '.agent/generated/manifest.json and .agent/generated/validation-report.json',
-        'reason': 'refresh-only generated integrity outputs; containing them would create a digest cycle (README.md remains in source scope)',
-    },
-    {
-        'path': '.agent/state/current.json and .agent/state/RESUME.md',
-        'reason': 'refresh-only generated state projections',
-    },
-    {
-        'path': 'project-dossier generated views',
-        'reason': 'refresh-only source map, current-state, handoff, and machine-readable mirrors',
-    },
+    {'path': path, 'reason': 'exact refresh-only generated output; inclusion would create a digest cycle'}
+    for path in GENERATED_OUTPUT_PATHS
+] + [
     {
         'path': 'docs/qualification/evidence/**',
         'reason': 'immutable validation/review evidence may be added after source validation and is hash-indexed separately',
@@ -136,10 +129,7 @@ def candidate_paths(root=ROOT):
 
 
 def is_generated(path):
-    if path == '.agent/generated/README.md':
-        return False
-    return any(path == prefix or path.startswith(prefix)
-               for prefix in GENERATED_PATHS)
+    return path in GENERATED_OUTPUT_PATHS
 
 
 def source_rows(root=ROOT):

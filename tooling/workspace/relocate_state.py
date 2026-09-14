@@ -19,9 +19,9 @@ import json
 import os
 from pathlib import Path
 import re
+import secrets
 import stat
 import sys
-import tempfile
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -35,6 +35,12 @@ MIGRATION_ID = re.compile(r'^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$')
 
 def sha(raw):
     return hashlib.sha256(raw).hexdigest()
+
+
+def path_identity(path):
+    value = Path(path).lstat()
+    return (value.st_dev, value.st_ino, value.st_mode, value.st_size,
+            value.st_mtime_ns, value.st_ctime_ns)
 
 
 def validate_migration_id(value):
@@ -196,52 +202,261 @@ def write_exclusive_json(path, value):
     return raw
 
 
-def replace_binding(path, value, expected_raw):
-    directory(path.parent, 'binding parent')
-    if stable_file_bytes(path, 'state binding') != expected_raw:
-        raise Denied('state binding changed before activation')
-    raw = json.dumps(value, indent=2, ensure_ascii=False, allow_nan=False).encode() + b'\n'
-    descriptor, temporary = tempfile.mkstemp(prefix='.state-location-', dir=path.parent)
-    try:
-        with os.fdopen(descriptor, 'wb') as stream:
-            stream.write(raw)
-            stream.flush()
-            os.fsync(stream.fileno())
-        no_symlink_components(path, 'state binding')
-        if stable_file_bytes(path, 'state binding') != expected_raw:
-            raise Denied('state binding changed at activation boundary')
-        os.replace(temporary, path)
-        parent_descriptor = os.open(path.parent, os.O_RDONLY)
-        try:
-            os.fsync(parent_descriptor)
-        finally:
-            os.close(parent_descriptor)
-    finally:
-        if os.path.exists(temporary):
-            os.unlink(temporary)
-
-
-def _exclusive_rename_syscall(source, destination):
+def _renameat_syscall(source_fd, source_name, destination_fd, destination_name, flag):
     libc = ctypes.CDLL(None, use_errno=True)
-    source_bytes, destination_bytes = os.fsencode(source), os.fsencode(destination)
-    if sys.platform == 'darwin' and hasattr(libc, 'renamex_np'):
-        operation = libc.renamex_np
-        operation.argtypes = (ctypes.c_char_p, ctypes.c_char_p, ctypes.c_uint)
+    source_bytes, destination_bytes = os.fsencode(source_name), os.fsencode(destination_name)
+    if sys.platform == 'darwin' and hasattr(libc, 'renameatx_np'):
+        operation = libc.renameatx_np
+        operation.argtypes = (ctypes.c_int, ctypes.c_char_p, ctypes.c_int,
+                              ctypes.c_char_p, ctypes.c_uint)
         operation.restype = ctypes.c_int
-        result = operation(source_bytes, destination_bytes, 0x00000004)  # RENAME_EXCL
+        darwin_flag = 0x00000004 if flag == 'exclusive' else 0x00000002
+        result = operation(source_fd, source_bytes, destination_fd, destination_bytes,
+                           darwin_flag)
     elif sys.platform.startswith('linux') and hasattr(libc, 'renameat2'):
         operation = libc.renameat2
         operation.argtypes = (ctypes.c_int, ctypes.c_char_p, ctypes.c_int,
                               ctypes.c_char_p, ctypes.c_uint)
         operation.restype = ctypes.c_int
-        result = operation(-100, source_bytes, -100, destination_bytes, 1)  # RENAME_NOREPLACE
+        linux_flag = 1 if flag == 'exclusive' else 2
+        result = operation(source_fd, source_bytes, destination_fd, destination_bytes,
+                           linux_flag)
     else:
-        raise Denied('platform lacks an atomic exclusive rename primitive')
+        raise Denied('platform lacks the required descriptor-relative rename primitive')
     if result != 0:
         error = ctypes.get_errno()
         if error in (errno.EEXIST, errno.ENOTEMPTY):
             raise Denied('exclusive rename destination already exists')
-        raise OSError(error, os.strerror(error), str(source), str(destination))
+        raise OSError(error, os.strerror(error), str(source_name), str(destination_name))
+
+
+def _exclusive_rename_syscall(source_fd, source_name, destination_fd, destination_name):
+    _renameat_syscall(source_fd, source_name, destination_fd, destination_name, 'exclusive')
+
+
+def _exchange_rename_syscall(first_fd, first_name, second_fd, second_name):
+    _renameat_syscall(first_fd, first_name, second_fd, second_name, 'exchange')
+
+
+def _stable_at(directory_fd, name, label):
+    if '/' in name or name in ('', '.', '..'):
+        raise Denied(label + ' has an unsafe descriptor-relative name')
+    flags = os.O_RDONLY | getattr(os, 'O_NOFOLLOW', 0)
+
+    def once():
+        descriptor = os.open(name, flags, dir_fd=directory_fd)
+        try:
+            before = os.fstat(descriptor)
+            chunks = []
+            while True:
+                chunk = os.read(descriptor, 1024 * 1024)
+                if not chunk:
+                    break
+                chunks.append(chunk)
+            after = os.fstat(descriptor)
+            current = os.stat(name, dir_fd=directory_fd, follow_symlinks=False)
+        finally:
+            os.close(descriptor)
+        identity = (before.st_dev, before.st_ino, before.st_mode, before.st_size,
+                    before.st_mtime_ns, before.st_ctime_ns)
+        if (identity != (after.st_dev, after.st_ino, after.st_mode, after.st_size,
+                         after.st_mtime_ns, after.st_ctime_ns)
+                or (after.st_dev, after.st_ino) != (current.st_dev, current.st_ino)):
+            raise Denied(label + ' changed during anchored read')
+        return b''.join(chunks), identity
+
+    first, second = once(), once()
+    if first != second:
+        raise Denied(label + ' changed or was replaced during anchored read')
+    return first
+
+
+def _write_at_exclusive(directory_fd, name, raw, label):
+    if '/' in name or name in ('', '.', '..'):
+        raise Denied(label + ' has an unsafe descriptor-relative name')
+    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, 'O_NOFOLLOW', 0)
+    descriptor = os.open(name, flags, 0o600, dir_fd=directory_fd)
+    with os.fdopen(descriptor, 'wb') as stream:
+        stream.write(raw)
+        stream.flush()
+        os.fsync(stream.fileno())
+    os.fsync(directory_fd)
+
+
+def _exists_at(directory_fd, name):
+    try:
+        os.stat(name, dir_fd=directory_fd, follow_symlinks=False)
+        return True
+    except FileNotFoundError:
+        return False
+
+
+def _ensure_recovery_directory(paths):
+    if paths['rollback_records'].exists() or paths['rollback_records'].is_symlink():
+        directory(paths['rollback_records'], 'rollback records')
+    else:
+        directory(paths['rollback_records'].parent, 'rollback-record parent')
+        os.mkdir(paths['rollback_records'], 0o700)
+    directory(paths['rollback_records'], 'rollback records')
+
+
+def activate_binding(paths, binding, binding_raw, binding_identity, *, race_hook=None,
+                     interleave=None):
+    """CAS activation by atomic exchange; never discard a raced descriptor."""
+    _ensure_recovery_directory(paths)
+    migration_id = validate_migration_id(binding['migration_id'])
+    active_raw = json.dumps(dict(binding, status='active'), indent=2,
+                            ensure_ascii=False, allow_nan=False).encode() + b'\n'
+    token = secrets.token_hex(8)
+    temporary_name = '.texenda-location.activation-' + token
+    transaction_name = migration_id + '.activation-transaction.json'
+    completed_name = migration_id + '.activation-complete.' + token + '.json'
+    moving_archive = migration_id + '.activated-moving.json'
+    conflict_name = migration_id + '.activation-conflict.' + token + '.json'
+    transaction = {
+        'schema_version': 'texenda.state-location-activation.v1',
+        'migration_id': migration_id,
+        'temporary_name': temporary_name,
+        'expected_moving_sha256': sha(binding_raw),
+        'candidate_active_sha256': sha(active_raw),
+        'token': token,
+    }
+    transaction_raw = json.dumps(transaction, indent=2, sort_keys=True).encode() + b'\n'
+    flags = os.O_RDONLY | getattr(os, 'O_DIRECTORY', 0) | getattr(os, 'O_NOFOLLOW', 0)
+    repo_fd = os.open(paths['repo'], flags)
+    recovery_fd = os.open(paths['rollback_records'], flags)
+    exchanged = False
+    committed = False
+    try:
+        _write_at_exclusive(recovery_fd, transaction_name, transaction_raw,
+                            'activation transaction')
+        _write_at_exclusive(repo_fd, temporary_name, active_raw, 'active binding candidate')
+        current_raw, current_identity = _stable_at(repo_fd, coordination.BINDING_NAME,
+                                                   'moving binding')
+        current_inode = (current_identity[0], current_identity[1],
+                         stat.S_IFMT(current_identity[2]))
+        if current_raw != binding_raw or current_inode != binding_identity:
+            raise Denied('state binding changed before atomic activation exchange')
+        if race_hook:
+            race_hook(paths['binding'], paths['binding'])
+        _exchange_rename_syscall(repo_fd, temporary_name, repo_fd,
+                                 coordination.BINDING_NAME)
+        exchanged = True
+        if interleave:
+            interleave('binding_after_exchange', paths, active_raw)
+        displaced_raw, displaced_identity = _stable_at(repo_fd, temporary_name,
+                                                        'displaced moving binding')
+        displaced_inode = (displaced_identity[0], displaced_identity[1],
+                           stat.S_IFMT(displaced_identity[2]))
+        if displaced_raw != binding_raw or displaced_inode != binding_identity:
+            raise Denied('raced state binding detected by atomic activation exchange')
+        _exclusive_rename_syscall(repo_fd, temporary_name, recovery_fd, moving_archive)
+        committed = True
+        _exclusive_rename_syscall(recovery_fd, transaction_name, recovery_fd,
+                                  completed_name)
+        os.fsync(repo_fd)
+        os.fsync(recovery_fd)
+    except BaseException as exc:
+        if exchanged and not committed:
+            try:
+                _exchange_rename_syscall(repo_fd, temporary_name, repo_fd,
+                                         coordination.BINDING_NAME)
+                exchanged = False
+            except BaseException as rollback_error:
+                raise Denied('activation exchange could not be rolled back; transaction record retained') from rollback_error
+        if not committed:
+            try:
+                _exclusive_rename_syscall(repo_fd, temporary_name, recovery_fd,
+                                          conflict_name)
+            except (FileNotFoundError, Denied, OSError):
+                pass
+            try:
+                recovered_name = migration_id + '.activation-recovered.' + token + '.json'
+                _exclusive_rename_syscall(recovery_fd, transaction_name, recovery_fd,
+                                          recovered_name)
+            except (FileNotFoundError, Denied, OSError):
+                pass
+        raise exc
+    finally:
+        os.close(recovery_fd)
+        os.close(repo_fd)
+
+
+def recover_activation_transaction(paths):
+    """Restore/finish an interrupted activation transaction while state lock is held."""
+    _ensure_recovery_directory(paths)
+    binding_raw = stable_file_bytes(paths['binding'], 'state binding')
+    binding = coordination.load_binding(paths['binding'], paths['repo'])
+    migration_id = validate_migration_id(binding['migration_id'])
+    transaction_name = migration_id + '.activation-transaction.json'
+    transaction_path = paths['rollback_records'] / transaction_name
+    if not transaction_path.exists() and not transaction_path.is_symlink():
+        return {'status': 'none'}
+    regular_file(transaction_path, 'activation transaction')
+    transaction_raw = stable_file_bytes(transaction_path, 'activation transaction')
+    transaction = coordination.load_json(transaction_raw)
+    required = {'schema_version', 'migration_id', 'temporary_name',
+                'expected_moving_sha256', 'candidate_active_sha256', 'token'}
+    if (not isinstance(transaction, dict) or set(transaction) != required
+            or transaction.get('schema_version') != 'texenda.state-location-activation.v1'
+            or transaction.get('migration_id') != migration_id
+            or not re.fullmatch(r'[0-9a-f]{16}', transaction.get('token', ''))
+            or transaction.get('temporary_name') != '.texenda-location.activation-'
+            + transaction.get('token', '')
+            or not re.fullmatch(r'[0-9a-f]{64}', transaction.get('expected_moving_sha256', ''))
+            or not re.fullmatch(r'[0-9a-f]{64}', transaction.get('candidate_active_sha256', ''))):
+        raise Denied('activation transaction record is invalid')
+    token = transaction['token']
+    temporary_name = transaction['temporary_name']
+    completed_name = migration_id + '.activation-complete.' + token + '.json'
+    recovered_name = migration_id + '.activation-recovered.' + token + '.json'
+    conflict_name = migration_id + '.activation-conflict.' + token + '.json'
+    moving_archive = migration_id + '.activated-moving.json'
+    flags = os.O_RDONLY | getattr(os, 'O_DIRECTORY', 0) | getattr(os, 'O_NOFOLLOW', 0)
+    repo_fd = os.open(paths['repo'], flags)
+    recovery_fd = os.open(paths['rollback_records'], flags)
+    try:
+        binding_hash = sha(binding_raw)
+        temporary_exists = _exists_at(repo_fd, temporary_name)
+        archive_exists = _exists_at(recovery_fd, moving_archive)
+        if (binding_hash == transaction['candidate_active_sha256']
+                and not temporary_exists and archive_exists):
+            # Exchange and moving-descriptor archival committed; only the
+            # transaction-record rename was interrupted.
+            _exclusive_rename_syscall(recovery_fd, transaction_name, recovery_fd,
+                                      completed_name)
+            return {'status': 'active_committed', 'binding': binding}
+        if (binding_hash == transaction['expected_moving_sha256'] and not temporary_exists):
+            # Interrupted before candidate creation/exchange. Preserve the
+            # transaction as an aborted recovery record and continue moving.
+            aborted_name = migration_id + '.activation-aborted.' + token + '.json'
+            _exclusive_rename_syscall(recovery_fd, transaction_name, recovery_fd,
+                                      aborted_name)
+            return {'status': 'moving_restored', 'binding': binding}
+        if not temporary_exists:
+            raise Denied('activation transaction lacks its preserved exchange descriptor')
+        temporary_raw, _temporary_identity = _stable_at(repo_fd, temporary_name,
+                                                         'activation temporary descriptor')
+        if binding_hash == transaction['candidate_active_sha256']:
+            # Post-exchange interruption or raced displaced descriptor: restore
+            # whatever descriptor was displaced without discarding either file.
+            _exchange_rename_syscall(repo_fd, temporary_name, repo_fd,
+                                     coordination.BINDING_NAME)
+            binding_raw = stable_file_bytes(paths['binding'], 'restored state binding')
+            temporary_raw, _temporary_identity = _stable_at(
+                repo_fd, temporary_name, 'restored active candidate')
+        if sha(temporary_raw) != transaction['candidate_active_sha256']:
+            raise Denied('activation recovery cannot identify the preserved active candidate')
+        _exclusive_rename_syscall(repo_fd, temporary_name, recovery_fd, conflict_name)
+        _exclusive_rename_syscall(recovery_fd, transaction_name, recovery_fd,
+                                  recovered_name)
+        restored = coordination.load_binding(paths['binding'], paths['repo'])
+        if restored['status'] != 'moving':
+            raise Denied('activation recovery did not restore a moving binding')
+        return {'status': 'moving_restored', 'binding': restored}
+    finally:
+        os.close(recovery_fd)
+        os.close(repo_fd)
 
 
 def rename_no_replace(source, destination, label, *, race_hook=None):
@@ -249,29 +464,50 @@ def rename_no_replace(source, destination, label, *, race_hook=None):
     no_symlink_components(source, label + ' source')
     directory(source.parent, label + ' source parent')
     directory(destination.parent, label + ' destination parent')
-    source_identity = source.lstat()
-    source_parent_identity = source.parent.lstat()
-    destination_parent_identity = destination.parent.lstat()
-    no_symlink_components(destination, label + ' destination', allow_missing_leaf=True)
-    if destination.exists() or destination.is_symlink():
-        raise Denied(label + ' destination already exists')
-    if race_hook:
-        race_hook(source, destination)
-    # Parent and source may have been substituted by the hook or another actor.
-    no_symlink_components(source, label + ' source')
-    directory(source.parent, label + ' source parent')
-    directory(destination.parent, label + ' destination parent')
-    current_source = source.lstat()
-    current_source_parent = source.parent.lstat()
-    current_destination_parent = destination.parent.lstat()
-    if ((current_source.st_dev, current_source.st_ino, stat.S_IFMT(current_source.st_mode))
-            != (source_identity.st_dev, source_identity.st_ino, stat.S_IFMT(source_identity.st_mode))
-            or (current_source_parent.st_dev, current_source_parent.st_ino)
-            != (source_parent_identity.st_dev, source_parent_identity.st_ino)
-            or (current_destination_parent.st_dev, current_destination_parent.st_ino)
-            != (destination_parent_identity.st_dev, destination_parent_identity.st_ino)):
-        raise Denied(label + ' source or parent was substituted before exclusive rename')
-    _exclusive_rename_syscall(source, destination)
+    flags = os.O_RDONLY | getattr(os, 'O_DIRECTORY', 0) | getattr(os, 'O_NOFOLLOW', 0)
+    source_parent_fd = os.open(source.parent, flags)
+    destination_parent_fd = os.open(destination.parent, flags)
+    try:
+        source_identity = os.stat(source.name, dir_fd=source_parent_fd, follow_symlinks=False)
+        source_parent_identity = os.fstat(source_parent_fd)
+        destination_parent_identity = os.fstat(destination_parent_fd)
+        try:
+            os.stat(destination.name, dir_fd=destination_parent_fd, follow_symlinks=False)
+        except FileNotFoundError:
+            pass
+        else:
+            raise Denied(label + ' destination already exists')
+        if race_hook:
+            race_hook(source, destination)
+        # Absolute names are now diagnostic only. Directory descriptors anchor
+        # the syscall and prevent a late ancestor substitution from redirecting it.
+        current_source_parent = source.parent.lstat()
+        current_destination_parent = destination.parent.lstat()
+        if ((current_source_parent.st_dev, current_source_parent.st_ino)
+                != (source_parent_identity.st_dev, source_parent_identity.st_ino)
+                or (current_destination_parent.st_dev, current_destination_parent.st_ino)
+                != (destination_parent_identity.st_dev, destination_parent_identity.st_ino)):
+            raise Denied(label + ' parent was substituted before descriptor-relative rename')
+        current_source = os.stat(source.name, dir_fd=source_parent_fd, follow_symlinks=False)
+        if ((current_source.st_dev, current_source.st_ino, stat.S_IFMT(current_source.st_mode))
+                != (source_identity.st_dev, source_identity.st_ino,
+                    stat.S_IFMT(source_identity.st_mode))):
+            raise Denied(label + ' source was substituted before descriptor-relative rename')
+        _exclusive_rename_syscall(source_parent_fd, source.name,
+                                  destination_parent_fd, destination.name)
+        moved = os.stat(destination.name, dir_fd=destination_parent_fd, follow_symlinks=False)
+        if (moved.st_dev, moved.st_ino) != (source_identity.st_dev, source_identity.st_ino):
+            raise Denied(label + ' destination identity mismatch after rename')
+        final_source_parent = source.parent.lstat()
+        final_destination_parent = destination.parent.lstat()
+        if ((final_source_parent.st_dev, final_source_parent.st_ino)
+                != (source_parent_identity.st_dev, source_parent_identity.st_ino)
+                or (final_destination_parent.st_dev, final_destination_parent.st_ino)
+                != (destination_parent_identity.st_dev, destination_parent_identity.st_ino)):
+            raise Denied(label + ' parent changed at descriptor-relative syscall boundary')
+    finally:
+        os.close(destination_parent_fd)
+        os.close(source_parent_fd)
 
 
 def one_location(source, destination, label):
@@ -320,6 +556,8 @@ def require_held_lock_path(path, descriptor):
 
 def read_moving(paths):
     raw = stable_file_bytes(paths['binding'], 'state binding')
+    observed = paths['binding'].lstat()
+    identity = (observed.st_dev, observed.st_ino, stat.S_IFMT(observed.st_mode))
     value = coordination.load_binding(paths['binding'], paths['repo'])
     if stable_file_bytes(paths['binding'], 'state binding') != raw:
         raise Denied('state binding changed during read')
@@ -328,7 +566,7 @@ def read_moving(paths):
     validate_migration_id(value['migration_id'])
     if Path(value['state_root']) != paths['state_root']:
         raise Denied('moving binding state root mismatch')
-    return value, raw
+    return value, raw, identity
 
 
 def baseline_matches(facts, baseline, label):
@@ -412,11 +650,15 @@ def apply(repository_root, state_root, *, stop_after=None, race_hooks=None,
           interleave=None):
     paths = layout(repository_root, state_root)
     revalidate_parents(paths)
-    binding, binding_raw = read_moving(paths)
     hooks = race_hooks or {}
     with held_relocation_lock(paths) as (lock_path, _descriptor):
         require_held_lock_path(lock_path, _descriptor)
         revalidate_parents(paths)
+        recovery = recover_activation_transaction(paths)
+        if recovery['status'] == 'active_committed':
+            result = verify_layout(paths, recovery['binding'])
+            return dict(result, status='active', recovered_activation=True)
+        binding, binding_raw, binding_identity = read_moving(paths)
         if stable_file_bytes(paths['binding'], 'state binding') != binding_raw:
             raise Denied('state binding changed before relocation')
         current_state = one_location(paths['source_state'], paths['destination_state'], 'state file')
@@ -453,7 +695,8 @@ def apply(repository_root, state_root, *, stop_after=None, race_hooks=None,
         require_held_lock_path(paths['destination_lock'], _descriptor)
         if stable_file_bytes(paths['binding'], 'state binding') != binding_raw:
             raise Denied('state binding changed at final activation boundary')
-        replace_binding(paths['binding'], dict(binding, status='active'), binding_raw)
+        activate_binding(paths, binding, binding_raw, binding_identity,
+                         race_hook=hooks.get('binding_swap'), interleave=interleave)
     return dict(result, status='active')
 
 
@@ -477,7 +720,7 @@ def verify(repository_root, state_root):
 def rollback(repository_root, state_root, *, race_hooks=None, interleave=None):
     paths = layout(repository_root, state_root)
     revalidate_parents(paths)
-    binding, binding_raw = read_moving(paths)
+    binding, binding_raw, _binding_identity = read_moving(paths)
     hooks = race_hooks or {}
     with held_relocation_lock(paths) as (lock_path, _descriptor):
         require_held_lock_path(lock_path, _descriptor)

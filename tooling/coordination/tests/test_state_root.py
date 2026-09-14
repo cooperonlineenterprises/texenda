@@ -5,6 +5,7 @@ import json
 import os
 from pathlib import Path
 import tempfile
+import threading
 import unittest
 from unittest import mock
 
@@ -17,6 +18,8 @@ def load_module(name, path):
 
 
 hm = load_module('texenda_state_root_harness', Path(__file__).resolve().parents[1] / 'harness.py')
+relocation = load_module('texenda_state_root_relocation',
+                         Path(__file__).resolve().parents[3] / 'tooling/workspace/relocate_state.py')
 
 
 class StateRootTests(unittest.TestCase):
@@ -67,6 +70,14 @@ class StateRootTests(unittest.TestCase):
         return {str(path.relative_to(self.root)): (path.stat().st_size, path.stat().st_mtime_ns,
                                                    path.stat().st_ctime_ns)
                 for path in self.root.rglob('*') if path.is_file()}
+
+    def relocation_layout(self):
+        (self.root / '.gitignore').write_text('.texenda/\n.texenda-location.json\n')
+        (self.base / 'local/agent-state').mkdir(parents=True, exist_ok=True)
+        (self.base / 'local/logs').mkdir(parents=True, exist_ok=True)
+        private = self.default / 'private-inputs/synthetic'
+        private.mkdir(parents=True, exist_ok=True)
+        (private / 'fixture.txt').write_text('synthetic')
 
     def test_default_state_location_remains_compatible_before_binding(self):
         before = self.metadata()
@@ -303,6 +314,73 @@ class StateRootTests(unittest.TestCase):
         status = harness.status()
         self.assertEqual(status['tasks']['WP-00']['state'], 'admitted')
         self.assertEqual(status['receipt_count'], 2)
+
+    def stale_cutover(self, operation):
+        self.relocation_layout()
+        entered, release = threading.Event(), threading.Event()
+        outcome = []
+
+        def hook(stage, _harness, _detail):
+            if stage == 'locked_after_initial_binding_check':
+                entered.set()
+                if not release.wait(5):
+                    raise RuntimeError('fixture interleave timeout')
+
+        stale = hm.Harness(self.root, interleave=hook)
+
+        def invoke():
+            try:
+                operation(stale)
+            except BaseException as exc:
+                outcome.append(exc)
+
+        thread = threading.Thread(target=invoke, name='synthetic-stale-harness')
+        thread.start()
+        self.assertTrue(entered.wait(5))
+        relocation.prepare(self.root, self.external, 'synthetic-stale-cutover')
+        relocation.apply(self.root, self.external)
+        release.set()
+        thread.join(5)
+        self.assertFalse(thread.is_alive())
+        self.assertEqual(len(outcome), 1)
+        self.assertIsInstance(outcome[0], hm.Denied)
+        self.assertFalse((self.default / 'state.json').exists())
+        self.assertFalse((self.default / 'state.lock').exists())
+        self.assertTrue((self.external / 'state.json').is_file())
+
+    def test_stale_init_cannot_recreate_default_ledger_after_cooperative_cutover(self):
+        self.stale_cutover(lambda harness: harness.init('human:stale'))
+
+    def test_stale_mutation_cannot_leave_competing_default_lock_after_cutover(self):
+        self.stale_cutover(lambda harness: harness.admit('WP-00', 'stale'))
+
+    def test_binding_swap_at_final_state_boundary_cannot_append_receipt(self):
+        raw = (self.default / 'state.json').read_bytes()
+        state = json.loads(raw)
+        self.external.mkdir(parents=True)
+
+        def hook(stage, harness, _detail):
+            if stage != 'before_state_commit':
+                return
+            (self.root / hm.BINDING_NAME).write_text(json.dumps({
+                'schema_version': hm.BINDING_VERSION,
+                'migration_id': 'synthetic-final-swap',
+                'repository_root': str(self.root),
+                'state_root': str(self.external),
+                'status': 'moving',
+                'baseline': {
+                    'state_sha256': hm.hashlib.sha256(raw).hexdigest(),
+                    'receipt_count': len(state['events']),
+                    'receipt_tip': state['events'][-1]['hash'],
+                },
+            }))
+
+        harness = hm.Harness(self.root, interleave=hook)
+        with self.assertRaisesRegex(hm.Denied, 'binding changed'):
+            harness.admit('WP-00', 'fixture')
+        self.assertEqual((self.default / 'state.json').read_bytes(), raw)
+        self.assertEqual(json.loads((self.root / hm.BINDING_NAME).read_text())['status'], 'moving')
+        self.assertFalse(any(path.name.startswith('.state-write-') for path in self.default.iterdir()))
 
 
 if __name__ == '__main__':

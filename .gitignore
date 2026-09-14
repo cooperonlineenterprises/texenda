@@ -1,5 +1,7 @@
 .texenda/
 .texenda-location.json
+.texenda-location.activation-*
+.agent/generated/.refresh-*
 .env
 .env.*
 !.env.example
