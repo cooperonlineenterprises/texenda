@@ -1,0 +1,95 @@
+{
+  "schema_version": "texenda.workspace-review-correction.v1",
+  "id": "EVD-WSM-REVIEW-FORMAT-0001",
+  "kind": "author_correction_evidence",
+  "status": "candidate_for_independent_review",
+  "recorded_at": "2026-09-14T15:49:58.320Z",
+  "author": "/root/workspace_architecture_author",
+  "requested_profile": "gpt-6-astra-max",
+  "runtime_id": "codex-desktop-collaboration",
+  "billing_mode": "subscription",
+  "api_spend_usd": 0,
+  "source_commit": "666b6da286bacbd7e02d6d3ca27b3e6c2aa81b1a",
+  "source_commit_retained": true,
+  "rejected_json_archive": {
+    "sha256": "cdb1b8e0c0ef2b8fddeab39636e4f9d966925ef16c7f5825498e97b88d1785d0",
+    "path": "docs/qualification/evidence/history/2026-09-14-workspace-architecture-review.rejected.json.txt"
+  },
+  "rejection_scope": "Missing JSON check evidence references only; the independently approved review Markdown semantics remain unchanged.",
+  "compatible_successor": {
+    "sha256": "652c913e6c1e69fcd9bec6a9626a8890c98ef15c6f5a321ff0d924f20eb59ab7",
+    "path": "docs/qualification/evidence/2026-09-14-workspace-architecture-review.evidence.json"
+  },
+  "unchanged_review_markdown": {
+    "sha256": "29f8e8ed2c6bee02abcfd49697ac5656b41cbb1519285121654b16cebc5500be",
+    "path": "docs/qualification/evidence/2026-09-14-workspace-architecture-independent-review.md"
+  },
+  "updated_validator_and_tests": [
+    {
+      "sha256": "16ac871f6ca7af714da5f967267c02bb17e90df2e2dc6676f9b9ed30903f1577",
+      "path": "tooling/workspace/validate_contract.py"
+    },
+    {
+      "sha256": "e976cb4a91b367a31e87e4298bab53c6e7a9aa5cd95e6e3fd22a0cbc53edd2a3",
+      "path": "tooling/workspace/tests/test_contract.py"
+    }
+  ],
+  "unchanged_existing_qualification_test": {
+    "sha256": "4bfeac5cadd2400ae759275f7b3bc0875ff1e15b30a15ceec34f940374a0e169",
+    "path": "tooling/coordination/tests/test_instruction_contracts.py"
+  },
+  "change": "All 15 original PASS check rows now carry repository-relative evidence_path and the matching unchanged review Markdown SHA-256. The successor adds explicit author correction/history metadata without changing original review fields or claiming approval of itself.",
+  "regression": "Workspace validation requires every docs/qualification JSON PASS/FAIL check to have a real confined hash-bound evidence file. Six regressions cover all current records, exact archived bytes/unchanged review semantics, missing path/hash, mismatch, missing file and unsafe paths.",
+  "validation": {
+    "result": "PASS",
+    "workspace_tests": 36,
+    "coordinator_tests": 132,
+    "sealed_tests": 39,
+    "package_checks_per_variant": 14,
+    "qualification_evidence_bindings": 128,
+    "JSON_before_this_record": 84,
+    "TOML": 1,
+    "Python": 10,
+    "local_links": 11,
+    "sealed_files_unchanged": 86,
+    "source_files_unchanged": 88,
+    "diff_and_preserved_file_checks": "PASS"
+  },
+  "validation_commands": [
+    {
+      "command": "env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/workspace/validate_contract.py --check --audit && env PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s tooling/workspace/tests -v",
+      "exit_code": 0
+    },
+    {
+      "command": "env PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s tooling/coordination/tests -v",
+      "exit_code": 0
+    },
+    {
+      "command": "env PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s specs/texenda-handoff/08-project-harness/tests -v",
+      "exit_code": 0
+    },
+    {
+      "command": "env PYTHONDONTWRITEBYTECODE=1 python3 -B specs/texenda-handoff/10-validation/validate_package.py --checksums && env PYTHONDONTWRITEBYTECODE=1 python3 -B /Users/jamesryancooper/Projects/texenda/10-validation/validate_package.py --checksums",
+      "exit_code": 0
+    },
+    {
+      "command": "git diff --check && git diff --exit-code 666b6da286bacbd7e02d6d3ca27b3e6c2aa81b1a -- specs/texenda-handoff tooling/coordination/tests/test_instruction_contracts.py docs/qualification/evidence/2026-09-14-workspace-architecture-independent-review.md",
+      "exit_code": 0
+    }
+  ],
+  "validation_log": {
+    "path": "docs/qualification/evidence/2026-09-14-workspace-review-envelope-validation.log",
+    "sha256": "8d5ac89db42de07c59fe960b552ce2bfb6a26fd4d615adbfa7556c679025f262"
+  },
+  "limitations": [
+    "Original approval remains bound to d3482777c675cc009884b87b3031abe73ee752ac; this correction needs separate final independent review.",
+    "No workspace relocation, state/private-input operation, network request, push, deployment or gate clearance occurred.",
+    "Historical JSON bytes, original commit 666b6da and the review Markdown are retained."
+  ],
+  "runtime_stop": {
+    "background_commands": 0,
+    "child_agents": 0,
+    "parent_must_observe_author_completed": true
+  },
+  "diff_hash_procedure": "After committing, independently compare shasum and Python hashlib over exact git diff --no-ext-diff --no-textconv --full-index --binary 36b74e9e1ca6353b3d642136fa70b7d2ac950e08 <new-head> stdout."
+}

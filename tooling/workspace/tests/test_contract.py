@@ -4,6 +4,7 @@ from __future__ import annotations
 import copy
 import importlib.util
 from pathlib import Path
+import subprocess
 import unittest
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -25,6 +26,52 @@ class WorkspaceContractTests(unittest.TestCase):
     def test_complete_mapped_contract(self):
         result = contract.validate(self.crosswalk, self.baseline, self.manifest)
         self.assertEqual((result['blueprint_paths'], result['source_moves']), (85, 16))
+
+    def test_all_qualification_pass_fail_checks_have_evidence_hashes(self):
+        self.assertGreater(contract.verify_qualification_checks(ROOT), 0)
+
+    def test_review_successor_preserves_exact_rejected_json_and_review_semantics(self):
+        name = 'docs/qualification/evidence/2026-09-14-workspace-architecture-review.evidence.json'
+        archived = ROOT / 'docs/qualification/evidence/history/2026-09-14-workspace-architecture-review.rejected.json.txt'
+        original = subprocess.check_output(['git', 'show',
+            '666b6da286bacbd7e02d6d3ca27b3e6c2aa81b1a:' + name], cwd=ROOT)
+        self.assertEqual(archived.read_bytes(), original)
+        successor = contract.loads((ROOT / name).read_text())
+        metadata = successor.pop('compatibility_correction')
+        self.assertEqual(metadata['prior_record']['sha256'], contract.sha(original))
+        self.assertFalse(metadata['this_successor_or_containing_commit_independently_approved'])
+        self.assertEqual(len(successor['checks']), 15)
+        for check in successor['checks']:
+            self.assertEqual(check.pop('evidence_path'), successor['review_document']['path'])
+            self.assertEqual(check.pop('sha256'), successor['review_document']['sha256'])
+        self.assertEqual(successor, contract.loads(original))
+        self.assertEqual(contract.sha((ROOT / successor['review_document']['path']).read_bytes()),
+                         '29f8e8ed2c6bee02abcfd49697ac5656b41cbb1519285121654b16cebc5500be')
+
+    def test_qualification_pass_and_fail_require_path_and_hash(self):
+        for status in ('PASS', 'FAIL'):
+            with self.subTest(status=status):
+                with self.assertRaises(contract.ContractError):
+                    contract.verify_qualification_check(ROOT, {'status': status})
+                with self.assertRaises(contract.ContractError):
+                    contract.verify_qualification_check(ROOT, {'status': status, 'evidence_path': 'AGENTS.md'})
+
+    def test_qualification_evidence_hash_mismatch_rejected(self):
+        with self.assertRaises(contract.ContractError):
+            contract.verify_qualification_check(ROOT, {
+                'status': 'PASS', 'evidence_path': 'AGENTS.md', 'sha256': '0' * 64})
+
+    def test_qualification_missing_file_rejected(self):
+        with self.assertRaises(contract.ContractError):
+            contract.verify_qualification_check(ROOT, {
+                'status': 'FAIL', 'evidence_path': 'docs/qualification/missing-evidence.fixture',
+                'sha256': '0' * 64})
+
+    def test_qualification_absolute_traversal_and_private_paths_rejected(self):
+        for path in ('/private/tmp/outside', '../outside', '.texenda/private-inputs/example.csv'):
+            with self.subTest(path=path), self.assertRaises(contract.ContractError):
+                contract.verify_qualification_check(ROOT, {
+                    'status': 'PASS', 'evidence_path': path, 'sha256': '0' * 64})
 
     def test_operations_owner_matches_sealed_authority_register(self):
         register = contract.loads((ROOT / 'specs/texenda-handoff/01-foundation/authority-register.json').read_text())

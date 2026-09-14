@@ -1,0 +1,530 @@
+{
+  "schema_version": "texenda.workspace-independent-review.v1",
+  "id": "EVD-WSM-REVIEW-0001",
+  "kind": "independent_candidate_review",
+  "information_role": "immutable_evidence",
+  "recorded_at": "2026-09-14T15:34:21Z",
+  "verdict": "APPROVE",
+  "approval_scope": "Exact corrected workspace architecture candidate and transition contracts only; no relocation, facade implementation, external-state cutover, operational adoption, product readiness or external gate is attested.",
+  "base_revision": "36b74e9e1ca6353b3d642136fa70b7d2ac950e08",
+  "base_tree": "f55477c5be32c6c866c1822f1e464dbba7e42198",
+  "candidate_revision": "d3482777c675cc009884b87b3031abe73ee752ac",
+  "candidate_tree": "8ea58ca9fe1e26463463c582868ea01fff476656",
+  "full_binary_diff_sha256": "04782d33049b7de58439dda8e414adcbc1fac7cc871da8e9e9a64660066e4787",
+  "diff_command": "git diff --no-ext-diff --no-textconv --full-index --binary 36b74e9e1ca6353b3d642136fa70b7d2ac950e08 d3482777c675cc009884b87b3031abe73ee752ac | shasum -a 256",
+  "candidate_file_hashes": [
+    {
+      "path": "docs/decisions/ADR-0004-mapped-project-workspace.md",
+      "sha256": "e1594f793c892adecfebbf86ce76c7fb180d79cc66497d936fd215ea773b8b08"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-workspace-architecture-author.json",
+      "sha256": "628d34315adceab1f67a4fe97b930bf1011a037e63ec3ff577e25b6b9b81639c"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-workspace-architecture-correction-validation.log",
+      "sha256": "723d6e4e6f0f5146d98a2e70b9f345f2f3c63cf3869fc28d81e6ebfcef79fafa"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-workspace-architecture-correction.json",
+      "sha256": "bd6fc788caff0fbf475016e2188cdf3118b95e36815b580bdff22971b751e576"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-workspace-architecture-validation.log",
+      "sha256": "ee777c976193e42c45c1b64b18ba856cabb55938b102a01411a0d0783f610c2f"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-workspace-phase-0-baseline.json",
+      "sha256": "943546a8681acd761e262352be139cca18f178ad954d4990b154254f8c6ff951"
+    },
+    {
+      "path": "project-dossier/transition/README.md",
+      "sha256": "30f5da3738a48d1bdf1c07b4517a977b7e5e1bc4fac5239fdd729cd89a0e9aa1"
+    },
+    {
+      "path": "project-dossier/transition/blueprint-adoption-crosswalk.json",
+      "sha256": "7bfd1930821cc695eca854e98ed1c0b347c076ebf5fb735a272108387eb6d4f0"
+    },
+    {
+      "path": "project-dossier/transition/workspace-move-manifest.json",
+      "sha256": "b11e8d683cb29c262c9c8ff032864932ccfba6b04c0bbd219f6ac3c803a4b22b"
+    },
+    {
+      "path": "tooling/workspace/tests/test_contract.py",
+      "sha256": "745241740730c26782e7348be0a0ce8da23e506008ac52a463801c69bbc9fd9f"
+    },
+    {
+      "path": "tooling/workspace/validate_contract.py",
+      "sha256": "0b3878fd9e8bb7a55b04a213d2c0f0f2abbb81834ac96186a6a1a0e72b1f341f"
+    }
+  ],
+  "author": "/root/workspace_architecture_author",
+  "reviewer": "/root/review_workspace_architecture",
+  "integrator": "/root",
+  "identities_distinct": true,
+  "reviewer_profile": {
+    "profile_id": "gpt-6-astra-max",
+    "capability_tier": 1,
+    "model_id": "gpt-6-astra",
+    "reasoning_effort": "max",
+    "runtime_id": "codex-desktop-collaboration",
+    "client_version": "26.901.41600 (build 7982)",
+    "sign_in_mode": "subscription",
+    "billing_mode": "subscription",
+    "capabilities": [
+      "read",
+      "edit",
+      "test"
+    ],
+    "verified_at": "2026-09-13T21:44:31Z",
+    "expires_at": "2026-10-12T21:44:31Z",
+    "qualification_check_ids": [
+      "desktop-profile-gpt-6-astra-max"
+    ],
+    "evidence": {
+      "path": "docs/qualification/model-roster-v2.1.evidence.json",
+      "sha256": "8e44034e6247ea47b3f0002100e6a343cfa6685d56138a24f55e8a13054173c0"
+    },
+    "requested_profile": "gpt-6-astra-max",
+    "requested_capability_floor": "T1",
+    "api_budget_usd": 0,
+    "api_spend_usd": 0,
+    "bounds": {
+      "max_seconds": 3600,
+      "max_tokens": 90000
+    },
+    "provider_token_meter": "unavailable",
+    "identity_limit": "The exact requested route and live evidence were verified. No independent provider-level executing-model introspection is available."
+  },
+  "review_method": "Read all applicable root/nested instructions and accepted decisions, project-bootstrap high-assurance references, sealed authority and relevant harness code. Reviewed the full original candidate, complete correction diff and new correction evidence; verified unchanged context and all eleven corrected candidate files by exact Git/content hashes. Reproduced all required checks on the corrected detached worktree.",
+  "review_document": {
+    "path": "docs/qualification/evidence/2026-09-14-workspace-architecture-independent-review.md",
+    "sha256": "29f8e8ed2c6bee02abcfd49697ac5656b41cbb1519285121654b16cebc5500be"
+  },
+  "predecessor": {
+    "revision": "609ddda6da96ddf2460925cc759db724acd70d59",
+    "tree": "fe3f4c3268a2fc7a33898fb306a4eed9170a28ca",
+    "full_binary_diff_sha256": "d0a387a2133c7be0f9df4d71b800a46ec4953674041cd0141b4cbe8de96e1cc4",
+    "verdict": "REQUEST_CHANGES",
+    "preserved_as_direct_parent": true,
+    "original_author_report_and_log_unchanged": true,
+    "historical_output_hashes_verified": 8
+  },
+  "findings": [
+    {
+      "id": "FIND-WSM-REVIEW-0001",
+      "priority": "P2",
+      "status": "RESOLVED",
+      "introduced_in": "609ddda6da96ddf2460925cc759db724acd70d59",
+      "resolved_in": "d3482777c675cc009884b87b3031abe73ee752ac",
+      "path": "project-dossier/transition/blueprint-adoption-crosswalk.json",
+      "finding": "operations_recovery and OPS-0001 pointed to the migration directory rather than the sealed operations-procedures owner.",
+      "resolution": "All three epochs and OPS-0001 now point to specs/texenda-handoff/04-security-governance-and-operations/runbooks.md. The validator reads and pins the sealed owner. Three added regression tests and independent in-memory reproductions reject the old target in every epoch and the artifact mapping.",
+      "scope_limit": "Product runbooks stay sealed; local workspace recovery remains adoption transition."
+    }
+  ],
+  "open_candidate_findings": [],
+  "digest_adjudication": {
+    "original_author_chat_digest": "d29afd1888053f1dcfab89a3a5bea7b0f4ccfc8a0c09d312a2733423b69e94c6",
+    "corrected_author_chat_digest": "14ea25937d15151652a84dfee01d7e2f0685f9e570f1b49aaa04a98fcae57b38",
+    "disposition": "Both chat digests differ from independently recomputed full diff bytes. Neither appears in committed candidate evidence. Exact reproduced digests above govern this review; chat is not authority."
+  },
+  "ownership_review": {
+    "concerns": 42,
+    "blueprint_paths": 85,
+    "catalog_artifact_types": 35,
+    "supplemental_triggered_types": 5,
+    "one_owner_per_epoch": true,
+    "duplicate_ledger_or_roster_or_routing_or_decision_or_evidence_authority": false,
+    "no_premature_policy_cutover": true,
+    "documentation_is_not_permission": true,
+    "extension_authority": "restrictions_only",
+    "real_task_lifecycle_required_before_operational_adoption": true,
+    "generated_views": "Non-authoritative source revision/tree/scope plus live ledger/evidence hashes; refresh only writes; no governance/code/schema/test/authoritative-dossier freshness exclusion."
+  },
+  "blueprint": {
+    "selected_source": "/Users/jamesryancooper/.codex/skills/project-bootstrap/assets/blueprint-source",
+    "selected_version": "1.0.0",
+    "profile": "high-assurance",
+    "adoption_mode": "mapped-existing",
+    "qualification": "inspected_structural_reference_only",
+    "installed_reference_hashes_verified": 17,
+    "planner_paths_verified": 85,
+    "artifact_types_verified": 35,
+    "origin_schema_supports_mapped_existing": false,
+    "origin_record_created": false,
+    "stock_generator_run": false,
+    "newer_candidate": {
+      "path": "/Users/jamesryancooper/Projects/octon-mini",
+      "declared_version": "4.3.0",
+      "head": "5e2d3025aea6b1574ab984e5ebb89b5602a38535",
+      "tree": "3c732979e580c80b020d09c22ce86f5202110518",
+      "dirty_entries": 218,
+      "qualification": "incomplete"
+    },
+    "limitations": [
+      "Installed validator/acceptance source-layout assumptions were inspected; prior failure observations remain attributed to the coordinator. The unsafe broad installed-layout acceptance copy was not rerun.",
+      "A complete newer-source qualification is not claimed. No facts, permissions, accepted decisions, status or evidence are transferred from another project.",
+      "A deliberately reviewed origin-schema successor is still required before creating an origin file."
+    ]
+  },
+  "package_hashes": {
+    "source": {
+      "manifest_sha256": "bcb7488ecf2ac42b4b33e478918e7ce6c35d0bdc04b208ddd9ed66622b468b7f",
+      "checksums_sha256": "8576bf08ec4f2a4718476eca70e6d1d5cb2b6be1af550bf5c20c692bcbaff715",
+      "path_nul_sha256": "c3b25ae42e74324fedd3f4d545fe4105e9a2607c2f777afe049af10e75d9fe98",
+      "canonical_array_sha256": "26fa6487334c2782bdff8e98c49963e6720228824f6b91a9a7126e0d6cec2131",
+      "file_count": 86
+    },
+    "sealed": {
+      "manifest_sha256": "bcb7488ecf2ac42b4b33e478918e7ce6c35d0bdc04b208ddd9ed66622b468b7f",
+      "checksums_sha256": "37fffb1a165cfa6b907e7433d617c06e1c64ff09cd282173f7d791cace2ac07e",
+      "path_nul_sha256": "0b672e476b38a99bfbdcd3b9dbfca1baa2f1fcdc7329410986caefa9e5421336",
+      "canonical_array_sha256": "83cceb48e29bd3d070856976abe5aa2f5559d5479c5a0d1485d2d12c326de1c8",
+      "file_count": 86
+    }
+  },
+  "package_preservation": {
+    "sealed_regular_files": 86,
+    "source_regular_files_including_preexisting_caches": 88,
+    "exact_source_top_level_entries": 16,
+    "differing_authoritative_paths": 11,
+    "sealed_role": "implementation_repository_sealed_authority",
+    "source_role": "historical_source_unpromoted_variant",
+    "semantic_reconciliation": "deferred to separate project-local amendment task",
+    "source_or_sealed_bytes_changed": false
+  },
+  "checkpoints": [
+    {
+      "kind": "complete_all_ref_git_bundle",
+      "sha256": "3103a9877f36c8b4b5535fe28e3bd9fe3814f0f045cd878efd374d5e357e3b71"
+    },
+    {
+      "kind": "byte_exact_state_checkpoint",
+      "sha256": "b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235"
+    },
+    {
+      "kind": "coordination_checkpoint_excluding_private_inputs",
+      "sha256": "0fe841098a8ba9bc672744eb53ca9dd72eed4e34921f257a74663616410228aa"
+    }
+  ],
+  "checkpoint_validation": {
+    "bundle_verified": true,
+    "bundle_complete_history": true,
+    "bundle_ref_count_including_HEAD": 29,
+    "coordination_archive_members_exclude_private_inputs": true,
+    "all_three_hashes_match": true,
+    "fresh_all_ref_checkpoint_required_before_move": true
+  },
+  "live_observation": {
+    "observed_at": "2026-09-14T15:30:10.294663+00:00",
+    "state_sha256": "b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235",
+    "version": "2.0",
+    "receipt_count": 13,
+    "receipt_tip": "f39249184757101b108ea7ec5ea0ffebdd8237315b8ac3cad3ad0cc6ab3e827e",
+    "roster_canonical_sha256": "a23705178b39e8d0dd194abd4cf6e42fc20be404739d0e28e0ca9b221c80ddcf",
+    "qualified_profile_count": 11,
+    "reviewer_qualification": {
+      "profile_id": "gpt-6-astra-max",
+      "capability_tier": 1,
+      "model_id": "gpt-6-astra",
+      "reasoning_effort": "max",
+      "runtime_id": "codex-desktop-collaboration",
+      "client_version": "26.901.41600 (build 7982)",
+      "sign_in_mode": "subscription",
+      "billing_mode": "subscription",
+      "capabilities": [
+        "read",
+        "edit",
+        "test"
+      ],
+      "verified_at": "2026-09-13T21:44:31Z",
+      "expires_at": "2026-10-12T21:44:31Z",
+      "qualification_check_ids": [
+        "desktop-profile-gpt-6-astra-max"
+      ],
+      "evidence": {
+        "path": "docs/qualification/model-roster-v2.1.evidence.json",
+        "sha256": "8e44034e6247ea47b3f0002100e6a343cfa6685d56138a24f55e8a13054173c0"
+      }
+    },
+    "lease_count": 0,
+    "budget_usd": 0,
+    "declared_allocations_usd": "0.0",
+    "cleared_gates": 0,
+    "task_state_counts": {
+      "completed": 1,
+      "planned": 43
+    },
+    "retained_evidence": "PASS",
+    "v1_source_checkpoint_sha256": "a2a58e20004c86c0081b1427087626e36f931c3804532e8a1caf1c94a49a609a",
+    "v1_receipt_prefix": "PASS",
+    "state_and_lock_metadata_unchanged": true,
+    "locking_invoked": false,
+    "private_input_content_accessed": false,
+    "old_path": "/Users/jamesryancooper/Projects/texenda-app/.texenda/state.json",
+    "planned_path": "/Users/jamesryancooper/Projects/texenda/local/agent-state/texenda/state.json",
+    "information_role": "point_in_time_observation_not_live_authority"
+  },
+  "private_input": {
+    "old_path": "/Users/jamesryancooper/Projects/texenda-app/.texenda/private-inputs/kit/ohw/2026-09-14/subscribers.csv",
+    "planned_path": "/Users/jamesryancooper/Projects/texenda/local/private-inputs/kit/ohw/2026-09-14/subscribers.csv",
+    "exists": true,
+    "ignored": true,
+    "tracked": false,
+    "ignore_rule": ".gitignore:1:.texenda/",
+    "content_opened": false,
+    "content_parsed": false,
+    "content_hashed": false,
+    "content_copied": false,
+    "content_logged": false,
+    "snapshot_or_content_hash_scope_includes_private_csv": false,
+    "method": "Exact-path test -f, git check-ignore -v, git ls-files and git status only. Archive names were checked for private-input/CSV exclusion before hashing the already scoped coordination archive."
+  },
+  "no_move_observation": {
+    "main_revision": "36b74e9e1ca6353b3d642136fa70b7d2ac950e08",
+    "main_tree": "f55477c5be32c6c866c1822f1e464dbba7e42198",
+    "canonical_path": "/Users/jamesryancooper/Projects/texenda-app",
+    "main_clean": true,
+    "remote": "https://github.com/cooperonlineenterprises/texenda.git",
+    "remote_tracking_refs": 0,
+    "project_home_not_git": true,
+    "repo_target_absent": true,
+    "original_source_entries_present": 16,
+    "free_space_rounded_gib": 321,
+    "same_filesystem": true,
+    "linked_worktrees": [
+      "/Users/jamesryancooper/Projects/texenda-app",
+      "/private/tmp/texenda-workspace-architecture-20260914",
+      "/private/tmp/texenda-workspace-architecture-review-20260914",
+      "/private/tmp/texenda-workspace-architecture-rereview-20260914"
+    ],
+    "moves_executed": false
+  },
+  "read_only_proof": {
+    "status": "PASS",
+    "read_only_static_check_output": {
+      "status": "PASS",
+      "concerns": 42,
+      "blueprint_paths": 85,
+      "artifact_types": 35,
+      "source_moves": 16,
+      "audit": {
+        "JSON": 83,
+        "TOML": 1,
+        "Python": 10,
+        "new_markdown_links": 7,
+        "sealed_files": 86,
+        "source_files": 88
+      },
+      "scope": "static transition contracts and original Git-bound inputs only",
+      "live_state_checked": false,
+      "moves_executed": false,
+      "private_input_accessed": false,
+      "approval": false
+    },
+    "reviewer_snapshot_paths": 220,
+    "source_snapshot_paths": 106,
+    "metadata_unchanged": true,
+    "tracked_untracked_ignored_cache_generated_paths_covered": true,
+    "private_inputs_inside_snapshot": false
+  },
+  "checks": [
+    {
+      "id": "workspace_contract",
+      "required": true,
+      "status": "PASS",
+      "working_directory": "/private/tmp/texenda-workspace-architecture-rereview-20260914",
+      "command_or_procedure": "env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/workspace/validate_contract.py --check --audit",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "captured_output": "{\"status\": \"PASS\", \"concerns\": 42, \"blueprint_paths\": 85, \"artifact_types\": 35, \"source_moves\": 16, \"audit\": {\"JSON\": 83, \"TOML\": 1, \"Python\": 10, \"new_markdown_links\": 7, \"sealed_files\": 86, \"source_files\": 88}, \"scope\": \"static transition contracts and original Git-bound inputs only\", \"live_state_checked\": false, \"moves_executed\": false, \"private_input_accessed\": false, \"approval\": false}\n"
+    },
+    {
+      "id": "workspace_tests",
+      "required": true,
+      "status": "PASS",
+      "working_directory": "/private/tmp/texenda-workspace-architecture-rereview-20260914",
+      "command_or_procedure": "env PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s tooling/workspace/tests -v",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "captured_output": "test_active_state_move_cannot_take_whole_legacy_directory (test_contract.WorkspaceContractTests.test_active_state_move_cannot_take_whole_legacy_directory) ... ok\ntest_author_cannot_be_own_required_reviewer (test_contract.WorkspaceContractTests.test_author_cannot_be_own_required_reviewer) ... ok\ntest_check_cannot_refresh (test_contract.WorkspaceContractTests.test_check_cannot_refresh) ... ok\ntest_checkpoint_move_cannot_escape_scope (test_contract.WorkspaceContractTests.test_checkpoint_move_cannot_escape_scope) ... ok\ntest_complete_mapped_contract (test_contract.WorkspaceContractTests.test_complete_mapped_contract) ... ok\ntest_duplicate_concern_owner (test_contract.WorkspaceContractTests.test_duplicate_concern_owner) ... ok\ntest_duplicate_json_keys (test_contract.WorkspaceContractTests.test_duplicate_json_keys) ... ok\ntest_every_source_top_level_entry_preserved (test_contract.WorkspaceContractTests.test_every_source_top_level_entry_preserved) ... ok\ntest_false_generated_adoption (test_contract.WorkspaceContractTests.test_false_generated_adoption) ... ok\ntest_false_source_qualification (test_contract.WorkspaceContractTests.test_false_source_qualification) ... ok\ntest_legacy_receipt_inputs_retained (test_contract.WorkspaceContractTests.test_legacy_receipt_inputs_retained) ... ok\ntest_missing_artifact_mapping (test_contract.WorkspaceContractTests.test_missing_artifact_mapping) ... ok\ntest_missing_source_not_treated_as_completed_move (test_contract.WorkspaceContractTests.test_missing_source_not_treated_as_completed_move) ... ok\ntest_move_target_traversal_or_other_project_denied (test_contract.WorkspaceContractTests.test_move_target_traversal_or_other_project_denied) ... ok\ntest_no_delete_overwrite_symlink_or_external_effect (test_contract.WorkspaceContractTests.test_no_delete_overwrite_symlink_or_external_effect) ... ok\ntest_nonfinite_json (test_contract.WorkspaceContractTests.test_nonfinite_json) ... ok\ntest_operations_owner_matches_sealed_authority_register (test_contract.WorkspaceContractTests.test_operations_owner_matches_sealed_authority_register) ... ok\ntest_operations_owner_rejects_migration_directory_in_every_epoch (test_contract.WorkspaceContractTests.test_operations_owner_rejects_migration_directory_in_every_epoch) ... ok\ntest_ops_artifact_rejects_migration_directory (test_contract.WorkspaceContractTests.test_ops_artifact_rejects_migration_directory) ... ok\ntest_premature_root_cutover (test_contract.WorkspaceContractTests.test_premature_root_cutover) ... ok\ntest_private_content_access_hash_parse_copy_denied (test_contract.WorkspaceContractTests.test_private_content_access_hash_parse_copy_denied) ... ok\ntest_private_file_cannot_enter_hash_scope (test_contract.WorkspaceContractTests.test_private_file_cannot_enter_hash_scope) ... ok\ntest_repo_destination_not_created_first (test_contract.WorkspaceContractTests.test_repo_destination_not_created_first) ... ok\ntest_second_authoritative_path (test_contract.WorkspaceContractTests.test_second_authoritative_path) ... ok\ntest_second_live_task_roster_receipt_decision_evidence_owner (test_contract.WorkspaceContractTests.test_second_live_task_roster_receipt_decision_evidence_owner) ... ok\ntest_source_difference_cannot_be_erased (test_contract.WorkspaceContractTests.test_source_difference_cannot_be_erased) ... ok\ntest_source_variant_cannot_replace_sealed_authority (test_contract.WorkspaceContractTests.test_source_variant_cannot_replace_sealed_authority) ... ok\ntest_state_binding_cannot_select_another_root (test_contract.WorkspaceContractTests.test_state_binding_cannot_select_another_root) ... ok\ntest_two_owner_paths_in_one_epoch (test_contract.WorkspaceContractTests.test_two_owner_paths_in_one_epoch) ... ok\ntest_unbound_projection (test_contract.WorkspaceContractTests.test_unbound_projection) ... ok\n\n----------------------------------------------------------------------\nRan 30 tests in 0.022s\n\nOK\n"
+    },
+    {
+      "id": "local_coordination_tests",
+      "required": true,
+      "status": "PASS",
+      "working_directory": "/private/tmp/texenda-workspace-architecture-rereview-20260914",
+      "command_or_procedure": "env PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s tooling/coordination/tests -v",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "captured_output": "test_active_local_links_resolve_inside_repository (test_instruction_contracts.InstructionContracts.test_active_local_links_resolve_inside_repository) ... ok\ntest_assignment_preserves_required_handoff_obligations (test_instruction_contracts.InstructionContracts.test_assignment_preserves_required_handoff_obligations) ... ok\ntest_context_overflow_retains_mandatory_sources_and_route_slice (test_instruction_contracts.InstructionContracts.test_context_overflow_retains_mandatory_sources_and_route_slice) ... ok\ntest_current_roster_binds_exact_profiles_to_observed_desktop_not_cli (test_instruction_contracts.InstructionContracts.test_current_roster_binds_exact_profiles_to_observed_desktop_not_cli) ... ok\ntest_entrypoints_route_to_local_prompts_and_governing_decision (test_instruction_contracts.InstructionContracts.test_entrypoints_route_to_local_prompts_and_governing_decision) ... ok\ntest_existing_qualification_envelope_hashes_and_profile_schema (test_instruction_contracts.InstructionContracts.test_existing_qualification_envelope_hashes_and_profile_schema) ... ok\ntest_historical_roster_remains_unchanged_while_correction_is_new (test_instruction_contracts.InstructionContracts.test_historical_roster_remains_unchanged_while_correction_is_new) ... ok\ntest_private_repository_and_bounded_ci_contract (test_instruction_contracts.InstructionContracts.test_private_repository_and_bounded_ci_contract) ... ok\ntest_project_config_and_example_keep_safe_model_free_defaults (test_instruction_contracts.InstructionContracts.test_project_config_and_example_keep_safe_model_free_defaults) ... ok\ntest_review_and_resume_require_evidence_identity_and_intervention (test_instruction_contracts.InstructionContracts.test_review_and_resume_require_evidence_identity_and_intervention) ... ok\ntest_usage_and_untrusted_content_limits_remain_explicit (test_instruction_contracts.InstructionContracts.test_usage_and_untrusted_content_limits_remain_explicit) ... ok\ntest_visualization_is_conditional_and_revision_bound (test_instruction_contracts.InstructionContracts.test_visualization_is_conditional_and_revision_bound) ... ok\ntest_activation_gate_matching_scope_completes (test_routing_v2.LegacyLifecycleTests.test_activation_gate_matching_scope_completes) ... ok\ntest_activation_gate_not_assumed (test_routing_v2.LegacyLifecycleTests.test_activation_gate_not_assumed) ... ok\ntest_activation_gate_scope_checked (test_routing_v2.LegacyLifecycleTests.test_activation_gate_scope_checked) ... ok\ntest_api_model_requires_budget (test_routing_v2.LegacyLifecycleTests.test_api_model_requires_budget) ... ok\ntest_author_cannot_review (test_routing_v2.LegacyLifecycleTests.test_author_cannot_review) ... ok\ntest_baseline_change_requires_explicit_migration (test_routing_v2.LegacyLifecycleTests.test_baseline_change_requires_explicit_migration) ... ok\ntest_changed_evidence_detected (test_routing_v2.LegacyLifecycleTests.test_changed_evidence_detected) ... ok\ntest_checkpoint_does_not_extend_without_request (test_routing_v2.LegacyLifecycleTests.test_checkpoint_does_not_extend_without_request) ... ok\ntest_complete_requires_integration (test_routing_v2.LegacyLifecycleTests.test_complete_requires_integration) ... ok\ntest_context_overflow_does_not_truncate (test_routing_v2.LegacyLifecycleTests.test_context_overflow_does_not_truncate) ... ok\ntest_default_writer_limit_is_enforced (test_routing_v2.LegacyLifecycleTests.test_default_writer_limit_is_enforced) ... ok\ntest_deferred_requires_observed_trigger (test_routing_v2.LegacyLifecycleTests.test_deferred_requires_observed_trigger) ... ok\ntest_disjoint_parallel_assignments_allowed (test_routing_v2.LegacyLifecycleTests.test_disjoint_parallel_assignments_allowed) ... ok\ntest_evidence_symlink_denied (test_routing_v2.LegacyLifecycleTests.test_evidence_symlink_denied) ... ok\ntest_expired_lease_cannot_submit (test_routing_v2.LegacyLifecycleTests.test_expired_lease_cannot_submit) ... ok\ntest_fake_human_label_rejected (test_routing_v2.LegacyLifecycleTests.test_fake_human_label_rejected) ... ok\ntest_incomplete_dependency_denied (test_routing_v2.LegacyLifecycleTests.test_incomplete_dependency_denied) ... ok\ntest_init_is_non_overwriting (test_routing_v2.LegacyLifecycleTests.test_init_is_non_overwriting) ... ok\ntest_initial_ready_respects_dependencies_and_deferral (test_routing_v2.LegacyLifecycleTests.test_initial_ready_respects_dependencies_and_deferral) ... ok\ntest_insufficient_review_tier_denied (test_routing_v2.LegacyLifecycleTests.test_insufficient_review_tier_denied) ... ok\ntest_integration_without_stop_proof_denied (test_routing_v2.LegacyLifecycleTests.test_integration_without_stop_proof_denied) ... ok\ntest_lifecycle_and_dependency_release (test_routing_v2.LegacyLifecycleTests.test_lifecycle_and_dependency_release) ... ok\ntest_merge_semantic_change_requires_review (test_routing_v2.LegacyLifecycleTests.test_merge_semantic_change_requires_review) ... ok\ntest_missing_test_log_denied (test_routing_v2.LegacyLifecycleTests.test_missing_test_log_denied) ... ok\ntest_no_path_traversal (test_routing_v2.LegacyLifecycleTests.test_no_path_traversal) ... ok\ntest_not_run_cannot_pass_review (test_routing_v2.LegacyLifecycleTests.test_not_run_cannot_pass_review) ... ok\ntest_out_of_scope_changed_path_denied (test_routing_v2.LegacyLifecycleTests.test_out_of_scope_changed_path_denied) ... ok\ntest_overlapping_leases_block_even_expired (test_routing_v2.LegacyLifecycleTests.test_overlapping_leases_block_even_expired) ... ok\ntest_qualification_expiry_denies_assignment (test_routing_v2.LegacyLifecycleTests.test_qualification_expiry_denies_assignment) ... ok\ntest_qualified_model_and_budget_allow_assignment (test_routing_v2.LegacyLifecycleTests.test_qualified_model_and_budget_allow_assignment) ... ok\ntest_receipt_chain_corruption_detected (test_routing_v2.LegacyLifecycleTests.test_receipt_chain_corruption_detected) ... ok\ntest_recovery_increments_fence (test_routing_v2.LegacyLifecycleTests.test_recovery_increments_fence) ... ok\ntest_recovery_requires_stop_and_fence (test_routing_v2.LegacyLifecycleTests.test_recovery_requires_stop_and_fence) ... ok\ntest_stale_candidate_denied (test_routing_v2.LegacyLifecycleTests.test_stale_candidate_denied) ... ok\ntest_state_corruption_detected (test_routing_v2.LegacyLifecycleTests.test_state_corruption_detected) ... ok\ntest_unknown_package_denied (test_routing_v2.LegacyLifecycleTests.test_unknown_package_denied) ... ok\ntest_unverified_model_fails_closed (test_routing_v2.LegacyLifecycleTests.test_unverified_model_fails_closed) ... ok\ntest_weaker_tier_rejected (test_routing_v2.LegacyLifecycleTests.test_weaker_tier_rejected) ... ok\ntest_wrong_fence_cannot_start (test_routing_v2.LegacyLifecycleTests.test_wrong_fence_cannot_start) ... ok\ntest_cli_init_context_check_and_dry_run_migration (test_routing_v2.MigrationTests.test_cli_init_context_check_and_dry_run_migration) ... ok\ntest_exact_legacy_api_integrated_case_can_complete_after_migration (test_routing_v2.MigrationTests.test_exact_legacy_api_integrated_case_can_complete_after_migration) ... ok\ntest_failed_migration_retains_exact_v1_and_checkpoint (test_routing_v2.MigrationTests.test_failed_migration_retains_exact_v1_and_checkpoint) ... ok\ntest_immediate_rollback_keeps_both_checkpoints_and_restores_exact_bytes (test_routing_v2.MigrationTests.test_immediate_rollback_keeps_both_checkpoints_and_restores_exact_bytes) ... ok\ntest_legacy_budget_cannot_fund_new_v2_author_or_reviewer (test_routing_v2.MigrationTests.test_legacy_budget_cannot_fund_new_v2_author_or_reviewer) ... ok\ntest_legacy_cancelled_api_history_and_allocations_are_preserved (test_routing_v2.MigrationTests.test_legacy_cancelled_api_history_and_allocations_are_preserved) ... ok\ntest_legacy_compatibility_cannot_expand_an_allocation (test_routing_v2.MigrationTests.test_legacy_compatibility_cannot_expand_an_allocation) ... ok\ntest_legacy_completed_api_history_and_allocations_are_preserved (test_routing_v2.MigrationTests.test_legacy_completed_api_history_and_allocations_are_preserved) ... ok\ntest_legacy_proof_survives_new_budget_replacement_and_expiry_only_for_old_work (test_routing_v2.MigrationTests.test_legacy_proof_survives_new_budget_replacement_and_expiry_only_for_old_work) ... ok\ntest_legacy_recovered_api_history_and_allocations_are_preserved (test_routing_v2.MigrationTests.test_legacy_recovered_api_history_and_allocations_are_preserved) ... ok\ntest_legacy_recovery_preserves_old_allocation_but_new_fence_requires_v2_proof (test_routing_v2.MigrationTests.test_legacy_recovery_preserves_old_allocation_but_new_fence_requires_v2_proof) ... ok\ntest_migration_boundary_proof_must_remain_present (test_routing_v2.MigrationTests.test_migration_boundary_proof_must_remain_present) ... ok\ntest_migration_dry_run_then_preserves_history_and_receipt_prefix (test_routing_v2.MigrationTests.test_migration_dry_run_then_preserves_history_and_receipt_prefix) ... ok\ntest_migration_idempotency_preserves_fresh_v2_roster (test_routing_v2.MigrationTests.test_migration_idempotency_preserves_fresh_v2_roster) ... ok\ntest_migration_rechecks_missing_and_tampered_historical_integration_chain (test_routing_v2.MigrationTests.test_migration_rechecks_missing_and_tampered_historical_integration_chain) ... ok\ntest_migration_rechecks_missing_and_tampered_historical_recovery (test_routing_v2.MigrationTests.test_migration_rechecks_missing_and_tampered_historical_recovery) ... ok\ntest_migration_rechecks_retained_checkpoint_and_its_log_after_recovery (test_routing_v2.MigrationTests.test_migration_rechecks_retained_checkpoint_and_its_log_after_recovery) ... ok\ntest_migration_refuses_changed_work_package_baseline (test_routing_v2.MigrationTests.test_migration_refuses_changed_work_package_baseline) ... ok\ntest_migration_refuses_corrupt_receipts_and_missing_chain (test_routing_v2.MigrationTests.test_migration_refuses_corrupt_receipts_and_missing_chain) ... ok\ntest_migration_refuses_live_and_expired_leases (test_routing_v2.MigrationTests.test_migration_refuses_live_and_expired_leases) ... ok\ntest_migration_refuses_non_owner_and_changed_terminal_evidence (test_routing_v2.MigrationTests.test_migration_refuses_non_owner_and_changed_terminal_evidence) ... ok\ntest_migration_refuses_uncertain_states_even_without_lease (test_routing_v2.MigrationTests.test_migration_refuses_uncertain_states_even_without_lease) ... ok\ntest_migration_refuses_unrecovered_blocked_assignment (test_routing_v2.MigrationTests.test_migration_refuses_unrecovered_blocked_assignment) ... ok\ntest_migration_requires_true_historical_integration_stop_proof (test_routing_v2.MigrationTests.test_migration_requires_true_historical_integration_stop_proof) ... ok\ntest_migration_validates_derived_recovery_fence_and_boolean_alias (test_routing_v2.MigrationTests.test_migration_validates_derived_recovery_fence_and_boolean_alias) ... ok\ntest_missing_or_tampered_legacy_budget_blocks_migration (test_routing_v2.MigrationTests.test_missing_or_tampered_legacy_budget_blocks_migration) ... ok\ntest_old_roster_is_invalidated_not_promoted (test_routing_v2.MigrationTests.test_old_roster_is_invalidated_not_promoted) ... ok\ntest_replaced_budget_cannot_hide_missing_or_tampered_legacy_proof (test_routing_v2.MigrationTests.test_replaced_budget_cannot_hide_missing_or_tampered_legacy_proof) ... ok\ntest_rollback_rechecks_retained_source_recovery_evidence (test_routing_v2.MigrationTests.test_rollback_rechecks_retained_source_recovery_evidence) ... ok\ntest_rollback_refuses_after_any_later_v2_receipt (test_routing_v2.MigrationTests.test_rollback_refuses_after_any_later_v2_receipt) ... ok\ntest_actual_policy_covers_44_routes_and_limits_parent_downshifts (test_routing_v2.RoutingTests.test_actual_policy_covers_44_routes_and_limits_parent_downshifts) ... ok\ntest_all_four_max_defaults_and_exact_binding (test_routing_v2.RoutingTests.test_all_four_max_defaults_and_exact_binding) ... ok\ntest_api_budget_is_retained_through_recovery (test_routing_v2.RoutingTests.test_api_budget_is_retained_through_recovery) ... ok\ntest_api_review_budget_is_wired_through_cli (test_routing_v2.RoutingTests.test_api_review_budget_is_wired_through_cli) ... ok\ntest_api_review_requires_positive_owner_allocation_and_records_bounds (test_routing_v2.RoutingTests.test_api_review_requires_positive_owner_allocation_and_records_bounds) ... ok\ntest_attestation_expiry_boundary_and_new_fence (test_routing_v2.RoutingTests.test_attestation_expiry_boundary_and_new_fence) ... ok\ntest_attestation_fields_and_checks_are_exact (test_routing_v2.RoutingTests.test_attestation_fields_and_checks_are_exact) ... ok\ntest_attestation_log_and_record_tamper_deny_at_start (test_routing_v2.RoutingTests.test_attestation_log_and_record_tamper_deny_at_start) ... ok\ntest_boolean_routing_tier_and_fence_are_not_integer_one (test_routing_v2.RoutingTests.test_boolean_routing_tier_and_fence_are_not_integer_one) ... ok\ntest_budget_amount_scope_and_hash_tampering_cannot_authorize_new_work (test_routing_v2.RoutingTests.test_budget_amount_scope_and_hash_tampering_cannot_authorize_new_work) ... ok\ntest_budget_evidence_is_rechecked_before_paid_work_and_approval (test_routing_v2.RoutingTests.test_budget_evidence_is_rechecked_before_paid_work_and_approval) ... ok\ntest_budget_expiry_blocks_completion_of_v2_paid_work (test_routing_v2.RoutingTests.test_budget_expiry_blocks_completion_of_v2_paid_work) ... ok\ntest_budget_expiry_blocks_integration_of_paid_review (test_routing_v2.RoutingTests.test_budget_expiry_blocks_integration_of_paid_review) ... ok\ntest_budget_expiry_blocks_new_author_allocation_at_and_after_deadline (test_routing_v2.RoutingTests.test_budget_expiry_blocks_new_author_allocation_at_and_after_deadline) ... ok\ntest_budget_expiry_blocks_new_reviewer_allocation (test_routing_v2.RoutingTests.test_budget_expiry_blocks_new_reviewer_allocation) ... ok\ntest_budget_expiry_blocks_review_of_paid_author_even_after_new_global_budget (test_routing_v2.RoutingTests.test_budget_expiry_blocks_review_of_paid_author_even_after_new_global_budget) ... ok\ntest_budget_expiry_blocks_start_of_paid_author (test_routing_v2.RoutingTests.test_budget_expiry_blocks_start_of_paid_author) ... ok\ntest_budget_record_is_closed_amount_owner_scope_and_time_bound (test_routing_v2.RoutingTests.test_budget_record_is_closed_amount_owner_scope_and_time_bound) ... ok\ntest_budget_scope_limits_each_paid_role_and_work_package (test_routing_v2.RoutingTests.test_budget_scope_limits_each_paid_role_and_work_package) ... ok\ntest_canonical_policy_digest_ignores_formatting_but_denies_semantic_change (test_routing_v2.RoutingTests.test_canonical_policy_digest_ignores_formatting_but_denies_semantic_change) ... ok\ntest_duplicate_json_policy_keys_are_denied (test_routing_v2.RoutingTests.test_duplicate_json_policy_keys_are_denied) ... ok\ntest_each_allowed_lower_effort_requires_and_accepts_exact_attestation (test_routing_v2.RoutingTests.test_each_allowed_lower_effort_requires_and_accepts_exact_attestation) ... ok\ntest_exact_profile_removal_or_same_tier_replacement_denies_start (test_routing_v2.RoutingTests.test_exact_profile_removal_or_same_tier_replacement_denies_start) ... ok\ntest_explicit_fallback_only_sol_max_with_flag_and_reason (test_routing_v2.RoutingTests.test_explicit_fallback_only_sol_max_with_flag_and_reason) ... ok\ntest_explicit_reviewer_fallback_is_recorded (test_routing_v2.RoutingTests.test_explicit_reviewer_fallback_is_recorded) ... ok\ntest_explicit_stronger_substitution_preserves_floor (test_routing_v2.RoutingTests.test_explicit_stronger_substitution_preserves_floor) ... ok\ntest_full_model_lifecycle_and_dependency_release (test_routing_v2.RoutingTests.test_full_model_lifecycle_and_dependency_release) ... ok\ntest_insufficient_capability_or_unknown_profile_deny (test_routing_v2.RoutingTests.test_insufficient_capability_or_unknown_profile_deny) ... ok\ntest_missing_default_never_selects_available_downshift (test_routing_v2.RoutingTests.test_missing_default_never_selects_available_downshift) ... ok\ntest_named_profile_check_must_pass (test_routing_v2.RoutingTests.test_named_profile_check_must_pass) ... ok\ntest_profile_catalog_mutations_and_duplicate_default_deny (test_routing_v2.RoutingTests.test_profile_catalog_mutations_and_duplicate_default_deny) ... ok\ntest_profile_expiry_boundaries_and_over_age (test_routing_v2.RoutingTests.test_profile_expiry_boundaries_and_over_age) ... ok\ntest_renewed_same_profile_requires_new_assignment_fence (test_routing_v2.RoutingTests.test_renewed_same_profile_requires_new_assignment_fence) ... ok\ntest_repeated_lease_extensions_do_not_change_declared_runtime_bounds (test_routing_v2.RoutingTests.test_repeated_lease_extensions_do_not_change_declared_runtime_bounds)\nCharacterize the existing meter limit; this is not extension authority. ... ok\ntest_review_checks_exact_author_qualification_and_independence (test_routing_v2.RoutingTests.test_review_checks_exact_author_qualification_and_independence) ... ok\ntest_review_downshift_requires_candidate_bound_attestation (test_routing_v2.RoutingTests.test_review_downshift_requires_candidate_bound_attestation) ... ok\ntest_review_rejection_and_recovery_preserve_shared_allowance_once (test_routing_v2.RoutingTests.test_review_rejection_and_recovery_preserve_shared_allowance_once) ... ok\ntest_review_rejects_wrong_reviewer_profile_or_expired_qualification (test_routing_v2.RoutingTests.test_review_rejects_wrong_reviewer_profile_or_expired_qualification) ... ok\ntest_roster_bytes_and_logs_rechecked (test_routing_v2.RoutingTests.test_roster_bytes_and_logs_rechecked) ... ok\ntest_roster_rejects_duplicate_and_mismatched_exact_profiles (test_routing_v2.RoutingTests.test_roster_rejects_duplicate_and_mismatched_exact_profiles) ... ok\ntest_roster_requires_owner_and_current_policy (test_routing_v2.RoutingTests.test_roster_requires_owner_and_current_policy) ... ok\ntest_sol_max_is_ordinary_t2_default (test_routing_v2.RoutingTests.test_sol_max_is_ordinary_t2_default) ... ok\ntest_subscription_bounds_remain_enforced (test_routing_v2.RoutingTests.test_subscription_bounds_remain_enforced) ... ok\ntest_unavailable_primary_never_silently_falls_back (test_routing_v2.RoutingTests.test_unavailable_primary_never_silently_falls_back) ... ok\ntest_unbudgeted_older_api_approval_cannot_integrate_or_escape_through_recovery (test_routing_v2.RoutingTests.test_unbudgeted_older_api_approval_cannot_integrate_or_escape_through_recovery) ... ok\ntest_untrusted_review_text_cannot_make_required_not_run_pass (test_routing_v2.RoutingTests.test_untrusted_review_text_cannot_make_required_not_run_pass) ... ok\ntest_usage_interruption_preserves_binding_lease_and_unfinished_checks (test_routing_v2.RoutingTests.test_usage_interruption_preserves_binding_lease_and_unfinished_checks)\nA reported quota limit is evidence, not an automatic route/state repair. ... ok\ntest_usage_pressure_text_cannot_supply_downshift_conditions (test_routing_v2.RoutingTests.test_usage_pressure_text_cannot_supply_downshift_conditions)\nDeterministic evidence boundary only, not a model prompt-injection eval. ... ok\ntest_usage_recovery_keeps_history_and_resumes_default_at_new_fence (test_routing_v2.RoutingTests.test_usage_recovery_keeps_history_and_resumes_default_at_new_fence) ... ok\ntest_v2_fields_cannot_be_smuggled_into_v1_evidence (test_routing_v2.RoutingTests.test_v2_fields_cannot_be_smuggled_into_v1_evidence) ... ok\ntest_valid_exact_budget_covers_full_paid_lifecycle (test_routing_v2.RoutingTests.test_valid_exact_budget_covers_full_paid_lifecycle) ... ok\n\n----------------------------------------------------------------------\nRan 132 tests in 1.294s\n\nOK\n"
+    },
+    {
+      "id": "sealed_harness_tests",
+      "required": true,
+      "status": "PASS",
+      "working_directory": "/private/tmp/texenda-workspace-architecture-rereview-20260914",
+      "command_or_procedure": "env PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s specs/texenda-handoff/08-project-harness/tests -v",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "captured_output": "test_activation_gate_matching_scope_completes (test_harness.HarnessTests.test_activation_gate_matching_scope_completes) ... ok\ntest_activation_gate_not_assumed (test_harness.HarnessTests.test_activation_gate_not_assumed) ... ok\ntest_activation_gate_scope_checked (test_harness.HarnessTests.test_activation_gate_scope_checked) ... ok\ntest_api_model_requires_budget (test_harness.HarnessTests.test_api_model_requires_budget) ... ok\ntest_author_cannot_review (test_harness.HarnessTests.test_author_cannot_review) ... ok\ntest_baseline_change_requires_explicit_migration (test_harness.HarnessTests.test_baseline_change_requires_explicit_migration) ... ok\ntest_changed_evidence_detected (test_harness.HarnessTests.test_changed_evidence_detected) ... ok\ntest_checkpoint_does_not_extend_without_request (test_harness.HarnessTests.test_checkpoint_does_not_extend_without_request) ... ok\ntest_complete_requires_integration (test_harness.HarnessTests.test_complete_requires_integration) ... ok\ntest_context_overflow_does_not_truncate (test_harness.HarnessTests.test_context_overflow_does_not_truncate) ... ok\ntest_default_writer_limit_is_enforced (test_harness.HarnessTests.test_default_writer_limit_is_enforced) ... ok\ntest_deferred_requires_observed_trigger (test_harness.HarnessTests.test_deferred_requires_observed_trigger) ... ok\ntest_disjoint_parallel_assignments_allowed (test_harness.HarnessTests.test_disjoint_parallel_assignments_allowed) ... ok\ntest_evidence_symlink_denied (test_harness.HarnessTests.test_evidence_symlink_denied) ... ok\ntest_expired_lease_cannot_submit (test_harness.HarnessTests.test_expired_lease_cannot_submit) ... ok\ntest_fake_human_label_rejected (test_harness.HarnessTests.test_fake_human_label_rejected) ... ok\ntest_incomplete_dependency_denied (test_harness.HarnessTests.test_incomplete_dependency_denied) ... ok\ntest_init_is_non_overwriting (test_harness.HarnessTests.test_init_is_non_overwriting) ... ok\ntest_initial_ready_respects_dependencies_and_deferral (test_harness.HarnessTests.test_initial_ready_respects_dependencies_and_deferral) ... ok\ntest_insufficient_review_tier_denied (test_harness.HarnessTests.test_insufficient_review_tier_denied) ... ok\ntest_integration_without_stop_proof_denied (test_harness.HarnessTests.test_integration_without_stop_proof_denied) ... ok\ntest_lifecycle_and_dependency_release (test_harness.HarnessTests.test_lifecycle_and_dependency_release) ... ok\ntest_merge_semantic_change_requires_review (test_harness.HarnessTests.test_merge_semantic_change_requires_review) ... ok\ntest_missing_test_log_denied (test_harness.HarnessTests.test_missing_test_log_denied) ... ok\ntest_no_path_traversal (test_harness.HarnessTests.test_no_path_traversal) ... ok\ntest_not_run_cannot_pass_review (test_harness.HarnessTests.test_not_run_cannot_pass_review) ... ok\ntest_out_of_scope_changed_path_denied (test_harness.HarnessTests.test_out_of_scope_changed_path_denied) ... ok\ntest_overlapping_leases_block_even_expired (test_harness.HarnessTests.test_overlapping_leases_block_even_expired) ... ok\ntest_qualification_expiry_denies_assignment (test_harness.HarnessTests.test_qualification_expiry_denies_assignment) ... ok\ntest_qualified_model_and_budget_allow_assignment (test_harness.HarnessTests.test_qualified_model_and_budget_allow_assignment) ... ok\ntest_receipt_chain_corruption_detected (test_harness.HarnessTests.test_receipt_chain_corruption_detected) ... ok\ntest_recovery_increments_fence (test_harness.HarnessTests.test_recovery_increments_fence) ... ok\ntest_recovery_requires_stop_and_fence (test_harness.HarnessTests.test_recovery_requires_stop_and_fence) ... ok\ntest_stale_candidate_denied (test_harness.HarnessTests.test_stale_candidate_denied) ... ok\ntest_state_corruption_detected (test_harness.HarnessTests.test_state_corruption_detected) ... ok\ntest_unknown_package_denied (test_harness.HarnessTests.test_unknown_package_denied) ... ok\ntest_unverified_model_fails_closed (test_harness.HarnessTests.test_unverified_model_fails_closed) ... ok\ntest_weaker_tier_rejected (test_harness.HarnessTests.test_weaker_tier_rejected) ... ok\ntest_wrong_fence_cannot_start (test_harness.HarnessTests.test_wrong_fence_cannot_start) ... ok\n\n----------------------------------------------------------------------\nRan 39 tests in 0.164s\n\nOK\n"
+    },
+    {
+      "id": "sealed_package",
+      "required": true,
+      "status": "PASS",
+      "working_directory": "/private/tmp/texenda-workspace-architecture-rereview-20260914",
+      "command_or_procedure": "env PYTHONDONTWRITEBYTECODE=1 python3 -B specs/texenda-handoff/10-validation/validate_package.py --checksums",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "captured_output": "{\n  \"package_version\": \"1.1.0\",\n  \"checked_at\": \"2026-09-14T15:29:37.119902+00:00\",\n  \"result\": \"PASS\",\n  \"checks\": [\n    {\n      \"check\": \"JSON parse\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"check\": \"Prior artifacts byte integrity\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"check\": \"Decision status and authority ownership\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"check\": \"WP DAG, bounded contracts, gates and routing\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"check\": \"Acceptance and requirement traceability, no product PASS\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"check\": \"Release profile closure\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"check\": \"Command authority metadata\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"check\": \"ADR required fields\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"check\": \"Model availability and spending truth\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"check\": \"Harness non-runner boundary (static)\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"check\": \"Source/archive provenance\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"check\": \"Current Markdown local links and anchors\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"check\": \"Manifest completeness\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"check\": \"Final package checksums\",\n      \"status\": \"PASS\"\n    }\n  ],\n  \"errors\": [],\n  \"warnings\": [],\n  \"counts\": {\n    \"files\": 86,\n    \"work_packages\": 44,\n    \"product_acceptance_criteria\": 125,\n    \"invariants\": 30,\n    \"adrs\": 35,\n    \"external_gates\": 14\n  },\n  \"scope\": \"Offline package structure/traceability/link checks only. Synthetic harness unit tests reported separately. No application/production/provider/security/legal qualification performed.\",\n  \"archive_limitation\": \"No complete verbatim conversation export; exact prior artifacts plus explicitly abridged turn record.\"\n}\n"
+    },
+    {
+      "id": "source_package",
+      "required": true,
+      "status": "PASS",
+      "working_directory": "/private/tmp/texenda-workspace-architecture-rereview-20260914",
+      "command_or_procedure": "env PYTHONDONTWRITEBYTECODE=1 python3 -B /Users/jamesryancooper/Projects/texenda/10-validation/validate_package.py --checksums",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "captured_output": "{\n  \"package_version\": \"1.1.0\",\n  \"checked_at\": \"2026-09-14T15:29:37.144310+00:00\",\n  \"result\": \"PASS\",\n  \"checks\": [\n    {\n      \"check\": \"JSON parse\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"check\": \"Prior artifacts byte integrity\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"check\": \"Decision status and authority ownership\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"check\": \"WP DAG, bounded contracts, gates and routing\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"check\": \"Acceptance and requirement traceability, no product PASS\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"check\": \"Release profile closure\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"check\": \"Command authority metadata\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"check\": \"ADR required fields\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"check\": \"Model availability and spending truth\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"check\": \"Harness non-runner boundary (static)\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"check\": \"Source/archive provenance\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"check\": \"Current Markdown local links and anchors\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"check\": \"Manifest completeness\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"check\": \"Final package checksums\",\n      \"status\": \"PASS\"\n    }\n  ],\n  \"errors\": [],\n  \"warnings\": [],\n  \"counts\": {\n    \"files\": 86,\n    \"work_packages\": 44,\n    \"product_acceptance_criteria\": 125,\n    \"invariants\": 30,\n    \"adrs\": 35,\n    \"external_gates\": 14\n  },\n  \"scope\": \"Offline package structure/traceability/link checks only. Synthetic harness unit tests reported separately. No application/production/provider/security/legal qualification performed.\",\n  \"archive_limitation\": \"No complete verbatim conversation export; exact prior artifacts plus explicitly abridged turn record.\"\n}\n"
+    },
+    {
+      "id": "diff_sealed",
+      "required": true,
+      "status": "PASS",
+      "working_directory": "/private/tmp/texenda-workspace-architecture-rereview-20260914",
+      "command_or_procedure": "git diff --check 36b74e9e1ca6353b3d642136fa70b7d2ac950e08 HEAD && git diff --exit-code 36b74e9e1ca6353b3d642136fa70b7d2ac950e08 HEAD -- specs/texenda-handoff",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "captured_output": ""
+    },
+    {
+      "id": "hashes",
+      "required": true,
+      "status": "PASS",
+      "working_directory": "/private/tmp/texenda-workspace-architecture-rereview-20260914",
+      "command_or_procedure": "python3 -B - <<'PY'\nfrom pathlib import Path\nimport importlib.util,json,hashlib,tarfile,subprocess\nroot=Path('/private/tmp/texenda-workspace-architecture-rereview-20260914');source=Path('/Users/jamesryancooper/Projects/texenda');sealed=root/'specs/texenda-handoff'\nread=lambda p:json.loads(p.read_text())\nsha=lambda b:hashlib.sha256(b).hexdigest()\ncanon=lambda o:json.dumps(o,sort_keys=True,separators=(',',':'),ensure_ascii=False,allow_nan=False).encode()\nb=read(root/'docs/qualification/evidence/2026-09-14-workspace-phase-0-baseline.json');c=read(root/'project-dossier/transition/blueprint-adoption-crosswalk.json');author=read(root/'docs/qualification/evidence/2026-09-14-workspace-architecture-author.json')\nassert sorted(p.name for p in source.iterdir())==sorted(r['entry'] for r in b['filesystem']['non_git_top_level'])\ndef rows(base):\n out=[]\n for p in sorted(base.rglob('*')):\n  assert not p.is_symlink(),str(p)\n  if p.is_file():out.append({'path':p.relative_to(base).as_posix(),'sha256':sha(p.read_bytes())})\n return out\nsource_rows=rows(source);sealed_rows=rows(sealed)\nassert source_rows==b['filesystem']['author_source_files']\nfor entry in b['filesystem']['non_git_top_level']:\n p=source/entry['entry'];assert not p.is_symlink()\n if entry['type']=='file':assert sha(p.read_bytes())==entry['sha256']\n else:\n  entry_rows=rows(p)\n  assert len(entry_rows)==entry['file_count'] and sha(canon(entry_rows))==entry['tree_sha256'],entry['entry']\ncomputed={}\nfor name,base,items in [('source',source,source_rows),('sealed',sealed,sealed_rows)]:\n filtered=[r for r in items if '__pycache__' not in Path(r['path']).parts and not r['path'].endswith('.pyc')]\n computed[name]={'manifest_sha256':sha((base/'manifest.json').read_bytes()),'checksums_sha256':sha((base/'SHA256SUMS').read_bytes()),'path_nul_sha256':sha(''.join(r['path']+'\\0'+r['sha256']+'\\n' for r in filtered).encode()),'canonical_array_sha256':sha(canon(filtered)),'file_count':len(filtered)}\n for key in ('manifest_sha256','checksums_sha256','path_nul_sha256','canonical_array_sha256'):assert computed[name][key]==b['packages'][name][key],(name,key)\nsmap={r['path']:r['sha256'] for r in source_rows};rmap={r['path']:r['sha256'] for r in sealed_rows if '__pycache__' not in Path(r['path']).parts and not r['path'].endswith('.pyc')}\ndifferences=[{'path':p,'source_sha256':smap[p],'sealed_sha256':rmap[p]} for p in sorted(rmap) if smap[p]!=rmap[p]]\nassert differences==b['packages']['differing_paths']\nfor row in b['bound_source_files']:\n raw=subprocess.check_output(['git','show',b['subject']['main_revision']+':'+row['path']],cwd=root)\n assert sha(raw)==row['sha256']\nfor row in b['blueprint_reference_files']:assert sha(Path(row['path']).read_bytes())==row['sha256'],row['path']\nfor row in author['output_hashes']:\n raw=subprocess.check_output(['git','show','609ddda6da96ddf2460925cc759db724acd70d59:'+row['path']],cwd=root)\n assert sha(raw)==row['sha256'],row['path']\ncorrection=read(root/'docs/qualification/evidence/2026-09-14-workspace-architecture-correction.json')\nfor key in ('output_hashes','source_hashes','historical_evidence'):\n for row in correction[key]:assert sha((root/row['path']).read_bytes())==row['sha256'],row['path']\ncp=[]\nfor row in b['checkpoints']:\n p=Path(row['path'])\n if p.suffix=='.tar':\n  with tarfile.open(p,'r') as archive:\n   names=[m.name for m in archive.getmembers()]\n   assert not any('private-input' in n or n.lower().endswith('.csv') for n in names)\n assert sha(p.read_bytes())==row['sha256'],row['path'];cp.append({'kind':row['kind'],'sha256':row['sha256']})\nplanner=Path('/Users/jamesryancooper/.codex/skills/project-bootstrap/scripts/plan_adoption.py')\nspec=importlib.util.spec_from_file_location('adoption_planner',planner);module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)\nplan=module.build_plan(Path('/Users/jamesryancooper/Projects/texenda-app'),'high-assurance')\nassert sorted(plan['collisions']+plan['candidate_new_paths'])==c['blueprint_path_inventory']\nart=read(Path('/Users/jamesryancooper/.codex/skills/project-bootstrap/assets/blueprint-source/dossier/artifact-types.json'))\nprint(json.dumps({'status':'PASS','packages':computed,'source_file_count_including_caches':len(source_rows),'top_level_entries':16,'exact_differing_paths':len(differences),'bound_git_source_hashes':len(b['bound_source_files']),'blueprint_hashes':len(b['blueprint_reference_files']),'author_output_hashes':len(author['output_hashes']),'checkpoints':cp,'planner_collisions':plan['collisions'],'planner_candidate_paths':len(plan['candidate_new_paths']),'planner_version':plan['blueprint_version'],'catalog_top_keys':list(art)},indent=2))\nprint(json.dumps({'candidate_file_hashes':[{'path':p,'sha256':sha((root/p).read_bytes())} for p in subprocess.check_output(['git','diff','--name-only',b['subject']['main_revision'],'HEAD'],cwd=root,text=True).splitlines()]},indent=2))\nPY",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "captured_output": "{\n  \"status\": \"PASS\",\n  \"packages\": {\n    \"source\": {\n      \"manifest_sha256\": \"bcb7488ecf2ac42b4b33e478918e7ce6c35d0bdc04b208ddd9ed66622b468b7f\",\n      \"checksums_sha256\": \"8576bf08ec4f2a4718476eca70e6d1d5cb2b6be1af550bf5c20c692bcbaff715\",\n      \"path_nul_sha256\": \"c3b25ae42e74324fedd3f4d545fe4105e9a2607c2f777afe049af10e75d9fe98\",\n      \"canonical_array_sha256\": \"26fa6487334c2782bdff8e98c49963e6720228824f6b91a9a7126e0d6cec2131\",\n      \"file_count\": 86\n    },\n    \"sealed\": {\n      \"manifest_sha256\": \"bcb7488ecf2ac42b4b33e478918e7ce6c35d0bdc04b208ddd9ed66622b468b7f\",\n      \"checksums_sha256\": \"37fffb1a165cfa6b907e7433d617c06e1c64ff09cd282173f7d791cace2ac07e\",\n      \"path_nul_sha256\": \"0b672e476b38a99bfbdcd3b9dbfca1baa2f1fcdc7329410986caefa9e5421336\",\n      \"canonical_array_sha256\": \"83cceb48e29bd3d070856976abe5aa2f5559d5479c5a0d1485d2d12c326de1c8\",\n      \"file_count\": 86\n    }\n  },\n  \"source_file_count_including_caches\": 88,\n  \"top_level_entries\": 16,\n  \"exact_differing_paths\": 11,\n  \"bound_git_source_hashes\": 11,\n  \"blueprint_hashes\": 17,\n  \"author_output_hashes\": 8,\n  \"checkpoints\": [\n    {\n      \"kind\": \"complete_all_ref_git_bundle\",\n      \"sha256\": \"3103a9877f36c8b4b5535fe28e3bd9fe3814f0f045cd878efd374d5e357e3b71\"\n    },\n    {\n      \"kind\": \"byte_exact_state_checkpoint\",\n      \"sha256\": \"b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235\"\n    },\n    {\n      \"kind\": \"coordination_checkpoint_excluding_private_inputs\",\n      \"sha256\": \"0fe841098a8ba9bc672744eb53ca9dd72eed4e34921f257a74663616410228aa\"\n    }\n  ],\n  \"planner_collisions\": [\n    \"AGENTS.md\"\n  ],\n  \"planner_candidate_paths\": 84,\n  \"planner_version\": \"1.0.0\",\n  \"catalog_top_keys\": [\n    \"schema_version\",\n    \"authority\",\n    \"artifacts\"\n  ]\n}\n{\n  \"candidate_file_hashes\": [\n    {\n      \"path\": \"docs/decisions/ADR-0004-mapped-project-workspace.md\",\n      \"sha256\": \"e1594f793c892adecfebbf86ce76c7fb180d79cc66497d936fd215ea773b8b08\"\n    },\n    {\n      \"path\": \"docs/qualification/evidence/2026-09-14-workspace-architecture-author.json\",\n      \"sha256\": \"628d34315adceab1f67a4fe97b930bf1011a037e63ec3ff577e25b6b9b81639c\"\n    },\n    {\n      \"path\": \"docs/qualification/evidence/2026-09-14-workspace-architecture-correction-validation.log\",\n      \"sha256\": \"723d6e4e6f0f5146d98a2e70b9f345f2f3c63cf3869fc28d81e6ebfcef79fafa\"\n    },\n    {\n      \"path\": \"docs/qualification/evidence/2026-09-14-workspace-architecture-correction.json\",\n      \"sha256\": \"bd6fc788caff0fbf475016e2188cdf3118b95e36815b580bdff22971b751e576\"\n    },\n    {\n      \"path\": \"docs/qualification/evidence/2026-09-14-workspace-architecture-validation.log\",\n      \"sha256\": \"ee777c976193e42c45c1b64b18ba856cabb55938b102a01411a0d0783f610c2f\"\n    },\n    {\n      \"path\": \"docs/qualification/evidence/2026-09-14-workspace-phase-0-baseline.json\",\n      \"sha256\": \"943546a8681acd761e262352be139cca18f178ad954d4990b154254f8c6ff951\"\n    },\n    {\n      \"path\": \"project-dossier/transition/README.md\",\n      \"sha256\": \"30f5da3738a48d1bdf1c07b4517a977b7e5e1bc4fac5239fdd729cd89a0e9aa1\"\n    },\n    {\n      \"path\": \"project-dossier/transition/blueprint-adoption-crosswalk.json\",\n      \"sha256\": \"7bfd1930821cc695eca854e98ed1c0b347c076ebf5fb735a272108387eb6d4f0\"\n    },\n    {\n      \"path\": \"project-dossier/transition/workspace-move-manifest.json\",\n      \"sha256\": \"b11e8d683cb29c262c9c8ff032864932ccfba6b04c0bbd219f6ac3c803a4b22b\"\n    },\n    {\n      \"path\": \"tooling/workspace/tests/test_contract.py\",\n      \"sha256\": \"745241740730c26782e7348be0a0ce8da23e506008ac52a463801c69bbc9fd9f\"\n    },\n    {\n      \"path\": \"tooling/workspace/validate_contract.py\",\n      \"sha256\": \"0b3878fd9e8bb7a55b04a213d2c0f0f2abbb81834ac96186a6a1a0e72b1f341f\"\n    }\n  ]\n}\n"
+    },
+    {
+      "id": "live_state",
+      "required": true,
+      "status": "PASS",
+      "working_directory": "/private/tmp/texenda-workspace-architecture-rereview-20260914",
+      "command_or_procedure": "python3 -B - <<'PY'\nfrom pathlib import Path\nimport importlib.util,json,hashlib,datetime,collections,subprocess\nreview = Path('/private/tmp/texenda-workspace-architecture-rereview-20260914')\nroot = Path('/Users/jamesryancooper/Projects/texenda-app')\nspec=importlib.util.spec_from_file_location('texenda_review_harness',review/'tooling/coordination/harness.py')\nm=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)\nh=m.Harness(root)\nstatepath=root/'.texenda/state.json'; lockpath=root/'.texenda/state.lock'\nmeta=lambda p: (p.stat().st_ino,p.stat().st_size,p.stat().st_mtime_ns,p.stat().st_ctime_ns,p.stat().st_atime_ns) if p.exists() else None\nstate_before=meta(statepath);lock_before=meta(lockpath)\nraw=statepath.read_bytes();s=m.load_json(raw);h._check(s);h._validate_retained_evidence(s)\nqualifications=[h.qualified(s,q['profile_id']) for q in s['roster']]\nfor q in qualifications:\n assert q['runtime_id']=='codex-desktop-collaboration'\n assert q['client_version']=='26.901.41600 (build 7982)'\n assert q['billing_mode']=='subscription'\nq=next(q for q in qualifications if q['profile_id']=='gpt-6-astra-max')\nassert q['reasoning_effort']=='max'\nlegacy=s['routing_migration']; backup=m.under(root,legacy['backup_path']);old_raw=backup.read_bytes()\nassert hashlib.sha256(old_raw).hexdigest()==legacy['source_sha256']\nold=m.load_json(old_raw);m.legacy.Harness._check(h,old);m.check_receipts(old);h._validate_retained_evidence(old)\nassert s['events'][:len(old['events'])]==old['events']\nassert statepath.read_bytes()==raw\nassert meta(statepath)==state_before and meta(lockpath)==lock_before\nobserved={'observed_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'state_sha256':hashlib.sha256(raw).hexdigest(),'version':s['version'],'receipt_count':len(s['events']),'receipt_tip':s['events'][-1]['hash'],'roster_canonical_sha256':m.digest(s['roster']),'qualified_profile_count':len(qualifications),'reviewer_qualification':q,'lease_count':sum(t['lease'] is not None for t in s['tasks'].values()),'budget_usd':s['budget_usd'],'declared_allocations_usd':str(h._declared_spend(s)),'cleared_gates':len(s['gates']),'task_state_counts':dict(collections.Counter(t['state'] for t in s['tasks'].values())),'retained_evidence':'PASS','v1_source_checkpoint_sha256':hashlib.sha256(old_raw).hexdigest(),'v1_receipt_prefix':'PASS','state_and_lock_metadata_unchanged':True,'locking_invoked':False,'private_input_content_accessed':False}\nprint(json.dumps(observed,indent=2))\nPY",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "captured_output": "{\n  \"observed_at\": \"2026-09-14T15:30:10.294663+00:00\",\n  \"state_sha256\": \"b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235\",\n  \"version\": \"2.0\",\n  \"receipt_count\": 13,\n  \"receipt_tip\": \"f39249184757101b108ea7ec5ea0ffebdd8237315b8ac3cad3ad0cc6ab3e827e\",\n  \"roster_canonical_sha256\": \"a23705178b39e8d0dd194abd4cf6e42fc20be404739d0e28e0ca9b221c80ddcf\",\n  \"qualified_profile_count\": 11,\n  \"reviewer_qualification\": {\n    \"profile_id\": \"gpt-6-astra-max\",\n    \"capability_tier\": 1,\n    \"model_id\": \"gpt-6-astra\",\n    \"reasoning_effort\": \"max\",\n    \"runtime_id\": \"codex-desktop-collaboration\",\n    \"client_version\": \"26.901.41600 (build 7982)\",\n    \"sign_in_mode\": \"subscription\",\n    \"billing_mode\": \"subscription\",\n    \"capabilities\": [\n      \"read\",\n      \"edit\",\n      \"test\"\n    ],\n    \"verified_at\": \"2026-09-13T21:44:31Z\",\n    \"expires_at\": \"2026-10-12T21:44:31Z\",\n    \"qualification_check_ids\": [\n      \"desktop-profile-gpt-6-astra-max\"\n    ],\n    \"evidence\": {\n      \"path\": \"docs/qualification/model-roster-v2.1.evidence.json\",\n      \"sha256\": \"8e44034e6247ea47b3f0002100e6a343cfa6685d56138a24f55e8a13054173c0\"\n    }\n  },\n  \"lease_count\": 0,\n  \"budget_usd\": 0.0,\n  \"declared_allocations_usd\": \"0.0\",\n  \"cleared_gates\": 0,\n  \"task_state_counts\": {\n    \"completed\": 1,\n    \"planned\": 43\n  },\n  \"retained_evidence\": \"PASS\",\n  \"v1_source_checkpoint_sha256\": \"a2a58e20004c86c0081b1427087626e36f931c3804532e8a1caf1c94a49a609a\",\n  \"v1_receipt_prefix\": \"PASS\",\n  \"state_and_lock_metadata_unchanged\": true,\n  \"locking_invoked\": false,\n  \"private_input_content_accessed\": false\n}\n"
+    },
+    {
+      "id": "blueprint_source_inspection",
+      "required": true,
+      "status": "PASS",
+      "working_directory": "/private/tmp/texenda-workspace-architecture-rereview-20260914",
+      "command_or_procedure": "python3 -B - <<'PY'\nfrom pathlib import Path\nimport json,subprocess\nroot=Path('/private/tmp/texenda-workspace-architecture-rereview-20260914')\nc=json.loads((root/'project-dossier/transition/blueprint-adoption-crosswalk.json').read_text())\nsource=Path('/Users/jamesryancooper/.codex/skills/project-bootstrap/assets/blueprint-source')\na=json.loads((source/'dossier/artifact-types.json').read_text())['artifacts']\nexpected=[{'id':r['id'],'path':r['path']} for r in a]\nassert expected==c['blueprint_artifact_type_inventory']\nprint(json.dumps({'artifact_types_exact_match':len(expected),'installed_version':(source/'VERSION').read_text().strip(),'installed_origin_supports_mapped_existing':'adoption_mode' in json.loads((source/'shared/schemas/project-blueprint-origin.schema.json').read_text())['properties']},indent=2))\nnewer=Path('/Users/jamesryancooper/Projects/octon-mini')\nprint('NEWER_HEAD_TREE',subprocess.check_output(['git','rev-parse','HEAD','HEAD^{tree}'],cwd=newer,text=True).strip())\nprint('NEWER_DIRTY_ENTRIES',len(subprocess.check_output(['git','--no-optional-locks','status','--porcelain=v1'],cwd=newer,text=True).splitlines()))\nprint('NEWER_DECLARED_VERSION',(newer/'VERSION').read_text().strip())\nPY",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "captured_output": "{\n  \"artifact_types_exact_match\": 35,\n  \"installed_version\": \"1.0.0\",\n  \"installed_origin_supports_mapped_existing\": false\n}\nNEWER_HEAD_TREE 5e2d3025aea6b1574ab984e5ebb89b5602a38535\n3c732979e580c80b020d09c22ce86f5202110518\nNEWER_DIRTY_ENTRIES 218\nNEWER_DECLARED_VERSION 4.3.0\n"
+    },
+    {
+      "id": "checkpoint_verify",
+      "required": true,
+      "status": "PASS",
+      "working_directory": "/private/tmp/texenda-workspace-architecture-rereview-20260914",
+      "command_or_procedure": "git bundle verify /private/tmp/texenda-workspace-migration-checkpoint-20260914/texenda-git-36b74e9.bundle",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "captured_output": "/private/tmp/texenda-workspace-migration-checkpoint-20260914/texenda-git-36b74e9.bundle is okay\nThe bundle contains these 29 refs:\n4ce1be33ea3d9e86e6806d992b4bdb7224ab3014 refs/heads/amendment/model-routing-v2\n56b6ec3ea0d66447205b03f74ffd5920e783c0bf refs/heads/analysis/astra-instructions\nf284e5989d2eac06f7e956724ad1cc9b32fbafcd refs/heads/analysis/astra-safety-usage\n5df52bb20a3c93d4baeb896846a62e47140be733 refs/heads/analysis/model-routing-map\n84f4a205b9da345d2ec50d6bf66177e6e4915668 refs/heads/analysis/model-routing-tests\ne3def2617753dd178e7d3eebae2e548b3e2df39b refs/heads/audit/astra-instruction-system\n4c60df8e0e32e3616365205a3d4c2760d44b6f1d refs/heads/audit/runtime-surface-correction\n36b74e9e1ca6353b3d642136fa70b7d2ac950e08 refs/heads/main\n36b74e9e1ca6353b3d642136fa70b7d2ac950e08 refs/heads/policy/private-repo-ci-20260914\n0cd7010242ee1ee35837aace4ea2a1f1a186777e refs/heads/qualification/gpt-5.6-luna-20260913\n9d186fc5c2d17a9702453975c646322dab2d0728 refs/heads/qualification/gpt-5.6-luna-high-20260913\n7c3590fda2bbed65d1975a63270e7082be3bfafd refs/heads/qualification/gpt-5.6-luna-max-20260913\nf17f94f8bd2998111f63ada54c2375591173c23e refs/heads/qualification/gpt-5.6-luna-medium-20260913\n0cd7010242ee1ee35837aace4ea2a1f1a186777e refs/heads/qualification/gpt-5.6-sol-20260913\nc95d01162fb6fc7fe0a669cf213bdd73813eb7a8 refs/heads/qualification/gpt-5.6-terra-20260913\n0b4c6c7eeb85e0ba78568a21f3d3bb1801cae888 refs/heads/qualification/gpt-5.6-terra-high-20260913\n0cd7010242ee1ee35837aace4ea2a1f1a186777e refs/heads/qualification/gpt-6-astra-20260913\nbaa5e350d3b27326ec4f405858ecb56ff9d53a57 refs/heads/qualify/desktop-astra-high-20260913\ne86099271cdf0810185ae563f73128c90c68c4de refs/heads/qualify/desktop-astra-max-20260913\n05ca53bc88a998a2e020c53081d89b3bd65e3156 refs/heads/qualify/desktop-luna-high-20260913\n0f0f4a97151a2f17c9831069f1f86fcbb2345550 refs/heads/qualify/desktop-luna-low-20260913\na3449b3a4ee60dba3476df50d1cb9999189075d4 refs/heads/qualify/desktop-luna-max-20260913\n7f7176d76465c9b66057af5ec53a817e07afedf6 refs/heads/qualify/desktop-luna-medium-20260913\n304f63cf7bee4b3980b00a370a91cca1c3442ca3 refs/heads/qualify/desktop-sol-high-20260913\nf6427f98b3bd3899215b77413b56c651f19c3280 refs/heads/qualify/desktop-sol-max-20260913\n358bc0a6a057d969f3ac313cbe9832f9520274f2 refs/heads/qualify/desktop-terra-high-20260913\n702314d59500d3b5dcd1bf5cb0e8dc7a055338bf refs/heads/qualify/desktop-terra-max-20260913\ne83cfc7fd64cd3c4997bb8fff1e831d335ded92b refs/heads/qualify/desktop-terra-medium-20260913\n36b74e9e1ca6353b3d642136fa70b7d2ac950e08 HEAD\nThe bundle records a complete history.\nThe bundle uses this hash algorithm: sha1\n"
+    },
+    {
+      "id": "locks",
+      "required": true,
+      "status": "PASS",
+      "working_directory": "/private/tmp/texenda-workspace-architecture-rereview-20260914",
+      "command_or_procedure": "lsof -n /Users/jamesryancooper/Projects/texenda-app/.texenda/state.json /Users/jamesryancooper/Projects/texenda-app/.texenda/state.lock",
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "captured_output": "",
+      "interpretation": "Empty output and lsof exit 1 indicate no reported open holders at this observation; this is not complete runtime-stop proof."
+    },
+    {
+      "id": "git_private_no_move",
+      "required": true,
+      "status": "PASS",
+      "working_directory": "/Users/jamesryancooper/Projects/texenda-app",
+      "command_or_procedure": "git --no-optional-locks status --porcelain=v1 --branch && git rev-parse HEAD HEAD^{tree} main && git remote -v && git worktree list --porcelain && git for-each-ref --format='%(refname)' refs/remotes && df -h /Users/jamesryancooper/Projects/texenda-app /Users/jamesryancooper/Projects/texenda /private/tmp && test ! -e /Users/jamesryancooper/Projects/texenda/.git && test ! -e /Users/jamesryancooper/Projects/texenda/repo && test -f .texenda/private-inputs/kit/ohw/2026-09-14/subscribers.csv && git check-ignore -v .texenda/private-inputs/kit/ohw/2026-09-14/subscribers.csv && git ls-files -- .texenda/private-inputs/kit/ohw/2026-09-14/subscribers.csv && git --no-optional-locks status --porcelain=v1 -- .texenda/private-inputs/kit/ohw/2026-09-14/subscribers.csv",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "captured_output": "## main...origin/main [gone]\n36b74e9e1ca6353b3d642136fa70b7d2ac950e08\nf55477c5be32c6c866c1822f1e464dbba7e42198\n36b74e9e1ca6353b3d642136fa70b7d2ac950e08\norigin\thttps://github.com/cooperonlineenterprises/texenda.git (fetch)\norigin\thttps://github.com/cooperonlineenterprises/texenda.git (push)\nworktree /Users/jamesryancooper/Projects/texenda-app\nHEAD 36b74e9e1ca6353b3d642136fa70b7d2ac950e08\nbranch refs/heads/main\n\nworktree /private/tmp/texenda-workspace-architecture-20260914\nHEAD d3482777c675cc009884b87b3031abe73ee752ac\nbranch refs/heads/migration/project-workspace-architecture-20260914\n\nworktree /private/tmp/texenda-workspace-architecture-rereview-20260914\nHEAD d3482777c675cc009884b87b3031abe73ee752ac\ndetached\n\nworktree /private/tmp/texenda-workspace-architecture-review-20260914\nHEAD 609ddda6da96ddf2460925cc759db724acd70d59\ndetached\n\nFilesystem      Size    Used   Avail Capacity iused ifree %iused  Mounted on\n/dev/disk3s5   926Gi   584Gi   321Gi    65%    7.5M  3.4G    0%   /System/Volumes/Data\n/dev/disk3s5   926Gi   584Gi   321Gi    65%    7.5M  3.4G    0%   /System/Volumes/Data\n/dev/disk3s5   926Gi   584Gi   321Gi    65%    7.5M  3.4G    0%   /System/Volumes/Data\n.gitignore:1:.texenda/\t.texenda/private-inputs/kit/ohw/2026-09-14/subscribers.csv\n"
+    },
+    {
+      "id": "static_readonly_snapshot",
+      "required": true,
+      "status": "PASS",
+      "working_directory": "/private/tmp/texenda-workspace-architecture-rereview-20260914",
+      "command_or_procedure": "python3 -B - <<'PY'\nfrom pathlib import Path\nimport subprocess,json,os\nroot=Path('/private/tmp/texenda-workspace-architecture-rereview-20260914');source=Path('/Users/jamesryancooper/Projects/texenda')\ndef snapshot(base):\n result={}\n for p in [base,*base.rglob('*')]:\n  s=p.lstat()\n  result[p.relative_to(base).as_posix()]=(s.st_mode,s.st_ino,s.st_size,s.st_atime_ns,s.st_mtime_ns,s.st_ctime_ns)\n return result\nbefore=snapshot(root);source_before=snapshot(source)\nrun=subprocess.run(['python3','-B','tooling/workspace/validate_contract.py','--check','--audit'],cwd=root,capture_output=True,text=True,env=dict(os.environ,PYTHONDONTWRITEBYTECODE='1',GIT_OPTIONAL_LOCKS='0'))\nassert run.returncode==0,run.stdout+run.stderr\nassert snapshot(root)==before,'review tree metadata changed'\nassert snapshot(source)==source_before,'source package metadata changed'\nprint(json.dumps({'status':'PASS','read_only_static_check_output':json.loads(run.stdout),'reviewer_snapshot_paths':len(before),'source_snapshot_paths':len(source_before),'metadata_unchanged':True,'tracked_untracked_ignored_cache_generated_paths_covered':True,'private_inputs_inside_snapshot':False},indent=2))\nPY",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "captured_output": "{\n  \"status\": \"PASS\",\n  \"read_only_static_check_output\": {\n    \"status\": \"PASS\",\n    \"concerns\": 42,\n    \"blueprint_paths\": 85,\n    \"artifact_types\": 35,\n    \"source_moves\": 16,\n    \"audit\": {\n      \"JSON\": 83,\n      \"TOML\": 1,\n      \"Python\": 10,\n      \"new_markdown_links\": 7,\n      \"sealed_files\": 86,\n      \"source_files\": 88\n    },\n    \"scope\": \"static transition contracts and original Git-bound inputs only\",\n    \"live_state_checked\": false,\n    \"moves_executed\": false,\n    \"private_input_accessed\": false,\n    \"approval\": false\n  },\n  \"reviewer_snapshot_paths\": 220,\n  \"source_snapshot_paths\": 106,\n  \"metadata_unchanged\": true,\n  \"tracked_untracked_ignored_cache_generated_paths_covered\": true,\n  \"private_inputs_inside_snapshot\": false\n}\n"
+    },
+    {
+      "id": "independent_regression",
+      "required": true,
+      "status": "PASS",
+      "working_directory": "/private/tmp/texenda-workspace-architecture-rereview-20260914",
+      "command_or_procedure": "env PYTHONDONTWRITEBYTECODE=1 python3 -B - <<'PY'\nfrom pathlib import Path\nimport importlib.util,json,copy,subprocess\nroot=Path.cwd();spec=importlib.util.spec_from_file_location('contract',root/'tooling/workspace/validate_contract.py');m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)\nc,b,manifest=[m.loads((root/p).read_text()) for p in (m.CROSSWALK,m.BASELINE,m.MANIFEST)]\nowner='specs/texenda-handoff/04-security-governance-and-operations/runbooks.md'\nassert next(r for r in c['ownership'] if r['concern_id']=='operations_recovery')['owner_by_epoch']==dict.fromkeys(c['epochs'],owner)\nrejected=[]\nfor epoch in c['epochs']:\n mutated=copy.deepcopy(c);next(r for r in mutated['ownership'] if r['concern_id']=='operations_recovery')['owner_by_epoch'][epoch]='specs/texenda-handoff/06-migration-and-production/'\n try:m.validate(mutated,b,manifest)\n except m.ContractError:rejected.append(epoch)\n else:raise AssertionError('old owner was accepted in '+epoch)\nmutated=copy.deepcopy(c);next(r for r in mutated['mappings'] if r['blueprint_path']=='project-dossier/operations/README.md')['mapped_path']='specs/texenda-handoff/06-migration-and-production/'\ntry:m.validate(mutated,b,manifest)\nexcept m.ContractError:rejected.append('OPS-0001')\nelse:raise AssertionError('old OPS target was accepted')\nsubprocess.run(['git','merge-base','--is-ancestor','609ddda6da96ddf2460925cc759db724acd70d59','HEAD'],check=True)\nassert not (root/'.agent').exists() and not (root/'.project-blueprint-origin.json').exists()\nassert not (root/'.texenda').exists()\nassert subprocess.check_output(['git','--no-optional-locks','status','--porcelain=v1','--ignored'],text=True)==''\nprint(json.dumps({'status':'PASS','old_owner_rejected':rejected,'rejected_candidate_preserved_as_ancestor':True,'no_second_ledger_or_premature_facade_or_origin':True,'review_worktree_tracked_untracked_ignored_clean':True}))\nPY",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "captured_output": "{\"status\": \"PASS\", \"old_owner_rejected\": [\"baseline\", \"facade\", \"external_state\", \"OPS-0001\"], \"rejected_candidate_preserved_as_ancestor\": true, \"no_second_ledger_or_premature_facade_or_origin\": true, \"review_worktree_tracked_untracked_ignored_clean\": true}\n"
+    }
+  ],
+  "effect_boundary": {
+    "network_requests": 0,
+    "github_changes": [],
+    "pushes": 0,
+    "app_registration_changes": 0,
+    "filesystem_moves": 0,
+    "live_state_writes": 0,
+    "private_content_operations": 0,
+    "api_spend_usd": 0,
+    "product_or_external_gates_cleared": [],
+    "local_writes": "Exactly the two assigned uncommitted review evidence files; tests used temporary synthetic fixtures and inherited bytecode suppression. No candidate files were modified."
+  },
+  "runtime_stop": {
+    "author_observed_status": "completed",
+    "author_observation_method": "collaboration.list_agents",
+    "reviewer_status_at_recording": "active while recording evidence; ends after final artifact checks",
+    "reviewer_child_agents": 0,
+    "reviewer_background_commands": 0,
+    "parent_must_observe_reviewer_completion": true,
+    "self_attested_stop_is_not_independent_proof": true,
+    "scope_release_or_relocation_requires_fresh_stop_proof": true
+  },
+  "not_run": [
+    {
+      "check": "GitHub visibility/branches/workflows/settings and Codex saved-path reread",
+      "reason": "No network/app operations permitted for this reviewer assignment. Coordinator baseline observations are attributed; repeat at relocation and final completion."
+    },
+    {
+      "check": "Filesystem relocation",
+      "reason": "Not executed. Exact approval, final evidence review, clean accepted integration and fresh runtime/worktree/checkpoint proof remain prerequisites."
+    },
+    {
+      "check": ".agent facade, origin successor and explicit state-root implementation",
+      "reason": "This candidate freezes contracts only; implementation and its negative/recovery tests need a separate exact candidate review."
+    },
+    {
+      "check": "Real mapped task lifecycle and final integrated-main checks",
+      "reason": "Required later, before operational adoption; no implementation-completion claim here."
+    },
+    {
+      "check": "Product acceptance and external gates",
+      "reason": "Out of scope; local structural tests cannot pass those gates."
+    }
+  ],
+  "resumption": "Preserve the exact candidate and these review records. Obtain the required final read-only review after evidence is added, observe author/reviewer runtimes stopped, and let the distinct T1 integrator perform accepted local integration with no unreviewed semantic resolution. Reverify all move preconditions and create a fresh all-ref checkpoint before relocation."
+}

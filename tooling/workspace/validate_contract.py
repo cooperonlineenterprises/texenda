@@ -319,6 +319,42 @@ def verify_actual_stores(root):
                 'origin schema cannot truthfully represent mapped-existing')
 
 
+def verify_qualification_check(root, check):
+    """Require a confined hash-bound evidence file for both passing and failing checks."""
+    if check.get('status') not in ('PASS', 'FAIL'):
+        return False
+    name = check.get('evidence_path')
+    require(isinstance(name, str) and bool(name), 'PASS/FAIL check lacks evidence_path')
+    parts = PurePosixPath(name).parts
+    require(not PurePosixPath(name).is_absolute() and '\\' not in name and ':' not in name
+            and not any(part in ('', '.', '..') for part in name.split('/'))
+            and not any(part in ('.git', '.texenda', 'private-inputs') for part in parts)
+            and not name.lower().endswith('.csv'), 'unsafe qualification evidence path')
+    require(valid_hash(check.get('sha256')), 'PASS/FAIL check lacks a valid SHA-256')
+    target = root
+    for part in parts:
+        target = target / part
+        require(not target.is_symlink(), 'qualification evidence symlink denied')
+    require(target.resolve().is_relative_to(root.resolve()) and target.is_file(),
+            'qualification evidence file missing or outside repository')
+    require(sha(target.read_bytes()) == check['sha256'], 'qualification evidence hash mismatch')
+    return True
+
+
+def verify_qualification_checks(root):
+    count = 0
+    for path in sorted((root / 'docs/qualification').rglob('*.json')):
+        require(not path.is_symlink(), 'qualification record symlink denied')
+        record = loads(path.read_text())
+        require(isinstance(record, dict), 'qualification record must be an object')
+        checks = record.get('checks', [])
+        require(isinstance(checks, list), 'qualification checks must be an array')
+        for check in checks:
+            require(isinstance(check, dict), 'qualification check must be an object')
+            count += verify_qualification_check(root, check)
+    return count
+
+
 def audit_candidate(root, baseline):
     """Parse candidate files and compare only the explicit public package scope."""
     names = subprocess.check_output(
@@ -346,7 +382,8 @@ def audit_candidate(root, baseline):
             require(path.read_bytes() == expected, 'sealed package changed: ' + name)
             counts['sealed_files'] += 1
     for name in ('docs/decisions/ADR-0004-mapped-project-workspace.md',
-                 'project-dossier/transition/README.md'):
+                 'project-dossier/transition/README.md',
+                 'docs/qualification/evidence/2026-09-14-workspace-architecture-independent-review.md'):
         path = root / name
         for target in re.findall(r'\[[^\]]+\]\(([^)]+)\)', path.read_text()):
             target = urllib.parse.unquote(target.split('#')[0])
@@ -375,13 +412,14 @@ def main():
         counts = validate(crosswalk, baseline, manifest)
         verify_bound_inputs(ROOT, baseline)
         verify_actual_stores(ROOT)
+        counts['qualification_checks'] = verify_qualification_checks(ROOT)
         if args.audit:
             counts['audit'] = audit_candidate(ROOT, baseline)
     except (ContractError, KeyError, TypeError, OSError, subprocess.CalledProcessError) as exc:
         print(json.dumps({'status': 'FAIL', 'reason': str(exc)}))
         return 1
     print(json.dumps({'status': 'PASS', **counts,
-                      'scope': 'static transition contracts and original Git-bound inputs only',
+                      'scope': 'static transition contracts, Git-bound inputs and qualification evidence links',
                       'live_state_checked': False, 'moves_executed': False,
                       'private_input_accessed': False, 'approval': False}))
     return 0
