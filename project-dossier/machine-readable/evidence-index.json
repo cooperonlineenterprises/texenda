@@ -1,10 +1,10 @@
 {
   "schema_version": "texenda.dossier-evidence-index.generated.v1",
-  "generation_id": "9bea818feb1b297b2b8fe02013664b6b3cca80ad97a8c2a9a5d5436ac74a2a7f",
-  "generated_at": "2026-09-14T22:39:08+00:00",
+  "generation_id": "bb14a10ff385661146269f992263788554ce124059fa6e52ead5c5b74ce8de2e",
+  "generated_at": "2026-09-14T23:24:29+00:00",
   "authority": "generated_hash_index_only",
   "owner_path": "docs/qualification/evidence/",
-  "evidence_scope_sha256": "5d1b4a2cbe437c7d59e54b9f5293d080e01624fef181a2590d489f0226ff0b70",
+  "evidence_scope_sha256": "aa8750c8ca0155ab225f2202d74357658234d6e5f571152ac3f99169c698ebad",
   "evidence": [
     {
       "path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-author-correction-validation.log",
@@ -39,12 +39,20 @@
       "sha256": "44b957f4717b7e07ea7d858b25dba37c8eb636798d0eb647cff4ad7c08466c21"
     },
     {
+      "path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-independent-review.md",
+      "sha256": "2a7a1edc278991acc03ad7a1e6f71dcc7042ab7235773a4e4ad3c9195ebe8345"
+    },
+    {
       "path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-residual-race-correction-validation.log",
       "sha256": "32e6791a7f3b4c8c297cbb91b014fe4cce0d2199922c203529c1be3171cbf6c6"
     },
     {
       "path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-residual-race-correction.evidence.json",
       "sha256": "0aa1026a84d8a5bf2892c920a181410f5119f5afcb11f84c585c373566b8fea3"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-review.evidence.json",
+      "sha256": "81e6faf6dbfb4c0645501942498465585b55ff0fe2165aad05e0390d47e8e576"
     },
     {
       "path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-safety-correction-validation.log",
