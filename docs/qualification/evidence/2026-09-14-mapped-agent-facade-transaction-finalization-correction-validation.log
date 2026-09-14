@@ -1,0 +1,58 @@
+Texenda mapped facade transaction-finalization correction validation
+observed_at_utc: 2026-09-14T19:59:04Z
+actor/profile: agent:mapped-facade-sol / gpt-5.6-sol-max / T2 / max
+runtime/billing: Codex desktop 26.901.41600 (build 7982) / subscription / API 0
+base_revision: 680457854984020d0c8616a7f640a63079be9b3c
+rejected_predecessor: 19cbe5daa77cd10e1354a9018584d2907827f79f
+source_revision: e2357ab8c9c882183539907b813402302afeb50e
+tested_generated_revision: 939a9e89e26bb1eaab0331dcad15ae62ba560bf3
+tested_tree: 832c538d3641e1cb60d8aa139c984ca7c26971e2
+generation_id: 663fa2650aa0cdc6e3fb2c2e2555c32b1fd4e89a15e4111c8bbacd0624d1092b
+source_scope_sha256: 4b23263f9759205e89e20b0e7de893e8aef426d963bff376daf9908a075f9e2b
+19cbe5d_to_tested_diff_sha256: 46eb6f724fdb6a63d68f471293d79778b505c4432c1a00aed0784c4b14c3166e
+base_to_tested_diff_sha256: c854355612e9cfd7051025a40254871483a1e0f4519e46472b400e46755c4d13
+canonical_diff_command: git --no-optional-locks -c core.abbrev=40 -c color.ui=false diff --no-ext-diff --no-textconv --full-index --binary <base> <tip> | shasum -a 256
+
+FAIL third-rereview
+  Independent Astra/max rereview closed the earlier sixteen findings but rejected 19cbe5d on six transaction-finalization findings. The rejected candidate and all earlier commits/evidence remain immutable; this successor is not an approval.
+
+PASS final-state-write-transaction
+  Existing-state writes now exchange the new and previous state through the anchored state-directory descriptor. After the final stable state comparison, an exact injection point runs before a second binding/repository/state-root/lock/policy identity check. A binding change there writes no receipt. A post-replacement binding change atomically exchanges the previous inode back, verifies the prior bytes/inode, syncs the state directory and denies. Both fixtures preserve exact state bytes and receipt count.
+
+PASS exclusive-speculative-lock-ownership
+  Missing lock acquisition uses O_CREAT|O_EXCL. EEXIST opens the existing inode and repeats continuity without claiming creation. Failure cleanup unlinks only the exact exclusively-created, unchanged, zero-byte inode and syncs its state directory. A raced other-actor lock remains; an exclusively-created lock is removed on both acquisition and later final-boundary continuity failure.
+
+PASS namespace-durability
+  State, lock, private-directory, binding, moving archive, activation transaction/completion/conflict/recovery and rollback moves use descriptor-relative exclusive/exchange operations followed by destination-then-source parent-directory fsync (shared parents once). Instrumentation observes .texenda, external state root, local private parent, repository and recovery-directory sync. A moving-archive sync failure propagates while retaining the pending transaction; helper resume validates and completes it.
+
+PASS pending-activation-interlock
+  Every ordinary Harness binding snapshot and .agent ledger-fact read scans the anchored recovery directory and fails closed on any activation-transaction record. A real fork hard-exits immediately after binding exchange. Status and mutation both deny before state mutation; exact state/receipt bytes remain unchanged. The relocation helper alone recovers under the destination lock and completes activation.
+
+PASS active-archive-validation
+  Active-committed recovery requires the archived moving descriptor to be an anchored regular non-symlink file whose exact hash/content, migration ID and moving-to-active transition match the pending transaction and active binding. A hard exit after archive rename followed by archive corruption is denied with the transaction retained and state unchanged.
+
+PASS idempotent-completed-resume
+  Successful activation retains exactly one token-bound completion transaction plus the exact moving archive. Repeated apply/resume validates binding, completion, archive, state/receipt baseline, private location and destination lock twice before returning already_completed. Missing, duplicate, malformed or corrupt evidence is denied. A child hard-exit after durable transaction completion is safely recognized on repeat without changing state bytes.
+
+FAIL intermediate-extension-binding-refresh
+  The first .agent rerun after implementation correctly rejected stale extension hashes for the changed harness/helper. The extension adapter was updated to the exact new SHA-256 values; the complete facade suite and all final checks then passed. No live or external path changed.
+
+PASS final-candidate-check-and-check-all-no-write
+  validate.py --check and --check --all used explicit read-only /Users/jamesryancooper/Projects/texenda/repo/.texenda. Nine non-writers exited 0 and both refresh writers were SKIPPED_WRITER. All 257 candidate files plus live state/lock retained hashes (where allowed), inode, size, mtime and ctime, and Git ignored status. Private/CSV content was excluded. No cache was created and no .git atime claim is made.
+
+PASS final-candidate-suites
+  .agent tests: 23 PASS, including complete prebinding/actual-bound check-all and pending-ledger denial.
+  workspace tests: 76 PASS, including 33 state-relocation tests and three real hard-exit fixtures.
+  local coordination tests: 161 PASS, including 29 state-root/transaction tests.
+  sealed harness tests: 39 PASS.
+  installed sealed and preserved source package validators: 14/14 PASS each.
+
+PASS final-candidate-static-integrity
+  Facade check: 117 JSON, 1 TOML, 19 Python, 27 dossier paths, 3 instruction files, 101 local links and 214 bound evidence checks. Workspace audit: 42 concerns, 85 blueprint paths, 35 artifact types, 16 source moves and 214 qualification checks. git diff --check passes; no diff exists under specs/texenda-handoff relative to rejected predecessor 19cbe5d. Generated validation deterministically covers all eleven registered outputs.
+
+PASS live-metadata-private-boundary
+  Canonical main remains 680457854984020d0c8616a7f640a63079be9b3c. Live state remains SHA-256 b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235, 13 receipts, tip f39249184757101b108ea7ec5ea0ffebdd8237315b8ac3cad3ad0cc6ab3e827e, eleven profiles, zero leases and zero budget/spend. The exact real CSV path passes existence, ignore and untracked checks only.
+
+NOT_RUN independent Astra/max rereview, integration, live binding/state/private move, real mapped lifecycle, GitHub/external mutation, product/external gates.
+
+No live state/lock/private bytes, receipt, main, handoff package, network, GitHub, spend, deployment, publication, sending or production state changed. The real private CSV was never opened, hashed, parsed, copied, listed or logged. Synthetic private fixtures only were used by tests.
