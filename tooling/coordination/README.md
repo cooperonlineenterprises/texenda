@@ -40,7 +40,13 @@ before replacement. Lock acquisition and the final descriptor-relative state
 commit recheck binding, repository/state-root/lock identity and routing policy.
 A stale pre-cutover harness cannot recreate default state or leave a speculative
 lock after a cooperative cutover; an unchanged newly-created lock inode is
-removed only when acquisition continuity itself fails. Repository-relative
+removed only when acquisition or later commit continuity fails. The final state
+comparison is followed by a binding/root/lock/policy identity recheck at the
+replacement boundary. Existing-state writes use an atomic exchange so a
+post-replacement identity failure restores the exact previous state bytes before
+returning denial. Any pending state-location activation transaction blocks all
+ordinary harness and facade ledger access until the relocation helper recovers it.
+Repository-relative
 evidence always stays under `--root`.
 Bound reads and writes also enforce the migration receipt count/prefix and exact
 state bytes while the receipt count is unchanged; later valid appended receipts

@@ -10,7 +10,9 @@ from __future__ import annotations
 import argparse
 import contextlib
 import copy
+import ctypes
 from decimal import Decimal
+import errno
 import fcntl
 import hashlib
 import importlib.util
@@ -224,7 +226,54 @@ def binding_snapshot(path, repository_root):
     value = load_binding(path, repository_root)
     if stable_file_bytes(path, 'state-location binding') != raw:
         raise Denied('state-location binding changed during snapshot')
+    recovery = repository_root.parent / 'local/logs/workspace-relocation'
+    if recovery.exists() or recovery.is_symlink():
+        resolved_directory(recovery, 'state-location recovery directory', absolute=True)
+        flags = (os.O_RDONLY | getattr(os, 'O_DIRECTORY', 0)
+                 | getattr(os, 'O_NOFOLLOW', 0))
+        recovery_fd = os.open(recovery, flags)
+        try:
+            opened = os.fstat(recovery_fd)
+            pending = [name for name in os.listdir(recovery_fd)
+                       if name.endswith('.activation-transaction.json')]
+            current = recovery.lstat()
+            if (opened.st_dev, opened.st_ino) != (current.st_dev, current.st_ino):
+                raise Denied('state-location recovery directory changed during scan')
+        finally:
+            os.close(recovery_fd)
+    else:
+        pending = []
+    if pending:
+        raise Denied('state-location activation transaction is pending recovery')
     return value, (*path_identity(path), hashlib.sha256(raw).hexdigest())
+
+
+def renameat_state(source_fd, source_name, destination_fd, destination_name, flag):
+    libc = ctypes.CDLL(None, use_errno=True)
+    source_bytes, destination_bytes = os.fsencode(source_name), os.fsencode(destination_name)
+    if sys.platform == 'darwin' and hasattr(libc, 'renameatx_np'):
+        operation = libc.renameatx_np
+        operation.argtypes = (ctypes.c_int, ctypes.c_char_p, ctypes.c_int,
+                              ctypes.c_char_p, ctypes.c_uint)
+        operation.restype = ctypes.c_int
+        platform_flag = 0x00000004 if flag == 'exclusive' else 0x00000002
+        result = operation(source_fd, source_bytes, destination_fd, destination_bytes,
+                           platform_flag)
+    elif sys.platform.startswith('linux') and hasattr(libc, 'renameat2'):
+        operation = libc.renameat2
+        operation.argtypes = (ctypes.c_int, ctypes.c_char_p, ctypes.c_int,
+                              ctypes.c_char_p, ctypes.c_uint)
+        operation.restype = ctypes.c_int
+        platform_flag = 1 if flag == 'exclusive' else 2
+        result = operation(source_fd, source_bytes, destination_fd, destination_bytes,
+                           platform_flag)
+    else:
+        raise Denied('platform lacks descriptor-relative state transaction primitives')
+    if result != 0:
+        error = ctypes.get_errno()
+        if error in (errno.EEXIST, errno.ENOTEMPTY):
+            raise Denied('state transaction destination already exists')
+        raise OSError(error, os.strerror(error), source_name, destination_name)
 
 
 def check_receipts(state):
@@ -403,14 +452,33 @@ class Harness(legacy.Harness):
         directory_flags = os.O_RDONLY | getattr(os, 'O_DIRECTORY', 0) | getattr(os, 'O_NOFOLLOW', 0)
         root_descriptor = os.open(self.root, directory_flags)
         directory_descriptor = os.open(self.dir, directory_flags)
-        lock_existed = True
-        try:
-            os.stat('state.lock', dir_fd=directory_descriptor, follow_symlinks=False)
-        except FileNotFoundError:
-            lock_existed = False
-        flags = os.O_RDWR | os.O_CREAT | getattr(os, 'O_NOFOLLOW', 0)
-        descriptor = os.open('state.lock', flags, 0o600, dir_fd=directory_descriptor)
-        created_identity = path_identity(self.lockfile) if not lock_existed else None
+        self._interleave('before_lock_create')
+        descriptor = None
+        created = False
+        nofollow = getattr(os, 'O_NOFOLLOW', 0)
+        for _attempt in range(3):
+            try:
+                descriptor = os.open('state.lock', os.O_RDWR | os.O_CREAT | os.O_EXCL
+                                     | nofollow, 0o600, dir_fd=directory_descriptor)
+                created = True
+                break
+            except FileExistsError:
+                try:
+                    descriptor = os.open('state.lock', os.O_RDWR | nofollow,
+                                         dir_fd=directory_descriptor)
+                    created = False
+                    break
+                except FileNotFoundError:
+                    continue
+        if descriptor is None:
+            os.close(directory_descriptor)
+            os.close(root_descriptor)
+            raise Denied('state lock namespace changed repeatedly during acquisition')
+        opened_at_creation = os.fstat(descriptor)
+        created_identity = ((opened_at_creation.st_dev, opened_at_creation.st_ino,
+                             opened_at_creation.st_mode, opened_at_creation.st_size,
+                             opened_at_creation.st_mtime_ns, opened_at_creation.st_ctime_ns)
+                            if created else None)
         acquired = False
         try:
             try:
@@ -423,7 +491,7 @@ class Harness(legacy.Harness):
                 'dir_fd': directory_descriptor,
                 'lock_fd': descriptor,
                 'lock_identity': inode_identity(self.lockfile),
-                'lock_created': not lock_existed,
+                'lock_created': created,
                 'lock_created_identity': created_identity,
             }
             try:
@@ -432,7 +500,14 @@ class Harness(legacy.Harness):
             except BaseException:
                 self._cleanup_speculative_lock(token)
                 raise
-            yield token
+            try:
+                yield token
+            except BaseException:
+                # A lock created by this invocation is still speculative until
+                # the mutation commits. Remove only that exact unchanged inode
+                # when any later continuity/transaction boundary fails.
+                self._cleanup_speculative_lock(token)
+                raise
         finally:
             if acquired:
                 fcntl.flock(descriptor, fcntl.LOCK_UN)
@@ -454,8 +529,9 @@ class Harness(legacy.Harness):
                 and (opened.st_dev, opened.st_ino) == (current.st_dev, current.st_ino)
                 and current.st_size == 0):
             os.unlink('state.lock', dir_fd=token['dir_fd'])
+            os.fsync(token['dir_fd'])
 
-    def _continuity(self, token, expected_state=None, expect_state_absent=False):
+    def _identity_continuity(self, token):
         self._binding_current()
         self._policy_current()
         self._validate_state_root_current()
@@ -470,6 +546,9 @@ class Harness(legacy.Harness):
                 != token['lock_identity']
                 or (lock_path.st_dev, lock_path.st_ino) != (lock_now.st_dev, lock_now.st_ino)):
             raise Denied('repository/state/lock identity changed during mutation')
+
+    def _continuity(self, token, expected_state=None, expect_state_absent=False):
+        self._identity_continuity(token)
         if expect_state_absent:
             try:
                 os.stat('state.json', dir_fd=token['dir_fd'], follow_symlinks=False)
@@ -479,12 +558,17 @@ class Harness(legacy.Harness):
                 raise Denied('state appeared before initialization commit')
         if expected_state is not None and self._stable_state_snapshot() != expected_state:
             raise Denied('state changed or was replaced before commit')
+        self._interleave('after_final_state_comparison_before_replacement', token)
+        # This check is intentionally after the final state comparison so a
+        # binding/root/lock/policy change at that exact boundary cannot commit.
+        self._identity_continuity(token)
 
     def _atomic_state_bytes(self, token, raw, *, expected_state=None,
                             expect_state_absent=False):
         temporary = '.state-write-' + secrets.token_hex(12)
         flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, 'O_NOFOLLOW', 0)
         descriptor = os.open(temporary, flags, 0o600, dir_fd=token['dir_fd'])
+        created_state_identity = os.fstat(descriptor)
         try:
             with os.fdopen(descriptor, 'wb') as stream:
                 stream.write(raw)
@@ -492,14 +576,42 @@ class Harness(legacy.Harness):
                 os.fsync(stream.fileno())
             self._interleave('before_state_commit', token)
             self._continuity(token, expected_state, expect_state_absent)
-            os.replace(temporary, 'state.json', src_dir_fd=token['dir_fd'],
-                       dst_dir_fd=token['dir_fd'])
+            if expected_state is None:
+                renameat_state(token['dir_fd'], temporary, token['dir_fd'],
+                               'state.json', 'exclusive')
+            else:
+                renameat_state(token['dir_fd'], temporary, token['dir_fd'],
+                               'state.json', 'exchange')
             os.fsync(token['dir_fd'])
-            self._binding_current()
-            self._validate_state_root_current()
+            try:
+                self._interleave('after_state_replacement_before_validation', token)
+                self._identity_continuity(token)
+            except BaseException:
+                if expected_state is None:
+                    current = os.stat('state.json', dir_fd=token['dir_fd'],
+                                      follow_symlinks=False)
+                    if ((current.st_dev, current.st_ino)
+                            != (created_state_identity.st_dev, created_state_identity.st_ino)):
+                        raise Denied('new state identity changed; cannot safely roll back')
+                    os.unlink('state.json', dir_fd=token['dir_fd'])
+                else:
+                    renameat_state(token['dir_fd'], temporary, token['dir_fd'],
+                                   'state.json', 'exchange')
+                    restored = self._stable_state_snapshot()
+                    if (restored[0] != expected_state[0]
+                            or restored[1][0:2] != expected_state[1][0:2]):
+                        raise Denied('previous state could not be restored after boundary failure')
+                os.fsync(token['dir_fd'])
+                raise
+            if expected_state is not None:
+                # The previous state is now the exclusively owned transaction
+                # temporary. Commit is durable before removing that old inode.
+                os.unlink(temporary, dir_fd=token['dir_fd'])
+                os.fsync(token['dir_fd'])
         finally:
             try:
                 os.unlink(temporary, dir_fd=token['dir_fd'])
+                os.fsync(token['dir_fd'])
             except FileNotFoundError:
                 pass
 

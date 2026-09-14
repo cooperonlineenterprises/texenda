@@ -45,6 +45,23 @@ class StateRelocationTests(unittest.TestCase):
     def prepare(self):
         return relocation.prepare(self.repo, self.state_root, 'synthetic-migration')
 
+    def fork_interrupted_apply(self, stage, exit_code=73):
+        """Hard-exit a child at an exact activation stage and return its status."""
+        pid = os.fork()
+        if pid == 0:
+            def interrupt(observed, _paths, _raw):
+                if observed == stage:
+                    os._exit(exit_code)
+            try:
+                relocation.apply(self.repo, self.state_root, interleave=interrupt)
+            except BaseException:
+                os._exit(97)
+            os._exit(0)
+        _pid, status = os.waitpid(pid, 0)
+        self.assertTrue(os.WIFEXITED(status))
+        self.assertEqual(os.WEXITSTATUS(status), exit_code)
+        return status
+
     def test_prepare_writes_closed_moving_marker_before_any_rename(self):
         result = self.prepare()
         self.assertEqual(result['status'], 'moving')
@@ -66,6 +83,36 @@ class StateRelocationTests(unittest.TestCase):
         self.assertTrue((self.home / 'local/private-inputs').is_dir())
         self.assertEqual(relocation.verify(self.repo, self.state_root)['status'], 'active')
         self.assertEqual(hm.Harness(self.repo, state_root=self.state_root).status()['version'], '2.0')
+
+    def test_every_renamed_namespace_is_fsynced_before_activation_returns(self):
+        self.prepare()
+        original_fsync = relocation.os.fsync
+        synchronized = set()
+
+        def observe(descriptor):
+            original_fsync(descriptor)
+            metadata = os.fstat(descriptor)
+            if not relocation.stat.S_ISDIR(metadata.st_mode):
+                return
+            expected = {
+                'default': self.repo / '.texenda',
+                'external': self.state_root,
+                'private-parent': self.home / 'local',
+                'repository': self.repo,
+                'recovery': self.home / 'local/logs/workspace-relocation',
+            }
+            for label, path in expected.items():
+                try:
+                    current = path.lstat()
+                except FileNotFoundError:
+                    continue
+                if (metadata.st_dev, metadata.st_ino) == (current.st_dev, current.st_ino):
+                    synchronized.add(label)
+
+        with mock.patch.object(relocation.os, 'fsync', side_effect=observe):
+            relocation.apply(self.repo, self.state_root)
+        self.assertEqual(synchronized,
+                         {'default', 'external', 'private-parent', 'repository', 'recovery'})
 
     def test_interrupted_after_state_resumes_without_copy_or_rewrite(self):
         self.prepare()
@@ -337,6 +384,121 @@ class StateRelocationTests(unittest.TestCase):
             'synthetic-migration.activation-conflict.*.json'))
         self.assertEqual(len(conflicts), 1)
         self.assertEqual(relocation.apply(self.repo, self.state_root)['status'], 'active')
+
+    def test_hard_exit_after_exchange_blocks_harness_until_helper_recovers(self):
+        self.prepare()
+        self.fork_interrupted_apply('binding_after_exchange')
+        pending = (self.home / 'local/logs/workspace-relocation'
+                   / 'synthetic-migration.activation-transaction.json')
+        state_path = self.state_root / 'state.json'
+        state_before = state_path.read_bytes()
+        receipt_count = len(json.loads(state_before)['events'])
+        self.assertTrue(pending.is_file())
+        self.assertEqual(json.loads((self.repo / hm.BINDING_NAME).read_text())['status'],
+                         'active')
+        for operation in ('status', 'mutation'):
+            with self.subTest(operation=operation), \
+                    self.assertRaisesRegex(hm.Denied, 'pending recovery'):
+                harness = hm.Harness(self.repo, state_root=self.state_root)
+                if operation == 'status':
+                    harness.status()
+                else:
+                    harness.admit('WP-00', 'fixture')
+        self.assertEqual(state_path.read_bytes(), state_before)
+        self.assertEqual(len(json.loads(state_path.read_bytes())['events']), receipt_count)
+        resumed = relocation.apply(self.repo, self.state_root)
+        self.assertEqual(resumed['status'], 'active')
+        self.assertTrue(resumed['recovered_activation'])
+        self.assertFalse(pending.exists())
+        self.assertEqual(state_path.read_bytes(), state_before)
+
+    def test_active_committed_recovery_rejects_corrupt_moving_archive(self):
+        self.prepare()
+        self.fork_interrupted_apply('binding_after_moving_archive')
+        recovery = self.home / 'local/logs/workspace-relocation'
+        pending = recovery / 'synthetic-migration.activation-transaction.json'
+        archive = recovery / 'synthetic-migration.activated-moving.json'
+        self.assertTrue(pending.is_file())
+        archive.write_text('{"status":"moving","corrupt":true}\n')
+        state_before = (self.state_root / 'state.json').read_bytes()
+        with self.assertRaisesRegex(hm.Denied, 'archived moving binding'):
+            relocation.apply(self.repo, self.state_root)
+        self.assertTrue(pending.is_file())
+        self.assertEqual((self.state_root / 'state.json').read_bytes(), state_before)
+
+    def test_completed_activation_is_idempotent_and_requires_exact_evidence(self):
+        self.prepare()
+        first = relocation.apply(self.repo, self.state_root)
+        self.assertFalse(first['already_completed'])
+        state_before = (self.state_root / 'state.json').read_bytes()
+        second = relocation.apply(self.repo, self.state_root)
+        self.assertTrue(second['already_completed'])
+        self.assertFalse(second['recovered_activation'])
+        recovery = self.home / 'local/logs/workspace-relocation'
+        archive = recovery / 'synthetic-migration.activated-moving.json'
+        completed = list(recovery.glob('synthetic-migration.activation-complete.*.json'))
+        self.assertEqual(len(completed), 1)
+        archive_raw = archive.read_bytes()
+        completed_raw = completed[0].read_bytes()
+
+        archive.unlink()
+        with self.assertRaisesRegex(hm.Denied, 'archive.*missing'):
+            relocation.apply(self.repo, self.state_root)
+        archive.write_bytes(archive_raw)
+
+        duplicate = recovery / 'synthetic-migration.activation-complete.ffffffffffffffff.json'
+        duplicate.write_bytes(completed_raw)
+        with self.assertRaisesRegex(hm.Denied, 'exactly one'):
+            relocation.apply(self.repo, self.state_root)
+        duplicate.unlink()
+
+        completed[0].write_text('{}\n')
+        with self.assertRaisesRegex(hm.Denied, 'activation transaction record'):
+            relocation.apply(self.repo, self.state_root)
+        completed[0].write_bytes(completed_raw)
+
+        archive.write_text('{}\n')
+        with self.assertRaisesRegex(hm.Denied, 'archived moving binding'):
+            relocation.apply(self.repo, self.state_root)
+        archive.write_bytes(archive_raw)
+        self.assertEqual((self.state_root / 'state.json').read_bytes(), state_before)
+        self.assertTrue(relocation.apply(self.repo, self.state_root)['already_completed'])
+
+    def test_hard_exit_after_completion_is_an_explicit_idempotent_resume(self):
+        self.prepare()
+        self.fork_interrupted_apply('binding_after_completion_before_return')
+        pending = (self.home / 'local/logs/workspace-relocation'
+                   / 'synthetic-migration.activation-transaction.json')
+        self.assertFalse(pending.exists())
+        state_before = (self.state_root / 'state.json').read_bytes()
+        result = relocation.apply(self.repo, self.state_root)
+        self.assertTrue(result['already_completed'])
+        self.assertFalse(result['recovered_activation'])
+        self.assertEqual((self.state_root / 'state.json').read_bytes(), state_before)
+
+    def test_activation_namespace_fsync_failure_retains_pending_recovery(self):
+        self.prepare()
+        original = relocation._fsync_rename_parents
+        calls = [0]
+
+        def fail_after_moving_archive(source_fd, destination_fd):
+            calls[0] += 1
+            if calls[0] == 5:
+                raise OSError('synthetic moving-archive fsync failure')
+            return original(source_fd, destination_fd)
+
+        with mock.patch.object(relocation, '_fsync_rename_parents',
+                               side_effect=fail_after_moving_archive):
+            with self.assertRaisesRegex(OSError, 'moving-archive fsync failure'):
+                relocation.apply(self.repo, self.state_root)
+        pending = (self.home / 'local/logs/workspace-relocation'
+                   / 'synthetic-migration.activation-transaction.json')
+        self.assertTrue(pending.is_file())
+        with self.assertRaisesRegex(hm.Denied, 'pending recovery'):
+            hm.Harness(self.repo, state_root=self.state_root)
+        result = relocation.apply(self.repo, self.state_root)
+        self.assertTrue(result['already_completed'])
+        self.assertTrue(result['recovered_activation'])
 
     def test_persisted_post_exchange_transaction_is_recovered_under_lock(self):
         self.prepare()

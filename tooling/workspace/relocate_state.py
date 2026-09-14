@@ -238,6 +238,41 @@ def _exchange_rename_syscall(first_fd, first_name, second_fd, second_name):
     _renameat_syscall(first_fd, first_name, second_fd, second_name, 'exchange')
 
 
+def _fsync_rename_parents(source_fd, destination_fd):
+    """Persist destination then source namespaces; sync a shared parent once."""
+    destination = os.fstat(destination_fd)
+    source = os.fstat(source_fd)
+    os.fsync(destination_fd)
+    if (source.st_dev, source.st_ino) != (destination.st_dev, destination.st_ino):
+        os.fsync(source_fd)
+
+
+def _exclusive_rename_durable(source_fd, source_name, destination_fd, destination_name):
+    _exclusive_rename_syscall(source_fd, source_name, destination_fd, destination_name)
+    _fsync_rename_parents(source_fd, destination_fd)
+
+
+def _exchange_rename_durable(first_fd, first_name, second_fd, second_name):
+    _exchange_rename_syscall(first_fd, first_name, second_fd, second_name)
+    _fsync_rename_parents(first_fd, second_fd)
+
+
+def _open_directory_fd(path, label):
+    path = Path(path)
+    directory(path, label)
+    expected = path.lstat()
+    flags = os.O_RDONLY | getattr(os, 'O_DIRECTORY', 0) | getattr(os, 'O_NOFOLLOW', 0)
+    descriptor = os.open(path, flags)
+    opened = os.fstat(descriptor)
+    current = path.lstat()
+    if ((opened.st_dev, opened.st_ino, stat.S_IFMT(opened.st_mode))
+            != (expected.st_dev, expected.st_ino, stat.S_IFMT(expected.st_mode))
+            or (current.st_dev, current.st_ino) != (opened.st_dev, opened.st_ino)):
+        os.close(descriptor)
+        raise Denied(label + ' changed during anchored open')
+    return descriptor
+
+
 def _stable_at(directory_fd, name, label):
     if '/' in name or name in ('', '.', '..'):
         raise Denied(label + ' has an unsafe descriptor-relative name')
@@ -296,8 +331,32 @@ def _ensure_recovery_directory(paths):
         directory(paths['rollback_records'], 'rollback records')
     else:
         directory(paths['rollback_records'].parent, 'rollback-record parent')
-        os.mkdir(paths['rollback_records'], 0o700)
+        parent_fd = _open_directory_fd(paths['rollback_records'].parent,
+                                       'rollback-record parent')
+        try:
+            os.mkdir(paths['rollback_records'].name, 0o700, dir_fd=parent_fd)
+            os.fsync(parent_fd)
+        finally:
+            os.close(parent_fd)
     directory(paths['rollback_records'], 'rollback records')
+
+
+def _complete_activation_transaction(recovery_fd, transaction_name, completed_name):
+    """Durably complete, or restore the pending name before propagating failure."""
+    _exclusive_rename_syscall(recovery_fd, transaction_name, recovery_fd,
+                              completed_name)
+    try:
+        _fsync_rename_parents(recovery_fd, recovery_fd)
+    except BaseException as sync_error:
+        try:
+            _exclusive_rename_syscall(recovery_fd, completed_name, recovery_fd,
+                                      transaction_name)
+            _fsync_rename_parents(recovery_fd, recovery_fd)
+        except BaseException as rollback_error:
+            raise Denied(
+                'activation completion durability failed; recovery layout is ambiguous'
+            ) from rollback_error
+        raise sync_error
 
 
 def activate_binding(paths, binding, binding_raw, binding_identity, *, race_hook=None,
@@ -322,9 +381,8 @@ def activate_binding(paths, binding, binding_raw, binding_identity, *, race_hook
         'token': token,
     }
     transaction_raw = json.dumps(transaction, indent=2, sort_keys=True).encode() + b'\n'
-    flags = os.O_RDONLY | getattr(os, 'O_DIRECTORY', 0) | getattr(os, 'O_NOFOLLOW', 0)
-    repo_fd = os.open(paths['repo'], flags)
-    recovery_fd = os.open(paths['rollback_records'], flags)
+    repo_fd = _open_directory_fd(paths['repo'], 'repository root')
+    recovery_fd = _open_directory_fd(paths['rollback_records'], 'rollback records')
     exchanged = False
     committed = False
     try:
@@ -342,6 +400,7 @@ def activate_binding(paths, binding, binding_raw, binding_identity, *, race_hook
         _exchange_rename_syscall(repo_fd, temporary_name, repo_fd,
                                  coordination.BINDING_NAME)
         exchanged = True
+        _fsync_rename_parents(repo_fd, repo_fd)
         if interleave:
             interleave('binding_after_exchange', paths, active_raw)
         displaced_raw, displaced_identity = _stable_at(repo_fd, temporary_name,
@@ -352,27 +411,29 @@ def activate_binding(paths, binding, binding_raw, binding_identity, *, race_hook
             raise Denied('raced state binding detected by atomic activation exchange')
         _exclusive_rename_syscall(repo_fd, temporary_name, recovery_fd, moving_archive)
         committed = True
-        _exclusive_rename_syscall(recovery_fd, transaction_name, recovery_fd,
-                                  completed_name)
-        os.fsync(repo_fd)
-        os.fsync(recovery_fd)
+        _fsync_rename_parents(repo_fd, recovery_fd)
+        if interleave:
+            interleave('binding_after_moving_archive', paths, active_raw)
+        _complete_activation_transaction(recovery_fd, transaction_name, completed_name)
+        if interleave:
+            interleave('binding_after_completion_before_return', paths, active_raw)
     except BaseException as exc:
         if exchanged and not committed:
             try:
-                _exchange_rename_syscall(repo_fd, temporary_name, repo_fd,
+                _exchange_rename_durable(repo_fd, temporary_name, repo_fd,
                                          coordination.BINDING_NAME)
                 exchanged = False
             except BaseException as rollback_error:
                 raise Denied('activation exchange could not be rolled back; transaction record retained') from rollback_error
         if not committed:
             try:
-                _exclusive_rename_syscall(repo_fd, temporary_name, recovery_fd,
+                _exclusive_rename_durable(repo_fd, temporary_name, recovery_fd,
                                           conflict_name)
             except (FileNotFoundError, Denied, OSError):
                 pass
             try:
                 recovered_name = migration_id + '.activation-recovered.' + token + '.json'
-                _exclusive_rename_syscall(recovery_fd, transaction_name, recovery_fd,
+                _exclusive_rename_durable(recovery_fd, transaction_name, recovery_fd,
                                           recovered_name)
             except (FileNotFoundError, Denied, OSError):
                 pass
@@ -382,19 +443,7 @@ def activate_binding(paths, binding, binding_raw, binding_identity, *, race_hook
         os.close(repo_fd)
 
 
-def recover_activation_transaction(paths):
-    """Restore/finish an interrupted activation transaction while state lock is held."""
-    _ensure_recovery_directory(paths)
-    binding_raw = stable_file_bytes(paths['binding'], 'state binding')
-    binding = coordination.load_binding(paths['binding'], paths['repo'])
-    migration_id = validate_migration_id(binding['migration_id'])
-    transaction_name = migration_id + '.activation-transaction.json'
-    transaction_path = paths['rollback_records'] / transaction_name
-    if not transaction_path.exists() and not transaction_path.is_symlink():
-        return {'status': 'none'}
-    regular_file(transaction_path, 'activation transaction')
-    transaction_raw = stable_file_bytes(transaction_path, 'activation transaction')
-    transaction = coordination.load_json(transaction_raw)
+def validate_activation_transaction(transaction, migration_id):
     required = {'schema_version', 'migration_id', 'temporary_name',
                 'expected_moving_sha256', 'candidate_active_sha256', 'token'}
     if (not isinstance(transaction, dict) or set(transaction) != required
@@ -406,16 +455,63 @@ def recover_activation_transaction(paths):
             or not re.fullmatch(r'[0-9a-f]{64}', transaction.get('expected_moving_sha256', ''))
             or not re.fullmatch(r'[0-9a-f]{64}', transaction.get('candidate_active_sha256', ''))):
         raise Denied('activation transaction record is invalid')
-    token = transaction['token']
-    temporary_name = transaction['temporary_name']
-    completed_name = migration_id + '.activation-complete.' + token + '.json'
-    recovered_name = migration_id + '.activation-recovered.' + token + '.json'
-    conflict_name = migration_id + '.activation-conflict.' + token + '.json'
-    moving_archive = migration_id + '.activated-moving.json'
-    flags = os.O_RDONLY | getattr(os, 'O_DIRECTORY', 0) | getattr(os, 'O_NOFOLLOW', 0)
-    repo_fd = os.open(paths['repo'], flags)
-    recovery_fd = os.open(paths['rollback_records'], flags)
+    return transaction
+
+
+def validate_moving_archive(recovery_fd, name, transaction, active_binding, active_raw):
     try:
+        archived_stat = os.stat(name, dir_fd=recovery_fd, follow_symlinks=False)
+    except FileNotFoundError as exc:
+        raise Denied('archived moving binding is missing') from exc
+    if not stat.S_ISREG(archived_stat.st_mode):
+        raise Denied('archived moving binding must be a regular non-symlink file')
+    try:
+        archive_raw, _archive_identity = _stable_at(recovery_fd, name,
+                                                    'archived moving binding')
+    except OSError as exc:
+        raise Denied('archived moving binding cannot be opened safely') from exc
+    if sha(archive_raw) != transaction['expected_moving_sha256']:
+        raise Denied('archived moving binding hash differs from activation transaction')
+    archived = coordination.load_json(archive_raw)
+    if (not isinstance(archived, dict) or archived.get('status') != 'moving'
+            or archived.get('migration_id') != transaction['migration_id']
+            or dict(archived, status='active') != active_binding
+            or sha(active_raw) != transaction['candidate_active_sha256']):
+        raise Denied('archived moving binding content does not match active transaction')
+    return archived
+
+
+def recover_activation_transaction(paths):
+    """Restore/finish an interrupted activation transaction while state lock is held."""
+    _ensure_recovery_directory(paths)
+    binding_raw = stable_file_bytes(paths['binding'], 'state binding')
+    binding = coordination.load_binding(paths['binding'], paths['repo'])
+    migration_id = validate_migration_id(binding['migration_id'])
+    transaction_name = migration_id + '.activation-transaction.json'
+    recovery_fd = _open_directory_fd(paths['rollback_records'], 'rollback records')
+    repo_fd = None
+    try:
+        pending_names = sorted(name for name in os.listdir(recovery_fd)
+                               if name.endswith('.activation-transaction.json'))
+        if not pending_names:
+            return {'status': 'none'}
+        if pending_names != [transaction_name]:
+            raise Denied('activation recovery has an ambiguous pending transaction set')
+        transaction_stat = os.stat(transaction_name, dir_fd=recovery_fd,
+                                   follow_symlinks=False)
+        if not stat.S_ISREG(transaction_stat.st_mode):
+            raise Denied('activation transaction must be a regular non-symlink file')
+        transaction_raw = _stable_at(recovery_fd, transaction_name,
+                                     'activation transaction')[0]
+        transaction = coordination.load_json(transaction_raw)
+        validate_activation_transaction(transaction, migration_id)
+        token = transaction['token']
+        temporary_name = transaction['temporary_name']
+        completed_name = migration_id + '.activation-complete.' + token + '.json'
+        recovered_name = migration_id + '.activation-recovered.' + token + '.json'
+        conflict_name = migration_id + '.activation-conflict.' + token + '.json'
+        moving_archive = migration_id + '.activated-moving.json'
+        repo_fd = _open_directory_fd(paths['repo'], 'repository root')
         binding_hash = sha(binding_raw)
         temporary_exists = _exists_at(repo_fd, temporary_name)
         archive_exists = _exists_at(recovery_fd, moving_archive)
@@ -423,14 +519,16 @@ def recover_activation_transaction(paths):
                 and not temporary_exists and archive_exists):
             # Exchange and moving-descriptor archival committed; only the
             # transaction-record rename was interrupted.
-            _exclusive_rename_syscall(recovery_fd, transaction_name, recovery_fd,
-                                      completed_name)
+            validate_moving_archive(recovery_fd, moving_archive, transaction,
+                                    binding, binding_raw)
+            _complete_activation_transaction(recovery_fd, transaction_name,
+                                             completed_name)
             return {'status': 'active_committed', 'binding': binding}
         if (binding_hash == transaction['expected_moving_sha256'] and not temporary_exists):
             # Interrupted before candidate creation/exchange. Preserve the
             # transaction as an aborted recovery record and continue moving.
             aborted_name = migration_id + '.activation-aborted.' + token + '.json'
-            _exclusive_rename_syscall(recovery_fd, transaction_name, recovery_fd,
+            _exclusive_rename_durable(recovery_fd, transaction_name, recovery_fd,
                                       aborted_name)
             return {'status': 'moving_restored', 'binding': binding}
         if not temporary_exists:
@@ -440,15 +538,15 @@ def recover_activation_transaction(paths):
         if binding_hash == transaction['candidate_active_sha256']:
             # Post-exchange interruption or raced displaced descriptor: restore
             # whatever descriptor was displaced without discarding either file.
-            _exchange_rename_syscall(repo_fd, temporary_name, repo_fd,
+            _exchange_rename_durable(repo_fd, temporary_name, repo_fd,
                                      coordination.BINDING_NAME)
             binding_raw = stable_file_bytes(paths['binding'], 'restored state binding')
             temporary_raw, _temporary_identity = _stable_at(
                 repo_fd, temporary_name, 'restored active candidate')
         if sha(temporary_raw) != transaction['candidate_active_sha256']:
             raise Denied('activation recovery cannot identify the preserved active candidate')
-        _exclusive_rename_syscall(repo_fd, temporary_name, recovery_fd, conflict_name)
-        _exclusive_rename_syscall(recovery_fd, transaction_name, recovery_fd,
+        _exclusive_rename_durable(repo_fd, temporary_name, recovery_fd, conflict_name)
+        _exclusive_rename_durable(recovery_fd, transaction_name, recovery_fd,
                                   recovered_name)
         restored = coordination.load_binding(paths['binding'], paths['repo'])
         if restored['status'] != 'moving':
@@ -456,7 +554,46 @@ def recover_activation_transaction(paths):
         return {'status': 'moving_restored', 'binding': restored}
     finally:
         os.close(recovery_fd)
-        os.close(repo_fd)
+        if repo_fd is not None:
+            os.close(repo_fd)
+
+
+def validate_completed_activation(paths):
+    binding_raw = stable_file_bytes(paths['binding'], 'state binding')
+    binding = coordination.load_binding(paths['binding'], paths['repo'])
+    migration_id = validate_migration_id(binding['migration_id'])
+    directory(paths['rollback_records'], 'rollback records')
+    recovery_fd = _open_directory_fd(paths['rollback_records'], 'rollback records')
+    completed_names = sorted(
+        name for name in os.listdir(recovery_fd)
+        if re.fullmatch(re.escape(migration_id)
+                        + r'\.activation-complete\.[0-9a-f]{16}\.json', name)
+    )
+    if binding['status'] != 'active':
+        os.close(recovery_fd)
+        if completed_names:
+            raise Denied('completed activation evidence conflicts with a non-active binding')
+        return None
+    if len(completed_names) != 1:
+        os.close(recovery_fd)
+        raise Denied('active binding requires exactly one completed activation transaction')
+    try:
+        completed_name = completed_names[0]
+        completed_stat = os.stat(completed_name, dir_fd=recovery_fd,
+                                 follow_symlinks=False)
+        if not stat.S_ISREG(completed_stat.st_mode):
+            raise Denied('completed activation transaction must be a regular file')
+        transaction = coordination.load_json(_stable_at(
+            recovery_fd, completed_name, 'completed activation transaction')[0])
+        validate_activation_transaction(transaction, migration_id)
+        if sha(binding_raw) != transaction['candidate_active_sha256']:
+            raise Denied('completed transaction does not bind the active descriptor')
+        validate_moving_archive(recovery_fd, migration_id + '.activated-moving.json',
+                                transaction, binding, binding_raw)
+    finally:
+        os.close(recovery_fd)
+    return {'binding': binding, 'transaction': transaction,
+            'completed_path': str(paths['rollback_records'] / completed_name)}
 
 
 def rename_no_replace(source, destination, label, *, race_hook=None):
@@ -493,7 +630,7 @@ def rename_no_replace(source, destination, label, *, race_hook=None):
                 != (source_identity.st_dev, source_identity.st_ino,
                     stat.S_IFMT(source_identity.st_mode))):
             raise Denied(label + ' source was substituted before descriptor-relative rename')
-        _exclusive_rename_syscall(source_parent_fd, source.name,
+        _exclusive_rename_durable(source_parent_fd, source.name,
                                   destination_parent_fd, destination.name)
         moved = os.stat(destination.name, dir_fd=destination_parent_fd, follow_symlinks=False)
         if (moved.st_dev, moved.st_ino) != (source_identity.st_dev, source_identity.st_ino):
@@ -592,7 +729,12 @@ def prepare(repository_root, state_root, migration_id='state-root-20260914'):
             raise Denied('state root must be empty before preparation')
     else:
         directory(paths['state_root'].parent, 'state-root parent')
-        os.mkdir(paths['state_root'], 0o700)
+        parent_fd = _open_directory_fd(paths['state_root'].parent, 'state-root parent')
+        try:
+            os.mkdir(paths['state_root'].name, 0o700, dir_fd=parent_fd)
+            os.fsync(parent_fd)
+        finally:
+            os.close(parent_fd)
     revalidate_parents(paths)
     with held_relocation_lock(paths) as (lock_path, _descriptor):
         require_held_lock_path(lock_path, _descriptor)
@@ -655,9 +797,16 @@ def apply(repository_root, state_root, *, stop_after=None, race_hooks=None,
         require_held_lock_path(lock_path, _descriptor)
         revalidate_parents(paths)
         recovery = recover_activation_transaction(paths)
-        if recovery['status'] == 'active_committed':
-            result = verify_layout(paths, recovery['binding'])
-            return dict(result, status='active', recovered_activation=True)
+        completed = validate_completed_activation(paths)
+        if completed is not None:
+            require_held_lock_path(paths['destination_lock'], _descriptor)
+            result = verify_layout(paths, completed['binding'])
+            require_held_lock_path(paths['destination_lock'], _descriptor)
+            if validate_completed_activation(paths) != completed:
+                raise Denied('completed activation evidence changed during idempotent resume')
+            return dict(result, status='active', already_completed=True,
+                        recovered_activation=recovery['status'] == 'active_committed',
+                        completion_evidence=completed['completed_path'])
         binding, binding_raw, binding_identity = read_moving(paths)
         if stable_file_bytes(paths['binding'], 'state binding') != binding_raw:
             raise Denied('state binding changed before relocation')
@@ -697,7 +846,8 @@ def apply(repository_root, state_root, *, stop_after=None, race_hooks=None,
             raise Denied('state binding changed at final activation boundary')
         activate_binding(paths, binding, binding_raw, binding_identity,
                          race_hook=hooks.get('binding_swap'), interleave=interleave)
-    return dict(result, status='active')
+    return dict(result, status='active', already_completed=False,
+                recovered_activation=recovery['status'] != 'none')
 
 
 def verify(repository_root, state_root):
@@ -747,12 +897,7 @@ def rollback(repository_root, state_root, *, race_hooks=None, interleave=None):
             interleave('before_rollback_record', paths, facts['raw'])
         restored = state_facts(paths['source_state'])
         baseline_matches(restored, binding['baseline'], 'restored state')
-        if paths['rollback_records'].exists() or paths['rollback_records'].is_symlink():
-            directory(paths['rollback_records'], 'rollback records')
-        else:
-            directory(paths['rollback_records'].parent, 'rollback-record parent')
-            os.mkdir(paths['rollback_records'], 0o700)
-        directory(paths['rollback_records'], 'rollback records')
+        _ensure_recovery_directory(paths)
         record = paths['rollback_records'] / (validate_migration_id(binding['migration_id'])
                                                + '.rolled-back.json')
         no_symlink_components(record, 'rollback record', allow_missing_leaf=True)

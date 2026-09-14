@@ -176,6 +176,14 @@ class StateRootTests(unittest.TestCase):
         with self.assertRaisesRegex(hm.Denied, 'initialization is denied'):
             harness.init('human:fixture')
 
+    def test_any_pending_activation_transaction_blocks_bound_harness(self):
+        self.relocate_synthetic()
+        recovery = self.base / 'local/logs/workspace-relocation'
+        recovery.mkdir(parents=True)
+        (recovery / 'different-safe-id.activation-transaction.json').write_text('{}\n')
+        with self.assertRaisesRegex(hm.Denied, 'pending recovery'):
+            hm.Harness(self.root, state_root=self.external)
+
     def test_receipt_and_state_corruption_are_denied_external(self):
         self.relocate_synthetic()
         path = self.external / 'state.json'
@@ -354,17 +362,72 @@ class StateRootTests(unittest.TestCase):
     def test_stale_mutation_cannot_leave_competing_default_lock_after_cutover(self):
         self.stale_cutover(lambda harness: harness.admit('WP-00', 'stale'))
 
-    def test_binding_swap_at_final_state_boundary_cannot_append_receipt(self):
+    def test_speculative_lock_cleanup_never_unlinks_another_actors_raced_inode(self):
+        lock = self.default / 'state.lock'
+        lock.unlink()
         raw = (self.default / 'state.json').read_bytes()
         state = json.loads(raw)
         self.external.mkdir(parents=True)
+        observed = {}
+
+        def hook(stage, _harness, _detail):
+            if stage == 'before_lock_create':
+                lock.write_text('')
+                observed['inode'] = lock.stat().st_ino
+            elif stage == 'locked_after_lock_acquired':
+                (self.root / hm.BINDING_NAME).write_text(json.dumps({
+                    'schema_version': hm.BINDING_VERSION,
+                    'migration_id': 'synthetic-lock-race',
+                    'repository_root': str(self.root),
+                    'state_root': str(self.external),
+                    'status': 'moving',
+                    'baseline': {
+                        'state_sha256': hm.hashlib.sha256(raw).hexdigest(),
+                        'receipt_count': len(state['events']),
+                        'receipt_tip': state['events'][-1]['hash'],
+                    },
+                }))
+
+        harness = hm.Harness(self.root, interleave=hook)
+        with self.assertRaisesRegex(hm.Denied, 'binding changed'):
+            harness.admit('WP-00', 'fixture')
+        self.assertTrue(lock.is_file())
+        self.assertEqual(lock.stat().st_ino, observed['inode'])
+        self.assertEqual((self.default / 'state.json').read_bytes(), raw)
+
+    def test_binding_swap_at_final_state_boundary_cannot_append_receipt(self):
+        self.relocate_synthetic()
+        raw = (self.external / 'state.json').read_bytes()
 
         def hook(stage, harness, _detail):
-            if stage != 'before_state_commit':
+            if stage != 'after_final_state_comparison_before_replacement':
+                return
+            path = self.root / hm.BINDING_NAME
+            value = json.loads(path.read_text())
+            value['status'] = 'moving'
+            replacement = path.with_name('.binding-final-boundary')
+            replacement.write_text(json.dumps(value))
+            os.replace(replacement, path)
+
+        harness = hm.Harness(self.root, state_root=self.external, interleave=hook)
+        with self.assertRaisesRegex(hm.Denied, 'binding changed'):
+            harness.admit('WP-00', 'fixture')
+        self.assertEqual((self.external / 'state.json').read_bytes(), raw)
+        self.assertEqual(json.loads((self.root / hm.BINDING_NAME).read_text())['status'], 'moving')
+        self.assertFalse(any(path.name.startswith('.state-write-') for path in self.external.iterdir()))
+
+    def test_final_boundary_denial_removes_only_its_exclusive_speculative_lock(self):
+        lock = self.default / 'state.lock'
+        lock.unlink()
+        raw, state = self.facts()
+        self.external.mkdir(parents=True)
+
+        def hook(stage, _harness, _detail):
+            if stage != 'after_final_state_comparison_before_replacement':
                 return
             (self.root / hm.BINDING_NAME).write_text(json.dumps({
                 'schema_version': hm.BINDING_VERSION,
-                'migration_id': 'synthetic-final-swap',
+                'migration_id': 'synthetic-final-lock-cleanup',
                 'repository_root': str(self.root),
                 'state_root': str(self.external),
                 'status': 'moving',
@@ -378,9 +441,29 @@ class StateRootTests(unittest.TestCase):
         harness = hm.Harness(self.root, interleave=hook)
         with self.assertRaisesRegex(hm.Denied, 'binding changed'):
             harness.admit('WP-00', 'fixture')
+        self.assertFalse(lock.exists())
         self.assertEqual((self.default / 'state.json').read_bytes(), raw)
-        self.assertEqual(json.loads((self.root / hm.BINDING_NAME).read_text())['status'], 'moving')
-        self.assertFalse(any(path.name.startswith('.state-write-') for path in self.default.iterdir()))
+
+    def test_post_replacement_binding_detection_atomically_restores_previous_state(self):
+        self.relocate_synthetic()
+        raw = (self.external / 'state.json').read_bytes()
+
+        def hook(stage, _harness, _detail):
+            if stage != 'after_state_replacement_before_validation':
+                return
+            path = self.root / hm.BINDING_NAME
+            value = json.loads(path.read_text())
+            value['status'] = 'moving'
+            replacement = path.with_name('.binding-post-replacement')
+            replacement.write_text(json.dumps(value))
+            os.replace(replacement, path)
+
+        harness = hm.Harness(self.root, state_root=self.external, interleave=hook)
+        with self.assertRaisesRegex(hm.Denied, 'binding changed'):
+            harness.admit('WP-00', 'fixture')
+        self.assertEqual((self.external / 'state.json').read_bytes(), raw)
+        self.assertEqual(len(json.loads(raw)['events']), 1)
+        self.assertFalse(any(path.name.startswith('.state-write-') for path in self.external.iterdir()))
 
 
 if __name__ == '__main__':

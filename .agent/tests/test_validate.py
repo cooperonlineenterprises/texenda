@@ -382,6 +382,47 @@ class FacadeIntegratedFixtureTests(unittest.TestCase):
             with self.assertRaisesRegex(common.ValidationError, 'prefix'):
                 common.ledger_facts(repository, external)
 
+    def test_agent_ledger_facts_reject_pending_binding_activation_before_state_read(self):
+        with tempfile.TemporaryDirectory() as directory:
+            home = (Path(directory) / 'home').resolve()
+            repository = home / 'repo'
+            repository.mkdir(parents=True)
+            harness = self.harness_module.Harness(repository)
+            harness.init('human:fixture')
+            source = repository / '.texenda'
+            external = home / 'local/agent-state/texenda'
+            external.mkdir(parents=True)
+            raw = (source / 'state.json').read_bytes()
+            state = json.loads(raw)
+            os.rename(source / 'state.json', external / 'state.json')
+            os.rename(source / 'state.lock', external / 'state.lock')
+            migration_id = 'synthetic-pending-agent-ledger'
+            (repository / '.texenda-location.json').write_text(json.dumps({
+                'schema_version': 'texenda.state-location.v1',
+                'migration_id': migration_id,
+                'repository_root': str(repository),
+                'state_root': str(external),
+                'status': 'active',
+                'baseline': {
+                    'state_sha256': hashlib.sha256(raw).hexdigest(),
+                    'receipt_count': len(state['events']),
+                    'receipt_tip': state['events'][-1]['hash'],
+                },
+            }))
+            recovery = home / 'local/logs/workspace-relocation'
+            recovery.mkdir(parents=True)
+            (recovery / 'different-safe-id.activation-transaction.json').write_text('{}\n')
+            original = common.stable_file_bytes
+
+            def guarded_read(path, label):
+                if Path(path) == external / 'state.json':
+                    raise AssertionError('state was read before pending transaction denial')
+                return original(path, label)
+
+            with mock.patch.object(common, 'stable_file_bytes', side_effect=guarded_read), \
+                    self.assertRaisesRegex(common.ValidationError, 'pending recovery'):
+                common.ledger_facts(repository, external)
+
     def test_duplicate_owner_and_origin_overclaim_are_rejected(self):
         crosswalk_path = self.fixture / 'project-dossier/transition/blueprint-adoption-crosswalk.json'
         crosswalk = json.loads(crosswalk_path.read_text())

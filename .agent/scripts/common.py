@@ -238,6 +238,24 @@ def binding(root=ROOT):
     require(value['schema_version'] == 'texenda.state-location.v1', 'unknown state binding schema')
     require(isinstance(value['migration_id'], str) and MIGRATION_ID.fullmatch(value['migration_id']),
             'unsafe state binding migration_id')
+    recovery = root.resolve().parent / 'local/logs/workspace-relocation'
+    if recovery.exists() or recovery.is_symlink():
+        recovery = resolved_directory(recovery, 'state activation recovery directory')
+        flags = (os.O_RDONLY | getattr(os, 'O_DIRECTORY', 0)
+                 | getattr(os, 'O_NOFOLLOW', 0))
+        recovery_fd = os.open(recovery, flags)
+        try:
+            opened = os.fstat(recovery_fd)
+            pending = [name for name in os.listdir(recovery_fd)
+                       if name.endswith('.activation-transaction.json')]
+            current = recovery.lstat()
+            require((opened.st_dev, opened.st_ino) == (current.st_dev, current.st_ino),
+                    'state activation recovery directory changed during scan')
+        finally:
+            os.close(recovery_fd)
+    else:
+        pending = []
+    require(not pending, 'state activation transaction is pending recovery')
     require(value['status'] in ('moving', 'active'), 'invalid state binding status')
     require(Path(value['repository_root']) == root.resolve(), 'state binding repository mismatch')
     require(Path(value['state_root']) == root.resolve().parent / 'local/agent-state/texenda',

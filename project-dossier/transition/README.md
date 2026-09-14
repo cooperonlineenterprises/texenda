@@ -122,6 +122,17 @@ The frozen external-state interface is deliberately narrow:
   its exact repository temporary name is ignored while transaction/completion/
   conflict records remain under `local/logs/workspace-relocation/`. No
   compare-then-unconditional replacement is used.
+- Every namespace rename/exchange is followed by `fsync` of both anchored parent
+  directories (once for a shared parent) before the next stage. A failed sync is
+  propagated and leaves or restores the pending activation transaction so normal
+  harness/facade reads and writes fail closed until helper recovery. The active
+  recovery path validates the exact archived moving descriptor and transaction.
+- Successful activation retains one exact completion transaction and its moving
+  archive. Repeated `apply`/resume validates that evidence, the active binding,
+  state baseline, private location and held destination lock before reporting an
+  explicit `already_completed` result. Missing, duplicate, symlinked, corrupt or
+  ambiguous completion evidence stops recovery; it is never inferred from a
+  missing source path.
 
 The implementation's required test contract includes default/external roots,
 missing state, conflicting roots/bindings, symlink and traversal escapes,
