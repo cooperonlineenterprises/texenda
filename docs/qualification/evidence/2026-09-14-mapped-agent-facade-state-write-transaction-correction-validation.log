@@ -1,0 +1,64 @@
+Texenda mapped facade state-write transaction correction validation
+observed_at_utc: 2026-09-14T21:18:55Z
+actor/profile: agent:mapped-facade-sol / gpt-5.6-sol-max / T2 / max
+author-side-auditor/profile: agent:mapped-facade-sol/state_txn_adversarial_audit / gpt-5.6-sol-max / T2 / max
+runtime/billing: Codex desktop 26.901.41600 (build 7982) / subscription / API 0
+base_revision: 680457854984020d0c8616a7f640a63079be9b3c
+rejected_predecessor: 8efe3aed33499402b6104d75c108dc2424f859f6
+source_revision: b440fd2299a18fe08e2d7c238373628671e80bed
+tested_generated_revision: 2ee540653e4cdb2136ea59812331e66dfb122b8d
+tested_tree: 91d7825460706f89518d2716c60fb8930610b229
+generation_id: e720b33d618dc9c4c02bc7d8517a345c83b1dbede57305d67fafe0c4372b81a3
+source_scope_sha256: 9b05e4c3eddd11ed664df391f06cd00a1b6e77ab5937de67e8cb7cfd9fe82037
+8efe3ae_to_tested_diff_sha256: 0319cf3ce894f3ae05ce83a05f91ff829b97054731400ef01eb3a070c4d65b11
+base_to_tested_diff_sha256: 9e3ef5996a5ecddac2fd6f4d578e4c6b91d4d7ae4496940a201e884554c1b694
+canonical_diff_command: git --no-optional-locks -c core.abbrev=40 -c color.ui=false diff --no-ext-diff --no-textconv --full-index --binary <base> <tip> | shasum -a 256
+
+FAIL fourth-rereview
+  Independent Astra/max review closed every relocation finding and rejected 8efe3ae only because state replacement could lose prior bytes on exchange/rollback failure and did not validate the displaced old inode completely. The rejected candidate and all earlier evidence remain immutable; this successor is not approval.
+
+PASS write-ahead-state-transaction
+  A fixed closed preparation control is atomically published before candidate creation. A ready control, atomically published before state exchange, binds exact old/new SHA-256 and inode identity plus repository, selected state root, lock, binding and routing-policy identity. Active control names are fully written and fsynced under non-operational staging names before descriptor-relative no-replace publication; partial staging is never interpreted as a phase.
+
+PASS exchange-durability-and-failed-rollback-preservation
+  Exchange, first directory fsync, displaced-byte/identity validation and final environment validation are one explicit transaction. Post-exchange fsync failure restores the exact previous bytes. When both exchange durability and rollback durability fail, or rollback exchange itself fails, state.json and the candidate/checkpoint retain both old/new byte sets with preparation/phase controls still blocking ordinary access. No finally path removes recovery material.
+
+PASS displaced-competing-inode-preservation
+  The displaced file must match complete prepared-old bytes and device/inode/type/size/mtime identity. The exact reviewer reproduction substitutes another internally valid receipt-bearing inode at the exchange syscall boundary. The harness exchanges it back to state.json, preserves the attempted new ledger at the candidate path, records sanitized conflict hashes and denies. Both valid receipt chains remain byte-for-byte available and recovery remains blocked rather than selecting one.
+
+PASS atomic-capture-cleanup
+  Ledger-byte cleanup performs descriptor-relative atomic no-replace capture into token- and SHA-bound non-active checkpoints, then validates the captured inode and bytes. It never unlinks state ledger material. A competing valid inode substituted at the capture boundary is moved intact to the unique checkpoint, the prepared ledger remains separately preserved, the active attempted state remains intact and all controls stay blocking.
+
+PASS explicit-recovery-and-pending-interlock
+  Harness status/read/mutation, facade ledger facts/checks and physical relocation all stop on any operational .state-write-* material. recover-state-write requires an accountable human actor plus runtime-stop attestation, acquires the preserved selected-root lock and defaults to restoring exact previous bytes without reserializing receipts. Missing, corrupt, symlinked, extra or ambiguous controls/material fail closed.
+
+PASS interruption-and-resumption
+  Real fork hard exits cover preparation staging/publication, candidate write/file and directory sync, ready state, exchange before/after sync, displaced validation, final identity validation, commit marker/capture, rollback exchange before/after sync, rollback marker/capture, outcome archival and first initialization. Checkpoint-backed rollback recognizes and resumes both pre-fsync and post-fsync layouts. A fully archived commit outcome finishes forward; every earlier phase restores previous state.
+
+FAIL author-audit-preparation-and-cleanup-findings
+  The first bounded author-side read-only adversarial audit found a candidate-before-control gap and validate-then-unlink cleanup race. Both were reproduced, corrected with preparation-first publication and atomic capture, and retained as findings rather than treated as approval.
+
+FAIL author-reaudit-publication-and-checkpoint-resume-findings
+  The second bounded author-side audit found in-place partial phase publication and a checkpoint-backed rollback restart gap. Controls now use staged atomic publication; the exact swapped checkpoint layout is recognized and resumed. Final read-only re-audit passed three targeted adversarial reproductions, 47 state-root tests, 34 relocation tests and git diff --check. This T2 audit is not the required independent T1 review.
+
+PASS final-candidate-check-and-check-all-no-write
+  validate.py --check and --check --all used explicit read-only /Users/jamesryancooper/Projects/texenda/repo/.texenda. Nine non-writers exited 0 and both refresh writers were SKIPPED_WRITER. All 260 candidate files plus live state/lock retained hashes where allowed, inode, size, mtime and ctime, and Git ignored status. Private/CSV content was excluded. No cache was created and no .git atime claim is made.
+
+PASS final-candidate-suites
+  .agent tests: 25 PASS, including pending state-write facade denial and complete default/bound check-all.
+  workspace tests: 77 PASS, including 34 state-relocation tests.
+  local coordination tests: 179 PASS, including 47 state-root/transaction tests with all forked children reaped.
+  sealed harness tests: 39 PASS.
+  installed sealed and preserved source package validators: 14/14 PASS each.
+
+PASS final-candidate-static-integrity
+  Facade/workspace checks: 119 JSON, 1 TOML, 19 Python, 27 dossier paths, 3 instruction files, 101 local links, 226 bound evidence checks, 42 concerns, 85 blueprint paths, 35 artifact types and 16 source moves. The closed state-write schema has phase/operation/binding correlations. git diff --check passes; no diff exists under specs/texenda-handoff relative to rejected 8efe3ae. Generated validation covers all eleven registered outputs.
+
+PASS live-metadata-private-boundary
+  Canonical main remains 680457854984020d0c8616a7f640a63079be9b3c. Live state remains SHA-256 b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235, 13 receipts, tip f39249184757101b108ea7ec5ea0ffebdd8237315b8ac3cad3ad0cc6ab3e827e, eleven profiles, zero leases and zero budget/spend. The exact real CSV path passes existence, ignore and untracked checks only.
+
+NOT_RUN independent Astra/max rereview, integration, live binding/state/private move, real mapped lifecycle, GitHub/external mutation, product/external gates, physical power-loss testing.
+
+Recovery limitation: the transaction depends on POSIX flock plus Darwin renameatx_np or Linux renameat2; unsupported platforms fail closed. Non-operational partial metadata staging and non-active content-addressed state checkpoints can remain as local recovery history, but only state.json is live authority. No claim is made about actual power-loss behavior beyond ordered file/directory fsync instrumentation and process-interruption tests.
+
+No live state/lock/private bytes, receipt, main, handoff package, network, GitHub, spend, deployment, publication, sending or production state changed. The real private CSV was never opened, hashed, parsed, copied, listed or logged. Synthetic private/state fixtures only were used by tests.

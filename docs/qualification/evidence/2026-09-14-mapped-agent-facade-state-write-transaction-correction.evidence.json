@@ -1,0 +1,181 @@
+{
+  "schema_version": "texenda.mapped-facade-author-evidence.v1",
+  "id": "EVD-FACADE-0006",
+  "kind": "candidate_author_state_write_transaction_correction",
+  "information_role": "immutable_successor_evidence",
+  "status": "candidate_for_independent_rereview",
+  "recorded_at": "2026-09-14T21:18:55Z",
+  "actor": "agent:mapped-facade-sol",
+  "requested_profile": "gpt-5.6-sol-max",
+  "capability_tier": "T2",
+  "reasoning_effort": "max",
+  "runtime_id": "codex-desktop-collaboration",
+  "client_version": "26.901.41600 (build 7982)",
+  "billing_mode": "subscription",
+  "api_budget_usd": 0,
+  "api_spend_usd": 0,
+  "base_revision": "680457854984020d0c8616a7f640a63079be9b3c",
+  "rejected_predecessor": "8efe3aed33499402b6104d75c108dc2424f859f6",
+  "source_revision": "b440fd2299a18fe08e2d7c238373628671e80bed",
+  "candidate_revision": "2ee540653e4cdb2136ea59812331e66dfb122b8d",
+  "candidate_tree": "91d7825460706f89518d2716c60fb8930610b229",
+  "generation_id": "e720b33d618dc9c4c02bc7d8517a345c83b1dbede57305d67fafe0c4372b81a3",
+  "source_scope_sha256": "9b05e4c3eddd11ed664df391f06cd00a1b6e77ab5937de67e8cb7cfd9fe82037",
+  "predecessor_to_candidate_diff_sha256": "0319cf3ce894f3ae05ce83a05f91ff829b97054731400ef01eb3a070c4d65b11",
+  "base_to_candidate_diff_sha256": "9e3ef5996a5ecddac2fd6f4d578e4c6b91d4d7ae4496940a201e884554c1b694",
+  "diff_command": "git --no-optional-locks -c core.abbrev=40 -c color.ui=false diff --no-ext-diff --no-textconv --full-index --binary <base> <tip> | shasum -a 256",
+  "supersession": {
+    "preserves_prior_evidence": true,
+    "reason": "Independent Astra/max rereview rejected 8efe3ae on two state-exchange error/recovery findings; this is a new candidate, not an amendment or approval.",
+    "approval": false
+  },
+  "author_side_audit": {
+    "actor": "agent:mapped-facade-sol/state_txn_adversarial_audit",
+    "profile": "gpt-5.6-sol-max",
+    "capability_tier": "T2",
+    "reasoning_effort": "max",
+    "read_only": true,
+    "independent_t1_approval": false,
+    "final_result": "PASS_after_four_reproduced_author_corrections"
+  },
+  "output_hashes": [
+    {"path": "tooling/coordination/harness.py", "sha256": "7716434e37119efbc494400ad6121e819f5785b62bbf370ec50a9abb24ee5b38"},
+    {"path": "tooling/coordination/schemas/state-write-transaction.schema.json", "sha256": "a6533f9b79544def01b737744d9b365be48e402f9ce080f43cfe70be95486878"},
+    {"path": "tooling/workspace/relocate_state.py", "sha256": "2691baf5917a501ad7eb38ea78e77fc4163fa4607c27b233f76f79c15b48db12"},
+    {"path": ".agent/scripts/common.py", "sha256": "1703324850e281663bd1623b2f64fbe05723ce32ef101a1c24924757338aabeb"},
+    {"path": ".agent/tests/test_validate.py", "sha256": "4a5ba71d0af7bc8c761b2e60ef009789e8f14bfbffea0869a82dece1a7a84472"},
+    {"path": "tooling/coordination/tests/test_state_root.py", "sha256": "52bdd903a661c281a12030a5f0abfa34d7419cab531b916e7cde7ad6e4e1f7d0"},
+    {"path": "tooling/workspace/tests/test_state_relocation.py", "sha256": "87e9b62575537acb0face8fdf66ff4fe2494766211de84ce525e9ebeb03f9516"},
+    {"path": ".agent/extensions/texenda-coordination/extension.json", "sha256": "7a63cf72390bea1402589021df4f762971c75275b0611cd06a675271e0e98a45"},
+    {"path": ".agent/tools.json", "sha256": "13f7a52a39c9171697923f756912c1217c737bf37df52086dffb7c12bbad679a"},
+    {"path": ".gitignore", "sha256": "a36f856543d8e1f6b49a5cca5770d45b8d1e97b683e6775d5be6ed5515ca241f"},
+    {"path": "tooling/coordination/README.md", "sha256": "b5b69eff747761c7060def091d0d0bfbdb588df4bdbd09e6251aabfa8f5a7c82"},
+    {"path": "project-dossier/transition/README.md", "sha256": "342b0ce075454656a9e183db7be5c9f2aaa60a83a87bc30eeec82b62687b0540"},
+    {"path": ".agent/generated/manifest.json", "sha256": "0357dfafc7add43e17b9e82a12304ebf033883984051421a33f77d833b871362"},
+    {"path": ".agent/generated/validation-report.json", "sha256": "4346e3266087491848edc3665c8d4022c9239e12eda30247d49e3a3d9cc74aa2"}
+  ],
+  "checks": [
+    {
+      "id": "fourth-rereview",
+      "required": false,
+      "status": "FAIL",
+      "command_or_procedure": "Preserve the Astra/max rejection of 8efe3ae and correct only its two state-exchange recovery findings without rewriting history.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-state-write-transaction-correction-validation.log",
+      "sha256": "05b5263e3c4b148ae0d7ed48685b377c68cfc02223cc26ec34967effa1bfe7d2"
+    },
+    {
+      "id": "write-ahead-transaction",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Exercise preparation-first, staged no-replace control publication and verify exact old/new/environment identity metadata exists durably before exchange.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-state-write-transaction-correction-validation.log",
+      "sha256": "05b5263e3c4b148ae0d7ed48685b377c68cfc02223cc26ec34967effa1bfe7d2"
+    },
+    {
+      "id": "exchange-rollback-durability",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Inject post-exchange fsync failure, combined exchange/rollback fsync failures and rollback-exchange failure; prove exact restoration or preservation of both byte sets plus blockers.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-state-write-transaction-correction-validation.log",
+      "sha256": "05b5263e3c4b148ae0d7ed48685b377c68cfc02223cc26ec34967effa1bfe7d2"
+    },
+    {
+      "id": "displaced-inode-preservation",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Substitute a distinct internally valid receipt-bearing inode at the exchange boundary; require complete-byte and prepared-inode denial, atomic competing-state restoration and preservation of attempted state.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-state-write-transaction-correction-validation.log",
+      "sha256": "05b5263e3c4b148ae0d7ed48685b377c68cfc02223cc26ec34967effa1bfe7d2"
+    },
+    {
+      "id": "atomic-capture-cleanup",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Race a distinct valid ledger at cleanup; require descriptor-relative no-replace capture, post-capture identity denial, no ledger unlink and preservation of all byte sets with blockers.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-state-write-transaction-correction-validation.log",
+      "sha256": "05b5263e3c4b148ae0d7ed48685b377c68cfc02223cc26ec34967effa1bfe7d2"
+    },
+    {
+      "id": "pending-interlock-explicit-recovery",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Prove ordinary Harness/facade/relocation operations deny pending material and recover-state-write requires human owner plus runtime-stop, preserved lock and exact descriptor-relative recovery.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-state-write-transaction-correction-validation.log",
+      "sha256": "05b5263e3c4b148ae0d7ed48685b377c68cfc02223cc26ec34967effa1bfe7d2"
+    },
+    {
+      "id": "interruption-resumption-matrix",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Run real hard-exit fixtures at every preparation/write/exchange/validation/commit/rollback/capture/archive phase, including first init and checkpoint-backed pre/post-fsync restart.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-state-write-transaction-correction-validation.log",
+      "sha256": "05b5263e3c4b148ae0d7ed48685b377c68cfc02223cc26ec34967effa1bfe7d2"
+    },
+    {
+      "id": "author-audit-preparation-cleanup",
+      "required": false,
+      "status": "FAIL",
+      "command_or_procedure": "Record the bounded read-only T2 audit reproductions for candidate-before-control and validate-then-unlink cleanup, then verify their preparation-first/no-unlink corrections.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-state-write-transaction-correction-validation.log",
+      "sha256": "05b5263e3c4b148ae0d7ed48685b377c68cfc02223cc26ec34967effa1bfe7d2"
+    },
+    {
+      "id": "author-reaudit-publication-checkpoint-resume",
+      "required": false,
+      "status": "FAIL",
+      "command_or_procedure": "Record the bounded read-only T2 re-audit reproductions for partial control publication and checkpoint-backed rollback restart, then rerun its three targeted adversarial checks to PASS.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-state-write-transaction-correction-validation.log",
+      "sha256": "05b5263e3c4b148ae0d7ed48685b377c68cfc02223cc26ec34967effa1bfe7d2"
+    },
+    {
+      "id": "facade-check-all-no-write",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Run validate.py --check and --check --all with the explicit read-only live state root; compare 260 candidate files and live state/lock hash-or-exclusion/inode/size/mtime/ctime plus ignored status before/after.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-state-write-transaction-correction-validation.log",
+      "sha256": "05b5263e3c4b148ae0d7ed48685b377c68cfc02223cc26ec34967effa1bfe7d2"
+    },
+    {
+      "id": "facade-workspace-coordination-sealed-packages",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Run 25 facade, 77 workspace, 179 coordinator and 39 sealed tests plus both 14-check package validators at committed candidate 2ee5406.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-state-write-transaction-correction-validation.log",
+      "sha256": "05b5263e3c4b148ae0d7ed48685b377c68cfc02223cc26ec34967effa1bfe7d2"
+    },
+    {
+      "id": "static-live-private-boundary",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Run parsing/link/schema/owner/evidence/generated/diff/sealed checks; verify canonical live metadata and exact real CSV existence/ignore/untracked status only.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-state-write-transaction-correction-validation.log",
+      "sha256": "05b5263e3c4b148ae0d7ed48685b377c68cfc02223cc26ec34967effa1bfe7d2"
+    }
+  ],
+  "private_input_proof": {
+    "content_opened": false,
+    "content_hashed": false,
+    "content_parsed": false,
+    "content_copied": false,
+    "content_listed": false,
+    "content_logged": false,
+    "exact_path_checks": ["existence", "ignored", "untracked"]
+  },
+  "forbidden_effects_performed": [],
+  "not_run": [
+    "independent Astra/max rereview",
+    "local main integration",
+    "live state/lock/private-input relocation",
+    "real mapped maintenance lifecycle",
+    "GitHub or external mutation",
+    "product or external gate qualification",
+    "physical power-loss test"
+  ],
+  "runtime_stop": {
+    "background_sessions": 0,
+    "all_hard_exit_fixture_children_reaped": true,
+    "child_agents_running": 0,
+    "parent_observation_required_before_scope_release": true
+  },
+  "resumption": "Independently rereview the exact final evidence-bearing derived tip. Do not integrate or execute live relocation before approval and a fresh runtime/lease/lock freeze."
+}
