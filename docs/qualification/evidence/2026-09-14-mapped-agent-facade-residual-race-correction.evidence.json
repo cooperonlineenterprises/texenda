@@ -1,0 +1,157 @@
+{
+  "schema_version": "texenda.mapped-facade-author-evidence.v1",
+  "id": "EVD-FACADE-0004",
+  "kind": "candidate_author_residual_race_correction",
+  "information_role": "immutable_successor_evidence",
+  "status": "candidate_for_independent_rereview",
+  "recorded_at": "2026-09-14T19:12:51Z",
+  "actor": "agent:mapped-facade-sol",
+  "requested_profile": "gpt-5.6-sol-max",
+  "capability_tier": "T2",
+  "reasoning_effort": "max",
+  "runtime_id": "codex-desktop-collaboration",
+  "client_version": "26.901.41600 (build 7982)",
+  "billing_mode": "subscription",
+  "api_budget_usd": 0,
+  "api_spend_usd": 0,
+  "base_revision": "680457854984020d0c8616a7f640a63079be9b3c",
+  "rejected_predecessor": "2fdbdced3ba09be6bcc0a835d334ac48a2786413",
+  "source_revision": "8bc13c30e157f1409e76df4fc173c8f0df69bf90",
+  "candidate_revision": "7a28b42917a134fbf309a65db87a9b5ea5bdd227",
+  "candidate_tree": "08e9ee79f6b7a3c6f9c853320f7e4f0ef7c063e4",
+  "generation_id": "0447472d87aa8774313f5c794b8065ee7a45b71fe25407da6077aa53c199fd07",
+  "source_scope_sha256": "eae951f6203ae0491c87db67d4131eba046d7e3ad69773bb7dd81b1b1793a9e1",
+  "predecessor_to_candidate_diff_sha256": "e23be910fae348721b4f08476455dd87fd913772011dc360b7d97b8c27230c77",
+  "base_to_candidate_diff_sha256": "9cb6b6d73173af2b253a96e50c917f3f36863de444ff64612e63ba4e762c01d3",
+  "diff_command": "git --no-optional-locks -c core.abbrev=40 -c color.ui=false diff --no-ext-diff --no-textconv --full-index --binary <base> <tip> | shasum -a 256",
+  "supersession": {
+    "preserves_prior_evidence": true,
+    "reason": "Independent Astra/max rereview rejected 2fdbdced on five residual findings; this is a new candidate, not an amendment or approval.",
+    "approval": false
+  },
+  "output_hashes": [
+    {"path": "tooling/coordination/harness.py", "sha256": "a146e993ec866cfd165372650f77c2a75d67329148477c32cb424100345ad91e"},
+    {"path": "tooling/workspace/relocate_state.py", "sha256": "7786d9483e4bd3f0f3754e96944c53cc4e41351b2ce190c5744942262d8a4aad"},
+    {"path": ".agent/scripts/common.py", "sha256": "d3c55b3ddf5d3e2e6a136f6b0a2ce23c9e1bee46dff6fcc50d6b0f7de3104862"},
+    {"path": ".agent/scripts/validate.py", "sha256": "5d41ae0ca32baed02985d290643cadab2c5519c3d96b667bb82784db4b06d5cc"},
+    {"path": ".agent/scripts/refresh.py", "sha256": "63eaffe7e8081e0fc3e35252af1b9c788e15373386954c04803699166a90e5bf"},
+    {"path": ".agent/tests/test_validate.py", "sha256": "b21cb0d803cf7840ee9093a234cc6cc3e0cba9fd4114c86e45013b0e09c035cc"},
+    {"path": "tooling/coordination/tests/test_state_root.py", "sha256": "47df37392fa165bca4264e7dcd0432a33c9c1fc88ba76f679c69b28afc6371a8"},
+    {"path": "tooling/workspace/tests/test_state_relocation.py", "sha256": "9459ee671e1a408c88c67cccfab3aaa6a9e9167684a8f28962fc21b0b7c65ac0"},
+    {"path": ".agent/generated/manifest.json", "sha256": "0e7431b96bcc9bd478d5fb0e82516b77dea6a48cb244d5544f4565ce75f4bcf3b"},
+    {"path": ".gitignore", "sha256": "f725ceb05995477c0e8d6637b3f8a3ab2448a2958f5c202d845d84ae4d44e68f"}
+  ],
+  "checks": [
+    {
+      "id": "second-rereview",
+      "required": false,
+      "status": "FAIL",
+      "command_or_procedure": "Preserve the Astra/max rejection of 2fdbdced and address exactly its five residual findings without rewriting history.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-residual-race-correction-validation.log",
+      "sha256": "32e6791a7f3b4c8c297cbb91b014fe4cce0d2199922c203529c1be3171cbf6c6"
+    },
+    {
+      "id": "stale-harness-continuity",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Run cooperative threaded stale init/admit cutovers and final-binding-swap mutation; verify no receipt/default state/speculative lock survives.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-residual-race-correction-validation.log",
+      "sha256": "32e6791a7f3b4c8c297cbb91b014fe4cce0d2199922c203529c1be3171cbf6c6"
+    },
+    {
+      "id": "binding-activation-cas",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Inject valid descriptor replacement and post-exchange interruption; verify atomic exchange rollback/preservation, lock-held resume, and persisted transaction recovery.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-residual-race-correction-validation.log",
+      "sha256": "32e6791a7f3b4c8c297cbb91b014fe4cce0d2199922c203529c1be3171cbf6c6"
+    },
+    {
+      "id": "descriptor-relative-renames",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Substitute parent aliases at the descriptor-relative syscall boundary for state, lock, private directory and rollback binding record; require unrelated content preservation and fail-closed identity result.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-residual-race-correction-validation.log",
+      "sha256": "32e6791a7f3b4c8c297cbb91b014fe4cce0d2199922c203529c1be3171cbf6c6"
+    },
+    {
+      "id": "exact-generated-source-scope",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Verify only eleven exact outputs are excluded, generated README remains source and synthetic generated-directory implementation enters source_rows and makes the projection stale.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-residual-race-correction-validation.log",
+      "sha256": "32e6791a7f3b4c8c297cbb91b014fe4cce0d2199922c203529c1be3171cbf6c6"
+    },
+    {
+      "id": "prebinding-and-bound-check-all",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Run full check-all in complete synthetic default and active-bound external layouts; compare repository and state/lock hash/inode/size/mtime/ctime before/after.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-residual-race-correction-validation.log",
+      "sha256": "32e6791a7f3b4c8c297cbb91b014fe4cce0d2199922c203529c1be3171cbf6c6"
+    },
+    {
+      "id": "intermediate-cas-identity-oracle",
+      "required": false,
+      "status": "FAIL",
+      "command_or_procedure": "Record and correct the overly strict post-rename ctime comparison; retain stable content plus device/inode/file-type identity.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-residual-race-correction-validation.log",
+      "sha256": "32e6791a7f3b4c8c297cbb91b014fe4cce0d2199922c203529c1be3171cbf6c6"
+    },
+    {
+      "id": "intermediate-unbound-fixture-lifetime",
+      "required": false,
+      "status": "FAIL",
+      "command_or_procedure": "Record and correct the unbound resolver assertion that ran after its synthetic TemporaryDirectory closed.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-residual-race-correction-validation.log",
+      "sha256": "32e6791a7f3b4c8c297cbb91b014fe4cce0d2199922c203529c1be3171cbf6c6"
+    },
+    {
+      "id": "facade-tests-and-check-all",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Run 22 .agent tests plus final candidate validate.py --check --all no-write oracle with explicit read-only live state root.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-residual-race-correction-validation.log",
+      "sha256": "32e6791a7f3b4c8c297cbb91b014fe4cce0d2199922c203529c1be3171cbf6c6"
+    },
+    {
+      "id": "workspace-coordination-sealed-packages",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Run 70 workspace, 157 coordination and 39 sealed tests plus both 14-check package validators.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-residual-race-correction-validation.log",
+      "sha256": "32e6791a7f3b4c8c297cbb91b014fe4cce0d2199922c203529c1be3171cbf6c6"
+    },
+    {
+      "id": "static-diff-live-private-boundary",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Run strict parsing/link/schema/owner/evidence checks, workspace audit, git diff/sealed/package comparison and live metadata-only state/private checks.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-residual-race-correction-validation.log",
+      "sha256": "32e6791a7f3b4c8c297cbb91b014fe4cce0d2199922c203529c1be3171cbf6c6"
+    }
+  ],
+  "private_input_proof": {
+    "content_opened": false,
+    "content_hashed": false,
+    "content_parsed": false,
+    "content_copied": false,
+    "content_listed": false,
+    "content_logged": false
+  },
+  "forbidden_effects_performed": [],
+  "not_run": [
+    "independent Astra/max rereview",
+    "local main integration",
+    "live state/lock/private-input relocation",
+    "real mapped maintenance lifecycle",
+    "GitHub or external mutation",
+    "product or external gate qualification"
+  ],
+  "runtime_stop": {
+    "background_sessions": 0,
+    "child_agents": 0,
+    "parent_observation_required_before_scope_release": true
+  },
+  "resumption": "Independently rereview the exact final derived tip. Do not integrate or execute live relocation before approval and a fresh runtime/lease/lock freeze."
+}

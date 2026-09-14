@@ -1,0 +1,59 @@
+Texenda mapped facade residual race correction validation
+observed_at_utc: 2026-09-14T19:12:51Z
+actor/profile: agent:mapped-facade-sol / gpt-5.6-sol-max / T2 / max
+runtime/billing: Codex desktop 26.901.41600 (build 7982) / subscription / API 0
+base_revision: 680457854984020d0c8616a7f640a63079be9b3c
+rejected_predecessor: 2fdbdced3ba09be6bcc0a835d334ac48a2786413
+source_revision: 8bc13c30e157f1409e76df4fc173c8f0df69bf90
+tested_generated_revision: 7a28b42917a134fbf309a65db87a9b5ea5bdd227
+tested_tree: 08e9ee79f6b7a3c6f9c853320f7e4f0ef7c063e4
+generation_id: 0447472d87aa8774313f5c794b8065ee7a45b71fe25407da6077aa53c199fd07
+source_scope_sha256: eae951f6203ae0491c87db67d4131eba046d7e3ad69773bb7dd81b1b1793a9e1
+2fdbdced_to_tested_diff_sha256: e23be910fae348721b4f08476455dd87fd913772011dc360b7d97b8c27230c77
+base_to_tested_diff_sha256: 9cb6b6d73173af2b253a96e50c917f3f36863de444ff64612e63ba4e762c01d3
+canonical_diff_command: git --no-optional-locks -c core.abbrev=40 -c color.ui=false diff --no-ext-diff --no-textconv --full-index --binary <base> <tip> | shasum -a 256
+
+FAIL second-rereview
+  Independent Astra/max rereview closed the prior eleven findings but rejected 2fdbdced on five residual race/scope/bound-check issues. The rejected candidate and every earlier evidence record remain immutable.
+
+PASS stale-harness-continuity
+  Harness mutation locks now anchor repository/state-root directories and the lock inode. Binding identity, root/lock identity, policy and exact state snapshot are checked after lock acquisition and immediately before descriptor-relative state replacement. Deterministic threads pause stale init/admit after the first binding check, complete prepare+apply, then resume: both fail; no default state or lock remains. A final moving-binding swap cannot append a receipt. Only a newly created, zero-byte, unchanged matching lock inode is removed when acquisition continuity fails.
+
+PASS binding-activation-cas-and-recovery
+  Activation writes an ignored active candidate and a local transaction record, atomically exchanges candidate/binding through directory descriptors, and validates displaced moving bytes+inode. A raced valid descriptor swaps back intact; the active candidate and transaction are preserved. Injected post-exchange interruption rolls back and resumes. A persisted hard-interruption transaction with active binding/moving temporary is recovered under the destination lock, then activation completes. Successful moving/transaction records remain in local/logs/workspace-relocation.
+
+PASS descriptor-relative-exclusive-renames
+  Darwin renameatx_np(RENAME_EXCL/RENAME_SWAP) or Linux renameat2(NOREPLACE/EXCHANGE) uses already-open source/destination directory descriptors. Source and parent identities are checked around the syscall. State, lock, private-directory and rollback-binding fixtures substitute the source parent at the syscall boundary: only the reviewed inode can move, unrelated alias content remains untouched, and the operation fails closed on the path-identity change.
+
+PASS exact-generated-source-scope
+  The common registry owns exactly eleven generated output paths. Source exclusions list those paths individually. .agent/generated/README.md stays source-scoped. An untracked .agent/generated/synthetic_implementation.py enters source_rows and makes check stale. Only .texenda-location.activation-* and refresh transaction markers are ignored operational temporaries.
+
+PASS prebinding-and-bound-check-all
+  The unbound resolver unit uses an independent synthetic repository/context, never the actual possibly bound ROOT. A full synthetic check-all runs without writes in the default layout, then after byte-preserving state/lock movement, active binding, and refresh it runs again with explicit external --state-root. Both runs execute all nine non-writers, skip both refresh writers, and preserve repository plus state/lock hashes/inodes/sizes/mtimes/ctimes.
+
+FAIL intermediate-cas-identity-oracle
+  The first CAS test treated rename-updated ctime as immutable identity and rejected normal activation. It was corrected to require stable content plus device/inode/file-type identity; all 27 relocation tests and normal/raced/interrupted paths then passed. No live path was involved.
+
+FAIL intermediate-unbound-fixture-lifetime
+  The first independent unbound-context unit resolved a script after its TemporaryDirectory had closed. The assertion was moved inside the fixture lifetime; direct and nested bound check-all suites then passed. No project file outside this candidate changed.
+
+PASS final-candidate-check-all-no-write
+  validate.py --check --all --state-root /Users/jamesryancooper/Projects/texenda/repo/.texenda
+  Nine non-writers exit 0; both refresh writers are SKIPPED_WRITER. 255 candidate files plus live state/lock retain hash,inode,size,mtime,ctime and ignored status. No cache is created and no .git atime claim is made.
+
+PASS final-candidate-suites
+  .agent tests: 22 PASS (includes complete prebinding and actual-bound synthetic check-all).
+  workspace tests: 70 PASS (27 relocation tests).
+  local coordination tests: 157 PASS (25 state-root/race tests).
+  sealed harness tests: 39 PASS.
+  sealed and source package validators: 14/14 PASS each.
+
+PASS final-candidate-static-integrity
+  Facade check: 116 JSON, 1 TOML, 19 Python, 27 dossier paths, 3 instruction files, 101 links, 203 bound evidence checks. Workspace audit: 42 concerns, 85 mappings, 35 artifact types, 16 source moves. Both package inventories remain 86 manifest files with the exact eleven differences; 88 source files including retained caches remain preserved. git diff --check and base-to-tip sealed diff pass.
+
+PASS live-metadata-only-baseline
+  Canonical main remains 680457854984020d0c8616a7f640a63079be9b3c. Live state remains SHA-256 b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235, 13 receipts, tip f39249184757101b108ea7ec5ea0ffebdd8237315b8ac3cad3ad0cc6ab3e827e, eleven profiles, zero leases and zero budget/spend. State/lock metadata is unchanged.
+
+NOT_RUN independent rereview, integration, live relocation, real mapped lifecycle, GitHub/external mutation, product/external gates.
+
+No live binding/state/private move, receipt append, network, push, GitHub mutation, spend, deployment, publication, sending or production action occurred. The real private CSV was never opened, hashed, parsed, copied, listed or logged.
