@@ -156,8 +156,7 @@ class FacadeIntegratedFixtureTests(unittest.TestCase):
         result = self.run_check()
         self.assertNotEqual(result.returncode, 0)
         self.assertIn('interrupted refresh marker', result.stderr)
-        (self.fixture / '.agent/generated/.refresh-in-progress').unlink()
-        refresh.refresh(self.fixture)
+        refresh.refresh(self.fixture, recover_interrupted=True)
         self.assertEqual(self.run_check().returncode, 0)
 
     def test_private_fixture_is_excluded_without_content_fingerprinting(self):

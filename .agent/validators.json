@@ -19,6 +19,14 @@
       "purpose": "Explicitly refresh only generated non-authoritative views."
     },
     {
+      "id": "facade-refresh-recovery",
+      "argv": ["python3", "-B", ".agent/scripts/refresh.py", "--recover-interrupted"],
+      "mode": "refresh_writer",
+      "required": true,
+      "run_in_check": false,
+      "purpose": "Explicitly replace every generated output after a detected interrupted refresh, then clear its marker."
+    },
+    {
       "id": "workspace-contract",
       "argv": ["python3", "-B", "tooling/workspace/validate_contract.py", "--check", "--audit"],
       "mode": "read_only",

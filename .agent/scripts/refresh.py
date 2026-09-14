@@ -243,15 +243,21 @@ Source revision/tree: `{revision}` / `{tree}`. Live ledger hash: `{ledger['ledge
     }
 
 
-def refresh(root=ROOT, state_root=None, *, fail_after=None):
+def refresh(root=ROOT, state_root=None, *, fail_after=None, recover_interrupted=False):
     outputs = build(root, state_root)
     marker = root / '.agent/generated/.refresh-in-progress'
     marker.parent.mkdir(parents=True, exist_ok=True)
-    descriptor = os.open(marker, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
-    with os.fdopen(descriptor, 'w') as stream:
-        stream.write('incomplete generated-integrity transaction\n')
-        stream.flush()
-        os.fsync(stream.fileno())
+    if marker.exists():
+        if marker.is_symlink() or not recover_interrupted:
+            raise checker.ValidationError('interrupted refresh marker present; use explicit verified recovery')
+    else:
+        if recover_interrupted:
+            raise checker.ValidationError('no interrupted refresh marker exists to recover')
+        descriptor = os.open(marker, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+        with os.fdopen(descriptor, 'w') as stream:
+            stream.write('incomplete generated-integrity transaction\n')
+            stream.flush()
+            os.fsync(stream.fileno())
     completed = 0
     try:
         for name in OUTPUTS:
@@ -273,11 +279,14 @@ def refresh(root=ROOT, state_root=None, *, fail_after=None):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--refresh', action='store_true', required=True)
+    mode = parser.add_mutually_exclusive_group(required=True)
+    mode.add_argument('--refresh', action='store_true')
+    mode.add_argument('--recover-interrupted', action='store_true')
     parser.add_argument('--state-root', type=Path)
     args = parser.parse_args(argv)
     try:
-        print(json.dumps(refresh(ROOT, args.state_root), indent=2))
+        print(json.dumps(refresh(ROOT, args.state_root,
+                                 recover_interrupted=args.recover_interrupted), indent=2))
         return 0
     except (checker.ValidationError, OSError, ValueError, KeyError, TypeError,
             __import__('subprocess').CalledProcessError) as exc:
