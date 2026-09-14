@@ -1,0 +1,29 @@
+Texenda mapped facade file-type correction validation
+observed_at_utc: 2026-09-14T22:37:47Z
+actor/profile: agent:mapped-facade-sol / gpt-5.6-sol-max / T2 / max
+rejected_predecessor: 1bc710394a47931a2320f7b6cee0733a2dd991b6
+source_revision/tree: 721cded93f024128f48c6f7918cf9e01b997c798 / f021b09e3b9803f10747ab2d96d80162747b20d2
+tested_revision/tree: d79d5b459bc6af47c987e2b8eadc3096f2ba12c8 / 124d42767777ac979b40492d53519f1192acb7c2
+generation_id/source_scope: cf21a5379a05823321ffaace6bb4eedbf753071dd2c1eaf27112e05b29f967df / c4f8c047acfd8de4ead7c806f4130d02d6ef5b90158c88ced83acc109a21bd11
+1bc7103_to_tested_diff_sha256: 1323fd85b81d323affc4a83a78fb5d1915fb07ccb47d712341af79bc415c00f3
+base_to_tested_diff_sha256: a821c885bee59306cc791520a545f9f15255e40383a62524c6369a5263f90f8b
+
+FAIL sixth-rereview
+  Astra/max approved the transaction matrix and rejected only the systemic nonregular-file boundary. Prior history/evidence remains immutable.
+
+PASS regular-content-reader-boundary
+  Harness, facade common and relocation stable readers use O_NOFOLLOW|O_NONBLOCK, immediately fstat and require S_ISREG before reading, then retain stable descriptor and path/inode checks. FIFO, Unix socket, directory, /dev/null and post-preflight FIFO substitution probes deny within bounded child timeouts.
+
+PASS state-lock-boundary
+  status/ready/check perform metadata-only existing-lock regular/non-symlink validation and still permit a missing lock. Writers open existing locks read-only/nonblocking, validate descriptor regularity and exact path identity before flock. FIFO/socket/directory and before-open substitution cases deny promptly.
+
+FAIL intermediate-test-selector
+  One focused facade invocation used an invalid leading-dot unittest module name and exited before loading tests. The correct discover/-k command immediately passed; no implementation or fixture state changed.
+
+PASS exact-candidate-tests-and-no-write
+  26 facade, 77 workspace, 184 coordinator and registered 39 sealed tests pass; both package validators pass via check-all. Check/check-all skip both writers and preserve all 264 candidate files plus live state/lock bytes/metadata/status. Static check covers 121 JSON, 1 TOML, 19 Python, 101 links and 248 evidence rows before this successor.
+
+PASS live-private-external-boundary
+  Canonical main/live state remain 6804578 and b993e... with 13 receipts, expected tip, eleven profiles, zero leases/budget. CSV checks are existence/ignore/untracked only. No main/live/private/package/network/external effect; all probes reaped; no cache/background work.
+
+NOT_RUN independent rereview of this successor, integration/live relocation, physical power-loss, product/external gates.
