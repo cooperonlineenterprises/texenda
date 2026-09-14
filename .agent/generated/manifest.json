@@ -1,12 +1,12 @@
 {
   "schema_version": "texenda.generated-integrity.v1",
-  "generation_id": "e7549b539ed8a44dd74387703da657be8074664821f97d2c502031ec3944bc3b",
+  "generation_id": "e720b33d618dc9c4c02bc7d8517a345c83b1dbede57305d67fafe0c4372b81a3",
   "generation_id_derivation": "sha256(canonical_json(source_scope_sha256,evidence_scope_sha256,ledger_sha256,receipt_count,receipt_tip))",
-  "generated_at": "2026-09-14T20:01:42+00:00",
+  "generated_at": "2026-09-14T21:16:35+00:00",
   "authority": "generated_non_authoritative",
-  "source_git_revision": "93548f7666a077bff227b41e1038b5935b9bfd37",
-  "source_git_tree": "309552fa9bf700c2758e0c683885acebf04b5212",
-  "source_scope_sha256": "4b23263f9759205e89e20b0e7de893e8aef426d963bff376daf9908a075f9e2b",
+  "source_git_revision": "b440fd2299a18fe08e2d7c238373628671e80bed",
+  "source_git_tree": "29cc233cff8ccf736abce41ab4bce6b12dad82fe",
+  "source_scope_sha256": "9b05e4c3eddd11ed664df391f06cd00a1b6e77ab5937de67e8cb7cfd9fe82037",
   "source_scope_exclusions": [
     {
       "path": ".agent/generated/manifest.json",
@@ -84,7 +84,7 @@
     },
     {
       "path": ".agent/extensions/texenda-coordination/extension.json",
-      "sha256": "45944fea66d23a0dbf60aa5c2ab08b01d6c4486ee34019964eb973cb4ec3ca0a"
+      "sha256": "7a63cf72390bea1402589021df4f762971c75275b0611cd06a675271e0e98a45"
     },
     {
       "path": ".agent/generated/README.md",
@@ -116,7 +116,7 @@
     },
     {
       "path": ".agent/scripts/common.py",
-      "sha256": "f2afa5f1391aadb3abb798819e4047c1bccac0ea5f4a67ba58a850d7ffbe30d6"
+      "sha256": "1703324850e281663bd1623b2f64fbe05723ce32ef101a1c24924757338aabeb"
     },
     {
       "path": ".agent/scripts/refresh.py",
@@ -144,11 +144,11 @@
     },
     {
       "path": ".agent/tests/test_validate.py",
-      "sha256": "deec20eb21239dc285c03326b96d3d2205caa2609a948045002666bad0de5f7c"
+      "sha256": "4a5ba71d0af7bc8c761b2e60ef009789e8f14bfbffea0869a82dece1a7a84472"
     },
     {
       "path": ".agent/tools.json",
-      "sha256": "f6112f3a943c1691f734885e766697884e3c4c6e8ad7444782c43910af835f23"
+      "sha256": "13f7a52a39c9171697923f756912c1217c737bf37df52086dffb7c12bbad679a"
     },
     {
       "path": ".agent/validators.json",
@@ -164,7 +164,7 @@
     },
     {
       "path": ".gitignore",
-      "sha256": "f725ceb05995477c0e8d6637b3f8a3ab2448a2958f5c202d845d84ae4d44e68f"
+      "sha256": "a36f856543d8e1f6b49a5cca5770d45b8d1e97b683e6775d5be6ed5515ca241f"
     },
     {
       "path": ".project-blueprint-origin.json",
@@ -436,7 +436,7 @@
     },
     {
       "path": "project-dossier/transition/README.md",
-      "sha256": "61a55dcee536971e9a783edacdfb8b16493710d0537b483aa0a4265d0a7835b7"
+      "sha256": "342b0ce075454656a9e183db7be5c9f2aaa60a83a87bc30eeec82b62687b0540"
     },
     {
       "path": "project-dossier/transition/blueprint-adoption-crosswalk.json",
@@ -808,11 +808,11 @@
     },
     {
       "path": "tooling/coordination/README.md",
-      "sha256": "ad72d22fc4a540983f5724eff82d7321c2d4430755f75ef45bc641e15dae16f4"
+      "sha256": "b5b69eff747761c7060def091d0d0bfbdb588df4bdbd09e6251aabfa8f5a7c82"
     },
     {
       "path": "tooling/coordination/harness.py",
-      "sha256": "10f420afb2e30b0681e4eab09ed4ef589627315c660532ba8268460c81ae6e77"
+      "sha256": "7716434e37119efbc494400ad6121e819f5785b62bbf370ec50a9abb24ee5b38"
     },
     {
       "path": "tooling/coordination/routing-policy.json",
@@ -829,6 +829,10 @@
     {
       "path": "tooling/coordination/schemas/state-location.schema.json",
       "sha256": "72527a4eddd5071f4a341a508f41f6b910ffacae93cb1e0017232517476fecf3"
+    },
+    {
+      "path": "tooling/coordination/schemas/state-write-transaction.schema.json",
+      "sha256": "a6533f9b79544def01b737744d9b365be48e402f9ce080f43cfe70be95486878"
     },
     {
       "path": "tooling/coordination/templates/ASSIGNMENT.md",
@@ -868,11 +872,11 @@
     },
     {
       "path": "tooling/coordination/tests/test_state_root.py",
-      "sha256": "7a4b36110dae3f333fa6d0c297fd104a8213c444990f096a9932c6c0dbb06ddb"
+      "sha256": "52bdd903a661c281a12030a5f0abfa34d7419cab531b916e7cde7ad6e4e1f7d0"
     },
     {
       "path": "tooling/workspace/relocate_state.py",
-      "sha256": "9e2dc0a908c8619e69490e470758baf292863b528b889259a4af147167529c8e"
+      "sha256": "2691baf5917a501ad7eb38ea78e77fc4163fa4607c27b233f76f79c15b48db12"
     },
     {
       "path": "tooling/workspace/tests/test_contract.py",
@@ -884,7 +888,7 @@
     },
     {
       "path": "tooling/workspace/tests/test_state_relocation.py",
-      "sha256": "3e75e53c472a3f92316a22e5583c2546c10eafcddbb3cf7cd2f185bb75bea7c0"
+      "sha256": "87e9b62575537acb0face8fdf66ff4fe2494766211de84ce525e9ebeb03f9516"
     },
     {
       "path": "tooling/workspace/validate_contract.py",

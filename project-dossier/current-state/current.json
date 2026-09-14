@@ -1,11 +1,11 @@
 {
   "schema_version": "texenda.dossier-current-state.generated.v1",
-  "generation_id": "e7549b539ed8a44dd74387703da657be8074664821f97d2c502031ec3944bc3b",
-  "generated_at": "2026-09-14T20:01:42+00:00",
+  "generation_id": "e720b33d618dc9c4c02bc7d8517a345c83b1dbede57305d67fafe0c4372b81a3",
+  "generated_at": "2026-09-14T21:16:35+00:00",
   "authority": "generated_non_authoritative_projection",
-  "source_git_revision": "93548f7666a077bff227b41e1038b5935b9bfd37",
-  "source_git_tree": "309552fa9bf700c2758e0c683885acebf04b5212",
-  "source_scope_sha256": "4b23263f9759205e89e20b0e7de893e8aef426d963bff376daf9908a075f9e2b",
+  "source_git_revision": "b440fd2299a18fe08e2d7c238373628671e80bed",
+  "source_git_tree": "29cc233cff8ccf736abce41ab4bce6b12dad82fe",
+  "source_scope_sha256": "9b05e4c3eddd11ed664df391f06cd00a1b6e77ab5937de67e8cb7cfd9fe82037",
   "source_scope_exclusions": [
     {
       "path": ".agent/generated/manifest.json",
