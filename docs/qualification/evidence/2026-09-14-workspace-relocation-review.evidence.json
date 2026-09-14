@@ -1,0 +1,417 @@
+{
+  "schema_version": "texenda.workspace-relocation-independent-review.v1",
+  "id": "EVD-WSR-REVIEW-0001",
+  "kind": "independent_candidate_review",
+  "information_role": "immutable_point_in_time_evidence",
+  "recorded_at": "2026-09-14T16:40:36Z",
+  "verdict": "APPROVE",
+  "approval_scope": "Exact Phase-1 relocation evidence/navigation/physical-audit candidate only. Does not attest facade adoption, external-state cutover, future .agent timestamp guarantee, product acceptance or external gates.",
+  "base_revision": "b99f71fbaba0183fa2857016819fb410cabc1160",
+  "base_tree": "24fdd3f5c7e9b8b1a03c854210d2cc6427620477",
+  "candidate_revision": "2f611948ca0f191ba0efc3478bc463644fde09f8",
+  "candidate_tree": "a3d40c7338d0470b7cd7ff7527722d89109cade2",
+  "full_binary_diff_sha256": "626e1a8324a58daa7d1fea7ef6e5bd6408d84f254f4e0cd8fa292cf9675fef4b",
+  "diff_command": "git --no-optional-locks diff --no-ext-diff --no-textconv --full-index --binary b99f71fbaba0183fa2857016819fb410cabc1160 2f611948ca0f191ba0efc3478bc463644fde09f8 | shasum -a 256",
+  "candidate_file_hashes": [
+    {
+      "path": "docs/qualification/evidence/2026-09-14-workspace-relocation-correction-validation.log",
+      "sha256": "27094f72b54362547f2749e1db50d4a2120c455919cb7f57f36d4424e530566a"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-workspace-relocation-validation.log",
+      "sha256": "77b55c489a37ac4eed405aedb6ac54e32eed9c6d0ad1a247c21ea9326dcc7acb"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-workspace-relocation.json",
+      "sha256": "09f2cbceb7ed4b6f2ff244174e10cf44e5642646231a1bdc641889986c81c05c"
+    },
+    {
+      "path": "project-dossier/transition/README.md",
+      "sha256": "8d688b46b93a58d0531061ccdca38f4cb8cb43eb9461f51b7ad29cb0d6acbb98"
+    },
+    {
+      "path": "project-dossier/transition/post-relocation-adoption-plan.json",
+      "sha256": "fa3144f5a622d1fcaffaa768d74e2f9b50d520f8614401fe5af87a4503710c15"
+    },
+    {
+      "path": "project-dossier/transition/workspace-relocation-receipt.md",
+      "sha256": "ca23dfb45ad29f20cc846a5edfb7625b418bb7293f351bdfaeaa3f9444b064f1"
+    },
+    {
+      "path": "tooling/workspace/tests/test_relocation.py",
+      "sha256": "f87269d8e7b13de69481f65550817c3d4c29b76dc28de607cac73758369e8251"
+    },
+    {
+      "path": "tooling/workspace/validate_relocation.py",
+      "sha256": "faca2d70ca7ae67b89b3d23561f9df1df0c9bab219aa8ae4f39e9cc35d573832"
+    }
+  ],
+  "author": "/root/workspace_relocation_author",
+  "reviewer": "/root/review_workspace_relocation",
+  "integrator": "/root",
+  "identities_distinct": true,
+  "reviewer_worktree": "/Users/jamesryancooper/Projects/texenda/worktrees/workspace-relocation-review",
+  "reviewer_profile": {
+    "profile_id": "gpt-6-astra-max",
+    "model_id": "gpt-6-astra",
+    "capability_floor": "T1",
+    "reasoning_effort": "max",
+    "runtime_id": "codex-desktop-collaboration",
+    "client_version": "26.901.41600 (build 7982)",
+    "billing_mode": "subscription",
+    "qualification_rechecked_at": "2026-09-14T16:32:22.825284Z",
+    "expires_at": "2026-10-12T21:44:31Z",
+    "evidence": {
+      "path": "docs/qualification/model-roster-v2.1.evidence.json",
+      "sha256": "8e44034e6247ea47b3f0002100e6a343cfa6685d56138a24f55e8a13054173c0"
+    },
+    "direct_app_observation": {
+      "path": "/Applications/ChatGPT.app/Contents/Info.plist",
+      "bundle_identifier": "com.openai.codex",
+      "short_version": "26.901.41600",
+      "build": "7982"
+    },
+    "max_seconds": 3000,
+    "max_tokens": 80000,
+    "api_allowance_usd": 0,
+    "api_spend_usd": 0,
+    "provider_token_meter": "unavailable",
+    "provider_model_introspection": "unavailable"
+  },
+  "review_document": {
+    "path": "docs/qualification/evidence/2026-09-14-workspace-relocation-independent-review.md",
+    "sha256": "2bcd51735b3d54b3ce537543de729c153a501f13537960d7b928d09ecda4fbb4"
+  },
+  "open_candidate_findings": [],
+  "resolved_predecessor": {
+    "revision": "7b758abd63d62260b4fa95c89eb537d0d9c856c4",
+    "resolution_revision": "2f611948ca0f191ba0efc3478bc463644fde09f8",
+    "reproduction": "Preserved source fails on declared detached reviewer at symbolic-ref HEAD; candidate passes with both declared worktrees.",
+    "disposition": "Compatibility correction approved; historical refs/commits preserved and no mutation authority created."
+  },
+  "live_observation": {
+    "canonical_repository": "/Users/jamesryancooper/Projects/texenda/repo",
+    "revision": "b99f71fbaba0183fa2857016819fb410cabc1160",
+    "tree": "24fdd3f5c7e9b8b1a03c854210d2cc6427620477",
+    "main_clean": true,
+    "remote": "https://github.com/cooperonlineenterprises/texenda.git",
+    "project_home_git_repository": false,
+    "old_checkout_present": false,
+    "worktrees": [
+      "/Users/jamesryancooper/Projects/texenda/repo",
+      "/Users/jamesryancooper/Projects/texenda/worktrees/workspace-relocation-evidence",
+      "/Users/jamesryancooper/Projects/texenda/worktrees/workspace-relocation-review"
+    ],
+    "state_path": "/Users/jamesryancooper/Projects/texenda/repo/.texenda/state.json",
+    "state_sha256_before": "b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235",
+    "state_sha256_after": "b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235",
+    "version": "2.0",
+    "receipt_count": 13,
+    "receipt_tip": "f39249184757101b108ea7ec5ea0ffebdd8237315b8ac3cad3ad0cc6ab3e827e",
+    "roster_canonical_sha256": "a23705178b39e8d0dd194abd4cf6e42fc20be404739d0e28e0ca9b221c80ddcf",
+    "qualified_profile_count": 11,
+    "lease_count": 0,
+    "api_budget_usd": 0,
+    "declared_api_allocations_usd": 0,
+    "cleared_external_gates": 0,
+    "phase_4_started": false
+  },
+  "preservation": {
+    "source_path": "/Users/jamesryancooper/Projects/texenda/sources/handoff-1.1.0-20260914",
+    "source_top_level_entries": 16,
+    "source_regular_files": 88,
+    "sealed_package_files": 86,
+    "differing_paths": 11,
+    "source_complete_inventory_sha256": "9be3c385dccdcb6f735993dc0fe24a6dcab07f8af4fcf1bd2c5fac58786ee4c4",
+    "common_manifest_sha256": "bcb7488ecf2ac42b4b33e478918e7ce6c35d0bdc04b208ddd9ed66622b468b7f",
+    "source_checksums_sha256": "8576bf08ec4f2a4718476eca70e6d1d5cb2b6be1af550bf5c20c692bcbaff715",
+    "sealed_checksums_sha256": "37fffb1a165cfa6b907e7433d617c06e1c64ff09cd282173f7d791cace2ac07e",
+    "archived_artifact_count": 7,
+    "fresh_bundle_sha256": "f94b0e81858197e5d0419cf7170650f889263602aa35b1d1e7e8710468064897",
+    "bundle_heads": 34,
+    "ordinary_refs": 29,
+    "archived_worktree_heads": 4,
+    "both_bundles_verified": true,
+    "completed_journal_moves": 18,
+    "journal_sha256": "807bc10b7d66dc60c807152db374b85fbe308e94fcc0a97ab8839f011f5c51c8"
+  },
+  "private_input": {
+    "path": "/Users/jamesryancooper/Projects/texenda/repo/.texenda/private-inputs/kit/ohw/2026-09-14/subscribers.csv",
+    "exists": true,
+    "ignored": true,
+    "tracked": false,
+    "ignore_rule": ".gitignore:1:.texenda/",
+    "contents_opened": false,
+    "contents_hashed": false,
+    "contents_parsed": false,
+    "contents_copied": false,
+    "contents_logged": false,
+    "private_subtree_in_metadata_snapshot": false,
+    "coordination_archive_member_count": 9,
+    "private_archive_members": 0
+  },
+  "blueprint": {
+    "selected_version": "1.0.0",
+    "selected_source": "/Users/jamesryancooper/.codex/skills/project-bootstrap/assets/blueprint-source",
+    "profile": "high-assurance",
+    "adoption_mode": "mapped-existing",
+    "qualification": "inspected_structural_reference_only",
+    "stock_generator_run": false,
+    "origin_record_created": false,
+    "newer_source_qualified": false,
+    "planner_exact_bytes_match": true,
+    "planner_sha256": "fa3144f5a622d1fcaffaa768d74e2f9b50d520f8614401fe5af87a4503710c15"
+  },
+  "read_only_observation": {
+    "snapshot_paths": 1871,
+    "scope": "Entire project-home metadata including Git/ignored/cache directories, excluding the whole private-input subtree.",
+    "preserved_fields": [
+      "mode",
+      "size",
+      "mtime_ns",
+      "ctime_ns",
+      "inode"
+    ],
+    "all_path_names_unchanged": true,
+    "state_bytes_unchanged": true,
+    "python_write_capable_open_attempts": 0,
+    "python_filesystem_mutation_attempts": 0,
+    "python_private_content_open_attempts": 0,
+    "full_access_time_equality": false,
+    "access_time_only_changed_paths": [
+      "repo/.git/index",
+      "repo/.git/objects/24/fdd3f5c7e9b8b1a03c854210d2cc6427620477",
+      "repo/.git/objects/60/9ddda6da96ddf2460925cc759db724acd70d59",
+      "repo/.git/objects/66/6b6da286bacbd7e02d6d3ca27b3e6c2aa81b1a",
+      "repo/.git/objects/b9/9f71fbaba0183fa2857016819fb410cabc1160",
+      "repo/.git/objects/c6/220627cb84ea0862323d14dda2a1b72e466e01"
+    ],
+    "observed_at": "2026-09-14T16:35:59.036952Z",
+    "disposition": "Outside the expressly limited Phase-1 atime claim; retain for later .agent timestamp acceptance. No system-wide syscall tracing claimed."
+  },
+  "github": {
+    "methods": [
+      "GET"
+    ],
+    "private": true,
+    "visibility": "private",
+    "hosted_branches": 0,
+    "hosted_workflows": 0,
+    "tracked_workflows": 0,
+    "actions_enabled": true,
+    "allowed_actions": "all",
+    "sha_pinning_required": false,
+    "writes_performed": false,
+    "pushed": false
+  },
+  "codex": {
+    "saved_project_id": "8445df3c-0057-4a15-a026-9ee972cc1293",
+    "saved_project_path": "/Users/jamesryancooper/Projects/texenda",
+    "saved_project_is_git_repository": false,
+    "safe_path_update_api_exposed": false,
+    "manual_action": "Open/add /Users/jamesryancooper/Projects/texenda/repo through Codex's project control.",
+    "registration_or_storage_edited": false
+  },
+  "checks": [
+    {
+      "id": "exact_candidate",
+      "required": true,
+      "status": "PASS",
+      "procedure": "Full eight-file diff and both-commit history read; exact base, candidate, tree and full binary diff hash match.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-workspace-relocation-independent-review.md",
+      "sha256": "2bcd51735b3d54b3ce537543de729c153a501f13537960d7b928d09ecda4fbb4"
+    },
+    {
+      "id": "workspace_layout_and_git",
+      "required": true,
+      "status": "PASS",
+      "procedure": "Physical audit at canonical b99f71f and both declared worktrees passes; project home non-Git, no parent AGENTS, old checkout absent, clean canonical main and expected remote.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-workspace-relocation-independent-review.md",
+      "sha256": "2bcd51735b3d54b3ce537543de729c153a501f13537960d7b928d09ecda4fbb4"
+    },
+    {
+      "id": "source_and_sealed_preservation",
+      "required": true,
+      "status": "PASS",
+      "procedure": "All 16 source entries/88 files, 86 sealed package files and exact 11 differing paths match baseline; no variant semantics selected.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-workspace-relocation-independent-review.md",
+      "sha256": "2bcd51735b3d54b3ce537543de729c153a501f13537960d7b928d09ecda4fbb4"
+    },
+    {
+      "id": "checkpoints_and_refs",
+      "required": true,
+      "status": "PASS",
+      "procedure": "All seven archive hashes and both Git bundles verify; 29 ordinary refs, HEAD and four archived worktree-head commits retained; post-checkpoint branch reported.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-workspace-relocation-independent-review.md",
+      "sha256": "2bcd51735b3d54b3ce537543de729c153a501f13537960d7b928d09ecda4fbb4"
+    },
+    {
+      "id": "relocation_journal",
+      "required": true,
+      "status": "PASS",
+      "procedure": "Journal SHA-256 807bc10b7d66dc60c807152db374b85fbe308e94fcc0a97ab8839f011f5c51c8 binds all 18 completed moves to the approved base/tree/state.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-workspace-relocation-independent-review.md",
+      "sha256": "2bcd51735b3d54b3ce537543de729c153a501f13537960d7b928d09ecda4fbb4"
+    },
+    {
+      "id": "live_state_and_qualification",
+      "required": true,
+      "status": "PASS",
+      "procedure": "Existing unchanged receipt/retained-evidence validators and all 11 exact profiles pass without opening a writable state lock; live bytes/tip/roster unchanged, zero leases/budget/allocations/gates.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-workspace-relocation-independent-review.md",
+      "sha256": "2bcd51735b3d54b3ce537543de729c153a501f13537960d7b928d09ecda4fbb4"
+    },
+    {
+      "id": "private_input_exclusion",
+      "required": true,
+      "status": "PASS",
+      "procedure": "Exact CSV existence/ignore/tracking/location checks only. No content open/hash/parse/copy/log. Whole private subtree excluded from snapshots; nine archive member names exclude private/CSV content.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-workspace-relocation-independent-review.md",
+      "sha256": "2bcd51735b3d54b3ce537543de729c153a501f13537960d7b928d09ecda4fbb4"
+    },
+    {
+      "id": "workspace_suite",
+      "required": true,
+      "status": "PASS",
+      "procedure": "env PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s tooling/workspace/tests -v: 43 PASS, exit 0.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-workspace-relocation-independent-review.md",
+      "sha256": "2bcd51735b3d54b3ce537543de729c153a501f13537960d7b928d09ecda4fbb4"
+    },
+    {
+      "id": "local_coordination_suite",
+      "required": true,
+      "status": "PASS",
+      "procedure": "env PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s tooling/coordination/tests -v: 132 PASS, exit 0.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-workspace-relocation-independent-review.md",
+      "sha256": "2bcd51735b3d54b3ce537543de729c153a501f13537960d7b928d09ecda4fbb4"
+    },
+    {
+      "id": "sealed_harness_suite",
+      "required": true,
+      "status": "PASS",
+      "procedure": "env PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s specs/texenda-handoff/08-project-harness/tests -v: 39 PASS, exit 0.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-workspace-relocation-independent-review.md",
+      "sha256": "2bcd51735b3d54b3ce537543de729c153a501f13537960d7b928d09ecda4fbb4"
+    },
+    {
+      "id": "both_package_validators",
+      "required": true,
+      "status": "PASS",
+      "procedure": "Both named validate_package.py --checksums commands: 14 checks PASS each, exit 0.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-workspace-relocation-independent-review.md",
+      "sha256": "2bcd51735b3d54b3ce537543de729c153a501f13537960d7b928d09ecda4fbb4"
+    },
+    {
+      "id": "static_contract_parse_owner_link_hash_checks",
+      "required": true,
+      "status": "PASS",
+      "procedure": "validate_contract.py --check --audit passes: 42 concerns, 85 paths, 35 types, 16 moves, 143 existing qualification bindings, 87 JSON/1 TOML/12 Python, 13 registry links; nine changed-Markdown links separately resolved.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-workspace-relocation-independent-review.md",
+      "sha256": "2bcd51735b3d54b3ce537543de729c153a501f13537960d7b928d09ecda4fbb4"
+    },
+    {
+      "id": "required_revision_negative",
+      "required": true,
+      "status": "PASS",
+      "procedure": "Physical audit with the candidate revision as expected canonical main rejects with exit 1 and canonical revision changed; expected negative passes.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-workspace-relocation-independent-review.md",
+      "sha256": "2bcd51735b3d54b3ce537543de729c153a501f13537960d7b928d09ecda4fbb4"
+    },
+    {
+      "id": "predecessor_correction",
+      "required": true,
+      "status": "PASS",
+      "procedure": "Exact 7b758 predecessor source executed in memory rejects the declared detached reviewer at symbolic-ref HEAD; corrected candidate accepts it while retaining original refs/objects. No removal/attachment requirement or new authority inferred.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-workspace-relocation-independent-review.md",
+      "sha256": "2bcd51735b3d54b3ce537543de729c153a501f13537960d7b928d09ecda4fbb4"
+    },
+    {
+      "id": "post_relocation_planner",
+      "required": true,
+      "status": "PASS",
+      "procedure": "Installed high-assurance planner against canonical repo produces exact committed bytes, SHA-256 fa3144f5a622d1fcaffaa768d74e2f9b50d520f8614401fe5af87a4503710c15.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-workspace-relocation-independent-review.md",
+      "sha256": "2bcd51735b3d54b3ce537543de729c153a501f13537960d7b928d09ecda4fbb4"
+    },
+    {
+      "id": "claimed_read_only_boundary",
+      "required": true,
+      "status": "PASS",
+      "procedure": "Whole-project snapshot of 1871 paths, excluding private subtree, retains names/mode/size/mtime/ctime/inode and live state bytes. Python audit hook observes zero write-capable open, filesystem mutation or private-content open attempts. Access-time limit is separately recorded.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-workspace-relocation-independent-review.md",
+      "sha256": "2bcd51735b3d54b3ce537543de729c153a501f13537960d7b928d09ecda4fbb4"
+    },
+    {
+      "id": "active_absolute_dependencies",
+      "required": true,
+      "status": "PASS",
+      "procedure": "Twenty-one tracked operational sources inspected: no active dependency on the old absolute checkout path.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-workspace-relocation-independent-review.md",
+      "sha256": "2bcd51735b3d54b3ce537543de729c153a501f13537960d7b928d09ecda4fbb4"
+    },
+    {
+      "id": "github_and_codex_observations",
+      "required": true,
+      "status": "PASS",
+      "procedure": "Four GitHub GETs confirm private/no branches/no hosted workflows/unchanged Actions settings; app project listing confirms parent path and precise manual repo reopen requirement.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-workspace-relocation-independent-review.md",
+      "sha256": "2bcd51735b3d54b3ce537543de729c153a501f13537960d7b928d09ecda4fbb4"
+    },
+    {
+      "id": "git_diff_and_candidate_cleanliness",
+      "required": true,
+      "status": "PASS",
+      "procedure": "git diff --check passes; sealed comparison to original main exits zero; author and reviewer worktrees clean including ignored files before the two review records; canonical main clean.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-workspace-relocation-independent-review.md",
+      "sha256": "2bcd51735b3d54b3ce537543de729c153a501f13537960d7b928d09ecda4fbb4"
+    },
+    {
+      "id": "independent_author_stop",
+      "required": true,
+      "status": "PASS",
+      "procedure": "collaboration.list_agents independently shows relocation author and final architecture reviewer completed; pre-move stop remains explicitly attributed to the parent dispatcher.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-workspace-relocation-independent-review.md",
+      "sha256": "2bcd51735b3d54b3ce537543de729c153a501f13537960d7b928d09ecda4fbb4"
+    },
+    {
+      "id": "full_git_access_time_probe",
+      "required": false,
+      "status": "FAIL",
+      "procedure": "Broader optional full-timestamp probe failed on six canonical .git paths. Follow-up at 2026-09-14T16:35:59.036952Z isolates changes to atime_ns only. Phase-1 candidate explicitly does not claim atime equality; later .agent acceptance must address its separate timestamp requirement.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-workspace-relocation-independent-review.md",
+      "sha256": "2bcd51735b3d54b3ce537543de729c153a501f13537960d7b928d09ecda4fbb4"
+    }
+  ],
+  "not_run": [
+    "Future .agent facade/origin schema/projections and full timestamp guarantee",
+    "External-state/private-input relocation and state-root code acceptance",
+    "Real mapped maintenance lifecycle",
+    "Integration and final read-only review after adding review evidence",
+    "Product or external qualification/gate checks"
+  ],
+  "deferred_semantic_work": [
+    "Separate project-local amendment to assess editor-wording divergence if warranted",
+    "Complete newer blueprint source qualification and deliberate mapped-existing origin-schema successor"
+  ],
+  "runtime_stop": {
+    "author_observed_completed": true,
+    "final_architecture_reviewer_observed_completed": true,
+    "pre_move_stop": "Attributed parent dispatcher observation retained; not retrospectively witnessed by this reviewer.",
+    "reviewer_at_recording": "Finishing the two assigned artifacts; no child agents or background commands.",
+    "required_next_step": "Parent observes reviewer completion before scope release or clean worktree removal.",
+    "self_attestation_is_not_independent_stop_proof": true
+  },
+  "mutations": {
+    "candidate_files_edited": false,
+    "review_files_added": [
+      "docs/qualification/evidence/2026-09-14-workspace-relocation-independent-review.md",
+      "docs/qualification/evidence/2026-09-14-workspace-relocation-review.evidence.json"
+    ],
+    "staged": false,
+    "committed": false,
+    "files_moved": false,
+    "state_moved_or_mutated": false,
+    "workspace_notice_changed": false,
+    "external_mutations": false
+  }
+}
