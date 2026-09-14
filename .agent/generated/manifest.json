@@ -1,12 +1,12 @@
 {
   "schema_version": "texenda.generated-integrity.v1",
-  "generation_id": "41ee4f9276e22fe64216830349e3b5a155e6848061ea7727973b3f388d909210",
+  "generation_id": "828e6a05e482be2898e578ac92c9eb9bed22db2724bce4cf54830d8dc52d9008",
   "generation_id_derivation": "sha256(canonical_json(source_scope_sha256,evidence_scope_sha256,ledger_sha256,receipt_count,receipt_tip))",
-  "generated_at": "2026-09-14T18:21:54+00:00",
+  "generated_at": "2026-09-14T18:29:01+00:00",
   "authority": "generated_non_authoritative",
-  "source_git_revision": "e21e9460b86abb0ccce42e562a8704b89de4b968",
-  "source_git_tree": "6991b67c17f47cd751a652de6636c436602f1459",
-  "source_scope_sha256": "1571f1877b8d06f2e8440f3d27b7f61323813e9f16caeb39583893ffe69c9f9a",
+  "source_git_revision": "6746b5b7c388cf1c704ec29b258f2ca3bd799850",
+  "source_git_tree": "2bb724b265a938f169c2e763bc3bc0e0f98b1ba2",
+  "source_scope_sha256": "806fc6ef62dd933975da6fb416ca62cb84835fc22d4160b3a8a44c9940582031",
   "source_scope_exclusions": [
     {
       "path": ".agent/generated/manifest.json and .agent/generated/validation-report.json",
@@ -52,7 +52,7 @@
     },
     {
       "path": ".agent/extensions/texenda-coordination/extension.json",
-      "sha256": "3dcfc328e23db9b21e9411dd627b3db5933a665f60da806c938cd9d78a802738"
+      "sha256": "f99d9db0954ee70c6c2445a0e19c0aa38e1197139f9ba96106246acf163b8b92"
     },
     {
       "path": ".agent/generated/README.md",
@@ -84,15 +84,15 @@
     },
     {
       "path": ".agent/scripts/common.py",
-      "sha256": "5cbf0496b7af8adb2fb1814ddcc4e6fc8eba65d8a30acc03db1370dbda53c4b9"
+      "sha256": "605de9b35b21cd4a5c778922ef2d59b6ab4d2de572a63ce974c386380fe80b5f"
     },
     {
       "path": ".agent/scripts/refresh.py",
-      "sha256": "d71ac7882e54bc189e2bd8188e4c9861bd0ccd6d746352222cafdc40b380ae54"
+      "sha256": "8e8afbf24c38c779ed310818fcaebb14fb5a16939229ebe8df4d8a67187f62c9"
     },
     {
       "path": ".agent/scripts/validate.py",
-      "sha256": "9373995e14800c02a3b8565ff50ca1f336a868dc21b591539658f1246b98c542"
+      "sha256": "ca07d82c89f71649c163f0876acd96b082eea8645946c90780a077cca6408ee6"
     },
     {
       "path": ".agent/tasks/README.md",
@@ -112,7 +112,7 @@
     },
     {
       "path": ".agent/tests/test_validate.py",
-      "sha256": "6e112436dea183c4e200717e36dfdce5e2756de20f7274a5932d0dd5a65f05ec"
+      "sha256": "e6a9abcacfd23ae3202439ff36fcebb8624397dc0f72b941cae2bda65d6425b5"
     },
     {
       "path": ".agent/tools.json",
@@ -780,7 +780,7 @@
     },
     {
       "path": "tooling/coordination/harness.py",
-      "sha256": "b14974e073908fc7e0a34adbc0b885bfbb9a032688b540121851cf7654d4c602"
+      "sha256": "e5a06ecb79569f598be03bbcded3167e5d02769ed97befe326f3cadf4382d99f"
     },
     {
       "path": "tooling/coordination/routing-policy.json",
