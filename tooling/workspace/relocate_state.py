@@ -98,13 +98,16 @@ def directory(path, label, *, required=True):
 
 def stable_file_bytes(path, label):
     regular_file(path, label)
-    flags = os.O_RDONLY | getattr(os, 'O_NOFOLLOW', 0)
+    flags = (os.O_RDONLY | getattr(os, 'O_NOFOLLOW', 0)
+             | getattr(os, 'O_NONBLOCK', 0))
 
     def once():
         no_symlink_components(path, label)
         descriptor = os.open(path, flags)
         try:
             before = os.fstat(descriptor)
+            if not stat.S_ISREG(before.st_mode):
+                raise Denied(label + ' must remain a regular non-symlink file')
             chunks = []
             while True:
                 chunk = os.read(descriptor, 1024 * 1024)
@@ -276,12 +279,15 @@ def _open_directory_fd(path, label):
 def _stable_at(directory_fd, name, label):
     if '/' in name or name in ('', '.', '..'):
         raise Denied(label + ' has an unsafe descriptor-relative name')
-    flags = os.O_RDONLY | getattr(os, 'O_NOFOLLOW', 0)
+    flags = (os.O_RDONLY | getattr(os, 'O_NOFOLLOW', 0)
+             | getattr(os, 'O_NONBLOCK', 0))
 
     def once():
         descriptor = os.open(name, flags, dir_fd=directory_fd)
         try:
             before = os.fstat(descriptor)
+            if not stat.S_ISREG(before.st_mode):
+                raise Denied(label + ' must be a regular non-symlink file')
             chunks = []
             while True:
                 chunk = os.read(descriptor, 1024 * 1024)

@@ -7,9 +7,11 @@ import json
 import os
 from pathlib import Path
 import shutil
+import socket
 import subprocess
 import sys
 import tempfile
+import time
 import unittest
 from unittest import mock
 
@@ -23,6 +25,60 @@ import validate
 
 
 class FacadeUnitTests(unittest.TestCase):
+    def assert_reader_denies_without_hanging(self, callback):
+        pid = os.fork()
+        if pid == 0:
+            try:
+                callback()
+            except common.ValidationError:
+                os._exit(0)
+            os._exit(1)
+        deadline = time.monotonic() + 2
+        while time.monotonic() < deadline:
+            observed, status = os.waitpid(pid, os.WNOHANG)
+            if observed:
+                self.assertEqual(os.WEXITSTATUS(status), 0)
+                return
+            time.sleep(0.01)
+        os.kill(pid, 9)
+        os.waitpid(pid, 0)
+        self.fail('facade reader probe timed out')
+
+    def test_shared_reader_rejects_fifo_socket_directory_device_and_substitution(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            fifo = root / 'fifo'
+            os.mkfifo(fifo)
+            folder = root / 'folder'
+            folder.mkdir()
+            socket_path = root / 'socket'
+            sock = socket.socket(socket.AF_UNIX)
+            sock.bind(str(socket_path))
+            try:
+                for path in (fifo, folder, socket_path, Path('/dev/null')):
+                    with self.subTest(path=path):
+                        self.assert_reader_denies_without_hanging(
+                            lambda path=path: common.stable_file_bytes(path, 'nonregular'))
+            finally:
+                sock.close()
+
+            target = root / 'target'
+            target.write_text('regular')
+            preserved = root / 'preserved'
+            original_open = common.os.open
+            replaced = [False]
+
+            def substitute(path, flags, *args, **kwargs):
+                if Path(path) == target and not replaced[0]:
+                    replaced[0] = True
+                    os.rename(target, preserved)
+                    os.mkfifo(target)
+                return original_open(path, flags, *args, **kwargs)
+
+            with mock.patch.object(common.os, 'open', side_effect=substitute), \
+                    self.assertRaises(common.ValidationError):
+                common.stable_file_bytes(target, 'post-preflight substitution')
+
     def test_duplicate_key_fixture_is_rejected(self):
         raw = (ROOT / '.agent/tests/fixtures/invalid/duplicate-key.json').read_bytes()
         with self.assertRaisesRegex(common.ValidationError, 'duplicate JSON key'):

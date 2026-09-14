@@ -38,6 +38,11 @@ lock for write, initialize state, or update caches/reports. Mutations use the
 selected state root's nonblocking exclusive lock and recheck the source bytes
 before replacement. Lock acquisition and the final descriptor-relative state
 commit recheck binding, repository/state-root/lock identity and routing policy.
+Every normal content reader uses no-follow/nonblocking open flags, verifies a
+regular descriptor before reading, then rechecks path/inode identity. Read-only
+commands validate any existing lock as regular, non-symlink metadata without
+opening it for write; a missing lock remains permitted. Writers likewise reject
+a nonregular or substituted lock before `flock`.
 A stale pre-cutover harness cannot recreate default state or leave a speculative
 lock after a cooperative cutover; an unchanged newly-created lock inode is
 removed only when acquisition or later commit continuity fails. The final state

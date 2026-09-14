@@ -205,12 +205,18 @@ def evidence_rows(root=ROOT):
 def stable_file_bytes(path, label='file'):
     path = no_symlink_components(Path(path).absolute(), label)
     require(path.is_file(), label + ' is missing or not regular')
-    flags = os.O_RDONLY | getattr(os, 'O_NOFOLLOW', 0)
+    flags = (os.O_RDONLY | getattr(os, 'O_NOFOLLOW', 0)
+             | getattr(os, 'O_NONBLOCK', 0))
 
     def once():
-        descriptor = os.open(path, flags)
+        try:
+            descriptor = os.open(path, flags)
+        except OSError as exc:
+            raise ValidationError(label + ' cannot be opened as a regular file') from exc
         try:
             before = os.fstat(descriptor)
+            require(stat.S_ISREG(before.st_mode),
+                    label + ' must be a regular non-symlink file')
             chunks = []
             while True:
                 chunk = os.read(descriptor, 1024 * 1024)
@@ -224,6 +230,9 @@ def stable_file_bytes(path, label='file'):
                     before.st_ctime_ns)
         require(identity == (after.st_dev, after.st_ino, after.st_size, after.st_mtime_ns,
                              after.st_ctime_ns), label + ' changed during read')
+        current = path.lstat()
+        require((after.st_dev, after.st_ino) == (current.st_dev, current.st_ino)
+                and stat.S_ISREG(current.st_mode), label + ' changed after safe open')
         return b''.join(chunks), identity
 
     first, second = once(), once()

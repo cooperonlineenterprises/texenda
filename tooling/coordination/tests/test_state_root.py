@@ -7,8 +7,10 @@ import io
 import json
 import os
 from pathlib import Path
+import socket
 import tempfile
 import threading
+import time
 import unittest
 from unittest import mock
 
@@ -62,6 +64,25 @@ class StateRootTests(unittest.TestCase):
     def recover_state_write(self):
         harness = hm.Harness(self.root, allow_state_recovery=True)
         return harness.recover_state_write('human:owner', runtime_stopped=True)
+
+    def assert_child_finishes(self, callback, timeout=2.0):
+        pid = os.fork()
+        if pid == 0:
+            try:
+                callback()
+            except (hm.Denied, OSError, ValueError):
+                os._exit(0)
+            os._exit(1)
+        deadline = time.monotonic() + timeout
+        while time.monotonic() < deadline:
+            observed, status = os.waitpid(pid, os.WNOHANG)
+            if observed:
+                self.assertEqual(os.WEXITSTATUS(status), 0)
+                return
+            time.sleep(0.01)
+        os.kill(pid, 9)
+        os.waitpid(pid, 0)
+        self.fail('child content-reader probe timed out')
 
     def relocate_synthetic(self, *, status='active', keep_default=False):
         self.external.mkdir(parents=True)
@@ -223,6 +244,72 @@ class StateRootTests(unittest.TestCase):
         state.symlink_to(target)
         with self.assertRaisesRegex(hm.Denied, 'symlink'):
             hm.Harness(self.root, state_root=self.external)
+
+    def test_nonregular_state_and_shared_reader_inputs_deny_without_hanging(self):
+        for kind in ('fifo', 'directory', 'socket'):
+            with self.subTest(kind=kind), tempfile.TemporaryDirectory() as directory:
+                root = (Path(directory) / 'repo').resolve()
+                root.mkdir()
+                harness = hm.Harness(root)
+                harness.init('human:fixture')
+                state = root / '.texenda/state.json'
+                os.rename(state, state.with_name('state.preserved'))
+                if kind == 'fifo':
+                    os.mkfifo(state)
+                elif kind == 'directory':
+                    state.mkdir()
+                else:
+                    sock = socket.socket(socket.AF_UNIX)
+                    sock.bind(str(state))
+                    self.addCleanup(sock.close)
+                self.assert_child_finishes(lambda: hm.Harness(root).status())
+        self.assert_child_finishes(lambda: hm.stable_file_bytes(Path('/dev/null'),
+                                                                 'device fixture'))
+        with tempfile.TemporaryDirectory() as directory:
+            root = (Path(directory) / 'repo').resolve()
+            root.mkdir()
+            harness = hm.Harness(root)
+            harness.init('human:fixture')
+            state = root / '.texenda/state.json'
+            preserved = state.with_name('state.preflight-preserved')
+            original_open = hm.os.open
+            replaced = [False]
+
+            def substitute(path, flags, *args, **kwargs):
+                if Path(path) == state and not replaced[0]:
+                    replaced[0] = True
+                    os.rename(state, preserved)
+                    os.mkfifo(state)
+                return original_open(path, flags, *args, **kwargs)
+
+            with mock.patch.object(hm.os, 'open', side_effect=substitute):
+                self.assert_child_finishes(harness.status)
+
+    def test_status_and_writer_reject_nonregular_state_lock_without_hanging(self):
+        for kind in ('fifo', 'directory', 'socket'):
+            with self.subTest(kind=kind), tempfile.TemporaryDirectory() as directory:
+                root = (Path(directory) / 'repo').resolve()
+                root.mkdir()
+                harness = hm.Harness(root)
+                harness.init('human:fixture')
+                lock = root / '.texenda/state.lock'
+                lock.unlink()
+                if kind == 'fifo':
+                    os.mkfifo(lock)
+                elif kind == 'directory':
+                    lock.mkdir()
+                else:
+                    sock = socket.socket(socket.AF_UNIX)
+                    sock.bind(str(lock))
+                    self.addCleanup(sock.close)
+                self.assert_child_finishes(lambda: hm.Harness(root).status())
+
+        lock = self.default / 'state.lock'
+        original = lock.with_name('state.lock.preserved')
+        harness = hm.Harness(self.root, interleave=lambda stage, _harness, _detail:
+                             (os.rename(lock, original), os.mkfifo(lock))
+                             if stage == 'before_lock_create' else None)
+        self.assert_child_finishes(lambda: harness.admit('WP-00', 'fixture'))
 
     def test_direct_and_ancestor_root_symlink_aliases_are_denied(self):
         root_alias = self.base / 'repo-alias'

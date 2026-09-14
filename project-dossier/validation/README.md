@@ -16,6 +16,10 @@ repository/project-home/state-root context. It categorically skips every
 modes reject an interrupted-refresh marker before delegation and deterministically
 reconstruct all eleven generated outputs byte-for-byte.
 
+Shared facade/coordinator readers use nonblocking no-follow opens, require a
+regular descriptor before content access, and recheck path/inode identity. FIFO,
+socket, device, directory, and post-preflight substitutions fail promptly.
+
 Only those exact eleven paths are excluded from the source fingerprint.
 `.agent/generated/README.md` and any additional implementation file under that
 directory remain source; adding one makes an unrefreshed or uncommitted

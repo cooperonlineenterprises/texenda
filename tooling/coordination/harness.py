@@ -144,8 +144,12 @@ def stable_file_bytes(path, label, *, missing_ok=False):
             if missing_ok:
                 return None
             raise Denied(label + ' is missing')
+        except OSError as exc:
+            raise Denied(label + ' cannot be opened as a regular file') from exc
         try:
             before = os.fstat(descriptor)
+            if not stat.S_ISREG(before.st_mode):
+                raise Denied(label + ' must be a regular non-symlink file')
             chunks = []
             while True:
                 chunk = os.read(descriptor, 1024 * 1024)
@@ -521,6 +525,10 @@ class Harness(legacy.Harness):
         self.state_root_identity = inode_identity(self.dir) if self.dir.exists() else None
         if self.statefile.is_symlink() or self.lockfile.is_symlink():
             raise Denied('state files cannot be symlinks')
+        if self.lockfile.exists():
+            lock_metadata = self.lockfile.lstat()
+            if not stat.S_ISREG(lock_metadata.st_mode):
+                raise Denied('existing state lock must be a regular non-symlink file')
         blockers = state_transaction_blocker_names(self.dir)
         if blockers and not allow_state_recovery:
             raise Denied('state-write transaction is pending explicit recovery')
@@ -562,15 +570,18 @@ class Harness(legacy.Harness):
         self._validate_state_root_current()
         if self.statefile.is_symlink():
             raise Denied('state file cannot be a symlink')
-        flags = os.O_RDONLY
-        if hasattr(os, 'O_NOFOLLOW'):
-            flags |= os.O_NOFOLLOW
+        flags = (os.O_RDONLY | getattr(os, 'O_NOFOLLOW', 0)
+                 | getattr(os, 'O_NONBLOCK', 0))
         try:
             descriptor = os.open(self.statefile, flags)
         except FileNotFoundError as exc:
             raise Denied('run init first') from exc
+        except OSError as exc:
+            raise Denied('state file cannot be opened as a regular file') from exc
         try:
             before = os.fstat(descriptor)
+            if not stat.S_ISREG(before.st_mode):
+                raise Denied('state file must be a regular non-symlink file')
             chunks = []
             while True:
                 chunk = os.read(descriptor, 1024 * 1024)
@@ -617,15 +628,17 @@ class Harness(legacy.Harness):
         descriptor = None
         created = False
         nofollow = getattr(os, 'O_NOFOLLOW', 0)
+        nonblock = getattr(os, 'O_NONBLOCK', 0)
         for _attempt in range(3):
             try:
                 descriptor = os.open('state.lock', os.O_RDWR | os.O_CREAT | os.O_EXCL
-                                     | nofollow, 0o600, dir_fd=directory_descriptor)
+                                     | nofollow | nonblock, 0o600,
+                                     dir_fd=directory_descriptor)
                 created = True
                 break
             except FileExistsError:
                 try:
-                    descriptor = os.open('state.lock', os.O_RDWR | nofollow,
+                    descriptor = os.open('state.lock', os.O_RDONLY | nofollow | nonblock,
                                          dir_fd=directory_descriptor)
                     created = False
                     break
@@ -636,6 +649,20 @@ class Harness(legacy.Harness):
             os.close(root_descriptor)
             raise Denied('state lock namespace changed repeatedly during acquisition')
         opened_at_creation = os.fstat(descriptor)
+        if not stat.S_ISREG(opened_at_creation.st_mode):
+            os.close(descriptor)
+            os.close(directory_descriptor)
+            os.close(root_descriptor)
+            raise Denied('opened state lock must be a regular non-symlink file')
+        current_lock = os.stat('state.lock', dir_fd=directory_descriptor,
+                               follow_symlinks=False)
+        if ((opened_at_creation.st_dev, opened_at_creation.st_ino)
+                != (current_lock.st_dev, current_lock.st_ino)
+                or not stat.S_ISREG(current_lock.st_mode)):
+            os.close(descriptor)
+            os.close(directory_descriptor)
+            os.close(root_descriptor)
+            raise Denied('state lock changed during safe open')
         created_identity = ((opened_at_creation.st_dev, opened_at_creation.st_ino,
                              opened_at_creation.st_mode, opened_at_creation.st_size,
                              opened_at_creation.st_mtime_ns, opened_at_creation.st_ctime_ns)
