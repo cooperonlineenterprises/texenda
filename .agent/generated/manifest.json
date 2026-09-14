@@ -1,24 +1,56 @@
 {
   "schema_version": "texenda.generated-integrity.v1",
-  "generation_id": "07d6ed7e14340c65b920a8dde101149a5ea3f0199e8dcf73407877865daad94f",
+  "generation_id": "0447472d87aa8774313f5c794b8065ee7a45b71fe25407da6077aa53c199fd07",
   "generation_id_derivation": "sha256(canonical_json(source_scope_sha256,evidence_scope_sha256,ledger_sha256,receipt_count,receipt_tip))",
-  "generated_at": "2026-09-14T18:33:59+00:00",
+  "generated_at": "2026-09-14T19:11:00+00:00",
   "authority": "generated_non_authoritative",
-  "source_git_revision": "fe28eb10956f4c6d4476807885dd9a14ebdc301e",
-  "source_git_tree": "0f7d8e923d0365dd5d5c86f98a5626dc62791733",
-  "source_scope_sha256": "806fc6ef62dd933975da6fb416ca62cb84835fc22d4160b3a8a44c9940582031",
+  "source_git_revision": "8bc13c30e157f1409e76df4fc173c8f0df69bf90",
+  "source_git_tree": "87c92f72a7181544ce0d1b5e3e6c7a224c9e3dcf",
+  "source_scope_sha256": "eae951f6203ae0491c87db67d4131eba046d7e3ad69773bb7dd81b1b1793a9e1",
   "source_scope_exclusions": [
     {
-      "path": ".agent/generated/manifest.json and .agent/generated/validation-report.json",
-      "reason": "refresh-only generated integrity outputs; containing them would create a digest cycle (README.md remains in source scope)"
+      "path": ".agent/generated/manifest.json",
+      "reason": "exact refresh-only generated output; inclusion would create a digest cycle"
     },
     {
-      "path": ".agent/state/current.json and .agent/state/RESUME.md",
-      "reason": "refresh-only generated state projections"
+      "path": ".agent/generated/validation-report.json",
+      "reason": "exact refresh-only generated output; inclusion would create a digest cycle"
     },
     {
-      "path": "project-dossier generated views",
-      "reason": "refresh-only source map, current-state, handoff, and machine-readable mirrors"
+      "path": ".agent/state/current.json",
+      "reason": "exact refresh-only generated output; inclusion would create a digest cycle"
+    },
+    {
+      "path": ".agent/state/RESUME.md",
+      "reason": "exact refresh-only generated output; inclusion would create a digest cycle"
+    },
+    {
+      "path": "project-dossier/CANONICAL_SOURCE_MAP.md",
+      "reason": "exact refresh-only generated output; inclusion would create a digest cycle"
+    },
+    {
+      "path": "project-dossier/current-state/current.json",
+      "reason": "exact refresh-only generated output; inclusion would create a digest cycle"
+    },
+    {
+      "path": "project-dossier/current-state/README.md",
+      "reason": "exact refresh-only generated output; inclusion would create a digest cycle"
+    },
+    {
+      "path": "project-dossier/handoff/START_HERE.md",
+      "reason": "exact refresh-only generated output; inclusion would create a digest cycle"
+    },
+    {
+      "path": "project-dossier/machine-readable/evidence-index.json",
+      "reason": "exact refresh-only generated output; inclusion would create a digest cycle"
+    },
+    {
+      "path": "project-dossier/machine-readable/findings.json",
+      "reason": "exact refresh-only generated output; inclusion would create a digest cycle"
+    },
+    {
+      "path": "project-dossier/machine-readable/path-authority.json",
+      "reason": "exact refresh-only generated output; inclusion would create a digest cycle"
     },
     {
       "path": "docs/qualification/evidence/**",
@@ -52,11 +84,11 @@
     },
     {
       "path": ".agent/extensions/texenda-coordination/extension.json",
-      "sha256": "f99d9db0954ee70c6c2445a0e19c0aa38e1197139f9ba96106246acf163b8b92"
+      "sha256": "1d90516538d2ba188e22a593a7f1fbead0f4b277ae2691a95376782f21d3a939"
     },
     {
       "path": ".agent/generated/README.md",
-      "sha256": "e91f76108758e77509538f0c6ae3cf624a0e3fa825aa78591781e8f24d075d9a"
+      "sha256": "cc17ef125a4bbffeb329010744751e2a3f1e0a85726927f100b5fdc93cd151cb"
     },
     {
       "path": ".agent/lifecycle.json",
@@ -84,15 +116,15 @@
     },
     {
       "path": ".agent/scripts/common.py",
-      "sha256": "605de9b35b21cd4a5c778922ef2d59b6ab4d2de572a63ce974c386380fe80b5f"
+      "sha256": "d3c55b3ddf5d3e2e6a136f6b0a2ce23c9e1bee46dff6fcc50d6b0f7de3104862"
     },
     {
       "path": ".agent/scripts/refresh.py",
-      "sha256": "8e8afbf24c38c779ed310818fcaebb14fb5a16939229ebe8df4d8a67187f62c9"
+      "sha256": "63eaffe7e8081e0fc3e35252af1b9c788e15373386954c04803699166a90e5bf"
     },
     {
       "path": ".agent/scripts/validate.py",
-      "sha256": "ca07d82c89f71649c163f0876acd96b082eea8645946c90780a077cca6408ee6"
+      "sha256": "5d41ae0ca32baed02985d290643cadab2c5519c3d96b667bb82784db4b06d5cc"
     },
     {
       "path": ".agent/tasks/README.md",
@@ -112,7 +144,7 @@
     },
     {
       "path": ".agent/tests/test_validate.py",
-      "sha256": "e6a9abcacfd23ae3202439ff36fcebb8624397dc0f72b941cae2bda65d6425b5"
+      "sha256": "b21cb0d803cf7840ee9093a234cc6cc3e0cba9fd4114c86e45013b0e09c035cc"
     },
     {
       "path": ".agent/tools.json",
@@ -132,7 +164,7 @@
     },
     {
       "path": ".gitignore",
-      "sha256": "2339b85d5172989183a965b86f93ca272a873c560cf3fc9e60b8e78cc7f47a82"
+      "sha256": "f725ceb05995477c0e8d6637b3f8a3ab2448a2958f5c202d845d84ae4d44e68f"
     },
     {
       "path": ".project-blueprint-origin.json",
@@ -404,7 +436,7 @@
     },
     {
       "path": "project-dossier/transition/README.md",
-      "sha256": "c0fd10d9443c0e9914a0d4d4afffa8e0be40ca1c8916a56435e4c975a1571a4f"
+      "sha256": "ec3e006d13f3535f0844752fe0038f5ff5f9df391104f8753116a1c5c7f5aeb2"
     },
     {
       "path": "project-dossier/transition/blueprint-adoption-crosswalk.json",
@@ -424,7 +456,7 @@
     },
     {
       "path": "project-dossier/validation/README.md",
-      "sha256": "7ff62b3be119cb228432a2cbbbbb4aba43ffd350b1c1f161dc636eb2c73941c3"
+      "sha256": "3c345ccb65f08a0ba1b6a7dd5b378d8b989043ce525a8c02b20f0c252882e0d5"
     },
     {
       "path": "specs/texenda-handoff/01-foundation/adr-index.md",
@@ -776,11 +808,11 @@
     },
     {
       "path": "tooling/coordination/README.md",
-      "sha256": "204798e0e17a50d3ce5e152c4be184867c86e96589b22b24b75cf3f0035bad58"
+      "sha256": "b247fa90b5ecf7206c2f1917fcf611317eb6166579a564f84124ce363f18aaeb"
     },
     {
       "path": "tooling/coordination/harness.py",
-      "sha256": "e5a06ecb79569f598be03bbcded3167e5d02769ed97befe326f3cadf4382d99f"
+      "sha256": "a146e993ec866cfd165372650f77c2a75d67329148477c32cb424100345ad91e"
     },
     {
       "path": "tooling/coordination/routing-policy.json",
@@ -832,15 +864,15 @@
     },
     {
       "path": "tooling/coordination/tests/test_routing_v2.py",
-      "sha256": "53b06b74de8e3a4f3034a18e9d036981026d02bba2959464af6875a050a49fda"
+      "sha256": "379517d3282e06ea005c1881f0ba15ef4ff72942f3f373570d54cdf0394a9e8c"
     },
     {
       "path": "tooling/coordination/tests/test_state_root.py",
-      "sha256": "ae0e8a391507e5a03c8b3982ae0047d278ab0df4e72106fa4488f1b41fdb7a25"
+      "sha256": "47df37392fa165bca4264e7dcd0432a33c9c1fc88ba76f679c69b28afc6371a8"
     },
     {
       "path": "tooling/workspace/relocate_state.py",
-      "sha256": "fee0f7622358cf89f2b2d53aeb8f8ba5428d671fc72a093399c821f0a26410ce"
+      "sha256": "7786d9483e4bd3f0f3754e96944c53cc4e41351b2ce190c5744942262d8a4aad"
     },
     {
       "path": "tooling/workspace/tests/test_contract.py",
@@ -852,7 +884,7 @@
     },
     {
       "path": "tooling/workspace/tests/test_state_relocation.py",
-      "sha256": "8f3487bedbc209ce8554c28acac259933cce86c4e22f81e749efcb36c5baadce"
+      "sha256": "9459ee671e1a408c88c67cccfab3aaa6a9e9167684a8f28962fc21b0b7c65ac0"
     },
     {
       "path": "tooling/workspace/validate_contract.py",

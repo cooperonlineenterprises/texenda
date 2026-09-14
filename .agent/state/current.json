@@ -1,23 +1,55 @@
 {
   "schema_version": "texenda.generated-current-state.v1",
-  "generation_id": "07d6ed7e14340c65b920a8dde101149a5ea3f0199e8dcf73407877865daad94f",
-  "generated_at": "2026-09-14T18:33:59+00:00",
+  "generation_id": "0447472d87aa8774313f5c794b8065ee7a45b71fe25407da6077aa53c199fd07",
+  "generated_at": "2026-09-14T19:11:00+00:00",
   "authority": "generated_non_authoritative_projection",
-  "source_git_revision": "fe28eb10956f4c6d4476807885dd9a14ebdc301e",
-  "source_git_tree": "0f7d8e923d0365dd5d5c86f98a5626dc62791733",
-  "source_scope_sha256": "806fc6ef62dd933975da6fb416ca62cb84835fc22d4160b3a8a44c9940582031",
+  "source_git_revision": "8bc13c30e157f1409e76df4fc173c8f0df69bf90",
+  "source_git_tree": "87c92f72a7181544ce0d1b5e3e6c7a224c9e3dcf",
+  "source_scope_sha256": "eae951f6203ae0491c87db67d4131eba046d7e3ad69773bb7dd81b1b1793a9e1",
   "source_scope_exclusions": [
     {
-      "path": ".agent/generated/manifest.json and .agent/generated/validation-report.json",
-      "reason": "refresh-only generated integrity outputs; containing them would create a digest cycle (README.md remains in source scope)"
+      "path": ".agent/generated/manifest.json",
+      "reason": "exact refresh-only generated output; inclusion would create a digest cycle"
     },
     {
-      "path": ".agent/state/current.json and .agent/state/RESUME.md",
-      "reason": "refresh-only generated state projections"
+      "path": ".agent/generated/validation-report.json",
+      "reason": "exact refresh-only generated output; inclusion would create a digest cycle"
     },
     {
-      "path": "project-dossier generated views",
-      "reason": "refresh-only source map, current-state, handoff, and machine-readable mirrors"
+      "path": ".agent/state/current.json",
+      "reason": "exact refresh-only generated output; inclusion would create a digest cycle"
+    },
+    {
+      "path": ".agent/state/RESUME.md",
+      "reason": "exact refresh-only generated output; inclusion would create a digest cycle"
+    },
+    {
+      "path": "project-dossier/CANONICAL_SOURCE_MAP.md",
+      "reason": "exact refresh-only generated output; inclusion would create a digest cycle"
+    },
+    {
+      "path": "project-dossier/current-state/current.json",
+      "reason": "exact refresh-only generated output; inclusion would create a digest cycle"
+    },
+    {
+      "path": "project-dossier/current-state/README.md",
+      "reason": "exact refresh-only generated output; inclusion would create a digest cycle"
+    },
+    {
+      "path": "project-dossier/handoff/START_HERE.md",
+      "reason": "exact refresh-only generated output; inclusion would create a digest cycle"
+    },
+    {
+      "path": "project-dossier/machine-readable/evidence-index.json",
+      "reason": "exact refresh-only generated output; inclusion would create a digest cycle"
+    },
+    {
+      "path": "project-dossier/machine-readable/findings.json",
+      "reason": "exact refresh-only generated output; inclusion would create a digest cycle"
+    },
+    {
+      "path": "project-dossier/machine-readable/path-authority.json",
+      "reason": "exact refresh-only generated output; inclusion would create a digest cycle"
     },
     {
       "path": "docs/qualification/evidence/**",
