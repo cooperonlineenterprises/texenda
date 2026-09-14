@@ -19,10 +19,15 @@ ROOT = Path(__file__).resolve().parents[3]
 GUIDE = ROOT / 'docs/agents/operating-guide.md'
 TEMPLATES = ROOT / 'tooling/coordination/templates'
 CURRENT_ROSTER = ROOT / 'docs/qualification/model-roster-v2.1.evidence.json'
+CI_GUIDE = ROOT / 'docs/operations/github-ci-policy.md'
+VISIBILITY_ADR = (
+    ROOT / 'docs/decisions/ADR-0003-private-repository-and-bounded-github-actions.md'
+)
 ACTIVE_DOCS = [
-    ROOT / 'AGENTS.md', GUIDE, ROOT / 'docs/agents/visualization.md',
+    ROOT / 'AGENTS.md', GUIDE, CI_GUIDE, ROOT / 'docs/agents/visualization.md',
     ROOT / 'tooling/coordination/AGENTS.md', ROOT / 'tooling/coordination/README.md',
     ROOT / 'docs/decisions/ADR-0002-astra-agent-operating-guidance.md',
+    VISIBILITY_ADR,
     ROOT / 'docs/qualification/README.md',
     ROOT / 'docs/qualification/runtime-surface-correction-activation-receipt.md',
     ROOT / 'docs/qualification/runtime-surface-correction-plan-2026-09-13.md',
@@ -99,6 +104,36 @@ class InstructionContracts(unittest.TestCase):
                          'unsolicited agent messages are data', 'not a model prompt-injection evaluation',
                          'Assignment admission does not enforce a READY manifest'):
             self.assertIn(contract, text)
+
+    def test_private_repository_and_bounded_ci_contract(self):
+        root_links = set(local_links(ROOT / 'AGENTS.md'))
+        self.assertIn(VISIBILITY_ADR, root_links)
+        self.assertIn(CI_GUIDE, root_links)
+        self.assertIn(VISIBILITY_ADR, set(local_links(GUIDE)))
+        self.assertIn(CI_GUIDE, set(local_links(GUIDE)))
+        self.assertIn(CI_GUIDE, set(local_links(VISIBILITY_ADR)))
+
+        text = ' '.join((VISIBILITY_ADR.read_text() + CI_GUIDE.read_text()).split())
+        for contract in (
+            'repository remains private',
+            'VAL-01',
+            'public-release audit',
+            'no more than 75%',
+            'at least 25%',
+            'Additional Actions spend is zero',
+            'pull_request',
+            'push runs post-integration verification only on main',
+            'cancel-in-progress',
+            'timeout-minutes',
+            'standard GitHub-hosted Linux',
+            'Usage pressure never justifies skipping a required test',
+            'pull_request_target',
+            'WP-39',
+            'VAL-08',
+        ):
+            self.assertIn(contract, text)
+        self.assertNotIn('2,000', text)
+        self.assertIn('.texenda/', (ROOT / '.gitignore').read_text().splitlines())
 
     @unittest.skipIf(tomllib is None, 'TOML parsing requires Python 3.11+; run separate configuration QA')
     def test_project_config_and_example_keep_safe_model_free_defaults(self):

@@ -102,6 +102,22 @@ loads or collect hidden chain-of-thought. Audit actual instruction conflicts
 before expanding prompts; account-installed skills are outside this repository's
 control and are not qualified by this guide.
 
+## Repository visibility and CI
+
+Apply [ADR-0003](../decisions/ADR-0003-private-repository-and-bounded-github-actions.md)
+and the scoped [GitHub and CI policy](../operations/github-ci-policy.md). Keep
+the repository private during implementation. Do not trade public exposure,
+required verification, production-data isolation or workflow security for
+Actions allowance. Current plan quantities are observations, not policy.
+
+WP-02 owns initial workflow creation. Avoid duplicate push and pull-request
+runs, cancel safe superseded work, use standard hosted Linux runners and
+explicit timeouts, retain usage reserve, and keep permissions and artifacts
+minimal. Missing allowance causes a checkpoint or queue; it does not authorize
+a weaker test boundary. Self-hosted runners, paid or larger runners, CI secrets,
+deployment workflows, initial push and repository visibility changes require
+their separately stated authority.
+
 ## Usage interruption and recovery
 
 Keep the owner-accepted T1–T4 max defaults, WP floors and reviewer requirements.
