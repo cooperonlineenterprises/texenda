@@ -1,0 +1,150 @@
+{
+  "schema_version": "texenda.mapped-facade-author-evidence.v1",
+  "id": "EVD-FACADE-0002",
+  "kind": "candidate_author_correction",
+  "information_role": "immutable_successor_evidence",
+  "status": "candidate_for_independent_review",
+  "recorded_at": "2026-09-14T17:35:01Z",
+  "actor": "agent:mapped-facade-sol",
+  "requested_profile": "gpt-5.6-sol-max",
+  "capability_tier": "T2",
+  "reasoning_effort": "max",
+  "runtime_id": "codex-desktop-collaboration",
+  "client_version": "26.901.41600 (build 7982)",
+  "billing_mode": "subscription",
+  "api_budget_usd": 0,
+  "api_spend_usd": 0,
+  "base_revision": "680457854984020d0c8616a7f640a63079be9b3c",
+  "predecessor_tip": "8a08bdc9b77399d1fbdae8a1ecf4e15f9fda18cc",
+  "correction_code_revision": "319d79cf37af16d9cd936a823b30aa9626c13aed",
+  "candidate_revision": "2aac171579110ea97b7c4ddf44ddf7b7ddc5ca44",
+  "candidate_tree": "34297dcc5c24a2db3af71854387e0cd028975bb4",
+  "correction_diff_sha256": "3cf05beffc56f291e6f3d856305038ae3c22b25bfea6035362aa4e8bf9139e2c",
+  "base_to_candidate_diff_sha256": "6eaf42fe0ec32c30976f8898536d0a38eb516c1f2550f32dbc384e6a2a6727de",
+  "diff_command": "git --no-optional-locks diff --no-ext-diff --no-textconv --full-index --binary <base> <tip> | shasum -a 256",
+  "supersedes_claim": {
+    "record": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-author.evidence.json",
+    "sha256": "122f1a9a30f4f9e80a30947c002c933ff360079eaee9db45989062be48083983",
+    "scope": "The predecessor's committed-final-tip .agent test claim only; all history and other bounded observations remain preserved.",
+    "silent_rewrite": false
+  },
+  "output_hashes": [
+    {
+      "path": ".agent/tests/test_validate.py",
+      "sha256": "d702dfae64b4351261e263d0a4469040cfbf1ae2077678b4d4b53339644ec129"
+    },
+    {
+      "path": ".agent/generated/manifest.json",
+      "sha256": "700d00db68f32be9c0cd92294eba9d557d60a6b03a070b5637672e2191a115fa"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-author-validation.log",
+      "sha256": "5f1383d8c125071a067f5a127ea55fdbcd14b3e84debc23c8098779c7bce1e68"
+    }
+  ],
+  "checks": [
+    {
+      "id": "predecessor-final-tip-reproduction",
+      "required": false,
+      "status": "FAIL",
+      "command_or_procedure": "Run the .agent unittest discovery command at committed predecessor 8a08bdc and observe setUpClass ordinary git commit exit 1 on identical bytes.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-author-correction-validation.log",
+      "sha256": "ae1205f1d8b510d89f86d52c298b1bbb356c227b69ab176adec7d8e8f8cdb362"
+    },
+    {
+      "id": "deterministic-fixture-correction",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Inspect the one-file correction and verify --allow-empty changes only synthetic revision creation while retaining all assertions.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-author-correction-validation.log",
+      "sha256": "ae1205f1d8b510d89f86d52c298b1bbb356c227b69ab176adec7d8e8f8cdb362"
+    },
+    {
+      "id": "facade-tests-committed-tip",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "python3 -B -m unittest discover -s .agent/tests -p test_*.py -v",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-author-correction-validation.log",
+      "sha256": "ae1205f1d8b510d89f86d52c298b1bbb356c227b69ab176adec7d8e8f8cdb362"
+    },
+    {
+      "id": "workspace-tests-committed-tip",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "python3 -B -m unittest discover -s tooling/workspace/tests -p test_*.py -v",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-author-correction-validation.log",
+      "sha256": "ae1205f1d8b510d89f86d52c298b1bbb356c227b69ab176adec7d8e8f8cdb362"
+    },
+    {
+      "id": "coordination-tests-committed-tip",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "python3 -B -m unittest discover -s tooling/coordination/tests -p test_*.py -v",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-author-correction-validation.log",
+      "sha256": "ae1205f1d8b510d89f86d52c298b1bbb356c227b69ab176adec7d8e8f8cdb362"
+    },
+    {
+      "id": "sealed-tests-committed-tip",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "python3 -B -m unittest discover -s specs/texenda-handoff/08-project-harness/tests -p test_*.py -v",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-author-correction-validation.log",
+      "sha256": "ae1205f1d8b510d89f86d52c298b1bbb356c227b69ab176adec7d8e8f8cdb362"
+    },
+    {
+      "id": "facade-check-and-static-audit",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Run .agent read-only check with the observed state root and tooling/workspace/validate_contract.py --check --audit.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-author-correction-validation.log",
+      "sha256": "ae1205f1d8b510d89f86d52c298b1bbb356c227b69ab176adec7d8e8f8cdb362"
+    },
+    {
+      "id": "both-package-validators",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Run both sealed and source package validators with --checksums.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-author-correction-validation.log",
+      "sha256": "ae1205f1d8b510d89f86d52c298b1bbb356c227b69ab176adec7d8e8f8cdb362"
+    },
+    {
+      "id": "read-only-parse-link-hash-diff-sealed",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Compare scoped file/live-state metadata around check; validate strict parse/link/hash/owner evidence; run git diff --check and base-to-tip sealed diff.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-author-correction-validation.log",
+      "sha256": "ae1205f1d8b510d89f86d52c298b1bbb356c227b69ab176adec7d8e8f8cdb362"
+    },
+    {
+      "id": "prior-diff-hash-correction",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Recompute predecessor and corrected-candidate hashes with the standard full-index binary no-textconv/no-ext-diff command and record the prior chat-command distinction.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-author-correction-validation.log",
+      "sha256": "ae1205f1d8b510d89f86d52c298b1bbb356c227b69ab176adec7d8e8f8cdb362"
+    }
+  ],
+  "private_input_proof": {
+    "content_opened": false,
+    "content_hashed": false,
+    "content_parsed": false,
+    "content_copied": false,
+    "content_listed": false,
+    "content_logged": false
+  },
+  "forbidden_effects_performed": [],
+  "not_run": [
+    "independent Astra/max review",
+    "local main integration",
+    "live state/lock/private-input relocation",
+    "real mapped maintenance lifecycle",
+    "GitHub or external mutation",
+    "product or external gate qualification"
+  ],
+  "runtime_stop": {
+    "background_sessions": 0,
+    "child_agents": 0,
+    "parent_observation_required_before_scope_release": true
+  },
+  "resumption": "Review the successor evidence and exact final derived tip with a distinct qualified gpt-6-astra-max reviewer. Do not execute the live move before exact approval and runtime/lease/lock freeze."
+}

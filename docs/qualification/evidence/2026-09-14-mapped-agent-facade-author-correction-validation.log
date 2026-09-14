@@ -1,0 +1,59 @@
+Texenda mapped facade author correction validation
+observed_at_utc: 2026-09-14T17:35:01Z
+actor: agent:mapped-facade-sol
+profile: gpt-5.6-sol / max / T2 author
+runtime: Codex desktop 26.901.41600 (build 7982)
+billing: subscription; API allocation/spend 0
+base_revision: 680457854984020d0c8616a7f640a63079be9b3c
+predecessor_evidence_tip: 8a08bdc9b77399d1fbdae8a1ecf4e15f9fda18cc
+correction_code_revision: 319d79cf37af16d9cd936a823b30aa9626c13aed
+tested_generated_revision: 2aac171579110ea97b7c4ddf44ddf7b7ddc5ca44
+tested_tree: 34297dcc5c24a2db3af71854387e0cd028975bb4
+correction_diff_sha256: 3cf05beffc56f291e6f3d856305038ae3c22b25bfea6035362aa4e8bf9139e2c
+base_to_tested_diff_sha256: 6eaf42fe0ec32c30976f8898536d0a38eb516c1f2550f32dbc384e6a2a6727de
+diff_command: git --no-optional-locks diff --no-ext-diff --no-textconv --full-index --binary <base> <tip> | shasum -a 256
+
+FAIL predecessor-final-tip-reproduction (historical defect, now corrected)
+  env PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s .agent/tests -p 'test_*.py' -v
+  At committed predecessor 8a08bdc, FacadeIntegratedFixtureTests.setUpClass cloned identical committed bytes, then ordinary git commit exited 1 with nothing to commit. Seven unit tests ran; integrated fixture setup errored. The earlier author pass used a dirty source context and therefore did not exercise identical final committed content.
+
+PASS deterministic-fixture-correction
+  .agent/tests/test_validate.py now invokes git commit --allow-empty for the synthetic fixture revision after copying and staging exact candidate paths. This works whether the copied candidate differs from or is identical to cloned HEAD. No copied-byte, source-scope, stale-view, mutation, private-exclusion, or read-only assertion changed.
+  Corrected file SHA-256: d702dfae64b4351261e263d0a4469040cfbf1ae2077678b4d4b53339644ec129.
+
+PASS facade-tests-at-committed-tip
+  env PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s .agent/tests -p 'test_*.py' -v
+  13 tests OK at committed tip 2aac171; integrated fixture cloned committed HEAD and completed both synthetic commits.
+
+PASS workspace-tests-at-committed-tip
+  env PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s tooling/workspace/tests -p 'test_*.py' -v
+  53 tests OK.
+
+PASS local-coordination-tests-at-committed-tip
+  env PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s tooling/coordination/tests -p 'test_*.py' -v
+  148 tests OK; synthetic integrity output PASS.
+
+PASS sealed-harness-tests-at-committed-tip
+  env PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s specs/texenda-handoff/08-project-harness/tests -p 'test_*.py' -v
+  39 tests OK.
+
+PASS facade-check-and-static-audit-at-committed-tip
+  env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/validate.py --check --state-root /Users/jamesryancooper/Projects/texenda/repo/.texenda
+  env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/workspace/validate_contract.py --check --audit
+  Facade PASS: generation 39f1d68d84391ab73088d2c093b742db92eebffd49a9c7bfb15b88abc31e397f; source scope d2c5cabf40468afe7a884f2bf00a84b4079aac9a1a6195d4c3a75c98cd9426cc; JSON 114, TOML 1, Python 19, dossier 27, instruction files 3, links 101, evidence bindings 178. Workspace contract PASS: 42 concerns, 85 paths, 35 types, 16 moves, 178 evidence checks, sealed/source counts unchanged.
+
+PASS both-package-validators-at-committed-tip
+  env PYTHONDONTWRITEBYTECODE=1 python3 -B specs/texenda-handoff/10-validation/validate_package.py --checksums
+  env PYTHONDONTWRITEBYTECODE=1 python3 -B /Users/jamesryancooper/Projects/texenda/sources/handoff-1.1.0-20260914/10-validation/validate_package.py --checksums
+  Both variants: all 14 checks PASS, 86 manifest files, 44 WPs, 125 product criteria, 30 invariants, 35 ADRs and 14 external gates. No product PASS.
+
+PASS read-only-diff-and-sealed-checks-at-committed-tip
+  Snapshot/compare SHA-256, size, mtime and ctime for 251 scoped files plus live state/lock, Git status including ignored, and cache paths around .agent check: unchanged. No .git atime claim; private contents excluded. git diff --check PASS. Base-to-tip sealed-package diff empty. Worktree clean.
+
+PASS prior-diff-hash-correction
+  Standard project command for base 6804578 to predecessor 8a08bdc produces 59f1e6427bc90ed9265bc95206043b8dae92630f06cfd6073562d3cd30731ca8. The prior chat value 61909bd45dd086a05bdb4de5429d33a275e96a534375906a108c0c2042b34b29 came from a shorter non-standard diff invocation lacking --no-ext-diff --no-textconv --full-index. Neither value was stored in the predecessor evidence; this successor records the distinction explicitly.
+
+PASS live-state-and-private-boundary-unchanged
+  Live state remains SHA-256 b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235, 13 receipts, tip f39249184757101b108ea7ec5ea0ffebdd8237315b8ac3cad3ad0cc6ab3e827e, eleven profiles, zero leases and zero budget/spend. No state/private move or binding occurred. The private CSV was not opened, parsed, hashed, copied, listed, or logged.
+
+Result: PASS for exact tested correction tip 2aac171. The original evidence remains immutable but is insufficient for the final committed-tip fixture claim; this successor supplies the correction. Independent Astra/max review, integration, live relocation and real mapped lifecycle remain NOT RUN. No network, GitHub mutation, push, spend, deployment, publication, sending, production action, live-state write or private-content access occurred.
