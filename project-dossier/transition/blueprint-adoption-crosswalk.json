@@ -342,11 +342,11 @@
     {
       "concern_id": "operations_recovery",
       "owner_by_epoch": {
-        "baseline": "specs/texenda-handoff/06-migration-and-production/",
-        "facade": "specs/texenda-handoff/06-migration-and-production/",
-        "external_state": "specs/texenda-handoff/06-migration-and-production/"
+        "baseline": "specs/texenda-handoff/04-security-governance-and-operations/runbooks.md",
+        "facade": "specs/texenda-handoff/04-security-governance-and-operations/runbooks.md",
+        "external_state": "specs/texenda-handoff/04-security-governance-and-operations/runbooks.md"
       },
-      "rule": "Product operations stay sealed; local workspace recovery is the new transition concern."
+      "rule": "The sealed authority-register operations-procedures owner is runbooks.md (RB-01 through RB-10, including incident, restore, release and rollback). Local workspace recovery remains the separate adoption transition concern."
     },
     {
       "concern_id": "supply_chain",
@@ -1363,12 +1363,12 @@
     },
     {
       "blueprint_path": "project-dossier/operations/README.md",
-      "mapped_path": "specs/texenda-handoff/06-migration-and-production/",
+      "mapped_path": "specs/texenda-handoff/04-security-governance-and-operations/runbooks.md",
       "concern_id": "operations_recovery",
       "role": "index",
       "equivalence": "functional",
       "materialize_phase": "existing",
-      "reason": "Existing product operations owner; local move recovery stays in transition."
+      "reason": "OPS-0001 indexes the sealed authority-register operations-procedures owner, runbooks.md (RB-01 through RB-10); local workspace move recovery stays in the separate adoption transition concern."
     },
     {
       "blueprint_path": "project-dossier/plans/README.md",

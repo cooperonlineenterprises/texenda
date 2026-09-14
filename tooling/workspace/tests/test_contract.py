@@ -26,6 +26,37 @@ class WorkspaceContractTests(unittest.TestCase):
         result = contract.validate(self.crosswalk, self.baseline, self.manifest)
         self.assertEqual((result['blueprint_paths'], result['source_moves']), (85, 16))
 
+    def test_operations_owner_matches_sealed_authority_register(self):
+        register = contract.loads((ROOT / 'specs/texenda-handoff/01-foundation/authority-register.json').read_text())
+        owners = [row['path'] for row in register['current_normative_owners']
+                  if row['topic'] == 'operations-procedures']
+        self.assertEqual(owners, ['04-security-governance-and-operations/runbooks.md'])
+        expected = 'specs/texenda-handoff/' + owners[0]
+        concern = next(row for row in self.crosswalk['ownership']
+                       if row['concern_id'] == 'operations_recovery')
+        self.assertEqual(set(concern['owner_by_epoch'].values()), {expected})
+        artifact = next(row for row in self.crosswalk['blueprint_artifact_type_inventory']
+                        if row['id'] == 'OPS-0001')
+        mapping = next(row for row in self.crosswalk['mappings']
+                       if row['blueprint_path'] == artifact['path'])
+        self.assertEqual((mapping['mapped_path'], mapping['role']), (expected, 'index'))
+
+    def test_operations_owner_rejects_migration_directory_in_every_epoch(self):
+        concern = next(row for row in self.crosswalk['ownership']
+                       if row['concern_id'] == 'operations_recovery')
+        for epoch in self.crosswalk['epochs']:
+            with self.subTest(epoch=epoch):
+                original = concern['owner_by_epoch'][epoch]
+                concern['owner_by_epoch'][epoch] = 'specs/texenda-handoff/06-migration-and-production/'
+                self.reject()
+                concern['owner_by_epoch'][epoch] = original
+
+    def test_ops_artifact_rejects_migration_directory(self):
+        mapping = next(row for row in self.crosswalk['mappings']
+                       if row['blueprint_path'] == 'project-dossier/operations/README.md')
+        mapping['mapped_path'] = 'specs/texenda-handoff/06-migration-and-production/'
+        self.reject()
+
     def test_duplicate_json_keys(self):
         with self.assertRaises(contract.ContractError):
             contract.loads('{"owner":"a","owner":"b"}')

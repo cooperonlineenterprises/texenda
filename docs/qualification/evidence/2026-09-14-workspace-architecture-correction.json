@@ -1,0 +1,140 @@
+{
+  "schema_version": "texenda.workspace-author-evidence.v1",
+  "id": "EVD-WSM-AUTHOR-CORRECTION-0001",
+  "kind": "candidate_correction_report",
+  "information_role": "immutable_evidence",
+  "status": "candidate_for_independent_rereview",
+  "recorded_at": "2026-09-14T15:26:41.169Z",
+  "actor": "/root/workspace_architecture_author",
+  "requested_profile": "gpt-6-astra-max",
+  "reasoning_effort": "max",
+  "runtime_id": "codex-desktop-collaboration",
+  "client_version": "26.901.41600 (build 7982)",
+  "billing_mode": "subscription",
+  "api_spend_usd": 0,
+  "branch": "migration/project-workspace-architecture-20260914",
+  "worktree": "/private/tmp/texenda-workspace-architecture-20260914",
+  "original_base_revision": "36b74e9e1ca6353b3d642136fa70b7d2ac950e08",
+  "corrected_candidate": "609ddda6da96ddf2460925cc759db724acd70d59",
+  "corrected_candidate_tree": "fe3f4c3268a2fc7a33898fb306a4eed9170a28ca",
+  "history_rewritten": false,
+  "finding": {
+    "priority": "P2",
+    "source": "Parent supplied confirmed independent reviewer finding for candidate 609ddda6da96ddf2460925cc759db724acd70d59.",
+    "concern": "operations_recovery and OPS-0001",
+    "incorrect_owner": "specs/texenda-handoff/06-migration-and-production/",
+    "sealed_topic": "operations-procedures",
+    "correct_owner": "specs/texenda-handoff/04-security-governance-and-operations/runbooks.md",
+    "scope": "RB-01 through RB-10 include production incident, restore, release and rollback procedures.",
+    "resolution": "Corrected all three ownership epochs and the OPS-0001 mapped path/rationale. Local workspace recovery remains the separate adoption_transition concern; no authority split or duplicate owner was introduced."
+  },
+  "tests_added": [
+    "Assert operations_recovery and OPS-0001 index the unique operations-procedures path from the sealed authority register.",
+    "Reject the old migration-directory owner independently in baseline, facade and external_state epochs.",
+    "Reject the old migration-directory OPS-0001 mapped path even when its concern owner is correct."
+  ],
+  "output_hashes": [
+    {
+      "sha256": "7bfd1930821cc695eca854e98ed1c0b347c076ebf5fb735a272108387eb6d4f0",
+      "path": "project-dossier/transition/blueprint-adoption-crosswalk.json"
+    },
+    {
+      "sha256": "0b3878fd9e8bb7a55b04a213d2c0f0f2abbb81834ac96186a6a1a0e72b1f341f",
+      "path": "tooling/workspace/validate_contract.py"
+    },
+    {
+      "sha256": "745241740730c26782e7348be0a0ce8da23e506008ac52a463801c69bbc9fd9f",
+      "path": "tooling/workspace/tests/test_contract.py"
+    },
+    {
+      "sha256": "723d6e4e6f0f5146d98a2e70b9f345f2f3c63cf3869fc28d81e6ebfcef79fafa",
+      "path": "docs/qualification/evidence/2026-09-14-workspace-architecture-correction-validation.log"
+    }
+  ],
+  "source_hashes": [
+    {
+      "sha256": "4b69cc4bfffeca287dc24fe9c1b275774f74aa806dc1a2e5d0247c5177741f8c",
+      "path": "specs/texenda-handoff/01-foundation/authority-register.json"
+    },
+    {
+      "sha256": "a5a0945673b220aa682427b73d331dd1da35350b47f81a24303a76731ea79e74",
+      "path": "specs/texenda-handoff/04-security-governance-and-operations/runbooks.md"
+    }
+  ],
+  "historical_evidence": [
+    {
+      "sha256": "628d34315adceab1f67a4fe97b930bf1011a037e63ec3ff577e25b6b9b81639c",
+      "path": "docs/qualification/evidence/2026-09-14-workspace-architecture-author.json"
+    },
+    {
+      "sha256": "ee777c976193e42c45c1b64b18ba856cabb55938b102a01411a0d0783f610c2f",
+      "path": "docs/qualification/evidence/2026-09-14-workspace-architecture-validation.log"
+    }
+  ],
+  "historical_evidence_rule": "The earlier author report and validation log remain immutable evidence of candidate 609ddda. Their output hashes were revalidated against that exact Git commit, not falsely updated to the corrected worktree. This successor binds the changed outputs and the new validation run.",
+  "commands": [
+    {
+      "command": "python3 -B tooling/workspace/validate_contract.py --check --audit && python3 -B -m unittest discover -s tooling/workspace/tests -v",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 -B -m unittest discover -s tooling/coordination/tests -v",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 -B -m unittest discover -s specs/texenda-handoff/08-project-harness/tests -v",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 -B specs/texenda-handoff/10-validation/validate_package.py --checksums && python3 -B /Users/jamesryancooper/Projects/texenda/10-validation/validate_package.py --checksums",
+      "exit_code": 0
+    },
+    {
+      "command": "git diff --check && git diff --exit-code 36b74e9e1ca6353b3d642136fa70b7d2ac950e08 -- specs/texenda-handoff && python3 -B - <<'PY'\nimport hashlib,json,pathlib,subprocess\nprior='609ddda6da96ddf2460925cc759db724acd70d59'\npath='docs/qualification/evidence/2026-09-14-workspace-architecture-author.json'\noriginal=subprocess.check_output(['git','show',prior+':'+path])\nassert pathlib.Path(path).read_bytes()==original\nreport=json.loads(original)\nfor row in report['output_hashes']:\n raw=subprocess.check_output(['git','show',prior+':'+row['path']])\n assert hashlib.sha256(raw).hexdigest()==row['sha256'],row['path']\nold_log='docs/qualification/evidence/2026-09-14-workspace-architecture-validation.log'\nassert pathlib.Path(old_log).read_bytes()==subprocess.check_output(['git','show',prior+':'+old_log])\nprint(json.dumps({'status':'PASS','historical_candidate':prior,'original_author_report_and_log_unchanged':True,'historical_output_hashes_checked':len(report['output_hashes']),'private_input_accessed':False}))\nPY",
+      "exit_code": 0
+    }
+  ],
+  "results": {
+    "workspace_tests": 30,
+    "local_coordination_tests": 132,
+    "sealed_harness_tests": 39,
+    "sealed_package_checks": 14,
+    "source_package_checks": 14,
+    "result": "PASS",
+    "syntax_before_this_record": {
+      "JSON": 82,
+      "TOML": 1,
+      "Python": 10
+    },
+    "new_markdown_links": 7,
+    "bound_original_source_inputs": 11,
+    "historical_candidate_output_hashes": 8,
+    "sealed_files_unchanged": 86,
+    "source_files_unchanged": 88,
+    "git_diff_check": "PASS",
+    "report_final_parse": "required after this report is written; no executable/source change remains"
+  },
+  "unchanged": [
+    "sealed handoff bytes",
+    "both source-package variants",
+    "Phase-0 baseline and move manifest",
+    "original author evidence and validation log",
+    "routing policy and current harness behavior",
+    "live state and receipt chain",
+    "private inputs"
+  ],
+  "forbidden_effects_performed": [],
+  "private_input_operations": "none",
+  "moves_executed": false,
+  "live_state_read_or_written": false,
+  "network_requests": 0,
+  "pushed": false,
+  "product_or_external_gates_cleared": [],
+  "candidate_binding": "Parent/reviewer binds the next full commit/tree and diff from the original base after this report is committed. This record does not self-approve the correction.",
+  "runtime_stop": {
+    "background_commands": 0,
+    "child_agents": 0,
+    "at_recording": "author preparing final scoped commit",
+    "handoff_rule": "Author returns the exact commit/tree/diff and ends. Parent independently observes completion before releasing the scope or moving/removing the worktree."
+  }
+}

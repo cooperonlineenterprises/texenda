@@ -75,6 +75,16 @@ def valid_hash(value):
     return isinstance(value, str) and re.fullmatch('[0-9a-f]{64}', value) is not None
 
 
+def sealed_operations_owner():
+    register = loads((ROOT / 'specs/texenda-handoff/01-foundation/authority-register.json').read_text())
+    owners = [row['path'] for row in register['current_normative_owners']
+              if row['topic'] == 'operations-procedures']
+    require(len(owners) == 1, 'sealed operations-procedures must have exactly one owner')
+    require(owners[0] == '04-security-governance-and-operations/runbooks.md',
+            'sealed operations-procedures baseline changed; explicit review required')
+    return 'specs/texenda-handoff/' + owners[0]
+
+
 def validate(crosswalk, baseline, manifest):
     require(crosswalk['schema_version'] == 'texenda.workspace-adoption-crosswalk.v1',
             'unknown crosswalk schema')
@@ -126,12 +136,21 @@ def validate(crosswalk, baseline, manifest):
     for concern in ('agent_permission_classes', 'precedence_trust'):
         require(owners[concern]['owner_by_epoch']['baseline'] == 'AGENTS.md',
                 'premature root authority cutover')
+    operations_owner = sealed_operations_owner()
+    require(all(owners['operations_recovery']['owner_by_epoch'][epoch] == operations_owner
+                for epoch in epochs), 'operations recovery owner disagrees with sealed authority register')
 
     mappings = crosswalk['mappings']
     inventory = crosswalk['blueprint_path_inventory']
     require(len(inventory) == len(set(inventory)) == 85, 'blueprint path inventory incomplete')
     require(sorted(row['blueprint_path'] for row in mappings) == sorted(inventory),
             'missing or duplicate blueprint mapping')
+    operations_mapping = next(row for row in mappings
+                              if row['blueprint_path'] == 'project-dossier/operations/README.md')
+    require(operations_mapping['mapped_path'] == operations_owner and
+            operations_mapping['concern_id'] == 'operations_recovery' and
+            operations_mapping['role'] == 'index',
+            'OPS-0001 must index the sealed operations-procedures owner')
     artifact_types = crosswalk['blueprint_artifact_type_inventory']
     require(len({row['id'] for row in artifact_types}) == len(artifact_types) == 35,
             'artifact type coverage incomplete')
