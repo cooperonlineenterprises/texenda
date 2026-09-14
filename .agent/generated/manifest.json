@@ -1,15 +1,16 @@
 {
   "schema_version": "texenda.generated-integrity.v1",
-  "generation_id": "deda36d311d40774f411248adb42c18e420e9d1de74131ecbc013af2b4b2e97d",
-  "generated_at": "2026-09-14T17:37:06+00:00",
+  "generation_id": "41ee4f9276e22fe64216830349e3b5a155e6848061ea7727973b3f388d909210",
+  "generation_id_derivation": "sha256(canonical_json(source_scope_sha256,evidence_scope_sha256,ledger_sha256,receipt_count,receipt_tip))",
+  "generated_at": "2026-09-14T18:21:54+00:00",
   "authority": "generated_non_authoritative",
-  "source_git_revision": "05795c01d0ad83ebb13f19b6cbb3be1aaf38b9fa",
-  "source_git_tree": "62f4047eae9e2d4bfc37465f4a12fd5de9a78711",
-  "source_scope_sha256": "d2c5cabf40468afe7a884f2bf00a84b4079aac9a1a6195d4c3a75c98cd9426cc",
+  "source_git_revision": "e21e9460b86abb0ccce42e562a8704b89de4b968",
+  "source_git_tree": "6991b67c17f47cd751a652de6636c436602f1459",
+  "source_scope_sha256": "1571f1877b8d06f2e8440f3d27b7f61323813e9f16caeb39583893ffe69c9f9a",
   "source_scope_exclusions": [
     {
-      "path": ".agent/generated/**",
-      "reason": "refresh-only generated integrity outputs; containing them would create a digest cycle"
+      "path": ".agent/generated/manifest.json and .agent/generated/validation-report.json",
+      "reason": "refresh-only generated integrity outputs; containing them would create a digest cycle (README.md remains in source scope)"
     },
     {
       "path": ".agent/state/current.json and .agent/state/RESUME.md",
@@ -51,7 +52,11 @@
     },
     {
       "path": ".agent/extensions/texenda-coordination/extension.json",
-      "sha256": "3ae9859d2576209c7e6a09f145ee6380b399cc6fa19017e72d2ff0adf2d6ddb5"
+      "sha256": "3dcfc328e23db9b21e9411dd627b3db5933a665f60da806c938cd9d78a802738"
+    },
+    {
+      "path": ".agent/generated/README.md",
+      "sha256": "e91f76108758e77509538f0c6ae3cf624a0e3fa825aa78591781e8f24d075d9a"
     },
     {
       "path": ".agent/lifecycle.json",
@@ -75,19 +80,19 @@
     },
     {
       "path": ".agent/schemas/project-blueprint-origin.v2.schema.json",
-      "sha256": "2db1ab62a7ca44a4cab055652af773ddfadd4f22edf335769952960f655aced6"
+      "sha256": "e6ba4f8b1617b30a1aa2a130fd603e2e74f3ecdac81de5801521f526f7de63cc"
     },
     {
       "path": ".agent/scripts/common.py",
-      "sha256": "83e91c95d4b7713fd619b42f125febf898f6395e82ebe78c95a847331dcce316"
+      "sha256": "5cbf0496b7af8adb2fb1814ddcc4e6fc8eba65d8a30acc03db1370dbda53c4b9"
     },
     {
       "path": ".agent/scripts/refresh.py",
-      "sha256": "f3b9ae0efd5ad84ef8832ffdc01f91a8ddfbc3dc9fbcdeca5a0cc89913d210d1"
+      "sha256": "d71ac7882e54bc189e2bd8188e4c9861bd0ccd6d746352222cafdc40b380ae54"
     },
     {
       "path": ".agent/scripts/validate.py",
-      "sha256": "323cae3a2b15484e030d30d29ed6171079ec42e7ce61dbff63ff946ef5bb207a"
+      "sha256": "9373995e14800c02a3b8565ff50ca1f336a868dc21b591539658f1246b98c542"
     },
     {
       "path": ".agent/tasks/README.md",
@@ -107,7 +112,7 @@
     },
     {
       "path": ".agent/tests/test_validate.py",
-      "sha256": "d702dfae64b4351261e263d0a4469040cfbf1ae2077678b4d4b53339644ec129"
+      "sha256": "6e112436dea183c4e200717e36dfdce5e2756de20f7274a5932d0dd5a65f05ec"
     },
     {
       "path": ".agent/tools.json",
@@ -115,7 +120,7 @@
     },
     {
       "path": ".agent/validators.json",
-      "sha256": "a16c4b7a4246d9cc1e7a128cf3e51e4788d882f49a795b576f2d410e6d9f8750"
+      "sha256": "45f7de0e3672e1f0ac8958bf0d2a107cd9aa7c2cbac4f2c7c36904321561e1e3"
     },
     {
       "path": ".codex/config.toml",
@@ -399,7 +404,7 @@
     },
     {
       "path": "project-dossier/transition/README.md",
-      "sha256": "8d688b46b93a58d0531061ccdca38f4cb8cb43eb9461f51b7ad29cb0d6acbb98"
+      "sha256": "c0fd10d9443c0e9914a0d4d4afffa8e0be40ca1c8916a56435e4c975a1571a4f"
     },
     {
       "path": "project-dossier/transition/blueprint-adoption-crosswalk.json",
@@ -419,7 +424,7 @@
     },
     {
       "path": "project-dossier/validation/README.md",
-      "sha256": "b05e9b3ac29175c8391a5cacb7ced95e16bc019319b2a7b4647da880dd2eec00"
+      "sha256": "7ff62b3be119cb228432a2cbbbbb4aba43ffd350b1c1f161dc636eb2c73941c3"
     },
     {
       "path": "specs/texenda-handoff/01-foundation/adr-index.md",
@@ -771,11 +776,11 @@
     },
     {
       "path": "tooling/coordination/README.md",
-      "sha256": "b17c3754fc7816bd9f9f43c40aa2dd956eaedb2bf26f68ff54605260405f69d4"
+      "sha256": "204798e0e17a50d3ce5e152c4be184867c86e96589b22b24b75cf3f0035bad58"
     },
     {
       "path": "tooling/coordination/harness.py",
-      "sha256": "ccb39f8df7c853d0a0e53a709758f7da46dd0387bd121e8503e07d7ed3b44d3f"
+      "sha256": "b14974e073908fc7e0a34adbc0b885bfbb9a032688b540121851cf7654d4c602"
     },
     {
       "path": "tooling/coordination/routing-policy.json",
@@ -791,7 +796,7 @@
     },
     {
       "path": "tooling/coordination/schemas/state-location.schema.json",
-      "sha256": "442d16eec7b1777658735f376a02739d15346e7ebc2198aaedd554524b0a10a6"
+      "sha256": "72527a4eddd5071f4a341a508f41f6b910ffacae93cb1e0017232517476fecf3"
     },
     {
       "path": "tooling/coordination/templates/ASSIGNMENT.md",
@@ -823,19 +828,19 @@
     },
     {
       "path": "tooling/coordination/tests/test_instruction_contracts.py",
-      "sha256": "4bfeac5cadd2400ae759275f7b3bc0875ff1e15b30a15ceec34f940374a0e169"
+      "sha256": "32b67cd885fb8c4a65028bb101e901046da4feb35524981217ce1c577ba1e117"
     },
     {
       "path": "tooling/coordination/tests/test_routing_v2.py",
-      "sha256": "1cddc404365f720cbdaaa40804a52b1740ebd85c8dadc787e03943d82d6f7bc8"
+      "sha256": "53b06b74de8e3a4f3034a18e9d036981026d02bba2959464af6875a050a49fda"
     },
     {
       "path": "tooling/coordination/tests/test_state_root.py",
-      "sha256": "c1509137f7046334d5b702164c65b64ec6cbbc73b6c27ddadc2bf387d4d40abd"
+      "sha256": "ae0e8a391507e5a03c8b3982ae0047d278ab0df4e72106fa4488f1b41fdb7a25"
     },
     {
       "path": "tooling/workspace/relocate_state.py",
-      "sha256": "a6a1aa14b924396bc74cc91a4a2bc82658bb74c39db92d7c5d9c4d290e77f430"
+      "sha256": "fee0f7622358cf89f2b2d53aeb8f8ba5428d671fc72a093399c821f0a26410ce"
     },
     {
       "path": "tooling/workspace/tests/test_contract.py",
@@ -847,7 +852,7 @@
     },
     {
       "path": "tooling/workspace/tests/test_state_relocation.py",
-      "sha256": "d46dabf2d02908020903ae8e57e87d291bbc254abe2f38ea17b6a88bd1bd50ac"
+      "sha256": "8f3487bedbc209ce8554c28acac259933cce86c4e22f81e749efcb36c5baadce"
     },
     {
       "path": "tooling/workspace/validate_contract.py",
@@ -1008,6 +1013,7 @@
     "declared_budget_usd": 0.0
   },
   "freshness_rule": "Recompute the complete declared source scope, separately indexed evidence, and stable live-ledger snapshot. Any mismatch is stale; current full HEAD/tree are reported separately because generated/evidence-only commits may follow this source revision.",
+  "generated_output_validation": "All eleven generated outputs are byte-reconstructed from validated inputs during check.",
   "limitations": [
     "SHA-256 establishes byte identity only, not authority, correctness, approval, or product readiness.",
     "Private-input content is excluded and was not opened, listed, copied, parsed, or hashed.",
