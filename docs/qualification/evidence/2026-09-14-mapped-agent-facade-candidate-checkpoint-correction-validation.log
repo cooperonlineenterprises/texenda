@@ -1,0 +1,48 @@
+Texenda mapped facade candidate/checkpoint correction validation
+observed_at_utc: 2026-09-14T22:06:51Z
+actor/profile: agent:mapped-facade-sol / gpt-5.6-sol-max / T2 / max
+author-side-auditor/profile: agent:mapped-facade-sol/state_txn_adversarial_audit / gpt-5.6-sol-max / T2 / max
+base_revision: 680457854984020d0c8616a7f640a63079be9b3c
+rejected_predecessor: 4db68b1f2bdf6f2629983fc5ed3e9cc760fd9cbd
+source_revision: 1ee0519b6c6114b62712797efe4cc486e890a78d
+tested_generated_revision: d2ced43dd4fe47d3dcc8e5196a3080e1e36997aa
+tested_tree: f9e55e193353c193d00d1325d5d47911efe5db6a
+generation_id: 52919db4640cb104ee913e152ec7e58cec56f9aa8b0d5b2e7906910703a66160
+source_scope_sha256: efd182484cf695933087e724e13b8bc929c41b259a9a3b0cba3a1448f996fa44
+4db68b1_to_tested_diff_sha256: e91f32f68a5cdc6e109e30ffd9b55e0f3bc3c73bb96bbce3125d79d28bf5fa82
+base_to_tested_diff_sha256: 41b53ce17a94bd0fe5e94da9727fae81dc36a4627db480da4378d27b05ba1d66
+canonical_diff_command: git --no-optional-locks -c core.abbrev=40 -c color.ui=false diff --no-ext-diff --no-textconv --full-index --binary <base> <tip> | shasum -a 256
+
+FAIL fifth-rereview
+  Independent Astra/max review closed the 69-case exchange/error matrix and rejected 4db68b1 only for ready-candidate substitution and captured preparation-checkpoint validation. Prior commits/evidence remain immutable; this successor is not approval.
+
+PASS immutable-ready-candidate
+  The preparation immutably records SHA-256 of the intended raw bytes before candidate creation. Exclusive creation retains the original file identity. A staged candidate-bound full control records only that intended hash/original identity before exposed post-fsync hooks. Exact bytes/hash/inode are rechecked before atomic rename to ready and again immediately before exchange; a substituted internally valid ledger is denied and cannot enter ready.
+
+PASS independent-intended-content
+  The intended-content checkpoint is an independently written inode, never a hardlink to candidate/state.json. Mutating it in a synthetic alias probe leaves active state unchanged. The original intended content therefore survives candidate-path substitution without exposing a second pathname that can mutate live authority.
+
+PASS captured-preparation-checkpoint
+  Before candidate capture, preparation recovery atomically publishes a full identity-bound capture control. Resume requires exactly the intended and attempted content-addressed checkpoints, stable regular/non-symlink reads, exact SHA/content, attempted original inode identity and distinct intended/attempted inodes. Corrupt, missing, duplicate, directory and FIFO checkpoints all deny promptly; FIFO opens are nonblocking before type rejection.
+
+PASS nested-recovery-resumption
+  Recovery hard-exits after candidate capture, then resumes idempotently from the exact checkpoint/control set and restores the unchanged prior ledger. A byte-identical different inode raced at the capture syscall boundary is rejected and both content sets plus blocking controls remain.
+
+FAIL author-audit-alias-and-capture-findings
+  The read-only Sol/max adversarial audit first reproduced a byte-identical capture-identity gap and then a hardlink alias from intended checkpoint to active state. Both were corrected with the candidate-bound/capture controls and independent intended inode. Final re-audit returned PASS on four focused cases, 50 state-root tests, alias mutation, FIFO/type cases and git diff check. This is not independent T1 approval.
+
+FAIL intermediate-test-oracle-wording
+  The first byte-identical capture test expected a later generic corruption message while the implementation correctly denied earlier at post-capture identity comparison. Only the assertion regex was corrected; the reproduced bytes/controls and implementation behavior were unchanged.
+
+PASS final-candidate-check-all-no-write
+  validate.py --check and --check --all used explicit read-only /Users/jamesryancooper/Projects/texenda/repo/.texenda. Nine non-writers exited 0, both refresh writers were skipped, and all 262 candidate files plus live state/lock retained allowed hashes, inode, size, mtime, ctime and ignored status. No private content or .git atime claim.
+
+PASS final-candidate-suites
+  25 facade, 77 workspace (34 relocation), 182 coordinator (50 state-root) and 39 sealed tests pass. Both package validators pass all 14 checks. The existing independent 69-case hard-exit matrix and all new nested children are reaped.
+
+PASS final-candidate-static-live-boundary
+  Static checks cover 120 JSON, 1 TOML, 19 Python, 27 dossier paths, 3 instructions, 101 links and 238 evidence checks before this successor. Git diff/sealed/package/authority checks pass. Canonical main/live state remain 6804578 and b993e... with 13 receipts, expected tip, eleven profiles, zero leases/budget. The real CSV received existence/ignore/untracked checks only.
+
+NOT_RUN independent Astra/max rereview of this successor, integration, live relocation, product/external gates, physical power-loss testing, network/GitHub/external mutation.
+
+Recovery remains POSIX-only: flock plus Darwin renameatx_np or Linux renameat2; unsupported platforms fail closed. No main/live/private/package/external state changed, and the real CSV was never opened, hashed, parsed, copied, listed or logged.
