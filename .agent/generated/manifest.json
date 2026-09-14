@@ -1,12 +1,12 @@
 {
   "schema_version": "texenda.generated-integrity.v1",
-  "generation_id": "3d2a7d2273080b8b74dc713e26157c31fa4c680f10329852446e01cbfd616a4a",
+  "generation_id": "663fa2650aa0cdc6e3fb2c2e2555c32b1fd4e89a15e4111c8bbacd0624d1092b",
   "generation_id_derivation": "sha256(canonical_json(source_scope_sha256,evidence_scope_sha256,ledger_sha256,receipt_count,receipt_tip))",
-  "generated_at": "2026-09-14T19:15:21+00:00",
+  "generated_at": "2026-09-14T19:55:58+00:00",
   "authority": "generated_non_authoritative",
-  "source_git_revision": "ba467ca5073fce8410e7ca6f0e5b7abd7807b32c",
-  "source_git_tree": "0a4a402032871d57f24090311cfba0e16352584c",
-  "source_scope_sha256": "eae951f6203ae0491c87db67d4131eba046d7e3ad69773bb7dd81b1b1793a9e1",
+  "source_git_revision": "e2357ab8c9c882183539907b813402302afeb50e",
+  "source_git_tree": "d7a8defff428733fb6f0cfe0affdb71c2dd11d98",
+  "source_scope_sha256": "4b23263f9759205e89e20b0e7de893e8aef426d963bff376daf9908a075f9e2b",
   "source_scope_exclusions": [
     {
       "path": ".agent/generated/manifest.json",
@@ -84,7 +84,7 @@
     },
     {
       "path": ".agent/extensions/texenda-coordination/extension.json",
-      "sha256": "1d90516538d2ba188e22a593a7f1fbead0f4b277ae2691a95376782f21d3a939"
+      "sha256": "45944fea66d23a0dbf60aa5c2ab08b01d6c4486ee34019964eb973cb4ec3ca0a"
     },
     {
       "path": ".agent/generated/README.md",
@@ -116,7 +116,7 @@
     },
     {
       "path": ".agent/scripts/common.py",
-      "sha256": "d3c55b3ddf5d3e2e6a136f6b0a2ce23c9e1bee46dff6fcc50d6b0f7de3104862"
+      "sha256": "f2afa5f1391aadb3abb798819e4047c1bccac0ea5f4a67ba58a850d7ffbe30d6"
     },
     {
       "path": ".agent/scripts/refresh.py",
@@ -144,7 +144,7 @@
     },
     {
       "path": ".agent/tests/test_validate.py",
-      "sha256": "b21cb0d803cf7840ee9093a234cc6cc3e0cba9fd4114c86e45013b0e09c035cc"
+      "sha256": "deec20eb21239dc285c03326b96d3d2205caa2609a948045002666bad0de5f7c"
     },
     {
       "path": ".agent/tools.json",
@@ -436,7 +436,7 @@
     },
     {
       "path": "project-dossier/transition/README.md",
-      "sha256": "ec3e006d13f3535f0844752fe0038f5ff5f9df391104f8753116a1c5c7f5aeb2"
+      "sha256": "61a55dcee536971e9a783edacdfb8b16493710d0537b483aa0a4265d0a7835b7"
     },
     {
       "path": "project-dossier/transition/blueprint-adoption-crosswalk.json",
@@ -808,11 +808,11 @@
     },
     {
       "path": "tooling/coordination/README.md",
-      "sha256": "b247fa90b5ecf7206c2f1917fcf611317eb6166579a564f84124ce363f18aaeb"
+      "sha256": "ad72d22fc4a540983f5724eff82d7321c2d4430755f75ef45bc641e15dae16f4"
     },
     {
       "path": "tooling/coordination/harness.py",
-      "sha256": "a146e993ec866cfd165372650f77c2a75d67329148477c32cb424100345ad91e"
+      "sha256": "10f420afb2e30b0681e4eab09ed4ef589627315c660532ba8268460c81ae6e77"
     },
     {
       "path": "tooling/coordination/routing-policy.json",
@@ -868,11 +868,11 @@
     },
     {
       "path": "tooling/coordination/tests/test_state_root.py",
-      "sha256": "47df37392fa165bca4264e7dcd0432a33c9c1fc88ba76f679c69b28afc6371a8"
+      "sha256": "7a4b36110dae3f333fa6d0c297fd104a8213c444990f096a9932c6c0dbb06ddb"
     },
     {
       "path": "tooling/workspace/relocate_state.py",
-      "sha256": "7786d9483e4bd3f0f3754e96944c53cc4e41351b2ce190c5744942262d8a4aad"
+      "sha256": "9e2dc0a908c8619e69490e470758baf292863b528b889259a4af147167529c8e"
     },
     {
       "path": "tooling/workspace/tests/test_contract.py",
@@ -884,7 +884,7 @@
     },
     {
       "path": "tooling/workspace/tests/test_state_relocation.py",
-      "sha256": "9459ee671e1a408c88c67cccfab3aaa6a9e9167684a8f28962fc21b0b7c65ac0"
+      "sha256": "3e75e53c472a3f92316a22e5583c2546c10eafcddbb3cf7cd2f185bb75bea7c0"
     },
     {
       "path": "tooling/workspace/validate_contract.py",
