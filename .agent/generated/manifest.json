@@ -1,11 +1,11 @@
 {
   "schema_version": "texenda.generated-integrity.v1",
-  "generation_id": "79768a41b155d0d38338a328b675736e839c1699cbea72faa46bb54053253417",
-  "generated_at": "2026-09-14T17:30:24+00:00",
+  "generation_id": "39f1d68d84391ab73088d2c093b742db92eebffd49a9c7bfb15b88abc31e397f",
+  "generated_at": "2026-09-14T17:34:06+00:00",
   "authority": "generated_non_authoritative",
-  "source_git_revision": "3c245b3b649191c5fe1f38cf24f906ddedb9c914",
-  "source_git_tree": "0f6d131a2e307e2ae62b0d1e22cb7a82ef6bfa59",
-  "source_scope_sha256": "f33ea59461456267377ec1bbe3c661f6bc7788d3c4bf89079ab93e4813637e1d",
+  "source_git_revision": "319d79cf37af16d9cd936a823b30aa9626c13aed",
+  "source_git_tree": "2026d400b09d6492eedae99cf01c3fc7d0095cdb",
+  "source_scope_sha256": "d2c5cabf40468afe7a884f2bf00a84b4079aac9a1a6195d4c3a75c98cd9426cc",
   "source_scope_exclusions": [
     {
       "path": ".agent/generated/**",
@@ -107,7 +107,7 @@
     },
     {
       "path": ".agent/tests/test_validate.py",
-      "sha256": "f57f518da31883c40e874721b9b9c5d7ac62cb6d51c2d044e1dbbb9f88cf0e60"
+      "sha256": "d702dfae64b4351261e263d0a4469040cfbf1ae2077678b4d4b53339644ec129"
     },
     {
       "path": ".agent/tools.json",
