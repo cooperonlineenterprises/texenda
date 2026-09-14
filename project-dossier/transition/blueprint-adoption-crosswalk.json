@@ -1,0 +1,1588 @@
+{
+  "schema_version": "texenda.workspace-adoption-crosswalk.v1",
+  "id": "TRN-WSM-0001",
+  "adoption_mode": "mapped-existing",
+  "profile": "high-assurance",
+  "status": "reviewable_transition_contract",
+  "authority": "Project-local adoption transition contract. Documentation is not permission. Planned new owners become active only at their reviewed cutover epoch.",
+  "decision": "docs/decisions/ADR-0004-mapped-project-workspace.md",
+  "baseline": "docs/qualification/evidence/2026-09-14-workspace-phase-0-baseline.json",
+  "profile_triggers": [
+    "concurrent agents",
+    "sensitive private inputs",
+    "external-effect boundaries",
+    "durable recovery",
+    "multi-session handoff",
+    "audit and reproducibility"
+  ],
+  "blueprint": {
+    "name": "project-blueprint",
+    "selected_version": "1.0.0",
+    "selected_source": "/Users/jamesryancooper/.codex/skills/project-bootstrap/assets/blueprint-source",
+    "qualification": "inspected_structural_reference_only",
+    "generated_new_project": false,
+    "newer_candidate_version": "4.3.0",
+    "newer_candidate_qualified": false,
+    "origin_schema_supports_mapped_existing": false,
+    "origin_record_created": false,
+    "limitation": "Installed source validator/acceptance fail on source-layout assumptions. A dirty Octon Mini 4.3.0 candidate is not fully qualified. No facts, accepted decisions, permissions, evidence or status are imported from either source."
+  },
+  "roles": [
+    "authoritative",
+    "adapter",
+    "index",
+    "generated_view",
+    "historical_source",
+    "deferred",
+    "not_applicable"
+  ],
+  "epochs": [
+    "baseline",
+    "facade",
+    "external_state"
+  ],
+  "ownership": [
+    {
+      "concern_id": "product_semantics",
+      "owner_by_epoch": {
+        "baseline": "specs/texenda-handoff/",
+        "facade": "specs/texenda-handoff/",
+        "external_state": "specs/texenda-handoff/"
+      },
+      "rule": "Sealed normative topic owners; accepted local ADRs amend only their explicitly accepted scopes."
+    },
+    {
+      "concern_id": "canonical_definition",
+      "owner_by_epoch": {
+        "baseline": "specs/texenda-handoff/01-foundation/product-and-brand.md",
+        "facade": "specs/texenda-handoff/01-foundation/product-and-brand.md",
+        "external_state": "specs/texenda-handoff/01-foundation/product-and-brand.md"
+      },
+      "rule": "No new dossier canonical definition."
+    },
+    {
+      "concern_id": "canonical_requirements",
+      "owner_by_epoch": {
+        "baseline": "specs/texenda-handoff/",
+        "facade": "specs/texenda-handoff/",
+        "external_state": "specs/texenda-handoff/"
+      },
+      "rule": "The sealed owner register dispatches to requirements, invariants and acceptance criteria; no copied requirements registry."
+    },
+    {
+      "concern_id": "canonical_architecture",
+      "owner_by_epoch": {
+        "baseline": "specs/texenda-handoff/03-domain-and-architecture/",
+        "facade": "specs/texenda-handoff/03-domain-and-architecture/",
+        "external_state": "specs/texenda-handoff/03-domain-and-architecture/"
+      },
+      "rule": "No new dossier canonical architecture."
+    },
+    {
+      "concern_id": "external_gates",
+      "owner_by_epoch": {
+        "baseline": "specs/texenda-handoff/01-foundation/external-validation-gates.json",
+        "facade": "specs/texenda-handoff/01-foundation/external-validation-gates.json",
+        "external_state": "specs/texenda-handoff/01-foundation/external-validation-gates.json"
+      },
+      "rule": "A criterion is not a gate clearance."
+    },
+    {
+      "concern_id": "model_routing",
+      "owner_by_epoch": {
+        "baseline": "tooling/coordination/routing-policy.json",
+        "facade": "tooling/coordination/routing-policy.json",
+        "external_state": "tooling/coordination/routing-policy.json"
+      },
+      "rule": "Registered restrictions-only extension; policy digest stays canonical JSON digest."
+    },
+    {
+      "concern_id": "wp_lifecycle",
+      "owner_by_epoch": {
+        "baseline": "tooling/coordination/harness.py",
+        "facade": "tooling/coordination/harness.py",
+        "external_state": "tooling/coordination/harness.py"
+      },
+      "rule": "Existing WP state machine remains the only WP transition implementation."
+    },
+    {
+      "concern_id": "active_tasks",
+      "owner_by_epoch": {
+        "baseline": "/Users/jamesryancooper/Projects/texenda-app/.texenda/state.json",
+        "facade": "/Users/jamesryancooper/Projects/texenda/repo/.texenda/state.json",
+        "external_state": "/Users/jamesryancooper/Projects/texenda/local/agent-state/texenda/state.json"
+      },
+      "rule": "One active tasks field in the existing receipt-bound ledger."
+    },
+    {
+      "concern_id": "receipts",
+      "owner_by_epoch": {
+        "baseline": "/Users/jamesryancooper/Projects/texenda-app/.texenda/state.json",
+        "facade": "/Users/jamesryancooper/Projects/texenda/repo/.texenda/state.json",
+        "external_state": "/Users/jamesryancooper/Projects/texenda/local/agent-state/texenda/state.json"
+      },
+      "rule": "The same existing receipt chain is relocated byte-for-byte."
+    },
+    {
+      "concern_id": "live_qualification",
+      "owner_by_epoch": {
+        "baseline": "/Users/jamesryancooper/Projects/texenda-app/.texenda/state.json",
+        "facade": "/Users/jamesryancooper/Projects/texenda/repo/.texenda/state.json",
+        "external_state": "/Users/jamesryancooper/Projects/texenda/local/agent-state/texenda/state.json"
+      },
+      "rule": "Live roster references qualified evidence; snapshots never become another roster."
+    },
+    {
+      "concern_id": "agent_permission_classes",
+      "owner_by_epoch": {
+        "baseline": "AGENTS.md",
+        "facade": ".agent/policy.json",
+        "external_state": ".agent/policy.json"
+      },
+      "rule": "Cut over only in the same exact reviewed candidate that removes duplicated root policy."
+    },
+    {
+      "concern_id": "precedence_trust",
+      "owner_by_epoch": {
+        "baseline": "AGENTS.md",
+        "facade": ".agent/context.json",
+        "external_state": ".agent/context.json"
+      },
+      "rule": "Cut over only in the same exact reviewed candidate that routes root and operating guide to the new owner."
+    },
+    {
+      "concern_id": "validation_commands",
+      "owner_by_epoch": {
+        "baseline": "tooling/coordination/README.md",
+        "facade": ".agent/validators.json",
+        "external_state": ".agent/validators.json"
+      },
+      "rule": "Delegates to existing validators; old command prose becomes a link at cutover."
+    },
+    {
+      "concern_id": "durable_decisions",
+      "owner_by_epoch": {
+        "baseline": "docs/decisions/",
+        "facade": "docs/decisions/",
+        "external_state": "docs/decisions/"
+      },
+      "rule": "Preserve accepted ADR IDs and history; .agent/decisions is an index only."
+    },
+    {
+      "concern_id": "qualification_evidence",
+      "owner_by_epoch": {
+        "baseline": "docs/qualification/evidence/",
+        "facade": "docs/qualification/evidence/",
+        "external_state": "docs/qualification/evidence/"
+      },
+      "rule": "Existing linked envelopes outside this directory remain immutable source records; indexes do not duplicate them."
+    },
+    {
+      "concern_id": "review_records",
+      "owner_by_epoch": {
+        "baseline": "docs/qualification/evidence/",
+        "facade": "docs/qualification/evidence/",
+        "external_state": "docs/qualification/evidence/"
+      },
+      "rule": "Retain exact-candidate independent reviews under their existing evidence owner."
+    },
+    {
+      "concern_id": "git_observation",
+      "owner_by_epoch": {
+        "baseline": ".git/",
+        "facade": ".git/",
+        "external_state": ".git/"
+      },
+      "rule": "Direct Git revision/tree/refs are the owner for Git facts; generated state is a projection."
+    },
+    {
+      "concern_id": "build_observation",
+      "owner_by_epoch": {
+        "baseline": "docs/qualification/evidence/",
+        "facade": "docs/qualification/evidence/",
+        "external_state": "docs/qualification/evidence/"
+      },
+      "rule": "Only exact-revision direct build/check evidence supports implementation claims."
+    },
+    {
+      "concern_id": "generic_record_vocabulary",
+      "owner_by_epoch": {
+        "baseline": null,
+        "facade": ".agent/schema.json",
+        "external_state": ".agent/schema.json"
+      },
+      "rule": "New universal IDs/statuses only; no product schema or WP status replacement."
+    },
+    {
+      "concern_id": "generic_lifecycle",
+      "owner_by_epoch": {
+        "baseline": null,
+        "facade": ".agent/lifecycle.json",
+        "external_state": ".agent/lifecycle.json"
+      },
+      "rule": "Generic metadata lifecycle only; coordinator owns live WP transitions."
+    },
+    {
+      "concern_id": "tool_contracts",
+      "owner_by_epoch": {
+        "baseline": null,
+        "facade": ".agent/tools.json",
+        "external_state": ".agent/tools.json"
+      },
+      "rule": "Availability and permission are separate; reference live qualification, never copy its roster."
+    },
+    {
+      "concern_id": "stable_project_hooks",
+      "owner_by_epoch": {
+        "baseline": null,
+        "facade": ".agent/project.json",
+        "external_state": ".agent/project.json"
+      },
+      "rule": "Stable project hooks register the Texenda coordinator; no mutable status report."
+    },
+    {
+      "concern_id": "dossier_interpretation",
+      "owner_by_epoch": {
+        "baseline": null,
+        "facade": "project-dossier/AUTHORITY.md",
+        "external_state": "project-dossier/AUTHORITY.md"
+      },
+      "rule": "Dossier information roles only; precedence and action permission are linked to their active owners."
+    },
+    {
+      "concern_id": "artifact_classification",
+      "owner_by_epoch": {
+        "baseline": null,
+        "facade": "project-dossier/ARTIFACT_CATALOG.json",
+        "external_state": "project-dossier/ARTIFACT_CATALOG.json"
+      },
+      "rule": "One catalog owns per-file role/cadence metadata; path-authority is generated."
+    },
+    {
+      "concern_id": "dossier_version",
+      "owner_by_epoch": {
+        "baseline": null,
+        "facade": "project-dossier/VERSION.md",
+        "external_state": "project-dossier/VERSION.md"
+      },
+      "rule": "Dossier contract version only; neither package variant is reversioned."
+    },
+    {
+      "concern_id": "dossier_supersession",
+      "owner_by_epoch": {
+        "baseline": null,
+        "facade": "project-dossier/SUPERSESSION.json",
+        "external_state": "project-dossier/SUPERSESSION.json"
+      },
+      "rule": "Dossier artifact replacement metadata only; accepted decisions stay under docs/decisions."
+    },
+    {
+      "concern_id": "conformance_findings",
+      "owner_by_epoch": {
+        "baseline": null,
+        "facade": "project-dossier/conformance/findings.json",
+        "external_state": "project-dossier/conformance/findings.json"
+      },
+      "rule": "Own new conformance findings; machine-readable/findings.json is generated from this owner."
+    },
+    {
+      "concern_id": "adoption_transition",
+      "owner_by_epoch": {
+        "baseline": "project-dossier/transition/blueprint-adoption-crosswalk.json",
+        "facade": "project-dossier/transition/blueprint-adoption-crosswalk.json",
+        "external_state": "project-dossier/transition/blueprint-adoption-crosswalk.json"
+      },
+      "rule": "This project-local transition crosswalk owns mapped-adoption contracts, not domain policy."
+    },
+    {
+      "concern_id": "adoption_plan",
+      "owner_by_epoch": {
+        "baseline": null,
+        "facade": "project-dossier/machine-readable/plan.json",
+        "external_state": "project-dossier/machine-readable/plan.json"
+      },
+      "rule": "Future adoption dependencies and acceptance only; cannot act as an active task ledger or mark WPs complete."
+    },
+    {
+      "concern_id": "consolidated_raidq",
+      "owner_by_epoch": {
+        "baseline": null,
+        "facade": "project-dossier/machine-readable/raidq.json",
+        "external_state": "project-dossier/machine-readable/raidq.json"
+      },
+      "rule": "New consolidated risks, assumptions, issues, dependencies and questions; do not repeat external gate authority."
+    },
+    {
+      "concern_id": "adoption_provenance",
+      "owner_by_epoch": {
+        "baseline": null,
+        "facade": "project-dossier/provenance/sources.json",
+        "external_state": "project-dossier/provenance/sources.json"
+      },
+      "rule": "New adoption/source-variant provenance only; sealed source register stays sealed."
+    },
+    {
+      "concern_id": "domain_models",
+      "owner_by_epoch": {
+        "baseline": "specs/texenda-handoff/03-domain-and-architecture/",
+        "facade": "specs/texenda-handoff/03-domain-and-architecture/",
+        "external_state": "specs/texenda-handoff/03-domain-and-architecture/"
+      },
+      "rule": "Existing schemas/interfaces are functional equivalents."
+    },
+    {
+      "concern_id": "security_data",
+      "owner_by_epoch": {
+        "baseline": "specs/texenda-handoff/04-security-governance-and-operations/",
+        "facade": "specs/texenda-handoff/04-security-governance-and-operations/",
+        "external_state": "specs/texenda-handoff/04-security-governance-and-operations/"
+      },
+      "rule": "Existing security/privacy/AI authority owners; no inferred readiness."
+    },
+    {
+      "concern_id": "operations_recovery",
+      "owner_by_epoch": {
+        "baseline": "specs/texenda-handoff/06-migration-and-production/",
+        "facade": "specs/texenda-handoff/06-migration-and-production/",
+        "external_state": "specs/texenda-handoff/06-migration-and-production/"
+      },
+      "rule": "Product operations stay sealed; local workspace recovery is the new transition concern."
+    },
+    {
+      "concern_id": "supply_chain",
+      "owner_by_epoch": {
+        "baseline": "specs/texenda-handoff/03-domain-and-architecture/technology-baseline.md",
+        "facade": "specs/texenda-handoff/03-domain-and-architecture/technology-baseline.md",
+        "external_state": "specs/texenda-handoff/03-domain-and-architecture/technology-baseline.md"
+      },
+      "rule": "Compatibility template and future qualification are indexed, not newly passed."
+    },
+    {
+      "concern_id": "external_research",
+      "owner_by_epoch": {
+        "baseline": "specs/texenda-handoff/09-reference/source-register.json",
+        "facade": "specs/texenda-handoff/09-reference/source-register.json",
+        "external_state": "specs/texenda-handoff/09-reference/source-register.json"
+      },
+      "rule": "Existing source records remain reference evidence; new mutable external facts need fresh evidence."
+    },
+    {
+      "concern_id": "assignment_protocol",
+      "owner_by_epoch": {
+        "baseline": "tooling/coordination/templates/",
+        "facade": "tooling/coordination/templates/",
+        "external_state": "tooling/coordination/templates/"
+      },
+      "rule": "Existing local assignment/review/resumption templates are functional equivalents."
+    },
+    {
+      "concern_id": "quality_rubric",
+      "owner_by_epoch": {
+        "baseline": "specs/texenda-handoff/10-validation/",
+        "facade": "specs/texenda-handoff/10-validation/",
+        "external_state": "specs/texenda-handoff/10-validation/"
+      },
+      "rule": "Existing acceptance/test mapping remains authority; new facade tests are scoped implementation checks."
+    },
+    {
+      "concern_id": "context_routing",
+      "owner_by_epoch": {
+        "baseline": "specs/texenda-handoff/07-agent-orchestration/context-routing.json",
+        "facade": "specs/texenda-handoff/07-agent-orchestration/context-routing.json",
+        "external_state": "specs/texenda-handoff/07-agent-orchestration/context-routing.json"
+      },
+      "rule": "Existing context router plus reviewed local instructions; no copied context pack."
+    },
+    {
+      "concern_id": "historical_compatibility",
+      "owner_by_epoch": {
+        "baseline": ".texenda/",
+        "facade": ".texenda/",
+        "external_state": ".texenda/"
+      },
+      "rule": "After cutover contains only ignored immutable evidence/context/v1 checkpoint inputs; never state.json or active locks."
+    },
+    {
+      "concern_id": "local_state_binding",
+      "owner_by_epoch": {
+        "baseline": null,
+        "facade": null,
+        "external_state": ".texenda-location.json"
+      },
+      "rule": "Ignored local configuration only: exact repo/state-root association and move status, never ledger contents."
+    },
+    {
+      "concern_id": "private_inputs",
+      "owner_by_epoch": {
+        "baseline": "/Users/jamesryancooper/Projects/texenda-app/.texenda/private-inputs",
+        "facade": "/Users/jamesryancooper/Projects/texenda/repo/.texenda/private-inputs",
+        "external_state": "/Users/jamesryancooper/Projects/texenda/local/private-inputs"
+      },
+      "rule": "Only existence/ignore/tracking/location checks and verified same-filesystem moves; no content access."
+    }
+  ],
+  "epoch_rules": {
+    "baseline": "Existing owners remain active, except new transition documents within the explicit owner migration scope.",
+    "facade": "Independent exact-candidate approval and serial integration activate policy/context/validator ownership in the same candidate that removes duplicate old prose.",
+    "external_state": "Approved state-root code and serial byte-preserving move activate external state binding. Old default calls fail closed when a binding exists."
+  },
+  "blueprint_path_inventory": [
+    ".agent/START_HERE.md",
+    ".agent/artifacts/registry.json",
+    ".agent/checklists/task-closure.md",
+    ".agent/checkpoints/README.md",
+    ".agent/context.json",
+    ".agent/decisions/README.md",
+    ".agent/events/README.md",
+    ".agent/evidence/README.md",
+    ".agent/extensions/README.md",
+    ".agent/extensions/registry.json",
+    ".agent/extensions/sample-restriction/README.md",
+    ".agent/extensions/sample-restriction/config.json",
+    ".agent/extensions/sample-restriction/validate.py",
+    ".agent/generated/README.md",
+    ".agent/generated/manifest.json",
+    ".agent/generated/validation-report.json",
+    ".agent/lifecycle.json",
+    ".agent/policy.json",
+    ".agent/project.json",
+    ".agent/reviews/README.md",
+    ".agent/schema.json",
+    ".agent/schemas/artifact-catalog.schema.json",
+    ".agent/schemas/dossier-records.schema.json",
+    ".agent/schemas/harness-extension-registry.schema.json",
+    ".agent/schemas/harness-record.schema.json",
+    ".agent/schemas/project-blueprint-origin.schema.json",
+    ".agent/scripts/refresh.py",
+    ".agent/scripts/validate.py",
+    ".agent/state/RESUME.md",
+    ".agent/state/current.json",
+    ".agent/tasks/README.md",
+    ".agent/templates/artifact.json",
+    ".agent/templates/checkpoint.md",
+    ".agent/templates/decision.md",
+    ".agent/templates/event.json",
+    ".agent/templates/evidence.md",
+    ".agent/templates/review.md",
+    ".agent/templates/task.md",
+    ".agent/tests/fixtures/invalid/duplicate-key.json",
+    ".agent/tests/fixtures/invalid/nested-agent-weakening.md",
+    ".agent/tests/fixtures/valid/kernel.json",
+    ".agent/tests/test_validate.py",
+    ".agent/tools.json",
+    ".agent/validators.json",
+    ".agents/README.md",
+    ".agents/agents/reviewer.json",
+    ".agents/skills/change-review/SKILL.md",
+    ".agents/skills/change-review/references/provenance.md",
+    ".agents/workflows/safe-change.json",
+    ".project-blueprint-origin.json",
+    "AGENTS.md",
+    "project-dossier/ARTIFACT_CATALOG.json",
+    "project-dossier/AUTHORITY.md",
+    "project-dossier/CANONICAL_SOURCE_MAP.md",
+    "project-dossier/CHECKSUMS.sha256",
+    "project-dossier/MANIFEST.json",
+    "project-dossier/README.md",
+    "project-dossier/SUPERSESSION.json",
+    "project-dossier/VERSION.md",
+    "project-dossier/canonical/architecture-or-outcome-model.md",
+    "project-dossier/canonical/constraints-gates-and-readiness.md",
+    "project-dossier/canonical/executive-project-definition.md",
+    "project-dossier/canonical/requirements-and-constraints.md",
+    "project-dossier/conformance/README.md",
+    "project-dossier/current-state/README.md",
+    "project-dossier/governance/README.md",
+    "project-dossier/handoff/ADOPTION_CHECKLIST.md",
+    "project-dossier/handoff/START_HERE.md",
+    "project-dossier/history/README.md",
+    "project-dossier/machine-readable/evidence-index.json",
+    "project-dossier/machine-readable/findings.json",
+    "project-dossier/machine-readable/path-authority.json",
+    "project-dossier/machine-readable/plan.json",
+    "project-dossier/machine-readable/raidq.json",
+    "project-dossier/machine-readable/requirements.json",
+    "project-dossier/machine-readable/sources.json",
+    "project-dossier/models/README.md",
+    "project-dossier/operations/README.md",
+    "project-dossier/plans/README.md",
+    "project-dossier/provenance/README.md",
+    "project-dossier/registers/README.md",
+    "project-dossier/research/README.md",
+    "project-dossier/transition/README.md",
+    "project-dossier/validation/QUALITY_GATES.json",
+    "project-dossier/validation/README.md"
+  ],
+  "blueprint_artifact_type_inventory": [
+    {
+      "id": "DOS-0001",
+      "path": "project-dossier/README.md"
+    },
+    {
+      "id": "DOS-0002",
+      "path": "project-dossier/AUTHORITY.md"
+    },
+    {
+      "id": "DOS-0003",
+      "path": "project-dossier/CANONICAL_SOURCE_MAP.md"
+    },
+    {
+      "id": "DOS-0004",
+      "path": "project-dossier/ARTIFACT_CATALOG.json"
+    },
+    {
+      "id": "DOS-0005",
+      "path": "project-dossier/MANIFEST.json"
+    },
+    {
+      "id": "DOS-0006",
+      "path": "project-dossier/VERSION.md"
+    },
+    {
+      "id": "DOS-0007",
+      "path": "project-dossier/SUPERSESSION.json"
+    },
+    {
+      "id": "DOS-0008",
+      "path": "project-dossier/machine-readable/path-authority.json"
+    },
+    {
+      "id": "DOS-0009",
+      "path": "project-dossier/CHECKSUMS.sha256"
+    },
+    {
+      "id": "DEF-0001",
+      "path": "project-dossier/canonical/executive-project-definition.md"
+    },
+    {
+      "id": "REQ-0001",
+      "path": "project-dossier/canonical/requirements-and-constraints.md"
+    },
+    {
+      "id": "REQ-0002",
+      "path": "project-dossier/machine-readable/requirements.json"
+    },
+    {
+      "id": "ARC-0001",
+      "path": "project-dossier/canonical/architecture-or-outcome-model.md"
+    },
+    {
+      "id": "DEC-0001",
+      "path": ".agent/decisions/README.md"
+    },
+    {
+      "id": "GOV-0001",
+      "path": "project-dossier/canonical/constraints-gates-and-readiness.md"
+    },
+    {
+      "id": "CUR-0001",
+      "path": "project-dossier/current-state/README.md"
+    },
+    {
+      "id": "CNF-0001",
+      "path": "project-dossier/conformance/README.md"
+    },
+    {
+      "id": "CNF-0002",
+      "path": "project-dossier/machine-readable/findings.json"
+    },
+    {
+      "id": "PLN-0001",
+      "path": "project-dossier/plans/README.md"
+    },
+    {
+      "id": "PLN-0002",
+      "path": "project-dossier/machine-readable/plan.json"
+    },
+    {
+      "id": "REG-0001",
+      "path": "project-dossier/registers/README.md"
+    },
+    {
+      "id": "REG-0002",
+      "path": "project-dossier/machine-readable/raidq.json"
+    },
+    {
+      "id": "PRV-0001",
+      "path": "project-dossier/provenance/README.md"
+    },
+    {
+      "id": "PRV-0002",
+      "path": "project-dossier/machine-readable/sources.json"
+    },
+    {
+      "id": "VAL-0001",
+      "path": "project-dossier/validation/README.md"
+    },
+    {
+      "id": "VAL-0002",
+      "path": "project-dossier/validation/QUALITY_GATES.json"
+    },
+    {
+      "id": "VAL-0003",
+      "path": "project-dossier/machine-readable/evidence-index.json"
+    },
+    {
+      "id": "HOF-0001",
+      "path": "project-dossier/handoff/START_HERE.md"
+    },
+    {
+      "id": "HOF-0002",
+      "path": "project-dossier/handoff/ADOPTION_CHECKLIST.md"
+    },
+    {
+      "id": "GOV-0002",
+      "path": "project-dossier/governance/README.md"
+    },
+    {
+      "id": "MOD-0001",
+      "path": "project-dossier/models/README.md"
+    },
+    {
+      "id": "OPS-0001",
+      "path": "project-dossier/operations/README.md"
+    },
+    {
+      "id": "RES-0001",
+      "path": "project-dossier/research/README.md"
+    },
+    {
+      "id": "TRN-0001",
+      "path": "project-dossier/transition/README.md"
+    },
+    {
+      "id": "HIS-0001",
+      "path": "project-dossier/history/README.md"
+    }
+  ],
+  "mappings": [
+    {
+      "blueprint_path": ".agent/START_HERE.md",
+      "mapped_path": ".agent/START_HERE.md",
+      "concern_id": "assignment_protocol",
+      "role": "index",
+      "equivalence": "direct",
+      "materialize_phase": "phase_3",
+      "reason": "Routes to canonical owners and live state location."
+    },
+    {
+      "blueprint_path": ".agent/artifacts/registry.json",
+      "mapped_path": "project-dossier/ARTIFACT_CATALOG.json",
+      "concern_id": "artifact_classification",
+      "role": "index",
+      "equivalence": "functional",
+      "materialize_phase": "phase_3",
+      "reason": "Use the existing adopted catalog metadata; large temporary artifacts live under local/artifacts."
+    },
+    {
+      "blueprint_path": ".agent/checklists/task-closure.md",
+      "mapped_path": "tooling/coordination/templates/ASSIGNMENT.md",
+      "concern_id": "assignment_protocol",
+      "role": "index",
+      "equivalence": "functional",
+      "materialize_phase": "existing",
+      "reason": "Existing handoff/closure protocol and review template supply required closure."
+    },
+    {
+      "blueprint_path": ".agent/checkpoints/README.md",
+      "mapped_path": "/Users/jamesryancooper/Projects/texenda/archive/checkpoints/",
+      "concern_id": "historical_compatibility",
+      "role": "historical_source",
+      "equivalence": "functional",
+      "materialize_phase": "phase_1",
+      "reason": "Local checkpoints outside Git; immutable legacy references remain in .texenda when required."
+    },
+    {
+      "blueprint_path": ".agent/context.json",
+      "mapped_path": ".agent/context.json",
+      "concern_id": "precedence_trust",
+      "role": "authoritative",
+      "equivalence": "direct",
+      "materialize_phase": "phase_3",
+      "reason": "Precedence and trust only after cutover."
+    },
+    {
+      "blueprint_path": ".agent/decisions/README.md",
+      "mapped_path": ".agent/decisions/README.md",
+      "concern_id": "durable_decisions",
+      "role": "index",
+      "equivalence": "direct",
+      "materialize_phase": "phase_3",
+      "reason": "Index docs/decisions; do not copy decisions."
+    },
+    {
+      "blueprint_path": ".agent/events/README.md",
+      "mapped_path": ".agent/tasks/README.md",
+      "concern_id": "receipts",
+      "role": "index",
+      "equivalence": "functional",
+      "materialize_phase": "phase_3",
+      "reason": "Existing external events/receipts are the only coordination chronology; no .agent/events store."
+    },
+    {
+      "blueprint_path": ".agent/evidence/README.md",
+      "mapped_path": ".agent/evidence/README.md",
+      "concern_id": "qualification_evidence",
+      "role": "index",
+      "equivalence": "direct",
+      "materialize_phase": "phase_3",
+      "reason": "Index docs/qualification/evidence; do not copy evidence."
+    },
+    {
+      "blueprint_path": ".agent/extensions/README.md",
+      "mapped_path": ".agent/project.json",
+      "concern_id": "stable_project_hooks",
+      "role": "adapter",
+      "equivalence": "functional",
+      "materialize_phase": "phase_3",
+      "reason": "Register only texenda-coordination in the project hook; no second extension registry."
+    },
+    {
+      "blueprint_path": ".agent/extensions/registry.json",
+      "mapped_path": ".agent/project.json",
+      "concern_id": "stable_project_hooks",
+      "role": "adapter",
+      "equivalence": "functional",
+      "materialize_phase": "phase_3",
+      "reason": "Register only texenda-coordination in the project hook; no second extension registry."
+    },
+    {
+      "blueprint_path": ".agent/extensions/sample-restriction/README.md",
+      "mapped_path": null,
+      "concern_id": "stable_project_hooks",
+      "role": "not_applicable",
+      "equivalence": "not_applicable",
+      "materialize_phase": "never",
+      "reason": "The generic sample restriction is not Texenda authority; replace its example with the justified Texenda coordination extension."
+    },
+    {
+      "blueprint_path": ".agent/extensions/sample-restriction/config.json",
+      "mapped_path": null,
+      "concern_id": "stable_project_hooks",
+      "role": "not_applicable",
+      "equivalence": "not_applicable",
+      "materialize_phase": "never",
+      "reason": "The generic sample restriction is not Texenda authority; replace its example with the justified Texenda coordination extension."
+    },
+    {
+      "blueprint_path": ".agent/extensions/sample-restriction/validate.py",
+      "mapped_path": null,
+      "concern_id": "stable_project_hooks",
+      "role": "not_applicable",
+      "equivalence": "not_applicable",
+      "materialize_phase": "never",
+      "reason": "The generic sample restriction is not Texenda authority; replace its example with the justified Texenda coordination extension."
+    },
+    {
+      "blueprint_path": ".agent/generated/README.md",
+      "mapped_path": ".agent/generated/README.md",
+      "concern_id": "artifact_classification",
+      "role": "index",
+      "equivalence": "direct",
+      "materialize_phase": "phase_3",
+      "reason": "Derived output boundary and refresh-only ownership."
+    },
+    {
+      "blueprint_path": ".agent/generated/manifest.json",
+      "mapped_path": ".agent/generated/manifest.json",
+      "concern_id": "artifact_classification",
+      "role": "generated_view",
+      "equivalence": "direct",
+      "materialize_phase": "phase_3",
+      "reason": "Explicit source-scope fingerprint and declared exclusions."
+    },
+    {
+      "blueprint_path": ".agent/generated/validation-report.json",
+      "mapped_path": ".agent/generated/validation-report.json",
+      "concern_id": "build_observation",
+      "role": "generated_view",
+      "equivalence": "direct",
+      "materialize_phase": "phase_3",
+      "reason": "Point-in-time refresh evidence; check itself writes no report."
+    },
+    {
+      "blueprint_path": ".agent/lifecycle.json",
+      "mapped_path": ".agent/lifecycle.json",
+      "concern_id": "generic_lifecycle",
+      "role": "authoritative",
+      "equivalence": "direct",
+      "materialize_phase": "phase_3",
+      "reason": "Generic lifecycle contracts; no WP state transition implementation."
+    },
+    {
+      "blueprint_path": ".agent/policy.json",
+      "mapped_path": ".agent/policy.json",
+      "concern_id": "agent_permission_classes",
+      "role": "authoritative",
+      "equivalence": "direct",
+      "materialize_phase": "phase_3",
+      "reason": "Project-wide agent action classes and denials only after cutover."
+    },
+    {
+      "blueprint_path": ".agent/project.json",
+      "mapped_path": ".agent/project.json",
+      "concern_id": "stable_project_hooks",
+      "role": "authoritative",
+      "equivalence": "direct",
+      "materialize_phase": "phase_3",
+      "reason": "Stable hooks and restrictions-only coordination registration."
+    },
+    {
+      "blueprint_path": ".agent/reviews/README.md",
+      "mapped_path": ".agent/reviews/README.md",
+      "concern_id": "review_records",
+      "role": "index",
+      "equivalence": "direct",
+      "materialize_phase": "phase_3",
+      "reason": "Index existing independent review evidence; no parallel review store."
+    },
+    {
+      "blueprint_path": ".agent/schema.json",
+      "mapped_path": ".agent/schema.json",
+      "concern_id": "generic_record_vocabulary",
+      "role": "authoritative",
+      "equivalence": "direct",
+      "materialize_phase": "phase_3",
+      "reason": "Universal record metadata; preserve Texenda IDs and product schemas."
+    },
+    {
+      "blueprint_path": ".agent/schemas/artifact-catalog.schema.json",
+      "mapped_path": ".agent/schema.json",
+      "concern_id": "generic_record_vocabulary",
+      "role": "adapter",
+      "equivalence": "functional",
+      "materialize_phase": "phase_3",
+      "reason": "Embed or explicitly reference only needed local schema definitions in .agent/schema.json; do not copy unadapted blueprint facts."
+    },
+    {
+      "blueprint_path": ".agent/schemas/dossier-records.schema.json",
+      "mapped_path": ".agent/schema.json",
+      "concern_id": "generic_record_vocabulary",
+      "role": "adapter",
+      "equivalence": "functional",
+      "materialize_phase": "phase_3",
+      "reason": "Embed or explicitly reference only needed local schema definitions in .agent/schema.json; do not copy unadapted blueprint facts."
+    },
+    {
+      "blueprint_path": ".agent/schemas/harness-extension-registry.schema.json",
+      "mapped_path": ".agent/schema.json",
+      "concern_id": "generic_record_vocabulary",
+      "role": "adapter",
+      "equivalence": "functional",
+      "materialize_phase": "phase_3",
+      "reason": "Embed or explicitly reference only needed local schema definitions in .agent/schema.json; do not copy unadapted blueprint facts."
+    },
+    {
+      "blueprint_path": ".agent/schemas/harness-record.schema.json",
+      "mapped_path": ".agent/schema.json",
+      "concern_id": "generic_record_vocabulary",
+      "role": "adapter",
+      "equivalence": "functional",
+      "materialize_phase": "phase_3",
+      "reason": "Embed or explicitly reference only needed local schema definitions in .agent/schema.json; do not copy unadapted blueprint facts."
+    },
+    {
+      "blueprint_path": ".agent/schemas/project-blueprint-origin.schema.json",
+      "mapped_path": null,
+      "concern_id": "generic_record_vocabulary",
+      "role": "deferred",
+      "equivalence": "functional",
+      "materialize_phase": "phase_3",
+      "reason": "Installed origin.v1 is closed and cannot truthfully encode mapped-existing; a deliberate local schema successor must be reviewed first."
+    },
+    {
+      "blueprint_path": ".agent/scripts/refresh.py",
+      "mapped_path": ".agent/scripts/refresh.py",
+      "concern_id": "artifact_classification",
+      "role": "adapter",
+      "equivalence": "direct",
+      "materialize_phase": "phase_3",
+      "reason": "Only writer of derived integrity; interrupted refresh fails closed."
+    },
+    {
+      "blueprint_path": ".agent/scripts/validate.py",
+      "mapped_path": ".agent/scripts/validate.py",
+      "concern_id": "validation_commands",
+      "role": "adapter",
+      "equivalence": "direct",
+      "materialize_phase": "phase_3",
+      "reason": "Read-only aggregator with structured findings and existing validators."
+    },
+    {
+      "blueprint_path": ".agent/state/RESUME.md",
+      "mapped_path": ".agent/state/RESUME.md",
+      "concern_id": "active_tasks",
+      "role": "generated_view",
+      "equivalence": "direct",
+      "materialize_phase": "phase_3",
+      "reason": "Compact handoff with source hashes and freshness."
+    },
+    {
+      "blueprint_path": ".agent/state/current.json",
+      "mapped_path": ".agent/state/current.json",
+      "concern_id": "git_observation",
+      "role": "generated_view",
+      "equivalence": "direct",
+      "materialize_phase": "phase_3",
+      "reason": "Compact exact Git/source-scope plus external ledger hashes; never live authority.",
+      "additional_source_concerns": [
+        "active_tasks",
+        "receipts",
+        "live_qualification",
+        "build_observation"
+      ]
+    },
+    {
+      "blueprint_path": ".agent/tasks/README.md",
+      "mapped_path": ".agent/tasks/README.md",
+      "concern_id": "active_tasks",
+      "role": "index",
+      "equivalence": "direct",
+      "materialize_phase": "phase_3",
+      "reason": "Index external live ledger; no active task records in this directory."
+    },
+    {
+      "blueprint_path": ".agent/templates/artifact.json",
+      "mapped_path": "tooling/coordination/templates/",
+      "concern_id": "assignment_protocol",
+      "role": "index",
+      "equivalence": "functional",
+      "materialize_phase": "existing",
+      "reason": "Reuse existing closed evidence/assignment/review/resumption contracts; do not manufacture parallel record stores."
+    },
+    {
+      "blueprint_path": ".agent/templates/checkpoint.md",
+      "mapped_path": "tooling/coordination/templates/",
+      "concern_id": "assignment_protocol",
+      "role": "index",
+      "equivalence": "functional",
+      "materialize_phase": "existing",
+      "reason": "Reuse existing closed evidence/assignment/review/resumption contracts; do not manufacture parallel record stores."
+    },
+    {
+      "blueprint_path": ".agent/templates/decision.md",
+      "mapped_path": "tooling/coordination/templates/",
+      "concern_id": "assignment_protocol",
+      "role": "index",
+      "equivalence": "functional",
+      "materialize_phase": "existing",
+      "reason": "Reuse existing closed evidence/assignment/review/resumption contracts; do not manufacture parallel record stores."
+    },
+    {
+      "blueprint_path": ".agent/templates/event.json",
+      "mapped_path": "tooling/coordination/templates/",
+      "concern_id": "assignment_protocol",
+      "role": "index",
+      "equivalence": "functional",
+      "materialize_phase": "existing",
+      "reason": "Reuse existing closed evidence/assignment/review/resumption contracts; do not manufacture parallel record stores."
+    },
+    {
+      "blueprint_path": ".agent/templates/evidence.md",
+      "mapped_path": "tooling/coordination/templates/",
+      "concern_id": "assignment_protocol",
+      "role": "index",
+      "equivalence": "functional",
+      "materialize_phase": "existing",
+      "reason": "Reuse existing closed evidence/assignment/review/resumption contracts; do not manufacture parallel record stores."
+    },
+    {
+      "blueprint_path": ".agent/templates/review.md",
+      "mapped_path": "tooling/coordination/templates/",
+      "concern_id": "assignment_protocol",
+      "role": "index",
+      "equivalence": "functional",
+      "materialize_phase": "existing",
+      "reason": "Reuse existing closed evidence/assignment/review/resumption contracts; do not manufacture parallel record stores."
+    },
+    {
+      "blueprint_path": ".agent/templates/task.md",
+      "mapped_path": "tooling/coordination/templates/",
+      "concern_id": "assignment_protocol",
+      "role": "index",
+      "equivalence": "functional",
+      "materialize_phase": "existing",
+      "reason": "Reuse existing closed evidence/assignment/review/resumption contracts; do not manufacture parallel record stores."
+    },
+    {
+      "blueprint_path": ".agent/tests/fixtures/invalid/duplicate-key.json",
+      "mapped_path": ".agent/tests/",
+      "concern_id": "quality_rubric",
+      "role": "adapter",
+      "equivalence": "functional",
+      "materialize_phase": "phase_3",
+      "reason": "Use Texenda-specific synthetic mutation fixtures; preserve their structural purpose without generic scaffold contents."
+    },
+    {
+      "blueprint_path": ".agent/tests/fixtures/invalid/nested-agent-weakening.md",
+      "mapped_path": ".agent/tests/",
+      "concern_id": "quality_rubric",
+      "role": "adapter",
+      "equivalence": "functional",
+      "materialize_phase": "phase_3",
+      "reason": "Use Texenda-specific synthetic mutation fixtures; preserve their structural purpose without generic scaffold contents."
+    },
+    {
+      "blueprint_path": ".agent/tests/fixtures/valid/kernel.json",
+      "mapped_path": ".agent/tests/",
+      "concern_id": "quality_rubric",
+      "role": "adapter",
+      "equivalence": "functional",
+      "materialize_phase": "phase_3",
+      "reason": "Use Texenda-specific synthetic mutation fixtures; preserve their structural purpose without generic scaffold contents."
+    },
+    {
+      "blueprint_path": ".agent/tests/test_validate.py",
+      "mapped_path": ".agent/tests/test_validate.py",
+      "concern_id": "quality_rubric",
+      "role": "adapter",
+      "equivalence": "direct",
+      "materialize_phase": "phase_3",
+      "reason": "Scoped facade positive/negative/recovery tests; no product gate claim."
+    },
+    {
+      "blueprint_path": ".agent/tools.json",
+      "mapped_path": ".agent/tools.json",
+      "concern_id": "tool_contracts",
+      "role": "authoritative",
+      "equivalence": "direct",
+      "materialize_phase": "phase_3",
+      "reason": "Tool availability never grants permission or qualification."
+    },
+    {
+      "blueprint_path": ".agent/validators.json",
+      "mapped_path": ".agent/validators.json",
+      "concern_id": "validation_commands",
+      "role": "authoritative",
+      "equivalence": "direct",
+      "materialize_phase": "phase_3",
+      "reason": "Single named command registry delegates existing local/sealed validators."
+    },
+    {
+      "blueprint_path": ".agents/README.md",
+      "mapped_path": null,
+      "concern_id": "assignment_protocol",
+      "role": "deferred",
+      "equivalence": "functional",
+      "materialize_phase": "deferred",
+      "reason": "Existing scoped operating guide and local templates cover assignments/reviews; add project-local capability definitions only for a demonstrated recurring need, under Git and restrictions-only."
+    },
+    {
+      "blueprint_path": ".agents/agents/reviewer.json",
+      "mapped_path": null,
+      "concern_id": "assignment_protocol",
+      "role": "deferred",
+      "equivalence": "functional",
+      "materialize_phase": "deferred",
+      "reason": "Existing scoped operating guide and local templates cover assignments/reviews; add project-local capability definitions only for a demonstrated recurring need, under Git and restrictions-only."
+    },
+    {
+      "blueprint_path": ".agents/skills/change-review/SKILL.md",
+      "mapped_path": null,
+      "concern_id": "assignment_protocol",
+      "role": "deferred",
+      "equivalence": "functional",
+      "materialize_phase": "deferred",
+      "reason": "Existing scoped operating guide and local templates cover assignments/reviews; add project-local capability definitions only for a demonstrated recurring need, under Git and restrictions-only."
+    },
+    {
+      "blueprint_path": ".agents/skills/change-review/references/provenance.md",
+      "mapped_path": null,
+      "concern_id": "assignment_protocol",
+      "role": "deferred",
+      "equivalence": "functional",
+      "materialize_phase": "deferred",
+      "reason": "Existing scoped operating guide and local templates cover assignments/reviews; add project-local capability definitions only for a demonstrated recurring need, under Git and restrictions-only."
+    },
+    {
+      "blueprint_path": ".agents/workflows/safe-change.json",
+      "mapped_path": null,
+      "concern_id": "assignment_protocol",
+      "role": "deferred",
+      "equivalence": "functional",
+      "materialize_phase": "deferred",
+      "reason": "Existing scoped operating guide and local templates cover assignments/reviews; add project-local capability definitions only for a demonstrated recurring need, under Git and restrictions-only."
+    },
+    {
+      "blueprint_path": ".project-blueprint-origin.json",
+      "mapped_path": null,
+      "concern_id": "adoption_provenance",
+      "role": "deferred",
+      "equivalence": "functional",
+      "materialize_phase": "phase_3",
+      "reason": "Do not create with installed origin.v1. A reviewed schema must explicitly support mapped-existing, structural-reference-only qualification and a truthful selected source/version."
+    },
+    {
+      "blueprint_path": "AGENTS.md",
+      "mapped_path": "AGENTS.md",
+      "concern_id": "precedence_trust",
+      "role": "adapter",
+      "equivalence": "direct",
+      "materialize_phase": "phase_3",
+      "reason": "Concise router after simultaneous reviewed policy/context cutover."
+    },
+    {
+      "blueprint_path": "project-dossier/ARTIFACT_CATALOG.json",
+      "mapped_path": "project-dossier/ARTIFACT_CATALOG.json",
+      "concern_id": "artifact_classification",
+      "role": "authoritative",
+      "equivalence": "direct",
+      "materialize_phase": "phase_3",
+      "reason": "Per-file metadata; generated initial content is deliberately adopted through review."
+    },
+    {
+      "blueprint_path": "project-dossier/AUTHORITY.md",
+      "mapped_path": "project-dossier/AUTHORITY.md",
+      "concern_id": "dossier_interpretation",
+      "role": "authoritative",
+      "equivalence": "direct",
+      "materialize_phase": "phase_3",
+      "reason": "Dossier interpretation only; documentation is not permission."
+    },
+    {
+      "blueprint_path": "project-dossier/CANONICAL_SOURCE_MAP.md",
+      "mapped_path": "project-dossier/CANONICAL_SOURCE_MAP.md",
+      "concern_id": "adoption_transition",
+      "role": "generated_view",
+      "equivalence": "direct",
+      "materialize_phase": "phase_3",
+      "reason": "Readable source map derived from the accepted epoch crosswalk."
+    },
+    {
+      "blueprint_path": "project-dossier/CHECKSUMS.sha256",
+      "mapped_path": ".agent/generated/manifest.json",
+      "concern_id": "artifact_classification",
+      "role": "generated_view",
+      "equivalence": "functional",
+      "materialize_phase": "phase_3",
+      "reason": "Use the same source-scoped SHA-256 inventory; checksum-only view is optional derived output."
+    },
+    {
+      "blueprint_path": "project-dossier/MANIFEST.json",
+      "mapped_path": ".agent/generated/manifest.json",
+      "concern_id": "artifact_classification",
+      "role": "generated_view",
+      "equivalence": "functional",
+      "materialize_phase": "phase_3",
+      "reason": "One generated integrity set covers dossier; no duplicate checksum owner."
+    },
+    {
+      "blueprint_path": "project-dossier/README.md",
+      "mapped_path": "project-dossier/README.md",
+      "concern_id": "dossier_interpretation",
+      "role": "index",
+      "equivalence": "direct",
+      "materialize_phase": "phase_3",
+      "reason": "Compact navigation across information roles."
+    },
+    {
+      "blueprint_path": "project-dossier/SUPERSESSION.json",
+      "mapped_path": "project-dossier/SUPERSESSION.json",
+      "concern_id": "dossier_supersession",
+      "role": "authoritative",
+      "equivalence": "direct",
+      "materialize_phase": "phase_3",
+      "reason": "Retained successor metadata for dossier paths only."
+    },
+    {
+      "blueprint_path": "project-dossier/VERSION.md",
+      "mapped_path": "project-dossier/VERSION.md",
+      "concern_id": "dossier_version",
+      "role": "authoritative",
+      "equivalence": "direct",
+      "materialize_phase": "phase_3",
+      "reason": "Version of mapped dossier contracts."
+    },
+    {
+      "blueprint_path": "project-dossier/canonical/architecture-or-outcome-model.md",
+      "mapped_path": "specs/texenda-handoff/03-domain-and-architecture/",
+      "concern_id": "canonical_architecture",
+      "role": "index",
+      "equivalence": "functional",
+      "materialize_phase": "existing",
+      "reason": "Sealed domain/architecture owners remain in place."
+    },
+    {
+      "blueprint_path": "project-dossier/canonical/constraints-gates-and-readiness.md",
+      "mapped_path": "specs/texenda-handoff/01-foundation/external-validation-gates.json",
+      "concern_id": "external_gates",
+      "role": "index",
+      "equivalence": "functional",
+      "materialize_phase": "existing",
+      "reason": "Sealed external gates and current denials remain authoritative."
+    },
+    {
+      "blueprint_path": "project-dossier/canonical/executive-project-definition.md",
+      "mapped_path": "specs/texenda-handoff/01-foundation/product-and-brand.md",
+      "concern_id": "canonical_definition",
+      "role": "index",
+      "equivalence": "functional",
+      "materialize_phase": "existing",
+      "reason": "Existing sealed owner; do not create a new canonical file."
+    },
+    {
+      "blueprint_path": "project-dossier/canonical/requirements-and-constraints.md",
+      "mapped_path": "specs/texenda-handoff/",
+      "concern_id": "canonical_requirements",
+      "role": "index",
+      "equivalence": "functional",
+      "materialize_phase": "existing",
+      "reason": "Existing requirements, invariants and acceptance owners; no copied wording."
+    },
+    {
+      "blueprint_path": "project-dossier/conformance/README.md",
+      "mapped_path": "project-dossier/conformance/README.md",
+      "concern_id": "conformance_findings",
+      "role": "index",
+      "equivalence": "direct",
+      "materialize_phase": "phase_3",
+      "reason": "Routes to new conformance findings owner."
+    },
+    {
+      "blueprint_path": "project-dossier/current-state/README.md",
+      "mapped_path": "project-dossier/current-state/README.md",
+      "concern_id": "git_observation",
+      "role": "generated_view",
+      "equivalence": "direct",
+      "materialize_phase": "phase_3",
+      "reason": "Exact source observations; never infer implementation from target prose.",
+      "additional_source_concerns": [
+        "active_tasks",
+        "receipts",
+        "live_qualification",
+        "build_observation"
+      ]
+    },
+    {
+      "blueprint_path": "project-dossier/governance/README.md",
+      "mapped_path": "specs/texenda-handoff/04-security-governance-and-operations/",
+      "concern_id": "security_data",
+      "role": "index",
+      "equivalence": "functional",
+      "materialize_phase": "existing",
+      "reason": "Existing security/privacy/authority owners cover the trigger."
+    },
+    {
+      "blueprint_path": "project-dossier/handoff/ADOPTION_CHECKLIST.md",
+      "mapped_path": "project-dossier/transition/README.md",
+      "concern_id": "adoption_transition",
+      "role": "index",
+      "equivalence": "functional",
+      "materialize_phase": "phase_3",
+      "reason": "The reviewed transition procedure supplies acceptance; no duplicate checklist."
+    },
+    {
+      "blueprint_path": "project-dossier/handoff/START_HERE.md",
+      "mapped_path": "project-dossier/handoff/START_HERE.md",
+      "concern_id": "active_tasks",
+      "role": "generated_view",
+      "equivalence": "direct",
+      "materialize_phase": "phase_3",
+      "reason": "Compact derived resumption with exact source hashes and next safe step."
+    },
+    {
+      "blueprint_path": "project-dossier/history/README.md",
+      "mapped_path": "/Users/jamesryancooper/Projects/texenda/archive/",
+      "concern_id": "adoption_provenance",
+      "role": "historical_source",
+      "equivalence": "functional",
+      "materialize_phase": "existing",
+      "reason": "Local checkpoints/history outside Git; retained Git commits preserve tracked history."
+    },
+    {
+      "blueprint_path": "project-dossier/machine-readable/evidence-index.json",
+      "mapped_path": "project-dossier/machine-readable/evidence-index.json",
+      "concern_id": "qualification_evidence",
+      "role": "generated_view",
+      "equivalence": "direct",
+      "materialize_phase": "phase_3",
+      "reason": "Hash-bound index of existing immutable evidence; not another evidence store."
+    },
+    {
+      "blueprint_path": "project-dossier/machine-readable/findings.json",
+      "mapped_path": "project-dossier/machine-readable/findings.json",
+      "concern_id": "conformance_findings",
+      "role": "generated_view",
+      "equivalence": "direct",
+      "materialize_phase": "phase_3",
+      "reason": "Generated from project-dossier/conformance/findings.json; no duplicate mutable findings."
+    },
+    {
+      "blueprint_path": "project-dossier/machine-readable/path-authority.json",
+      "mapped_path": "project-dossier/machine-readable/path-authority.json",
+      "concern_id": "artifact_classification",
+      "role": "generated_view",
+      "equivalence": "direct",
+      "materialize_phase": "phase_3",
+      "reason": "Derived from artifact catalog; every dossier file is classified."
+    },
+    {
+      "blueprint_path": "project-dossier/machine-readable/plan.json",
+      "mapped_path": "project-dossier/machine-readable/plan.json",
+      "concern_id": "adoption_plan",
+      "role": "authoritative",
+      "equivalence": "direct",
+      "materialize_phase": "phase_3",
+      "reason": "New adoption dependency plan only; no active task/receipt state."
+    },
+    {
+      "blueprint_path": "project-dossier/machine-readable/raidq.json",
+      "mapped_path": "project-dossier/machine-readable/raidq.json",
+      "concern_id": "consolidated_raidq",
+      "role": "authoritative",
+      "equivalence": "direct",
+      "materialize_phase": "phase_3",
+      "reason": "New unresolved adoption RAIDQ owner."
+    },
+    {
+      "blueprint_path": "project-dossier/machine-readable/requirements.json",
+      "mapped_path": "specs/texenda-handoff/10-validation/requirement-traceability.json",
+      "concern_id": "canonical_requirements",
+      "role": "index",
+      "equivalence": "functional",
+      "materialize_phase": "existing",
+      "reason": "Existing sealed traceability is the functional equivalent; no new requirement ledger."
+    },
+    {
+      "blueprint_path": "project-dossier/machine-readable/sources.json",
+      "mapped_path": "project-dossier/provenance/sources.json",
+      "concern_id": "adoption_provenance",
+      "role": "index",
+      "equivalence": "functional",
+      "materialize_phase": "phase_3",
+      "reason": "One new adoption source registry under provenance; sealed register is unchanged."
+    },
+    {
+      "blueprint_path": "project-dossier/models/README.md",
+      "mapped_path": "specs/texenda-handoff/03-domain-and-architecture/",
+      "concern_id": "domain_models",
+      "role": "index",
+      "equivalence": "functional",
+      "materialize_phase": "existing",
+      "reason": "Existing domain models cover the trigger."
+    },
+    {
+      "blueprint_path": "project-dossier/operations/README.md",
+      "mapped_path": "specs/texenda-handoff/06-migration-and-production/",
+      "concern_id": "operations_recovery",
+      "role": "index",
+      "equivalence": "functional",
+      "materialize_phase": "existing",
+      "reason": "Existing product operations owner; local move recovery stays in transition."
+    },
+    {
+      "blueprint_path": "project-dossier/plans/README.md",
+      "mapped_path": "project-dossier/plans/README.md",
+      "concern_id": "adoption_plan",
+      "role": "index",
+      "equivalence": "direct",
+      "materialize_phase": "phase_3",
+      "reason": "Future plan navigation; does not activate tasks."
+    },
+    {
+      "blueprint_path": "project-dossier/provenance/README.md",
+      "mapped_path": "project-dossier/provenance/README.md",
+      "concern_id": "adoption_provenance",
+      "role": "index",
+      "equivalence": "direct",
+      "materialize_phase": "phase_3",
+      "reason": "Source-variant and blueprint limitations with hash links."
+    },
+    {
+      "blueprint_path": "project-dossier/registers/README.md",
+      "mapped_path": "project-dossier/registers/README.md",
+      "concern_id": "consolidated_raidq",
+      "role": "index",
+      "equivalence": "direct",
+      "materialize_phase": "phase_3",
+      "reason": "Compact register navigation."
+    },
+    {
+      "blueprint_path": "project-dossier/research/README.md",
+      "mapped_path": "specs/texenda-handoff/09-reference/source-register.json",
+      "concern_id": "external_research",
+      "role": "index",
+      "equivalence": "functional",
+      "materialize_phase": "existing",
+      "reason": "Existing provenance source register; no imported research facts."
+    },
+    {
+      "blueprint_path": "project-dossier/transition/README.md",
+      "mapped_path": "project-dossier/transition/README.md",
+      "concern_id": "adoption_transition",
+      "role": "index",
+      "equivalence": "direct",
+      "materialize_phase": "phase_3",
+      "reason": "Operator procedure indexes the reviewed manifest and frozen contracts."
+    },
+    {
+      "blueprint_path": "project-dossier/validation/QUALITY_GATES.json",
+      "mapped_path": "specs/texenda-handoff/10-validation/",
+      "concern_id": "quality_rubric",
+      "role": "index",
+      "equivalence": "functional",
+      "materialize_phase": "existing",
+      "reason": "No copied product gate catalog; new structural tests stay scoped."
+    },
+    {
+      "blueprint_path": "project-dossier/validation/README.md",
+      "mapped_path": "project-dossier/validation/README.md",
+      "concern_id": "validation_commands",
+      "role": "index",
+      "equivalence": "direct",
+      "materialize_phase": "phase_3",
+      "reason": "Commands link to .agent/validators.json and immutable evidence."
+    }
+  ],
+  "supplemental_mappings": [
+    {
+      "mapped_path": ".agent/extensions/texenda-coordination/",
+      "concern_id": "stable_project_hooks",
+      "role": "adapter",
+      "equivalence": "new",
+      "materialize_phase": "phase_3",
+      "reason": "Path/hash references to tooling/coordination and the current routing policy; restrictions-only."
+    },
+    {
+      "mapped_path": "project-dossier/transition/blueprint-adoption-crosswalk.json",
+      "concern_id": "adoption_transition",
+      "role": "authoritative",
+      "equivalence": "new",
+      "materialize_phase": "phase_2",
+      "reason": "Single transition owner for this mapped contract and its ownership epochs."
+    },
+    {
+      "mapped_path": "project-dossier/conformance/findings.json",
+      "concern_id": "conformance_findings",
+      "role": "authoritative",
+      "equivalence": "new",
+      "materialize_phase": "phase_3",
+      "reason": "Canonical new conformance finding records; machine-readable/findings is derived."
+    },
+    {
+      "mapped_path": "project-dossier/provenance/sources.json",
+      "concern_id": "adoption_provenance",
+      "role": "authoritative",
+      "equivalence": "new",
+      "materialize_phase": "phase_3",
+      "reason": "Adoption and source-variant provenance only."
+    },
+    {
+      "mapped_path": "project-dossier/current-state/current.json",
+      "concern_id": "git_observation",
+      "role": "generated_view",
+      "equivalence": "new",
+      "materialize_phase": "phase_3",
+      "reason": "Compact direct observation projection with exact source hashes and freshness."
+    }
+  ],
+  "supplemental_high_assurance_types": [
+    {
+      "id": "SEC-0001",
+      "concern_id": "security_data",
+      "role": "index",
+      "mapped_path": "specs/texenda-handoff/04-security-governance-and-operations/",
+      "reason": "Sensitive-input and external-effect triggers already have canonical owners; no security conclusion imported."
+    },
+    {
+      "id": "DAT-0001",
+      "concern_id": "security_data",
+      "role": "index",
+      "mapped_path": "specs/texenda-handoff/04-security-governance-and-operations/security-and-privacy.md",
+      "reason": "Product classification/retention stays sealed; new local placement and metadata-only private handling are transition contracts."
+    },
+    {
+      "id": "SUP-0001",
+      "concern_id": "supply_chain",
+      "role": "index",
+      "mapped_path": "specs/texenda-handoff/05-implementation/compatibility-manifest.template.json",
+      "reason": "Exact stack/license qualification remains deferred to its existing WP and external gate; template is not PASS evidence."
+    },
+    {
+      "id": "EVA-0001",
+      "concern_id": "quality_rubric",
+      "role": "adapter",
+      "mapped_path": ".agent/tests/",
+      "reason": "Repeated governed work needs facade mutation/recovery tests, supplementing unchanged local/sealed suites."
+    },
+    {
+      "id": "CTX-0001",
+      "concern_id": "context_routing",
+      "role": "adapter",
+      "mapped_path": "tooling/coordination/harness.py",
+      "reason": "Use the existing context command and scoped templates; no duplicate context authority."
+    }
+  ],
+  "projection_contract": {
+    "authority": "generated_non_authoritative",
+    "required_fields": [
+      "schema_version",
+      "generated_at",
+      "source_git_revision",
+      "source_git_tree",
+      "source_scope_sha256",
+      "source_scope_exclusions",
+      "ledger_sha256",
+      "receipt_count",
+      "receipt_tip",
+      "roster_evidence_sha256",
+      "freshness_rule"
+    ],
+    "source_revision_rule": "Record the exact observed source commit/tree and a deterministic source-scope fingerprint. A tracked projection cannot name its containing commit without a hash cycle. check recomputes current HEAD/tree and source scope, verifies the recorded revision exists and has the same declared source scope, and reports exact current HEAD separately.",
+    "permitted_exclusions": [
+      "declared generated projection/integrity outputs",
+      "immutable validation/review evidence added after source validation"
+    ],
+    "exclusion_limit": "Every exclusion is explicit and reasoned; governance, implementation, tests, schemas and authoritative dossier inputs may never be excluded. Evidence hashes are independently validated; a new evidence-only commit is not a semantic source change.",
+    "ledger_binding": "Read-only direct live ledger verification at the explicit configured root; no copied tasks/roster/events; differing or missing hashes make projection stale.",
+    "check_writes": false,
+    "refresh_only_writer": true
+  },
+  "facade_acceptance": {
+    "single_active_task_store": "existing harness ledger only",
+    "single_decision_store": "docs/decisions/",
+    "single_evidence_store": "docs/qualification/evidence/",
+    "single_routing_store": "tooling/coordination/routing-policy.json",
+    "single_receipt_chain": "existing external ledger events",
+    "new_product_canonical_files": false,
+    "registered_extension_authority": "restrictions_only",
+    "origin_schema_successor_required": true,
+    "real_mapped_task_lifecycle_required": true,
+    "independent_review_profile": "gpt-6-astra-max",
+    "reviewer_distinct_from_author_and_integrator": true,
+    "final_read_only_review_after_evidence_added": true
+  },
+  "path_classification_contract": {
+    "source": "project-dossier/ARTIFACT_CATALOG.json",
+    "generated_mirror": "project-dossier/machine-readable/path-authority.json",
+    "all_dossier_files_required": true,
+    "classes": [
+      "authoritative",
+      "navigation",
+      "generated_view",
+      "evidence",
+      "plan",
+      "history"
+    ],
+    "navigation_cannot_grant_permission": true,
+    "mutable_concern_owner_count": 1
+  },
+  "deferred_semantic_work": [
+    {
+      "id": "DEFER-WSM-0001",
+      "title": "Assess separate project-local amendment for package editor wording divergence",
+      "owner_path": "docs/decisions/",
+      "trigger": "Explicit later reconciliation task with relevant sealed topic owner and VAL-03 review",
+      "status": "deferred",
+      "does_not_modify_packages": true
+    },
+    {
+      "id": "DEFER-WSM-0002",
+      "title": "Qualify a newer canonical reusable blueprint source before any version adoption claim",
+      "owner_path": "project-dossier/provenance/sources.json",
+      "trigger": "A complete intended-layout source validation with a clean identifiable source",
+      "status": "deferred",
+      "does_not_import_project_facts": true
+    }
+  ]
+}

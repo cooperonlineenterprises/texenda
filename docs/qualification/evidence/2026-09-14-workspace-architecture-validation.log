@@ -1,0 +1,386 @@
+Texenda mapped workspace architecture author validation
+Working directory: /private/tmp/texenda-workspace-architecture-20260914
+Runtime: Python 3.13.9; no private input content operations.
+
+CHECK 1
+COMMAND: python3 -B tooling/workspace/validate_contract.py --check --audit && python3 -B -m unittest discover -s tooling/workspace/tests -v && git diff --check && git diff --exit-code 36b74e9e1ca6353b3d642136fa70b7d2ac950e08 -- specs/texenda-handoff
+EXIT: 0
+{"status": "PASS", "concerns": 42, "blueprint_paths": 85, "artifact_types": 35, "source_moves": 16, "audit": {"JSON": 81, "TOML": 1, "Python": 10, "new_markdown_links": 7, "sealed_files": 86, "source_files": 88}, "scope": "static transition contracts and original Git-bound inputs only", "live_state_checked": false, "moves_executed": false, "private_input_accessed": false, "approval": false}
+test_active_state_move_cannot_take_whole_legacy_directory (test_contract.WorkspaceContractTests.test_active_state_move_cannot_take_whole_legacy_directory) ... ok
+test_author_cannot_be_own_required_reviewer (test_contract.WorkspaceContractTests.test_author_cannot_be_own_required_reviewer) ... ok
+test_check_cannot_refresh (test_contract.WorkspaceContractTests.test_check_cannot_refresh) ... ok
+test_checkpoint_move_cannot_escape_scope (test_contract.WorkspaceContractTests.test_checkpoint_move_cannot_escape_scope) ... ok
+test_complete_mapped_contract (test_contract.WorkspaceContractTests.test_complete_mapped_contract) ... ok
+test_duplicate_concern_owner (test_contract.WorkspaceContractTests.test_duplicate_concern_owner) ... ok
+test_duplicate_json_keys (test_contract.WorkspaceContractTests.test_duplicate_json_keys) ... ok
+test_every_source_top_level_entry_preserved (test_contract.WorkspaceContractTests.test_every_source_top_level_entry_preserved) ... ok
+test_false_generated_adoption (test_contract.WorkspaceContractTests.test_false_generated_adoption) ... ok
+test_false_source_qualification (test_contract.WorkspaceContractTests.test_false_source_qualification) ... ok
+test_legacy_receipt_inputs_retained (test_contract.WorkspaceContractTests.test_legacy_receipt_inputs_retained) ... ok
+test_missing_artifact_mapping (test_contract.WorkspaceContractTests.test_missing_artifact_mapping) ... ok
+test_missing_source_not_treated_as_completed_move (test_contract.WorkspaceContractTests.test_missing_source_not_treated_as_completed_move) ... ok
+test_move_target_traversal_or_other_project_denied (test_contract.WorkspaceContractTests.test_move_target_traversal_or_other_project_denied) ... ok
+test_no_delete_overwrite_symlink_or_external_effect (test_contract.WorkspaceContractTests.test_no_delete_overwrite_symlink_or_external_effect) ... ok
+test_nonfinite_json (test_contract.WorkspaceContractTests.test_nonfinite_json) ... ok
+test_premature_root_cutover (test_contract.WorkspaceContractTests.test_premature_root_cutover) ... ok
+test_private_content_access_hash_parse_copy_denied (test_contract.WorkspaceContractTests.test_private_content_access_hash_parse_copy_denied) ... ok
+test_private_file_cannot_enter_hash_scope (test_contract.WorkspaceContractTests.test_private_file_cannot_enter_hash_scope) ... ok
+test_repo_destination_not_created_first (test_contract.WorkspaceContractTests.test_repo_destination_not_created_first) ... ok
+test_second_authoritative_path (test_contract.WorkspaceContractTests.test_second_authoritative_path) ... ok
+test_second_live_task_roster_receipt_decision_evidence_owner (test_contract.WorkspaceContractTests.test_second_live_task_roster_receipt_decision_evidence_owner) ... ok
+test_source_difference_cannot_be_erased (test_contract.WorkspaceContractTests.test_source_difference_cannot_be_erased) ... ok
+test_source_variant_cannot_replace_sealed_authority (test_contract.WorkspaceContractTests.test_source_variant_cannot_replace_sealed_authority) ... ok
+test_state_binding_cannot_select_another_root (test_contract.WorkspaceContractTests.test_state_binding_cannot_select_another_root) ... ok
+test_two_owner_paths_in_one_epoch (test_contract.WorkspaceContractTests.test_two_owner_paths_in_one_epoch) ... ok
+test_unbound_projection (test_contract.WorkspaceContractTests.test_unbound_projection) ... ok
+
+----------------------------------------------------------------------
+Ran 27 tests in 0.017s
+
+OK
+
+CHECK 2
+COMMAND: python3 -B -m unittest discover -s tooling/coordination/tests -v
+EXIT: 0
+test_active_local_links_resolve_inside_repository (test_instruction_contracts.InstructionContracts.test_active_local_links_resolve_inside_repository) ... ok
+test_assignment_preserves_required_handoff_obligations (test_instruction_contracts.InstructionContracts.test_assignment_preserves_required_handoff_obligations) ... ok
+test_context_overflow_retains_mandatory_sources_and_route_slice (test_instruction_contracts.InstructionContracts.test_context_overflow_retains_mandatory_sources_and_route_slice) ... ok
+test_current_roster_binds_exact_profiles_to_observed_desktop_not_cli (test_instruction_contracts.InstructionContracts.test_current_roster_binds_exact_profiles_to_observed_desktop_not_cli) ... ok
+test_entrypoints_route_to_local_prompts_and_governing_decision (test_instruction_contracts.InstructionContracts.test_entrypoints_route_to_local_prompts_and_governing_decision) ... ok
+test_existing_qualification_envelope_hashes_and_profile_schema (test_instruction_contracts.InstructionContracts.test_existing_qualification_envelope_hashes_and_profile_schema) ... ok
+test_historical_roster_remains_unchanged_while_correction_is_new (test_instruction_contracts.InstructionContracts.test_historical_roster_remains_unchanged_while_correction_is_new) ... ok
+test_private_repository_and_bounded_ci_contract (test_instruction_contracts.InstructionContracts.test_private_repository_and_bounded_ci_contract) ... ok
+test_project_config_and_example_keep_safe_model_free_defaults (test_instruction_contracts.InstructionContracts.test_project_config_and_example_keep_safe_model_free_defaults) ... ok
+test_review_and_resume_require_evidence_identity_and_intervention (test_instruction_contracts.InstructionContracts.test_review_and_resume_require_evidence_identity_and_intervention) ... ok
+test_usage_and_untrusted_content_limits_remain_explicit (test_instruction_contracts.InstructionContracts.test_usage_and_untrusted_content_limits_remain_explicit) ... ok
+test_visualization_is_conditional_and_revision_bound (test_instruction_contracts.InstructionContracts.test_visualization_is_conditional_and_revision_bound) ... ok
+test_activation_gate_matching_scope_completes (test_routing_v2.LegacyLifecycleTests.test_activation_gate_matching_scope_completes) ... ok
+test_activation_gate_not_assumed (test_routing_v2.LegacyLifecycleTests.test_activation_gate_not_assumed) ... ok
+test_activation_gate_scope_checked (test_routing_v2.LegacyLifecycleTests.test_activation_gate_scope_checked) ... ok
+test_api_model_requires_budget (test_routing_v2.LegacyLifecycleTests.test_api_model_requires_budget) ... ok
+test_author_cannot_review (test_routing_v2.LegacyLifecycleTests.test_author_cannot_review) ... ok
+test_baseline_change_requires_explicit_migration (test_routing_v2.LegacyLifecycleTests.test_baseline_change_requires_explicit_migration) ... ok
+test_changed_evidence_detected (test_routing_v2.LegacyLifecycleTests.test_changed_evidence_detected) ... ok
+test_checkpoint_does_not_extend_without_request (test_routing_v2.LegacyLifecycleTests.test_checkpoint_does_not_extend_without_request) ... ok
+test_complete_requires_integration (test_routing_v2.LegacyLifecycleTests.test_complete_requires_integration) ... ok
+test_context_overflow_does_not_truncate (test_routing_v2.LegacyLifecycleTests.test_context_overflow_does_not_truncate) ... ok
+test_default_writer_limit_is_enforced (test_routing_v2.LegacyLifecycleTests.test_default_writer_limit_is_enforced) ... ok
+test_deferred_requires_observed_trigger (test_routing_v2.LegacyLifecycleTests.test_deferred_requires_observed_trigger) ... ok
+test_disjoint_parallel_assignments_allowed (test_routing_v2.LegacyLifecycleTests.test_disjoint_parallel_assignments_allowed) ... ok
+test_evidence_symlink_denied (test_routing_v2.LegacyLifecycleTests.test_evidence_symlink_denied) ... ok
+test_expired_lease_cannot_submit (test_routing_v2.LegacyLifecycleTests.test_expired_lease_cannot_submit) ... ok
+test_fake_human_label_rejected (test_routing_v2.LegacyLifecycleTests.test_fake_human_label_rejected) ... ok
+test_incomplete_dependency_denied (test_routing_v2.LegacyLifecycleTests.test_incomplete_dependency_denied) ... ok
+test_init_is_non_overwriting (test_routing_v2.LegacyLifecycleTests.test_init_is_non_overwriting) ... ok
+test_initial_ready_respects_dependencies_and_deferral (test_routing_v2.LegacyLifecycleTests.test_initial_ready_respects_dependencies_and_deferral) ... ok
+test_insufficient_review_tier_denied (test_routing_v2.LegacyLifecycleTests.test_insufficient_review_tier_denied) ... ok
+test_integration_without_stop_proof_denied (test_routing_v2.LegacyLifecycleTests.test_integration_without_stop_proof_denied) ... ok
+test_lifecycle_and_dependency_release (test_routing_v2.LegacyLifecycleTests.test_lifecycle_and_dependency_release) ... ok
+test_merge_semantic_change_requires_review (test_routing_v2.LegacyLifecycleTests.test_merge_semantic_change_requires_review) ... ok
+test_missing_test_log_denied (test_routing_v2.LegacyLifecycleTests.test_missing_test_log_denied) ... ok
+test_no_path_traversal (test_routing_v2.LegacyLifecycleTests.test_no_path_traversal) ... ok
+test_not_run_cannot_pass_review (test_routing_v2.LegacyLifecycleTests.test_not_run_cannot_pass_review) ... ok
+test_out_of_scope_changed_path_denied (test_routing_v2.LegacyLifecycleTests.test_out_of_scope_changed_path_denied) ... ok
+test_overlapping_leases_block_even_expired (test_routing_v2.LegacyLifecycleTests.test_overlapping_leases_block_even_expired) ... ok
+test_qualification_expiry_denies_assignment (test_routing_v2.LegacyLifecycleTests.test_qualification_expiry_denies_assignment) ... ok
+test_qualified_model_and_budget_allow_assignment (test_routing_v2.LegacyLifecycleTests.test_qualified_model_and_budget_allow_assignment) ... ok
+test_receipt_chain_corruption_detected (test_routing_v2.LegacyLifecycleTests.test_receipt_chain_corruption_detected) ... ok
+test_recovery_increments_fence (test_routing_v2.LegacyLifecycleTests.test_recovery_increments_fence) ... ok
+test_recovery_requires_stop_and_fence (test_routing_v2.LegacyLifecycleTests.test_recovery_requires_stop_and_fence) ... ok
+test_stale_candidate_denied (test_routing_v2.LegacyLifecycleTests.test_stale_candidate_denied) ... ok
+test_state_corruption_detected (test_routing_v2.LegacyLifecycleTests.test_state_corruption_detected) ... ok
+test_unknown_package_denied (test_routing_v2.LegacyLifecycleTests.test_unknown_package_denied) ... ok
+test_unverified_model_fails_closed (test_routing_v2.LegacyLifecycleTests.test_unverified_model_fails_closed) ... ok
+test_weaker_tier_rejected (test_routing_v2.LegacyLifecycleTests.test_weaker_tier_rejected) ... ok
+test_wrong_fence_cannot_start (test_routing_v2.LegacyLifecycleTests.test_wrong_fence_cannot_start) ... ok
+test_cli_init_context_check_and_dry_run_migration (test_routing_v2.MigrationTests.test_cli_init_context_check_and_dry_run_migration) ... ok
+test_exact_legacy_api_integrated_case_can_complete_after_migration (test_routing_v2.MigrationTests.test_exact_legacy_api_integrated_case_can_complete_after_migration) ... ok
+test_failed_migration_retains_exact_v1_and_checkpoint (test_routing_v2.MigrationTests.test_failed_migration_retains_exact_v1_and_checkpoint) ... ok
+test_immediate_rollback_keeps_both_checkpoints_and_restores_exact_bytes (test_routing_v2.MigrationTests.test_immediate_rollback_keeps_both_checkpoints_and_restores_exact_bytes) ... ok
+test_legacy_budget_cannot_fund_new_v2_author_or_reviewer (test_routing_v2.MigrationTests.test_legacy_budget_cannot_fund_new_v2_author_or_reviewer) ... ok
+test_legacy_cancelled_api_history_and_allocations_are_preserved (test_routing_v2.MigrationTests.test_legacy_cancelled_api_history_and_allocations_are_preserved) ... ok
+test_legacy_compatibility_cannot_expand_an_allocation (test_routing_v2.MigrationTests.test_legacy_compatibility_cannot_expand_an_allocation) ... ok
+test_legacy_completed_api_history_and_allocations_are_preserved (test_routing_v2.MigrationTests.test_legacy_completed_api_history_and_allocations_are_preserved) ... ok
+test_legacy_proof_survives_new_budget_replacement_and_expiry_only_for_old_work (test_routing_v2.MigrationTests.test_legacy_proof_survives_new_budget_replacement_and_expiry_only_for_old_work) ... ok
+test_legacy_recovered_api_history_and_allocations_are_preserved (test_routing_v2.MigrationTests.test_legacy_recovered_api_history_and_allocations_are_preserved) ... ok
+test_legacy_recovery_preserves_old_allocation_but_new_fence_requires_v2_proof (test_routing_v2.MigrationTests.test_legacy_recovery_preserves_old_allocation_but_new_fence_requires_v2_proof) ... ok
+test_migration_boundary_proof_must_remain_present (test_routing_v2.MigrationTests.test_migration_boundary_proof_must_remain_present) ... ok
+test_migration_dry_run_then_preserves_history_and_receipt_prefix (test_routing_v2.MigrationTests.test_migration_dry_run_then_preserves_history_and_receipt_prefix) ... ok
+test_migration_idempotency_preserves_fresh_v2_roster (test_routing_v2.MigrationTests.test_migration_idempotency_preserves_fresh_v2_roster) ... ok
+test_migration_rechecks_missing_and_tampered_historical_integration_chain (test_routing_v2.MigrationTests.test_migration_rechecks_missing_and_tampered_historical_integration_chain) ... ok
+test_migration_rechecks_missing_and_tampered_historical_recovery (test_routing_v2.MigrationTests.test_migration_rechecks_missing_and_tampered_historical_recovery) ... ok
+test_migration_rechecks_retained_checkpoint_and_its_log_after_recovery (test_routing_v2.MigrationTests.test_migration_rechecks_retained_checkpoint_and_its_log_after_recovery) ... ok
+test_migration_refuses_changed_work_package_baseline (test_routing_v2.MigrationTests.test_migration_refuses_changed_work_package_baseline) ... ok
+test_migration_refuses_corrupt_receipts_and_missing_chain (test_routing_v2.MigrationTests.test_migration_refuses_corrupt_receipts_and_missing_chain) ... ok
+test_migration_refuses_live_and_expired_leases (test_routing_v2.MigrationTests.test_migration_refuses_live_and_expired_leases) ... ok
+test_migration_refuses_non_owner_and_changed_terminal_evidence (test_routing_v2.MigrationTests.test_migration_refuses_non_owner_and_changed_terminal_evidence) ... ok
+test_migration_refuses_uncertain_states_even_without_lease (test_routing_v2.MigrationTests.test_migration_refuses_uncertain_states_even_without_lease) ... ok
+test_migration_refuses_unrecovered_blocked_assignment (test_routing_v2.MigrationTests.test_migration_refuses_unrecovered_blocked_assignment) ... ok
+test_migration_requires_true_historical_integration_stop_proof (test_routing_v2.MigrationTests.test_migration_requires_true_historical_integration_stop_proof) ... ok
+test_migration_validates_derived_recovery_fence_and_boolean_alias (test_routing_v2.MigrationTests.test_migration_validates_derived_recovery_fence_and_boolean_alias) ... ok
+test_missing_or_tampered_legacy_budget_blocks_migration (test_routing_v2.MigrationTests.test_missing_or_tampered_legacy_budget_blocks_migration) ... ok
+test_old_roster_is_invalidated_not_promoted (test_routing_v2.MigrationTests.test_old_roster_is_invalidated_not_promoted) ... ok
+test_replaced_budget_cannot_hide_missing_or_tampered_legacy_proof (test_routing_v2.MigrationTests.test_replaced_budget_cannot_hide_missing_or_tampered_legacy_proof) ... ok
+test_rollback_rechecks_retained_source_recovery_evidence (test_routing_v2.MigrationTests.test_rollback_rechecks_retained_source_recovery_evidence) ... ok
+test_rollback_refuses_after_any_later_v2_receipt (test_routing_v2.MigrationTests.test_rollback_refuses_after_any_later_v2_receipt) ... ok
+test_actual_policy_covers_44_routes_and_limits_parent_downshifts (test_routing_v2.RoutingTests.test_actual_policy_covers_44_routes_and_limits_parent_downshifts) ... ok
+test_all_four_max_defaults_and_exact_binding (test_routing_v2.RoutingTests.test_all_four_max_defaults_and_exact_binding) ... ok
+test_api_budget_is_retained_through_recovery (test_routing_v2.RoutingTests.test_api_budget_is_retained_through_recovery) ... ok
+test_api_review_budget_is_wired_through_cli (test_routing_v2.RoutingTests.test_api_review_budget_is_wired_through_cli) ... ok
+test_api_review_requires_positive_owner_allocation_and_records_bounds (test_routing_v2.RoutingTests.test_api_review_requires_positive_owner_allocation_and_records_bounds) ... ok
+test_attestation_expiry_boundary_and_new_fence (test_routing_v2.RoutingTests.test_attestation_expiry_boundary_and_new_fence) ... ok
+test_attestation_fields_and_checks_are_exact (test_routing_v2.RoutingTests.test_attestation_fields_and_checks_are_exact) ... ok
+test_attestation_log_and_record_tamper_deny_at_start (test_routing_v2.RoutingTests.test_attestation_log_and_record_tamper_deny_at_start) ... ok
+test_boolean_routing_tier_and_fence_are_not_integer_one (test_routing_v2.RoutingTests.test_boolean_routing_tier_and_fence_are_not_integer_one) ... ok
+test_budget_amount_scope_and_hash_tampering_cannot_authorize_new_work (test_routing_v2.RoutingTests.test_budget_amount_scope_and_hash_tampering_cannot_authorize_new_work) ... ok
+test_budget_evidence_is_rechecked_before_paid_work_and_approval (test_routing_v2.RoutingTests.test_budget_evidence_is_rechecked_before_paid_work_and_approval) ... ok
+test_budget_expiry_blocks_completion_of_v2_paid_work (test_routing_v2.RoutingTests.test_budget_expiry_blocks_completion_of_v2_paid_work) ... ok
+test_budget_expiry_blocks_integration_of_paid_review (test_routing_v2.RoutingTests.test_budget_expiry_blocks_integration_of_paid_review) ... ok
+test_budget_expiry_blocks_new_author_allocation_at_and_after_deadline (test_routing_v2.RoutingTests.test_budget_expiry_blocks_new_author_allocation_at_and_after_deadline) ... ok
+test_budget_expiry_blocks_new_reviewer_allocation (test_routing_v2.RoutingTests.test_budget_expiry_blocks_new_reviewer_allocation) ... ok
+test_budget_expiry_blocks_review_of_paid_author_even_after_new_global_budget (test_routing_v2.RoutingTests.test_budget_expiry_blocks_review_of_paid_author_even_after_new_global_budget) ... ok
+test_budget_expiry_blocks_start_of_paid_author (test_routing_v2.RoutingTests.test_budget_expiry_blocks_start_of_paid_author) ... ok
+test_budget_record_is_closed_amount_owner_scope_and_time_bound (test_routing_v2.RoutingTests.test_budget_record_is_closed_amount_owner_scope_and_time_bound) ... ok
+test_budget_scope_limits_each_paid_role_and_work_package (test_routing_v2.RoutingTests.test_budget_scope_limits_each_paid_role_and_work_package) ... ok
+test_canonical_policy_digest_ignores_formatting_but_denies_semantic_change (test_routing_v2.RoutingTests.test_canonical_policy_digest_ignores_formatting_but_denies_semantic_change) ... ok
+test_duplicate_json_policy_keys_are_denied (test_routing_v2.RoutingTests.test_duplicate_json_policy_keys_are_denied) ... ok
+test_each_allowed_lower_effort_requires_and_accepts_exact_attestation (test_routing_v2.RoutingTests.test_each_allowed_lower_effort_requires_and_accepts_exact_attestation) ... ok
+test_exact_profile_removal_or_same_tier_replacement_denies_start (test_routing_v2.RoutingTests.test_exact_profile_removal_or_same_tier_replacement_denies_start) ... ok
+test_explicit_fallback_only_sol_max_with_flag_and_reason (test_routing_v2.RoutingTests.test_explicit_fallback_only_sol_max_with_flag_and_reason) ... ok
+test_explicit_reviewer_fallback_is_recorded (test_routing_v2.RoutingTests.test_explicit_reviewer_fallback_is_recorded) ... ok
+test_explicit_stronger_substitution_preserves_floor (test_routing_v2.RoutingTests.test_explicit_stronger_substitution_preserves_floor) ... ok
+test_full_model_lifecycle_and_dependency_release (test_routing_v2.RoutingTests.test_full_model_lifecycle_and_dependency_release) ... ok
+test_insufficient_capability_or_unknown_profile_deny (test_routing_v2.RoutingTests.test_insufficient_capability_or_unknown_profile_deny) ... ok
+test_missing_default_never_selects_available_downshift (test_routing_v2.RoutingTests.test_missing_default_never_selects_available_downshift) ... ok
+test_named_profile_check_must_pass (test_routing_v2.RoutingTests.test_named_profile_check_must_pass) ... ok
+test_profile_catalog_mutations_and_duplicate_default_deny (test_routing_v2.RoutingTests.test_profile_catalog_mutations_and_duplicate_default_deny) ... ok
+test_profile_expiry_boundaries_and_over_age (test_routing_v2.RoutingTests.test_profile_expiry_boundaries_and_over_age) ... ok
+test_renewed_same_profile_requires_new_assignment_fence (test_routing_v2.RoutingTests.test_renewed_same_profile_requires_new_assignment_fence) ... ok
+test_repeated_lease_extensions_do_not_change_declared_runtime_bounds (test_routing_v2.RoutingTests.test_repeated_lease_extensions_do_not_change_declared_runtime_bounds)
+Characterize the existing meter limit; this is not extension authority. ... ok
+test_review_checks_exact_author_qualification_and_independence (test_routing_v2.RoutingTests.test_review_checks_exact_author_qualification_and_independence) ... ok
+test_review_downshift_requires_candidate_bound_attestation (test_routing_v2.RoutingTests.test_review_downshift_requires_candidate_bound_attestation) ... ok
+test_review_rejection_and_recovery_preserve_shared_allowance_once (test_routing_v2.RoutingTests.test_review_rejection_and_recovery_preserve_shared_allowance_once) ... ok
+test_review_rejects_wrong_reviewer_profile_or_expired_qualification (test_routing_v2.RoutingTests.test_review_rejects_wrong_reviewer_profile_or_expired_qualification) ... ok
+test_roster_bytes_and_logs_rechecked (test_routing_v2.RoutingTests.test_roster_bytes_and_logs_rechecked) ... ok
+test_roster_rejects_duplicate_and_mismatched_exact_profiles (test_routing_v2.RoutingTests.test_roster_rejects_duplicate_and_mismatched_exact_profiles) ... ok
+test_roster_requires_owner_and_current_policy (test_routing_v2.RoutingTests.test_roster_requires_owner_and_current_policy) ... ok
+test_sol_max_is_ordinary_t2_default (test_routing_v2.RoutingTests.test_sol_max_is_ordinary_t2_default) ... ok
+test_subscription_bounds_remain_enforced (test_routing_v2.RoutingTests.test_subscription_bounds_remain_enforced) ... ok
+test_unavailable_primary_never_silently_falls_back (test_routing_v2.RoutingTests.test_unavailable_primary_never_silently_falls_back) ... ok
+test_unbudgeted_older_api_approval_cannot_integrate_or_escape_through_recovery (test_routing_v2.RoutingTests.test_unbudgeted_older_api_approval_cannot_integrate_or_escape_through_recovery) ... ok
+test_untrusted_review_text_cannot_make_required_not_run_pass (test_routing_v2.RoutingTests.test_untrusted_review_text_cannot_make_required_not_run_pass) ... ok
+test_usage_interruption_preserves_binding_lease_and_unfinished_checks (test_routing_v2.RoutingTests.test_usage_interruption_preserves_binding_lease_and_unfinished_checks)
+A reported quota limit is evidence, not an automatic route/state repair. ... ok
+test_usage_pressure_text_cannot_supply_downshift_conditions (test_routing_v2.RoutingTests.test_usage_pressure_text_cannot_supply_downshift_conditions)
+Deterministic evidence boundary only, not a model prompt-injection eval. ... ok
+test_usage_recovery_keeps_history_and_resumes_default_at_new_fence (test_routing_v2.RoutingTests.test_usage_recovery_keeps_history_and_resumes_default_at_new_fence) ... ok
+test_v2_fields_cannot_be_smuggled_into_v1_evidence (test_routing_v2.RoutingTests.test_v2_fields_cannot_be_smuggled_into_v1_evidence) ... ok
+test_valid_exact_budget_covers_full_paid_lifecycle (test_routing_v2.RoutingTests.test_valid_exact_budget_covers_full_paid_lifecycle) ... ok
+
+----------------------------------------------------------------------
+Ran 132 tests in 1.140s
+
+OK
+
+CHECK 3
+COMMAND: python3 -B -m unittest discover -s specs/texenda-handoff/08-project-harness/tests -v
+EXIT: 0
+test_activation_gate_matching_scope_completes (test_harness.HarnessTests.test_activation_gate_matching_scope_completes) ... ok
+test_activation_gate_not_assumed (test_harness.HarnessTests.test_activation_gate_not_assumed) ... ok
+test_activation_gate_scope_checked (test_harness.HarnessTests.test_activation_gate_scope_checked) ... ok
+test_api_model_requires_budget (test_harness.HarnessTests.test_api_model_requires_budget) ... ok
+test_author_cannot_review (test_harness.HarnessTests.test_author_cannot_review) ... ok
+test_baseline_change_requires_explicit_migration (test_harness.HarnessTests.test_baseline_change_requires_explicit_migration) ... ok
+test_changed_evidence_detected (test_harness.HarnessTests.test_changed_evidence_detected) ... ok
+test_checkpoint_does_not_extend_without_request (test_harness.HarnessTests.test_checkpoint_does_not_extend_without_request) ... ok
+test_complete_requires_integration (test_harness.HarnessTests.test_complete_requires_integration) ... ok
+test_context_overflow_does_not_truncate (test_harness.HarnessTests.test_context_overflow_does_not_truncate) ... ok
+test_default_writer_limit_is_enforced (test_harness.HarnessTests.test_default_writer_limit_is_enforced) ... ok
+test_deferred_requires_observed_trigger (test_harness.HarnessTests.test_deferred_requires_observed_trigger) ... ok
+test_disjoint_parallel_assignments_allowed (test_harness.HarnessTests.test_disjoint_parallel_assignments_allowed) ... ok
+test_evidence_symlink_denied (test_harness.HarnessTests.test_evidence_symlink_denied) ... ok
+test_expired_lease_cannot_submit (test_harness.HarnessTests.test_expired_lease_cannot_submit) ... ok
+test_fake_human_label_rejected (test_harness.HarnessTests.test_fake_human_label_rejected) ... ok
+test_incomplete_dependency_denied (test_harness.HarnessTests.test_incomplete_dependency_denied) ... ok
+test_init_is_non_overwriting (test_harness.HarnessTests.test_init_is_non_overwriting) ... ok
+test_initial_ready_respects_dependencies_and_deferral (test_harness.HarnessTests.test_initial_ready_respects_dependencies_and_deferral) ... ok
+test_insufficient_review_tier_denied (test_harness.HarnessTests.test_insufficient_review_tier_denied) ... ok
+test_integration_without_stop_proof_denied (test_harness.HarnessTests.test_integration_without_stop_proof_denied) ... ok
+test_lifecycle_and_dependency_release (test_harness.HarnessTests.test_lifecycle_and_dependency_release) ... ok
+test_merge_semantic_change_requires_review (test_harness.HarnessTests.test_merge_semantic_change_requires_review) ... ok
+test_missing_test_log_denied (test_harness.HarnessTests.test_missing_test_log_denied) ... ok
+test_no_path_traversal (test_harness.HarnessTests.test_no_path_traversal) ... ok
+test_not_run_cannot_pass_review (test_harness.HarnessTests.test_not_run_cannot_pass_review) ... ok
+test_out_of_scope_changed_path_denied (test_harness.HarnessTests.test_out_of_scope_changed_path_denied) ... ok
+test_overlapping_leases_block_even_expired (test_harness.HarnessTests.test_overlapping_leases_block_even_expired) ... ok
+test_qualification_expiry_denies_assignment (test_harness.HarnessTests.test_qualification_expiry_denies_assignment) ... ok
+test_qualified_model_and_budget_allow_assignment (test_harness.HarnessTests.test_qualified_model_and_budget_allow_assignment) ... ok
+test_receipt_chain_corruption_detected (test_harness.HarnessTests.test_receipt_chain_corruption_detected) ... ok
+test_recovery_increments_fence (test_harness.HarnessTests.test_recovery_increments_fence) ... ok
+test_recovery_requires_stop_and_fence (test_harness.HarnessTests.test_recovery_requires_stop_and_fence) ... ok
+test_stale_candidate_denied (test_harness.HarnessTests.test_stale_candidate_denied) ... ok
+test_state_corruption_detected (test_harness.HarnessTests.test_state_corruption_detected) ... ok
+test_unknown_package_denied (test_harness.HarnessTests.test_unknown_package_denied) ... ok
+test_unverified_model_fails_closed (test_harness.HarnessTests.test_unverified_model_fails_closed) ... ok
+test_weaker_tier_rejected (test_harness.HarnessTests.test_weaker_tier_rejected) ... ok
+test_wrong_fence_cannot_start (test_harness.HarnessTests.test_wrong_fence_cannot_start) ... ok
+
+----------------------------------------------------------------------
+Ran 39 tests in 0.140s
+
+OK
+
+CHECK 4
+COMMAND: python3 -B specs/texenda-handoff/10-validation/validate_package.py --checksums && python3 -B /Users/jamesryancooper/Projects/texenda/10-validation/validate_package.py --checksums
+EXIT: 0
+{
+  "package_version": "1.1.0",
+  "checked_at": "2026-09-14T15:05:52.606128+00:00",
+  "result": "PASS",
+  "checks": [
+    {
+      "check": "JSON parse",
+      "status": "PASS"
+    },
+    {
+      "check": "Prior artifacts byte integrity",
+      "status": "PASS"
+    },
+    {
+      "check": "Decision status and authority ownership",
+      "status": "PASS"
+    },
+    {
+      "check": "WP DAG, bounded contracts, gates and routing",
+      "status": "PASS"
+    },
+    {
+      "check": "Acceptance and requirement traceability, no product PASS",
+      "status": "PASS"
+    },
+    {
+      "check": "Release profile closure",
+      "status": "PASS"
+    },
+    {
+      "check": "Command authority metadata",
+      "status": "PASS"
+    },
+    {
+      "check": "ADR required fields",
+      "status": "PASS"
+    },
+    {
+      "check": "Model availability and spending truth",
+      "status": "PASS"
+    },
+    {
+      "check": "Harness non-runner boundary (static)",
+      "status": "PASS"
+    },
+    {
+      "check": "Source/archive provenance",
+      "status": "PASS"
+    },
+    {
+      "check": "Current Markdown local links and anchors",
+      "status": "PASS"
+    },
+    {
+      "check": "Manifest completeness",
+      "status": "PASS"
+    },
+    {
+      "check": "Final package checksums",
+      "status": "PASS"
+    }
+  ],
+  "errors": [],
+  "warnings": [],
+  "counts": {
+    "files": 86,
+    "work_packages": 44,
+    "product_acceptance_criteria": 125,
+    "invariants": 30,
+    "adrs": 35,
+    "external_gates": 14
+  },
+  "scope": "Offline package structure/traceability/link checks only. Synthetic harness unit tests reported separately. No application/production/provider/security/legal qualification performed.",
+  "archive_limitation": "No complete verbatim conversation export; exact prior artifacts plus explicitly abridged turn record."
+}
+{
+  "package_version": "1.1.0",
+  "checked_at": "2026-09-14T15:05:52.684983+00:00",
+  "result": "PASS",
+  "checks": [
+    {
+      "check": "JSON parse",
+      "status": "PASS"
+    },
+    {
+      "check": "Prior artifacts byte integrity",
+      "status": "PASS"
+    },
+    {
+      "check": "Decision status and authority ownership",
+      "status": "PASS"
+    },
+    {
+      "check": "WP DAG, bounded contracts, gates and routing",
+      "status": "PASS"
+    },
+    {
+      "check": "Acceptance and requirement traceability, no product PASS",
+      "status": "PASS"
+    },
+    {
+      "check": "Release profile closure",
+      "status": "PASS"
+    },
+    {
+      "check": "Command authority metadata",
+      "status": "PASS"
+    },
+    {
+      "check": "ADR required fields",
+      "status": "PASS"
+    },
+    {
+      "check": "Model availability and spending truth",
+      "status": "PASS"
+    },
+    {
+      "check": "Harness non-runner boundary (static)",
+      "status": "PASS"
+    },
+    {
+      "check": "Source/archive provenance",
+      "status": "PASS"
+    },
+    {
+      "check": "Current Markdown local links and anchors",
+      "status": "PASS"
+    },
+    {
+      "check": "Manifest completeness",
+      "status": "PASS"
+    },
+    {
+      "check": "Final package checksums",
+      "status": "PASS"
+    }
+  ],
+  "errors": [],
+  "warnings": [],
+  "counts": {
+    "files": 86,
+    "work_packages": 44,
+    "product_acceptance_criteria": 125,
+    "invariants": 30,
+    "adrs": 35,
+    "external_gates": 14
+  },
+  "scope": "Offline package structure/traceability/link checks only. Synthetic harness unit tests reported separately. No application/production/provider/security/legal qualification performed.",
+  "archive_limitation": "No complete verbatim conversation export; exact prior artifacts plus explicitly abridged turn record."
+}

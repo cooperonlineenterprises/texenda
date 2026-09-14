@@ -1,0 +1,282 @@
+{
+  "schema_version": "texenda.workspace-move-manifest.v1",
+  "id": "TRN-WSM-0002",
+  "status": "execution_plan_requires_exact_independent_approval",
+  "authority_basis": "docs/decisions/ADR-0004-mapped-project-workspace.md",
+  "baseline_evidence": "docs/qualification/evidence/2026-09-14-workspace-phase-0-baseline.json",
+  "execution_actor_floor": "gpt-6-astra-max",
+  "project_home": "/Users/jamesryancooper/Projects/texenda",
+  "old_repository": "/Users/jamesryancooper/Projects/texenda-app",
+  "new_repository": "/Users/jamesryancooper/Projects/texenda/repo",
+  "keep_active_parent_root": true,
+  "parent_git_repository": false,
+  "constraints": {
+    "overwrite": false,
+    "delete": false,
+    "symlink_bridge": false,
+    "private_content_access": false,
+    "private_content_hash": false,
+    "private_content_copy": false,
+    "remote_mutation": false,
+    "receipt_rewrite": false,
+    "serial_moves": true
+  },
+  "preconditions": [
+    "Independent Astra/max approval binds the exact candidate and move manifest bytes.",
+    "Current clean main and tree equal the exact approved integration evidence; the baseline main is an ancestry check, not permission to discard newer commits.",
+    "All affected author/reviewer runtimes are observed stopped; no lease, open coordination writer/lock, or unresolved linked worktree remains.",
+    "Every source exists with the recorded type and digest. All destinations are absent; directory creation must be exclusive and symlink-free.",
+    "The original project home stays the active parent path. Run relocation from the neutral /Users/jamesryancooper/Projects parent or unchanged project home.",
+    "Recheck state SHA/tip/roster/budget, both package validators, private-input existence/ignore/tracking only, disk capacity and same-filesystem rename support.",
+    "Verify the baseline checkpoint and create a fresh content-addressed all-ref Git checkpoint covering accepted architecture/review commits before moving the checkout."
+  ],
+  "create_directories": [
+    "/Users/jamesryancooper/Projects/texenda/sources",
+    "/Users/jamesryancooper/Projects/texenda/sources/handoff-1.1.0-20260914",
+    "/Users/jamesryancooper/Projects/texenda/worktrees",
+    "/Users/jamesryancooper/Projects/texenda/local",
+    "/Users/jamesryancooper/Projects/texenda/local/agent-state",
+    "/Users/jamesryancooper/Projects/texenda/local/logs",
+    "/Users/jamesryancooper/Projects/texenda/local/artifacts",
+    "/Users/jamesryancooper/Projects/texenda/archive",
+    "/Users/jamesryancooper/Projects/texenda/archive/checkpoints"
+  ],
+  "reserved_absent_targets": [
+    "/Users/jamesryancooper/Projects/texenda/repo",
+    "/Users/jamesryancooper/Projects/texenda/local/private-inputs",
+    "/Users/jamesryancooper/Projects/texenda/local/agent-state/texenda"
+  ],
+  "source_package_moves": [
+    {
+      "source": "/Users/jamesryancooper/Projects/texenda/01-foundation",
+      "destination": "/Users/jamesryancooper/Projects/texenda/sources/handoff-1.1.0-20260914/01-foundation",
+      "entry": "01-foundation",
+      "type": "directory",
+      "tree_sha256": "ce0179f3eb5b6898581e032903343237ec72de354a1deb148ea471e42968fb01",
+      "file_count": 8,
+      "operation": "same_filesystem_rename_no_replace"
+    },
+    {
+      "source": "/Users/jamesryancooper/Projects/texenda/02-product-and-ux",
+      "destination": "/Users/jamesryancooper/Projects/texenda/sources/handoff-1.1.0-20260914/02-product-and-ux",
+      "entry": "02-product-and-ux",
+      "type": "directory",
+      "tree_sha256": "d66d60b262d6f3c02520bbb58f7f1df5405127059c6c1cdc54ed2e29943344fb",
+      "file_count": 2,
+      "operation": "same_filesystem_rename_no_replace"
+    },
+    {
+      "source": "/Users/jamesryancooper/Projects/texenda/03-domain-and-architecture",
+      "destination": "/Users/jamesryancooper/Projects/texenda/sources/handoff-1.1.0-20260914/03-domain-and-architecture",
+      "entry": "03-domain-and-architecture",
+      "type": "directory",
+      "tree_sha256": "84e9102af02168ab7cd7371b0588d884a121bf49c32212e7e64370f82f8e86eb",
+      "file_count": 14,
+      "operation": "same_filesystem_rename_no_replace"
+    },
+    {
+      "source": "/Users/jamesryancooper/Projects/texenda/04-security-governance-and-operations",
+      "destination": "/Users/jamesryancooper/Projects/texenda/sources/handoff-1.1.0-20260914/04-security-governance-and-operations",
+      "entry": "04-security-governance-and-operations",
+      "type": "directory",
+      "tree_sha256": "68ffef4e5c3e533466be87ea17ac58d1893ae438af1ea5dcc7001e3da140d036",
+      "file_count": 4,
+      "operation": "same_filesystem_rename_no_replace"
+    },
+    {
+      "source": "/Users/jamesryancooper/Projects/texenda/05-implementation",
+      "destination": "/Users/jamesryancooper/Projects/texenda/sources/handoff-1.1.0-20260914/05-implementation",
+      "entry": "05-implementation",
+      "type": "directory",
+      "tree_sha256": "81803b8bd1c73a0ad47959e88ab6933e4182333f7645fd8ab31069c609f55aad",
+      "file_count": 5,
+      "operation": "same_filesystem_rename_no_replace"
+    },
+    {
+      "source": "/Users/jamesryancooper/Projects/texenda/06-migration-and-production",
+      "destination": "/Users/jamesryancooper/Projects/texenda/sources/handoff-1.1.0-20260914/06-migration-and-production",
+      "entry": "06-migration-and-production",
+      "type": "directory",
+      "tree_sha256": "27d3e910180d120bf171aaffb9149f992b354a52fe1657a10aae1a22d42d3cb5",
+      "file_count": 8,
+      "operation": "same_filesystem_rename_no_replace"
+    },
+    {
+      "source": "/Users/jamesryancooper/Projects/texenda/07-agent-orchestration",
+      "destination": "/Users/jamesryancooper/Projects/texenda/sources/handoff-1.1.0-20260914/07-agent-orchestration",
+      "entry": "07-agent-orchestration",
+      "type": "directory",
+      "tree_sha256": "a2d39846bff70becd99b6c2c4889b7a3389c82489324fd44072cc93d19f3f030",
+      "file_count": 8,
+      "operation": "same_filesystem_rename_no_replace"
+    },
+    {
+      "source": "/Users/jamesryancooper/Projects/texenda/08-project-harness",
+      "destination": "/Users/jamesryancooper/Projects/texenda/sources/handoff-1.1.0-20260914/08-project-harness",
+      "entry": "08-project-harness",
+      "type": "directory",
+      "tree_sha256": "2c5d6c7dbb2f2639c3a3235574c9cedf99d7a4734222ce2d0edf901910d3d7b7",
+      "file_count": 13,
+      "operation": "same_filesystem_rename_no_replace"
+    },
+    {
+      "source": "/Users/jamesryancooper/Projects/texenda/09-reference",
+      "destination": "/Users/jamesryancooper/Projects/texenda/sources/handoff-1.1.0-20260914/09-reference",
+      "entry": "09-reference",
+      "type": "directory",
+      "tree_sha256": "7c22a8ea3033a3a33ea77a5ed9a56d6795353d74f0456fcb6f11a6d14ae2e067",
+      "file_count": 10,
+      "operation": "same_filesystem_rename_no_replace"
+    },
+    {
+      "source": "/Users/jamesryancooper/Projects/texenda/10-validation",
+      "destination": "/Users/jamesryancooper/Projects/texenda/sources/handoff-1.1.0-20260914/10-validation",
+      "entry": "10-validation",
+      "type": "directory",
+      "tree_sha256": "593d507931319f0086761305330d9429c8008ecd918bbcc7bd2e8a4cd1ab2cb5",
+      "file_count": 10,
+      "operation": "same_filesystem_rename_no_replace"
+    },
+    {
+      "source": "/Users/jamesryancooper/Projects/texenda/AGENTS.md",
+      "destination": "/Users/jamesryancooper/Projects/texenda/sources/handoff-1.1.0-20260914/AGENTS.md",
+      "entry": "AGENTS.md",
+      "type": "file",
+      "sha256": "7c00669e512e55ceb9df4102deead4a823c73376f6c13ee9bd05de791c87539b",
+      "operation": "same_filesystem_rename_no_replace"
+    },
+    {
+      "source": "/Users/jamesryancooper/Projects/texenda/DECISION-STATUS.md",
+      "destination": "/Users/jamesryancooper/Projects/texenda/sources/handoff-1.1.0-20260914/DECISION-STATUS.md",
+      "entry": "DECISION-STATUS.md",
+      "type": "file",
+      "sha256": "e7740e60da66f280e42a8217eeefce470a2cdb5e1b1ed20485ecfd9887a9966b",
+      "operation": "same_filesystem_rename_no_replace"
+    },
+    {
+      "source": "/Users/jamesryancooper/Projects/texenda/MANIFEST.md",
+      "destination": "/Users/jamesryancooper/Projects/texenda/sources/handoff-1.1.0-20260914/MANIFEST.md",
+      "entry": "MANIFEST.md",
+      "type": "file",
+      "sha256": "cfc5a88ab37fa86bd35f0dcb946e14d62d5c87860a22a3487fb9031102df8179",
+      "operation": "same_filesystem_rename_no_replace"
+    },
+    {
+      "source": "/Users/jamesryancooper/Projects/texenda/README.md",
+      "destination": "/Users/jamesryancooper/Projects/texenda/sources/handoff-1.1.0-20260914/README.md",
+      "entry": "README.md",
+      "type": "file",
+      "sha256": "2768a0c1675d5843d948d0205d9c63838bd7a21aa34beda20ff74f72c0bd0670",
+      "operation": "same_filesystem_rename_no_replace"
+    },
+    {
+      "source": "/Users/jamesryancooper/Projects/texenda/SHA256SUMS",
+      "destination": "/Users/jamesryancooper/Projects/texenda/sources/handoff-1.1.0-20260914/SHA256SUMS",
+      "entry": "SHA256SUMS",
+      "type": "file",
+      "sha256": "8576bf08ec4f2a4718476eca70e6d1d5cb2b6be1af550bf5c20c692bcbaff715",
+      "operation": "same_filesystem_rename_no_replace"
+    },
+    {
+      "source": "/Users/jamesryancooper/Projects/texenda/manifest.json",
+      "destination": "/Users/jamesryancooper/Projects/texenda/sources/handoff-1.1.0-20260914/manifest.json",
+      "entry": "manifest.json",
+      "type": "file",
+      "sha256": "bcb7488ecf2ac42b4b33e478918e7ce6c35d0bdc04b208ddd9ed66622b468b7f",
+      "operation": "same_filesystem_rename_no_replace"
+    }
+  ],
+  "directory_digest_method": "SHA-256 of UTF-8 canonical JSON (sort_keys=True, separators=(comma,colon), ensure_ascii=False) of sorted relative file path and SHA-256 rows; excludes directories but includes all regular files; symlinks forbidden",
+  "repository_move": {
+    "source": "/Users/jamesryancooper/Projects/texenda-app",
+    "destination": "/Users/jamesryancooper/Projects/texenda/repo",
+    "operation": "same_filesystem_rename_no_replace",
+    "source_main_at_baseline": "36b74e9e1ca6353b3d642136fa70b7d2ac950e08",
+    "source_tree_at_baseline": "f55477c5be32c6c866c1822f1e464dbba7e42198",
+    "execution_revision_rule": "Use the newer exact approved clean integrated revision recorded in relocation evidence; preserve every local ref/object and all ignored .texenda bytes.",
+    "initial_state_disposition": "Keep entire ignored .texenda directory with the checkout during Phase 1.",
+    "destination_must_be_absent": true
+  },
+  "workspace_notice": {
+    "path": "/Users/jamesryancooper/Projects/texenda/WORKSPACE.md",
+    "role": "non_authoritative_navigation",
+    "content_contract": "Describe repo/worktrees/local/sources/archive roles and route to repo/AGENTS.md; no parent authority or parent Git repository."
+  },
+  "checkpoint_archive": {
+    "source": "/private/tmp/texenda-workspace-migration-checkpoint-20260914",
+    "destination": "/Users/jamesryancooper/Projects/texenda/archive/checkpoints/phase-0-20260914",
+    "operation": "same_filesystem_rename_no_replace_after_verification",
+    "content_hashes": [
+      {
+        "name": "texenda-git-36b74e9.bundle",
+        "sha256": "3103a9877f36c8b4b5535fe28e3bd9fe3814f0f045cd878efd374d5e357e3b71"
+      },
+      {
+        "name": "state-b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235.json",
+        "sha256": "b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235"
+      },
+      {
+        "name": "coordination-state-no-private-inputs.tar",
+        "sha256": "0fe841098a8ba9bc672744eb53ca9dd72eed4e34921f257a74663616410228aa"
+      }
+    ],
+    "old_locator_is_historical": true
+  },
+  "postconditions": [
+    "Git revision, tree, remote, refs and status unchanged across the physical checkout rename; main clean.",
+    "No linked worktree references an invalid old path.",
+    "State SHA, receipt count/tip, roster and budget unchanged.",
+    "Both package checksum validators pass; every preserved package file matches baseline hashes including source cache extras.",
+    "Private CSV exists only at the same repository-relative ignored/untracked path for Phase 1; no content was accessed.",
+    "Parent is not a Git repository and WORKSPACE.md is navigation only.",
+    "Codex saved path reopened or precise manual reopen action recorded; no app database edits.",
+    "Read-only GitHub check still shows private/no branches/no hosted or tracked workflow; Actions settings unchanged.",
+    "A sanitized relocation receipt and distinct Astra/max review bind all before/after observations."
+  ],
+  "recovery": {
+    "mode": "resume_or_rollback_by_verified_move",
+    "journal_location": "/Users/jamesryancooper/Projects/texenda/local/logs/workspace-relocation/",
+    "never_infer_completed_from_missing_source": true,
+    "procedure": [
+      "Record each completed rename with its source/destination and expected digest; journal is local operational evidence, not a receipt chain.",
+      "For each interrupted action, exactly one of source or destination must exist with the expected type/digest. Both present, both absent, or mismatch stops for investigation.",
+      "Resume only remaining reviewed actions after rechecking runtimes, leases, checkout revision and hashes.",
+      "Rollback only recorded completed moves in reverse order, only into absent original destinations, with the same exact digest verification. Keep newly created empty directories and notices; do not delete them.",
+      "Never restore the Git bundle over a live checkout or replace a changed state file. Checkpoints remain recovery evidence for a separately reviewed operation."
+    ]
+  },
+  "external_state_cutover": {
+    "phase": "Phase 4; separate reviewed code and exact move approval required",
+    "binding_path": "/Users/jamesryancooper/Projects/texenda/repo/.texenda-location.json",
+    "binding_ignored": true,
+    "explicit_state_root": "/Users/jamesryancooper/Projects/texenda/local/agent-state/texenda",
+    "active_moves": [
+      {
+        "source": "/Users/jamesryancooper/Projects/texenda/repo/.texenda/state.json",
+        "destination": "/Users/jamesryancooper/Projects/texenda/local/agent-state/texenda/state.json",
+        "required": true,
+        "sha256": "b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235"
+      },
+      {
+        "source": "/Users/jamesryancooper/Projects/texenda/repo/.texenda/state.lock",
+        "destination": "/Users/jamesryancooper/Projects/texenda/local/agent-state/texenda/state.lock",
+        "required_if_present": true,
+        "verification": "No process holds or uses the old lock; no content or timestamp mutation from read-only checks."
+      }
+    ],
+    "private_directory_move": {
+      "source": "/Users/jamesryancooper/Projects/texenda/repo/.texenda/private-inputs",
+      "destination": "/Users/jamesryancooper/Projects/texenda/local/private-inputs",
+      "operation": "same_filesystem_rename_no_replace",
+      "verification": "Existence and exact destination only; no file content opens, parsing, hashing, or content-copying tool."
+    },
+    "historical_compatibility_retained": [
+      ".texenda/evidence/",
+      ".texenda/context/",
+      ".texenda/state.v1.a2a58e20004c86c0081b1427087626e36f931c3804532e8a1caf1c94a49a609a.json"
+    ],
+    "state_bytes_change_required": false,
+    "receipt_append_required": false,
+    "interruption_rule": "A moving marker at repo/.texenda-location.json survives every active-state move and blocks all state reads/writes and default init until serial recovery verifies the one state location and activates the binding."
+  }
+}

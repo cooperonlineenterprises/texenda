@@ -1,0 +1,167 @@
+{
+  "schema_version": "texenda.workspace-author-evidence.v1",
+  "id": "EVD-WSM-0002",
+  "kind": "candidate_author_report",
+  "information_role": "immutable_evidence",
+  "status": "candidate_for_independent_review",
+  "recorded_at": "2026-09-14T15:10:18.863Z",
+  "actor": "/root/workspace_architecture_author",
+  "requested_profile": "gpt-6-astra-max",
+  "capability_floor": "T1",
+  "reasoning_effort": "max",
+  "runtime_id": "codex-desktop-collaboration",
+  "client_version": "26.901.41600 (build 7982)",
+  "billing_mode": "subscription",
+  "api_budget_usd": 0,
+  "api_spend_usd": 0,
+  "bounds": {
+    "max_seconds": 3600,
+    "max_tokens": 90000,
+    "provider_token_meter": "unavailable"
+  },
+  "base_revision": "36b74e9e1ca6353b3d642136fa70b7d2ac950e08",
+  "base_tree": "f55477c5be32c6c866c1822f1e464dbba7e42198",
+  "branch": "migration/project-workspace-architecture-20260914",
+  "worktree": "/private/tmp/texenda-workspace-architecture-20260914",
+  "candidate_binding": "The parent/reviewer binds the final commit and tree after this evidence record is committed. Output hashes below bind the candidate content except this self-referential report. No approval is self-attested.",
+  "output_hashes": [
+    {
+      "sha256": "e1594f793c892adecfebbf86ce76c7fb180d79cc66497d936fd215ea773b8b08",
+      "path": "docs/decisions/ADR-0004-mapped-project-workspace.md"
+    },
+    {
+      "sha256": "943546a8681acd761e262352be139cca18f178ad954d4990b154254f8c6ff951",
+      "path": "docs/qualification/evidence/2026-09-14-workspace-phase-0-baseline.json"
+    },
+    {
+      "sha256": "30f5da3738a48d1bdf1c07b4517a977b7e5e1bc4fac5239fdd729cd89a0e9aa1",
+      "path": "project-dossier/transition/README.md"
+    },
+    {
+      "sha256": "223629d7a2aa9c6077cf16a57c3b01c314b931c2e70ea89a1de71121699b67c8",
+      "path": "project-dossier/transition/blueprint-adoption-crosswalk.json"
+    },
+    {
+      "sha256": "b11e8d683cb29c262c9c8ff032864932ccfba6b04c0bbd219f6ac3c803a4b22b",
+      "path": "project-dossier/transition/workspace-move-manifest.json"
+    },
+    {
+      "sha256": "afc25b7273bc4e50567af45ecdfe303bf1b96e0f2778beedd644379528fe50a4",
+      "path": "tooling/workspace/validate_contract.py"
+    },
+    {
+      "sha256": "45a44ad45658bb1e6cdc78b016d2da6404b78a87ee5c36fa3c0a3f0ad86bedfd",
+      "path": "tooling/workspace/tests/test_contract.py"
+    },
+    {
+      "sha256": "ee777c976193e42c45c1b64b18ba856cabb55938b102a01411a0d0783f610c2f",
+      "path": "docs/qualification/evidence/2026-09-14-workspace-architecture-validation.log"
+    }
+  ],
+  "commands": [
+    {
+      "command": "python3 -B tooling/workspace/validate_contract.py --check --audit && python3 -B -m unittest discover -s tooling/workspace/tests -v && git diff --check && git diff --exit-code 36b74e9e1ca6353b3d642136fa70b7d2ac950e08 -- specs/texenda-handoff",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 -B -m unittest discover -s tooling/coordination/tests -v",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 -B -m unittest discover -s specs/texenda-handoff/08-project-harness/tests -v",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 -B specs/texenda-handoff/10-validation/validate_package.py --checksums && python3 -B /Users/jamesryancooper/Projects/texenda/10-validation/validate_package.py --checksums",
+      "exit_code": 0
+    }
+  ],
+  "results": {
+    "static_crosswalk": "PASS: 42 concerns, 85 blueprint paths, 35 catalog artifact types, 5 supplemental triggered types, 16 source top-level moves",
+    "workspace_mutation_tests": "27 PASS",
+    "local_coordination_tests": "132 PASS",
+    "sealed_harness_tests": "39 PASS",
+    "sealed_package_validator": "14 PASS; checksums",
+    "source_package_validator": "14 PASS; checksums",
+    "syntax": "PASS before this report: 81 JSON, 1 TOML, 10 Python files; report parsed in final audit",
+    "local_links": "7 new Markdown links PASS",
+    "bound_source_hashes": "11 original Git-bound source inputs PASS",
+    "sealed_bytes": "86 files identical to original base revision",
+    "source_bytes": "88 original source files still match the Phase-0 inventory, including two preexisting caches",
+    "git_diff_check": "PASS"
+  },
+  "findings": [
+    {
+      "id": "FIND-WSM-0001",
+      "finding": "Existing receipt-bound WP-00 integration evidence and v1 migration checkpoint use repository-relative .texenda paths.",
+      "resolution": "Freeze byte-exact retention of ignored historical .texenda/evidence, context and v1 checkpoint. Only active state.json/lock and private-input directory move externally.",
+      "status": "contract_resolved_implementation_pending"
+    },
+    {
+      "id": "FIND-WSM-0002",
+      "finding": "Both 1.1.0 packages pass structural checks but eleven shared files differ.",
+      "resolution": "Preserve both as distinct sealed authority/source variant; editor reconciliation remains a separate future amendment task.",
+      "status": "preserved_semantic_work_deferred"
+    },
+    {
+      "id": "FIND-WSM-0003",
+      "finding": "Installed 1.0.0 source-layout validation fails; newer dirty 4.3.0 source lacks complete qualification; origin.v1 cannot express mapped-existing.",
+      "resolution": "Structural reference only. Defer origin file until a deliberately versioned reviewed local schema supports truthful mapped adoption.",
+      "status": "limitation_recorded"
+    },
+    {
+      "id": "FIND-WSM-0004",
+      "finding": "A tracked generated projection cannot identify its own containing commit without a hash cycle.",
+      "resolution": "Exact source revision/tree plus deterministic source-scope fingerprint and ledger hashes; final check reports exact current HEAD/tree. Exclusions are explicit and cannot hide authority/code/test changes.",
+      "status": "contract_resolved_implementation_pending"
+    }
+  ],
+  "permissions_used": [
+    "read scoped project/blueprint/checkpoint metadata and public package files",
+    "write only assigned worktree transition documents, static tests and sanitized evidence",
+    "run offline static/local/sealed/package checks",
+    "local scoped branch commit"
+  ],
+  "forbidden_effects_performed": [],
+  "private_input_proof": {
+    "content_opened": false,
+    "content_hashed": false,
+    "content_parsed": false,
+    "content_copied": false,
+    "content_logged": false,
+    "author_operation": "none",
+    "baseline_existence_ignore_tracking_proof": "attributed to coordinator in EVD-WSM-0001"
+  },
+  "not_run": [
+    {
+      "check": "filesystem relocation",
+      "reason": "Requires independently approved exact candidate and fresh stopped-runtime/lease/worktree proof."
+    },
+    {
+      "check": ".agent facade, authority cutover, origin schema and state-root implementation",
+      "reason": "Reserved for the bounded implementation candidate after this T1 contract is approved."
+    },
+    {
+      "check": ".agent check read-only/mutation/recovery proof and real mapped task lifecycle",
+      "reason": "Facade is not implemented in this contract-only candidate."
+    },
+    {
+      "check": "live state/private-input movement",
+      "reason": "Requires independently approved state-root code and exact T1 move review."
+    },
+    {
+      "check": "GitHub/app verification by this author",
+      "reason": "No network/app operation in this assignment; coordinator observations attributed explicitly."
+    },
+    {
+      "check": "product/external gates",
+      "reason": "Outside the structural migration; no gate is cleared."
+    }
+  ],
+  "runtime_stop": {
+    "at_recording": "author preparing final commit; no background command session or child runtime exists",
+    "final_protocol": "Author ends after returning exact commit/tree/diff hash. Parent must observe this agent completed/stopped before releasing the scope or removing/moving its worktree.",
+    "self_attested_stop_is_not_independent_proof": true
+  },
+  "resumption": "Read the exact committed candidate and validation log; independently review with a distinct qualified Astra/max actor, then let the T1 integration lead perform only accepted next steps. Retain this worktree/branch until the parent proves author stop."
+}

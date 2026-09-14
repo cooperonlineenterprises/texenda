@@ -1,0 +1,895 @@
+{
+  "schema_version": "texenda.workspace-baseline.v1",
+  "id": "EVD-WSM-0001",
+  "information_role": "immutable_point_in_time_evidence",
+  "authority": "Observation only; not permission, live state, model qualification, or product readiness.",
+  "observed_at": "2026-09-14T14:26:52Z",
+  "independent_author_recheck_at": "2026-09-14T14:47:36.288302+00:00",
+  "subject": {
+    "repository_root": "/Users/jamesryancooper/Projects/texenda-app",
+    "main_revision": "36b74e9e1ca6353b3d642136fa70b7d2ac950e08",
+    "main_tree": "f55477c5be32c6c866c1822f1e464dbba7e42198",
+    "git_status": "clean",
+    "remote": "https://github.com/cooperonlineenterprises/texenda.git",
+    "remote_refs": 0,
+    "baseline_local_heads": 28,
+    "bundle_ref_count_including_HEAD": 29,
+    "baseline_worktrees": [
+      "/Users/jamesryancooper/Projects/texenda-app"
+    ]
+  },
+  "observation_sources": {
+    "coordinator": "Parent migration coordinator /root, scoped read-only Phase-0 observations supplied to this author",
+    "author": "workspace_architecture_author, independently recomputed local package/checkpoint/Git facts; GitHub and app observations attributed to coordinator",
+    "runtime": "codex-desktop-collaboration",
+    "requested_profile": "gpt-6-astra-max",
+    "client_version": "26.901.41600 (build 7982)",
+    "billing_mode": "subscription",
+    "api_usd": 0,
+    "identity_limit": "Requested profile and recorded runtime qualification are not independent provider model introspection."
+  },
+  "filesystem": {
+    "project_home": "/Users/jamesryancooper/Projects/texenda",
+    "project_home_git_repository": false,
+    "non_git_top_level": [
+      {
+        "entry": "01-foundation",
+        "type": "directory",
+        "file_count": 8,
+        "tree_sha256": "ce0179f3eb5b6898581e032903343237ec72de354a1deb148ea471e42968fb01"
+      },
+      {
+        "entry": "02-product-and-ux",
+        "type": "directory",
+        "file_count": 2,
+        "tree_sha256": "d66d60b262d6f3c02520bbb58f7f1df5405127059c6c1cdc54ed2e29943344fb"
+      },
+      {
+        "entry": "03-domain-and-architecture",
+        "type": "directory",
+        "file_count": 14,
+        "tree_sha256": "84e9102af02168ab7cd7371b0588d884a121bf49c32212e7e64370f82f8e86eb"
+      },
+      {
+        "entry": "04-security-governance-and-operations",
+        "type": "directory",
+        "file_count": 4,
+        "tree_sha256": "68ffef4e5c3e533466be87ea17ac58d1893ae438af1ea5dcc7001e3da140d036"
+      },
+      {
+        "entry": "05-implementation",
+        "type": "directory",
+        "file_count": 5,
+        "tree_sha256": "81803b8bd1c73a0ad47959e88ab6933e4182333f7645fd8ab31069c609f55aad"
+      },
+      {
+        "entry": "06-migration-and-production",
+        "type": "directory",
+        "file_count": 8,
+        "tree_sha256": "27d3e910180d120bf171aaffb9149f992b354a52fe1657a10aae1a22d42d3cb5"
+      },
+      {
+        "entry": "07-agent-orchestration",
+        "type": "directory",
+        "file_count": 8,
+        "tree_sha256": "a2d39846bff70becd99b6c2c4889b7a3389c82489324fd44072cc93d19f3f030"
+      },
+      {
+        "entry": "08-project-harness",
+        "type": "directory",
+        "file_count": 13,
+        "tree_sha256": "2c5d6c7dbb2f2639c3a3235574c9cedf99d7a4734222ce2d0edf901910d3d7b7"
+      },
+      {
+        "entry": "09-reference",
+        "type": "directory",
+        "file_count": 10,
+        "tree_sha256": "7c22a8ea3033a3a33ea77a5ed9a56d6795353d74f0456fcb6f11a6d14ae2e067"
+      },
+      {
+        "entry": "10-validation",
+        "type": "directory",
+        "file_count": 10,
+        "tree_sha256": "593d507931319f0086761305330d9429c8008ecd918bbcc7bd2e8a4cd1ab2cb5"
+      },
+      {
+        "entry": "AGENTS.md",
+        "type": "file",
+        "sha256": "7c00669e512e55ceb9df4102deead4a823c73376f6c13ee9bd05de791c87539b"
+      },
+      {
+        "entry": "DECISION-STATUS.md",
+        "type": "file",
+        "sha256": "e7740e60da66f280e42a8217eeefce470a2cdb5e1b1ed20485ecfd9887a9966b"
+      },
+      {
+        "entry": "MANIFEST.md",
+        "type": "file",
+        "sha256": "cfc5a88ab37fa86bd35f0dcb946e14d62d5c87860a22a3487fb9031102df8179"
+      },
+      {
+        "entry": "README.md",
+        "type": "file",
+        "sha256": "2768a0c1675d5843d948d0205d9c63838bd7a21aa34beda20ff74f72c0bd0670"
+      },
+      {
+        "entry": "SHA256SUMS",
+        "type": "file",
+        "sha256": "8576bf08ec4f2a4718476eca70e6d1d5cb2b6be1af550bf5c20c692bcbaff715"
+      },
+      {
+        "entry": "manifest.json",
+        "type": "file",
+        "sha256": "bcb7488ecf2ac42b4b33e478918e7ce6c35d0bdc04b208ddd9ed66622b468b7f"
+      }
+    ],
+    "author_source_files": [
+      {
+        "path": "01-foundation/adr-index.md",
+        "sha256": "412edcbc33d22a67e37e408f92274ada4400348a27cb445bae2c172e713f748e"
+      },
+      {
+        "path": "01-foundation/adr-set.md",
+        "sha256": "197d02b2da92eb42aab288584054d8c25efed11a2caf2f011921103b67798046"
+      },
+      {
+        "path": "01-foundation/authority-register.json",
+        "sha256": "4b69cc4bfffeca287dc24fe9c1b275774f74aa806dc1a2e5d0247c5177741f8c"
+      },
+      {
+        "path": "01-foundation/external-validation-gates.json",
+        "sha256": "214ccdf545dec44f59b37aa1fcf3b53f666d992cb2eabd440508358faf312dd8"
+      },
+      {
+        "path": "01-foundation/invariant-index.json",
+        "sha256": "901f15211dc3ab93b1ce64a9703b96306afcbe053536412a98a1f7336adcdb6c"
+      },
+      {
+        "path": "01-foundation/invariants.md",
+        "sha256": "28962b51a3bb58c3d515384913616423c9efee5563777ce80d993f8af12b0f98"
+      },
+      {
+        "path": "01-foundation/product-and-brand.md",
+        "sha256": "5c053f043e6db101a61908934481ff90c8ee336e193a32a412baa49954595c1a"
+      },
+      {
+        "path": "01-foundation/section-map.md",
+        "sha256": "3d6adb3a71916dc34e1fc8cee7dc72e1cc6e968216b02f841d43ef00ce9f3f80"
+      },
+      {
+        "path": "02-product-and-ux/interaction-architecture.md",
+        "sha256": "7a6992b23e35a0a90434c03f62976e772de482420e381c63a360c4fa2271cceb"
+      },
+      {
+        "path": "02-product-and-ux/operator-workflows.md",
+        "sha256": "7999bef029852b9eb2ed5fef3e3417f343b7adc99e929650f76cbf030ad69eed"
+      },
+      {
+        "path": "03-domain-and-architecture/canonical-domain.md",
+        "sha256": "46d4e3d4f440a2d7f6f03d48cb11f9a8c1e27c2475ad46dde4ca8704ba75c92a"
+      },
+      {
+        "path": "03-domain-and-architecture/channels.md",
+        "sha256": "c7dd16b0fbe29b22d20d1bf1222a54c794bf3829b3edf8d28550db0fe96af16d"
+      },
+      {
+        "path": "03-domain-and-architecture/command-catalog.json",
+        "sha256": "28ea3c83c6703ac9308eed69c4b7ca5d1242462b3090ba899906fde88e42d78a"
+      },
+      {
+        "path": "03-domain-and-architecture/content.md",
+        "sha256": "d02aec41df60ef6df7ce63e907751425b4a13c849dc4890c268e9c82bcd3411d"
+      },
+      {
+        "path": "03-domain-and-architecture/contracts/command-envelope.schema.json",
+        "sha256": "1019958ec93cbd9d5bca2edda9389af826f09adde5571eb46e8235eac4d1dc06"
+      },
+      {
+        "path": "03-domain-and-architecture/contracts/example-command.json",
+        "sha256": "bb5352f12721cd8526acb6be1bf3f4f2e221a0a7114878cde4d7d93c3179d00c"
+      },
+      {
+        "path": "03-domain-and-architecture/domain-catalog.json",
+        "sha256": "ba3d29fa204003dcd26bfeb8598328bd9914ea504ddfcea9a1263245deeb6ccb"
+      },
+      {
+        "path": "03-domain-and-architecture/execution-semantics.md",
+        "sha256": "19c3b198cc391c17018c2b602fad30ce183b01843e4249bd88638b4611b3ed20"
+      },
+      {
+        "path": "03-domain-and-architecture/permission-and-coordination.md",
+        "sha256": "4f04efe19ca704b757689d7e4e982dd6e092e8335fc52bf708cae2915204259c"
+      },
+      {
+        "path": "03-domain-and-architecture/provider-integrations.md",
+        "sha256": "023d0e18a8af70d6ff98b89f9c7e5b5e5f6a3d0d5d062c7d509831132abf5914"
+      },
+      {
+        "path": "03-domain-and-architecture/schema-and-contract-guide.md",
+        "sha256": "8c6991d8c6b05e13d284ac3e1aa678bd4a9ff426454ba2a782a715c0c54f959c"
+      },
+      {
+        "path": "03-domain-and-architecture/state-machines.json",
+        "sha256": "67088c4238ac17a872d226ec922236c25a7556b8e7ff5c9fb617f91248d0217f"
+      },
+      {
+        "path": "03-domain-and-architecture/system-architecture.md",
+        "sha256": "e757d87b36fb5516b6dd1666cc04e3cf07f4d4e670a64624aa70848132aa106b"
+      },
+      {
+        "path": "03-domain-and-architecture/technology-baseline.md",
+        "sha256": "2ca4eb01b46d99321c04ab470476a415be8e1211bcbb8194fbc60747a167babb"
+      },
+      {
+        "path": "04-security-governance-and-operations/ai-and-agent-authority.md",
+        "sha256": "99575fd1693a1ccd9b26b1553c3db2943acd795ff895377bd59880bac605500e"
+      },
+      {
+        "path": "04-security-governance-and-operations/observability.md",
+        "sha256": "511a710194d672d3b4bcab393287cc928cb22739cc55b851a19a34004efd106b"
+      },
+      {
+        "path": "04-security-governance-and-operations/runbooks.md",
+        "sha256": "a5a0945673b220aa682427b73d331dd1da35350b47f81a24303a76731ea79e74"
+      },
+      {
+        "path": "04-security-governance-and-operations/security-and-privacy.md",
+        "sha256": "c2e5ea7d1a84c78665504d1e971ede2dd2220c251a8f5c0caea709ac730dad2a"
+      },
+      {
+        "path": "05-implementation/compatibility-manifest.template.json",
+        "sha256": "65acb5f22efabcc4d38ea4c99293efd7d8216946e036a2b14e29a7707a13f8c8"
+      },
+      {
+        "path": "05-implementation/repository-plan.md",
+        "sha256": "18cd00d16d068c8e49cec3cef6f98d7ab95f97e47ca6c4701cb96ac280c612ef"
+      },
+      {
+        "path": "05-implementation/roadmap.md",
+        "sha256": "adf7d18eb2519c3ec945e03d03e15e4467583be923f7c8a6ed010ed07d3318f6"
+      },
+      {
+        "path": "05-implementation/work-breakdown.md",
+        "sha256": "d9bbba2db18cd0d56b9c1991d8e6eb64827094a3caf96a2031908271bcdd791f"
+      },
+      {
+        "path": "05-implementation/work-packages.json",
+        "sha256": "6e9bc795341ab165d7a6c81c06412ce149ba26b4a749012f7e7323f3aa8aeb29"
+      },
+      {
+        "path": "06-migration-and-production/acceptance-catalog.json",
+        "sha256": "e6bf0bb96152e4fbcd9b4da13817f0a06ca4e57cd5502c4b329a4cc216ee7e58"
+      },
+      {
+        "path": "06-migration-and-production/acceptance-plan.md",
+        "sha256": "3e70639f6d3438201d2c6dac581a762ddda42f18b08d9f8c7c2dd9597173c0ce"
+      },
+      {
+        "path": "06-migration-and-production/kit-migration.md",
+        "sha256": "ff17aa2b39d6a36589f2bb2860f8bd8d6ee0f24667e029a2421867b6733ee6a6"
+      },
+      {
+        "path": "06-migration-and-production/migration-unit.template.json",
+        "sha256": "4044f4c95711ac3db95a84f9a5cea0a3d9a3bbf881a09b6a5d48fb34f07f867b"
+      },
+      {
+        "path": "06-migration-and-production/release-evidence.template.json",
+        "sha256": "7d14e8c69ec7558442af0d43a5b31f0538cdffb05316b7699033d6a76f91bb95"
+      },
+      {
+        "path": "06-migration-and-production/release-plan.md",
+        "sha256": "141f6841856df68be3ddc3b044cbb4f8c211d67cf4c3fdcbad854d0451b2c00c"
+      },
+      {
+        "path": "06-migration-and-production/release-profiles.json",
+        "sha256": "869813ada7d0ea1a829cdad9204b35c67fd2631707fbbfbab50a315a3a3b8b15"
+      },
+      {
+        "path": "06-migration-and-production/workload-profile.template.json",
+        "sha256": "508b12e094faed83fc93df14caf1acb11590ee09239923edb6d0f684708ab163"
+      },
+      {
+        "path": "07-agent-orchestration/ASSIGNMENT.template.md",
+        "sha256": "ac0347f24dbafc6d00c48e598a0c812d0c713a7d31b33ee473a4b18e91c53c8c"
+      },
+      {
+        "path": "07-agent-orchestration/ORCHESTRATOR-START.md",
+        "sha256": "55b10958742f7e7b257ba6c0fa886421470d416f70fe7a10f7eaaed0c6dd66b2"
+      },
+      {
+        "path": "07-agent-orchestration/OWNER-EXECUTION-HANDOFF.md",
+        "sha256": "1c1aeea5da051cce109c7154dcc27b3ce9faecd83bfeb4f5ed2d3f93a21d17e3"
+      },
+      {
+        "path": "07-agent-orchestration/context-routing.json",
+        "sha256": "2eb9d19f144c5167217158734b352759355cf4ea7fb27a3624e9f55caf801e7b"
+      },
+      {
+        "path": "07-agent-orchestration/handoff-and-review.md",
+        "sha256": "32e2b791f7bbb41a66d8777be1f2386e772429a7b1c98e6b289bad4131e65f25"
+      },
+      {
+        "path": "07-agent-orchestration/model-routing.json",
+        "sha256": "d89a954574c02038394a17cc1a91d6fece83713b5bae546bb62b1293c7893f0b"
+      },
+      {
+        "path": "07-agent-orchestration/model-routing.md",
+        "sha256": "7f76bc2fe26f5344d00ebc414874ec3df6799be52a35acb01fe7aea27c3fd1ee"
+      },
+      {
+        "path": "07-agent-orchestration/project-kernel.md",
+        "sha256": "ea8bc73aecaa82161465d5b999b26cf80f0215e950a2ce0a82789d27f1b9e062"
+      },
+      {
+        "path": "08-project-harness/README.md",
+        "sha256": "c24fabc010ea1329060553f58ea6cb0870837ec8d7958450dfc389359392461d"
+      },
+      {
+        "path": "08-project-harness/__pycache__/harness.cpython-314.pyc",
+        "sha256": "df56919db3116d0deade32a26f1c1bba70337c67e9e688878434f494b41e4d5a"
+      },
+      {
+        "path": "08-project-harness/codex-config.toml.example",
+        "sha256": "0263cde3fb5fdd14f07b9f1027cd010e1c44856464e6526af51eaadb0ce5e7f0"
+      },
+      {
+        "path": "08-project-harness/harness.py",
+        "sha256": "226a4a14b3a795b24354eb90e51a50067fd27fe809423b30b9fa1551f3ce72d6"
+      },
+      {
+        "path": "08-project-harness/install.py",
+        "sha256": "bb6db5593dffddc9b79d10b6f1bce652c653ce835b859f90495be7740419c343"
+      },
+      {
+        "path": "08-project-harness/probe_runtime.py",
+        "sha256": "a564f0196eb46c4f768dd44d9ac373448bcd75adb47176829b37bbfa1be4a7a9"
+      },
+      {
+        "path": "08-project-harness/root-AGENTS.md.template",
+        "sha256": "d1124dec4922d86cdf313a9625f140d2f6ae356686bdc8b09cba4a43c3d618bc"
+      },
+      {
+        "path": "08-project-harness/schemas/evidence.schema.json",
+        "sha256": "5970c7af1839a45b7fcdaf8879ce444ee576ceb6389793f697774bac5ba26038"
+      },
+      {
+        "path": "08-project-harness/schemas/work-package.schema.json",
+        "sha256": "a5c7450db5dbdf164f368f38da44517b32b98617ed3401a97d493674b77becdc"
+      },
+      {
+        "path": "08-project-harness/templates/evidence.json",
+        "sha256": "7418fd0b65d8e4089e5a4947cc0b79b871ed79294b986050d2c811dec22c4e42"
+      },
+      {
+        "path": "08-project-harness/templates/roster.json",
+        "sha256": "774e9793aec31c22777a3985c5f15581d9f5721c9b0b1d929def17cb2fd9e27b"
+      },
+      {
+        "path": "08-project-harness/tests/__pycache__/test_harness.cpython-314.pyc",
+        "sha256": "39d2ea9c358cbbecafbe458d1b8a50e643442e22447a9c0796206259d45064b3"
+      },
+      {
+        "path": "08-project-harness/tests/test_harness.py",
+        "sha256": "6249895a38d54729c2fb68db4c5e46f7fb4df6d32e1e2bf5d9f6713229e84296"
+      },
+      {
+        "path": "09-reference/conversation-coverage.md",
+        "sha256": "682cca6aa13facdd32ca4f2b6ec91294290d904be6f39a5895db8f7585e4d81b"
+      },
+      {
+        "path": "09-reference/conversation-record.json",
+        "sha256": "c2d3b2f03da07a7124d68217f1cfda4b223f05aabe4807dba95717af273eb56a"
+      },
+      {
+        "path": "09-reference/conversation-record.md",
+        "sha256": "a7e56703b9fd3c55a0c26ffc4aeb5690c014c4a50e0a8ffaacebce320ed2ace5"
+      },
+      {
+        "path": "09-reference/original-artifact-integrity.json",
+        "sha256": "d2713f61dace666ff132bc875629f16797b67d4853717953a315641e2bd1b7f3"
+      },
+      {
+        "path": "09-reference/prior-artifacts/Texenda_Decision_Closure_v1.0.zip",
+        "sha256": "46f1c2ab5223af3ec9df11771d92aafa6e6a6ffdb944f3ffef5493d25a352c45"
+      },
+      {
+        "path": "09-reference/prior-artifacts/Texenda_Implementation_Roadmap_Acceptance_v1.0.md",
+        "sha256": "988adf95f6f372ae5ea40a75563aa24994a19577a963e9d87b8b5227dfd363ec"
+      },
+      {
+        "path": "09-reference/prior-artifacts/Texenda_Product_Technical_Foundation_v1.0.md",
+        "sha256": "9105d60b98fcffa14c53b3d5c313f94b1a4df6a3e280e95c4984d65f279d31e6"
+      },
+      {
+        "path": "09-reference/source-register.json",
+        "sha256": "c570de269e139827305c7621ef4f1e3f8a91e56b82a352fcaec93b3bf23c814f"
+      },
+      {
+        "path": "09-reference/source-register.md",
+        "sha256": "ddcac169edefdd8caf3eb8c67938aa05016dc498e0d565cc6d3f0bc0920cb879"
+      },
+      {
+        "path": "09-reference/supersession-and-traceability.md",
+        "sha256": "9c5ceaf56409de6fcf8668af813223433b397311c3a6afd97a739e3c3834a01d"
+      },
+      {
+        "path": "10-validation/clean-install-smoke.json",
+        "sha256": "dcce1e9c27fd71ae67b3e339f8b97da146deccfdaed09f16d70b706ead85aedc"
+      },
+      {
+        "path": "10-validation/harness-test-map.json",
+        "sha256": "34e341684295e0631719cadfc3faa4522ebb59523a728c0f63283dea5bf4ef24"
+      },
+      {
+        "path": "10-validation/harness-tests.log",
+        "sha256": "cff3ae6eafbb7b902d66348a402d6824d04edbf8cddadf0b8dadf06d22c46bdf"
+      },
+      {
+        "path": "10-validation/package-review.md",
+        "sha256": "f5a907539bc5aa78e378956f4be521e18b1c51101c598fcdf370b97c0501ad97"
+      },
+      {
+        "path": "10-validation/packaging-runtime-probe.json",
+        "sha256": "850dc6035e625f310efc7c27419d4df02e10683529afc8d493cacf0a44c1bd18"
+      },
+      {
+        "path": "10-validation/requirement-traceability.json",
+        "sha256": "879979462fbb5faf610846c5c623d7d805b48fa91aeed426fcaa472823038cb6"
+      },
+      {
+        "path": "10-validation/synthetic-domain-fixtures.json",
+        "sha256": "928f020f04dc012e5dd53206f32ad07570d5f410a6181221ea1e03175eba341f"
+      },
+      {
+        "path": "10-validation/traceability-index.md",
+        "sha256": "0a01ce4ecab4d96fb2379764e827d42a0dba919ebe3a75e5bcc56b7cff430f12"
+      },
+      {
+        "path": "10-validation/validate_package.py",
+        "sha256": "6f2ccd3d376f84c0bbb6eb317d3bd6f485154101d3989193eb66054b347d4652"
+      },
+      {
+        "path": "10-validation/validation-report.json",
+        "sha256": "1c99bab83214bd05038be08caf9b4def7fbaf4a48a13fde8bd4e1cefda8abb55"
+      },
+      {
+        "path": "AGENTS.md",
+        "sha256": "7c00669e512e55ceb9df4102deead4a823c73376f6c13ee9bd05de791c87539b"
+      },
+      {
+        "path": "DECISION-STATUS.md",
+        "sha256": "e7740e60da66f280e42a8217eeefce470a2cdb5e1b1ed20485ecfd9887a9966b"
+      },
+      {
+        "path": "MANIFEST.md",
+        "sha256": "cfc5a88ab37fa86bd35f0dcb946e14d62d5c87860a22a3487fb9031102df8179"
+      },
+      {
+        "path": "README.md",
+        "sha256": "2768a0c1675d5843d948d0205d9c63838bd7a21aa34beda20ff74f72c0bd0670"
+      },
+      {
+        "path": "SHA256SUMS",
+        "sha256": "8576bf08ec4f2a4718476eca70e6d1d5cb2b6be1af550bf5c20c692bcbaff715"
+      },
+      {
+        "path": "manifest.json",
+        "sha256": "bcb7488ecf2ac42b4b33e478918e7ce6c35d0bdc04b208ddd9ed66622b468b7f"
+      }
+    ],
+    "source_tree_hash_algorithm": "SHA-256 of UTF-8 canonical JSON (sort_keys=True, separators=(comma,colon), ensure_ascii=False) of sorted relative file path and SHA-256 rows; excludes directories but includes all regular files; symlinks forbidden",
+    "free_space_baseline_reported_gib": 330,
+    "free_space_author_recheck_gib": 321,
+    "free_space_unit": "GiB, df -h rounded",
+    "overwrite_targets_observed_absent": [
+      "/Users/jamesryancooper/Projects/texenda/repo",
+      "/Users/jamesryancooper/Projects/texenda/worktrees",
+      "/Users/jamesryancooper/Projects/texenda/local",
+      "/Users/jamesryancooper/Projects/texenda/sources",
+      "/Users/jamesryancooper/Projects/texenda/archive"
+    ],
+    "source_symlinks": 0,
+    "source_regular_file_count": 88,
+    "source_package_manifest_count": 86,
+    "extra_preserved_cache_paths": [
+      "08-project-harness/__pycache__/harness.cpython-314.pyc",
+      "08-project-harness/tests/__pycache__/test_harness.cpython-314.pyc"
+    ]
+  },
+  "state": {
+    "old_path": "/Users/jamesryancooper/Projects/texenda-app/.texenda/state.json",
+    "planned_path": "/Users/jamesryancooper/Projects/texenda/local/agent-state/texenda/state.json",
+    "sha256": "b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235",
+    "version": "2.0",
+    "receipt_count": 13,
+    "receipt_tip": "f39249184757101b108ea7ec5ea0ffebdd8237315b8ac3cad3ad0cc6ab3e827e",
+    "routing_policy_digest": "61f0db448cf5ac5adad4d9340d568a7558c0369174e30aab92dd0ccf0d24bdf0",
+    "work_package_digest": "9ad162070c27e4c765ba145fc8a35d31dc288482453daaa39ec0bb6add8bd8d8",
+    "roster_record": {
+      "path": "docs/qualification/model-roster-v2.1.evidence.json",
+      "sha256": "8e44034e6247ea47b3f0002100e6a343cfa6685d56138a24f55e8a13054173c0"
+    },
+    "roster_canonical_sha256": "a23705178b39e8d0dd194abd4cf6e42fc20be404739d0e28e0ca9b221c80ddcf",
+    "qualified_profile_count": 11,
+    "earliest_profile_expiry": "2026-10-12T21:37:21Z",
+    "latest_profile_expiry": "2026-10-12T22:07:26Z",
+    "lease_count": 0,
+    "api_budget_usd": 0,
+    "declared_api_allocations_usd": 0,
+    "cleared_external_gate_count": 0,
+    "task_state_counts": {
+      "completed": 1,
+      "planned": 43
+    },
+    "checkpoint_independently_inspected": true,
+    "live_file_inspected_by": "coordinator only; this author inspected the content-addressed checkpoint",
+    "immutable_legacy_references": [
+      ".texenda/evidence/wp00-integration.evidence.json",
+      ".texenda/state.v1.a2a58e20004c86c0081b1427087626e36f931c3804532e8a1caf1c94a49a609a.json"
+    ],
+    "legacy_retention_rule": "Keep .texenda/evidence/**, .texenda/context/** and the named v1 checkpoint byte-exact at their repository-relative paths. They are ignored historical compatibility inputs, not active state."
+  },
+  "private_input": {
+    "old_path": "/Users/jamesryancooper/Projects/texenda-app/.texenda/private-inputs/kit/ohw/2026-09-14/subscribers.csv",
+    "planned_path": "/Users/jamesryancooper/Projects/texenda/local/private-inputs/kit/ohw/2026-09-14/subscribers.csv",
+    "exists": true,
+    "ignore_rule": ".gitignore:1:.texenda/",
+    "git_ls_files_result": "empty",
+    "git_status_result": "empty",
+    "contents_accessed": false,
+    "contents_hashed": false,
+    "contents_parsed": false,
+    "contents_copied": false,
+    "permitted_verification": [
+      "existence",
+      "ignore_rule",
+      "tracking_status",
+      "eventual_location"
+    ],
+    "method": "Coordinator used exact-path file existence, git check-ignore, git ls-files, and git status only. This author performed no private-input file operation."
+  },
+  "packages": {
+    "version": "1.1.0",
+    "sealed": {
+      "old_path": "/Users/jamesryancooper/Projects/texenda-app/specs/texenda-handoff",
+      "planned_path": "/Users/jamesryancooper/Projects/texenda/repo/specs/texenda-handoff",
+      "role": "implementation_repository_sealed_authority",
+      "manifest_sha256": "bcb7488ecf2ac42b4b33e478918e7ce6c35d0bdc04b208ddd9ed66622b468b7f",
+      "checksums_sha256": "37fffb1a165cfa6b907e7433d617c06e1c64ff09cd282173f7d791cace2ac07e",
+      "path_nul_sha256": "0b672e476b38a99bfbdcd3b9dbfca1baa2f1fcdc7329410986caefa9e5421336",
+      "canonical_array_sha256": "83cceb48e29bd3d070856976abe5aa2f5559d5479c5a0d1485d2d12c326de1c8"
+    },
+    "source": {
+      "old_path": "/Users/jamesryancooper/Projects/texenda",
+      "planned_path": "/Users/jamesryancooper/Projects/texenda/sources/handoff-1.1.0-20260914",
+      "role": "historical_source_unpromoted_variant",
+      "manifest_sha256": "bcb7488ecf2ac42b4b33e478918e7ce6c35d0bdc04b208ddd9ed66622b468b7f",
+      "checksums_sha256": "8576bf08ec4f2a4718476eca70e6d1d5cb2b6be1af550bf5c20c692bcbaff715",
+      "path_nul_sha256": "c3b25ae42e74324fedd3f4d545fe4105e9a2607c2f777afe049af10e75d9fe98",
+      "canonical_array_sha256": "26fa6487334c2782bdff8e98c49963e6720228824f6b91a9a7126e0d6cec2131"
+    },
+    "digest_methods": {
+      "path_nul_sha256": "Sort all regular files by POSIX-relative path; exclude __pycache__ components and .pyc; concatenate path + NUL + file SHA-256 + newline as UTF-8, then SHA-256. Both scopes contain 86 files.",
+      "canonical_array_sha256": "SHA-256 of UTF-8 canonical JSON array of sorted {path,sha256} rows for the 86 manifest artifacts; sort_keys=True, separators=(comma,colon), ensure_ascii=False."
+    },
+    "differing_paths": [
+      {
+        "path": "01-foundation/adr-index.md",
+        "source_sha256": "412edcbc33d22a67e37e408f92274ada4400348a27cb445bae2c172e713f748e",
+        "sealed_sha256": "c28faedbda98efba405b04e25b76b1356cb3c9d5c8839ad7f4b4fdc56e2b6ea1"
+      },
+      {
+        "path": "01-foundation/adr-set.md",
+        "source_sha256": "197d02b2da92eb42aab288584054d8c25efed11a2caf2f011921103b67798046",
+        "sealed_sha256": "0a2b7a10c1ab701898732065b6f6df3e4d4c03876b45de8a57eb51b979fed4de"
+      },
+      {
+        "path": "03-domain-and-architecture/content.md",
+        "source_sha256": "d02aec41df60ef6df7ce63e907751425b4a13c849dc4890c268e9c82bcd3411d",
+        "sealed_sha256": "13eca128ce77633b472c19a937d5ede0a00895704e9c2e96213ad69bd8ebf840"
+      },
+      {
+        "path": "03-domain-and-architecture/technology-baseline.md",
+        "source_sha256": "2ca4eb01b46d99321c04ab470476a415be8e1211bcbb8194fbc60747a167babb",
+        "sealed_sha256": "9e0ac6009d4ce360effb04209c51e35d9feead12844ce84b34e619b590ae7810"
+      },
+      {
+        "path": "05-implementation/compatibility-manifest.template.json",
+        "source_sha256": "65acb5f22efabcc4d38ea4c99293efd7d8216946e036a2b14e29a7707a13f8c8",
+        "sealed_sha256": "0b7cf511bbee904812d2f44686af689d6f3730fdb7467015b59ce99cc8fc66c9"
+      },
+      {
+        "path": "05-implementation/work-breakdown.md",
+        "source_sha256": "d9bbba2db18cd0d56b9c1991d8e6eb64827094a3caf96a2031908271bcdd791f",
+        "sealed_sha256": "5b07246002ea6fb651b82d2bdee1349c7e436c75ebff8fc6ad030fa14c78bfd0"
+      },
+      {
+        "path": "05-implementation/work-packages.json",
+        "source_sha256": "6e9bc795341ab165d7a6c81c06412ce149ba26b4a749012f7e7323f3aa8aeb29",
+        "sealed_sha256": "9ad162070c27e4c765ba145fc8a35d31dc288482453daaa39ec0bb6add8bd8d8"
+      },
+      {
+        "path": "09-reference/source-register.json",
+        "source_sha256": "c570de269e139827305c7621ef4f1e3f8a91e56b82a352fcaec93b3bf23c814f",
+        "sealed_sha256": "88f1027050fcf3ce56cb0d5fa4ac6fce6f0db973979855e2e2298c90f59dfbcf"
+      },
+      {
+        "path": "09-reference/source-register.md",
+        "source_sha256": "ddcac169edefdd8caf3eb8c67938aa05016dc498e0d565cc6d3f0bc0920cb879",
+        "sealed_sha256": "0d4f61ce076e2706759f22d2f02007ed101b3c682614e71acd4a699e432a4ce4"
+      },
+      {
+        "path": "DECISION-STATUS.md",
+        "source_sha256": "e7740e60da66f280e42a8217eeefce470a2cdb5e1b1ed20485ecfd9887a9966b",
+        "sealed_sha256": "9bf1bba6787e175def0e26b210f0c7aba8dab44ff76986983a9aa97438cee400"
+      },
+      {
+        "path": "SHA256SUMS",
+        "source_sha256": "8576bf08ec4f2a4718476eca70e6d1d5cb2b6be1af550bf5c20c692bcbaff715",
+        "sealed_sha256": "37fffb1a165cfa6b907e7433d617c06e1c64ff09cd282173f7d791cace2ac07e"
+      }
+    ],
+    "semantic_disposition": "Do not select, merge, or reconcile the later @react-email/editor wording during structural migration. The implementation sealed authority stays unchanged; record a future project-local amendment task if reconciliation is warranted.",
+    "package_assertions": {
+      "checks_passed_per_variant": 14,
+      "work_packages": 44,
+      "acceptance_criteria": 125,
+      "invariants": 30,
+      "adrs": 35,
+      "external_gates": 14
+    }
+  },
+  "checkpoints": [
+    {
+      "kind": "complete_all_ref_git_bundle",
+      "path": "/private/tmp/texenda-workspace-migration-checkpoint-20260914/texenda-git-36b74e9.bundle",
+      "sha256": "3103a9877f36c8b4b5535fe28e3bd9fe3814f0f045cd878efd374d5e357e3b71",
+      "validation": "git bundle verify: exit 0, complete history, 29 refs including HEAD"
+    },
+    {
+      "kind": "byte_exact_state_checkpoint",
+      "path": "/private/tmp/texenda-workspace-migration-checkpoint-20260914/state-b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235.json",
+      "sha256": "b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235",
+      "validation": "author SHA-256 equals baseline; state fields and receipt tip independently inspected"
+    },
+    {
+      "kind": "coordination_checkpoint_excluding_private_inputs",
+      "path": "/private/tmp/texenda-workspace-migration-checkpoint-20260914/coordination-state-no-private-inputs.tar",
+      "sha256": "0fe841098a8ba9bc672744eb53ca9dd72eed4e34921f257a74663616410228aa",
+      "validation": "author recomputed SHA-256 and listed archive member names; no private-input member"
+    }
+  ],
+  "active_path_findings": {
+    "search": "rg -n /Users/jamesryancooper/Projects/texenda-app in tracked/current operational sources, excluding private inputs",
+    "operational_absolute_path_dependencies_found": 0,
+    "historical_paths": [
+      "docs/qualification/evidence/2026-09-14-private-repository-ci-review.evidence.json",
+      "docs/qualification/evidence/runtime-surface-correction-independent-review.md",
+      "docs/qualification/evidence/2026-09-14-private-repository-ci-independent-review.md",
+      "docs/qualification/analysis/2026-09-13-astra-safety-usage-audit.json"
+    ],
+    "matches": 5,
+    "disposition": "Preserve historical evidence and its old paths; add successor relocation evidence."
+  },
+  "github": {
+    "observer": "coordinator",
+    "observed_at": "2026-09-14T14:26:52Z",
+    "visibility": "PRIVATE",
+    "is_private": true,
+    "default_hosted_branch": null,
+    "branches": [],
+    "hosted_workflow_count": 0,
+    "tracked_workflow_count": 0,
+    "actions_enabled": true,
+    "allowed_actions": "all",
+    "sha_pinning_required": false,
+    "read_only": true,
+    "pushed": false,
+    "changes_made": false,
+    "limitation": "Read-only API observations must be repeated immediately after relocation and at final completion; this author made no network request."
+  },
+  "codex": {
+    "observer": "coordinator",
+    "project_id": "8445df3c-0057-4a15-a026-9ee972cc1293",
+    "label": "texenda",
+    "saved_path": "/Users/jamesryancooper/Projects/texenda",
+    "is_git_repository": false,
+    "safe_project_path_update_api_exposed": false,
+    "required_manual_reopen_path": "/Users/jamesryancooper/Projects/texenda/repo",
+    "limitation": "Reopen/re-register the canonical checkout through supported app UI; do not edit app databases. Current task remains rooted at the unchanged parent."
+  },
+  "runtimes": {
+    "at_phase_0": "coordinator active; other relevant preexisting work runtimes reported stopped; no leases",
+    "authoring": "workspace_architecture_author is active in /private/tmp/texenda-workspace-architecture-20260914; sole child writer after inventory/blueprint agents stopped",
+    "relocation_permission": "NOT_ESTABLISHED_BY_THIS_RECORD",
+    "required_fresh_stop_proof": true,
+    "rule": "Observe every affected author/reviewer process stopped, reconcile linked worktrees, and keep a neutral-root T1 execution actor before relocation."
+  },
+  "blueprint": {
+    "profile": "high-assurance",
+    "adoption_mode": "mapped-existing",
+    "selected_reference": {
+      "path": "/Users/jamesryancooper/.codex/skills/project-bootstrap/assets/blueprint-source",
+      "version": "1.0.0",
+      "qualification": "inspected_structural_reference_only",
+      "dry_run": "PASS as reported by coordinator",
+      "source_validator": "FAIL: installed source-layout assumptions resolve ROOT to ~/.codex and report 20 missing source paths",
+      "acceptance_runner": "FAIL: installed-layout source copying reaches socket/temporary paths",
+      "origin_schema_supports_mapped_existing": false
+    },
+    "newer_candidate": {
+      "path": "/Users/jamesryancooper/Projects/octon-mini",
+      "declared_version": "4.3.0",
+      "head": "5e2d3025aea6b1574ab984e5ebb89b5602a38535",
+      "tree": "3c732979e580c80b020d09c22ce86f5202110518",
+      "dirty_entry_count": 218,
+      "qualification": "unqualified_candidate",
+      "partial_checks": "source-contract and installed-smoke PASS: 627 files, 105 templates",
+      "full_checks": "interrupted; no complete qualification",
+      "authority_transferred": false
+    },
+    "planner": {
+      "command": "python3 -B /Users/jamesryancooper/.codex/skills/project-bootstrap/scripts/plan_adoption.py --target /Users/jamesryancooper/Projects/texenda-app --profile high-assurance --format json",
+      "exit_code": 0,
+      "exact_collisions": [
+        "AGENTS.md"
+      ],
+      "candidate_new_path_count": 84,
+      "meaning": "literal missing paths are not functional gaps; mapped crosswalk is required",
+      "post_relocation_rerun": "required"
+    }
+  },
+  "bound_source_files": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "590ded771ad5b20b05056c1182873a368a3b914f9a395c8b7b88d1ca030b5344"
+    },
+    {
+      "path": "tooling/coordination/AGENTS.md",
+      "sha256": "aee04badd44941ac820b71f4359a82b6771128e7ab3f9b0b6da5aab8612272bc"
+    },
+    {
+      "path": "tooling/coordination/harness.py",
+      "sha256": "4d6b15408c6b77483c93dace1b693651e6b50c81607f4e2b22084313d2d205e4"
+    },
+    {
+      "path": "tooling/coordination/routing-policy.json",
+      "sha256": "5ebc903a1bd2d3e1925a01fcb1e556f0ed0a4c50682a3b3d93ccc7d7cdd6e979"
+    },
+    {
+      "path": "tooling/coordination/templates/ASSIGNMENT.md",
+      "sha256": "44babb922eed9155a87d8bb282d249785369afaa338edd736c97c73fd7b4f2c6"
+    },
+    {
+      "path": "tooling/coordination/README.md",
+      "sha256": "a219084c6d4974da8adf1308b8c4c392ba8819eb5a59fa95c684975adefc366e"
+    },
+    {
+      "path": "docs/agents/operating-guide.md",
+      "sha256": "de2e830a1b30920922ad4ea5588368dd8004800596d243e8520a1b7b914a4eb7"
+    },
+    {
+      "path": "docs/qualification/model-roster-v2.1.evidence.json",
+      "sha256": "8e44034e6247ea47b3f0002100e6a343cfa6685d56138a24f55e8a13054173c0"
+    },
+    {
+      "path": "docs/decisions/ADR-0001-quality-first-model-routing.md",
+      "sha256": "7196cc03755e9298d226f3b3271fe459890836117805957c1cceb37173ac8267"
+    },
+    {
+      "path": "docs/decisions/ADR-0002-astra-agent-operating-guidance.md",
+      "sha256": "88a6d6e0a33aff8622490ecd313567030ef95e3e6d20a12f6f0f1360d05e86d4"
+    },
+    {
+      "path": "docs/decisions/ADR-0003-private-repository-and-bounded-github-actions.md",
+      "sha256": "dbf29b877a8a832cc5d72ab44b9c737524ebae8ef1ab995e5b878f33ec4743e9"
+    }
+  ],
+  "blueprint_reference_files": [
+    {
+      "path": "/Users/jamesryancooper/.codex/skills/project-bootstrap/SKILL.md",
+      "sha256": "1d5aab7dc1f139d4536d586909a95d0135d085d533fb80973045707af5418a86"
+    },
+    {
+      "path": "/Users/jamesryancooper/.codex/skills/project-bootstrap/references/dossier-model.md",
+      "sha256": "cccff86d0684bdbedd31e1062e078f488597965b00984a82cf59fee66864b39b"
+    },
+    {
+      "path": "/Users/jamesryancooper/.codex/skills/project-bootstrap/references/harness-model.md",
+      "sha256": "c1a1cf4a1e4c85e1d7ff269854546cf8c82018920565a3d68eca5965c976d3bb"
+    },
+    {
+      "path": "/Users/jamesryancooper/.codex/skills/project-bootstrap/references/profile-selection.md",
+      "sha256": "6a715d2b5496f7d56bee62c8a15e4d7fc2841f298c2abdeff2f6265cdfa1cbb8"
+    },
+    {
+      "path": "/Users/jamesryancooper/.codex/skills/project-bootstrap/references/generation-workflow.md",
+      "sha256": "8aca230925f8e081181dcb18adec9648f71ca1a528e68f835fa1c3cfaf98e9c8"
+    },
+    {
+      "path": "/Users/jamesryancooper/.codex/skills/project-bootstrap/scripts/plan_adoption.py",
+      "sha256": "c34a9030c2915ca92bc1c3eceea8bc166c62566422960de277560f3db18222f8"
+    },
+    {
+      "path": "/Users/jamesryancooper/.codex/skills/project-bootstrap/scripts/scaffold_project.py",
+      "sha256": "8846e44e0606b09bbf1a4919a0327510d35fd335963dd394c0859db41a285c5f"
+    },
+    {
+      "path": "/Users/jamesryancooper/.codex/skills/project-bootstrap/scripts/validate_blueprint.py",
+      "sha256": "746117d041f1aa77f68c02147cf8dce04d6fc63f9f91ac009d582acc85138a5b"
+    },
+    {
+      "path": "/Users/jamesryancooper/.codex/skills/project-bootstrap/scripts/test_acceptance.py",
+      "sha256": "5107f8d4e585012e24fe74bf2ae5c992b956ac18a95eb2c3cf691a6d1f6298a3"
+    },
+    {
+      "path": "/Users/jamesryancooper/.codex/skills/project-bootstrap/assets/blueprint-source/VERSION",
+      "sha256": "59854984853104df5c353e2f681a15fc7924742f9a2e468c29af248dce45ce03"
+    },
+    {
+      "path": "/Users/jamesryancooper/.codex/skills/project-bootstrap/assets/blueprint-source/blueprint.json",
+      "sha256": "40a9361ca19a809f5f54d0cabf35756110f88839584344cfea009912544ad5ce"
+    },
+    {
+      "path": "/Users/jamesryancooper/.codex/skills/project-bootstrap/assets/blueprint-source/dossier/BLUEPRINT.md",
+      "sha256": "7136fab6af66180cfeb3eb5c2776c24a12ae2903b72ef813718db255c0e00004"
+    },
+    {
+      "path": "/Users/jamesryancooper/.codex/skills/project-bootstrap/assets/blueprint-source/dossier/artifact-types.json",
+      "sha256": "803ac2d02920c6f13707f1006475bf643e78d2d46cbd8804a12e07cc5f5eeb1f"
+    },
+    {
+      "path": "/Users/jamesryancooper/.codex/skills/project-bootstrap/assets/blueprint-source/harness/BLUEPRINT.md",
+      "sha256": "4a97de2f55d46b34e686b53f91adf44a25d2712a2bf6a56168b31b1298ba4eab"
+    },
+    {
+      "path": "/Users/jamesryancooper/.codex/skills/project-bootstrap/assets/blueprint-source/shared/GENERATION_CONTRACT.md",
+      "sha256": "c50fd895848411178a37da9b14193f55de7cd9556fd8f650dda8898ae178107e"
+    },
+    {
+      "path": "/Users/jamesryancooper/.codex/skills/project-bootstrap/assets/blueprint-source/shared/schemas/project-blueprint-origin.schema.json",
+      "sha256": "42726c4542fddbc63f3d149c2582a5ef76f2c545b7283c4f043f4542b6e3c7a1"
+    },
+    {
+      "path": "/Users/jamesryancooper/.codex/skills/project-bootstrap/assets/blueprint-source/migrations/0.2.0-to-1.0.0.md",
+      "sha256": "9124d3760441b68f9b46c35741466fd493618a14e35daab00733b90a5ffc2d1f"
+    }
+  ],
+  "phase_0_checks": [
+    {
+      "check": "local coordination tests",
+      "result": "PASS",
+      "count": 132,
+      "observer": "coordinator"
+    },
+    {
+      "check": "sealed harness tests",
+      "result": "PASS",
+      "count": 39,
+      "observer": "coordinator"
+    },
+    {
+      "check": "sealed package validator --checksums",
+      "result": "PASS",
+      "count": 14,
+      "observer": "coordinator"
+    },
+    {
+      "check": "source package validator --checksums",
+      "result": "PASS",
+      "count": 14,
+      "observer": "coordinator"
+    },
+    {
+      "check": "GitHub and private-input metadata-only checks",
+      "result": "PASS",
+      "observer": "coordinator"
+    }
+  ],
+  "limitations": [
+    "This immutable baseline is not a live roster, task ledger, permission source, or final relocation attestation.",
+    "The author candidate and later review commits require exact integration evidence and a fresh all-ref checkpoint before filesystem moves.",
+    "This author has not run product tests, changed GitHub, read private-input contents, moved files, or stopped the coordinator.",
+    "Historical compatibility inputs in .texenda remain ignored and repository-relative; active state.json and locks must leave that directory after explicit cutover."
+  ]
+}
