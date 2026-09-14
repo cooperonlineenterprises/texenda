@@ -1,7 +1,7 @@
 # Canonical source map
 
 Generated, non-authoritative navigation. Documentation is not permission.
-Generation: `cf21a5379a05823321ffaace6bb4eedbf753071dd2c1eaf27112e05b29f967df` at `2026-09-14T22:37:02+00:00`.
+Generation: `9bea818feb1b297b2b8fe02013664b6b3cca80ad97a8c2a9a5d5436ac74a2a7f` at `2026-09-14T22:39:08+00:00`.
 
 | Concern | Baseline owner | Facade owner | External-state owner |
 |---|---|---|---|

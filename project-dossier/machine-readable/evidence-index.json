@@ -1,10 +1,10 @@
 {
   "schema_version": "texenda.dossier-evidence-index.generated.v1",
-  "generation_id": "cf21a5379a05823321ffaace6bb4eedbf753071dd2c1eaf27112e05b29f967df",
-  "generated_at": "2026-09-14T22:37:02+00:00",
+  "generation_id": "9bea818feb1b297b2b8fe02013664b6b3cca80ad97a8c2a9a5d5436ac74a2a7f",
+  "generated_at": "2026-09-14T22:39:08+00:00",
   "authority": "generated_hash_index_only",
   "owner_path": "docs/qualification/evidence/",
-  "evidence_scope_sha256": "633a986c828c5d6820ff4735ff6f98f9a9665d0cce41275b14e2d224f61300d0",
+  "evidence_scope_sha256": "5d1b4a2cbe437c7d59e54b9f5293d080e01624fef181a2590d489f0226ff0b70",
   "evidence": [
     {
       "path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-author-correction-validation.log",
@@ -29,6 +29,14 @@
     {
       "path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-candidate-checkpoint-correction.evidence.json",
       "sha256": "ab3b0c527c92c79b5163057b588f1ae2c7b46c5a43c9f1335fcf2dbec6f4c682"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-file-type-correction-validation.log",
+      "sha256": "9a5303b2e03634c6b52e58364216710763ff5040f6ad101f7316812ceaf1c86c"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-file-type-correction.evidence.json",
+      "sha256": "44b957f4717b7e07ea7d858b25dba37c8eb636798d0eb647cff4ad7c08466c21"
     },
     {
       "path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-residual-race-correction-validation.log",
