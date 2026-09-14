@@ -1,10 +1,10 @@
 {
   "schema_version": "texenda.dossier-evidence-index.generated.v1",
-  "generation_id": "e720b33d618dc9c4c02bc7d8517a345c83b1dbede57305d67fafe0c4372b81a3",
-  "generated_at": "2026-09-14T21:16:35+00:00",
+  "generation_id": "168dbdfeb4d717ff409150b8c8e63c6adc8e68aeeea8981f0627765289c7296f",
+  "generated_at": "2026-09-14T21:21:34+00:00",
   "authority": "generated_hash_index_only",
   "owner_path": "docs/qualification/evidence/",
-  "evidence_scope_sha256": "c2448fdf3a030b02f2b6aaa3ac2113c488a6eab9dad9c471deaf0c8c797b51f1",
+  "evidence_scope_sha256": "b7a737fda7c6460a0d7867ab46067ba2d605b30e409c72fc1c2424a3d01f2ca3",
   "evidence": [
     {
       "path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-author-correction-validation.log",
@@ -37,6 +37,14 @@
     {
       "path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-safety-correction.evidence.json",
       "sha256": "4d69dea5ce8b450316ec396c7c93e17c96aa885189e7cce4db9415bbe444f855"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-state-write-transaction-correction-validation.log",
+      "sha256": "05b5263e3c4b148ae0d7ed48685b377c68cfc02223cc26ec34967effa1bfe7d2"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-state-write-transaction-correction.evidence.json",
+      "sha256": "4b2886d833941c943e098ba2890911138a41a26e4ca092c6efb1c2458d067ebc"
     },
     {
       "path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-transaction-finalization-correction-validation.log",
