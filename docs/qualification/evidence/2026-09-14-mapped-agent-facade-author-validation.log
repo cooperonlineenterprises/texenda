@@ -1,0 +1,79 @@
+Texenda mapped facade/state-root author validation
+observed_at_utc: 2026-09-14T17:28:07Z
+actor: agent:mapped-facade-sol
+profile: gpt-5.6-sol / max / T2 author
+runtime: Codex desktop 26.901.41600 (build 7982)
+billing: subscription; API allocation/spend 0
+base_revision: 680457854984020d0c8616a7f640a63079be9b3c
+source_candidate_revision: 3c245b3b649191c5fe1f38cf24f906ddedb9c914
+source_candidate_tree: 0f6d131a2e307e2ae62b0d1e22cb7a82ef6bfa59
+
+PASS adoption-planner
+  python3 /Users/jamesryancooper/.codex/skills/project-bootstrap/scripts/plan_adoption.py --target /Users/jamesryancooper/Projects/texenda/worktrees/mapped-agent-facade --profile high-assurance
+  Installed structural reference 1.0.0; two exact collisions and 83 candidate paths; read-only. Stock generator NOT RUN.
+
+PASS facade-mutation-suite
+  env PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s .agent/tests -p 'test_*.py' -q
+  13 tests OK: strict/duplicate keys, ownership, origin truth, restriction extension, stale views, interrupted refresh recovery, private exclusion, and scoped read-only proof.
+
+PASS workspace-and-relocation-suite
+  env PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s tooling/workspace/tests -p 'test_*.py' -q
+  53 tests OK, including 10 synthetic state/private relocation prepare/apply/resume/reverse-rename/verify and no-private-open/list/hash instrumentation cases.
+
+PASS local-coordination-suite
+  env PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s tooling/coordination/tests -p 'test_*.py' -q
+  148 tests OK, including 16 state-root/binding/stable-read/concurrent-lock/private-exclusion cases and all legacy lifecycle cases replayed through the local adapter.
+
+PASS sealed-harness-suite
+  env PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s specs/texenda-handoff/08-project-harness/tests -p 'test_*.py' -q
+  39 tests OK; sealed files unchanged.
+
+PASS workspace-contract-audit
+  env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/workspace/validate_contract.py --check --audit
+  42 concerns, 85 blueprint paths, 35 blueprint artifact types, 16 source moves, 164 bound qualification checks; JSON 113, TOML 1, Python 19; no live move/private content/approval claim.
+
+PASS sealed-package-validator
+  env PYTHONDONTWRITEBYTECODE=1 python3 -B specs/texenda-handoff/10-validation/validate_package.py --checksums
+  All 14 checks PASS; 86 files, 44 WPs, 125 product criteria, 30 invariants, 35 ADRs, 14 external gates; no product PASS.
+
+PASS source-package-validator
+  env PYTHONDONTWRITEBYTECODE=1 python3 -B /Users/jamesryancooper/Projects/texenda/sources/handoff-1.1.0-20260914/10-validation/validate_package.py --checksums
+  All 14 checks PASS with the same structural counts; source remains unpromoted and separate.
+
+PASS package-variant-byte-comparison
+  Standard-library SHA-256 inventory comparison against the Phase-0 baseline.
+  Both manifest scopes contain 86 files; exactly eleven expected differing paths remain. The source's two preexisting cache files remain outside the 86-file manifest scope. No package file was modified.
+
+PASS generated-refresh-and-read-only-check
+  env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/refresh.py --refresh --state-root /Users/jamesryancooper/Projects/texenda/repo/.texenda
+  env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/validate.py --check --state-root /Users/jamesryancooper/Projects/texenda/repo/.texenda
+  Pre-evidence generation cb1a35be97be70cda1cfb2b641b7165ce71935e45536d1bb72d5c2ad8339d895; source scope f33ea59461456267377ec1bbe3c661f6bc7788d3c4bf89079ab93e4813637e1d. Check PASS: JSON 113, TOML 1, Python 19, dossier paths 27, instruction files 3, local links 101, evidence checks 164.
+
+PASS read-only-mutation-proof
+  Snapshot exact SHA-256/size/mtime/ctime for 249 tracked+untracked candidate files and the live state/lock, plus Git status including ignored paths; run facade check; compare again.
+  All snapshots/status identical, no cache directory created, no Git atime claim, and private-input content excluded. The dedicated synthetic test additionally covers tracked, untracked evidence-only, ignored cache, generated, state, and lock paths.
+
+PASS live-ledger-stable-read
+  env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root /Users/jamesryancooper/Projects/texenda/repo status
+  env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root /Users/jamesryancooper/Projects/texenda/repo check
+  State version 2.0; SHA-256 b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235; 13 receipts; tip f39249184757101b108ea7ec5ea0ffebdd8237315b8ac3cad3ad0cc6ab3e827e; eleven exact profiles available through 2026-10-12; zero leases; budget/allocation/spend 0. State and lock inode/size/mtime/ctime were identical before/after.
+
+PASS private-input-metadata-only
+  test -f /Users/jamesryancooper/Projects/texenda/repo/.texenda/private-inputs/kit/ohw/2026-09-14/subscribers.csv
+  git check-ignore -v .texenda/private-inputs/kit/ohw/2026-09-14/subscribers.csv
+  git ls-files --error-unmatch .texenda/private-inputs/kit/ohw/2026-09-14/subscribers.csv (expected exit 1)
+  Existence PASS; ignored by .gitignore line 1; untracked PASS. Contents were not opened, parsed, hashed, logged, copied, or listed.
+
+PASS git-and-sealed-diff
+  git diff --check
+  git diff --exit-code 680457854984020d0c8616a7f640a63079be9b3c -- specs/texenda-handoff
+  No whitespace error and no sealed-package byte change. Remote remains https://github.com/cooperonlineenterprises/texenda.git. Canonical main remained 680457854984020d0c8616a7f640a63079be9b3c during authoring.
+
+NOT_RUN independent-review
+  Requires a distinct qualified gpt-6-astra/max reviewer of the exact final candidate/evidence.
+NOT_RUN integration-or-live-relocation
+  This T2 author did not touch main, create an active binding, move live state/lock/private inputs, append receipts, or run a real mapped task lifecycle.
+NOT_RUN GitHub-or-external-effects
+  No network, push, remote branch, GitHub setting/workflow/secret/budget change, spend, deployment, publication, sending, or production activation was performed.
+
+Result: PASS for the bounded author candidate and synthetic relocation prerequisite only. No product or external gate passed. Final integrated-head validation, exact T1 review, real mapped lifecycle, and serial live relocation remain required.

@@ -1,0 +1,171 @@
+{
+  "schema_version": "texenda.dossier-path-authority.generated.v1",
+  "generation_id": "79768a41b155d0d38338a328b675736e839c1699cbea72faa46bb54053253417",
+  "generated_at": "2026-09-14T17:30:24+00:00",
+  "authority": "generated_from_project-dossier/ARTIFACT_CATALOG.json",
+  "source_sha256": "4a6aa8a8b6b73db5f6e42f1876556d06645baa3ee3557d9948321d48c52345f9",
+  "paths": [
+    {
+      "path": "project-dossier/README.md",
+      "classification": "navigation",
+      "owner_path": "project-dossier/AUTHORITY.md",
+      "concern_id": "dossier_interpretation"
+    },
+    {
+      "path": "project-dossier/AUTHORITY.md",
+      "classification": "authoritative",
+      "owner_path": "project-dossier/AUTHORITY.md",
+      "concern_id": "dossier_interpretation"
+    },
+    {
+      "path": "project-dossier/CANONICAL_SOURCE_MAP.md",
+      "classification": "generated_view",
+      "owner_path": "project-dossier/transition/blueprint-adoption-crosswalk.json",
+      "concern_id": "adoption_transition"
+    },
+    {
+      "path": "project-dossier/ARTIFACT_CATALOG.json",
+      "classification": "authoritative",
+      "owner_path": "project-dossier/ARTIFACT_CATALOG.json",
+      "concern_id": "artifact_classification"
+    },
+    {
+      "path": "project-dossier/VERSION.md",
+      "classification": "authoritative",
+      "owner_path": "project-dossier/VERSION.md",
+      "concern_id": "dossier_version"
+    },
+    {
+      "path": "project-dossier/SUPERSESSION.json",
+      "classification": "authoritative",
+      "owner_path": "project-dossier/SUPERSESSION.json",
+      "concern_id": "dossier_supersession"
+    },
+    {
+      "path": "project-dossier/current-state/README.md",
+      "classification": "generated_view",
+      "owner_path": "direct_git_build_and_harness_evidence",
+      "concern_id": "git_observation"
+    },
+    {
+      "path": "project-dossier/current-state/current.json",
+      "classification": "generated_view",
+      "owner_path": "direct_git_build_and_harness_evidence",
+      "concern_id": "git_observation"
+    },
+    {
+      "path": "project-dossier/conformance/README.md",
+      "classification": "navigation",
+      "owner_path": "project-dossier/conformance/findings.json",
+      "concern_id": "conformance_findings"
+    },
+    {
+      "path": "project-dossier/conformance/findings.json",
+      "classification": "authoritative",
+      "owner_path": "project-dossier/conformance/findings.json",
+      "concern_id": "conformance_findings"
+    },
+    {
+      "path": "project-dossier/plans/README.md",
+      "classification": "navigation",
+      "owner_path": "project-dossier/machine-readable/plan.json",
+      "concern_id": "adoption_plan"
+    },
+    {
+      "path": "project-dossier/machine-readable/plan.json",
+      "classification": "plan",
+      "owner_path": "project-dossier/machine-readable/plan.json",
+      "concern_id": "adoption_plan"
+    },
+    {
+      "path": "project-dossier/registers/README.md",
+      "classification": "navigation",
+      "owner_path": "project-dossier/machine-readable/raidq.json",
+      "concern_id": "consolidated_raidq"
+    },
+    {
+      "path": "project-dossier/machine-readable/raidq.json",
+      "classification": "authoritative",
+      "owner_path": "project-dossier/machine-readable/raidq.json",
+      "concern_id": "consolidated_raidq"
+    },
+    {
+      "path": "project-dossier/provenance/README.md",
+      "classification": "navigation",
+      "owner_path": "project-dossier/provenance/sources.json",
+      "concern_id": "adoption_provenance"
+    },
+    {
+      "path": "project-dossier/provenance/sources.json",
+      "classification": "authoritative",
+      "owner_path": "project-dossier/provenance/sources.json",
+      "concern_id": "adoption_provenance"
+    },
+    {
+      "path": "project-dossier/validation/README.md",
+      "classification": "navigation",
+      "owner_path": ".agent/validators.json",
+      "concern_id": "validation_commands"
+    },
+    {
+      "path": "project-dossier/evidence/README.md",
+      "classification": "navigation",
+      "owner_path": "docs/qualification/evidence/",
+      "concern_id": "qualification_evidence"
+    },
+    {
+      "path": "project-dossier/handoff/START_HERE.md",
+      "classification": "generated_view",
+      "owner_path": "external_live_state_and_direct_evidence",
+      "concern_id": "active_tasks"
+    },
+    {
+      "path": "project-dossier/transition/README.md",
+      "classification": "navigation",
+      "owner_path": "project-dossier/transition/blueprint-adoption-crosswalk.json",
+      "concern_id": "adoption_transition"
+    },
+    {
+      "path": "project-dossier/transition/blueprint-adoption-crosswalk.json",
+      "classification": "authoritative",
+      "owner_path": "project-dossier/transition/blueprint-adoption-crosswalk.json",
+      "concern_id": "adoption_transition"
+    },
+    {
+      "path": "project-dossier/transition/workspace-move-manifest.json",
+      "classification": "plan",
+      "owner_path": "project-dossier/transition/workspace-move-manifest.json",
+      "concern_id": "adoption_transition"
+    },
+    {
+      "path": "project-dossier/transition/workspace-relocation-receipt.md",
+      "classification": "evidence",
+      "owner_path": "project-dossier/transition/workspace-relocation-receipt.md",
+      "concern_id": "adoption_transition"
+    },
+    {
+      "path": "project-dossier/transition/post-relocation-adoption-plan.json",
+      "classification": "history",
+      "owner_path": "project-dossier/transition/post-relocation-adoption-plan.json",
+      "concern_id": "adoption_transition"
+    },
+    {
+      "path": "project-dossier/machine-readable/path-authority.json",
+      "classification": "generated_view",
+      "owner_path": "project-dossier/ARTIFACT_CATALOG.json",
+      "concern_id": "artifact_classification"
+    },
+    {
+      "path": "project-dossier/machine-readable/findings.json",
+      "classification": "generated_view",
+      "owner_path": "project-dossier/conformance/findings.json",
+      "concern_id": "conformance_findings"
+    },
+    {
+      "path": "project-dossier/machine-readable/evidence-index.json",
+      "classification": "generated_view",
+      "owner_path": "docs/qualification/evidence/",
+      "concern_id": "qualification_evidence"
+    }
+  ]
+}

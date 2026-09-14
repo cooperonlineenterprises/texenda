@@ -1,0 +1,43 @@
+{
+  "schema_version": "texenda.dossier-current-state.generated.v1",
+  "generation_id": "79768a41b155d0d38338a328b675736e839c1699cbea72faa46bb54053253417",
+  "generated_at": "2026-09-14T17:30:24+00:00",
+  "authority": "generated_non_authoritative_projection",
+  "source_git_revision": "3c245b3b649191c5fe1f38cf24f906ddedb9c914",
+  "source_git_tree": "0f6d131a2e307e2ae62b0d1e22cb7a82ef6bfa59",
+  "source_scope_sha256": "f33ea59461456267377ec1bbe3c661f6bc7788d3c4bf89079ab93e4813637e1d",
+  "source_scope_exclusions": [
+    {
+      "path": ".agent/generated/**",
+      "reason": "refresh-only generated integrity outputs; containing them would create a digest cycle"
+    },
+    {
+      "path": ".agent/state/current.json and .agent/state/RESUME.md",
+      "reason": "refresh-only generated state projections"
+    },
+    {
+      "path": "project-dossier generated views",
+      "reason": "refresh-only source map, current-state, handoff, and machine-readable mirrors"
+    },
+    {
+      "path": "docs/qualification/evidence/**",
+      "reason": "immutable validation/review evidence may be added after source validation and is hash-indexed separately"
+    },
+    {
+      "path": ".git/** and ignored local state/private/cache paths",
+      "reason": "Git internals and nontracked operational/private material are outside the tracked source scope"
+    }
+  ],
+  "ledger_sha256": "b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235",
+  "receipt_count": 13,
+  "receipt_tip": "f39249184757101b108ea7ec5ea0ffebdd8237315b8ac3cad3ad0cc6ab3e827e",
+  "roster_evidence_sha256": "a23705178b39e8d0dd194abd4cf6e42fc20be404739d0e28e0ca9b221c80ddcf",
+  "evidence_scope_sha256": "d42b5ad11b114efed8e3ae9c3d490f30a6e2c814514d04906bf6b76141f352be",
+  "freshness_rule": "Recompute the complete declared source scope, separately indexed evidence, and stable live-ledger snapshot. Any mismatch is stale; current full HEAD/tree are reported separately because generated/evidence-only commits may follow this source revision.",
+  "ledger_observation": {
+    "state_root": "/Users/jamesryancooper/Projects/texenda/repo/.texenda",
+    "state_version": "2.0",
+    "lease_count": 0,
+    "declared_budget_usd": 0.0
+  }
+}

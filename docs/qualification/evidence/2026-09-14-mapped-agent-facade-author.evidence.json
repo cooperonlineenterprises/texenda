@@ -1,0 +1,174 @@
+{
+  "schema_version": "texenda.mapped-facade-author-evidence.v1",
+  "id": "EVD-FACADE-0001",
+  "kind": "candidate_author_report",
+  "information_role": "immutable_evidence",
+  "status": "candidate_for_independent_review",
+  "recorded_at": "2026-09-14T17:28:07Z",
+  "actor": "agent:mapped-facade-sol",
+  "requested_profile": "gpt-5.6-sol-max",
+  "capability_tier": "T2",
+  "reasoning_effort": "max",
+  "runtime_id": "codex-desktop-collaboration",
+  "client_version": "26.901.41600 (build 7982)",
+  "billing_mode": "subscription",
+  "api_budget_usd": 0,
+  "api_spend_usd": 0,
+  "bounds": {
+    "max_seconds": 5000,
+    "max_tokens": 120000,
+    "provider_token_meter": "unavailable"
+  },
+  "base_revision": "680457854984020d0c8616a7f640a63079be9b3c",
+  "candidate_revision": "3c245b3b649191c5fe1f38cf24f906ddedb9c914",
+  "candidate_tree": "0f6d131a2e307e2ae62b0d1e22cb7a82ef6bfa59",
+  "source_scope_sha256": "f33ea59461456267377ec1bbe3c661f6bc7788d3c4bf89079ab93e4813637e1d",
+  "pre_evidence_generation_id": "cb1a35be97be70cda1cfb2b641b7165ce71935e45536d1bb72d5c2ad8339d895",
+  "checks": [
+    {
+      "id": "adoption-planner",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Run the installed project-bootstrap read-only adoption planner with high-assurance; do not run the generator.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-author-validation.log",
+      "sha256": "5f1383d8c125071a067f5a127ea55fdbcd14b3e84debc23c8098779c7bce1e68"
+    },
+    {
+      "id": "facade-mutation-suite",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "python3 -B -m unittest discover -s .agent/tests -p test_*.py -q",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-author-validation.log",
+      "sha256": "5f1383d8c125071a067f5a127ea55fdbcd14b3e84debc23c8098779c7bce1e68"
+    },
+    {
+      "id": "workspace-relocation-suite",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "python3 -B -m unittest discover -s tooling/workspace/tests -p test_*.py -q",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-author-validation.log",
+      "sha256": "5f1383d8c125071a067f5a127ea55fdbcd14b3e84debc23c8098779c7bce1e68"
+    },
+    {
+      "id": "local-coordination-suite",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "python3 -B -m unittest discover -s tooling/coordination/tests -p test_*.py -q",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-author-validation.log",
+      "sha256": "5f1383d8c125071a067f5a127ea55fdbcd14b3e84debc23c8098779c7bce1e68"
+    },
+    {
+      "id": "sealed-harness-suite",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "python3 -B -m unittest discover -s specs/texenda-handoff/08-project-harness/tests -p test_*.py -q",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-author-validation.log",
+      "sha256": "5f1383d8c125071a067f5a127ea55fdbcd14b3e84debc23c8098779c7bce1e68"
+    },
+    {
+      "id": "workspace-contract-audit",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "python3 -B tooling/workspace/validate_contract.py --check --audit",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-author-validation.log",
+      "sha256": "5f1383d8c125071a067f5a127ea55fdbcd14b3e84debc23c8098779c7bce1e68"
+    },
+    {
+      "id": "sealed-package-validator",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "python3 -B specs/texenda-handoff/10-validation/validate_package.py --checksums",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-author-validation.log",
+      "sha256": "5f1383d8c125071a067f5a127ea55fdbcd14b3e84debc23c8098779c7bce1e68"
+    },
+    {
+      "id": "source-package-validator",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "python3 -B /Users/jamesryancooper/Projects/texenda/sources/handoff-1.1.0-20260914/10-validation/validate_package.py --checksums",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-author-validation.log",
+      "sha256": "5f1383d8c125071a067f5a127ea55fdbcd14b3e84debc23c8098779c7bce1e68"
+    },
+    {
+      "id": "generated-refresh-and-check",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Run explicit refresh against the stable default live ledger, then .agent/scripts/validate.py --check against the same state root.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-author-validation.log",
+      "sha256": "5f1383d8c125071a067f5a127ea55fdbcd14b3e84debc23c8098779c7bce1e68"
+    },
+    {
+      "id": "read-only-mutation-proof",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Compare scoped SHA-256, size, mtime, ctime, Git status including ignored, live state/lock metadata, and cache paths before/after the facade check; do not claim .git atime.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-author-validation.log",
+      "sha256": "5f1383d8c125071a067f5a127ea55fdbcd14b3e84debc23c8098779c7bce1e68"
+    },
+    {
+      "id": "live-ledger-stable-read",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Run the new local adapter status/check against canonical repo default state and compare state/lock metadata before/after.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-author-validation.log",
+      "sha256": "5f1383d8c125071a067f5a127ea55fdbcd14b3e84debc23c8098779c7bce1e68"
+    },
+    {
+      "id": "private-input-metadata-only",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Check only exact-path existence, git check-ignore, and git ls-files tracking status for the private CSV.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-author-validation.log",
+      "sha256": "5f1383d8c125071a067f5a127ea55fdbcd14b3e84debc23c8098779c7bce1e68"
+    },
+    {
+      "id": "package-variant-byte-comparison",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Compare both public package file inventories/hashes to the Phase-0 baseline while excluding only the two named source cache files from the 86-file manifest scope.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-author-validation.log",
+      "sha256": "5f1383d8c125071a067f5a127ea55fdbcd14b3e84debc23c8098779c7bce1e68"
+    },
+    {
+      "id": "git-and-sealed-diff",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "git diff --check and git diff --exit-code 680457854984020d0c8616a7f640a63079be9b3c -- specs/texenda-handoff",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-author-validation.log",
+      "sha256": "5f1383d8c125071a067f5a127ea55fdbcd14b3e84debc23c8098779c7bce1e68"
+    }
+  ],
+  "private_input_proof": {
+    "existence_checked": true,
+    "ignore_checked": true,
+    "tracking_checked": true,
+    "content_opened": false,
+    "content_hashed": false,
+    "content_parsed": false,
+    "content_copied": false,
+    "content_listed": false,
+    "content_logged": false
+  },
+  "forbidden_effects_performed": [],
+  "not_run": [
+    "independent Astra/max review",
+    "local main integration",
+    "live state/lock/private-input relocation",
+    "real mapped maintenance task lifecycle",
+    "GitHub or any other external mutation",
+    "product or external gate qualification"
+  ],
+  "limitations": [
+    "The installed 1.0.0 blueprint is structural-reference-only and the dirty 4.3.0 candidate remains unqualified.",
+    "The two 1.1.0 package variants remain semantically unreconciled and byte-distinct in eleven expected files.",
+    "Synthetic relocation tests do not authorize or execute the live move.",
+    "This author does not independently approve its own candidate."
+  ],
+  "runtime_stop": {
+    "background_sessions": 0,
+    "child_agents": 0,
+    "self_attested_stop_is_not_independent_proof": true,
+    "parent_observation_required_before_scope_release": true
+  },
+  "resumption": "Review the exact branch tip, source candidate, generated/evidence commit, and bound log with a distinct qualified gpt-6-astra-max actor. Do not execute live relocation until exact approval and a fresh runtime/lease/lock freeze."
+}

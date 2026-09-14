@@ -1,0 +1,1008 @@
+{
+  "schema_version": "texenda.generated-integrity.v1",
+  "generation_id": "79768a41b155d0d38338a328b675736e839c1699cbea72faa46bb54053253417",
+  "generated_at": "2026-09-14T17:30:24+00:00",
+  "authority": "generated_non_authoritative",
+  "source_git_revision": "3c245b3b649191c5fe1f38cf24f906ddedb9c914",
+  "source_git_tree": "0f6d131a2e307e2ae62b0d1e22cb7a82ef6bfa59",
+  "source_scope_sha256": "f33ea59461456267377ec1bbe3c661f6bc7788d3c4bf89079ab93e4813637e1d",
+  "source_scope_exclusions": [
+    {
+      "path": ".agent/generated/**",
+      "reason": "refresh-only generated integrity outputs; containing them would create a digest cycle"
+    },
+    {
+      "path": ".agent/state/current.json and .agent/state/RESUME.md",
+      "reason": "refresh-only generated state projections"
+    },
+    {
+      "path": "project-dossier generated views",
+      "reason": "refresh-only source map, current-state, handoff, and machine-readable mirrors"
+    },
+    {
+      "path": "docs/qualification/evidence/**",
+      "reason": "immutable validation/review evidence may be added after source validation and is hash-indexed separately"
+    },
+    {
+      "path": ".git/** and ignored local state/private/cache paths",
+      "reason": "Git internals and nontracked operational/private material are outside the tracked source scope"
+    }
+  ],
+  "source_files": [
+    {
+      "path": ".agent/START_HERE.md",
+      "sha256": "790f0ecb1f4e207bb04e312b24771e394e2bbbe9cf92939c39558966543b19b1"
+    },
+    {
+      "path": ".agent/context.json",
+      "sha256": "b81f0d788ada44792604ca3378d921be064bb1e8f1c6fdfc91cd6f599a391bd1"
+    },
+    {
+      "path": ".agent/decisions/README.md",
+      "sha256": "e1b0b81e2b87f819ec1114a1be0a27d507e73f5d2d2502f6fd667f69121ff05d"
+    },
+    {
+      "path": ".agent/evidence/README.md",
+      "sha256": "5679a1e0c1d162daaa47375194da14182539734518ff0fdb01aaa5b9d7863d8f"
+    },
+    {
+      "path": ".agent/extensions/texenda-coordination/README.md",
+      "sha256": "5b3ddd877eda70ec09dc3c2082115179447515e28b26ed22a9a2bb7bee44e490"
+    },
+    {
+      "path": ".agent/extensions/texenda-coordination/extension.json",
+      "sha256": "3ae9859d2576209c7e6a09f145ee6380b399cc6fa19017e72d2ff0adf2d6ddb5"
+    },
+    {
+      "path": ".agent/lifecycle.json",
+      "sha256": "050c3c51ed1eff41ef3c32ec647392b3747cefe8d5618fdc3ea416147e48babc"
+    },
+    {
+      "path": ".agent/policy.json",
+      "sha256": "8399033f4f34fd1a4e839c306e5522c2bc0e0eae7cf59cd8356d30bf0ef9468d"
+    },
+    {
+      "path": ".agent/project.json",
+      "sha256": "4215e39c6ffdcd0b0c20603f0772145c891756e5fa4b3f5535ef6f211b535539"
+    },
+    {
+      "path": ".agent/reviews/README.md",
+      "sha256": "92fdffd5b89888b5a0379a4df3a4467297f6cdb1fe9ad5bb0f8e13579bf445e6"
+    },
+    {
+      "path": ".agent/schema.json",
+      "sha256": "983320cb1bffa115384bb167a2a645a1a02d6dde52d089c45019b23e3b347c65"
+    },
+    {
+      "path": ".agent/schemas/project-blueprint-origin.v2.schema.json",
+      "sha256": "2db1ab62a7ca44a4cab055652af773ddfadd4f22edf335769952960f655aced6"
+    },
+    {
+      "path": ".agent/scripts/common.py",
+      "sha256": "83e91c95d4b7713fd619b42f125febf898f6395e82ebe78c95a847331dcce316"
+    },
+    {
+      "path": ".agent/scripts/refresh.py",
+      "sha256": "f3b9ae0efd5ad84ef8832ffdc01f91a8ddfbc3dc9fbcdeca5a0cc89913d210d1"
+    },
+    {
+      "path": ".agent/scripts/validate.py",
+      "sha256": "323cae3a2b15484e030d30d29ed6171079ec42e7ce61dbff63ff946ef5bb207a"
+    },
+    {
+      "path": ".agent/tasks/README.md",
+      "sha256": "0c58e8d25f6a5c0be0167c98c6f00f4013b7dca6c62a72a16406b1dda42fa42e"
+    },
+    {
+      "path": ".agent/tests/fixtures/invalid/duplicate-key.json",
+      "sha256": "7ef9a350663d322648842fd369215ad622fb40e7cfa2b6bf13bea92c96148c6c"
+    },
+    {
+      "path": ".agent/tests/fixtures/invalid/nested-agent-weakening.md",
+      "sha256": "a338e43805dff471dac695f7a3d210b6fb25136d51dcbba0efcba72fed9292a2"
+    },
+    {
+      "path": ".agent/tests/fixtures/valid/kernel.json",
+      "sha256": "8113f946d8fad10917a892cf77a258cb30046ae2baf1a829909a340f896532c0"
+    },
+    {
+      "path": ".agent/tests/test_validate.py",
+      "sha256": "f57f518da31883c40e874721b9b9c5d7ac62cb6d51c2d044e1dbbb9f88cf0e60"
+    },
+    {
+      "path": ".agent/tools.json",
+      "sha256": "f6112f3a943c1691f734885e766697884e3c4c6e8ad7444782c43910af835f23"
+    },
+    {
+      "path": ".agent/validators.json",
+      "sha256": "a16c4b7a4246d9cc1e7a128cf3e51e4788d882f49a795b576f2d410e6d9f8750"
+    },
+    {
+      "path": ".codex/config.toml",
+      "sha256": "180a29761772e2d1ec31bb7c6c3546549d2dbe5b14573354fc57559daa514170"
+    },
+    {
+      "path": ".codex/config.toml.example",
+      "sha256": "3d2cb990c2218bbfe5465cd3d552f472a67abb513a875eb304513a051eb6fea8"
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "2339b85d5172989183a965b86f93ca272a873c560cf3fc9e60b8e78cc7f47a82"
+    },
+    {
+      "path": ".project-blueprint-origin.json",
+      "sha256": "9ebe8a7cd007f6805b5e838771792e4baff8bd976a4068b8cfae409088f95c9c"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "1532dd6be102d971b8dc1cdb0b9cd4748b31328643ed6c379d5d65225166a2bd"
+    },
+    {
+      "path": "docs/agents/operating-guide.md",
+      "sha256": "37529b26070f4d9b40eacce1712297e6e52baa69787620a8925f704121f2a838"
+    },
+    {
+      "path": "docs/agents/visualization.md",
+      "sha256": "0c4ec49140dc85b8d38b73e0539f5e2566047f82c4eaa851675a5882ac466ef0"
+    },
+    {
+      "path": "docs/audits/2026-09-13-gpt-6-astra-agent-system-audit.md",
+      "sha256": "7cf7dbd6741544ca77c3eee6afdcfa3001d7eeecd7870c52b3b6b686299124f5"
+    },
+    {
+      "path": "docs/audits/2026-09-13-gpt-6-astra-author-verification.log",
+      "sha256": "9d8a4168908eb4ad10c4cc4499af529ef3af881424c832d7461a80fa578d8cf8"
+    },
+    {
+      "path": "docs/audits/2026-09-13-gpt-6-astra-independent-review.md",
+      "sha256": "9bddaa709fbbc11568eccd01cf4f2c85f35ba794a315a64c119805c4ba5cd69d"
+    },
+    {
+      "path": "docs/audits/2026-09-13-gpt-6-astra-review.evidence.json",
+      "sha256": "1d453169c1e8e39e3ed25d23cfce095f3bdbde5446ab74b4efb36f8f629a107a"
+    },
+    {
+      "path": "docs/decisions/ADR-0001-quality-first-model-routing.md",
+      "sha256": "7196cc03755e9298d226f3b3271fe459890836117805957c1cceb37173ac8267"
+    },
+    {
+      "path": "docs/decisions/ADR-0002-astra-agent-operating-guidance.md",
+      "sha256": "88a6d6e0a33aff8622490ecd313567030ef95e3e6d20a12f6f0f1360d05e86d4"
+    },
+    {
+      "path": "docs/decisions/ADR-0003-private-repository-and-bounded-github-actions.md",
+      "sha256": "dbf29b877a8a832cc5d72ab44b9c737524ebae8ef1ab995e5b878f33ec4743e9"
+    },
+    {
+      "path": "docs/decisions/ADR-0004-mapped-project-workspace.md",
+      "sha256": "e1594f793c892adecfebbf86ce76c7fb180d79cc66497d936fd215ea773b8b08"
+    },
+    {
+      "path": "docs/operations/github-ci-policy.md",
+      "sha256": "f0709eab96b2f549e2cfb4274ec4db2aa5239368a4222076d95c9b96ae77dce6"
+    },
+    {
+      "path": "docs/qualification/README.md",
+      "sha256": "76a6bf7859f1b47da64c3e34aefbafbf39cced6aded453d7cb3bbbafe919cf5b"
+    },
+    {
+      "path": "docs/qualification/analysis/2026-09-13-astra-instruction-scope-audit.json",
+      "sha256": "e90055829e619fdc41b4f50d58ea2e7114a7aeb20890042c8a9af74310b2ec8c"
+    },
+    {
+      "path": "docs/qualification/analysis/2026-09-13-astra-safety-usage-audit.json",
+      "sha256": "433685da64af22e42790289a5f977caafcf5234ce0b41e1cf10a8de556274d73"
+    },
+    {
+      "path": "docs/qualification/analysis/routing-v2-test-coverage.json",
+      "sha256": "30fa2b439df7ac8a60d2319a5f15e4aeadb8ca6344b0893de22a6541c2ef9ca8"
+    },
+    {
+      "path": "docs/qualification/analysis/routing-v2-test-plan.md",
+      "sha256": "4fe17ba6f1676c7b6cfbd90cf877c406575fd904d474cb2f9d121287008a2199"
+    },
+    {
+      "path": "docs/qualification/analysis/work-package-routing-proposal.json",
+      "sha256": "0f2aecfe11bed348d4a01b97c98c1b5571ceaf4a727bf30399caac9116058f35"
+    },
+    {
+      "path": "docs/qualification/analysis/work-package-routing-review.json",
+      "sha256": "31f0daa4a82e28eefaabbec69d7d2985fa2051e87eff40b8ce2f1cea724b6fe0"
+    },
+    {
+      "path": "docs/qualification/model-qualification-verification.md",
+      "sha256": "418a84f629b8751dc22e5131ebd2fa69d88fadb86b10a3f6c80d63055373791c"
+    },
+    {
+      "path": "docs/qualification/model-roster-v2.1.evidence.json",
+      "sha256": "8e44034e6247ea47b3f0002100e6a343cfa6685d56138a24f55e8a13054173c0"
+    },
+    {
+      "path": "docs/qualification/model-roster-v2.evidence.json",
+      "sha256": "dbfd99b98edc134c1e202c0b48145141f967718194b67012f75a3868bf4ef6a1"
+    },
+    {
+      "path": "docs/qualification/model-roster.evidence.json",
+      "sha256": "2c1faf1e067e31615111b2821d687c269524390c11f1dac7c504f9fa60a84e17"
+    },
+    {
+      "path": "docs/qualification/probes/2026-09-13/gpt-5.6-luna-high-desktop.json",
+      "sha256": "a4b4b39af3e27ce36d8e7b368d6e5fa7508a9088d6409ce42717e7fede54a5db"
+    },
+    {
+      "path": "docs/qualification/probes/2026-09-13/gpt-5.6-luna-low-desktop.json",
+      "sha256": "d223cfcda3e8232fd0610fc8d0c11f89f7d7c91d9c3eeca92bd48a2cd4cf0975"
+    },
+    {
+      "path": "docs/qualification/probes/2026-09-13/gpt-5.6-luna-max-desktop.json",
+      "sha256": "73e6370836289af4babb18c0f0ffffb8b2b853a5e6ffabadec31bcca691dbd44"
+    },
+    {
+      "path": "docs/qualification/probes/2026-09-13/gpt-5.6-luna-medium-desktop.json",
+      "sha256": "f4bbaf3d7ef77cb946a44b9fdb69591eac01f9ef8c5ed0bac6d94352c47f78be"
+    },
+    {
+      "path": "docs/qualification/probes/2026-09-13/gpt-5.6-sol-high-desktop.json",
+      "sha256": "bfeb7d4639e2af5fd1d686a599e8c5ae4165b645bfd84bbcc90384c7ab62bc70"
+    },
+    {
+      "path": "docs/qualification/probes/2026-09-13/gpt-5.6-sol-max-desktop.json",
+      "sha256": "bade3a896b777d08d134b596edef0c95ee80fa59df81e7c95a3ec3985346c429"
+    },
+    {
+      "path": "docs/qualification/probes/2026-09-13/gpt-5.6-terra-high-desktop.json",
+      "sha256": "763d6ca28031640217699b00157d45c636b4abe7829cfd7e980b7aee287dbf6a"
+    },
+    {
+      "path": "docs/qualification/probes/2026-09-13/gpt-5.6-terra-max-desktop.json",
+      "sha256": "0e8e8d8b5e1027b18fde140f7e207c7bab7cb0daea79fae714dd55a5cbb48f66"
+    },
+    {
+      "path": "docs/qualification/probes/2026-09-13/gpt-5.6-terra-medium-desktop.json",
+      "sha256": "5ce0c586e5506c78643b86850620804fe534c6017690f5b4ab4718c30ce3e61d"
+    },
+    {
+      "path": "docs/qualification/probes/2026-09-13/gpt-6-astra-high-desktop.json",
+      "sha256": "39667e91d35f6f538338047ecac039a9b282bc41b842cb7789fb8b863ac19e55"
+    },
+    {
+      "path": "docs/qualification/probes/2026-09-13/gpt-6-astra-max-desktop.json",
+      "sha256": "e62f78f3930ffd840c0d5d596a910a87187fe26bdad314b925711a0d39ab8df0"
+    },
+    {
+      "path": "docs/qualification/probes/gpt-5.6-luna-high.json",
+      "sha256": "f47fcc9a55cb7702ec8896919eaacc289bbe0b69e783dc132eaa9657cc1a0322"
+    },
+    {
+      "path": "docs/qualification/probes/gpt-5.6-luna-max.json",
+      "sha256": "5b8beec0eefc42830da3097f10f817f765034b4e72594f6c2b23bc817cd2a09e"
+    },
+    {
+      "path": "docs/qualification/probes/gpt-5.6-luna-medium.json",
+      "sha256": "9ca408754af445cfdd40f4753a239b89e026a2ab9d109f013d63692346758160"
+    },
+    {
+      "path": "docs/qualification/probes/gpt-5.6-luna.json",
+      "sha256": "469723e6801d3a2c91d29d52ca3ed69c4bcdc6206d7a85cceb12c472b08ab00f"
+    },
+    {
+      "path": "docs/qualification/probes/gpt-5.6-sol-max.json",
+      "sha256": "d53046c0c75c549ab6ce41c9385f6f13cf8d69b9a6dfd3addfff68fa934605ad"
+    },
+    {
+      "path": "docs/qualification/probes/gpt-5.6-sol.json",
+      "sha256": "b3517e156c382bc9fb45ed29994a8ff573854ddcd03436fee88ed053810ae300"
+    },
+    {
+      "path": "docs/qualification/probes/gpt-5.6-terra-high.json",
+      "sha256": "4bf17a79ae8bcc32bcbb38e49d9ed295e4743808126bd4716d70c65cfd5db267"
+    },
+    {
+      "path": "docs/qualification/probes/gpt-5.6-terra-max.json",
+      "sha256": "2cd4aa563083a29b00b3a0fa9481ef9a19101cc5e126f6268fbb23990139431c"
+    },
+    {
+      "path": "docs/qualification/probes/gpt-5.6-terra.json",
+      "sha256": "1c81e33c60d7da2e23b1d9f4fc1c8e8647bb26dfce3ff9fcce6dc3d1d19aeda3"
+    },
+    {
+      "path": "docs/qualification/probes/gpt-6-astra-max.json",
+      "sha256": "d5ca2d2136c8ea958069a6cc4af3604b839b6b78dc58250f171b0be03691c021"
+    },
+    {
+      "path": "docs/qualification/probes/gpt-6-astra.json",
+      "sha256": "6ab0d7b121630937de88441c1aedf1e46de1da1d0319ac01806bb7435fdf726f"
+    },
+    {
+      "path": "docs/qualification/routing-v2-activation-receipt.md",
+      "sha256": "1deed5c5710f223a2fa65262ee2f7bd5ed15ad484a66aa01fef7edbadb6897c9"
+    },
+    {
+      "path": "docs/qualification/routing-v2-activation-verification.md",
+      "sha256": "56eac15cf277651f9e06a2e8d5c4152b5f807a27e454ffd60a8fa40dfe107077"
+    },
+    {
+      "path": "docs/qualification/runtime-inventory.json",
+      "sha256": "9a7615dbec54b796c01274315c7d345253d8a639bdfaa42d41fb425a8f39e049"
+    },
+    {
+      "path": "docs/qualification/runtime-surface-correction-activation-receipt.md",
+      "sha256": "2a8040e6a0d29914a9d047350287d53b5429e9c3eb03b69b62200c7512405b24"
+    },
+    {
+      "path": "docs/qualification/runtime-surface-correction-plan-2026-09-13.md",
+      "sha256": "d54cefc5eb9fc87198ddcf7763c17b905b6d92a2b315e5cbdde2d89dae53daf2"
+    },
+    {
+      "path": "docs/qualification/runtime-surface-correction-verification-2026-09-13.md",
+      "sha256": "ff68101fc42e258f8d0563665779ad4e018e3ce015a28b21406ce30a0f8d8545"
+    },
+    {
+      "path": "docs/qualification/runtime-surface-observation-2026-09-13.json",
+      "sha256": "35995674a989b1b77233eafdc80ed092d0a8f8622b88990e8f7b3f8336978091"
+    },
+    {
+      "path": "project-dossier/ARTIFACT_CATALOG.json",
+      "sha256": "4a6aa8a8b6b73db5f6e42f1876556d06645baa3ee3557d9948321d48c52345f9"
+    },
+    {
+      "path": "project-dossier/AUTHORITY.md",
+      "sha256": "bf848d935caf9b058702ba3f010b24305d0da288964798b3cc6f200b886ad5fa"
+    },
+    {
+      "path": "project-dossier/README.md",
+      "sha256": "e563a510c05a53917cf6c109e48461634eedec17c4996aeb4f464413fa3413cf"
+    },
+    {
+      "path": "project-dossier/SUPERSESSION.json",
+      "sha256": "1e210dd2e921b23cd1fc38073175e0c7f0302e768f8dcae8e7c81ca10a4af261"
+    },
+    {
+      "path": "project-dossier/VERSION.md",
+      "sha256": "3177331a8f31e1f17470d01eb34256f8ad5527ef861778cb88d927f1581d605c"
+    },
+    {
+      "path": "project-dossier/conformance/README.md",
+      "sha256": "6b6f3e3edc628c2de234c8b9dbdce254bd796dd6f31ffa3afc3490b2bb8f74d3"
+    },
+    {
+      "path": "project-dossier/conformance/findings.json",
+      "sha256": "80d078dcf83b4e70aa88ee63774e5294097bd67e9c4dc0293a2d9ebb36088de2"
+    },
+    {
+      "path": "project-dossier/evidence/README.md",
+      "sha256": "e64387d2634c15f03857f3cc12f781f8ec7e91921085357895857b0e9ae1a645"
+    },
+    {
+      "path": "project-dossier/machine-readable/plan.json",
+      "sha256": "3b5bafdd81aef171c78265c60f8ecd5f26a548be4348f32243493df780e2b4f5"
+    },
+    {
+      "path": "project-dossier/machine-readable/raidq.json",
+      "sha256": "821cf656b7de81267c1e50cd79d267d1df950c57a0d32d4b990a9610f57e6133"
+    },
+    {
+      "path": "project-dossier/plans/README.md",
+      "sha256": "ececcf0408b7892c555098dcbb811c5cc993842206c141a2d5caff325aa10825"
+    },
+    {
+      "path": "project-dossier/provenance/README.md",
+      "sha256": "be825af7702de2e41a41f8aafadeb26c166e9fe913b87c731c2470d1d46b2c40"
+    },
+    {
+      "path": "project-dossier/provenance/sources.json",
+      "sha256": "8e263af29759692fb1711ebb272f373c8dfba3c0c98a9e35fa3940bd14ce095a"
+    },
+    {
+      "path": "project-dossier/registers/README.md",
+      "sha256": "c8f1dbcdc7265946994740c90dbba6bcf950808a0916b7276af73a72e517bc19"
+    },
+    {
+      "path": "project-dossier/transition/README.md",
+      "sha256": "8d688b46b93a58d0531061ccdca38f4cb8cb43eb9461f51b7ad29cb0d6acbb98"
+    },
+    {
+      "path": "project-dossier/transition/blueprint-adoption-crosswalk.json",
+      "sha256": "427e39ffaf7d5557886b53f8a80d42639bb299c6dc1d76e297400206d9abbb16"
+    },
+    {
+      "path": "project-dossier/transition/post-relocation-adoption-plan.json",
+      "sha256": "fa3144f5a622d1fcaffaa768d74e2f9b50d520f8614401fe5af87a4503710c15"
+    },
+    {
+      "path": "project-dossier/transition/workspace-move-manifest.json",
+      "sha256": "b11e8d683cb29c262c9c8ff032864932ccfba6b04c0bbd219f6ac3c803a4b22b"
+    },
+    {
+      "path": "project-dossier/transition/workspace-relocation-receipt.md",
+      "sha256": "ca23dfb45ad29f20cc846a5edfb7625b418bb7293f351bdfaeaa3f9444b064f1"
+    },
+    {
+      "path": "project-dossier/validation/README.md",
+      "sha256": "b05e9b3ac29175c8391a5cacb7ced95e16bc019319b2a7b4647da880dd2eec00"
+    },
+    {
+      "path": "specs/texenda-handoff/01-foundation/adr-index.md",
+      "sha256": "c28faedbda98efba405b04e25b76b1356cb3c9d5c8839ad7f4b4fdc56e2b6ea1"
+    },
+    {
+      "path": "specs/texenda-handoff/01-foundation/adr-set.md",
+      "sha256": "0a2b7a10c1ab701898732065b6f6df3e4d4c03876b45de8a57eb51b979fed4de"
+    },
+    {
+      "path": "specs/texenda-handoff/01-foundation/authority-register.json",
+      "sha256": "4b69cc4bfffeca287dc24fe9c1b275774f74aa806dc1a2e5d0247c5177741f8c"
+    },
+    {
+      "path": "specs/texenda-handoff/01-foundation/external-validation-gates.json",
+      "sha256": "214ccdf545dec44f59b37aa1fcf3b53f666d992cb2eabd440508358faf312dd8"
+    },
+    {
+      "path": "specs/texenda-handoff/01-foundation/invariant-index.json",
+      "sha256": "901f15211dc3ab93b1ce64a9703b96306afcbe053536412a98a1f7336adcdb6c"
+    },
+    {
+      "path": "specs/texenda-handoff/01-foundation/invariants.md",
+      "sha256": "28962b51a3bb58c3d515384913616423c9efee5563777ce80d993f8af12b0f98"
+    },
+    {
+      "path": "specs/texenda-handoff/01-foundation/product-and-brand.md",
+      "sha256": "5c053f043e6db101a61908934481ff90c8ee336e193a32a412baa49954595c1a"
+    },
+    {
+      "path": "specs/texenda-handoff/01-foundation/section-map.md",
+      "sha256": "3d6adb3a71916dc34e1fc8cee7dc72e1cc6e968216b02f841d43ef00ce9f3f80"
+    },
+    {
+      "path": "specs/texenda-handoff/02-product-and-ux/interaction-architecture.md",
+      "sha256": "7a6992b23e35a0a90434c03f62976e772de482420e381c63a360c4fa2271cceb"
+    },
+    {
+      "path": "specs/texenda-handoff/02-product-and-ux/operator-workflows.md",
+      "sha256": "7999bef029852b9eb2ed5fef3e3417f343b7adc99e929650f76cbf030ad69eed"
+    },
+    {
+      "path": "specs/texenda-handoff/03-domain-and-architecture/canonical-domain.md",
+      "sha256": "46d4e3d4f440a2d7f6f03d48cb11f9a8c1e27c2475ad46dde4ca8704ba75c92a"
+    },
+    {
+      "path": "specs/texenda-handoff/03-domain-and-architecture/channels.md",
+      "sha256": "c7dd16b0fbe29b22d20d1bf1222a54c794bf3829b3edf8d28550db0fe96af16d"
+    },
+    {
+      "path": "specs/texenda-handoff/03-domain-and-architecture/command-catalog.json",
+      "sha256": "28ea3c83c6703ac9308eed69c4b7ca5d1242462b3090ba899906fde88e42d78a"
+    },
+    {
+      "path": "specs/texenda-handoff/03-domain-and-architecture/content.md",
+      "sha256": "13eca128ce77633b472c19a937d5ede0a00895704e9c2e96213ad69bd8ebf840"
+    },
+    {
+      "path": "specs/texenda-handoff/03-domain-and-architecture/contracts/command-envelope.schema.json",
+      "sha256": "1019958ec93cbd9d5bca2edda9389af826f09adde5571eb46e8235eac4d1dc06"
+    },
+    {
+      "path": "specs/texenda-handoff/03-domain-and-architecture/contracts/example-command.json",
+      "sha256": "bb5352f12721cd8526acb6be1bf3f4f2e221a0a7114878cde4d7d93c3179d00c"
+    },
+    {
+      "path": "specs/texenda-handoff/03-domain-and-architecture/domain-catalog.json",
+      "sha256": "ba3d29fa204003dcd26bfeb8598328bd9914ea504ddfcea9a1263245deeb6ccb"
+    },
+    {
+      "path": "specs/texenda-handoff/03-domain-and-architecture/execution-semantics.md",
+      "sha256": "19c3b198cc391c17018c2b602fad30ce183b01843e4249bd88638b4611b3ed20"
+    },
+    {
+      "path": "specs/texenda-handoff/03-domain-and-architecture/permission-and-coordination.md",
+      "sha256": "4f04efe19ca704b757689d7e4e982dd6e092e8335fc52bf708cae2915204259c"
+    },
+    {
+      "path": "specs/texenda-handoff/03-domain-and-architecture/provider-integrations.md",
+      "sha256": "023d0e18a8af70d6ff98b89f9c7e5b5e5f6a3d0d5d062c7d509831132abf5914"
+    },
+    {
+      "path": "specs/texenda-handoff/03-domain-and-architecture/schema-and-contract-guide.md",
+      "sha256": "8c6991d8c6b05e13d284ac3e1aa678bd4a9ff426454ba2a782a715c0c54f959c"
+    },
+    {
+      "path": "specs/texenda-handoff/03-domain-and-architecture/state-machines.json",
+      "sha256": "67088c4238ac17a872d226ec922236c25a7556b8e7ff5c9fb617f91248d0217f"
+    },
+    {
+      "path": "specs/texenda-handoff/03-domain-and-architecture/system-architecture.md",
+      "sha256": "e757d87b36fb5516b6dd1666cc04e3cf07f4d4e670a64624aa70848132aa106b"
+    },
+    {
+      "path": "specs/texenda-handoff/03-domain-and-architecture/technology-baseline.md",
+      "sha256": "9e0ac6009d4ce360effb04209c51e35d9feead12844ce84b34e619b590ae7810"
+    },
+    {
+      "path": "specs/texenda-handoff/04-security-governance-and-operations/ai-and-agent-authority.md",
+      "sha256": "99575fd1693a1ccd9b26b1553c3db2943acd795ff895377bd59880bac605500e"
+    },
+    {
+      "path": "specs/texenda-handoff/04-security-governance-and-operations/observability.md",
+      "sha256": "511a710194d672d3b4bcab393287cc928cb22739cc55b851a19a34004efd106b"
+    },
+    {
+      "path": "specs/texenda-handoff/04-security-governance-and-operations/runbooks.md",
+      "sha256": "a5a0945673b220aa682427b73d331dd1da35350b47f81a24303a76731ea79e74"
+    },
+    {
+      "path": "specs/texenda-handoff/04-security-governance-and-operations/security-and-privacy.md",
+      "sha256": "c2e5ea7d1a84c78665504d1e971ede2dd2220c251a8f5c0caea709ac730dad2a"
+    },
+    {
+      "path": "specs/texenda-handoff/05-implementation/compatibility-manifest.template.json",
+      "sha256": "0b7cf511bbee904812d2f44686af689d6f3730fdb7467015b59ce99cc8fc66c9"
+    },
+    {
+      "path": "specs/texenda-handoff/05-implementation/repository-plan.md",
+      "sha256": "18cd00d16d068c8e49cec3cef6f98d7ab95f97e47ca6c4701cb96ac280c612ef"
+    },
+    {
+      "path": "specs/texenda-handoff/05-implementation/roadmap.md",
+      "sha256": "adf7d18eb2519c3ec945e03d03e15e4467583be923f7c8a6ed010ed07d3318f6"
+    },
+    {
+      "path": "specs/texenda-handoff/05-implementation/work-breakdown.md",
+      "sha256": "5b07246002ea6fb651b82d2bdee1349c7e436c75ebff8fc6ad030fa14c78bfd0"
+    },
+    {
+      "path": "specs/texenda-handoff/05-implementation/work-packages.json",
+      "sha256": "9ad162070c27e4c765ba145fc8a35d31dc288482453daaa39ec0bb6add8bd8d8"
+    },
+    {
+      "path": "specs/texenda-handoff/06-migration-and-production/acceptance-catalog.json",
+      "sha256": "e6bf0bb96152e4fbcd9b4da13817f0a06ca4e57cd5502c4b329a4cc216ee7e58"
+    },
+    {
+      "path": "specs/texenda-handoff/06-migration-and-production/acceptance-plan.md",
+      "sha256": "3e70639f6d3438201d2c6dac581a762ddda42f18b08d9f8c7c2dd9597173c0ce"
+    },
+    {
+      "path": "specs/texenda-handoff/06-migration-and-production/kit-migration.md",
+      "sha256": "ff17aa2b39d6a36589f2bb2860f8bd8d6ee0f24667e029a2421867b6733ee6a6"
+    },
+    {
+      "path": "specs/texenda-handoff/06-migration-and-production/migration-unit.template.json",
+      "sha256": "4044f4c95711ac3db95a84f9a5cea0a3d9a3bbf881a09b6a5d48fb34f07f867b"
+    },
+    {
+      "path": "specs/texenda-handoff/06-migration-and-production/release-evidence.template.json",
+      "sha256": "7d14e8c69ec7558442af0d43a5b31f0538cdffb05316b7699033d6a76f91bb95"
+    },
+    {
+      "path": "specs/texenda-handoff/06-migration-and-production/release-plan.md",
+      "sha256": "141f6841856df68be3ddc3b044cbb4f8c211d67cf4c3fdcbad854d0451b2c00c"
+    },
+    {
+      "path": "specs/texenda-handoff/06-migration-and-production/release-profiles.json",
+      "sha256": "869813ada7d0ea1a829cdad9204b35c67fd2631707fbbfbab50a315a3a3b8b15"
+    },
+    {
+      "path": "specs/texenda-handoff/06-migration-and-production/workload-profile.template.json",
+      "sha256": "508b12e094faed83fc93df14caf1acb11590ee09239923edb6d0f684708ab163"
+    },
+    {
+      "path": "specs/texenda-handoff/07-agent-orchestration/ASSIGNMENT.template.md",
+      "sha256": "ac0347f24dbafc6d00c48e598a0c812d0c713a7d31b33ee473a4b18e91c53c8c"
+    },
+    {
+      "path": "specs/texenda-handoff/07-agent-orchestration/ORCHESTRATOR-START.md",
+      "sha256": "55b10958742f7e7b257ba6c0fa886421470d416f70fe7a10f7eaaed0c6dd66b2"
+    },
+    {
+      "path": "specs/texenda-handoff/07-agent-orchestration/OWNER-EXECUTION-HANDOFF.md",
+      "sha256": "1c1aeea5da051cce109c7154dcc27b3ce9faecd83bfeb4f5ed2d3f93a21d17e3"
+    },
+    {
+      "path": "specs/texenda-handoff/07-agent-orchestration/context-routing.json",
+      "sha256": "2eb9d19f144c5167217158734b352759355cf4ea7fb27a3624e9f55caf801e7b"
+    },
+    {
+      "path": "specs/texenda-handoff/07-agent-orchestration/handoff-and-review.md",
+      "sha256": "32e2b791f7bbb41a66d8777be1f2386e772429a7b1c98e6b289bad4131e65f25"
+    },
+    {
+      "path": "specs/texenda-handoff/07-agent-orchestration/model-routing.json",
+      "sha256": "d89a954574c02038394a17cc1a91d6fece83713b5bae546bb62b1293c7893f0b"
+    },
+    {
+      "path": "specs/texenda-handoff/07-agent-orchestration/model-routing.md",
+      "sha256": "7f76bc2fe26f5344d00ebc414874ec3df6799be52a35acb01fe7aea27c3fd1ee"
+    },
+    {
+      "path": "specs/texenda-handoff/07-agent-orchestration/project-kernel.md",
+      "sha256": "ea8bc73aecaa82161465d5b999b26cf80f0215e950a2ce0a82789d27f1b9e062"
+    },
+    {
+      "path": "specs/texenda-handoff/08-project-harness/README.md",
+      "sha256": "c24fabc010ea1329060553f58ea6cb0870837ec8d7958450dfc389359392461d"
+    },
+    {
+      "path": "specs/texenda-handoff/08-project-harness/codex-config.toml.example",
+      "sha256": "0263cde3fb5fdd14f07b9f1027cd010e1c44856464e6526af51eaadb0ce5e7f0"
+    },
+    {
+      "path": "specs/texenda-handoff/08-project-harness/harness.py",
+      "sha256": "226a4a14b3a795b24354eb90e51a50067fd27fe809423b30b9fa1551f3ce72d6"
+    },
+    {
+      "path": "specs/texenda-handoff/08-project-harness/install.py",
+      "sha256": "bb6db5593dffddc9b79d10b6f1bce652c653ce835b859f90495be7740419c343"
+    },
+    {
+      "path": "specs/texenda-handoff/08-project-harness/probe_runtime.py",
+      "sha256": "a564f0196eb46c4f768dd44d9ac373448bcd75adb47176829b37bbfa1be4a7a9"
+    },
+    {
+      "path": "specs/texenda-handoff/08-project-harness/root-AGENTS.md.template",
+      "sha256": "d1124dec4922d86cdf313a9625f140d2f6ae356686bdc8b09cba4a43c3d618bc"
+    },
+    {
+      "path": "specs/texenda-handoff/08-project-harness/schemas/evidence.schema.json",
+      "sha256": "5970c7af1839a45b7fcdaf8879ce444ee576ceb6389793f697774bac5ba26038"
+    },
+    {
+      "path": "specs/texenda-handoff/08-project-harness/schemas/work-package.schema.json",
+      "sha256": "a5c7450db5dbdf164f368f38da44517b32b98617ed3401a97d493674b77becdc"
+    },
+    {
+      "path": "specs/texenda-handoff/08-project-harness/templates/evidence.json",
+      "sha256": "7418fd0b65d8e4089e5a4947cc0b79b871ed79294b986050d2c811dec22c4e42"
+    },
+    {
+      "path": "specs/texenda-handoff/08-project-harness/templates/roster.json",
+      "sha256": "774e9793aec31c22777a3985c5f15581d9f5721c9b0b1d929def17cb2fd9e27b"
+    },
+    {
+      "path": "specs/texenda-handoff/08-project-harness/tests/test_harness.py",
+      "sha256": "6249895a38d54729c2fb68db4c5e46f7fb4df6d32e1e2bf5d9f6713229e84296"
+    },
+    {
+      "path": "specs/texenda-handoff/09-reference/conversation-coverage.md",
+      "sha256": "682cca6aa13facdd32ca4f2b6ec91294290d904be6f39a5895db8f7585e4d81b"
+    },
+    {
+      "path": "specs/texenda-handoff/09-reference/conversation-record.json",
+      "sha256": "c2d3b2f03da07a7124d68217f1cfda4b223f05aabe4807dba95717af273eb56a"
+    },
+    {
+      "path": "specs/texenda-handoff/09-reference/conversation-record.md",
+      "sha256": "a7e56703b9fd3c55a0c26ffc4aeb5690c014c4a50e0a8ffaacebce320ed2ace5"
+    },
+    {
+      "path": "specs/texenda-handoff/09-reference/original-artifact-integrity.json",
+      "sha256": "d2713f61dace666ff132bc875629f16797b67d4853717953a315641e2bd1b7f3"
+    },
+    {
+      "path": "specs/texenda-handoff/09-reference/prior-artifacts/Texenda_Decision_Closure_v1.0.zip",
+      "sha256": "46f1c2ab5223af3ec9df11771d92aafa6e6a6ffdb944f3ffef5493d25a352c45"
+    },
+    {
+      "path": "specs/texenda-handoff/09-reference/prior-artifacts/Texenda_Implementation_Roadmap_Acceptance_v1.0.md",
+      "sha256": "988adf95f6f372ae5ea40a75563aa24994a19577a963e9d87b8b5227dfd363ec"
+    },
+    {
+      "path": "specs/texenda-handoff/09-reference/prior-artifacts/Texenda_Product_Technical_Foundation_v1.0.md",
+      "sha256": "9105d60b98fcffa14c53b3d5c313f94b1a4df6a3e280e95c4984d65f279d31e6"
+    },
+    {
+      "path": "specs/texenda-handoff/09-reference/source-register.json",
+      "sha256": "88f1027050fcf3ce56cb0d5fa4ac6fce6f0db973979855e2e2298c90f59dfbcf"
+    },
+    {
+      "path": "specs/texenda-handoff/09-reference/source-register.md",
+      "sha256": "0d4f61ce076e2706759f22d2f02007ed101b3c682614e71acd4a699e432a4ce4"
+    },
+    {
+      "path": "specs/texenda-handoff/09-reference/supersession-and-traceability.md",
+      "sha256": "9c5ceaf56409de6fcf8668af813223433b397311c3a6afd97a739e3c3834a01d"
+    },
+    {
+      "path": "specs/texenda-handoff/10-validation/clean-install-smoke.json",
+      "sha256": "dcce1e9c27fd71ae67b3e339f8b97da146deccfdaed09f16d70b706ead85aedc"
+    },
+    {
+      "path": "specs/texenda-handoff/10-validation/harness-test-map.json",
+      "sha256": "34e341684295e0631719cadfc3faa4522ebb59523a728c0f63283dea5bf4ef24"
+    },
+    {
+      "path": "specs/texenda-handoff/10-validation/harness-tests.log",
+      "sha256": "cff3ae6eafbb7b902d66348a402d6824d04edbf8cddadf0b8dadf06d22c46bdf"
+    },
+    {
+      "path": "specs/texenda-handoff/10-validation/package-review.md",
+      "sha256": "f5a907539bc5aa78e378956f4be521e18b1c51101c598fcdf370b97c0501ad97"
+    },
+    {
+      "path": "specs/texenda-handoff/10-validation/packaging-runtime-probe.json",
+      "sha256": "850dc6035e625f310efc7c27419d4df02e10683529afc8d493cacf0a44c1bd18"
+    },
+    {
+      "path": "specs/texenda-handoff/10-validation/requirement-traceability.json",
+      "sha256": "879979462fbb5faf610846c5c623d7d805b48fa91aeed426fcaa472823038cb6"
+    },
+    {
+      "path": "specs/texenda-handoff/10-validation/synthetic-domain-fixtures.json",
+      "sha256": "928f020f04dc012e5dd53206f32ad07570d5f410a6181221ea1e03175eba341f"
+    },
+    {
+      "path": "specs/texenda-handoff/10-validation/traceability-index.md",
+      "sha256": "0a01ce4ecab4d96fb2379764e827d42a0dba919ebe3a75e5bcc56b7cff430f12"
+    },
+    {
+      "path": "specs/texenda-handoff/10-validation/validate_package.py",
+      "sha256": "6f2ccd3d376f84c0bbb6eb317d3bd6f485154101d3989193eb66054b347d4652"
+    },
+    {
+      "path": "specs/texenda-handoff/10-validation/validation-report.json",
+      "sha256": "1c99bab83214bd05038be08caf9b4def7fbaf4a48a13fde8bd4e1cefda8abb55"
+    },
+    {
+      "path": "specs/texenda-handoff/AGENTS.md",
+      "sha256": "7c00669e512e55ceb9df4102deead4a823c73376f6c13ee9bd05de791c87539b"
+    },
+    {
+      "path": "specs/texenda-handoff/DECISION-STATUS.md",
+      "sha256": "9bf1bba6787e175def0e26b210f0c7aba8dab44ff76986983a9aa97438cee400"
+    },
+    {
+      "path": "specs/texenda-handoff/MANIFEST.md",
+      "sha256": "cfc5a88ab37fa86bd35f0dcb946e14d62d5c87860a22a3487fb9031102df8179"
+    },
+    {
+      "path": "specs/texenda-handoff/README.md",
+      "sha256": "2768a0c1675d5843d948d0205d9c63838bd7a21aa34beda20ff74f72c0bd0670"
+    },
+    {
+      "path": "specs/texenda-handoff/SHA256SUMS",
+      "sha256": "37fffb1a165cfa6b907e7433d617c06e1c64ff09cd282173f7d791cace2ac07e"
+    },
+    {
+      "path": "specs/texenda-handoff/manifest.json",
+      "sha256": "bcb7488ecf2ac42b4b33e478918e7ce6c35d0bdc04b208ddd9ed66622b468b7f"
+    },
+    {
+      "path": "tooling/coordination/AGENTS.md",
+      "sha256": "9a1e8d6634b170562c282c929a43b692675147d87d4a0ffd6563dba2f570cfa8"
+    },
+    {
+      "path": "tooling/coordination/README.md",
+      "sha256": "b17c3754fc7816bd9f9f43c40aa2dd956eaedb2bf26f68ff54605260405f69d4"
+    },
+    {
+      "path": "tooling/coordination/harness.py",
+      "sha256": "ccb39f8df7c853d0a0e53a709758f7da46dd0387bd121e8503e07d7ed3b44d3f"
+    },
+    {
+      "path": "tooling/coordination/routing-policy.json",
+      "sha256": "5ebc903a1bd2d3e1925a01fcb1e556f0ed0a4c50682a3b3d93ccc7d7cdd6e979"
+    },
+    {
+      "path": "tooling/coordination/schemas/evidence.schema.json",
+      "sha256": "2f41bb0879ad832c1f8db951924055331506f14ea24208372e8a119e5aba7e3a"
+    },
+    {
+      "path": "tooling/coordination/schemas/profile-qualification.schema.json",
+      "sha256": "9a5ea83d161557e2439d5155662c04ab8f17b47ee295d87fcebea02b5133866c"
+    },
+    {
+      "path": "tooling/coordination/schemas/state-location.schema.json",
+      "sha256": "442d16eec7b1777658735f376a02739d15346e7ebc2198aaedd554524b0a10a6"
+    },
+    {
+      "path": "tooling/coordination/templates/ASSIGNMENT.md",
+      "sha256": "44babb922eed9155a87d8bb282d249785369afaa338edd736c97c73fd7b4f2c6"
+    },
+    {
+      "path": "tooling/coordination/templates/RESUME.md",
+      "sha256": "837ca52e61dd86b3b3f710e4d83fe0dc86b7e48e89c66cad571613ea6aa31d2b"
+    },
+    {
+      "path": "tooling/coordination/templates/REVIEW.md",
+      "sha256": "a43dd83f6b9972d2a332e9ca3a570a10989e31d81694af96ee15a158ad52d8aa"
+    },
+    {
+      "path": "tooling/coordination/templates/budget.json",
+      "sha256": "773c29b0150218ba82bdfdcfa7c3e7b7f743286e3f9264ad342058d8b1cf5962"
+    },
+    {
+      "path": "tooling/coordination/templates/review.json",
+      "sha256": "30fb09b1299883b9b3962db56c02d3461d98fd1cb6930b82cef5254f51d86854"
+    },
+    {
+      "path": "tooling/coordination/templates/roster.json",
+      "sha256": "6e5b7ec7015a8d9b10f0ea2058e1ab5114543d184862a8570ada720f86c3ee34"
+    },
+    {
+      "path": "tooling/coordination/templates/routing.json",
+      "sha256": "13b2ff4c220821431d469aad3dba1b6e4443c8039ca032195ac3202f4918516c"
+    },
+    {
+      "path": "tooling/coordination/tests/test_instruction_contracts.py",
+      "sha256": "4bfeac5cadd2400ae759275f7b3bc0875ff1e15b30a15ceec34f940374a0e169"
+    },
+    {
+      "path": "tooling/coordination/tests/test_routing_v2.py",
+      "sha256": "1cddc404365f720cbdaaa40804a52b1740ebd85c8dadc787e03943d82d6f7bc8"
+    },
+    {
+      "path": "tooling/coordination/tests/test_state_root.py",
+      "sha256": "c1509137f7046334d5b702164c65b64ec6cbbc73b6c27ddadc2bf387d4d40abd"
+    },
+    {
+      "path": "tooling/workspace/relocate_state.py",
+      "sha256": "a6a1aa14b924396bc74cc91a4a2bc82658bb74c39db92d7c5d9c4d290e77f430"
+    },
+    {
+      "path": "tooling/workspace/tests/test_contract.py",
+      "sha256": "e976cb4a91b367a31e87e4298bab53c6e7a9aa5cd95e6e3fd22a0cbc53edd2a3"
+    },
+    {
+      "path": "tooling/workspace/tests/test_relocation.py",
+      "sha256": "f87269d8e7b13de69481f65550817c3d4c29b76dc28de607cac73758369e8251"
+    },
+    {
+      "path": "tooling/workspace/tests/test_state_relocation.py",
+      "sha256": "d46dabf2d02908020903ae8e57e87d291bbc254abe2f38ea17b6a88bd1bd50ac"
+    },
+    {
+      "path": "tooling/workspace/validate_contract.py",
+      "sha256": "985001a9d3d54f7bf2f67b0cb0bf1d78931b3b265fcd4f90fa14d56d471b4532"
+    },
+    {
+      "path": "tooling/workspace/validate_relocation.py",
+      "sha256": "faca2d70ca7ae67b89b3d23561f9df1df0c9bab219aa8ae4f39e9cc35d573832"
+    }
+  ],
+  "evidence_scope_sha256": "d42b5ad11b114efed8e3ae9c3d490f30a6e2c814514d04906bf6b76141f352be",
+  "evidence_files": [
+    {
+      "path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-author-validation.log",
+      "sha256": "5f1383d8c125071a067f5a127ea55fdbcd14b3e84debc23c8098779c7bce1e68"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-author.evidence.json",
+      "sha256": "122f1a9a30f4f9e80a30947c002c933ff360079eaee9db45989062be48083983"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-private-repository-ci-independent-review.md",
+      "sha256": "41c661da2da516e67fa4c45f62232aab62c9fe244616c01c35236b491c91f070"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-private-repository-ci-review.evidence.json",
+      "sha256": "185d17a95ad9c6d1d555b6880642fc97da3ad0450ec0c6373554f6f78588c7fa"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-workspace-architecture-author.json",
+      "sha256": "628d34315adceab1f67a4fe97b930bf1011a037e63ec3ff577e25b6b9b81639c"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-workspace-architecture-correction-validation.log",
+      "sha256": "723d6e4e6f0f5146d98a2e70b9f345f2f3c63cf3869fc28d81e6ebfcef79fafa"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-workspace-architecture-correction.json",
+      "sha256": "bd6fc788caff0fbf475016e2188cdf3118b95e36815b580bdff22971b751e576"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-workspace-architecture-independent-review.md",
+      "sha256": "29f8e8ed2c6bee02abcfd49697ac5656b41cbb1519285121654b16cebc5500be"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-workspace-architecture-review.evidence.json",
+      "sha256": "652c913e6c1e69fcd9bec6a9626a8890c98ef15c6f5a321ff0d924f20eb59ab7"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-workspace-architecture-validation.log",
+      "sha256": "ee777c976193e42c45c1b64b18ba856cabb55938b102a01411a0d0783f610c2f"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-workspace-phase-0-baseline.json",
+      "sha256": "943546a8681acd761e262352be139cca18f178ad954d4990b154254f8c6ff951"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-workspace-relocation-correction-validation.log",
+      "sha256": "27094f72b54362547f2749e1db50d4a2120c455919cb7f57f36d4424e530566a"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-workspace-relocation-independent-review.md",
+      "sha256": "2bcd51735b3d54b3ce537543de729c153a501f13537960d7b928d09ecda4fbb4"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-workspace-relocation-review.evidence.json",
+      "sha256": "2565bdc3633a06ba3ab2ebb38ffd46065d4c9aa9684ea16fe2717f1e12ae94e5"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-workspace-relocation-validation.log",
+      "sha256": "77b55c489a37ac4eed405aedb6ac54e32eed9c6d0ad1a247c21ea9326dcc7acb"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-workspace-relocation.json",
+      "sha256": "09f2cbceb7ed4b6f2ff244174e10cf44e5642646231a1bdc641889986c81c05c"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-workspace-review-envelope-correction.json",
+      "sha256": "8cd5ac32ca1a6caf0465c498549bf334084013f62b26ec94c6f9ae7015511ea4"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-workspace-review-envelope-validation.log",
+      "sha256": "8d5ac89db42de07c59fe960b552ce2bfb6a26fd4d615adbfa7556c679025f262"
+    },
+    {
+      "path": "docs/qualification/evidence/history/2026-09-14-workspace-architecture-review.rejected.json.txt",
+      "sha256": "cdb1b8e0c0ef2b8fddeab39636e4f9d966925ef16c7f5825498e97b88d1785d0"
+    },
+    {
+      "path": "docs/qualification/evidence/routing-v2-author-verification.log",
+      "sha256": "9462c9da71843e12b6724f8282669f89d5ffc860edbdeeb2727d1bd9cb9cf6ed"
+    },
+    {
+      "path": "docs/qualification/evidence/routing-v2-budget-authorization-verification.log",
+      "sha256": "5fac2f5955b395dbf8e9359e380e633c05bb6cafa6eef5b1dbad8a05d362f97e"
+    },
+    {
+      "path": "docs/qualification/evidence/routing-v2-correction-verification.log",
+      "sha256": "4cd83417f42061b78a63f0f0dee3de7e0db41b2fe55da92c3d5c610fcbac0210"
+    },
+    {
+      "path": "docs/qualification/evidence/routing-v2-migration-fixture.json",
+      "sha256": "29577c44f6d31eafc10f66b787bc0f8f691ab3c3f0d5773e48519f44ccf77211"
+    },
+    {
+      "path": "docs/qualification/evidence/routing-v2-review-verification.log",
+      "sha256": "55d589efec4f65567d7a1bc310c15af9604772c2246f8bf4c653a29b596fd83b"
+    },
+    {
+      "path": "docs/qualification/evidence/routing-v2-review.evidence.json",
+      "sha256": "880caab21053225cfa848dd9c3ccd47df7eddd2910f453e6fb1c9f02ee031620"
+    },
+    {
+      "path": "docs/qualification/evidence/routing-v2-submission.evidence.json",
+      "sha256": "740a9893dc6834dea98c88911b592a2196be99d3504f4b1bbb78d28cd64e92dc"
+    },
+    {
+      "path": "docs/qualification/evidence/runtime-surface-correction-independent-review.md",
+      "sha256": "30df3eee1f938fdc1ebfa6784eeaf338b70c209b01d8ddbe6d2b019037be6aee"
+    },
+    {
+      "path": "docs/qualification/evidence/runtime-surface-correction-review.evidence.json",
+      "sha256": "2d16af882bbbfd1f392356d21fd4d47bca05932996e41e1238d93e43defeffd8"
+    },
+    {
+      "path": "docs/qualification/evidence/wp00-author-verification.log",
+      "sha256": "a72379baa97571d3cfef4b753a3e34e809e221fffa627c7444c1adcbf70eaf82"
+    },
+    {
+      "path": "docs/qualification/evidence/wp00-review-verification.log",
+      "sha256": "e518542da6d15a80eaa592d4814725746ec0b235ff10fdcc4922a492394f5178"
+    },
+    {
+      "path": "docs/qualification/evidence/wp00-review.evidence.json",
+      "sha256": "371d47a3b2b47df6b5f2cf49bd73f8c8b849ff09a8bcb47586da8a77fbed8caf"
+    },
+    {
+      "path": "docs/qualification/evidence/wp00-submission.evidence.json",
+      "sha256": "d6f611d2be064c822fe5c4c9c8c507ea01a0c83d117dfa554864a3aab642906f"
+    }
+  ],
+  "ledger_sha256": "b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235",
+  "receipt_count": 13,
+  "receipt_tip": "f39249184757101b108ea7ec5ea0ffebdd8237315b8ac3cad3ad0cc6ab3e827e",
+  "roster_evidence_sha256": "a23705178b39e8d0dd194abd4cf6e42fc20be404739d0e28e0ca9b221c80ddcf",
+  "ledger_observation": {
+    "state_root": "/Users/jamesryancooper/Projects/texenda/repo/.texenda",
+    "state_version": "2.0",
+    "lease_count": 0,
+    "declared_budget_usd": 0.0
+  },
+  "freshness_rule": "Recompute the complete declared source scope, separately indexed evidence, and stable live-ledger snapshot. Any mismatch is stale; current full HEAD/tree are reported separately because generated/evidence-only commits may follow this source revision.",
+  "limitations": [
+    "SHA-256 establishes byte identity only, not authority, correctness, approval, or product readiness.",
+    "Private-input content is excluded and was not opened, listed, copied, parsed, or hashed.",
+    "This projection is not the live task, receipt, roster, routing, decision, evidence, or permission owner."
+  ]
+}

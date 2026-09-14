@@ -1,0 +1,141 @@
+{
+  "schema_version": "texenda.dossier-evidence-index.generated.v1",
+  "generation_id": "79768a41b155d0d38338a328b675736e839c1699cbea72faa46bb54053253417",
+  "generated_at": "2026-09-14T17:30:24+00:00",
+  "authority": "generated_hash_index_only",
+  "owner_path": "docs/qualification/evidence/",
+  "evidence_scope_sha256": "d42b5ad11b114efed8e3ae9c3d490f30a6e2c814514d04906bf6b76141f352be",
+  "evidence": [
+    {
+      "path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-author-validation.log",
+      "sha256": "5f1383d8c125071a067f5a127ea55fdbcd14b3e84debc23c8098779c7bce1e68"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-author.evidence.json",
+      "sha256": "122f1a9a30f4f9e80a30947c002c933ff360079eaee9db45989062be48083983"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-private-repository-ci-independent-review.md",
+      "sha256": "41c661da2da516e67fa4c45f62232aab62c9fe244616c01c35236b491c91f070"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-private-repository-ci-review.evidence.json",
+      "sha256": "185d17a95ad9c6d1d555b6880642fc97da3ad0450ec0c6373554f6f78588c7fa"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-workspace-architecture-author.json",
+      "sha256": "628d34315adceab1f67a4fe97b930bf1011a037e63ec3ff577e25b6b9b81639c"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-workspace-architecture-correction-validation.log",
+      "sha256": "723d6e4e6f0f5146d98a2e70b9f345f2f3c63cf3869fc28d81e6ebfcef79fafa"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-workspace-architecture-correction.json",
+      "sha256": "bd6fc788caff0fbf475016e2188cdf3118b95e36815b580bdff22971b751e576"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-workspace-architecture-independent-review.md",
+      "sha256": "29f8e8ed2c6bee02abcfd49697ac5656b41cbb1519285121654b16cebc5500be"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-workspace-architecture-review.evidence.json",
+      "sha256": "652c913e6c1e69fcd9bec6a9626a8890c98ef15c6f5a321ff0d924f20eb59ab7"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-workspace-architecture-validation.log",
+      "sha256": "ee777c976193e42c45c1b64b18ba856cabb55938b102a01411a0d0783f610c2f"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-workspace-phase-0-baseline.json",
+      "sha256": "943546a8681acd761e262352be139cca18f178ad954d4990b154254f8c6ff951"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-workspace-relocation-correction-validation.log",
+      "sha256": "27094f72b54362547f2749e1db50d4a2120c455919cb7f57f36d4424e530566a"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-workspace-relocation-independent-review.md",
+      "sha256": "2bcd51735b3d54b3ce537543de729c153a501f13537960d7b928d09ecda4fbb4"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-workspace-relocation-review.evidence.json",
+      "sha256": "2565bdc3633a06ba3ab2ebb38ffd46065d4c9aa9684ea16fe2717f1e12ae94e5"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-workspace-relocation-validation.log",
+      "sha256": "77b55c489a37ac4eed405aedb6ac54e32eed9c6d0ad1a247c21ea9326dcc7acb"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-workspace-relocation.json",
+      "sha256": "09f2cbceb7ed4b6f2ff244174e10cf44e5642646231a1bdc641889986c81c05c"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-workspace-review-envelope-correction.json",
+      "sha256": "8cd5ac32ca1a6caf0465c498549bf334084013f62b26ec94c6f9ae7015511ea4"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-workspace-review-envelope-validation.log",
+      "sha256": "8d5ac89db42de07c59fe960b552ce2bfb6a26fd4d615adbfa7556c679025f262"
+    },
+    {
+      "path": "docs/qualification/evidence/history/2026-09-14-workspace-architecture-review.rejected.json.txt",
+      "sha256": "cdb1b8e0c0ef2b8fddeab39636e4f9d966925ef16c7f5825498e97b88d1785d0"
+    },
+    {
+      "path": "docs/qualification/evidence/routing-v2-author-verification.log",
+      "sha256": "9462c9da71843e12b6724f8282669f89d5ffc860edbdeeb2727d1bd9cb9cf6ed"
+    },
+    {
+      "path": "docs/qualification/evidence/routing-v2-budget-authorization-verification.log",
+      "sha256": "5fac2f5955b395dbf8e9359e380e633c05bb6cafa6eef5b1dbad8a05d362f97e"
+    },
+    {
+      "path": "docs/qualification/evidence/routing-v2-correction-verification.log",
+      "sha256": "4cd83417f42061b78a63f0f0dee3de7e0db41b2fe55da92c3d5c610fcbac0210"
+    },
+    {
+      "path": "docs/qualification/evidence/routing-v2-migration-fixture.json",
+      "sha256": "29577c44f6d31eafc10f66b787bc0f8f691ab3c3f0d5773e48519f44ccf77211"
+    },
+    {
+      "path": "docs/qualification/evidence/routing-v2-review-verification.log",
+      "sha256": "55d589efec4f65567d7a1bc310c15af9604772c2246f8bf4c653a29b596fd83b"
+    },
+    {
+      "path": "docs/qualification/evidence/routing-v2-review.evidence.json",
+      "sha256": "880caab21053225cfa848dd9c3ccd47df7eddd2910f453e6fb1c9f02ee031620"
+    },
+    {
+      "path": "docs/qualification/evidence/routing-v2-submission.evidence.json",
+      "sha256": "740a9893dc6834dea98c88911b592a2196be99d3504f4b1bbb78d28cd64e92dc"
+    },
+    {
+      "path": "docs/qualification/evidence/runtime-surface-correction-independent-review.md",
+      "sha256": "30df3eee1f938fdc1ebfa6784eeaf338b70c209b01d8ddbe6d2b019037be6aee"
+    },
+    {
+      "path": "docs/qualification/evidence/runtime-surface-correction-review.evidence.json",
+      "sha256": "2d16af882bbbfd1f392356d21fd4d47bca05932996e41e1238d93e43defeffd8"
+    },
+    {
+      "path": "docs/qualification/evidence/wp00-author-verification.log",
+      "sha256": "a72379baa97571d3cfef4b753a3e34e809e221fffa627c7444c1adcbf70eaf82"
+    },
+    {
+      "path": "docs/qualification/evidence/wp00-review-verification.log",
+      "sha256": "e518542da6d15a80eaa592d4814725746ec0b235ff10fdcc4922a492394f5178"
+    },
+    {
+      "path": "docs/qualification/evidence/wp00-review.evidence.json",
+      "sha256": "371d47a3b2b47df6b5f2cf49bd73f8c8b849ff09a8bcb47586da8a77fbed8caf"
+    },
+    {
+      "path": "docs/qualification/evidence/wp00-submission.evidence.json",
+      "sha256": "d6f611d2be064c822fe5c4c9c8c507ea01a0c83d117dfa554864a3aab642906f"
+    }
+  ],
+  "limitations": [
+    "Indexing does not copy evidence authority or make a check current forever."
+  ]
+}

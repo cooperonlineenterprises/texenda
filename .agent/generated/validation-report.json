@@ -1,0 +1,36 @@
+{
+  "schema_version": "texenda.generated-validation-report.v1",
+  "generation_id": "79768a41b155d0d38338a328b675736e839c1699cbea72faa46bb54053253417",
+  "generated_at": "2026-09-14T17:30:24+00:00",
+  "authority": "generated_point_in_time_evidence",
+  "result": "PASS",
+  "checks": [
+    {
+      "id": "strict_sources",
+      "status": "PASS"
+    },
+    {
+      "id": "single_owner_map",
+      "status": "PASS"
+    },
+    {
+      "id": "extension_confinement",
+      "status": "PASS"
+    },
+    {
+      "id": "receipt_integrity",
+      "status": "PASS"
+    },
+    {
+      "id": "evidence_hash_index",
+      "status": "PASS"
+    }
+  ],
+  "source_scope_sha256": "f33ea59461456267377ec1bbe3c661f6bc7788d3c4bf89079ab93e4813637e1d",
+  "ledger_sha256": "b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235",
+  "limitations": [
+    "SHA-256 establishes byte identity only, not authority, correctness, approval, or product readiness.",
+    "Private-input content is excluded and was not opened, listed, copied, parsed, or hashed.",
+    "This projection is not the live task, receipt, roster, routing, decision, evidence, or permission owner."
+  ]
+}
