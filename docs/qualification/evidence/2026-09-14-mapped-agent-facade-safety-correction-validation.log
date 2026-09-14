@@ -1,0 +1,85 @@
+Texenda mapped facade/state-root safety correction validation
+observed_at_utc: 2026-09-14T18:30:28Z
+actor: agent:mapped-facade-sol
+profile: gpt-5.6-sol / max / T2 author
+runtime: Codex desktop 26.901.41600 (build 7982)
+billing: subscription; API allocation/spend 0
+base_revision: 680457854984020d0c8616a7f640a63079be9b3c
+rejected_predecessor: c9d10ec96b648637efb17f5a3e362262aeaddae5
+correction_source_revision: 6746b5b7c388cf1c704ec29b258f2ca3bd799850
+tested_generated_revision: 13235aafd6c35e8998c0718535c611d2b357017b
+tested_tree: 6f1ea37cadffe9ee0fd841cddcd5d0e895a0099f
+generation_id: 828e6a05e482be2898e578ac92c9eb9bed22db2724bce4cf54830d8dc52d9008
+source_scope_sha256: 806fc6ef62dd933975da6fb416ca62cb84835fc22d4160b3a8a44c9940582031
+correction_diff_sha256: a42c896e5c1023b5ccffdafa965eb2110089573abb8248c9edc419f7f8ecae6c
+base_to_tested_diff_sha256: a215fe7474858f72860b6886482b0fbac874b4b831f4b87ee265588872c680e0
+canonical_diff_command: git --no-optional-locks -c core.abbrev=40 -c color.ui=false diff --no-ext-diff --no-textconv --full-index --binary <base> <tip> | shasum -a 256
+
+FAIL rejected-predecessor-review
+  Independent Astra/max review rejected c9d10ec. This successor does not rewrite or approve that candidate; it addresses all eleven supplied findings and requires fresh independent review.
+
+PASS finding-01-check-all-never-writes
+  validate.py rejects an interrupted-refresh marker before delegation, classifies refresh commands exactly, and categorically skips every refresh_writer even under --all. Registry mutation tests reject a mislabeled refresh or coordinator init. Check and check-all outer snapshot oracles cover tracked/untracked/ignored/generated/cache/state/lock bytes, size, mtime and ctime without claiming .git atime.
+
+PASS finding-02-validated-command-context
+  Registry rows declare shell-free working directory and repository/project-home/state-root parameters. The resolver validates canonical paths and allowlisted Python/Git execution, expands the source-package path, omits the complete optional state-root pair before binding, and places harness --state-root before the check subcommand. The final check-all successfully executed all nine non-writer registered commands with the canonical default ledger passed as the detached read-only root.
+
+PASS finding-03-all-generated-bytes
+  Check reconstructs and exact-byte compares all eleven refresh outputs from validated inputs, recorded UTC time and source identity. It independently recomputes the generation ID. Tests append parse-valid whitespace to each JSON/Markdown output one at a time and reject every change; separate mutations reject both current-state files, all four Markdown files, manifest authority/limitations/freshness/derivation, and validation-report authority/checks/limitations.
+
+PASS finding-04-binding-baseline
+  Harness reads/mutations and .agent ledger facts require baseline receipt count/prefix and exact state SHA-256 while count is unchanged. Synthetic tests reject short count, wrong tip and semantically valid byte drift, while a valid coordinator mutation appending a receipt remains readable.
+
+PASS finding-05-unbound-external-read-only
+  Original default .texenda initialization/mutation remains compatible before binding. An explicit unbound external root may support detached status/ready/check/context reads only; init, every locked mutation and context output fail before lock/state creation. Default plus explicit active state/lock remains denied.
+
+PASS finding-06-private-before-read
+  Harness rejects private/CSV evidence envelopes and indirect PASS/FAIL log paths before stable open/hash, including symlinks. Strict parsing, evidence/source hashing and AGENTS discovery reject or prune private/ignored paths before content access. Instrumented synthetic private trees prove no open/read/hash/list path; the real CSV was not touched by content tools.
+
+PASS finding-07-symlink-and-substitution
+  Harness, .agent and relocation reject direct/ancestor symlink aliases before resolution. State, policy, binding, evidence, source, generated and Markdown paths use stable no-follow reads where applicable. Relocation revalidates parents/source identities and the held-lock inode at each boundary; source/private/state-root/rollback-parent substitutions after prepare fail closed.
+
+PASS finding-08-relocation-lock-serialization
+  Prepare holds the source lock over baseline read and moving-marker creation. Apply/resume holds the one existing source/destination lock over state, lock and private moves, verification and active binding replacement. Rollback holds it through reverse moves and binding archival. Held source/destination tests, post-lock-move probe and divergent-store interleaving all deny or show the lock remains held; binding substitution cannot activate.
+
+PASS finding-09-atomic-exclusive-renames
+  Every state, lock, private-directory and rollback-record move uses Darwin renamex_np(RENAME_EXCL), or Linux renameat2(RENAME_NOREPLACE), and otherwise fails closed. Race hooks prove concurrently created file, directory, state and rollback-record destinations remain intact and sources are not overwritten/moved.
+
+PASS finding-10-safe-migration-id
+  The binding schema, harness/common loaders, helper function/CLI and rollback path enforce ^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$. Empty, dot, traversal, slash and overlength IDs fail before marker/move; rollback revalidates its complete parent and absent destination.
+
+PASS finding-11-full-origin-schema
+  The local validator recursively enforces every declared origin-v2 type, constant, required key, nested additionalProperties closure, pattern, length and minimum. Revision/tree now explicitly require strings. Tests reject wrong selected source, descriptor/predecessor hashes, extra nested fields, malformed revisions and non-string trees.
+
+PASS committed-tip-facade-tests
+  env PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s .agent/tests -p 'test_*.py' -v
+  19 tests OK.
+
+PASS committed-tip-workspace-tests
+  env PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s tooling/workspace/tests -p 'test_*.py' -v
+  66 tests OK, including 23 relocation concurrency/race/recovery cases.
+
+PASS committed-tip-coordination-tests
+  env PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s tooling/coordination/tests -p 'test_*.py' -v
+  154 tests OK, including 22 state-root/private/baseline cases.
+
+PASS committed-tip-sealed-tests
+  env PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s specs/texenda-handoff/08-project-harness/tests -p 'test_*.py' -v
+  39 tests OK; sealed package unchanged.
+
+PASS committed-tip-check-all-no-write
+  env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/validate.py --check --all --state-root /Users/jamesryancooper/Projects/texenda/repo/.texenda
+  All nine non-writer registered commands exit 0; both refresh writers report SKIPPED_WRITER. Snapshot of 253 candidate files plus live state/lock and Git status including ignored paths is identical before/after; no cache created.
+
+FAIL initial-clean-cache-oracle
+  The first outer check-all oracle after an earlier manually interrupted recursive pre-fix test found two already-present ignored __pycache__ directories. They were preserved by moving them to /private/tmp/texenda-check-all-caches.KHHptR, not deleted. Sequential isolation proved no registered command recreated them; two subsequent clean check-all runs produced no cache or metadata change. This residue is not counted as a passing run and no source/private content was involved.
+
+PASS committed-tip-static-package-and-read-only-checks
+  Facade check: JSON 115, TOML 1, Python 19, dossier paths 27, instruction files 3, local links 101, bound evidence checks 188. Workspace audit: 42 concerns, 85 blueprint paths, 35 types, 16 source moves. Both package variants pass all 14 checksum-aware checks with 86 manifest files, 44 WPs, 125 product criteria, 30 invariants, 35 ADRs and 14 external gates. git diff --check and base-to-tip sealed diff pass.
+
+PASS live-metadata-only-baseline
+  New harness status/check against canonical default state: SHA-256 b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235; 13 receipts; tip f39249184757101b108ea7ec5ea0ffebdd8237315b8ac3cad3ad0cc6ab3e827e; eleven exact profiles; zero leases; zero budget/spend. State and lock inode/size/mtime/ctime were unchanged before/after.
+
+NOT_RUN independent-rereview, integration, live relocation, real mapped lifecycle, GitHub/external mutation, product/external gates.
+
+Result: PASS for the tested correction candidate only. No live binding/state/private move, receipt append, network, push, GitHub mutation, spend, deployment, publication, sending, or production action occurred. The real private CSV was never opened, hashed, parsed, copied, listed, or logged.

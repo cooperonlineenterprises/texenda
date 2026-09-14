@@ -1,0 +1,194 @@
+{
+  "schema_version": "texenda.mapped-facade-author-evidence.v1",
+  "id": "EVD-FACADE-0003",
+  "kind": "candidate_author_safety_correction",
+  "information_role": "immutable_successor_evidence",
+  "status": "candidate_for_independent_rereview",
+  "recorded_at": "2026-09-14T18:30:28Z",
+  "actor": "agent:mapped-facade-sol",
+  "requested_profile": "gpt-5.6-sol-max",
+  "capability_tier": "T2",
+  "reasoning_effort": "max",
+  "runtime_id": "codex-desktop-collaboration",
+  "client_version": "26.901.41600 (build 7982)",
+  "billing_mode": "subscription",
+  "api_budget_usd": 0,
+  "api_spend_usd": 0,
+  "base_revision": "680457854984020d0c8616a7f640a63079be9b3c",
+  "rejected_predecessor": "c9d10ec96b648637efb17f5a3e362262aeaddae5",
+  "correction_source_revision": "6746b5b7c388cf1c704ec29b258f2ca3bd799850",
+  "candidate_revision": "13235aafd6c35e8998c0718535c611d2b357017b",
+  "candidate_tree": "6f1ea37cadffe9ee0fd841cddcd5d0e895a0099f",
+  "generation_id": "828e6a05e482be2898e578ac92c9eb9bed22db2724bce4cf54830d8dc52d9008",
+  "source_scope_sha256": "806fc6ef62dd933975da6fb416ca62cb84835fc22d4160b3a8a44c9940582031",
+  "correction_diff_sha256": "a42c896e5c1023b5ccffdafa965eb2110089573abb8248c9edc419f7f8ecae6c",
+  "base_to_candidate_diff_sha256": "a215fe7474858f72860b6886482b0fbac874b4b831f4b87ee265588872c680e0",
+  "diff_command": "git --no-optional-locks -c core.abbrev=40 -c color.ui=false diff --no-ext-diff --no-textconv --full-index --binary <base> <tip> | shasum -a 256",
+  "supersession": {
+    "preserves": [
+      "docs/qualification/evidence/2026-09-14-mapped-agent-facade-author.evidence.json",
+      "docs/qualification/evidence/2026-09-14-mapped-agent-facade-author-correction.evidence.json"
+    ],
+    "reason": "Independent Astra/max rejection of c9d10ec requires a new candidate and evidence; history is not rewritten.",
+    "approval": false
+  },
+  "output_hashes": [
+    {"path": ".agent/scripts/common.py", "sha256": "605de9b35b21cd4a5c778922ef2d59b6ab4d2de572a63ce974c386380fe80b5f"},
+    {"path": ".agent/scripts/refresh.py", "sha256": "8e8afbf24c38c779ed310818fcaebb14fb5a16939229ebe8df4d8a67187f62c9"},
+    {"path": ".agent/scripts/validate.py", "sha256": "ca07d82c89f71649c163f0876acd96b082eea8645946c90780a077cca6408ee6"},
+    {"path": ".agent/validators.json", "sha256": "45f7de0e3672e1f0ac8958bf0d2a107cd9aa7c2cbac4f2c7c36904321561e1e3"},
+    {"path": ".agent/schemas/project-blueprint-origin.v2.schema.json", "sha256": "e6ba4f8b1617b30a1aa2a130fd603e2e74f3ecdac81de5801521f526f7de63cc"},
+    {"path": "tooling/coordination/harness.py", "sha256": "e5a06ecb79569f598be03bbcded3167e5d02769ed97befe326f3cadf4382d99f"},
+    {"path": "tooling/coordination/schemas/state-location.schema.json", "sha256": "72527a4eddd5071f4a341a508f41f6b910ffacae93cb1e0017232517476fecf3"},
+    {"path": "tooling/workspace/relocate_state.py", "sha256": "fee0f7622358cf89f2b2d53aeb8f8ba5428d671fc72a093399c821f0a26410ce"},
+    {"path": ".agent/tests/test_validate.py", "sha256": "e6a9abcacfd23ae3202439ff36fcebb8624397dc0f72b941cae2bda65d6425b5"},
+    {"path": "tooling/coordination/tests/test_state_root.py", "sha256": "ae0e8a391507e5a03c8b3982ae0047d278ab0df4e72106fa4488f1b41fdb7a25"},
+    {"path": "tooling/workspace/tests/test_state_relocation.py", "sha256": "8f3487bedbc209ce8554c28acac259933cce86c4e22f81e749efcb36c5baadce"},
+    {"path": ".agent/generated/manifest.json", "sha256": "18781b800305af2accbb5290c72da5a71578028d57033267b83d56a49e51cb3b"}
+  ],
+  "checks": [
+    {
+      "id": "rejected-predecessor-review",
+      "required": false,
+      "status": "FAIL",
+      "command_or_procedure": "Retain the independent Astra/max rejection of c9d10ec as the basis for this successor; do not amend or approve the rejected candidate.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-safety-correction-validation.log",
+      "sha256": "a7555f8d2703cb500dec578a913b637aa927cbe7b118ef50a8ac5950497161b2"
+    },
+    {
+      "id": "check-all-writer-denial-and-context",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Verify interrupted-marker preflight, categorical refresh_writer skip, shell-free validated context, optional/bound state-root forwarding and global harness option placement.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-safety-correction-validation.log",
+      "sha256": "a7555f8d2703cb500dec578a913b637aa927cbe7b118ef50a8ac5950497161b2"
+    },
+    {
+      "id": "all-generated-byte-reconstruction",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Rebuild and compare all eleven generated outputs and generation-ID basis; apply one-at-a-time byte and structured claim mutations.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-safety-correction-validation.log",
+      "sha256": "a7555f8d2703cb500dec578a913b637aa927cbe7b118ef50a8ac5950497161b2"
+    },
+    {
+      "id": "bound-baseline-and-unbound-read-only",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Run harness and .agent count/prefix/hash mutations, valid appended receipt, default compatibility, unbound explicit read and denied mutation/init/context-output cases.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-safety-correction-validation.log",
+      "sha256": "a7555f8d2703cb500dec578a913b637aa927cbe7b118ef50a8ac5950497161b2"
+    },
+    {
+      "id": "private-and-symlink-pre-read",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Instrument synthetic private/CSV/log/AGENTS paths and direct/ancestor symlink substitutions; require denial before open/read/hash/list or resolution-following.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-safety-correction-validation.log",
+      "sha256": "a7555f8d2703cb500dec578a913b637aa927cbe7b118ef50a8ac5950497161b2"
+    },
+    {
+      "id": "serialized-exclusive-relocation",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Exercise held source/destination locks, divergent-store/binding/parent substitutions, atomic file/directory/state/rollback destination races, unavailable primitive, interruption/resume and rollback.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-safety-correction-validation.log",
+      "sha256": "a7555f8d2703cb500dec578a913b637aa927cbe7b118ef50a8ac5950497161b2"
+    },
+    {
+      "id": "migration-id-and-origin-schema",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Mutate unsafe migration IDs and every origin-v2 nested/constant/type/hash/revision/tree boundary; verify closed rejection.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-safety-correction-validation.log",
+      "sha256": "a7555f8d2703cb500dec578a913b637aa927cbe7b118ef50a8ac5950497161b2"
+    },
+    {
+      "id": "facade-tests",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "python3 -B -m unittest discover -s .agent/tests -p test_*.py -v",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-safety-correction-validation.log",
+      "sha256": "a7555f8d2703cb500dec578a913b637aa927cbe7b118ef50a8ac5950497161b2"
+    },
+    {
+      "id": "workspace-tests",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "python3 -B -m unittest discover -s tooling/workspace/tests -p test_*.py -v",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-safety-correction-validation.log",
+      "sha256": "a7555f8d2703cb500dec578a913b637aa927cbe7b118ef50a8ac5950497161b2"
+    },
+    {
+      "id": "coordination-tests",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "python3 -B -m unittest discover -s tooling/coordination/tests -p test_*.py -v",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-safety-correction-validation.log",
+      "sha256": "a7555f8d2703cb500dec578a913b637aa927cbe7b118ef50a8ac5950497161b2"
+    },
+    {
+      "id": "sealed-tests-and-both-packages",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Run 39 sealed harness tests and both package validators with --checksums.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-safety-correction-validation.log",
+      "sha256": "a7555f8d2703cb500dec578a913b637aa927cbe7b118ef50a8ac5950497161b2"
+    },
+    {
+      "id": "check-all-no-write",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Snapshot 253 scoped candidate files plus live state/lock and status including ignored; run validate.py --check --all with explicit read-only state root; compare bytes/size/mtime/ctime/status/cache paths.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-safety-correction-validation.log",
+      "sha256": "a7555f8d2703cb500dec578a913b637aa927cbe7b118ef50a8ac5950497161b2"
+    },
+    {
+      "id": "initial-clean-cache-oracle",
+      "required": false,
+      "status": "FAIL",
+      "command_or_procedure": "Record two preexisting ignored caches found after an earlier interrupted recursive pre-fix test; move them to the named /private/tmp checkpoint, isolate every command, then rerun the clean oracle twice.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-safety-correction-validation.log",
+      "sha256": "a7555f8d2703cb500dec578a913b637aa927cbe7b118ef50a8ac5950497161b2"
+    },
+    {
+      "id": "parse-link-schema-owner-evidence-diff-sealed",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Run facade check, workspace audit, strict parse/link/schema/owner/evidence validation, git diff --check and base-to-tip sealed diff.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-safety-correction-validation.log",
+      "sha256": "a7555f8d2703cb500dec578a913b637aa927cbe7b118ef50a8ac5950497161b2"
+    },
+    {
+      "id": "live-metadata-only-baseline",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Run new harness status/check against canonical default state and compare state/lock inode,size,mtime,ctime without private content access.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-safety-correction-validation.log",
+      "sha256": "a7555f8d2703cb500dec578a913b637aa927cbe7b118ef50a8ac5950497161b2"
+    }
+  ],
+  "private_input_proof": {
+    "content_opened": false,
+    "content_hashed": false,
+    "content_parsed": false,
+    "content_copied": false,
+    "content_listed": false,
+    "content_logged": false
+  },
+  "forbidden_effects_performed": [],
+  "not_run": [
+    "independent Astra/max rereview",
+    "local main integration",
+    "live state/lock/private-input relocation",
+    "real mapped maintenance lifecycle",
+    "GitHub or external mutation",
+    "product or external gate qualification"
+  ],
+  "runtime_stop": {
+    "background_sessions": 0,
+    "child_agents": 0,
+    "parent_observation_required_before_scope_release": true
+  },
+  "resumption": "Review the exact final derived tip and this successor with a distinct qualified gpt-6-astra-max reviewer. Do not integrate or execute live relocation before exact approval and a fresh runtime/lease/lock freeze."
+}
