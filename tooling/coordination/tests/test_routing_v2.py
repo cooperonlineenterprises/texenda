@@ -27,6 +27,11 @@ old_tests.hm = hm.legacy
 def prepare(test, migrate=True, floors=None):
     old_tests.HarnessTests.setUp(test)
     test.v1 = test.h
+    # The adapter rejects ancestor symlink aliases (for example macOS
+    # /var -> /private/var); synthetic fixtures use canonical paths.
+    test.base = test.base.resolve()
+    test.root = test.root.resolve()
+    test.pkg = test.pkg.resolve()
     policy = json.loads(hm.POLICY.read_text())
     policy['work_package_digest'] = hm.file_hash(test.pkg / '05-implementation/work-packages.json')
     policy['work_package_routes'] = []

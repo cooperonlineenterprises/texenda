@@ -224,7 +224,7 @@ class InstructionContracts(unittest.TestCase):
 
     def test_context_overflow_retains_mandatory_sources_and_route_slice(self):
         with tempfile.TemporaryDirectory() as directory:
-            harness = routing.hm.Harness(Path(directory))
+            harness = routing.hm.Harness(Path(directory).resolve())
             ready = harness.context('WP-00')
             narrow = harness.context('WP-00', max_bytes=1)
             self.assertEqual(ready['status'], 'READY')

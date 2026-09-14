@@ -103,11 +103,17 @@ The frozen external-state interface is deliberately narrow:
   directories, refresh projections or write bytecode/cache/report/timestamps.
   Read a stable snapshot and fail closed on concurrent changes. Mutating
   commands retain serialized locking and recheck state before replacement.
-- A interrupted move is not a new ledger. The local move record and `moving`
+- An interrupted move is not a new ledger. The local move record and `moving`
   binding let T1 recovery determine which exact source/destination exists.
   Both present, both absent or mismatched state bytes stop recovery. Resume
   the remaining reviewed rename, or reverse completed renames into absent
   original paths. Preserve records/directories; no deletion or symlink bridge.
+- The relocation helper requires a bounded filename-safe migration ID, canonical
+  paths with no direct or ancestor symlink aliases, and the existing state lock.
+  It holds that lock across stable baseline reads, every move, final verification,
+  binding activation or rollback archival. State, lock, private-directory and
+  rollback-record moves use the platform's atomic no-replace primitive and fail
+  closed when unavailable or when a concurrent destination appears.
 
 The implementation's required test contract includes default/external roots,
 missing state, conflicting roots/bindings, symlink and traversal escapes,

@@ -20,6 +20,11 @@ default. An active ignored `.texenda-location.json` requires the exact absolute
 competing root fails closed. Never initialize after binding, initialize over an
 existing ledger, or use the sealed v1 CLI on a v2 ledger.
 
+An explicit state root without an active binding is available only for detached
+read-only `status`, `ready`, `check`, and context inspection. It cannot initialize,
+append a receipt, acquire/create a lock, or write context output. This prevents a
+second unbound active ledger while retaining review of an already relocated copy.
+
 ```sh
 # Empty ledger only; init is non-overwriting and starts with no qualified profiles.
 python3 tooling/coordination/harness.py --root . init
@@ -32,6 +37,10 @@ python3 tooling/coordination/harness.py --root . context WP-00
 lock for write, initialize state, or update caches/reports. Mutations use the
 selected state root's nonblocking exclusive lock and recheck the source bytes
 before replacement. Repository-relative evidence always stays under `--root`.
+Bound reads and writes also enforce the migration receipt count/prefix and exact
+state bytes while the receipt count is unchanged; later valid appended receipts
+remain permitted. Evidence envelopes and their PASS/FAIL log paths reject private
+paths, CSVs, and symlink aliases before content reads or hashing.
 The independently reviewed [state relocation helper](../workspace/relocate_state.py)
 provides prepare/apply/resume/reverse-rename/verify operations; only the T1 move
 lead uses it after the required freeze and exact approval.

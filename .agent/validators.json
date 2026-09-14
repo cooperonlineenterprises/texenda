@@ -1,29 +1,43 @@
 {
   "schema_version": "texenda.agent.v1",
   "authority": "Single project validation command registry after the reviewed facade cutover. Commands delegate existing validators; a PASS is scoped evidence, not permission or product readiness.",
+  "execution_context": {
+    "shell": false,
+    "working_directory": "{repository_root}",
+    "repository_root": "validated canonical absolute directory containing this registry",
+    "project_home": "validated canonical workspace parent; repo/ parent or worktrees/ grandparent",
+    "state_root": "validated canonical absolute directory; required when a binding is active, optional and omitted as an argv pair before binding",
+    "global_option_placement": "--state-root is inserted before the harness subcommand"
+  },
   "commands": [
     {
       "id": "facade-check",
-      "argv": ["python3", "-B", ".agent/scripts/validate.py", "--check"],
+      "argv": ["python3", "-B", ".agent/scripts/validate.py", "--check", "--state-root", "{state_root}"],
       "mode": "read_only",
       "required": true,
       "run_in_check": false,
+      "working_directory": "{repository_root}",
+      "context_parameters": ["repository_root", "state_root_optional_before_binding"],
       "purpose": "Validate mapped authority, strict records, links, hashes, state projection, and generated freshness without writes."
     },
     {
       "id": "facade-refresh",
-      "argv": ["python3", "-B", ".agent/scripts/refresh.py", "--refresh"],
+      "argv": ["python3", "-B", ".agent/scripts/refresh.py", "--refresh", "--state-root", "{state_root}"],
       "mode": "refresh_writer",
       "required": true,
       "run_in_check": false,
+      "working_directory": "{repository_root}",
+      "context_parameters": ["repository_root", "state_root_optional_before_binding"],
       "purpose": "Explicitly refresh only generated non-authoritative views."
     },
     {
       "id": "facade-refresh-recovery",
-      "argv": ["python3", "-B", ".agent/scripts/refresh.py", "--recover-interrupted"],
+      "argv": ["python3", "-B", ".agent/scripts/refresh.py", "--recover-interrupted", "--state-root", "{state_root}"],
       "mode": "refresh_writer",
       "required": true,
       "run_in_check": false,
+      "working_directory": "{repository_root}",
+      "context_parameters": ["repository_root", "state_root_optional_before_binding"],
       "purpose": "Explicitly replace every generated output after a detected interrupted refresh, then clear its marker."
     },
     {
@@ -32,6 +46,8 @@
       "mode": "read_only",
       "required": true,
       "run_in_check": true,
+      "working_directory": "{repository_root}",
+      "context_parameters": ["repository_root"],
       "purpose": "Delegate the reviewed workspace/crosswalk contract validator."
     },
     {
@@ -40,6 +56,8 @@
       "mode": "synthetic_writes_only",
       "required": true,
       "run_in_check": false,
+      "working_directory": "{repository_root}",
+      "context_parameters": ["repository_root"],
       "purpose": "Run facade mutation, stale-view, interruption, and read-only proofs in synthetic fixtures."
     },
     {
@@ -48,6 +66,8 @@
       "mode": "synthetic_writes_only",
       "required": true,
       "run_in_check": false,
+      "working_directory": "{repository_root}",
+      "context_parameters": ["repository_root"],
       "purpose": "Run mapped workspace and state-relocation recovery tests."
     },
     {
@@ -56,6 +76,8 @@
       "mode": "synthetic_writes_only",
       "required": true,
       "run_in_check": false,
+      "working_directory": "{repository_root}",
+      "context_parameters": ["repository_root"],
       "purpose": "Run the local coordinator routing, state-root, and instruction suites."
     },
     {
@@ -64,6 +86,8 @@
       "mode": "synthetic_writes_only",
       "required": true,
       "run_in_check": false,
+      "working_directory": "{repository_root}",
+      "context_parameters": ["repository_root"],
       "purpose": "Run all 39 unchanged sealed lifecycle tests."
     },
     {
@@ -72,23 +96,29 @@
       "mode": "read_only",
       "required": true,
       "run_in_check": false,
+      "working_directory": "{repository_root}",
+      "context_parameters": ["repository_root"],
       "purpose": "Run all 14 sealed implementation-package checks including checksums."
     },
     {
       "id": "source-package-checksums",
-      "argv": ["python3", "-B", "../sources/handoff-1.1.0-20260914/10-validation/validate_package.py", "--checksums"],
+      "argv": ["python3", "-B", "{project_home}/sources/handoff-1.1.0-20260914/10-validation/validate_package.py", "--checksums"],
       "mode": "read_only",
       "required": true,
       "run_in_check": false,
+      "working_directory": "{repository_root}",
+      "context_parameters": ["repository_root", "project_home"],
       "purpose": "Run all 14 preserved source-package checks from the canonical repo layout."
     },
     {
       "id": "coordination-state-check",
-      "argv": ["python3", "-B", "tooling/coordination/harness.py", "--root", ".", "check"],
+      "argv": ["python3", "-B", "tooling/coordination/harness.py", "--root", "{repository_root}", "--state-root", "{state_root}", "check"],
       "mode": "read_only",
       "required": true,
       "run_in_check": false,
-      "purpose": "Validate the live receipt/state/policy integrity; add exact --state-root after binding."
+      "working_directory": "{repository_root}",
+      "context_parameters": ["repository_root", "state_root_optional_before_binding"],
+      "purpose": "Validate live receipt/state/policy integrity with the resolved optional-or-bound state root in global-option position."
     },
     {
       "id": "git-diff-check",
@@ -96,6 +126,8 @@
       "mode": "read_only",
       "required": true,
       "run_in_check": false,
+      "working_directory": "{repository_root}",
+      "context_parameters": ["repository_root"],
       "purpose": "Reject whitespace errors in the candidate diff."
     }
   ]

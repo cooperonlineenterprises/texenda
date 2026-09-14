@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import argparse
 import ast
+import datetime as dt
 import json
+import os
 from pathlib import Path, PurePosixPath
 import re
 import subprocess
@@ -15,8 +17,9 @@ import urllib.parse
 sys.dont_write_bytecode = True
 from common import (EVIDENCE_PREFIX, GENERATED_PATHS, ROOT, SOURCE_SCOPE_EXCLUSIONS,
                     ValidationError, binding, candidate_paths, canonical, evidence_rows,
-                    git, git_identity, ledger_facts, load_json, loads, require, sha,
-                    revision_source_rows, source_rows, scope_digest, valid_sha)
+                    git, git_identity, ledger_facts, load_json, loads, require, resolved_directory, sha,
+                    no_symlink_components, reject_private_name, revision_source_rows,
+                    source_rows, scope_digest, stable_file_bytes, valid_sha)
 
 
 KERNEL_KEYS = {
@@ -29,7 +32,7 @@ KERNEL_KEYS = {
     'lifecycle.json': {'schema_version', 'authority', 'scope', 'transitions', 'exclusions'},
     'tools.json': {'schema_version', 'authority', 'availability_source', 'permission_source',
                    'tools'},
-    'validators.json': {'schema_version', 'authority', 'commands'},
+    'validators.json': {'schema_version', 'authority', 'execution_context', 'commands'},
     'project.json': {'schema_version', 'project_id', 'adoption_mode', 'profile',
                      'repository_role', 'dossier', 'extensions', 'external_state'},
 }
@@ -53,8 +56,10 @@ RECORD_ID = re.compile(r'^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)*-[0-9]{4}$')
 def strict_parsing(root=ROOT):
     counts = {'json': 0, 'toml': 0, 'python': 0}
     for name in candidate_paths(root):
+        reject_private_name(name, 'parse candidate')
         path = root / name
-        if not path.is_file() or path.is_symlink():
+        no_symlink_components(path.absolute(), 'parse candidate')
+        if not path.is_file():
             continue
         if name.startswith('.agent/tests/fixtures/invalid/'):
             continue
@@ -119,13 +124,68 @@ def validate_nested_instruction_text(text):
 
 def validate_instruction_scope(root=ROOT):
     count = 0
-    for path in sorted(root.rglob('AGENTS.md')):
-        if '.git' in path.relative_to(root).parts:
+    for name in candidate_paths(root):
+        if not name.endswith('AGENTS.md'):
             continue
-        require(path.is_file() and not path.is_symlink(), 'instruction file must be regular')
+        common_name = PurePosixPath(name)
+        require('private-inputs' not in common_name.parts and not name.lower().endswith('.csv'),
+                'private instruction path entered discovery')
+        path = root / name
+        no_symlink_components(path.absolute(), 'instruction file')
+        require(path.is_file(), 'instruction file must be regular')
         validate_nested_instruction_text(path.read_text())
         count += 1
     return count
+
+
+def validate_schema_instance(value, schema, path='$'):
+    if 'const' in schema:
+        expected = schema['const']
+        require(type(value) is type(expected) and value == expected,
+                path + ' differs from schema const')
+    if 'enum' in schema:
+        require(any(type(value) is type(item) and value == item for item in schema['enum']),
+                path + ' is outside schema enum')
+    declared = schema.get('type')
+    types = {
+        'object': dict,
+        'array': list,
+        'string': str,
+        'integer': int,
+        'number': (int, float),
+        'boolean': bool,
+        'null': type(None),
+    }
+    if declared:
+        expected_type = types.get(declared)
+        require(expected_type is not None, path + ' uses unsupported schema type')
+        if declared in ('integer', 'number'):
+            require(type(value) in ((int,) if declared == 'integer' else (int, float)),
+                    path + ' has wrong type')
+        else:
+            require(type(value) is expected_type, path + ' has wrong type')
+    if isinstance(value, str):
+        if 'minLength' in schema:
+            require(len(value) >= schema['minLength'], path + ' is shorter than minLength')
+        if 'maxLength' in schema:
+            require(len(value) <= schema['maxLength'], path + ' exceeds maxLength')
+        if 'pattern' in schema:
+            require(re.search(schema['pattern'], value) is not None, path + ' fails pattern')
+    if type(value) is int and 'minimum' in schema:
+        require(value >= schema['minimum'], path + ' is below minimum')
+    if isinstance(value, dict):
+        properties = schema.get('properties', {})
+        required = schema.get('required', [])
+        require(all(isinstance(item, str) for item in required), path + ' has invalid required keys')
+        require(set(required) <= set(value), path + ' is missing required keys')
+        if schema.get('additionalProperties') is False:
+            require(set(value) <= set(properties), path + ' has additional properties')
+        for key, item in value.items():
+            if key in properties:
+                validate_schema_instance(item, properties[key], path + '.' + key)
+    if isinstance(value, list) and 'items' in schema:
+        for index, item in enumerate(value):
+            validate_schema_instance(item, schema['items'], f'{path}[{index}]')
 
 
 def validate_origin(root=ROOT):
@@ -137,6 +197,7 @@ def validate_origin(root=ROOT):
     record = load_json(root / '.project-blueprint-origin.json')
     required = set(schema['required'])
     require(set(record) == required == set(schema['properties']), 'origin record is not closed')
+    validate_schema_instance(record, schema)
     require(record['schema_version'] == 'texenda.project-blueprint-origin.v2'
             and record['adoption_mode'] == 'mapped-existing'
             and record['generated_new_project'] is False
@@ -160,7 +221,8 @@ def validate_origin(root=ROOT):
 def validate_indexes(root=ROOT):
     for name in INDEX_STORES:
         directory = root / '.agent' / name
-        require(directory.is_dir() and not directory.is_symlink(), 'missing index store: ' + name)
+        no_symlink_components(directory.absolute(), 'index store')
+        require(directory.is_dir(), 'missing index store: ' + name)
         files = sorted(path.name for path in directory.iterdir() if path.is_file())
         require(files == ['README.md'], 'second active record store under .agent/' + name)
     require(not (root / '.agent/events').exists(), 'second receipt/event store exists')
@@ -180,7 +242,8 @@ def validate_extension(root=ROOT):
         require(any(name.startswith(prefix) for prefix in allowed),
                 'extension binding escapes confined paths: ' + name)
         path = root / name
-        require(path.is_file() and not path.is_symlink() and sha(path.read_bytes()) == row['sha256'],
+        no_symlink_components(path.absolute(), 'extension binding')
+        require(path.is_file() and sha(path.read_bytes()) == row['sha256'],
                 'extension binding hash mismatch: ' + name)
 
 
@@ -190,8 +253,16 @@ def validate_registry(root=ROOT):
     require(isinstance(rows, list) and rows, 'validator registry is empty')
     ids = [row['id'] for row in rows]
     require(len(ids) == len(set(ids)), 'duplicate validator command ID')
+    context = registry['execution_context']
+    require(set(context) == {'shell', 'working_directory', 'repository_root', 'project_home',
+                             'state_root', 'global_option_placement'}
+            and context['shell'] is False
+            and context['working_directory'] == '{repository_root}',
+            'validator execution context is not closed or shell-free')
+    row_fields = {'id', 'argv', 'mode', 'required', 'run_in_check', 'purpose',
+                  'working_directory', 'context_parameters'}
     for row in rows:
-        require(set(row) == {'id', 'argv', 'mode', 'required', 'run_in_check', 'purpose'},
+        require(set(row) == row_fields,
                 'validator command is not closed: ' + row.get('id', '?'))
         require(isinstance(row['argv'], list) and row['argv']
                 and all(isinstance(item, str) and item for item in row['argv']),
@@ -200,11 +271,72 @@ def validate_registry(root=ROOT):
                 'validator mode unknown')
         require(not any(item in {'sh', 'bash', 'zsh', '-c'} for item in row['argv']),
                 'shell command delegation is forbidden')
+        require(row['working_directory'] == '{repository_root}'
+                and isinstance(row['context_parameters'], list)
+                and row['context_parameters']
+                and row['context_parameters'][0] == 'repository_root'
+                and len(row['context_parameters']) == len(set(row['context_parameters'])),
+                'validator execution parameterization is invalid')
+        tokens = {match for item in row['argv'] for match in re.findall(r'{[^}]+}', item)}
+        allowed_tokens = {'{repository_root}', '{project_home}', '{state_root}'}
+        require(tokens <= allowed_tokens, 'unknown validator argv token')
+        if '{state_root}' in tokens:
+            require('state_root_optional_before_binding' in row['context_parameters'],
+                    'state-root token lacks declared parameterization')
+        if '{project_home}' in tokens:
+            require('project_home' in row['context_parameters'],
+                    'project-home token lacks declared parameterization')
     check = next((row for row in rows if row['id'] == 'facade-check'), None)
     refresh = next((row for row in rows if row['id'] == 'facade-refresh'), None)
     require(check and check['mode'] == 'read_only' and refresh and refresh['mode'] == 'refresh_writer',
             'check/refresh command contract missing')
     return registry
+
+
+def execution_context(root=ROOT, state_root=None):
+    repository = resolved_directory(Path(root).absolute(), 'validator repository root')
+    if repository.name == 'repo' and (repository.parent / 'WORKSPACE.md').is_file():
+        project_home = repository.parent
+    elif (repository.parent.name == 'worktrees'
+          and (repository.parent.parent / 'WORKSPACE.md').is_file()):
+        project_home = repository.parent.parent
+    else:
+        project_home = repository.parent
+    project_home = resolved_directory(project_home.absolute(), 'validator project home')
+    selected_state = None
+    if state_root is not None:
+        selected_state = resolved_directory(Path(state_root).absolute(), 'validator state root')
+    elif binding(repository):
+        raise ValidationError('active binding requires explicit --state-root for delegated checks')
+    return {
+        'repository_root': str(repository),
+        'project_home': str(project_home),
+        'state_root': str(selected_state) if selected_state else None,
+    }
+
+
+def resolve_command(row, context):
+    argv = list(row['argv'])
+    if context['state_root'] is None:
+        while '{state_root}' in argv:
+            index = argv.index('{state_root}')
+            require(index > 0 and argv[index - 1] == '--state-root',
+                    'optional state root must be a complete argv option pair')
+            del argv[index - 1:index + 1]
+    replacements = {f'{{{key}}}': value for key, value in context.items() if value is not None}
+    resolved = []
+    for item in argv:
+        for token, value in replacements.items():
+            item = item.replace(token, value)
+        require('{' not in item and '}' not in item and '\x00' not in item and '\n' not in item,
+                'unresolved or unsafe validator argv')
+        resolved.append(item)
+    require(resolved[0] in ('python3', 'git'), 'validator executable is not allowlisted')
+    if row['id'] == 'coordination-state-check' and context['state_root'] is not None:
+        state_index = resolved.index('--state-root')
+        require(state_index < resolved.index('check'),
+                'harness --state-root must be a global option before the subcommand')
+    return resolved
 
 
 def validate_dossier(root=ROOT, *, generated=True):
@@ -222,8 +354,15 @@ def validate_dossier(root=ROOT, *, generated=True):
     classes = {'authoritative', 'navigation', 'generated_view', 'evidence', 'plan', 'history'}
     require(all(row['classification'] in classes for row in rows),
             'unknown dossier path classification')
-    actual = sorted(path.relative_to(root).as_posix()
-                    for path in (root / 'project-dossier').rglob('*') if path.is_file())
+    actual = []
+    for name in candidate_paths(root):
+        if not name.startswith('project-dossier/'):
+            continue
+        path = root / name
+        no_symlink_components(path.absolute(), 'dossier path')
+        if path.is_file():
+            actual.append(path.relative_to(root).as_posix())
+    actual.sort()
     if generated:
         require(sorted(paths) == actual, 'artifact catalog does not cover every dossier file')
     else:
@@ -249,11 +388,14 @@ def validate_dossier(root=ROOT, *, generated=True):
 
 def validate_links(root=ROOT, *, allow_generated_missing=False):
     count = 0
-    selected = [root / 'AGENTS.md', root / 'docs/agents/operating-guide.md']
-    selected += sorted((root / '.agent').rglob('*.md'))
-    selected += sorted((root / 'project-dossier').rglob('*.md'))
+    names = {'AGENTS.md', 'docs/agents/operating-guide.md'}
+    names.update(name for name in candidate_paths(root)
+                 if name.endswith('.md')
+                 and (name.startswith('.agent/') or name.startswith('project-dossier/')))
+    selected = [root / name for name in sorted(names)]
     for path in selected:
-        if not path.is_file() or path.is_symlink():
+        no_symlink_components(path.absolute(), 'Markdown path')
+        if not path.is_file():
             continue
         for target in re.findall(r'\[[^\]]+\]\(([^)]+)\)', path.read_text()):
             target = urllib.parse.unquote(target.split('#', 1)[0])
@@ -262,19 +404,19 @@ def validate_links(root=ROOT, *, allow_generated_missing=False):
             destination = Path(target)
             if not destination.is_absolute():
                 destination = path.parent / destination
-            if not destination.exists() and allow_generated_missing:
-                try:
-                    relative = destination.resolve(strict=False).relative_to(root.resolve()).as_posix()
-                except ValueError:
-                    relative = None
-                if relative in GENERATED_FILES:
-                    continue
-            require(destination.exists() and not destination.is_symlink(),
-                    'broken or symlinked local link in ' + str(path.relative_to(root)) + ': ' + target)
+            destination = Path(os.path.abspath(destination))
             try:
-                destination.resolve().relative_to(root.resolve())
+                relative = destination.relative_to(root.absolute()).as_posix()
             except ValueError as exc:
                 raise ValidationError('local link escapes repository: ' + target) from exc
+            if not destination.exists() and allow_generated_missing:
+                if relative in GENERATED_FILES:
+                    continue
+            no_symlink_components(destination.absolute(), 'Markdown link')
+            require(destination.exists(),
+                    'broken or symlinked local link in ' + str(path.relative_to(root)) + ': ' + target)
+            require(destination.resolve() == destination,
+                    'local link uses a non-canonical or symlinked path: ' + target)
             count += 1
     return count
 
@@ -319,21 +461,39 @@ def validate_evidence_records(root=ROOT):
                     and not evidence_path.lower().endswith('.csv'),
                     'PASS/FAIL evidence path is missing or unsafe')
             target = root / evidence_path
-            require(target.is_file() and not target.is_symlink() and valid_sha(check.get('sha256'))
+            no_symlink_components(target.absolute(), 'qualification evidence path')
+            require(target.is_file() and valid_sha(check.get('sha256'))
                     and sha(target.read_bytes()) == check['sha256'],
                     'PASS/FAIL evidence hash mismatch: ' + evidence_path)
             count += 1
     return count
 
 
-def run_registry_checks(registry, root=ROOT, *, all_commands=False):
+def ensure_no_interrupted_refresh(root=ROOT):
+    generated = root / '.agent/generated'
+    no_symlink_components(generated.absolute(), 'generated directory')
+    markers = list(generated.glob('.refresh-*'))
+    require(not markers, 'interrupted refresh marker present')
+
+
+def run_registry_checks(registry, root=ROOT, state_root=None, *, all_commands=False,
+                        allow_refresh_marker=False):
     results = []
+    context = execution_context(root, state_root)
     for row in registry['commands']:
-        if row['id'] in ('facade-check', 'facade-refresh'):
+        # A check can never dispatch a writer, even under --all.
+        if row['mode'] == 'refresh_writer':
+            results.append({'id': row['id'], 'status': 'SKIPPED_WRITER'})
+            continue
+        if row['id'] == 'facade-check':
             continue
         if not (all_commands or row['run_in_check']):
             continue
-        result = subprocess.run(row['argv'], cwd=root, capture_output=True, text=True, check=False,
+        if not allow_refresh_marker:
+            ensure_no_interrupted_refresh(root)
+        argv = resolve_command(row, context)
+        result = subprocess.run(argv, cwd=context['repository_root'],
+                                capture_output=True, text=True, check=False,
                                 env={**dict(__import__('os').environ), 'PYTHONDONTWRITEBYTECODE': '1'})
         require(result.returncode == 0,
                 'registered command failed: ' + row['id'] + '\n' + result.stdout + result.stderr)
@@ -342,14 +502,19 @@ def run_registry_checks(registry, root=ROOT, *, all_commands=False):
 
 
 def validate_generated(root=ROOT, state_root=None):
-    markers = list((root / '.agent/generated').glob('.refresh-*'))
-    require(not markers, 'interrupted refresh marker present')
+    ensure_no_interrupted_refresh(root)
     for name in GENERATED_FILES:
         path = root / name
         require(path.is_file() and not path.is_symlink(), 'generated output missing: ' + name)
     manifest = load_json(root / '.agent/generated/manifest.json')
     generation_id = manifest['generation_id']
     require(valid_sha(generation_id), 'invalid generated transaction ID')
+    generated_at = manifest.get('generated_at')
+    require(isinstance(generated_at, str)
+            and re.fullmatch(r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+00:00', generated_at),
+            'generated timestamp must be second-precision UTC ISO-8601')
+    parsed_time = dt.datetime.fromisoformat(generated_at)
+    require(parsed_time.tzinfo == dt.timezone.utc, 'generated timestamp is not UTC')
     rows = source_rows(root)
     require(manifest['source_files'] == rows
             and manifest['source_scope_sha256'] == scope_digest(rows)
@@ -370,6 +535,15 @@ def validate_generated(root=ROOT, state_root=None):
         require(manifest[key] == facts[key], 'generated ledger projection is stale: ' + key)
     require(manifest['ledger_observation']['state_root'] == facts['state_root'],
             'generated state-root observation is stale')
+    basis = {
+        'source_scope_sha256': manifest['source_scope_sha256'],
+        'evidence_scope_sha256': manifest['evidence_scope_sha256'],
+        'ledger_sha256': manifest['ledger_sha256'],
+        'receipt_count': manifest['receipt_count'],
+        'receipt_tip': manifest['receipt_tip'],
+    }
+    require(sha(canonical(basis)) == generation_id,
+            'generated transaction ID does not match its declared derivation')
     current = load_json(root / '.agent/state/current.json')
     required = {'schema_version', 'generation_id', 'generated_at', 'authority',
                 'source_git_revision', 'source_git_tree', 'source_scope_sha256',
@@ -395,14 +569,31 @@ def validate_generated(root=ROOT, state_root=None):
     findings_mirror = load_json(root / 'project-dossier/machine-readable/findings.json')
     require(findings_mirror['source_sha256'] == sha((root / 'project-dossier/conformance/findings.json').read_bytes())
             and findings_mirror['findings'] == findings['findings'], 'findings mirror is stale')
+    # Reconstruct every generated byte from validated sources, the recorded
+    # source identity/time, and the stable ledger. This covers all eleven
+    # outputs, including every Markdown byte and all manifest/report claims.
+    import refresh as generator
+    require(tuple(generator.OUTPUTS) == GENERATED_FILES,
+            'generated output registry differs between check and refresh')
+    effective_state_root = state_root or Path(manifest['ledger_observation']['state_root'])
+    expected = generator.build(root, effective_state_root, generated_at=generated_at,
+                               source_identity=(revision, manifest['source_git_tree']),
+                               prevalidate=False)
+    require(set(expected) == set(GENERATED_FILES), 'generated reconstruction scope is incomplete')
+    for name in GENERATED_FILES:
+        require(stable_file_bytes(root / name, 'generated output') == expected[name],
+                'generated output bytes differ from deterministic reconstruction: ' + name)
     head, tree = git_identity(root)
     return {'generation_id': generation_id, 'current_git_revision': head,
             'current_git_tree': tree, 'source_scope_sha256': manifest['source_scope_sha256'],
             'ledger_sha256': facts['ledger_sha256']}
 
 
-def validate(root=ROOT, state_root=None, *, generated=True, run_all=False):
+def validate(root=ROOT, state_root=None, *, generated=True, run_all=False,
+             allow_refresh_marker=False):
     require(sys.version_info >= (3, 11), 'Python 3.11 or newer is required')
+    if not allow_refresh_marker:
+        ensure_no_interrupted_refresh(root)
     parsing = strict_parsing(root)
     validate_kernel(root)
     instruction_files = validate_instruction_scope(root)
@@ -414,7 +605,9 @@ def validate(root=ROOT, state_root=None, *, generated=True, run_all=False):
     catalog = validate_dossier(root, generated=generated)
     links = validate_links(root, allow_generated_missing=not generated)
     evidence_checks = validate_evidence_records(root)
-    registered = run_registry_checks(registry, root, all_commands=run_all)
+    generated_result = validate_generated(root, state_root) if generated else None
+    registered = run_registry_checks(registry, root, state_root, all_commands=run_all,
+                                     allow_refresh_marker=allow_refresh_marker)
     result = {
         'status': 'PASS',
         'mode': 'read_only',
@@ -429,7 +622,7 @@ def validate(root=ROOT, state_root=None, *, generated=True, run_all=False):
         'product_or_external_gate': 'none',
     }
     if generated:
-        result['generated'] = validate_generated(root, state_root)
+        result['generated'] = generated_result
     return result
 
 

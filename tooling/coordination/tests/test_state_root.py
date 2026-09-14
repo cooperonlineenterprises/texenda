@@ -6,6 +6,7 @@ import os
 from pathlib import Path
 import tempfile
 import unittest
+from unittest import mock
 
 
 def load_module(name, path):
@@ -79,6 +80,12 @@ class StateRootTests(unittest.TestCase):
         os.rename(self.default / 'state.lock', self.external / 'state.lock')
         harness = hm.Harness(self.root, state_root=self.external)
         self.assertEqual(harness.status()['version'], '2.0')
+        with self.assertRaisesRegex(hm.Denied, 'read-only'):
+            harness.admit('WP-00', 'fixture')
+        with self.assertRaisesRegex(hm.Denied, 'read-only'):
+            harness.init('human:fixture')
+        with self.assertRaisesRegex(hm.Denied, 'cannot be used with mutating'):
+            harness.context('WP-00', 'context.json')
 
     def test_missing_external_state_fails_without_initialization(self):
         self.external.mkdir(parents=True)
@@ -130,6 +137,15 @@ class StateRootTests(unittest.TestCase):
         with self.assertRaisesRegex(hm.Denied, 'frozen project workspace root'):
             hm.Harness(self.root, state_root=wrong)
 
+    def test_binding_migration_id_is_a_bounded_safe_filename(self):
+        binding = self.relocate_synthetic()
+        for value in ('../../escaped', 'nested/name', '.', '', 'x' * 65):
+            with self.subTest(value=value):
+                binding['migration_id'] = value
+                (self.root / hm.BINDING_NAME).write_text(json.dumps(binding))
+                with self.assertRaisesRegex(hm.Denied, 'closed schema'):
+                    hm.Harness(self.root, state_root=self.external)
+
     def test_relative_traversal_and_symlink_state_roots_are_denied(self):
         with self.assertRaisesRegex(hm.Denied, 'absolute'):
             hm.Harness(self.root, state_root=Path('external-state'))
@@ -166,6 +182,18 @@ class StateRootTests(unittest.TestCase):
         state.symlink_to(target)
         with self.assertRaisesRegex(hm.Denied, 'symlink'):
             hm.Harness(self.root, state_root=self.external)
+
+    def test_direct_and_ancestor_root_symlink_aliases_are_denied(self):
+        root_alias = self.base / 'repo-alias'
+        root_alias.symlink_to(self.root, target_is_directory=True)
+        with self.assertRaisesRegex(hm.Denied, 'symlink'):
+            hm.Harness(root_alias)
+        real_parent = self.base / 'real-state-parent'
+        (real_parent / 'state').mkdir(parents=True)
+        parent_alias = self.base / 'state-parent-alias'
+        parent_alias.symlink_to(real_parent, target_is_directory=True)
+        with self.assertRaisesRegex(hm.Denied, 'symlink'):
+            hm.Harness(self.root, state_root=parent_alias / 'state')
 
     def test_concurrent_writer_lock_denies_mutation(self):
         lock = self.default / 'state.lock'
@@ -205,6 +233,76 @@ class StateRootTests(unittest.TestCase):
             self.harness.evidence('.texenda/private-inputs/kit/synthetic.csv')
         with self.assertRaisesRegex(hm.Denied, 'private inputs'):
             self.harness.context('WP-00', '.texenda/private-inputs/context.json')
+
+    def test_evidence_check_logs_reject_private_csv_before_hash_or_read(self):
+        private = self.default / 'private-inputs/kit/synthetic.csv'
+        private.parent.mkdir(parents=True)
+        private.write_text('synthetic private value')
+        record = self.root / 'evidence/private-log.json'
+        record.parent.mkdir()
+        record.write_text(json.dumps({
+            'schema_version': '1.0',
+            'kind': 'checkpoint',
+            'task_id': 'WP-00',
+            'candidate_revision': 'a' * 40,
+            'summary': 'synthetic private-log rejection',
+            'checks': [{
+                'id': 'private', 'required': True, 'status': 'PASS',
+                'command_or_procedure': 'synthetic',
+                'evidence_path': '.texenda/private-inputs/kit/synthetic.csv',
+                'sha256': '0' * 64,
+            }],
+        }))
+        with mock.patch.object(hm, 'file_hash', side_effect=AssertionError('private hash attempted')):
+            with self.assertRaisesRegex(hm.Denied, 'private inputs or CSV'):
+                self.harness.evidence('evidence/private-log.json')
+
+    def test_evidence_check_log_symlink_is_denied_before_hash(self):
+        target = self.root / 'evidence/target.log'
+        target.parent.mkdir(exist_ok=True)
+        target.write_text('synthetic')
+        link = self.root / 'evidence/link.log'
+        link.symlink_to(target)
+        record = self.root / 'evidence/symlink-log.json'
+        record.write_text(json.dumps({
+            'schema_version': '1.0', 'kind': 'checkpoint', 'task_id': 'WP-00',
+            'candidate_revision': 'a' * 40, 'summary': 'synthetic symlink rejection',
+            'checks': [{
+                'id': 'symlink', 'required': True, 'status': 'PASS',
+                'command_or_procedure': 'synthetic', 'evidence_path': 'evidence/link.log',
+                'sha256': '0' * 64,
+            }],
+        }))
+        with mock.patch.object(hm, 'file_hash', side_effect=AssertionError('symlink hash attempted')):
+            with self.assertRaisesRegex(hm.Denied, 'symlink'):
+                self.harness.evidence('evidence/symlink-log.json')
+
+    def test_binding_baseline_count_prefix_and_unchanged_hash_are_enforced(self):
+        binding = self.relocate_synthetic()
+        binding_path = self.root / hm.BINDING_NAME
+        binding['baseline']['receipt_count'] += 1
+        binding_path.write_text(json.dumps(binding))
+        with self.assertRaisesRegex(hm.Denied, 'shorter'):
+            hm.Harness(self.root, state_root=self.external).status()
+        binding['baseline']['receipt_count'] -= 1
+        binding['baseline']['receipt_tip'] = '0' * 64
+        binding_path.write_text(json.dumps(binding))
+        with self.assertRaisesRegex(hm.Denied, 'prefix'):
+            hm.Harness(self.root, state_root=self.external).status()
+        raw, state = self.facts(self.external / 'state.json')
+        binding['baseline']['receipt_tip'] = state['events'][-1]['hash']
+        binding_path.write_text(json.dumps(binding))
+        (self.external / 'state.json').write_bytes(raw + b' ')
+        with self.assertRaisesRegex(hm.Denied, 'bytes differ'):
+            hm.Harness(self.root, state_root=self.external).status()
+
+    def test_bound_state_permits_legitimate_appended_receipts(self):
+        self.relocate_synthetic()
+        harness = hm.Harness(self.root, state_root=self.external)
+        harness.admit('WP-00', 'fixture')
+        status = harness.status()
+        self.assertEqual(status['tasks']['WP-00']['state'], 'admitted')
+        self.assertEqual(status['receipt_count'], 2)
 
 
 if __name__ == '__main__':

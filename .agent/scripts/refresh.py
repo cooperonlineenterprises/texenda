@@ -74,16 +74,19 @@ def source_map(crosswalk, generation_id, generated_at):
     return '\n'.join(lines).encode()
 
 
-def build(root=ROOT, state_root=None):
+def build(root=ROOT, state_root=None, *, generated_at=None, source_identity=None,
+          prevalidate=True, allow_refresh_marker=False):
     # Validate adopted authorities and all non-generated sources before any write.
-    checker.validate(root, state_root, generated=False, run_all=False)
+    if prevalidate:
+        checker.validate(root, state_root, generated=False, run_all=False,
+                         allow_refresh_marker=allow_refresh_marker)
     rows = source_rows(root)
     evidence = evidence_rows(root)
     ledger = ledger_facts(root, state_root)
-    revision, tree = git_identity(root)
+    revision, tree = source_identity or git_identity(root)
     require(revision_source_rows(revision, root) == rows,
             'refresh requires every non-generated non-evidence source byte at the recorded Git revision')
-    generated_at = dt.datetime.now(dt.timezone.utc).replace(microsecond=0).isoformat()
+    generated_at = generated_at or dt.datetime.now(dt.timezone.utc).replace(microsecond=0).isoformat()
     scope = scope_digest(rows)
     evidence_scope = scope_digest(evidence)
     transaction_basis = {
@@ -106,6 +109,7 @@ def build(root=ROOT, state_root=None):
     manifest = {
         'schema_version': 'texenda.generated-integrity.v1',
         'generation_id': generation_id,
+        'generation_id_derivation': 'sha256(canonical_json(source_scope_sha256,evidence_scope_sha256,ledger_sha256,receipt_count,receipt_tip))',
         'generated_at': generated_at,
         'authority': 'generated_non_authoritative',
         'source_git_revision': revision,
@@ -121,6 +125,7 @@ def build(root=ROOT, state_root=None):
         'roster_evidence_sha256': ledger['roster_evidence_sha256'],
         'ledger_observation': ledger_observation,
         'freshness_rule': freshness,
+        'generated_output_validation': 'All eleven generated outputs are byte-reconstructed from validated inputs during check.',
         'limitations': [
             'SHA-256 establishes byte identity only, not authority, correctness, approval, or product readiness.',
             'Private-input content is excluded and was not opened, listed, copied, parsed, or hashed.',
@@ -244,7 +249,7 @@ Source revision/tree: `{revision}` / `{tree}`. Live ledger hash: `{ledger['ledge
 
 
 def refresh(root=ROOT, state_root=None, *, fail_after=None, recover_interrupted=False):
-    outputs = build(root, state_root)
+    outputs = build(root, state_root, allow_refresh_marker=recover_interrupted)
     marker = root / '.agent/generated/.refresh-in-progress'
     marker.parent.mkdir(parents=True, exist_ok=True)
     if marker.exists():

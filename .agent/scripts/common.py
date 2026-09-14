@@ -7,6 +7,7 @@ import json
 import os
 from pathlib import Path, PurePosixPath
 import re
+import stat
 import subprocess
 import tarfile
 
@@ -26,8 +27,8 @@ GENERATED_PATHS = (
 EVIDENCE_PREFIX = 'docs/qualification/evidence/'
 SOURCE_SCOPE_EXCLUSIONS = [
     {
-        'path': '.agent/generated/**',
-        'reason': 'refresh-only generated integrity outputs; containing them would create a digest cycle',
+        'path': '.agent/generated/manifest.json and .agent/generated/validation-report.json',
+        'reason': 'refresh-only generated integrity outputs; containing them would create a digest cycle (README.md remains in source scope)',
     },
     {
         'path': '.agent/state/current.json and .agent/state/RESUME.md',
@@ -46,6 +47,7 @@ SOURCE_SCOPE_EXCLUSIONS = [
         'reason': 'Git internals and nontracked operational/private material are outside the tracked source scope',
     },
 ]
+MIGRATION_ID = re.compile(r'^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$')
 
 
 class ValidationError(ValueError):
@@ -72,8 +74,7 @@ def loads(raw):
 
 
 def load_json(path):
-    require(path.is_file() and not path.is_symlink(), 'missing/nonregular JSON: ' + str(path))
-    return loads(path.read_bytes())
+    return loads(stable_file_bytes(path, 'JSON path'))
 
 
 def canonical(value):
@@ -89,6 +90,40 @@ def valid_sha(value):
     return isinstance(value, str) and re.fullmatch('[0-9a-f]{64}', value) is not None
 
 
+def reject_private_name(name, label='path'):
+    require(isinstance(name, str) and name, label + ' must be a nonempty string')
+    parts = PurePosixPath(name).parts
+    require('private-inputs' not in parts and not name.lower().endswith('.csv'),
+            label + ' is private/CSV and cannot enter a content-read scope')
+
+
+def no_symlink_components(path, label, *, allow_missing_leaf=False):
+    """Reject direct and ancestor symlink aliases before any resolution or read."""
+    candidate = Path(path)
+    require(candidate.is_absolute(), label + ' must be absolute')
+    require('..' not in candidate.parts, label + ' traversal is forbidden')
+    current = Path(candidate.anchor)
+    parts = candidate.parts[1:]
+    for index, part in enumerate(parts):
+        current = current / part
+        try:
+            mode = current.lstat().st_mode
+        except FileNotFoundError:
+            require(allow_missing_leaf and index == len(parts) - 1,
+                    label + ' has a missing parent or target')
+            return current
+        require(not stat.S_ISLNK(mode), label + ' contains a symlink alias')
+    return candidate
+
+
+def resolved_directory(path, label):
+    candidate = no_symlink_components(Path(path), label)
+    require(candidate.is_dir(), label + ' must be a directory')
+    resolved = candidate.resolve(strict=True)
+    require(resolved == candidate, label + ' must use its canonical absolute path')
+    return resolved
+
+
 def git(*arguments, root=ROOT, text=True):
     result = subprocess.run(['git', '--no-optional-locks', *arguments], cwd=root,
                             capture_output=True, check=True)
@@ -101,6 +136,8 @@ def candidate_paths(root=ROOT):
 
 
 def is_generated(path):
+    if path == '.agent/generated/README.md':
+        return False
     return any(path == prefix or path.startswith(prefix)
                for prefix in GENERATED_PATHS)
 
@@ -111,11 +148,12 @@ def source_rows(root=ROOT):
         if is_generated(name) or name.startswith(EVIDENCE_PREFIX):
             continue
         parts = PurePosixPath(name).parts
-        require('.texenda' not in parts and 'private-inputs' not in parts
-                and not name.lower().endswith('.csv'),
+        reject_private_name(name, 'source path')
+        require('.texenda' not in parts,
                 'private/local input entered source fingerprint: ' + name)
         path = root / name
-        require(path.is_file() and not path.is_symlink(), 'source path is not a regular file: ' + name)
+        no_symlink_components(path.absolute(), 'source path')
+        require(path.is_file(), 'source path is not a regular file: ' + name)
         rows.append({'path': name, 'sha256': sha(path.read_bytes())})
     return rows
 
@@ -140,16 +178,17 @@ def evidence_rows(root=ROOT):
     names = git('ls-files', '-z', EVIDENCE_PREFIX, root=root).split('\0')
     rows = []
     for name in sorted(filter(None, names)):
+        reject_private_name(name, 'evidence path')
         path = root / name
-        require(path.is_file() and not path.is_symlink(), 'evidence path is not regular: ' + name)
-        require('private-inputs' not in PurePosixPath(name).parts and not name.lower().endswith('.csv'),
-                'private input entered evidence index')
+        no_symlink_components(path.absolute(), 'evidence path')
+        require(path.is_file(), 'evidence path is not regular: ' + name)
         rows.append({'path': name, 'sha256': sha(path.read_bytes())})
     return rows
 
 
-def stable_bytes(path):
-    require(path.is_file() and not path.is_symlink(), 'state file missing or symlinked')
+def stable_file_bytes(path, label='file'):
+    path = no_symlink_components(Path(path).absolute(), label)
+    require(path.is_file(), label + ' is missing or not regular')
     flags = os.O_RDONLY | getattr(os, 'O_NOFOLLOW', 0)
 
     def once():
@@ -168,12 +207,16 @@ def stable_bytes(path):
         identity = (before.st_dev, before.st_ino, before.st_size, before.st_mtime_ns,
                     before.st_ctime_ns)
         require(identity == (after.st_dev, after.st_ino, after.st_size, after.st_mtime_ns,
-                             after.st_ctime_ns), 'state changed during read')
+                             after.st_ctime_ns), label + ' changed during read')
         return b''.join(chunks), identity
 
     first, second = once(), once()
-    require(first == second, 'state changed or was replaced during read')
+    require(first == second, label + ' changed or was replaced during read')
     return first[0]
+
+
+def stable_bytes(path):
+    return stable_file_bytes(path, 'state file')
 
 
 def check_receipts(state):
@@ -193,12 +236,14 @@ def check_receipts(state):
 
 def binding(root=ROOT):
     path = root / '.texenda-location.json'
-    if not path.exists():
+    if not path.exists() and not path.is_symlink():
         return None
-    value = load_json(path)
+    value = loads(stable_file_bytes(path, 'state binding'))
     require(set(value) == {'schema_version', 'migration_id', 'repository_root', 'state_root',
                            'status', 'baseline'}, 'state binding is not closed')
     require(value['schema_version'] == 'texenda.state-location.v1', 'unknown state binding schema')
+    require(isinstance(value['migration_id'], str) and MIGRATION_ID.fullmatch(value['migration_id']),
+            'unsafe state binding migration_id')
     require(value['status'] in ('moving', 'active'), 'invalid state binding status')
     require(Path(value['repository_root']) == root.resolve(), 'state binding repository mismatch')
     require(Path(value['state_root']) == root.resolve().parent / 'local/agent-state/texenda',
@@ -219,14 +264,13 @@ def ledger_facts(root=ROOT, state_root=None, fallback_state_root=None):
         selected = Path(state_root)
         require(selected.is_absolute() and '..' not in selected.parts,
                 'state root must be absolute and traversal-free')
-        selected = selected.resolve(strict=True)
-        require(selected.is_dir() and not selected.is_symlink(), 'state root must be a real directory')
+        selected = resolved_directory(selected, 'state root')
     elif location:
         raise ValidationError('active binding requires explicit --state-root')
     elif fallback_state_root is not None:
         selected = Path(fallback_state_root)
         require(selected.is_absolute(), 'recorded ledger root is not absolute')
-        selected = selected.resolve(strict=True)
+        selected = resolved_directory(selected, 'recorded ledger root')
     else:
         selected = root / '.texenda'
     if location:
@@ -236,6 +280,15 @@ def ledger_facts(root=ROOT, state_root=None, fallback_state_root=None):
     raw = stable_bytes(selected / 'state.json')
     state = loads(raw)
     check_receipts(state)
+    if location:
+        baseline = location['baseline']
+        require(len(state['events']) >= baseline['receipt_count'],
+                'bound receipt chain is shorter than its baseline')
+        require(state['events'][baseline['receipt_count'] - 1]['hash'] == baseline['receipt_tip'],
+                'bound receipt prefix differs from its baseline')
+        if len(state['events']) == baseline['receipt_count']:
+            require(sha(raw) == baseline['state_sha256'],
+                    'bound state bytes differ at unchanged receipt count')
     return {
         'state_root': str(selected),
         'ledger_sha256': sha(raw),

@@ -68,9 +68,11 @@
           "const": "4.3.0"
         },
         "revision": {
+          "type": "string",
           "pattern": "^[0-9a-f]{40}$"
         },
         "tree": {
+          "type": "string",
           "pattern": "^[0-9a-f]{40}$"
         },
         "dirty_entry_count": {
