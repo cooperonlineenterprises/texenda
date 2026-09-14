@@ -45,10 +45,12 @@ comparison is followed by a binding/root/lock/policy identity recheck at the
 replacement boundary. Existing-state writes use an atomic exchange so a
 post-replacement identity failure restores the exact previous state bytes before
 returning denial. Before candidate creation, the harness publishes a closed
-preparation control; a second closed
-[state-write transaction](schemas/state-write-transaction.schema.json) binds the
-exact old/new hashes and inode identities, repository/state-root/lock identities,
-binding identity and routing-policy digest before exchange. Controls are fully
+preparation control. After exclusive candidate creation, an atomically published
+candidate-bound [state-write transaction](schemas/state-write-transaction.schema.json)
+binds the immutable intended hash, originally opened candidate identity,
+repository/state-root/lock identities, binding identity and routing-policy digest.
+Only an exact raw/hash/inode recheck promotes that same control to `ready` by
+atomic rename immediately before exchange. Controls are fully
 written/fsynced under a non-operational staging name before descriptor-relative
 no-replace publication, so a partial file never masquerades as an active phase.
 The harness validates the complete displaced old bytes and prepared inode after
@@ -150,7 +152,11 @@ checkpoint. Missing, corrupt, ambiguous or substituted recovery material fails
 closed. If rollback exchange or directory sync cannot be proved, the active and
 candidate/checkpoint bytes plus both blocking controls remain. Candidate cleanup
 is an atomic no-replace capture into a content-addressed, non-active checkpoint;
-the harness never unlinks ledger bytes. Completed/recovered transaction records
+the harness never unlinks ledger bytes. The intended-content checkpoint is an
+independent inode, so it cannot alias or mutate active `state.json`. Preparation
+capture persists the original candidate identity and requires the exact intended
+and attempted checkpoint set, equal bytes/hashes on distinct inodes, and the exact
+attempted inode. Completed/recovered transaction records
 retain sanitized hashes and identities. Ordinary success leaves no hidden
 candidate or cleanup control and exactly one active `state.json` ledger.
 

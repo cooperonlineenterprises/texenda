@@ -134,7 +134,8 @@ def stable_file_bytes(path, label, *, missing_ok=False):
         raise
     if path.is_symlink():
         raise Denied(label + ' cannot be a symlink')
-    flags = os.O_RDONLY | getattr(os, 'O_NOFOLLOW', 0)
+    flags = (os.O_RDONLY | getattr(os, 'O_NOFOLLOW', 0)
+             | getattr(os, 'O_NONBLOCK', 0))
 
     def once():
         try:
@@ -327,7 +328,8 @@ def stable_at(directory_fd, name, label, *, missing_ok=False):
     """Read a descriptor-relative regular file twice without following aliases."""
     if not isinstance(name, str) or not name or '/' in name or name in ('.', '..'):
         raise Denied(label + ' has an unsafe descriptor-relative name')
-    flags = os.O_RDONLY | getattr(os, 'O_NOFOLLOW', 0)
+    flags = (os.O_RDONLY | getattr(os, 'O_NOFOLLOW', 0)
+             | getattr(os, 'O_NONBLOCK', 0))
 
     def once():
         try:
@@ -830,7 +832,7 @@ class Harness(legacy.Harness):
         candidates = []
         extras = []
         for name in names:
-            if re.fullmatch(r'\.state-write-(?:ready|commit-cleanup|rollback-cleanup)-[0-9a-f]{24}\.json', name):
+            if re.fullmatch(r'\.state-write-(?:preparation-capture|candidate-bound|ready|commit-cleanup|rollback-cleanup)-[0-9a-f]{24}\.json', name):
                 controls.append(name)
             elif re.fullmatch(r'\.state-write-candidate-[0-9a-f]{24}\.json', name):
                 candidates.append(name)
@@ -868,9 +870,23 @@ class Harness(legacy.Harness):
                              'state-write-committed-' + token_value + '.json',
                              'state-write-recovered-' + token_value + '.json',
                          }]
-        if len(archive_names) > 1 or (controls and archive_names):
+        preparation_capture_archive = ('state-write-preparation-capture-recovered-'
+                                       + token_value + '.json')
+        capture_archive_exists = preparation_capture_archive in os.listdir(token['dir_fd'])
+        if (len(archive_names) > 1 or (controls and archive_names)
+                or (controls and capture_archive_exists)
+                or (archive_names and capture_archive_exists)):
             raise Denied('state-write recovery has ambiguous archived outcomes')
         if not controls:
+            if capture_archive_exists:
+                archived_raw, _archived_signature = stable_at(
+                    token['dir_fd'], preparation_capture_archive,
+                    'archived preparation capture control')
+                archived = self._validate_state_transaction(load_json(archived_raw))
+                if (archived['phase'] != 'ready'
+                        or not self._preparation_matches_ready(preparation, archived)):
+                    raise Denied('archived preparation capture differs from preparation')
+                return archived, preparation_capture_archive, preparation
             if archive_names:
                 archived_raw, _archived_signature = stable_at(
                     token['dir_fd'], archive_names[0], 'archived state-write transaction')
@@ -884,10 +900,17 @@ class Harness(legacy.Harness):
         raw, _signature = stable_at(token['dir_fd'], control,
                                     'state-write phase control')
         transaction = self._validate_state_transaction(load_json(raw))
+        preparation_capture = '.state-write-preparation-capture-' + token_value + '.json'
+        if control == preparation_capture:
+            if (transaction['phase'] != 'ready'
+                    or not self._preparation_matches_ready(preparation, transaction)):
+                raise Denied('preparation capture control differs from fixed preparation')
+            return transaction, control, preparation
         if transaction['phase'] != 'ready' or not self._preparation_matches_ready(
                 preparation, transaction):
             raise Denied('state-write ready record differs from preparation')
         allowed_controls = {
+            '.state-write-candidate-bound-' + token_value + '.json',
             '.state-write-ready-' + token_value + '.json',
             '.state-write-commit-cleanup-' + token_value + '.json',
             '.state-write-rollback-cleanup-' + token_value + '.json',
@@ -911,6 +934,36 @@ class Harness(legacy.Harness):
     def _checkpoint_name(self, transaction, role, expected):
         return ('state-write-checkpoint-' + role + '-' + expected['sha256'] + '-'
                 + transaction['token'] + '.json')
+
+    def _checkpoint_names_for_transaction(self, token, transaction):
+        suffix = '-' + transaction['token'] + '.json'
+        return sorted(name for name in os.listdir(token['dir_fd'])
+                      if name.startswith('state-write-checkpoint-')
+                      and name.endswith(suffix))
+
+    def _ensure_intended_checkpoint(self, token, transaction, candidate_entry):
+        expected = transaction['new_state']
+        intended_name = self._checkpoint_name(transaction, 'intended', expected)
+        intended = self._entry(token, intended_name, 'intended state checkpoint')
+        if intended is None:
+            if candidate_entry is None:
+                raise Denied('intended state checkpoint and candidate are both missing')
+            write_at_exclusive(token['dir_fd'], intended_name, candidate_entry[0],
+                               'independent intended state checkpoint')
+            intended = self._entry(token, intended_name, 'intended state checkpoint')
+        if (intended is None
+                or hashlib.sha256(intended[0]).hexdigest() != expected['sha256']
+                or not stat.S_ISREG(intended[1][2])):
+            raise Denied('intended state checkpoint content is invalid')
+        if expected.get('identity') is not None:
+            if candidate_entry is None or not identity_matches(
+                    candidate_entry[1], expected['identity']):
+                raise Denied('candidate identity differs from its bound creation identity')
+        if (candidate_entry is not None
+                and (candidate_entry[1][0], candidate_entry[1][1])
+                == (intended[1][0], intended[1][1])):
+            raise Denied('intended checkpoint must not alias the candidate inode')
+        return intended_name, intended
 
     def _capture_transaction_candidate(self, token, transaction, expected, role, label):
         source = transaction['candidate_name']
@@ -1040,15 +1093,81 @@ class Harness(legacy.Harness):
         rollback_control = '.state-write-rollback-cleanup-' + transaction['token'] + '.json'
         commit_control = '.state-write-commit-cleanup-' + transaction['token'] + '.json'
 
-        if transaction['phase'] == 'preparing':
-            previous_layout = ((transaction['operation'] == 'initialize' and state_entry is None)
-                               or (transaction['operation'] == 'replace'
-                                   and self._entry_matches(state_entry, old)))
+        capture_control = ('.state-write-preparation-capture-'
+                           + transaction['token'] + '.json')
+        capture_archive = ('state-write-preparation-capture-recovered-'
+                           + transaction['token'] + '.json')
+        if transaction['phase'] == 'preparing' or control in (capture_control,
+                                                               capture_archive):
+            previous_old = preparation['old_state']
+            previous_layout = ((preparation['operation'] == 'initialize'
+                                and state_entry is None)
+                               or (preparation['operation'] == 'replace'
+                                   and self._entry_matches(state_entry, previous_old)))
             if not previous_layout or not binding_same:
                 raise Denied('state-write preparation environment changed before recovery')
-            if candidate_entry is not None:
+            expected_checkpoint = self._checkpoint_name(
+                preparation, 'attempted', preparation['new_state'])
+            intended_checkpoint = self._checkpoint_name(
+                preparation, 'intended', preparation['new_state'])
+            checkpoints = self._checkpoint_names_for_transaction(token, preparation)
+            allowed_checkpoints = {expected_checkpoint, intended_checkpoint}
+            if any(name not in allowed_checkpoints for name in checkpoints):
+                raise Denied('preparation recovery has duplicate or unexpected checkpoints')
+            if control == STATE_TRANSACTION_PENDING and candidate_entry is not None:
+                self._ensure_intended_checkpoint(token, preparation, candidate_entry)
+                checkpoints = self._checkpoint_names_for_transaction(token, preparation)
+                if checkpoints != [intended_checkpoint]:
+                    raise Denied('preparation intended-checkpoint set is not exact')
+                capture_transaction = copy.deepcopy(preparation)
+                capture_transaction['phase'] = 'ready'
+                capture_transaction['new_state']['identity'] = state_identity_record(
+                    candidate_entry[1])
+                self._validate_state_transaction(capture_transaction)
+                capture_raw = json.dumps(
+                    capture_transaction, indent=2, sort_keys=True,
+                    ensure_ascii=False, allow_nan=False).encode() + b'\n'
+                write_at_exclusive(token['dir_fd'], capture_control, capture_raw,
+                                   'preparation capture control',
+                                   interleave=self._interleave)
+                transaction = capture_transaction
+                new = transaction['new_state']
+                control = capture_control
+            if control in (capture_control, capture_archive):
+                if transaction['phase'] != 'ready':
+                    raise Denied('preparation capture lacks a bound candidate identity')
+                candidate_entry = self._entry(token, transaction['candidate_name'],
+                                              'state transaction candidate')
+                if candidate_entry is not None:
+                    self._ensure_intended_checkpoint(token, transaction, candidate_entry)
+                checkpoints = self._checkpoint_names_for_transaction(token, transaction)
+                if (candidate_entry is None
+                        and checkpoints != sorted([expected_checkpoint,
+                                                  intended_checkpoint])):
+                    raise Denied('captured preparation checkpoint is missing')
                 self._capture_transaction_candidate(token, transaction, new, 'attempted',
                                                     'incomplete prepared state')
+                checkpoints = self._checkpoint_names_for_transaction(token, transaction)
+                if checkpoints != sorted([expected_checkpoint, intended_checkpoint]):
+                    raise Denied('captured preparation checkpoint set is not exact')
+                checkpoint = self._entry(token, expected_checkpoint,
+                                         'captured preparation checkpoint')
+                intended = self._entry(token, intended_checkpoint,
+                                       'intended preparation checkpoint')
+                if (checkpoint is None
+                        or hashlib.sha256(checkpoint[0]).hexdigest() != new['sha256']
+                        or not stat.S_ISREG(checkpoint[1][2])
+                        or intended is None
+                        or hashlib.sha256(intended[0]).hexdigest() != new['sha256']
+                        or not stat.S_ISREG(intended[1][2])
+                        or not identity_matches(checkpoint[1], new['identity'])
+                        or (checkpoint[1][0], checkpoint[1][1])
+                        == (intended[1][0], intended[1][1])):
+                    raise Denied('captured preparation checkpoint is corrupt')
+                if control == capture_control:
+                    self._rename_transaction_entry(token, capture_control, capture_archive)
+            elif checkpoints:
+                raise Denied('preparation checkpoint exists without capture control')
             archive = ('state-write-preparation-recovered-' + transaction['token']
                        + '.json')
             self._rename_transaction_entry(token, STATE_TRANSACTION_PENDING, archive)
@@ -1056,8 +1175,9 @@ class Harness(legacy.Harness):
             return {
                 'recovered': True,
                 'outcome': 'previous_state_restored',
-                'previous_state_sha256': old['sha256'] if old else None,
-                'attempted_state_sha256': new['sha256'],
+                'previous_state_sha256': (previous_old['sha256']
+                                          if previous_old else None),
+                'attempted_state_sha256': preparation['new_state']['sha256'],
                 'receipt_bytes_rewritten': False,
                 'transaction_archive': str(self.dir / archive),
             }
@@ -1211,28 +1331,56 @@ class Harness(legacy.Harness):
                 stream.flush()
                 self._interleave('state_write_before_candidate_file_fsync', preparation)
                 os.fsync(stream.fileno())
-                self._interleave('state_write_after_candidate_file_fsync', preparation)
-            os.fsync(token['dir_fd'])
-            self._interleave('state_write_after_candidate_directory_fsync', preparation)
-            candidate_entry = stable_at(token['dir_fd'], temporary,
-                                        'new state transaction candidate')
-            candidate_record = self._state_value_record(*candidate_entry)
+                created_candidate_signature = stat_signature(os.fstat(stream.fileno()))
+            candidate_before_checkpoint = stable_at(
+                token['dir_fd'], temporary, 'originally created state candidate')
+            preparation_with_identity = copy.deepcopy(preparation)
+            preparation_with_identity['new_state']['identity'] = state_identity_record(
+                created_candidate_signature)
+            self._ensure_intended_checkpoint(token, preparation_with_identity,
+                                             candidate_before_checkpoint)
+            candidate_record = {
+                'sha256': preparation['new_state']['sha256'],
+                'identity': state_identity_record(created_candidate_signature),
+            }
             transaction = copy.deepcopy(preparation)
             transaction['phase'] = 'ready'
             transaction['new_state'] = candidate_record
             self._validate_state_transaction(transaction)
             transaction_raw = json.dumps(transaction, indent=2, sort_keys=True,
                                          ensure_ascii=False, allow_nan=False).encode() + b'\n'
-            ready_control = '.state-write-ready-' + transaction_token + '.json'
-            write_at_exclusive(token['dir_fd'], ready_control,
-                               transaction_raw, 'state-write ready control',
+            candidate_bound_control = ('.state-write-candidate-bound-'
+                                       + transaction_token + '.json')
+            write_at_exclusive(token['dir_fd'], candidate_bound_control,
+                               transaction_raw, 'state-write candidate identity control',
                                interleave=self._interleave)
+            self._interleave('state_write_after_candidate_file_fsync', preparation)
+            os.fsync(token['dir_fd'])
+            self._interleave('state_write_after_candidate_directory_fsync', preparation)
+            candidate_entry = stable_at(token['dir_fd'], temporary,
+                                        'new state transaction candidate')
+            if (candidate_entry[0] != raw
+                    or hashlib.sha256(candidate_entry[0]).hexdigest()
+                    != preparation['new_state']['sha256']
+                    or not identity_matches(candidate_entry[1], state_identity_record(
+                        created_candidate_signature))):
+                raise Denied('new state candidate differs from the originally created bytes/inode')
+            ready_control = '.state-write-ready-' + transaction_token + '.json'
+            self._rename_transaction_entry(token, candidate_bound_control, ready_control)
             self._interleave('state_write_after_transaction_prepared', transaction)
             self._interleave('before_state_commit', token)
             self._continuity(token, expected_state, expect_state_absent)
             if not self._transaction_environment(token, transaction):
                 raise Denied('state-location binding differs at state exchange boundary')
             self._interleave('state_write_before_exchange', transaction)
+            candidate_entry = self._entry(token, temporary,
+                                          'candidate at state exchange boundary')
+            if (candidate_entry is None or candidate_entry[0] != raw
+                    or hashlib.sha256(candidate_entry[0]).hexdigest()
+                    != preparation['new_state']['sha256']
+                    or not identity_matches(candidate_entry[1],
+                                            candidate_record['identity'])):
+                raise Denied('new state candidate changed immediately before exchange')
             if expected_state is None:
                 renameat_state(token['dir_fd'], temporary, token['dir_fd'],
                                'state.json', 'exclusive')

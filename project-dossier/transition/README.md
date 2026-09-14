@@ -135,15 +135,18 @@ The frozen external-state interface is deliberately narrow:
   missing source path.
 - Coordinator receipt writes use a separate selected-state-root transaction.
   A closed preparation control precedes candidate creation; a complete staged and
-  atomically published ready control then binds exact old/new hashes and inode
-  identities plus repository, state-root, lock, binding and policy identity before
-  exchange. Ordinary Harness and facade checks stop on pending/candidate/cleanup
+  atomically published candidate-bound control then binds the immutable intended
+  hash, originally opened candidate identity, repository, state-root, lock, binding
+  and policy identity. Exact raw/hash/inode revalidation is required before atomic
+  rename to `ready` and exchange. Ordinary Harness and facade checks stop on pending/candidate/cleanup
   material. The explicit
   owner/runtime-stopped recovery command holds the state lock and restores the
   previous byte-exact ledger by default; a competing displaced ledger and the
   attempted new ledger are both retained if prepared-old identity cannot be
   proved. Cleanup moves ledger bytes through descriptor-relative no-replace
   capture into content-addressed non-active checkpoints; it never unlinks them.
+  Intended checkpoints are independent inodes and preparation recovery requires
+  exact intended/attempted checkpoint sets and identity/content relationships.
   No recovery path reserializes or splices receipt chains.
 
 The implementation's required test contract includes default/external roots,

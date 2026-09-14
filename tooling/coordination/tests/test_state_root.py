@@ -669,6 +669,166 @@ class StateRootTests(unittest.TestCase):
         hm.check_receipts(json.loads(preserved['checkpoint'].read_bytes()))
         self.assertTrue(hm.state_transaction_blocker_names(self.default))
 
+    def test_candidate_replacement_after_directory_fsync_cannot_enter_ready_record(self):
+        original_raw = (self.default / 'state.json').read_bytes()
+        competing = copy.deepcopy(json.loads(original_raw))
+        competing['tasks']['WP-02']['state'] = 'admitted'
+        self.harness._event(competing, 'human:ready-candidate-racer', 'admit', 'WP-02')
+        self.harness._check(competing)
+        competing_raw = (json.dumps(competing, indent=2, ensure_ascii=False,
+                                    allow_nan=False).encode() + b'\n')
+        preserved = {}
+
+        def substitute(stage, _harness, preparation):
+            if stage != 'state_write_after_candidate_directory_fsync':
+                return
+            candidate = self.default / preparation['candidate_name']
+            intended = self.default / ('state-write-review-preserved-intended-'
+                                       + preparation['token'] + '.json')
+            os.rename(candidate, intended)
+            candidate.write_bytes(competing_raw)
+            preserved['intended'] = intended
+
+        harness = hm.Harness(self.root, interleave=substitute)
+        with self.assertRaisesRegex(hm.Denied, 'all recovery material is retained'):
+            harness.admit('WP-00', 'fixture')
+        preparation = json.loads((self.default / hm.STATE_TRANSACTION_PENDING).read_text())
+        expected_intended_sha = preparation['new_state']['sha256']
+        self.assertEqual((self.default / 'state.json').read_bytes(), original_raw)
+        self.assertEqual(hm.hashlib.sha256(preserved['intended'].read_bytes()).hexdigest(),
+                         expected_intended_sha)
+        candidate = self.default / preparation['candidate_name']
+        intended_checkpoint = self.default / harness._checkpoint_name(
+            preparation, 'intended', preparation['new_state'])
+        self.assertEqual(candidate.read_bytes(), competing_raw)
+        self.assertEqual(intended_checkpoint.read_bytes(), preserved['intended'].read_bytes())
+        self.assertNotEqual(hm.hashlib.sha256(competing_raw).hexdigest(),
+                            expected_intended_sha)
+        self.assertFalse(any(path.name.startswith('.state-write-ready-')
+                             for path in self.default.iterdir()))
+        self.assertTrue(hm.state_transaction_blocker_names(self.default))
+        with self.assertRaises(hm.Denied):
+            self.recover_state_write()
+        self.assertEqual((self.default / 'state.json').read_bytes(), original_raw)
+        self.assertTrue(candidate.exists())
+        self.assertTrue(intended_checkpoint.exists())
+
+    def test_preparation_checkpoint_resume_validates_exact_captured_material(self):
+        def captured_fixture(root):
+            harness = hm.Harness(root)
+            harness.init('human:fixture')
+            original = (root / '.texenda/state.json').read_bytes()
+            pid = os.fork()
+            if pid == 0:
+                def stop_ready(stage, _harness, detail):
+                    if (stage == 'state_write_after_control_staging_partial'
+                            and detail['target'].startswith('.state-write-candidate-bound-')):
+                        os._exit(83)
+                hm.Harness(root, interleave=stop_ready).admit('WP-00', 'fixture')
+                os._exit(0)
+            _pid, status = os.waitpid(pid, 0)
+            self.assertEqual(os.WEXITSTATUS(status), 83)
+            pid = os.fork()
+            if pid == 0:
+                def stop_capture(stage, _harness, _detail):
+                    if stage == 'state_write_after_candidate_capture':
+                        os._exit(84)
+                recovery = hm.Harness(root, interleave=stop_capture,
+                                      allow_state_recovery=True)
+                recovery.recover_state_write('human:owner', runtime_stopped=True)
+                os._exit(0)
+            _pid, status = os.waitpid(pid, 0)
+            self.assertEqual(os.WEXITSTATUS(status), 84)
+            state_root = root / '.texenda'
+            preparation = json.loads((state_root / hm.STATE_TRANSACTION_PENDING).read_text())
+            checkpoint_name = hm.Harness(root, allow_state_recovery=True)._checkpoint_name(
+                preparation, 'attempted', preparation['new_state'])
+            return original, preparation, state_root / checkpoint_name
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = (Path(directory) / 'repo').resolve()
+            root.mkdir()
+            original, _preparation, checkpoint = captured_fixture(root)
+            result = hm.Harness(root, allow_state_recovery=True).recover_state_write(
+                'human:owner', runtime_stopped=True)
+            self.assertEqual(result['outcome'], 'previous_state_restored')
+            self.assertEqual((root / '.texenda/state.json').read_bytes(), original)
+            self.assertEqual(hm.state_transaction_blocker_names(root / '.texenda'), [])
+
+        for mutation in ('corrupt', 'missing', 'duplicate', 'wrong-type', 'fifo'):
+            with self.subTest(mutation=mutation), tempfile.TemporaryDirectory() as directory:
+                root = (Path(directory) / 'repo').resolve()
+                root.mkdir()
+                original, preparation, checkpoint = captured_fixture(root)
+                if mutation == 'corrupt':
+                    checkpoint.write_text('{}\n')
+                elif mutation == 'missing':
+                    checkpoint.unlink()
+                elif mutation == 'duplicate':
+                    duplicate = checkpoint.with_name(
+                        'state-write-checkpoint-previous-'
+                        + preparation['new_state']['sha256'] + '-'
+                        + preparation['token'] + '.json')
+                    duplicate.write_bytes(checkpoint.read_bytes())
+                elif mutation == 'wrong-type':
+                    preserved = checkpoint.with_name(checkpoint.name + '.preserved')
+                    os.rename(checkpoint, preserved)
+                    checkpoint.mkdir()
+                else:
+                    preserved = checkpoint.with_name(checkpoint.name + '.preserved')
+                    os.rename(checkpoint, preserved)
+                    os.mkfifo(checkpoint)
+                recovery = hm.Harness(root, allow_state_recovery=True)
+                with self.assertRaises(hm.Denied):
+                    recovery.recover_state_write('human:owner', runtime_stopped=True)
+                self.assertEqual((root / '.texenda/state.json').read_bytes(), original)
+                self.assertTrue(hm.state_transaction_blocker_names(root / '.texenda'))
+
+    def test_preparation_capture_rejects_byte_identical_replacement_inode(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = (Path(directory) / 'repo').resolve()
+            root.mkdir()
+            hm.Harness(root).init('human:fixture')
+            original = (root / '.texenda/state.json').read_bytes()
+            pid = os.fork()
+            if pid == 0:
+                def stop_ready(stage, _harness, detail):
+                    if (stage == 'state_write_after_control_staging_partial'
+                            and detail['target'].startswith('.state-write-candidate-bound-')):
+                        os._exit(85)
+                hm.Harness(root, interleave=stop_ready).admit('WP-00', 'fixture')
+                os._exit(0)
+            _pid, status = os.waitpid(pid, 0)
+            self.assertEqual(os.WEXITSTATUS(status), 85)
+            state_root = root / '.texenda'
+            preparation = json.loads((state_root / hm.STATE_TRANSACTION_PENDING).read_text())
+            candidate = state_root / preparation['candidate_name']
+            intended_name = hm.Harness(root, allow_state_recovery=True)._checkpoint_name(
+                preparation, 'intended', preparation['new_state'])
+            intended = state_root / intended_name
+            observed = {}
+
+            def replace(stage, _harness, detail):
+                if stage != 'state_write_before_candidate_capture' or detail['role'] != 'attempted':
+                    return
+                preserved = state_root / ('state-write-review-preserved-candidate-'
+                                          + preparation['token'] + '.json')
+                os.rename(candidate, preserved)
+                candidate.write_bytes(preserved.read_bytes())
+                observed['preserved'] = preserved
+
+            recovery = hm.Harness(root, interleave=replace, allow_state_recovery=True)
+            with self.assertRaisesRegex(hm.Denied, 'checkpoint (?:differs|is corrupt)'):
+                recovery.recover_state_write('human:owner', runtime_stopped=True)
+            attempted_name = recovery._checkpoint_name(
+                preparation, 'attempted', preparation['new_state'])
+            attempted = state_root / attempted_name
+            self.assertEqual(intended.read_bytes(), attempted.read_bytes())
+            self.assertNotEqual(intended.stat().st_ino, attempted.stat().st_ino)
+            self.assertEqual(observed['preserved'].read_bytes(), attempted.read_bytes())
+            self.assertEqual((state_root / 'state.json').read_bytes(), original)
+            self.assertTrue(hm.state_transaction_blocker_names(state_root))
+
     def test_hard_interruptions_recover_previous_state_at_every_precleanup_phase(self):
         stages = (
             'state_write_after_preparation_control',
@@ -892,7 +1052,7 @@ class StateRootTests(unittest.TestCase):
         if pid == 0:
             def stop_ready(stage, _harness, detail):
                 if (stage == 'state_write_after_control_staging_partial'
-                        and detail['target'].startswith('.state-write-ready-')):
+                        and detail['target'].startswith('.state-write-candidate-bound-')):
                     os._exit(82)
             hm.Harness(self.root, interleave=stop_ready).admit('WP-00', 'fixture')
             os._exit(0)
@@ -1000,6 +1160,13 @@ class StateRootTests(unittest.TestCase):
         checkpoints = list(self.default.glob('state-write-checkpoint-previous-*.json'))
         self.assertEqual(len(checkpoints), 1)
         self.assertEqual(len(json.loads(checkpoints[0].read_bytes())['events']), 1)
+        intended = list(self.default.glob('state-write-checkpoint-intended-*.json'))
+        self.assertEqual(len(intended), 2)
+        active = self.default / 'state.json'
+        self.assertTrue(all(path.stat().st_ino != active.stat().st_ino for path in intended))
+        active_raw = active.read_bytes()
+        intended[-1].write_bytes(b'synthetic non-active checkpoint mutation\n')
+        self.assertEqual(active.read_bytes(), active_raw)
         self.assertFalse(any(path.name.startswith('.state-write-')
                              for path in self.default.iterdir()))
 
