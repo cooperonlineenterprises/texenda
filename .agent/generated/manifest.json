@@ -1,12 +1,12 @@
 {
   "schema_version": "texenda.generated-integrity.v1",
-  "generation_id": "cf062a51743af6d2ed13e4d9216d1fe1975427dab501da5d1213171a02c2e311",
+  "generation_id": "cf21a5379a05823321ffaace6bb4eedbf753071dd2c1eaf27112e05b29f967df",
   "generation_id_derivation": "sha256(canonical_json(source_scope_sha256,evidence_scope_sha256,ledger_sha256,receipt_count,receipt_tip))",
-  "generated_at": "2026-09-14T22:08:57+00:00",
+  "generated_at": "2026-09-14T22:37:02+00:00",
   "authority": "generated_non_authoritative",
-  "source_git_revision": "22061061fca78a938397b88db1aad6863b1aaef8",
-  "source_git_tree": "46bc3e27a6307f609ddf30a8c31abb83e2c5e467",
-  "source_scope_sha256": "efd182484cf695933087e724e13b8bc929c41b259a9a3b0cba3a1448f996fa44",
+  "source_git_revision": "721cded93f024128f48c6f7918cf9e01b997c798",
+  "source_git_tree": "f021b09e3b9803f10747ab2d96d80162747b20d2",
+  "source_scope_sha256": "c4f8c047acfd8de4ead7c806f4130d02d6ef5b90158c88ced83acc109a21bd11",
   "source_scope_exclusions": [
     {
       "path": ".agent/generated/manifest.json",
@@ -84,7 +84,7 @@
     },
     {
       "path": ".agent/extensions/texenda-coordination/extension.json",
-      "sha256": "d682a1d2c26a273e82d25e9bd42a70d42b22ec473273036a5fe4f4dfedca7cd7"
+      "sha256": "ee559f9ad791259a1037a2b336f91ffbff6a36db89f5832d33bde1c5d37b8dbf"
     },
     {
       "path": ".agent/generated/README.md",
@@ -116,7 +116,7 @@
     },
     {
       "path": ".agent/scripts/common.py",
-      "sha256": "1703324850e281663bd1623b2f64fbe05723ce32ef101a1c24924757338aabeb"
+      "sha256": "f4a2cdac87da0cbd699fa567a89826aece268e261a5bb3709f7696c95b78bf20"
     },
     {
       "path": ".agent/scripts/refresh.py",
@@ -144,7 +144,7 @@
     },
     {
       "path": ".agent/tests/test_validate.py",
-      "sha256": "4a5ba71d0af7bc8c761b2e60ef009789e8f14bfbffea0869a82dece1a7a84472"
+      "sha256": "dbc99e5f693d8a6826d8816a9342104fdb60b19a3d1271691ffe73ed28ab6ef5"
     },
     {
       "path": ".agent/tools.json",
@@ -456,7 +456,7 @@
     },
     {
       "path": "project-dossier/validation/README.md",
-      "sha256": "3c345ccb65f08a0ba1b6a7dd5b378d8b989043ce525a8c02b20f0c252882e0d5"
+      "sha256": "93cb4ac018b2f42e057963a019bd409262c2ceb556c96c3de3f914789d834176"
     },
     {
       "path": "specs/texenda-handoff/01-foundation/adr-index.md",
@@ -808,11 +808,11 @@
     },
     {
       "path": "tooling/coordination/README.md",
-      "sha256": "095022ca8ca0fc00ed5752f25052334d3cb45ec4739765bb6ff428aa16684e26"
+      "sha256": "6a95f3d81cbd37d333494f6aa47e756f0fb2de39addff70a582b5bfb97533ebc"
     },
     {
       "path": "tooling/coordination/harness.py",
-      "sha256": "30680bbd822e3feba0255c53cefeb97faecaa50da10184d08c7835c2306220b0"
+      "sha256": "71f31b31a897a0f5fc86a13f600ef07c01b414e6bb3e3c10c97521781f87f00e"
     },
     {
       "path": "tooling/coordination/routing-policy.json",
@@ -872,11 +872,11 @@
     },
     {
       "path": "tooling/coordination/tests/test_state_root.py",
-      "sha256": "5fe9a6bbfaa7c49c7796c6c226bfddde109c1574ce633cb8e019dfdcfaaec468"
+      "sha256": "7fcd0da5c424322dcf3df19dc6201a4b87cc2fce001f11828afeeb9383456c5a"
     },
     {
       "path": "tooling/workspace/relocate_state.py",
-      "sha256": "2691baf5917a501ad7eb38ea78e77fc4163fa4607c27b233f76f79c15b48db12"
+      "sha256": "dc9652691614c1baf861939a894ae8e055aa1851e475d6ccbc769feaffc8a246"
     },
     {
       "path": "tooling/workspace/tests/test_contract.py",
