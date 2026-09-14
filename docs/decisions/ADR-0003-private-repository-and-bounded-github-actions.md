@@ -1,9 +1,10 @@
 # ADR-0003: Private repository and bounded GitHub Actions
 
 Status: AUTHORITATIVE DECISION — owner accepted the repository-visibility and CI
-direction on 2026-09-14. Implementation status: candidate; independent review
-and integration remain pending. This project-local decision does not amend
-Texenda product semantics, the sealed handoff, external gates, or ADR-0001.
+direction on 2026-09-14. Implementation status is established by exact-candidate
+review and Git integration evidence; this ADR does not self-attest either. This
+project-local decision does not amend Texenda product semantics, the sealed
+handoff, external gates, or ADR-0001.
 
 ## Decision
 
