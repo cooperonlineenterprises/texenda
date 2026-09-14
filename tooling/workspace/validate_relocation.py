@@ -217,8 +217,10 @@ def audit(home, expected_revision, allowed_worktrees):
             git(repo, 'merge-base', '--is-ancestor', value, current_refs[ref])
         else:
             require(current_refs[ref] == value, 'preserved Git ref changed: ' + ref)
-    assigned_refs = {git(Path(path), 'symbolic-ref', 'HEAD') for path in allowed_worktrees}
-    require(set(current_refs) - set(bundled_refs) <= assigned_refs, 'undeclared new Git ref')
+    # Branches survive worktree removal; reviewers may use detached worktrees.
+    # New local refs are observations, not mutation authority from this audit.
+    post_checkpoint_refs = {ref: current_refs[ref] for ref in
+                            sorted(set(current_refs) - set(bundled_refs))}
     journal_path = home / 'local/logs/workspace-relocation/phase-1-journal.json'
     journal_raw = read_bytes(journal_path)
     journal = contract.loads(journal_raw)
@@ -251,6 +253,7 @@ def audit(home, expected_revision, allowed_worktrees):
                     'all_refs_sha256': sha(git(repo, 'show-ref').encode()),
                     'fresh_bundle_ref_count': len(bundle_heads.splitlines()),
                     'preserved_bundled_refs': len(bundled_refs),
+                    'post_checkpoint_refs': post_checkpoint_refs,
                     'archived_worktree_heads': archived_heads},
             'source': dict(source_summary, preserved_regular_files=len(source_rows),
                            all_files_canonical_sha256=sha(canonical(source_rows)), top_level_entries=16),

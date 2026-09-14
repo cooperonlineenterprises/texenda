@@ -1,0 +1,92 @@
+Texenda Phase-1 author correction before independent review
+Predecessor candidate: 7b758abd63d62260b4fa95c89eb537d0d9c856c4
+Reason: a retained post-checkpoint branch may outlive its worktree, and a reviewer may use a detached worktree. No rule requires deleting preserved branches or attaching reviewers to branches. The opt-in physical audit now records post-checkpoint refs and still requires every pre-move ordinary ref and archived commit to be retained; it continues to enforce the exact declared linked-worktree paths. No move, state, private input, package or external authority changed.
+Corrected source: tooling/workspace/validate_relocation.py
+SHA-256: faca2d70ca7ae67b89b3d23561f9df1df0c9bab219aa8ae4f39e9cc35d573832
+
+Command: env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/workspace/validate_relocation.py --project-home /Users/jamesryancooper/Projects/texenda --expected-revision b99f71fbaba0183fa2857016819fb410cabc1160 --allowed-worktree /Users/jamesryancooper/Projects/texenda/worktrees/workspace-relocation-evidence
+Exit code: 0
+Selected output (Git/ref fields; full earlier physical scope remains in original log):
+{
+  "outcome": "pass",
+  "observed_at": "2026-09-14T16:27:24.705374+00:00",
+  "git": {
+    "revision": "b99f71fbaba0183fa2857016819fb410cabc1160",
+    "tree": "24fdd3f5c7e9b8b1a03c854210d2cc6427620477",
+    "remote": "https://github.com/cooperonlineenterprises/texenda.git",
+    "clean": true,
+    "linked_worktrees": [
+      "/Users/jamesryancooper/Projects/texenda/repo",
+      "/Users/jamesryancooper/Projects/texenda/worktrees/workspace-relocation-evidence"
+    ],
+    "all_refs_sha256": "bd36dda4028e183a16659950c98a4b8df8bed7651d7bbf418c9ab9de2ae095bc",
+    "fresh_bundle_ref_count": 34,
+    "preserved_bundled_refs": 29,
+    "post_checkpoint_refs": {
+      "refs/heads/migration/workspace-relocation-evidence-20260914": "7b758abd63d62260b4fa95c89eb537d0d9c856c4"
+    },
+    "archived_worktree_heads": {
+      "worktrees/texenda-workspace-architecture-20260914/HEAD": "b99f71fbaba0183fa2857016819fb410cabc1160",
+      "worktrees/texenda-workspace-architecture-final-review-20260914/HEAD": "b99f71fbaba0183fa2857016819fb410cabc1160",
+      "worktrees/texenda-workspace-architecture-review-20260914/HEAD": "609ddda6da96ddf2460925cc759db724acd70d59",
+      "worktrees/texenda-workspace-architecture-rereview-20260914/HEAD": "c6220627cb84ea0862323d14dda2a1b72e466e01"
+    }
+  },
+  "state_sha256": "b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235",
+  "receipt_count": 13,
+  "receipt_tip": "f39249184757101b108ea7ec5ea0ffebdd8237315b8ac3cad3ad0cc6ab3e827e"
+}
+
+Command: env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/workspace/validate_contract.py --check --audit && env PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s tooling/workspace/tests -v && git --no-optional-locks diff --check
+Exit code: 0
+{"status": "PASS", "concerns": 42, "blueprint_paths": 85, "artifact_types": 35, "source_moves": 16, "qualification_checks": 143, "audit": {"JSON": 87, "TOML": 1, "Python": 12, "new_markdown_links": 13, "sealed_files": 86, "source_files": 88}, "scope": "static transition contracts, Git-bound inputs and qualification evidence links", "live_state_checked": false, "moves_executed": false, "private_input_accessed": false, "approval": false}
+test_active_state_move_cannot_take_whole_legacy_directory (test_contract.WorkspaceContractTests.test_active_state_move_cannot_take_whole_legacy_directory) ... ok
+test_all_qualification_pass_fail_checks_have_evidence_hashes (test_contract.WorkspaceContractTests.test_all_qualification_pass_fail_checks_have_evidence_hashes) ... ok
+test_author_cannot_be_own_required_reviewer (test_contract.WorkspaceContractTests.test_author_cannot_be_own_required_reviewer) ... ok
+test_check_cannot_refresh (test_contract.WorkspaceContractTests.test_check_cannot_refresh) ... ok
+test_checkpoint_move_cannot_escape_scope (test_contract.WorkspaceContractTests.test_checkpoint_move_cannot_escape_scope) ... ok
+test_complete_mapped_contract (test_contract.WorkspaceContractTests.test_complete_mapped_contract) ... ok
+test_duplicate_concern_owner (test_contract.WorkspaceContractTests.test_duplicate_concern_owner) ... ok
+test_duplicate_json_keys (test_contract.WorkspaceContractTests.test_duplicate_json_keys) ... ok
+test_every_source_top_level_entry_preserved (test_contract.WorkspaceContractTests.test_every_source_top_level_entry_preserved) ... ok
+test_false_generated_adoption (test_contract.WorkspaceContractTests.test_false_generated_adoption) ... ok
+test_false_source_qualification (test_contract.WorkspaceContractTests.test_false_source_qualification) ... ok
+test_legacy_receipt_inputs_retained (test_contract.WorkspaceContractTests.test_legacy_receipt_inputs_retained) ... ok
+test_missing_artifact_mapping (test_contract.WorkspaceContractTests.test_missing_artifact_mapping) ... ok
+test_missing_source_not_treated_as_completed_move (test_contract.WorkspaceContractTests.test_missing_source_not_treated_as_completed_move) ... ok
+test_move_target_traversal_or_other_project_denied (test_contract.WorkspaceContractTests.test_move_target_traversal_or_other_project_denied) ... ok
+test_no_delete_overwrite_symlink_or_external_effect (test_contract.WorkspaceContractTests.test_no_delete_overwrite_symlink_or_external_effect) ... ok
+test_nonfinite_json (test_contract.WorkspaceContractTests.test_nonfinite_json) ... ok
+test_operations_owner_matches_sealed_authority_register (test_contract.WorkspaceContractTests.test_operations_owner_matches_sealed_authority_register) ... ok
+test_operations_owner_rejects_migration_directory_in_every_epoch (test_contract.WorkspaceContractTests.test_operations_owner_rejects_migration_directory_in_every_epoch) ... ok
+test_ops_artifact_rejects_migration_directory (test_contract.WorkspaceContractTests.test_ops_artifact_rejects_migration_directory) ... ok
+test_premature_root_cutover (test_contract.WorkspaceContractTests.test_premature_root_cutover) ... ok
+test_private_content_access_hash_parse_copy_denied (test_contract.WorkspaceContractTests.test_private_content_access_hash_parse_copy_denied) ... ok
+test_private_file_cannot_enter_hash_scope (test_contract.WorkspaceContractTests.test_private_file_cannot_enter_hash_scope) ... ok
+test_qualification_absolute_traversal_and_private_paths_rejected (test_contract.WorkspaceContractTests.test_qualification_absolute_traversal_and_private_paths_rejected) ... ok
+test_qualification_evidence_hash_mismatch_rejected (test_contract.WorkspaceContractTests.test_qualification_evidence_hash_mismatch_rejected) ... ok
+test_qualification_missing_file_rejected (test_contract.WorkspaceContractTests.test_qualification_missing_file_rejected) ... ok
+test_qualification_pass_and_fail_require_path_and_hash (test_contract.WorkspaceContractTests.test_qualification_pass_and_fail_require_path_and_hash) ... ok
+test_repo_destination_not_created_first (test_contract.WorkspaceContractTests.test_repo_destination_not_created_first) ... ok
+test_review_successor_preserves_exact_rejected_json_and_review_semantics (test_contract.WorkspaceContractTests.test_review_successor_preserves_exact_rejected_json_and_review_semantics) ... ok
+test_second_authoritative_path (test_contract.WorkspaceContractTests.test_second_authoritative_path) ... ok
+test_second_live_task_roster_receipt_decision_evidence_owner (test_contract.WorkspaceContractTests.test_second_live_task_roster_receipt_decision_evidence_owner) ... ok
+test_source_difference_cannot_be_erased (test_contract.WorkspaceContractTests.test_source_difference_cannot_be_erased) ... ok
+test_source_variant_cannot_replace_sealed_authority (test_contract.WorkspaceContractTests.test_source_variant_cannot_replace_sealed_authority) ... ok
+test_state_binding_cannot_select_another_root (test_contract.WorkspaceContractTests.test_state_binding_cannot_select_another_root) ... ok
+test_two_owner_paths_in_one_epoch (test_contract.WorkspaceContractTests.test_two_owner_paths_in_one_epoch) ... ok
+test_unbound_projection (test_contract.WorkspaceContractTests.test_unbound_projection) ... ok
+test_inventory_preserves_preexisting_cache_files (test_relocation.RelocationAuditTests.test_inventory_preserves_preexisting_cache_files) ... ok
+test_missing_or_changed_state_denied_before_harness_import (test_relocation.RelocationAuditTests.test_missing_or_changed_state_denied_before_harness_import) ... ok
+test_physical_audit_requires_explicit_local_arguments (test_relocation.RelocationAuditTests.test_physical_audit_requires_explicit_local_arguments) ... ok
+test_private_boundary_denied_before_content_open (test_relocation.RelocationAuditTests.test_private_boundary_denied_before_content_open) ... ok
+test_source_byte_changes_and_extra_files_are_rejected (test_relocation.RelocationAuditTests.test_source_byte_changes_and_extra_files_are_rejected) ... ok
+test_symlink_leaf_and_parent_denied_before_open (test_relocation.RelocationAuditTests.test_symlink_leaf_and_parent_denied_before_open) ... ok
+test_traversal_and_relative_path_denied (test_relocation.RelocationAuditTests.test_traversal_and_relative_path_denied) ... ok
+
+----------------------------------------------------------------------
+Ran 43 tests in 0.083s
+
+OK
+
+Validation scope: local Phase-1 evidence only. New local refs are observations, not new mutation permission. Parent must independently review the exact final candidate and observe author stop.

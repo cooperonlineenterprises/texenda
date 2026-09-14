@@ -79,7 +79,7 @@
       "path": "project-dossier/transition/README.md"
     },
     {
-      "sha256": "e1b3ed194b3bbc06626cfb21124ac0fff13cacf049d03c6efbf2e88bd8061e0c",
+      "sha256": "faca2d70ca7ae67b89b3d23561f9df1df0c9bab219aa8ae4f39e9cc35d573832",
       "path": "tooling/workspace/validate_relocation.py"
     },
     {
@@ -456,6 +456,14 @@
     "Separate project-local amendment to assess the two package editor wordings if warranted.",
     "Qualify a newer canonical blueprint or deliberately reviewed origin-schema successor for mapped-existing adoption."
   ],
+  "author_correction": {
+    "predecessor_candidate": "7b758abd63d62260b4fa95c89eb537d0d9c856c4",
+    "reason": "Retained post-checkpoint branches can outlive their worktrees; independent reviewers may use detached worktrees. Record new refs as observations while preserving all baseline ref and commit-object checks.",
+    "scope": "Local physical-audit compatibility only; no authority, package, ledger, private input or move changed.",
+    "prior_report_preserved_at": "7b758abd63d62260b4fa95c89eb537d0d9c856c4:docs/qualification/evidence/2026-09-14-workspace-relocation.json",
+    "evidence_path": "docs/qualification/evidence/2026-09-14-workspace-relocation-correction-validation.log",
+    "sha256": "27094f72b54362547f2749e1db50d4a2120c455919cb7f57f36d4424e530566a"
+  },
   "forbidden_effects_performed": [],
   "runtime_stop": {
     "at_recording": "author preparing final commit; no child agent or background command remains",
