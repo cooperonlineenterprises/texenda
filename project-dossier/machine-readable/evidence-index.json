@@ -1,10 +1,10 @@
 {
   "schema_version": "texenda.dossier-evidence-index.generated.v1",
-  "generation_id": "828e6a05e482be2898e578ac92c9eb9bed22db2724bce4cf54830d8dc52d9008",
-  "generated_at": "2026-09-14T18:29:01+00:00",
+  "generation_id": "07d6ed7e14340c65b920a8dde101149a5ea3f0199e8dcf73407877865daad94f",
+  "generated_at": "2026-09-14T18:33:59+00:00",
   "authority": "generated_hash_index_only",
   "owner_path": "docs/qualification/evidence/",
-  "evidence_scope_sha256": "1255569bd07b89e63d2fce3906111cc3b55073137ecdab5c51c2067a49c43c52",
+  "evidence_scope_sha256": "89d3b4574d9a9b5998d6f91b395817ae676bc3652821529f2cd080fbb4438f82",
   "evidence": [
     {
       "path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-author-correction-validation.log",
@@ -21,6 +21,14 @@
     {
       "path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-author.evidence.json",
       "sha256": "122f1a9a30f4f9e80a30947c002c933ff360079eaee9db45989062be48083983"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-safety-correction-validation.log",
+      "sha256": "a7555f8d2703cb500dec578a913b637aa927cbe7b118ef50a8ac5950497161b2"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-safety-correction.evidence.json",
+      "sha256": "4d69dea5ce8b450316ec396c7c93e17c96aa885189e7cce4db9415bbe444f855"
     },
     {
       "path": "docs/qualification/evidence/2026-09-14-private-repository-ci-independent-review.md",
