@@ -1,0 +1,135 @@
+{
+  "schema_version": "2.0",
+  "kind": "review",
+  "task_id": "PRIVATE-REPOSITORY-CI-POLICY-2026-09-14",
+  "candidate_revision": "85fa890e20be523db0a3a411503a89fd92a1d0e0",
+  "profile_id": "gpt-6-astra-max",
+  "routing_policy_digest": "61f0db448cf5ac5adad4d9340d568a7558c0369174e30aab92dd0ccf0d24bdf0",
+  "scope": "Independent review of the exact private-repository and bounded-GitHub-Actions local policy amendment. Review worktree /private/tmp/texenda-private-repo-ci-review-20260914 was detached and clean at the candidate. Only this envelope and its companion report are added, uncommitted. No candidate file, live ledger or external state is changed.",
+  "summary": "APPROVE: no actionable findings for the exact candidate. Independently passed 132 local coordination tests, 39 sealed harness tests, all 14 checksum-aware package checks, parsing, links and evidence-hash checks. GitHub remains PRIVATE with no hosted branches/workflows; the live ledger remains at receipt 13 with eleven current profiles and zero leases/API budget/declared allocations. Integration, runtime-stop verification and external/product gates remain separate.",
+  "checks": [
+    {
+      "id": "exact-candidate-diff-and-changed-files",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Independently read the full binary base-to-candidate diff and every changed file. Base 829c6c0b3edb0bdb7c92833298303990290680ad; candidate 85fa890e20be523db0a3a411503a89fd92a1d0e0; tree 0aa96e740c1fb6f193adf4a55ffc06c6ce57c8a4; full binary diff SHA-256 35692acfa7c5b411caf9041fb24112e9216710f5e0dc2992952357636adb0869. Recompute all five candidate path hashes recorded in the report.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-private-repository-ci-independent-review.md",
+      "sha256": "41c661da2da516e67fa4c45f62232aab62c9fe244616c01c35236b491c91f070"
+    },
+    {
+      "id": "private-ci-and-authority-semantics",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Compare root instructions, operating guide, ADR-0003, CI policy and static regression test with governing ADRs, sealed authority/invariants, WP-02/WP-39 and VAL-01/VAL-08. Verify private default; transient quota/price facts; <=75% steady-state target and >=25% reserve; zero additional spend; no skipped required tests; gated public-release audit; safe triggers/cancellation/timeouts; Linux/minimal permissions/caches/artifacts/secrets; pull_request_target threat; gated self-hosted runners; independent AI review/local integration with no self-approval, semantic-resolution or external-authority expansion.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-private-repository-ci-independent-review.md",
+      "sha256": "41c661da2da516e67fa4c45f62232aab62c9fe244616c01c35236b491c91f070"
+    },
+    {
+      "id": "local-coordination-suite",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "env PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tooling/coordination/tests -v; exit 0; Ran 132 tests in 1.356s; OK; no failures, errors or skips. All yielded output was collected to terminal exit.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-private-repository-ci-independent-review.md",
+      "sha256": "41c661da2da516e67fa4c45f62232aab62c9fe244616c01c35236b491c91f070"
+    },
+    {
+      "id": "sealed-harness-suite",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "env PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s specs/texenda-handoff/08-project-harness/tests -v; exit 0; Ran 39 tests in 0.162s; OK; no failures, errors or skips.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-private-repository-ci-independent-review.md",
+      "sha256": "41c661da2da516e67fa4c45f62232aab62c9fe244616c01c35236b491c91f070"
+    },
+    {
+      "id": "sealed-package-checksum-validation",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "env PYTHONDONTWRITEBYTECODE=1 python3 specs/texenda-handoff/10-validation/validate_package.py --checksums; exit 0; 14 PASS checks; errors [] and warnings []; checked_at 2026-09-14T12:57:11.917392+00:00. Product acceptance was not run.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-private-repository-ci-independent-review.md",
+      "sha256": "41c661da2da516e67fa4c45f62232aab62c9fe244616c01c35236b491c91f070"
+    },
+    {
+      "id": "diff-whitespace-and-sealed-preservation",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "git diff --check 829c6c0b3edb0bdb7c92833298303990290680ad..85fa890e20be523db0a3a411503a89fd92a1d0e0; and git diff --exit-code 829c6c0b3edb0bdb7c92833298303990290680ad..85fa890e20be523db0a3a411503a89fd92a1d0e0 -- specs/texenda-handoff; both exit 0 with empty output.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-private-repository-ci-independent-review.md",
+      "sha256": "41c661da2da516e67fa4c45f62232aab62c9fe244616c01c35236b491c91f070"
+    },
+    {
+      "id": "parse-local-links-and-existing-evidence-hashes",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Read-only Python inspection over git ls-files -z parsed all 77 tracked JSON, 3 TOML/config examples and 8 Python files; resolved all 27 local links in changed Markdown files; independently verified all 108 recursive local qualification path/SHA-256 references, including 100 top-level PASS/FAIL check hashes. Recomputed the unchanged canonical routing-policy digest.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-private-repository-ci-independent-review.md",
+      "sha256": "41c661da2da516e67fa4c45f62232aab62c9fe244616c01c35236b491c91f070"
+    },
+    {
+      "id": "direct-official-github-source-review",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Directly opened and reviewed https://docs.github.com/en/billing/concepts/product-billing/github-actions and https://github.com/pricing on 2026-09-14 through the web tool, not search snippets. The report records source-specific observations, advisory dispositions and limits. No current quantities or prices are adopted as policy or authority; actual account plan/overage controls remain unverified.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-private-repository-ci-independent-review.md",
+      "sha256": "41c661da2da516e67fa4c45f62232aab62c9fe244616c01c35236b491c91f070"
+    },
+    {
+      "id": "github-read-only-state",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Authenticated gh api GET requests to repos/cooperonlineenterprises/texenda, actions/permissions, actions/permissions/workflow, actions/workflows and branches --paginate all exited 0. Repository private=true, visibility=private, size=0, no branches, zero workflows. Existing Actions enabled=true, allowed_actions=all, sha_pinning_required=false; workflow token default read, can_approve_pull_request_reviews=false. No setting changed. git ls-files -- .github/workflows was empty.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-private-repository-ci-independent-review.md",
+      "sha256": "41c661da2da516e67fa4c45f62232aab62c9fe244616c01c35236b491c91f070"
+    },
+    {
+      "id": "live-ledger-read-only-integrity",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Directly read /Users/jamesryancooper/Projects/texenda-app/.texenda/state.json; verify canonical receipt sequence/previous hashes, final state digest and exact file SHA-256 b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235. Receipt 13 tip f39249184757101b108ea7ec5ea0ffebdd8237315b8ac3cad3ad0cc6ab3e827e; eleven active roster rows; zero leases/API budget/declared allocations; WP-00 completed, other 43 planned. Inspected read-only Harness._check and Harness.qualified also passed. No lock or writer was called; reread bytes unchanged.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-private-repository-ci-independent-review.md",
+      "sha256": "41c661da2da516e67fa4c45f62232aab62c9fe244616c01c35236b491c91f070"
+    },
+    {
+      "id": "private-kit-csv-ignore-and-tracking",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "For .texenda/private-inputs/kit/ohw/2026-09-14/subscribers.csv in the source checkout: test -f succeeded; git check-ignore -v reported .gitignore:1 .texenda/; exact-path git ls-files was empty. Candidate git ls-files -- .texenda was empty. CSV contents were never opened, parsed or hashed; this does not attest history/public-release clearance.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-private-repository-ci-independent-review.md",
+      "sha256": "41c661da2da516e67fa4c45f62232aab62c9fe244616c01c35236b491c91f070"
+    },
+    {
+      "id": "current-exact-reviewer-qualification",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Recompute active v2.1 roster hash, compare all eleven live exact rows and check current validity with the read-only coordinator. Review profile gpt-6-astra-max is bound to gpt-6-astra/max, codex-desktop-collaboration, client 26.901.41600 (build 7982), subscription, local read/edit/test. Independently observed desktop bundle matches. Provider-model/effective-effort introspection remains unavailable; no direct CLI qualification or new probe is implied.",
+      "evidence_path": "docs/qualification/model-roster-v2.1.evidence.json",
+      "sha256": "8e44034e6247ea47b3f0002100e6a343cfa6685d56138a24f55e8a13054173c0"
+    },
+    {
+      "id": "reviewer-independence-scope-and-stop-boundary",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Candidate existed before this reviewer task. Detached review checkout started clean at the exact candidate and no candidate bytes were edited. Candidate author actor was not supplied; this is not inferred from Git author metadata. Reviewer /root/review_private_repo_ci is distinct from integrator /root. Every command session terminated; no child agent/server/background job or ledger was started. Only two uncommitted review artifacts are created. Parent must independently observe author stop/isolation and final reviewer task completion before integration.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-private-repository-ci-independent-review.md",
+      "sha256": "41c661da2da516e67fa4c45f62232aab62c9fe244616c01c35236b491c91f070"
+    },
+    {
+      "id": "hosted-ci-and-public-release-qualification",
+      "required": false,
+      "status": "NOT_RUN",
+      "command_or_procedure": "No hosted workflow execution, actual account plan/overage inspection, or complete history/hosted-surface public-release audit. These remain separately bounded future work."
+    },
+    {
+      "id": "product-production-and-external-gates",
+      "required": false,
+      "status": "NOT_RUN",
+      "command_or_procedure": "All 125 product acceptance criteria, production data/services, sending, deployment, provisioning and external gates including VAL-01/VAL-08 remain unqualified by this policy review."
+    },
+    {
+      "id": "independent-provider-identity-and-runtime-enforcement",
+      "required": false,
+      "status": "NOT_RUN",
+      "command_or_procedure": "Provider-model/effort introspection, physical sandbox/egress enforcement, fresh runtime probes, direct CLI qualification and actual provider-token metering are unavailable or outside scope."
+    }
+  ],
+  "notes": "Reviewer task /root/review_private_repo_ci; parent supplied accepted dispatch gpt-6-astra/max, exact profile gpt-6-astra-max, desktop collaboration and subscription mode. Independently observed public bundle metadata: com.openai.codex 26.901.41600 build 7982. Self-observed provider identity is null/unavailable, not authenticated by role or Git metadata. Candidate author actor is unavailable/not supplied; independence follows candidate preexistence and no candidate edits by this newly spawned task. Integrator is /root. Bounds: 1800 seconds and 50000 tokens from dispatch, one review attempt, AI API budget/spend USD 0; actual provider token use unmeasured. First clock observation 2026-09-14 12:53:42 UTC. Base 829c6c0b3edb0bdb7c92833298303990290680ad; candidate 85fa890e20be523db0a3a411503a89fd92a1d0e0; tree 0aa96e740c1fb6f193adf4a55ffc06c6ce57c8a4; diff SHA-256 35692acfa7c5b411caf9041fb24112e9216710f5e0dc2992952357636adb0869. Changed paths and hashes, direct source retrieval on 2026-09-14/dispositions, GitHub observations, complete command/result inventory, ledger/private-CSV boundaries and limitations are bound by the companion report's SHA-256. No candidate edits, staging, commit, push, GitHub mutation, Actions enablement, secret access/configuration, spending, runner/environment provisioning, deployment, publication, production-data or CSV-content access, external send, gate clearance or destructive operation occurred. Approval is exact-candidate only. Parent must observe final reviewer completion and author runtime stop/isolation, verify evidence and clean integration state, and rerun affected checks after local integration; semantic conflict resolution requires new review. This envelope does not attest its writer's future termination or grant external authority."
+}
