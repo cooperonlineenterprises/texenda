@@ -1,10 +1,10 @@
 {
   "schema_version": "texenda.dossier-evidence-index.generated.v1",
-  "generation_id": "3d4ba4a26435d2d24f0033d726339533085269fe0889ac1e7426dd62684d7896",
-  "generated_at": "2026-09-15T04:13:45+00:00",
+  "generation_id": "830c86e6250e52fd1ad95b2ee54d7f96abeec843ead0e90c80521c6d6f00463d",
+  "generated_at": "2026-09-15T05:04:07+00:00",
   "authority": "generated_hash_index_only",
   "owner_path": "docs/qualification/evidence/",
-  "evidence_scope_sha256": "069da51aea9fc56714de58249a34ab4a9ae3b1c0880ad04a9947e13b53fbf4fc",
+  "evidence_scope_sha256": "9266278d46f0a1ac97e9e89c159de58e06bd8234ca23ee669c166a0d7671877f",
   "evidence": [
     {
       "path": "docs/qualification/evidence/2026-09-14-external-state-cutover-author-validation.log",
@@ -167,12 +167,20 @@
       "sha256": "2e37e59579b89a1be380139c54ae7126a43452886b4d6f24ad3f03fead6551b8"
     },
     {
+      "path": "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-independent-review.md",
+      "sha256": "6aba252f6ec54a2a884ebc9c1bae385c9385da8ba14656e97912161293e868f7"
+    },
+    {
       "path": "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-observations.evidence.json",
       "sha256": "b22d0791941b83166513da307cf749e45bcf191db85c3b7311e0e08ce602593c"
     },
     {
       "path": "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-observations.md",
       "sha256": "d92e1b2de4b822b144ccb73d51f3f9cb672869f6821cfbe77eb32ce577987b63"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-review.evidence.json",
+      "sha256": "827bd0cd421450b95446997375085f889801625585730bff1cc5d51bfd463e01"
     },
     {
       "path": "docs/qualification/evidence/2026-09-15-external-state-cutover-independent-review.md",
