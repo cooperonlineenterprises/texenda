@@ -1,10 +1,10 @@
 {
   "schema_version": "texenda.dossier-evidence-index.generated.v1",
-  "generation_id": "8fca60b8a528b424656b61fa197e3231c2766c475e70ad6e8fa66d45f47ed621",
-  "generated_at": "2026-09-15T16:19:29+00:00",
+  "generation_id": "0336af250313f3fe0018dbfcff61231214e8320f158bf7fc4fdf0292041dcefb",
+  "generated_at": "2026-09-15T16:39:02+00:00",
   "authority": "generated_hash_index_only",
   "owner_path": "docs/qualification/evidence/",
-  "evidence_scope_sha256": "9266278d46f0a1ac97e9e89c159de58e06bd8234ca23ee669c166a0d7671877f",
+  "evidence_scope_sha256": "ff2e7818e24284572d7b354a37622c744e43da30799ee79e5a32529224d1c67d",
   "evidence": [
     {
       "path": "docs/qualification/evidence/2026-09-14-external-state-cutover-author-validation.log",
@@ -157,6 +157,14 @@
     {
       "path": "docs/qualification/evidence/2026-09-14-workspace-review-envelope-validation.log",
       "sha256": "8d5ac89db42de07c59fe960b552ce2bfb6a26fd4d615adbfa7556c679025f262"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-15-clean-workflow-independent-review.md",
+      "sha256": "ae2a4fb0ff2fdd40ca6167d01b17f91e8c8b17cc59fd8c6ec56968e846341f2b"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-15-clean-workflow-review.evidence.json",
+      "sha256": "40d520813d66f27c90d551e490080396067dc0363cb60791da3869ffcb5fc37a"
     },
     {
       "path": "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-author.evidence.json",

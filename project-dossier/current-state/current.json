@@ -1,10 +1,10 @@
 {
   "schema_version": "texenda.dossier-current-state.generated.v1",
-  "generation_id": "8fca60b8a528b424656b61fa197e3231c2766c475e70ad6e8fa66d45f47ed621",
-  "generated_at": "2026-09-15T16:19:29+00:00",
+  "generation_id": "0336af250313f3fe0018dbfcff61231214e8320f158bf7fc4fdf0292041dcefb",
+  "generated_at": "2026-09-15T16:39:02+00:00",
   "authority": "generated_non_authoritative_projection",
-  "source_git_revision": "74c662436e8bd63ae41024fbe1968627e0305ec7",
-  "source_git_tree": "8b652835bd91ed332946628e2fbebce2dba8bdef",
+  "source_git_revision": "f32a48e63152f928179b6605fea18784a442a7ea",
+  "source_git_tree": "1236449dabada13c68b2a00ad1429b3e676d1ade",
   "source_scope_sha256": "36d57188cfcf38cd8de13bff24f5e6d28d284157ce12d826664fc662ae39fb70",
   "source_scope_exclusions": [
     {
@@ -64,7 +64,7 @@
   "receipt_count": 13,
   "receipt_tip": "f39249184757101b108ea7ec5ea0ffebdd8237315b8ac3cad3ad0cc6ab3e827e",
   "roster_evidence_sha256": "a23705178b39e8d0dd194abd4cf6e42fc20be404739d0e28e0ca9b221c80ddcf",
-  "evidence_scope_sha256": "9266278d46f0a1ac97e9e89c159de58e06bd8234ca23ee669c166a0d7671877f",
+  "evidence_scope_sha256": "ff2e7818e24284572d7b354a37622c744e43da30799ee79e5a32529224d1c67d",
   "freshness_rule": "Recompute the complete declared source scope, separately indexed evidence, and stable live-ledger snapshot. Any mismatch is stale; current full HEAD/tree are reported separately because generated/evidence-only commits may follow this source revision.",
   "ledger_observation": {
     "state_root": "/Users/jamesryancooper/Projects/texenda/local/agent-state/texenda",
