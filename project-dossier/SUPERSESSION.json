@@ -1,7 +1,7 @@
 {
   "schema_version": "texenda.dossier-supersession.v1",
   "authority": "Dossier artifact replacement metadata only; accepted decisions and sealed authority retain their existing owners.",
-  "current_version": "1.2.0-mapped-existing",
+  "current_version": "1.3.0-mapped-existing",
   "records": [
     {
       "id": "SUP-0001",
@@ -13,6 +13,18 @@
       "active_successor_path": "project-dossier/transition/README.md",
       "successor_version": "1.2.0-mapped-existing",
       "reason": "Separate the completed migration procedure from ordinary current navigation without changing its bytes."
+    },
+    {
+      "id": "SUP-0002",
+      "prior_version": "1.2.0-mapped-existing",
+      "prior_path": "project-dossier/transition/blueprint-adoption-crosswalk.json",
+      "prior_revision": "700565cd829871b04bde87e485c25d802505192c",
+      "prior_sha256": "689d5ffedb15938b25679c0cb9215bd7cac850b3b8f09e257a0f7a0c4fade00e",
+      "retention": "exact_predecessor_in_preserved_Git_history",
+      "active_successor_path": "project-dossier/transition/blueprint-adoption-crosswalk.json",
+      "successor_schema": "texenda.workspace-adoption-crosswalk.v2",
+      "successor_version": "1.3.0-mapped-existing",
+      "reason": "Use a neutral maintenance_items group with preserved IDs, explicit compatibility dispositions and a checked local planner view."
     }
   ],
   "rules": {

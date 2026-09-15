@@ -29,6 +29,50 @@ class WorkspaceContractTests(unittest.TestCase):
         result = contract.validate(self.crosswalk, self.baseline, self.manifest)
         self.assertEqual((result['blueprint_paths'], result['source_moves']), (85, 16))
 
+    def test_crosswalk_v2_preserves_exact_v1_history_and_stable_ids(self):
+        self.assertEqual(self.crosswalk['schema_version'], 'texenda.workspace-adoption-crosswalk.v2')
+        self.assertEqual(contract.verify_crosswalk_predecessor(ROOT),
+                         contract.CROSSWALK_PREDECESSOR_SHA256)
+        self.assertNotIn('deferred_semantic_work', self.crosswalk)
+        self.assertEqual([row['id'] for row in self.crosswalk['maintenance_items']],
+                         ['DEFER-WSM-0001', 'DEFER-WSM-0002'])
+
+    def test_crosswalk_rejects_unknown_schema_altered_predecessor_and_id_loss(self):
+        original = copy.deepcopy(self.crosswalk)
+        for mutate in (
+            lambda value: value.update(schema_version='unknown'),
+            lambda value: value['schema_successor'].update(previous_revision='a' * 40),
+            lambda value: value['schema_successor'].update(previous_sha256='0' * 64),
+            lambda value: value['schema_successor'].update(previous_path='elsewhere.json'),
+            lambda value: value['maintenance_items'].pop(),
+        ):
+            self.crosswalk = copy.deepcopy(original)
+            mutate(self.crosswalk)
+            self.reject()
+
+    def test_compatibility_dispositions_cover_every_dependency_without_retirement(self):
+        self.assertEqual(contract.validate_compatibility_dispositions(self.crosswalk), 10)
+        rows = {row['id']: row for row in self.crosswalk['compatibility_dispositions']['items']}
+        self.assertEqual(set(rows['COMPAT-0003']['paths']), contract.COMPATIBILITY_INPUTS)
+        self.assertEqual(rows['COMPAT-0007']['disposition'], 'isolate')
+        self.assertFalse(self.crosswalk['compatibility_dispositions']['ordinary_work_requires_migration_history'])
+
+    def test_compatibility_cannot_lose_inputs_recovery_risks_or_single_owner(self):
+        original = copy.deepcopy(self.crosswalk)
+        mutations = (
+            lambda rows: rows.pop(),
+            lambda rows: rows[0].update(owner_path='.agent/second-harness.py'),
+            lambda rows: rows[0].update(disposition='eliminate'),
+            lambda rows: rows[2]['paths'].pop(),
+            lambda rows: rows[3].update(recovery=''),
+            lambda rows: rows[4].update(required_proof=[]),
+            lambda rows: rows[6].update(risk=''),
+        )
+        for mutate in mutations:
+            self.crosswalk = copy.deepcopy(original)
+            mutate(self.crosswalk['compatibility_dispositions']['items'])
+            self.reject()
+
     def test_completed_current_epoch_and_active_origin_v3_are_required(self):
         self.assertEqual(self.crosswalk['status'], 'completed_current_contract')
         self.assertEqual(self.crosswalk['current_epoch'], 'external_state')
@@ -210,7 +254,7 @@ class WorkspaceContractTests(unittest.TestCase):
         self.reject()
 
     def test_editor_resolution_cannot_clear_wp10_or_val03(self):
-        item = next(row for row in self.crosswalk['deferred_semantic_work']
+        item = next(row for row in self.crosswalk['maintenance_items']
                     if row['id'] == 'DEFER-WSM-0001')
         item['remaining_gate'] = 'resolved'
         self.reject()
@@ -349,6 +393,33 @@ class FollowupContractTests(unittest.TestCase):
             with self.subTest(key=key):
                 self.reject(lambda _e, provenance, _o, key=key, value=value: next(
                     row for row in provenance['sources'] if row['id'] == 'SRC-0007').update({key: value}))
+
+    def test_archive_baseline_cannot_invent_past_equality_or_promote_raw_artifacts(self):
+        for key, value in (('historical_equality_reconstructed', True),
+                           ('raw_artifacts_promoted_to_source_or_evidence_authority', True),
+                           ('authority', 'authoritative'), ('current_file_count', 1),
+                           ('manifest_sha256', '0' * 64),
+                           ('provenance_sha256', '0' * 64)):
+            with self.subTest(key=key):
+                self.reject(lambda _e, provenance, _o, key=key, value=value: next(
+                    row for row in provenance['sources'] if row['id'] == 'SRC-0008').update({key: value}))
+
+    def test_blueprint_blocker_has_external_owner_complete_retry_and_authentic_seed(self):
+        raidq = contract.loads((ROOT / 'project-dossier/machine-readable/raidq.json').read_text())
+        self.assertEqual(contract.validate_blueprint_maintenance(raidq),
+                         'external_source_correction_and_authentic_reviewed_seed_required')
+        for mutate in (
+            lambda row: row.update(owner='Texenda agent silently fixes external source'),
+            lambda row: row.update(status='resolved'),
+            lambda row: row['requalification_commands'].remove(
+                'env PYTHONDONTWRITEBYTECODE=1 python3 -B skills/octon-mini-project-bootstrap/scripts/validate_octon_mini.py'),
+            lambda row: row.update(retry_trigger='skip failed fixture and fabricate seed'),
+            lambda row: row.update(required_evidence=[]),
+        ):
+            value = copy.deepcopy(raidq)
+            mutate(next(row for row in value['items'] if row['id'] == 'RAIDQ-0005'))
+            with self.assertRaises(contract.ContractError):
+                contract.validate_blueprint_maintenance(value)
 
     def test_actual_sealed_byte_mutation_is_rejected(self):
         with tempfile.TemporaryDirectory() as directory:

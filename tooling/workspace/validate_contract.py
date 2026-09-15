@@ -52,6 +52,14 @@ ORDINARY_COORDINATOR = (
     'env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py '
     '--root . --state-root ' + ORDINARY_STATE_ROOT
 )
+CROSSWALK_PREDECESSOR_REVISION = '700565cd829871b04bde87e485c25d802505192c'
+CROSSWALK_PREDECESSOR_SHA256 = '689d5ffedb15938b25679c0cb9215bd7cac850b3b8f09e257a0f7a0c4fade00e'
+COMPATIBILITY_INPUTS = {
+    '.texenda/context/WP-00.json',
+    '.texenda/evidence/wp00-integration-verification.log',
+    '.texenda/evidence/wp00-integration.evidence.json',
+    '.texenda/state.v1.a2a58e20004c86c0081b1427087626e36f931c3804532e8a1caf1c94a49a609a.json',
+}
 
 
 class ContractError(ValueError):
@@ -90,8 +98,8 @@ def valid_hash(value):
     return isinstance(value, str) and re.fullmatch('[0-9a-f]{64}', value) is not None
 
 
-def sealed_operations_owner():
-    register = loads((ROOT / 'specs/texenda-handoff/01-foundation/authority-register.json').read_text())
+def sealed_operations_owner(root=ROOT):
+    register = loads((root / 'specs/texenda-handoff/01-foundation/authority-register.json').read_text())
     owners = [row['path'] for row in register['current_normative_owners']
               if row['topic'] == 'operations-procedures']
     require(len(owners) == 1, 'sealed operations-procedures must have exactly one owner')
@@ -100,9 +108,20 @@ def sealed_operations_owner():
     return 'specs/texenda-handoff/' + owners[0]
 
 
-def validate(crosswalk, baseline, manifest):
-    require(crosswalk['schema_version'] == 'texenda.workspace-adoption-crosswalk.v1',
+def validate(crosswalk, baseline, manifest, *, root=ROOT):
+    require(crosswalk['schema_version'] == 'texenda.workspace-adoption-crosswalk.v2',
             'unknown crosswalk schema')
+    successor = crosswalk.get('schema_successor', {})
+    require(successor.get('previous_schema') == 'texenda.workspace-adoption-crosswalk.v1'
+            and successor.get('previous_revision') == CROSSWALK_PREDECESSOR_REVISION
+            and successor.get('previous_path') == CROSSWALK
+            and successor.get('previous_sha256') == CROSSWALK_PREDECESSOR_SHA256
+            and successor.get('retention') == 'exact_predecessor_in_preserved_Git_history'
+            and successor.get('field_rename') == {
+                'from': 'deferred_semantic_work', 'to': 'maintenance_items'}
+            and successor.get('preserved_record_ids') == ['DEFER-WSM-0001', 'DEFER-WSM-0002']
+            and 'deferred_semantic_work' not in crosswalk,
+            'crosswalk v2 lost its exact v1 predecessor or current field migration')
     require(baseline['schema_version'] == 'texenda.workspace-baseline.v1', 'unknown baseline schema')
     require(manifest['schema_version'] == 'texenda.workspace-move-manifest.v1', 'unknown move schema')
     require(crosswalk['adoption_mode'] == 'mapped-existing', 'false adoption mode')
@@ -168,7 +187,7 @@ def validate(crosswalk, baseline, manifest):
     for concern in ('agent_permission_classes', 'precedence_trust'):
         require(owners[concern]['owner_by_epoch']['baseline'] == 'AGENTS.md',
                 'premature root authority cutover')
-    operations_owner = sealed_operations_owner()
+    operations_owner = sealed_operations_owner(root)
     require(all(owners['operations_recovery']['owner_by_epoch'][epoch] == operations_owner
                 for epoch in epochs), 'operations recovery owner disagrees with sealed authority register')
 
@@ -246,13 +265,23 @@ def validate(crosswalk, baseline, manifest):
             acceptance['reviewer_distinct_from_author_and_integrator'] is True and
             acceptance['final_read_only_review_after_evidence_added'] is True,
             'authority or independent review boundary weakened')
-    deferred = {row['id']: row for row in crosswalk['deferred_semantic_work']}
+    deferred = {row['id']: row for row in crosswalk['maintenance_items']}
+    require(len(crosswalk['maintenance_items']) == len(deferred) == 2
+            and set(deferred) == {'DEFER-WSM-0001', 'DEFER-WSM-0002'},
+            'maintenance IDs were lost, duplicated or replaced')
     editor_resolution = deferred.get('DEFER-WSM-0001', {})
     require(editor_resolution.get('status') == 'resolved_scoped_by_ADR-0005'
             and editor_resolution.get('does_not_modify_packages') is True
             and 'WP-10' in editor_resolution.get('remaining_gate', '')
             and 'VAL-03' in editor_resolution.get('remaining_gate', ''),
             'editor wording resolution overclaims package or qualification scope')
+    source_followup = deferred['DEFER-WSM-0002']
+    require(source_followup.get('owner_path') == 'project-dossier/machine-readable/raidq.json'
+            and source_followup.get('owner_record') == 'RAIDQ-0005'
+            and source_followup.get('status') == 'deferred'
+            and source_followup.get('does_not_import_project_facts') is True,
+            'Blueprint maintenance blocker was bypassed or lost its issue owner')
+    validate_compatibility_dispositions(crosswalk)
 
     packages = baseline['packages']
     require(packages['sealed']['role'] == 'implementation_repository_sealed_authority' and
@@ -343,6 +372,59 @@ def validate(crosswalk, baseline, manifest):
             'artifact_types': len(artifact_types), 'source_moves': len(moves)}
 
 
+def validate_compatibility_dispositions(crosswalk):
+    group = crosswalk['compatibility_dispositions']
+    require(group['ordinary_work_requires_migration_history'] is False
+            and group['assessed_on'] == '2026-09-15',
+            'compatibility register became ordinary-work prerequisites')
+    rows = group['items']
+    by_id = {row['id']: row for row in rows}
+    expected = {
+        'COMPAT-0001': ('retain', 'tooling/coordination/harness.py'),
+        'COMPAT-0002': ('retain', 'tooling/coordination/harness.py'),
+        'COMPAT-0003': ('retain', '.texenda/'),
+        'COMPAT-0004': ('retain', 'tooling/workspace/relocate_state.py'),
+        'COMPAT-0005': ('retain', '.texenda-location.json'),
+        'COMPAT-0006': ('retain', '.project-blueprint-origin.json'),
+        'COMPAT-0007': ('isolate', 'tooling/workspace/interpret_adoption.py'),
+        'COMPAT-0008': ('retain', '.codex/config.toml'),
+        'COMPAT-0009': ('retain', 'tooling/coordination/harness.py'),
+        'COMPAT-0010': ('retain', CROSSWALK),
+    }
+    require(len(rows) == len(by_id) and set(by_id) == set(expected),
+            'compatibility disposition coverage is incomplete or duplicated')
+    for identifier, (disposition, owner) in expected.items():
+        row = by_id[identifier]
+        require(row['disposition'] == disposition and row['owner_path'] == owner,
+                'compatibility dependency retired or assigned a second owner: ' + identifier)
+        require(all(isinstance(row.get(key), str) and row[key].strip()
+                    for key in ('subject', 'record_class', 'reason', 'risk', 'trigger', 'recovery'))
+                and isinstance(row.get('required_proof'), list) and row['required_proof']
+                and all(isinstance(value, str) and value.strip() for value in row['required_proof'])
+                and isinstance(row.get('paths'), list) and row['paths']
+                and len(row['paths']) == len(set(row['paths'])),
+                'compatibility disposition lacks risk, trigger, proof or recovery: ' + identifier)
+    require(set(by_id['COMPAT-0003']['paths']) == COMPATIBILITY_INPUTS,
+            'receipt-referenced compatibility input paths changed')
+    require('226a4a14b3a795b24354eb90e51a50067fd27fe809423b30b9fa1551f3ce72d6'
+            in by_id['COMPAT-0001']['reason'], 'sealed-v1 compatibility pin lost')
+    return len(rows)
+
+
+def verify_crosswalk_predecessor(root):
+    raw = subprocess.check_output(['git', 'show', CROSSWALK_PREDECESSOR_REVISION + ':' + CROSSWALK],
+                                  cwd=root)
+    require(sha(raw) == CROSSWALK_PREDECESSOR_SHA256,
+            'crosswalk v1 predecessor bytes changed or are unavailable')
+    prior = loads(raw)
+    current = loads((root / CROSSWALK).read_text())
+    require(prior['schema_version'] == 'texenda.workspace-adoption-crosswalk.v1'
+            and [row['id'] for row in prior['deferred_semantic_work']]
+            == [row['id'] for row in current['maintenance_items']],
+            'crosswalk successor changed stable maintenance IDs')
+    return CROSSWALK_PREDECESSOR_SHA256
+
+
 EDITOR_ADR = 'docs/decisions/ADR-0005-react-email-editor-reversible-default.md'
 OBSERVATIONS = 'docs/qualification/evidence/2026-09-15-editor-blueprint-followup-observations.evidence.json'
 EDITOR_FIELDS = (
@@ -430,7 +512,7 @@ def validate_followup_metadata(editor, provenance, origin):
     by_id = {row['id']: row for row in sources}
     require(len(by_id) == len(sources) and set(by_id) == {
                 'SRC-0001', 'SRC-0002', 'SRC-0003', 'SRC-0004',
-                'SRC-0005', 'SRC-0006', 'SRC-0007'}, 'follow-up provenance IDs incomplete')
+                'SRC-0005', 'SRC-0006', 'SRC-0007', 'SRC-0008'}, 'follow-up provenance IDs incomplete')
     require(origin['schema_version'] == 'texenda.project-blueprint-origin.v3'
             and origin['selected_version'] == by_id['SRC-0001']['version'] == '1.0.0'
             and by_id['SRC-0001']['qualification']
@@ -480,8 +562,57 @@ def validate_followup_metadata(editor, provenance, origin):
             and debug['authority'] == 'non_authoritative_forward_only'
             and debug['debug_payloads_promoted_to_project_evidence'] is False,
             'debug forward baseline overclaims historical equality or authority')
+    archive = by_id['SRC-0008']
+    require(archive['kind'] == 'archive_forward_integrity_baseline'
+            and archive['observed_on'] == '2026-09-15'
+            and archive['path'] == HOME + '/archive/integrity/2026-09-15-preimplementation'
+            and archive['manifest'] == 'CURRENT-SHA256SUMS'
+            and archive['manifest_sha256'] == 'b682602668d10e96e9c50fbf317d5e3eee4124f1db613e5c49bd86b281656fde'
+            and archive['provenance'] == 'PROVENANCE.md'
+            and archive['provenance_sha256'] == '32e5ee34be5482ee8da28630690cca64720371ef63ebdd84a4cfc91b29de766f'
+            and archive['current_file_count'] == 5626
+            and archive['current_hashes_verified'] is True
+            and archive['historical_equality_reconstructed'] is False
+            and archive['authority'] == 'non_authoritative_forward_only'
+            and archive['raw_artifacts_promoted_to_source_or_evidence_authority'] is False
+            and archive['verification_working_directory'] == HOME
+            and archive['verification_command']
+            == 'shasum -a 256 -c archive/integrity/2026-09-15-preimplementation/CURRENT-SHA256SUMS'
+            and archive['verification_result'] == {
+                'exit_code': 0, 'verified_files': 5626, 'non_success_lines': 0},
+            'archive forward baseline changed or overclaims history/authority')
     return {'origin': 'separated_v3', 'editor': 'reversible_unverified_default',
-            'debug_artifacts': 'forward_baseline_only'}
+            'debug_artifacts': 'forward_baseline_only', 'archive_files': 5626}
+
+
+def validate_blueprint_maintenance(raidq):
+    matches = [row for row in raidq['items'] if row['id'] == 'RAIDQ-0005']
+    require(len(matches) == 1, 'Blueprint maintenance issue is missing or duplicated')
+    row = matches[0]
+    prefix = 'env PYTHONDONTWRITEBYTECODE=1 python3 -B skills/octon-mini-project-bootstrap/scripts/'
+    require(row['status'] == 'gated'
+            and row['owner'] == 'Octon Mini / Project Blueprint source maintainer'
+            and row['project_observation_owner'] == 'project-dossier/provenance/sources.json'
+            and isinstance(row['blockers'], list) and len(row['blockers']) == 2
+            and 'test_source_activation_exercise_writes_only_external_receipt' in row['blockers'][0]
+            and '2026-09-10T23:59:59-05:00' in row['blockers'][0]
+            and '--project-blueprint-seed' in row['blockers'][1]
+            and 'authentic reviewed' in row['retry_trigger']
+            and 'clean committed' in row['retry_trigger']
+            and row['requalification_commands'] == [
+                'git rev-parse HEAD HEAD^{tree}', 'git show HEAD:VERSION',
+                'git status --porcelain=v1 --untracked-files=all --ignored=matching',
+                prefix + 'validate_source_contracts.py', prefix + 'test_acceptance.py',
+                prefix + 'validate_octon_mini.py',
+                'git status --porcelain=v1 --untracked-files=all --ignored=matching']
+            and row['next_command_after_retry_trigger'] == prefix + 'validate_source_contracts.py'
+            and row['planner_diagnostic_after_full_qualification']
+            == 'env PYTHONDONTWRITEBYTECODE=1 python3 -B octon upgrade --help'
+            and isinstance(row['required_evidence'], list) and len(row['required_evidence']) >= 4
+            and all(isinstance(row.get(key), str) and row[key].strip()
+                    for key in ('risk', 'control', 'command_working_directory', 'recovery')),
+            'Blueprint blocker lost its external owner, complete qualification, seed or recovery boundary')
+    return 'external_source_correction_and_authentic_reviewed_seed_required'
 
 
 def verify_followup_records(root):
@@ -551,14 +682,23 @@ def verify_clean_operating_contract(root):
             'current transition entry still embeds the migration procedure')
 
     supersession = loads((root / 'project-dossier/SUPERSESSION.json').read_text())
-    require(supersession['current_version'] == '1.2.0-mapped-existing'
-            and len(supersession['records']) == 1,
+    require(supersession['current_version'] == '1.3.0-mapped-existing'
+            and len(supersession['records']) == 2,
             'dossier version/supersession is not current')
     record = supersession['records'][0]
     require(record['prior_sha256'] == COMPLETED_TRANSITION_SHA256
             and record['retained_history_path'] == COMPLETED_TRANSITION_HISTORY
             and record['active_successor_path'] == 'project-dossier/transition/README.md',
             'transition successor does not bind the retained history')
+    crosswalk_successor = supersession['records'][1]
+    require(crosswalk_successor['id'] == 'SUP-0002'
+            and crosswalk_successor['prior_revision'] == CROSSWALK_PREDECESSOR_REVISION
+            and crosswalk_successor['prior_sha256'] == CROSSWALK_PREDECESSOR_SHA256
+            and crosswalk_successor['prior_path'] == CROSSWALK
+            and crosswalk_successor['active_successor_path'] == CROSSWALK
+            and crosswalk_successor['retention'] == 'exact_predecessor_in_preserved_Git_history'
+            and crosswalk_successor['successor_schema'] == 'texenda.workspace-adoption-crosswalk.v2',
+            'crosswalk supersession lost its exact retained predecessor')
     catalog = loads((root / 'project-dossier/ARTIFACT_CATALOG.json').read_text())
     artifacts = {row['path']: row for row in catalog['artifacts']}
     require(artifacts[COMPLETED_TRANSITION_HISTORY]['classification'] == 'history'
@@ -710,6 +850,9 @@ def main():
         verify_bound_inputs(ROOT, baseline)
         verify_actual_stores(ROOT)
         counts['followups'] = verify_followup_records(ROOT)
+        counts['crosswalk_predecessor_sha256'] = verify_crosswalk_predecessor(ROOT)
+        counts['blueprint_maintenance'] = validate_blueprint_maintenance(
+            loads((ROOT / 'project-dossier/machine-readable/raidq.json').read_text()))
         counts['clean_operation'] = verify_clean_operating_contract(ROOT)
         counts['qualification_checks'] = verify_qualification_checks(ROOT)
         if args.audit:

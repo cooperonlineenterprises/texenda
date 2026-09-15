@@ -35,7 +35,34 @@
       "type": "issue",
       "status": "gated",
       "statement": "Clean committed Octon Mini 4.2.0 is identified but not fully qualified: the full validator fails the expired source-activation fixture. Dirty uncommitted working VERSION 4.3.0 is a separate observation.",
-      "control": "Retain source/acceptance PASS and full-validator FAIL explicitly. Do not upgrade until a clean source is fully qualified and an exact reviewed migration seed/plan is separately authorized; installed 1.0.0 remains structural-reference-only."
+      "control": "Retain source/acceptance PASS and full-validator FAIL explicitly. Neither 4.2.0 nor dirty 4.3.0 is adopted. Installed 1.0.0 remains structural-reference-only. The project-local origin-v3 interpreter corrects the planner view only; it does not repair the source, qualify it or manufacture a seed.",
+      "owner": "Octon Mini / Project Blueprint source maintainer",
+      "project_observation_owner": "project-dossier/provenance/sources.json",
+      "blockers": [
+        "AutonomousDeliveryTests.test_source_activation_exercise_writes_only_external_receipt fails because fixed valid_until 2026-09-10T23:59:59-05:00 expired; 19/20 sub-suite tests passed at clean revision 5e2d3025aea6b1574ab984e5ebb89b5602a38535.",
+        "OCTON-CONT-0001: Project Blueprint 3.1.0 upgrade requires an exact reviewed --project-blueprint-seed; no authentic reviewed seed exists."
+      ],
+      "risk": "A partial PASS, dirty working version, local planner interpretation or invented seed could be mistaken for complete source qualification and silently replace Texenda authority.",
+      "retry_trigger": "The source maintainer supplies a clean committed fixture correction. Its exact revision must pass the complete intended-source qualification boundary; an authentic reviewed migration seed and separately reviewed Texenda upgrade plan are also required before adoption.",
+      "required_evidence": [
+        "Clean Git revision/tree, committed VERSION and unchanged clean status before/after all commands",
+        "Passing source-contracts, acceptance and complete validator on that same exact corrected commit, retaining any failed attempts as failures",
+        "Authentic exact reviewed migration seed and separate authority for its use; no fabricated seed or installation facts",
+        "Texenda mapped-authority/receipt/evidence compatibility review and recoverable upgrade plan before any application"
+      ],
+      "command_working_directory": "The intended clean source checkout at the new corrected commit; not the installed 1.0.0 skill layout, dirty source checkout or archived failed 4.2.0 observation.",
+      "requalification_commands": [
+        "git rev-parse HEAD HEAD^{tree}",
+        "git show HEAD:VERSION",
+        "git status --porcelain=v1 --untracked-files=all --ignored=matching",
+        "env PYTHONDONTWRITEBYTECODE=1 python3 -B skills/octon-mini-project-bootstrap/scripts/validate_source_contracts.py",
+        "env PYTHONDONTWRITEBYTECODE=1 python3 -B skills/octon-mini-project-bootstrap/scripts/test_acceptance.py",
+        "env PYTHONDONTWRITEBYTECODE=1 python3 -B skills/octon-mini-project-bootstrap/scripts/validate_octon_mini.py",
+        "git status --porcelain=v1 --untracked-files=all --ignored=matching"
+      ],
+      "next_command_after_retry_trigger": "env PYTHONDONTWRITEBYTECODE=1 python3 -B skills/octon-mini-project-bootstrap/scripts/validate_source_contracts.py",
+      "planner_diagnostic_after_full_qualification": "env PYTHONDONTWRITEBYTECODE=1 python3 -B octon upgrade --help",
+      "recovery": "Keep Texenda on the current mapped 1.0.0 structural reference and preserve failed evidence. Requalification or planner diagnostics do not themselves authorize installation, upgrade or source-repository changes."
     }
   ]
 }

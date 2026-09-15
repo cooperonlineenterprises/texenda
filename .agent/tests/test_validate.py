@@ -119,7 +119,7 @@ class FacadeUnitTests(unittest.TestCase):
             '--check --all --state-root '
             '/Users/jamesryancooper/Projects/texenda/local/agent-state/texenda')
         ids = {row['id'] for row in registry['commands']}
-        self.assertTrue({'workspace-contract', 'workspace-tests', 'coordination-tests',
+        self.assertTrue({'workspace-contract', 'adoption-interpretation', 'workspace-tests', 'coordination-tests',
                          'sealed-harness-tests', 'sealed-package-checksums',
                          'source-package-checksums', 'coordination-state-check'} <= ids)
 
@@ -148,6 +148,7 @@ class FacadeUnitTests(unittest.TestCase):
             direct_scripts = (
                 '.agent/scripts/validate.py',
                 'tooling/workspace/validate_contract.py',
+                'tooling/workspace/interpret_adoption.py',
                 'specs/texenda-handoff/10-validation/validate_package.py',
                 'tooling/coordination/harness.py',
             )
@@ -696,6 +697,22 @@ class FacadeIntegratedFixtureTests(unittest.TestCase):
         path.write_text(json.dumps(value))
         with self.assertRaisesRegex(common.ValidationError, 'could mutate'):
             validate.validate_registry(self.fixture)
+        path.write_bytes(original)
+
+    def test_registry_keeps_adoption_interpretation_offline_and_read_only(self):
+        path = self.fixture / '.agent/validators.json'
+        original = path.read_bytes()
+        for mutate in (
+            lambda row: row['argv'].__setitem__(2, '/installed/skill/scripts/plan_adoption.py'),
+            lambda row: row['argv'].__setitem__(-1, '--stock-plan'),
+            lambda row: row.update(run_in_check=False),
+            lambda row: row.update(mode='synthetic_writes_only'),
+        ):
+            value = json.loads(original)
+            mutate(next(row for row in value['commands'] if row['id'] == 'adoption-interpretation'))
+            path.write_text(json.dumps(value))
+            with self.assertRaisesRegex(common.ValidationError, 'interpreter self-check'):
+                validate.validate_registry(self.fixture)
         path.write_bytes(original)
 
 

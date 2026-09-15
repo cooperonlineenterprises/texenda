@@ -42,7 +42,8 @@
         "sha256": "d8e1471a25c5d0d20bd560d0dd33f060d6d0013aa573e3f725b2ce93639b3d7e",
         "verified": true
       },
-      "limitation": "Exact committed VERSION is 4.2.0. The full validator fails the expired activation fixture; passing source/acceptance checks do not establish full qualification or a Texenda upgrade."
+      "limitation": "Exact committed VERSION is 4.2.0. The full validator fails the expired activation fixture; passing source/acceptance checks do not establish full qualification or a Texenda upgrade.",
+      "maintenance_owner_record": "project-dossier/machine-readable/raidq.json#RAIDQ-0005"
     },
     {
       "id": "SRC-0003",
@@ -114,6 +115,27 @@
       "debug_payloads_promoted_to_project_evidence": false,
       "evidence": "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-observations.evidence.json",
       "limitation": "The five current hashes are the first durable forward baseline. No pre-move manifest exists; historical equality cannot be reconstructed, and raw debug/bytecode payloads are not source, approval or readiness evidence."
+    },
+    {
+      "id": "SRC-0008",
+      "kind": "archive_forward_integrity_baseline",
+      "observed_on": "2026-09-15",
+      "path": "/Users/jamesryancooper/Projects/texenda/archive/integrity/2026-09-15-preimplementation",
+      "manifest": "CURRENT-SHA256SUMS",
+      "manifest_sha256": "b682602668d10e96e9c50fbf317d5e3eee4124f1db613e5c49bd86b281656fde",
+      "provenance": "PROVENANCE.md",
+      "provenance_sha256": "32e5ee34be5482ee8da28630690cca64720371ef63ebdd84a4cfc91b29de766f",
+      "current_file_count": 5626,
+      "current_hashes_verified": true,
+      "historical_equality_reconstructed": false,
+      "authority": "non_authoritative_forward_only",
+      "raw_artifacts_promoted_to_source_or_evidence_authority": false,
+      "scope": "Recorded regular archive files existing at the baseline, excluding archive/integrity itself; private-input paths, CSV files and symlinks are rejected.",
+      "verification_working_directory": "/Users/jamesryancooper/Projects/texenda",
+      "verification_command": "shasum -a 256 -c archive/integrity/2026-09-15-preimplementation/CURRENT-SHA256SUMS",
+      "verification_result": {"exit_code": 0, "verified_files": 5626, "non_success_lines": 0},
+      "freshness": "Verify recorded files against the unchanged dated manifest; future archive additions need a separate forward baseline.",
+      "limitation": "Historical equality cannot be reconstructed where no pre-migration hash exists. This baseline proves forward byte stability only; raw logs, bytecode, Git objects, sessions and bundles remain local archive material, not project source, evidence authority, approval or readiness."
     }
   ],
   "package_difference_count": 11,

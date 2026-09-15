@@ -1,5 +1,15 @@
 {
-  "schema_version": "texenda.workspace-adoption-crosswalk.v1",
+  "schema_version": "texenda.workspace-adoption-crosswalk.v2",
+  "schema_successor": {
+    "previous_schema": "texenda.workspace-adoption-crosswalk.v1",
+    "previous_revision": "700565cd829871b04bde87e485c25d802505192c",
+    "previous_path": "project-dossier/transition/blueprint-adoption-crosswalk.json",
+    "previous_sha256": "689d5ffedb15938b25679c0cb9215bd7cac850b3b8f09e257a0f7a0c4fade00e",
+    "retention": "exact_predecessor_in_preserved_Git_history",
+    "field_rename": {"from": "deferred_semantic_work", "to": "maintenance_items"},
+    "preserved_record_ids": ["DEFER-WSM-0001", "DEFER-WSM-0002"],
+    "reason": "Separate current maintenance dispositions from resolved semantic work without rewriting historical records or changing Blueprint selection."
+  },
   "id": "TRN-WSM-0001",
   "adoption_mode": "mapped-existing",
   "profile": "high-assurance",
@@ -1581,7 +1591,7 @@
     "navigation_cannot_grant_permission": true,
     "mutable_concern_owner_count": 1
   },
-  "deferred_semantic_work": [
+  "maintenance_items": [
     {
       "id": "DEFER-WSM-0001",
       "title": "Package editor wording divergence resolved only within the local amendment scope",
@@ -1595,12 +1605,150 @@
     {
       "id": "DEFER-WSM-0002",
       "title": "Qualify a newer canonical reusable blueprint source before any version adoption claim",
-      "owner_path": "project-dossier/provenance/sources.json",
-      "trigger": "A complete intended-layout source validation with a clean identifiable source",
+      "owner_path": "project-dossier/machine-readable/raidq.json",
+      "owner_record": "RAIDQ-0005",
+      "trigger": "The external source maintainer commits the fixture correction; exact full qualification and an authentic reviewed migration seed then permit a separately reviewed upgrade plan.",
       "status": "deferred",
       "does_not_import_project_facts": true
     }
   ],
+  "compatibility_dispositions": {
+    "authority": "Maintenance dispositions owned by this adoption crosswalk only; these records do not change the named runtime, evidence, decision, permission or task owners.",
+    "assessed_on": "2026-09-15",
+    "ordinary_work_requires_migration_history": false,
+    "items": [
+      {
+        "id": "COMPAT-0001",
+        "subject": "Hash-pinned sealed-v1 harness inheritance",
+        "disposition": "retain",
+        "owner_path": "tooling/coordination/harness.py",
+        "record_class": "mutable_current_source_with_immutable_dependency",
+        "paths": ["tooling/coordination/harness.py", "specs/texenda-handoff/08-project-harness/harness.py"],
+        "reason": "The local v2 adapter uses reviewed sealed lifecycle/evidence primitives; the sealed import is pinned to SHA-256 226a4a14b3a795b24354eb90e51a50067fd27fe809423b30b9fa1551f3ce72d6.",
+        "risk": "Native consolidation could alter denial, receipt, lease or recovery behavior without a practical ordinary-work benefit.",
+        "trigger": "A demonstrated behavior or maintenance defect in the inherited boundary, not stylistic cleanup.",
+        "required_proof": ["Complete v1/v2 behavior and denial equivalence", "Unchanged receipt/evidence replay", "Targeted retirement negatives and exact independent T1 review"],
+        "recovery": "Retain the reviewed adapter and exact sealed bytes; a future forward candidate must define recovery before retiring the import."
+      },
+      {
+        "id": "COMPAT-0002",
+        "subject": "Default .texenda state location before binding only",
+        "disposition": "retain",
+        "owner_path": "tooling/coordination/harness.py",
+        "record_class": "mutable_current_source",
+        "paths": ["tooling/coordination/harness.py", ".agent/project.json"],
+        "reason": "The backward-compatible default supports pre-binding fixtures and historical bootstrap. Active bound Texenda requires its explicit external state root and rejects default initialization or a competing store.",
+        "risk": "Removing the default without a reviewed forward migration would break old recovery/fixture consumers; allowing it after binding would create competing state.",
+        "trigger": "All pre-binding consumers have a reviewed replacement and a concrete reason to remove compatibility.",
+        "required_proof": ["Default-before-binding positive tests", "Missing/wrong explicit root and competing-state negative tests", "No implicit initialization or new ledger"],
+        "recovery": "Continue using the explicit bound command; never recreate repo/.texenda/state.json."
+      },
+      {
+        "id": "COMPAT-0003",
+        "subject": "Four receipt-referenced ignored compatibility inputs",
+        "disposition": "retain",
+        "owner_path": ".texenda/",
+        "record_class": "receipt_referenced_compatibility_input",
+        "paths": [".texenda/context/WP-00.json", ".texenda/evidence/wp00-integration-verification.log", ".texenda/evidence/wp00-integration.evidence.json", ".texenda/state.v1.a2a58e20004c86c0081b1427087626e36f931c3804532e8a1caf1c94a49a609a.json"],
+        "reason": "Live retained receipts/evidence still resolve these exact canonical repository-relative paths and bytes. They contain no active ledger or locks after cutover.",
+        "risk": "Moving or rewriting them invalidates receipt/evidence replay even when a copy exists elsewhere.",
+        "trigger": "A separately reviewed forward reference migration can preserve every historical reference without rewriting the existing chain.",
+        "required_proof": ["Exact retained input hashes and receipt replay", "No second active state store", "Independent T1 approval of any forward reference migration"],
+        "recovery": "Restore only verified original bytes at the retained exact paths from authorized checkpoints; never rewrite receipts to fit missing evidence."
+      },
+      {
+        "id": "COMPAT-0004",
+        "subject": "Relocation helper and activation records",
+        "disposition": "retain",
+        "owner_path": "tooling/workspace/relocate_state.py",
+        "record_class": "current_recovery_source_and_hash_bound_history",
+        "paths": ["tooling/workspace/relocate_state.py", "project-dossier/transition/external-state-relocation-receipt.md"],
+        "reason": "The helper retains tested interruption/activation recovery; the immutable relocation receipt locates the active binding, moving descriptor and completion transaction in local/logs/workspace-relocation/.",
+        "risk": "Archive relocation or helper removal could make an interrupted activation ambiguous and tempt unsafe initialization.",
+        "trigger": "A future authorized location change or an actual interrupted activation requires this maintenance route.",
+        "required_proof": ["Non-overwriting, no-copy move and recovery negatives", "Observed runtime/lease stop before mutation", "Exact activation-record and state-chain verification"],
+        "recovery": "Use the helper's explicit verify/recover/rollback procedure after T1 review and runtime stop; ordinary validation never invokes its writers."
+      },
+      {
+        "id": "COMPAT-0005",
+        "subject": "Absolute canonical repository/state binding",
+        "disposition": "retain",
+        "owner_path": ".texenda-location.json",
+        "record_class": "mutable_local_configuration_outside_Git",
+        "paths": [".texenda-location.json", "tooling/coordination/schemas/state-location.schema.json"],
+        "reason": "The ignored descriptor binds one canonical repository and one external state root. The visible explicit option prevents hidden selection, symlink bridges or fallback.",
+        "risk": "Another workstation/path requires reviewed rebinding; silently inferring paths can select the wrong ledger.",
+        "trigger": "An authorized workspace move or new-machine recovery changes a canonical location.",
+        "required_proof": ["Independent repository/state-root validation", "Symlink, traversal, missing-state and competing-root negatives", "Same receipt chain and private-input exclusion"],
+        "recovery": "Keep the existing binding until a reviewed serial move verifies the new location; fail closed on mismatch."
+      },
+      {
+        "id": "COMPAT-0006",
+        "subject": "Origin-v2 predecessor",
+        "disposition": "retain",
+        "owner_path": ".project-blueprint-origin.json",
+        "record_class": "immutable_hash_bound_evidence",
+        "paths": [".agent/schemas/project-blueprint-origin.v2.schema.json", ".agent/schemas/project-blueprint-origin.v3.schema.json", ".project-blueprint-origin.json"],
+        "reason": "The v3 origin record hashes its v2 schema predecessor and distinguishes current selected reference, failed clean qualification, and dirty observation.",
+        "risk": "Deleting or editing v2 erases a checked provenance link; treating v2 as current mixes clean and dirty source facts.",
+        "trigger": "A later reviewed origin schema successor is required for a genuinely changed qualification boundary.",
+        "required_proof": ["Exact predecessor hash", "Origin-v3 constants and evidence agreement", "Unknown-schema, false-adoption and changed-descriptor negatives"],
+        "recovery": "Preserve both schemas and add reviewed successors rather than replacing their history."
+      },
+      {
+        "id": "COMPAT-0007",
+        "subject": "Stock planner origin-v3 limitation",
+        "disposition": "isolate",
+        "owner_path": "tooling/workspace/interpret_adoption.py",
+        "record_class": "mutable_current_source",
+        "paths": ["tooling/workspace/interpret_adoption.py", ".project-blueprint-origin.json"],
+        "reason": "The local read-only interpreter preserves the stock origin summary as an observation and separately validates Texenda v3 and all 85 mapped paths. Its ordinary self-check has no installed-skill dependency.",
+        "risk": "A planner view could falsely become source qualification, upgrade authority or a fabricated seed.",
+        "trigger": "Maintenance receives a fresh explicit stock 1.0.0 planner JSON observation, or repository source/path membership changes.",
+        "required_proof": ["Exact target/profile/version/partition checks", "Strict JSON and path/symlink/private-boundary negatives", "No-write tests and no source-path execution"],
+        "recovery": "Reject incompatible input and retain the current selected reference; the external upgrade blocker remains RAIDQ-0005."
+      },
+      {
+        "id": "COMPAT-0008",
+        "subject": "Codex config and checked example mirror",
+        "disposition": "retain",
+        "owner_path": ".codex/config.toml",
+        "record_class": "mutable_current_configuration_and_explanatory_mirror",
+        "paths": [".codex/config.toml", ".codex/config.toml.example"],
+        "reason": "The active file owns defaults; the example explains use and is checked for semantic equality. Direct CLI qualification remains separate from desktop profiles.",
+        "risk": "Unverified mirror drift could misconfigure new sessions; configuration alone cannot qualify a runtime or grant permissions.",
+        "trigger": "A supported configuration change or direct-CLI qualification task updates the active owner.",
+        "required_proof": ["Parsed TOML semantic equality", "Exact runtime/profile qualification before CLI assignment", "No secret values or unapproved model substitution"],
+        "recovery": "Keep the reviewed defaults and correct the example through the owner; never infer effective running-session settings from either file."
+      },
+      {
+        "id": "COMPAT-0009",
+        "subject": "Live ready command instead of a second readiness view",
+        "disposition": "retain",
+        "owner_path": "tooling/coordination/harness.py",
+        "record_class": "mutable_current_source",
+        "paths": ["tooling/coordination/harness.py", ".agent/START_HERE.md"],
+        "reason": "The documented read-only ready command derives available work directly from the selected ledger; a tracked copied list would require refresh and introduce avoidable stale status.",
+        "risk": "Copied readiness can outlive leases, evidence expiry or dependency changes and be mistaken for assignment permission.",
+        "trigger": "A demonstrated repeated-use need justifies another compact generated display.",
+        "required_proof": ["Live ready output under explicit state root", "Any future display bound to exact ledger hashes and freshness", "No second task or readiness authority"],
+        "recovery": "Re-run ready against the validated live state; do not use a historical list to authorize dispatch."
+      },
+      {
+        "id": "COMPAT-0010",
+        "subject": "Generic scaffold omissions and functional equivalents",
+        "disposition": "retain",
+        "owner_path": "project-dossier/transition/blueprint-adoption-crosswalk.json",
+        "record_class": "mutable_current_source",
+        "paths": ["project-dossier/transition/blueprint-adoption-crosswalk.json"],
+        "reason": "All 85 intended paths have a direct/functional mapping, justified omission or deferred trigger. Generic sample restrictions are inapplicable; optional .agents packages await a recurring need. Existing authority is indexed instead of copied.",
+        "risk": "Installing absent generic files would add duplicate task, decision, evidence, routing or product owners.",
+        "trigger": "A concrete recurring capability need or reviewed structural-reference change, with the full current crosswalk reassessed.",
+        "required_proof": ["All planner paths explicitly dispositioned", "No duplicate mutable concern owner", "Scoped independent review for any new capability or owner"],
+        "recovery": "Keep mapped owners and omit generic files until their exact justified scope is reviewed."
+      }
+    ]
+  },
   "local_amendments": [
     {
       "id": "ADR-0005",

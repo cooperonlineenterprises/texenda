@@ -52,6 +52,16 @@
       "purpose": "Delegate the reviewed workspace/crosswalk contract validator."
     },
     {
+      "id": "adoption-interpretation",
+      "argv": ["python3", "-B", "tooling/workspace/interpret_adoption.py", "--root", "{repository_root}", "--check"],
+      "mode": "read_only",
+      "required": true,
+      "run_in_check": true,
+      "working_directory": "{repository_root}",
+      "context_parameters": ["repository_root"],
+      "purpose": "Check the local origin-v3/crosswalk interpretation and exact 85-path partition without loading an installed planner, writing output or qualifying a Blueprint."
+    },
+    {
       "id": "facade-tests",
       "argv": ["python3", "-B", "-m", "unittest", "discover", "-s", ".agent/tests", "-p", "test_*.py", "-v"],
       "mode": "synthetic_writes_only",

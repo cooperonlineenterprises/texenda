@@ -37,3 +37,12 @@ Blueprint 4.2.0 remains unqualified because its complete validator failed, and
 no reviewed upgrade seed exists. ADR-0005 resolves only the package editor
 wording as a reversible local default; WP-10 and VAL-03 remain gated. Neither
 condition reopens the completed workspace epoch.
+
+Maintenance starts with the [local planner interpreter](../../tooling/workspace/README.md).
+It interprets the selected reference through local origin-v3 validation and all
+85 mapped paths. It performs no upgrade, source qualification or seed creation.
+The crosswalk's `compatibility_dispositions` retain the receipt-bound and
+recovery dependencies with owners, risks and retirement proof. Its v2 successor
+preserves the exact v1 Git record and stable maintenance IDs. The external
+Blueprint correction and retry commands belong to
+[RAIDQ-0005](../machine-readable/raidq.json).

@@ -356,6 +356,14 @@ def validate_registry(root=ROOT):
     require(state_check and state_check['argv'][-1] == 'check'
             and 'init' not in state_check['argv'],
             'coordination check registry could mutate state')
+    interpreter = next((row for row in rows if row['id'] == 'adoption-interpretation'), None)
+    require(interpreter and interpreter['argv'] == [
+                'python3', '-B', 'tooling/workspace/interpret_adoption.py',
+                '--root', '{repository_root}', '--check']
+            and interpreter['mode'] == 'read_only' and interpreter['required'] is True
+            and interpreter['run_in_check'] is True
+            and interpreter['context_parameters'] == ['repository_root'],
+            'adoption interpreter self-check cannot depend on an installed planner or write mode')
     return registry
 
 
@@ -472,8 +480,8 @@ def validate_dossier(root=ROOT, *, generated=True):
     require(history_row is not None and history_row['classification'] == 'history',
             'completed transition history is not catalogued as history')
     supersession = load_json(root / 'project-dossier/SUPERSESSION.json')
-    require(supersession['current_version'] == '1.2.0-mapped-existing'
-            and len(supersession['records']) == 1
+    require(supersession['current_version'] == '1.3.0-mapped-existing'
+            and len(supersession['records']) == 2
             and supersession['records'][0]['prior_sha256'] == history_sha
             and supersession['records'][0]['retained_history_path'] == history_path,
             'dossier supersession does not preserve the completed transition')
@@ -530,6 +538,11 @@ def validate_links(root=ROOT, *, allow_generated_missing=False):
 
 def validate_crosswalk_correction(root=ROOT):
     crosswalk = load_json(root / 'project-dossier/transition/blueprint-adoption-crosswalk.json')
+    require(crosswalk['schema_version'] == 'texenda.workspace-adoption-crosswalk.v2'
+            and crosswalk['schema_successor']['previous_schema']
+            == 'texenda.workspace-adoption-crosswalk.v1'
+            and 'deferred_semantic_work' not in crosswalk,
+            'crosswalk field migration or current schema is ambiguous')
     blueprint = crosswalk['blueprint']
     require(crosswalk['status'] == 'completed_current_contract'
             and crosswalk.get('current_epoch') == 'external_state'
@@ -551,7 +564,7 @@ def validate_crosswalk_correction(root=ROOT):
     require(history['mapped_path'] == 'project-dossier/history/README.md'
             and history['role'] == 'historical_source',
             'tracked transition history index is not the active mapping')
-    editor = next(row for row in crosswalk['deferred_semantic_work']
+    editor = next(row for row in crosswalk['maintenance_items']
                   if row['id'] == 'DEFER-WSM-0001')
     require(editor['status'] == 'resolved_scoped_by_ADR-0005'
             and editor['does_not_modify_packages'] is True
