@@ -1,0 +1,208 @@
+{
+  "schema_version": "2.0",
+  "kind": "review",
+  "task_id": "TRN-WSM-0001",
+  "candidate_revision": "0c0f202782720d9d7f34bc1d929d9df8a24868d1",
+  "observed_revision": "0c0f202782720d9d7f34bc1d929d9df8a24868d1",
+  "summary": "APPROVE exact corrected candidate 0c0f202782720d9d7f34bc1d929d9df8a24868d1 with zero unresolved findings. P2 is resolved by a truthful portable read-only contract: content and modification metadata remain protected while OS-managed atime is explicitly outside the guarantee. The old all-timestamps snapshot failure and old review remain preserved. No containing/future head, product, Blueprint upgrade or external effect is approved.",
+  "profile_id": "gpt-6-astra-max",
+  "role": "reviewer",
+  "capability_tier": 1,
+  "routing_policy_digest": "61f0db448cf5ac5adad4d9340d568a7558c0369174e30aab92dd0ccf0d24bdf0",
+  "work_package_digest": "9ad162070c27e4c765ba145fc8a35d31dc288482453daaa39ec0bb6add8bd8d8",
+  "issued_at": "2026-09-15T17:00:08Z",
+  "qualifications": [
+    {
+      "profile_id": "gpt-6-astra-max",
+      "capability_tier": 1,
+      "model_id": "gpt-6-astra",
+      "reasoning_effort": "max",
+      "runtime_id": "codex-desktop-collaboration",
+      "client_version": "26.901.41600 (build 7982)",
+      "sign_in_mode": "subscription",
+      "billing_mode": "subscription",
+      "capabilities": [
+        "read",
+        "edit",
+        "test"
+      ],
+      "verified_at": "2026-09-13T21:44:31Z",
+      "expires_at": "2026-10-12T21:44:31Z",
+      "qualification_check_ids": [
+        "desktop-profile-gpt-6-astra-max"
+      ]
+    }
+  ],
+  "scope": "Exact new candidate review of the 20-file portable read-only correction from 28188ea2bc28d1fd747d8b37e68b50a912b68d4b, including docs/ADR-0006, tools/registry, validation/refresh disclosure, tests and generated projections. Preserves old evidence and all protected source/state/package/private boundaries. TRN-WSM-0001 is an existing transition reference, not a new task ledger or receipt.",
+  "notes": "Corrected tree e243baffc8acd256047e48bb74b4826c90975424; base tree 82f800c242bb6f35471c03afc3ec3209f4b4a50e; canonical full-index binary diff SHA 74c94cf1c70eac726ceb084665ff1b5c52cc547ebbf3f3868056cb4a0e898738. Reviewer /root/clean_setup_reviewer, author /root/clean_workflow_author and integrator /root distinct. Review bounds 20000 tokens/1200 seconds; later evidence-only bounds 15000 tokens/900 seconds; subscription/API USD 0, no fallback/downshift/children. Markdown SHA 602a2d4499e9a26d28ee809f75f3a0fc27791dc533d3a6ddadf90e820d5d163d binds finding, resolution, tests, actual atime observations, preserved-property proof and old-evidence scope. Literal all-timestamps stability remains outside portable guarantee. Provider token/model introspection unavailable. Containing commit/tree/file hashes reported separately.",
+  "checks": [
+    {
+      "id": "exact-corrected-candidate",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Verify clean detached corrected HEAD 0c0f202782720d9d7f34bc1d929d9df8a24868d1/tree e243baffc8acd256047e48bb74b4826c90975424 and base 28188ea2bc28d1fd747d8b37e68b50a912b68d4b. Inspect complete 20-file diff; canonical full-index binary SHA 74c94cf1c70eac726ceb084665ff1b5c52cc547ebbf3f3868056cb4a0e898738.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-workflow-atime-correction-independent-review.md",
+      "sha256": "602a2d4499e9a26d28ee809f75f3a0fc27791dc533d3a6ddadf90e820d5d163d"
+    },
+    {
+      "id": "independence-qualification-and-bounds",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Reviewer /root/clean_setup_reviewer is distinct from author /root/clean_workflow_author and integrator /root. Live Harness.qualified confirms gpt-6-astra-max available through 2026-10-12T21:44:31Z, owner-roster SHA 8e44034e6247ea47b3f0002100e6a343cfa6685d56138a24f55e8a13054173c0. Corrected review 20000 tokens/1200 seconds; evidence follow-up 15000 tokens/900 seconds, subscription/API USD 0, no fallback/downshift/children.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-workflow-atime-correction-independent-review.md",
+      "sha256": "602a2d4499e9a26d28ee809f75f3a0fc27791dc533d3a6ddadf90e820d5d163d"
+    },
+    {
+      "id": "p2-truthful-portability-resolution",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Inspect ADR-0006, validation/generated guidance, tools, registry, validation JSON and generated manifest/report. OS-managed atime is explicitly outside the portable no-write guarantee; no claim that the original literal all-timestamps guarantee is now portable. Content/path/mode/size/mtime/ctime/generated/cache/lock/live-state protections remain required.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-workflow-atime-correction-independent-review.md",
+      "sha256": "602a2d4499e9a26d28ee809f75f3a0fc27791dc533d3a6ddadf90e820d5d163d"
+    },
+    {
+      "id": "no-atime-restoration-or-filesystem-mutation",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Inspect every executable correction: only disclosure/validation/test behavior changes. No timestamp restoration, filesystem-setting mutation, hidden writer, weaker reader/path/symlink/receipt/lock check or automatic state selection was introduced.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-workflow-atime-correction-independent-review.md",
+      "sha256": "602a2d4499e9a26d28ee809f75f3a0fc27791dc533d3a6ddadf90e820d5d163d"
+    },
+    {
+      "id": "ordinary-workflow-preserved",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Targeted instruction tests and source comparison preserve the exact explicit-root validation/status/ready/context and assignment/review/resumption routes. No wrapper, implicit initialization, state fallback, second owner or product authority change.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-workflow-atime-correction-independent-review.md",
+      "sha256": "602a2d4499e9a26d28ee809f75f3a0fc27791dc533d3a6ddadf90e820d5d163d"
+    },
+    {
+      "id": "exact-full-registered-check",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/validate.py --check --all --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda: exit 0 in 19.221 seconds, all nine registry commands exit 0 and both refresh writers skipped.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-workflow-atime-correction-independent-review.md",
+      "sha256": "602a2d4499e9a26d28ee809f75f3a0fc27791dc533d3a6ddadf90e820d5d163d"
+    },
+    {
+      "id": "standalone-facade-suite",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "env PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s .agent/tests -p 'test_*.py' -v: 35 tests PASS in 49.850 seconds without skips, including the complete-check fixture skipped during recursive aggregation.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-workflow-atime-correction-independent-review.md",
+      "sha256": "602a2d4499e9a26d28ee809f75f3a0fc27791dc533d3a6ddadf90e820d5d163d"
+    },
+    {
+      "id": "targeted-instruction-suite",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "env PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s tooling/coordination/tests -p 'test_instruction_contracts.py' -v: 16 tests PASS in 0.056 seconds.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-workflow-atime-correction-independent-review.md",
+      "sha256": "602a2d4499e9a26d28ee809f75f3a0fc27791dc533d3a6ddadf90e820d5d163d"
+    },
+    {
+      "id": "independent-disclosure-negatives",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "In-memory mutations reverting the tool side-effect declaration, removing the registry atime limitation, and removing the generated-manifest limitation are each rejected with the expected overclaim error. No repository mutation was used for these negatives.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-workflow-atime-correction-independent-review.md",
+      "sha256": "602a2d4499e9a26d28ee809f75f3a0fc27791dc533d3a6ddadf90e820d5d163d"
+    },
+    {
+      "id": "registered-suites-and-packages",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "The full registered check runs the facade/workspace/coordinator/sealed suites and both package checksum validators successfully. Both packages pass 14/14; workspace byte audit preserves 86 sealed and 88 source files and the eleven differences.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-workflow-atime-correction-independent-review.md",
+      "sha256": "602a2d4499e9a26d28ee809f75f3a0fc27791dc533d3a6ddadf90e820d5d163d"
+    },
+    {
+      "id": "schema-link-owner-and-evidence-integrity",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Full facade validation passes 134 JSON, 1 TOML, 19 Python, 30 dossier paths, 3 instruction files, 126 links and 496 PASS/FAIL evidence bindings. Owner and authority boundaries remain intact.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-workflow-atime-correction-independent-review.md",
+      "sha256": "602a2d4499e9a26d28ee809f75f3a0fc27791dc533d3a6ddadf90e820d5d163d"
+    },
+    {
+      "id": "generated-reconstruction-and-disclosure",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "All eleven outputs reconstruct exactly at generation e393135a44b4c84896e47c90ae776f37e92866f770b3e06fcf8877c9a9fae633/source scope fb2a83c6ed2e6756e078ce74a3f302b1c6bd91f81b0f334950a74e749ed3361d. Manifest/report limitations agree; JSON reports all ten preserved properties and portable_atime_stability false.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-workflow-atime-correction-independent-review.md",
+      "sha256": "602a2d4499e9a26d28ee809f75f3a0fc27791dc533d3a6ddadf90e820d5d163d"
+    },
+    {
+      "id": "preserved-properties-snapshot",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Across 362 review-worktree/external-state paths surrounding the full-check interval, content/path/mode/device/inode/size/mtime/ctime are unchanged. Generated/cache/lock/live state preserved. Three OS-managed atime changes are recorded separately, not restored; snapshot scope and concurrent read-only-test limitation are explicit.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-workflow-atime-correction-independent-review.md",
+      "sha256": "602a2d4499e9a26d28ee809f75f3a0fc27791dc533d3a6ddadf90e820d5d163d"
+    },
+    {
+      "id": "protected-paths-history-and-old-review",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "git diff --check and protected-path comparisons pass. Sealed package, coordinator/routing, permission/context, ADR-0001/4/5, prior evidence and exact transition history stay byte-identical. Prior Markdown/envelope hashes ae2a4fb0ff2fdd40ca6167d01b17f91e8c8b17cc59fd8c6ec56968e846341f2b / 40d520813d66f27c90d551e490080396067dc0363cb60791da3869ffcb5fc37a remain scoped to 48033f36.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-workflow-atime-correction-independent-review.md",
+      "sha256": "602a2d4499e9a26d28ee809f75f3a0fc27791dc533d3a6ddadf90e820d5d163d"
+    },
+    {
+      "id": "live-state-package-and-private-boundaries",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "State SHA b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235 retains 13 receipts/tip f39249184757101b108ea7ec5ea0ffebdd8237315b8ac3cad3ad0cc6ab3e827e, 11 profiles, zero leases/budget and empty gates. Package manifests/history retain exact documented hashes. Private checks use final existence and ignore/tracking only; no contents/size/hash/copy/parse/listing.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-workflow-atime-correction-independent-review.md",
+      "sha256": "602a2d4499e9a26d28ee809f75f3a0fc27791dc533d3a6ddadf90e820d5d163d"
+    },
+    {
+      "id": "inherited-audit-timing-and-gates-preserved",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Original inherited 836e209..338cd135 present audit and integration-before-final-audit timing exception remain unchanged, with no backdating or evidence rewrite. Blueprint 4.2.0 remains unqualified, no reviewed seed/upgrade exists, and WP-10/VAL-03 remain gated.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-workflow-atime-correction-independent-review.md",
+      "sha256": "602a2d4499e9a26d28ee809f75f3a0fc27791dc533d3a6ddadf90e820d5d163d"
+    },
+    {
+      "id": "review-cleanliness-runtime-and-no-external-effects",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Corrected review worktree stayed clean at exact head/tree. All review command sessions completed, no child/background runtimes remain, and no explicit repository/state/package/private/global/upstream/GitHub/Codex mutation or external effect occurred. Parent must observe this later evidence-authoring runtime stop.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-workflow-atime-correction-independent-review.md",
+      "sha256": "602a2d4499e9a26d28ee809f75f3a0fc27791dc533d3a6ddadf90e820d5d163d"
+    },
+    {
+      "id": "prior-literal-all-timestamps-snapshot",
+      "required": false,
+      "status": "FAIL",
+      "command_or_procedure": "At prior head 28188ea2bc28d1fd747d8b37e68b50a912b68d4b, both full checks passed but strict all-metadata preservation proof failed. Field-level repeat isolated manifest atime_ns 1789490486225265910 to 1789490575483816624 with SHA/inode/size/mtime/ctime unchanged and other 361 entries unchanged. This retained historical failure motivated the new portable-contract correction; it is not relabelled as a prior PASS.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-workflow-atime-correction-independent-review.md",
+      "sha256": "602a2d4499e9a26d28ee809f75f3a0fc27791dc533d3a6ddadf90e820d5d163d"
+    },
+    {
+      "id": "containing-evidence-head-refresh-and-final-audit",
+      "required": false,
+      "status": "NOT_RUN",
+      "command_or_procedure": "Preserve the two new evidence records, explicitly refresh declared generated views, and independently audit the exact resulting head. Current approval does not approve the containing evidence commit or future head."
+    },
+    {
+      "id": "local-integration-and-main-verification",
+      "required": false,
+      "status": "NOT_RUN",
+      "command_or_procedure": "Local integration and verification of the resulting exact main revision remain integrator steps after final-head approval."
+    },
+    {
+      "id": "portable-all-timestamps-stability",
+      "required": false,
+      "status": "NOT_RUN",
+      "command_or_procedure": "No claim of portable OS-managed atime stability. The correction retains an explicit limitation; no atime restoration or filesystem mutation is attempted."
+    },
+    {
+      "id": "github-codex-upstream-or-product-qualification",
+      "required": false,
+      "status": "NOT_RUN",
+      "command_or_procedure": "No fresh GitHub/Codex registration observation, source qualification/upgrade, product execution or external gate is claimed by this reviewer."
+    }
+  ]
+}
