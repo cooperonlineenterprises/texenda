@@ -1,0 +1,196 @@
+{
+  "schema_version": "2.0",
+  "kind": "submission",
+  "task_id": "TRN-WSM-0001",
+  "candidate_revision": "d788fb7b88fb34d15f6a7167eef6dd448e81d8fc",
+  "observed_revision": "d788fb7b88fb34d15f6a7167eef6dd448e81d8fc",
+  "summary": "Author candidate for the scoped ADR-0005 editor default, origin-v3 clean/dirty provenance correction, and forward-only debug baseline. Texenda checks pass; upstream full source qualification remains FAIL and upgrade/VAL-03 remain unapproved. Independent candidate review and integration are separate.",
+  "profile_id": "gpt-6-astra-max",
+  "role": "author",
+  "capability_tier": 1,
+  "routing_policy_digest": "61f0db448cf5ac5adad4d9340d568a7558c0369174e30aab92dd0ccf0d24bdf0",
+  "work_package_digest": "9ad162070c27e4c765ba145fc8a35d31dc288482453daaa39ec0bb6add8bd8d8",
+  "issued_at": "2026-09-15T04:07:10+00:00",
+  "scope": "Repository-local follow-up implementation only. TRN-WSM-0001 is the existing transition reference, not a live WP submission or receipt. No dependency install, blueprint upgrade, package promotion, canonical-main/live/private/global-skill/Octon-original/app change or external write.",
+  "changed_paths": [
+    ".agent/generated/manifest.json",
+    ".agent/generated/validation-report.json",
+    ".agent/schemas/project-blueprint-origin.v3.schema.json",
+    ".agent/scripts/validate.py",
+    ".agent/state/RESUME.md",
+    ".agent/state/current.json",
+    ".agent/tests/test_validate.py",
+    ".project-blueprint-origin.json",
+    "AGENTS.md",
+    "docs/decisions/ADR-0005-react-email-editor-reversible-default.md",
+    "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-author.evidence.json",
+    "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-author.md",
+    "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-observations.evidence.json",
+    "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-observations.md",
+    "project-dossier/CANONICAL_SOURCE_MAP.md",
+    "project-dossier/VERSION.md",
+    "project-dossier/conformance/findings.json",
+    "project-dossier/current-state/README.md",
+    "project-dossier/current-state/current.json",
+    "project-dossier/handoff/START_HERE.md",
+    "project-dossier/machine-readable/evidence-index.json",
+    "project-dossier/machine-readable/findings.json",
+    "project-dossier/machine-readable/path-authority.json",
+    "project-dossier/machine-readable/raidq.json",
+    "project-dossier/provenance/README.md",
+    "project-dossier/provenance/sources.json",
+    "project-dossier/transition/README.md",
+    "project-dossier/transition/blueprint-adoption-crosswalk.json",
+    "tooling/workspace/tests/test_contract.py",
+    "tooling/workspace/validate_contract.py"
+  ],
+  "notes": "Base 836e209020177267ccaa1c803b66779cd29d12ec/tree 99fa9c7889c429b1dd28942b3f949051410bd727. Source commit 15075bcb0bdce8f6fc3f9195d01c9af67da78929. Tested first-refresh candidate d788fb7b88fb34d15f6a7167eef6dd448e81d8fc/tree 75c506d8d80b906dbe80d236197c510c3c514052, canonical diff 289e5bb122b1f4c36956584fef7f1c497de1ec1cf675724dfa82067cf9ff59d9. Source scope ed42a7f8fc518e5a111d82c10adc84278b8f0b4ff7d942bf1e54c5e48cb8ea0d. Final evidence/index-only descendant is reported separately to avoid a cycle. Author /root/execute_external_state_relocation, distinct reviewer and root integrator retain separate roles; this is not self-approval. The frozen origin-v3 assessment keeps source-contract/acceptance PASS and full-validator FAIL (one expired source activation fixture, 19/20 sub-suite cases pass). The selected reference remains installed 1.0.0; clean committed 4.2.0 and dirty uncommitted 4.3.0 are not adopted. No reviewed seed is fabricated; both plan attempts stopped before mutation. Public first-party retrieval only, dated 2026-09-15. All source/test sessions finished; no child agents/background jobs remain. Parent must observe final actor stop. Provider model/effort introspection is not claimed.",
+  "checks": [
+    {
+      "id": "editor-local-amendment-contract",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Inspect ADR-0005 scope and root routing; validate version-null/UNVERIFIED, VAL-03 false, codec/allowlist/retained outputs/fallback, and unchanged package scope.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-author.md",
+      "sha256": "2e37e59579b89a1be380139c54ae7126a43452886b4d6f24ad3f03fead6551b8"
+    },
+    {
+      "id": "origin-v3-and-v2-preservation",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Validate strict closed origin v3, separate clean committed 4.2.0 and historical dirty 4.3.0, matching observed evidence and preserved v2 hash; no false adoption or source qualification.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-author.md",
+      "sha256": "2e37e59579b89a1be380139c54ae7126a43452886b4d6f24ad3f03fead6551b8"
+    },
+    {
+      "id": "origin-targeted-negatives",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "python3 -B .agent/tests/test_validate.py OriginV3Tests -v; seven targeted version-mixing/false qualification/missing FAIL/blocked-seed/preserved-v2 tests pass.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-author.md",
+      "sha256": "2e37e59579b89a1be380139c54ae7126a43452886b4d6f24ad3f03fead6551b8"
+    },
+    {
+      "id": "followup-targeted-negatives",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "python3 -B tooling/workspace/tests/test_contract.py FollowupContractTests -v; eight editor gate, source-mixing, package-mutation and debug historical-overclaim tests pass.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-author.md",
+      "sha256": "2e37e59579b89a1be380139c54ae7126a43452886b4d6f24ad3f03fead6551b8"
+    },
+    {
+      "id": "facade-suite",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "python3 -B -m unittest discover -s .agent/tests -p 'test_*.py' -v; 33 tests pass, no skips.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-author.md",
+      "sha256": "2e37e59579b89a1be380139c54ae7126a43452886b4d6f24ad3f03fead6551b8"
+    },
+    {
+      "id": "workspace-suite",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "python3 -B -m unittest discover -s tooling/workspace/tests -p 'test_*.py' -v; 85 tests pass.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-author.md",
+      "sha256": "2e37e59579b89a1be380139c54ae7126a43452886b4d6f24ad3f03fead6551b8"
+    },
+    {
+      "id": "coordinator-suite",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "python3 -B -m unittest discover -s tooling/coordination/tests -p 'test_*.py' -v; 184 tests pass.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-author.md",
+      "sha256": "2e37e59579b89a1be380139c54ae7126a43452886b4d6f24ad3f03fead6551b8"
+    },
+    {
+      "id": "sealed-suite",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "python3 -B -m unittest discover -s specs/texenda-handoff/08-project-harness/tests -p 'test_*.py' -v; 39 tests pass.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-author.md",
+      "sha256": "2e37e59579b89a1be380139c54ae7126a43452886b4d6f24ad3f03fead6551b8"
+    },
+    {
+      "id": "both-package-checks",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Run both exact --checksums commands in the Markdown; each passes 14/14 with 86 sealed/88 source files and all eleven differences preserved.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-author.md",
+      "sha256": "2e37e59579b89a1be380139c54ae7126a43452886b4d6f24ad3f03fead6551b8"
+    },
+    {
+      "id": "contract-schema-link-owner-evidence",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Run workspace --check --audit and facade validation; strict schema/parse/link/owner/evidence bindings and extension hashes pass.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-author.md",
+      "sha256": "2e37e59579b89a1be380139c54ae7126a43452886b4d6f24ad3f03fead6551b8"
+    },
+    {
+      "id": "eleven-output-refresh-and-check-all",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Run explicit external-root refresh after source commit, then --check and --check --all; eleven existing outputs reconstruct exactly, nine nonwriter commands pass, two refresh writers are skipped.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-author.md",
+      "sha256": "2e37e59579b89a1be380139c54ae7126a43452886b4d6f24ad3f03fead6551b8"
+    },
+    {
+      "id": "no-write-snapshot",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Use the complete recorded driver around both facade modes; 829 entries, lossless metadata and Git states unchanged; named private/Git-internal/atime/temporary-fixture exclusions.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-author.md",
+      "sha256": "2e37e59579b89a1be380139c54ae7126a43452886b4d6f24ad3f03fead6551b8"
+    },
+    {
+      "id": "live-and-private-boundary",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Canonical bound Harness check and exact state/lock/binding metadata/hash/facts remain unchanged, WP-10 planned, gates empty, no receipt append. Only permitted exact CSV existence/absence/Git scope checks ran.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-author.md",
+      "sha256": "2e37e59579b89a1be380139c54ae7126a43452886b4d6f24ad3f03fead6551b8"
+    },
+    {
+      "id": "debug-forward-baseline-only",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Retain exact CURRENT-SHA256SUMS/PROVENANCE.md hashes and five current PASS values, without a pre-move manifest or historical equality/authority claim.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-author.md",
+      "sha256": "2e37e59579b89a1be380139c54ae7126a43452886b4d6f24ad3f03fead6551b8"
+    },
+    {
+      "id": "protected-paths-and-clean-worktree",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Verify v2 schema, both packages, coordination extension bindings and coordination source unchanged; clean tracked/untracked/ignored status and diff whitespace; no cache relocation needed.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-author.md",
+      "sha256": "2e37e59579b89a1be380139c54ae7126a43452886b4d6f24ad3f03fead6551b8"
+    },
+    {
+      "id": "upstream-full-source-validator",
+      "required": false,
+      "status": "FAIL",
+      "command_or_procedure": "Preserve the independently rerun clean validate_octon_mini.py exit 1 and exact expired fixture failure, as bound by the observation record. This remains a qualification blocker, not a local source-check PASS.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-observations.md",
+      "sha256": "d92e1b2de4b822b144ccb73d51f3f9cb672869f6821cfbe77eb32ce577987b63"
+    },
+    {
+      "id": "independent-candidate-review",
+      "required": false,
+      "status": "NOT_RUN",
+      "command_or_procedure": "Distinct Astra/max reviewer must inspect the final candidate/evidence and exact final Git diff."
+    },
+    {
+      "id": "candidate-integration",
+      "required": false,
+      "status": "NOT_RUN",
+      "command_or_procedure": "Root integrates separately after independent review and reruns final-head validation."
+    },
+    {
+      "id": "editor-qualification-and-blueprint-upgrade",
+      "required": false,
+      "status": "NOT_RUN",
+      "command_or_procedure": "WP-10/VAL-03 compatibility qualification, an exact package pin, clean-source full qualification, reviewed migration seed and any upgrade remain outside this candidate's authorized effects."
+    }
+  ]
+}
