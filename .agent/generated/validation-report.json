@@ -1,7 +1,7 @@
 {
   "schema_version": "texenda.generated-validation-report.v1",
-  "generation_id": "0336af250313f3fe0018dbfcff61231214e8320f158bf7fc4fdf0292041dcefb",
-  "generated_at": "2026-09-15T16:39:02+00:00",
+  "generation_id": "e393135a44b4c84896e47c90ae776f37e92866f770b3e06fcf8877c9a9fae633",
+  "generated_at": "2026-09-15T16:51:11+00:00",
   "authority": "generated_point_in_time_evidence",
   "result": "PASS",
   "checks": [
@@ -26,11 +26,12 @@
       "status": "PASS"
     }
   ],
-  "source_scope_sha256": "36d57188cfcf38cd8de13bff24f5e6d28d284157ce12d826664fc662ae39fb70",
+  "source_scope_sha256": "fb2a83c6ed2e6756e078ce74a3f302b1c6bd91f81b0f334950a74e749ed3361d",
   "ledger_sha256": "b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235",
   "limitations": [
     "SHA-256 establishes byte identity only, not authority, correctness, approval, or product readiness.",
     "Private-input content is excluded and was not opened, listed, copied, parsed, or hashed.",
-    "This projection is not the live task, receipt, roster, routing, decision, evidence, or permission owner."
+    "This projection is not the live task, receipt, roster, routing, decision, evidence, or permission owner.",
+    "Validation performs no explicit project writes and preserves content, path membership, mode, size, mtime, ctime, generated outputs, caches, locks, and live state; OS-managed atime may advance when files are read and is outside the portable no-write guarantee."
   ]
 }

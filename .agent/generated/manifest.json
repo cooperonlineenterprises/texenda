@@ -1,12 +1,12 @@
 {
   "schema_version": "texenda.generated-integrity.v1",
-  "generation_id": "0336af250313f3fe0018dbfcff61231214e8320f158bf7fc4fdf0292041dcefb",
+  "generation_id": "e393135a44b4c84896e47c90ae776f37e92866f770b3e06fcf8877c9a9fae633",
   "generation_id_derivation": "sha256(canonical_json(source_scope_sha256,evidence_scope_sha256,ledger_sha256,receipt_count,receipt_tip))",
-  "generated_at": "2026-09-15T16:39:02+00:00",
+  "generated_at": "2026-09-15T16:51:11+00:00",
   "authority": "generated_non_authoritative",
-  "source_git_revision": "f32a48e63152f928179b6605fea18784a442a7ea",
-  "source_git_tree": "1236449dabada13c68b2a00ad1429b3e676d1ade",
-  "source_scope_sha256": "36d57188cfcf38cd8de13bff24f5e6d28d284157ce12d826664fc662ae39fb70",
+  "source_git_revision": "7df950f841460df9c56c240a449d0233112d3acf",
+  "source_git_tree": "9abed8f0116a9800796f4a1caa9f7e771aebb8d8",
+  "source_scope_sha256": "fb2a83c6ed2e6756e078ce74a3f302b1c6bd91f81b0f334950a74e749ed3361d",
   "source_scope_exclusions": [
     {
       "path": ".agent/generated/manifest.json",
@@ -88,7 +88,7 @@
     },
     {
       "path": ".agent/generated/README.md",
-      "sha256": "cc17ef125a4bbffeb329010744751e2a3f1e0a85726927f100b5fdc93cd151cb"
+      "sha256": "b3fb38fe579ab340bf44f475b9a557f91a57d727c67e2e5788baedccccc608f5"
     },
     {
       "path": ".agent/lifecycle.json",
@@ -124,11 +124,11 @@
     },
     {
       "path": ".agent/scripts/refresh.py",
-      "sha256": "bb36736c4d323d1b6376e5a611b722fce73c55366e61bee7aaaea55229962afe"
+      "sha256": "e26525d801e22245c1dbdfd0fb2955b1e9adf21cda50984b825a386f0fc8deac"
     },
     {
       "path": ".agent/scripts/validate.py",
-      "sha256": "ef45156bf3977c9c47d6088ee1f7ef2af2888b5c1ab570e521b9645451e9b260"
+      "sha256": "cdedbca74a1af3d9cc4d4e595f100fd1ea50ab38be0d7ae0b16f1d5102654d6c"
     },
     {
       "path": ".agent/tasks/README.md",
@@ -148,15 +148,15 @@
     },
     {
       "path": ".agent/tests/test_validate.py",
-      "sha256": "54cc11a4f4f93c3dbc53754e163ca72f2542a5c731c4c495e7ef9d2c97310f3e"
+      "sha256": "dd748299fc3f18ee87da0306d2ba5d64ca00e0b2b94e75a78e50984a48b5d95a"
     },
     {
       "path": ".agent/tools.json",
-      "sha256": "da5bd5659f030d6c581ccb99be35ac448bba37600d8ccea094d32393360ea9a9"
+      "sha256": "04d78e223bf048fff4323c5f1a245176e41e19fef07ab73fef9d3c8de47854ea"
     },
     {
       "path": ".agent/validators.json",
-      "sha256": "5fdcdc1b463a417b4cd7eaadf4bcff00d3a9c67429291012be7f2df0e6531dd0"
+      "sha256": "c09d1d81888560ac08aba78b8bc367a9c96200aed39cc40589aeff241e26706c"
     },
     {
       "path": ".codex/config.toml",
@@ -224,7 +224,7 @@
     },
     {
       "path": "docs/decisions/ADR-0006-clean-ordinary-operating-contract.md",
-      "sha256": "fc92002c6af406f1d0c9a497724b1cf15ccf8ef4783730ed43b5d5ceaa0c1ac5"
+      "sha256": "60d91f1463ff7020d159f8e7c28441cf99eded6402aeb85e4a6239ff6da2cbaa"
     },
     {
       "path": "docs/operations/github-ci-policy.md",
@@ -480,7 +480,7 @@
     },
     {
       "path": "project-dossier/validation/README.md",
-      "sha256": "b0d4eb64676574d12f9a9e82ecc34f6cf1f9badf16c7aa8c96b62ab1b92810ba"
+      "sha256": "82b817fc59812d43e393414a47690a2fb25a7ce14e989d5fa97249c3ff39e3c8"
     },
     {
       "path": "specs/texenda-handoff/01-foundation/adr-index.md",
@@ -888,7 +888,7 @@
     },
     {
       "path": "tooling/coordination/tests/test_instruction_contracts.py",
-      "sha256": "4546a6bf2ce76f42ed2710caa231bd282c18e22db4ab0863e33f3fd575e1460b"
+      "sha256": "991a6fa664eec1395ecce6dff1da8c68290bd29ae50fd6f3a8be7a0d68c0c3d3"
     },
     {
       "path": "tooling/coordination/tests/test_routing_v2.py",
@@ -1213,6 +1213,7 @@
   "limitations": [
     "SHA-256 establishes byte identity only, not authority, correctness, approval, or product readiness.",
     "Private-input content is excluded and was not opened, listed, copied, parsed, or hashed.",
-    "This projection is not the live task, receipt, roster, routing, decision, evidence, or permission owner."
+    "This projection is not the live task, receipt, roster, routing, decision, evidence, or permission owner.",
+    "Validation performs no explicit project writes and preserves content, path membership, mode, size, mtime, ctime, generated outputs, caches, locks, and live state; OS-managed atime may advance when files are read and is outside the portable no-write guarantee."
   ]
 }
