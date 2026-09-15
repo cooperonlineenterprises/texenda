@@ -1,9 +1,9 @@
 {
   "schema_version": "texenda.dossier-path-authority.generated.v1",
-  "generation_id": "bb14a10ff385661146269f992263788554ce124059fa6e52ead5c5b74ce8de2e",
-  "generated_at": "2026-09-14T23:24:29+00:00",
+  "generation_id": "af93d9d327035928fc003586b7457d2bb200578b72cf6ae6855754dbe77da474",
+  "generated_at": "2026-09-15T00:03:15+00:00",
   "authority": "generated_from_project-dossier/ARTIFACT_CATALOG.json",
-  "source_sha256": "4a6aa8a8b6b73db5f6e42f1876556d06645baa3ee3557d9948321d48c52345f9",
+  "source_sha256": "fd1fb1bb7231a37fb3fddcff2d36d599252bdfacfbdd8797e17870a6652223a1",
   "paths": [
     {
       "path": "project-dossier/README.md",
@@ -147,6 +147,12 @@
       "path": "project-dossier/transition/post-relocation-adoption-plan.json",
       "classification": "history",
       "owner_path": "project-dossier/transition/post-relocation-adoption-plan.json",
+      "concern_id": "adoption_transition"
+    },
+    {
+      "path": "project-dossier/transition/external-state-relocation-receipt.md",
+      "classification": "evidence",
+      "owner_path": "project-dossier/transition/external-state-relocation-receipt.md",
       "concern_id": "adoption_transition"
     },
     {

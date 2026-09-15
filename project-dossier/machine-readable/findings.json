@@ -1,19 +1,19 @@
 {
   "schema_version": "texenda.dossier-findings.generated.v1",
-  "generation_id": "bb14a10ff385661146269f992263788554ce124059fa6e52ead5c5b74ce8de2e",
-  "generated_at": "2026-09-14T23:24:29+00:00",
+  "generation_id": "af93d9d327035928fc003586b7457d2bb200578b72cf6ae6855754dbe77da474",
+  "generated_at": "2026-09-15T00:03:15+00:00",
   "authority": "generated_from_project-dossier/conformance/findings.json",
-  "source_sha256": "80d078dcf83b4e70aa88ee63774e5294097bd67e9c4dc0293a2d9ebb36088de2",
+  "source_sha256": "6a791e6b7d5876f513eff4afa97746313380b491f543388741e09d15cf355456",
   "findings": [
     {
       "id": "FIND-0001",
       "classification": "transitional",
       "subject": "mapped .agent and dossier facade",
       "basis": "docs/decisions/ADR-0004-mapped-project-workspace.md",
-      "observation": "The facade and external-state code are a bounded candidate pending exact independent review and integration.",
-      "evidence": "project-dossier/transition/blueprint-adoption-crosswalk.json",
-      "disposition": "review_required",
-      "limitations": "No operational adoption or product readiness claim."
+      "observation": "The independently reviewed mapped facade and external-state code are integrated in main at 01247b6ecc2368610d03d8a82b7ac911d4ad1622. The subsequent external-state evidence/projection candidate still requires its own independent review and integration.",
+      "evidence": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-review.evidence.json",
+      "disposition": "external_state_evidence_candidate_review_required",
+      "limitations": "The final integrated-head audit remains NOT_RUN; no product or external readiness claim."
     },
     {
       "id": "FIND-0002",
@@ -37,13 +37,13 @@
     },
     {
       "id": "FIND-0004",
-      "classification": "gated",
+      "classification": "transitional",
       "subject": "external live state and private-input relocation",
       "basis": "project-dossier/transition/workspace-move-manifest.json",
-      "observation": "Code and synthetic recovery tests do not execute the live move.",
-      "evidence": "tooling/workspace/relocate_state.py",
-      "disposition": "requires_T1_exact_review_freeze_and_serial_execution",
-      "limitations": "Private-input content remains outside every inspection scope."
+      "observation": "The serial state-root-20260914 move was verified at the approved main. One active external ledger retains the exact state hash and all 13 receipts; the private-input directory moved outside Git without content access.",
+      "evidence": "project-dossier/transition/external-state-relocation-receipt.md",
+      "disposition": "physical_move_verified_evidence_and_projection_candidate_review_required",
+      "limitations": "The canonical pre-refresh facade check reported stale state-root observation. Refresh verification belongs to the separate candidate; no private-content comparison or final integrated-head approval is claimed."
     },
     {
       "id": "FIND-0005",
@@ -54,6 +54,16 @@
       "evidence": "docs/agents/operating-guide.md",
       "disposition": "deferred_until_concrete_recurring_need",
       "limitations": "Absence is deliberate and does not waive required independent review."
+    },
+    {
+      "id": "FIND-0006",
+      "classification": "transitional",
+      "subject": "mapped read-only replay of completed WP-00",
+      "basis": "docs/decisions/ADR-0004-mapped-project-workspace.md",
+      "observation": "The existing coordinator revalidated the retained init/admit/assign/start/submit/review/integration/complete receipts and all 24 required submission/review/integration checks for the real September 13 WP-00 completion.",
+      "evidence": "project-dossier/transition/external-state-relocation-receipt.md",
+      "disposition": "replay_verified_pending_independent_candidate_review",
+      "limitations": "This demonstrates mapped access to pre-existing completion. It is not a new WP execution, receipt, lease, gate, or post-cutover operational run."
     }
   ]
 }
