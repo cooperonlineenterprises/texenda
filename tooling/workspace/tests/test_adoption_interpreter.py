@@ -161,6 +161,68 @@ class AdoptionInterpreterTests(unittest.TestCase):
             self.rewrite(name, mutate)
             self.reject()
 
+    def test_missing_physical_mapped_file_rejected_in_both_modes(self):
+        (self.root / 'tooling/coordination/templates/ASSIGNMENT.md').unlink()
+        with self.assertRaisesRegex(interpreter.ValidationError, 'mapped owner is missing'):
+            interpreter.interpret(self.root)
+        self.reject()
+        result = self.run_cli('--check')
+        self.assertEqual(result.returncode, 2)
+        self.assertIn(b'mapped owner is missing', result.stderr)
+
+    def test_missing_physical_mapped_directory_is_rejected(self):
+        path = self.root / 'tooling/coordination/templates'
+        path.rename(path.with_name('retained-templates'))
+        self.reject()
+
+    def test_mapped_file_cannot_be_a_directory_or_symlink(self):
+        path = self.root / 'tooling/coordination/templates/ASSIGNMENT.md'
+        path.unlink()
+        path.mkdir()
+        with self.assertRaisesRegex(interpreter.ValidationError, 'wrong file/directory type'):
+            interpreter.interpret(self.root)
+        path.rmdir()
+        path.symlink_to(self.root / 'AGENTS.md')
+        self.reject()
+
+    def test_mapped_directory_cannot_be_a_file_or_symlink(self):
+        path = self.root / '.agent/tests'
+        retained = path.with_name('retained-tests')
+        path.rename(retained)
+        path.write_text('synthetic wrong type')
+        self.reject()
+        path.unlink()
+        path.symlink_to(retained, target_is_directory=True)
+        self.reject()
+
+    def test_archive_index_is_required_metadata_only_directory(self):
+        archive = self.root.parent / 'synthetic-archive-index'
+        self.rewrite(interpreter.contract.CROSSWALK, lambda value: next(
+            row for row in value['mappings']
+            if row['blueprint_path'] == '.agent/checkpoints/README.md'
+        ).update(mapped_path=str(archive) + '/'))
+        with mock.patch.object(interpreter, 'ARCHIVE_INDEX', str(archive) + '/'):
+            self.reject()  # Missing required directory.
+            archive.write_text('synthetic wrong type')
+            self.reject()
+            archive.unlink()
+            archive.symlink_to(self.root, target_is_directory=True)
+            self.reject()
+            archive.unlink()
+            archive.mkdir()
+            (archive / 'opaque-unread-file').write_text('synthetic archive payload')
+            real_open = os.open
+
+            def no_archive_open(path, flags, *args, **kwargs):
+                self.assertFalse(str(path).startswith(str(archive)),
+                                 'archive contents must not be opened')
+                return real_open(path, flags, *args, **kwargs)
+
+            with mock.patch.object(os, 'open', side_effect=no_archive_open), \
+                    mock.patch.object(Path, 'iterdir', side_effect=AssertionError('no archive enumeration')), \
+                    mock.patch.object(Path, 'rglob', side_effect=AssertionError('no archive traversal')):
+                self.assertEqual(interpreter.interpret(self.root)['status'], 'PASS')
+
     def test_stock_lexical_escape_and_private_paths_are_rejected(self):
         for name in ('../outside', '/outside', '.agent/../outside', '.agent//empty',
                      '.agent/./dot', '.git/config', '.texenda/state.json',

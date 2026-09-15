@@ -34,6 +34,11 @@ output-file or apply option. It rejects duplicate keys, nonfinite numbers,
 wrong target/profile/version, duplicate or missing mappings, incorrect path
 partitions, traversal, symlinks and private-input paths. The stock origin summary
 is retained as an observation alongside the validated local v3 interpretation.
+Every non-null mapped target must exist as the declared regular file or directory
+(a trailing slash declares a directory). Only null mappings with `deferred` or
+`not_applicable` roles may lack a target. The sole absolute mapping is the exact
+archive checkpoint index; its directory and ancestor metadata are checked, and
+its contents are never enumerated or read.
 Output is a hash-bound, point-in-time view; it grants no permission and creates
 no second ledger. Operating-system access times may advance when files are read.
 

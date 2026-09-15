@@ -64,7 +64,7 @@ def relative_name(value):
     return value
 
 
-def presence(root, name):
+def presence(root, name, *, directory=None):
     """Inspect only named path metadata; never follow a symlink or read content."""
     parts = relative_name(name).split('/')
     path = root
@@ -78,6 +78,9 @@ def presence(root, name):
         require(stat.S_ISREG(mode) or stat.S_ISDIR(mode), 'planner path is not regular')
         require(index == len(parts) - 1 or stat.S_ISDIR(mode),
                 'planner path has a non-directory parent')
+        if index == len(parts) - 1 and directory is not None:
+            expected = stat.S_ISDIR(mode) if directory else stat.S_ISREG(mode)
+            require(expected, 'mapped owner has the wrong file/directory type: ' + name)
     return True
 
 
@@ -119,10 +122,14 @@ def local_contract(root):
         elif isinstance(mapped, str) and mapped.startswith('/'):
             require(mapped == ARCHIVE_INDEX and row['role'] == 'historical_source',
                     'mapping escapes the repository or permitted archive index')
-            # The sole external mapping is an index. Do not inspect archive content.
+            # The sole external mapping requires this exact directory. Inspect
+            # only it and its ancestor metadata; never enumerate/read contents.
+            resolved_directory(Path(ARCHIVE_INDEX), 'required archive index')
         else:
             require(isinstance(mapped, str) and bool(mapped), 'mapping path is malformed')
-            presence(root, relative_name(mapped.rstrip('/')))
+            require(presence(root, relative_name(mapped.rstrip('/')),
+                             directory=mapped.endswith('/')),
+                    'mapped owner is missing: ' + mapped)
         observed[name] = 'collision' if presence(root, name) else 'candidate_new'
     require(all(stable_file_bytes(root / name, 'interpretation source') == raw
                 for name, raw in sources.items()), 'interpretation sources changed during check')
