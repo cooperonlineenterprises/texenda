@@ -1,19 +1,19 @@
 {
   "schema_version": "texenda.dossier-findings.generated.v1",
-  "generation_id": "a9d3bd11d5d742dd83d19f262d4cadd993e71203577dcce931dcb63a31eb3d07",
-  "generated_at": "2026-09-15T00:39:30+00:00",
+  "generation_id": "892985fdecb5d2e5b9f2ddf9043cd38f21d8c14cba06077526bc082a3354d7a3",
+  "generated_at": "2026-09-15T01:21:16+00:00",
   "authority": "generated_from_project-dossier/conformance/findings.json",
-  "source_sha256": "6a791e6b7d5876f513eff4afa97746313380b491f543388741e09d15cf355456",
+  "source_sha256": "ff18aa613bf62cfa5ef6d2f5aab12b80ca9dcd26d757bc512076b0963ba295e5",
   "findings": [
     {
       "id": "FIND-0001",
-      "classification": "transitional",
+      "classification": "conformant",
       "subject": "mapped .agent and dossier facade",
       "basis": "docs/decisions/ADR-0004-mapped-project-workspace.md",
-      "observation": "The independently reviewed mapped facade and external-state code are integrated in main at 01247b6ecc2368610d03d8a82b7ac911d4ad1622. The subsequent external-state evidence/projection candidate still requires its own independent review and integration.",
-      "evidence": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-review.evidence.json",
-      "disposition": "external_state_evidence_candidate_review_required",
-      "limitations": "The final integrated-head audit remains NOT_RUN; no product or external readiness claim."
+      "observation": "At the 2026-09-15 audit, facade/state-root code and independently reviewed cutover evidence/projections were integrated at 14682d798faed7cd398d21be3cf8076b84d5b0fe, tree 09d8475a6fc746640edef52efa7c10b340a9299e. The exact baseline integrity was approved.",
+      "evidence": "docs/qualification/evidence/2026-09-15-workspace-adoption-integrated-main-audit.evidence.json",
+      "disposition": "prior_integrated_baseline_verified",
+      "limitations": "Conformance is limited to the exact audited code/governance/evidence baseline. Its preserved P2 wording correction is proposed in this unapproved closeout candidate; neither full adoption nor later-candidate/product/external approval is asserted."
     },
     {
       "id": "FIND-0002",
@@ -37,13 +37,13 @@
     },
     {
       "id": "FIND-0004",
-      "classification": "transitional",
+      "classification": "conformant",
       "subject": "external live state and private-input relocation",
       "basis": "project-dossier/transition/workspace-move-manifest.json",
-      "observation": "The serial state-root-20260914 move was verified at the approved main. One active external ledger retains the exact state hash and all 13 receipts; the private-input directory moved outside Git without content access.",
-      "evidence": "project-dossier/transition/external-state-relocation-receipt.md",
-      "disposition": "physical_move_verified_evidence_and_projection_candidate_review_required",
-      "limitations": "The canonical pre-refresh facade check reported stale state-root observation. Refresh verification belongs to the separate candidate; no private-content comparison or final integrated-head approval is claimed."
+      "observation": "The state-root-20260914 physical move and external-root projections were independently accepted and reverified at integrated main 14682d798faed7cd398d21be3cf8076b84d5b0fe. One external ledger retains the exact state hash, 13 receipts, 11 roster entries and zero leases/budget/gates.",
+      "evidence": "docs/qualification/evidence/2026-09-15-workspace-adoption-integrated-main-audit.evidence.json",
+      "disposition": "prior_physical_cutover_and_projection_integrity_verified",
+      "limitations": "The historical pre-refresh failure is resolved by the audited integrated projections, not by assuming this closeout candidate is approved. Private checks remain exact-path-only, with no content/size inspection or equality claim; no new receipt or external gate was created."
     },
     {
       "id": "FIND-0005",
@@ -57,13 +57,13 @@
     },
     {
       "id": "FIND-0006",
-      "classification": "transitional",
+      "classification": "conformant",
       "subject": "mapped read-only replay of completed WP-00",
       "basis": "docs/decisions/ADR-0004-mapped-project-workspace.md",
-      "observation": "The existing coordinator revalidated the retained init/admit/assign/start/submit/review/integration/complete receipts and all 24 required submission/review/integration checks for the real September 13 WP-00 completion.",
-      "evidence": "project-dossier/transition/external-state-relocation-receipt.md",
-      "disposition": "replay_verified_pending_independent_candidate_review",
-      "limitations": "This demonstrates mapped access to pre-existing completion. It is not a new WP execution, receipt, lease, gate, or post-cutover operational run."
+      "observation": "The independent cutover review and integrated-main audit at 14682d798faed7cd398d21be3cf8076b84d5b0fe accepted the read-only mapped replay of the real September 13 WP-00 completion and all 24 required submission/review/integration checks.",
+      "evidence": "docs/qualification/evidence/2026-09-15-workspace-adoption-integrated-main-audit.evidence.json",
+      "disposition": "mapped_lifecycle_replay_accepted_for_recorded_baseline",
+      "limitations": "This is the approved demonstration for the prior exact baseline, not approval of the current status-correction candidate. It is not a new WP execution, receipt, lease, gate, model requalification or post-cutover operational run."
     }
   ]
 }
