@@ -219,10 +219,17 @@ and run:
 {validation_command}
 ```
 
-Then inspect `{coordinator_command} status`, `ready`, and `context WP-01`. Use the
-[resumption template](../../tooling/coordination/templates/RESUME.md) when prior
-work was interrupted. If any digest is stale, refresh only after the underlying
-authority is understood.
+Then inspect the active ledger without writing:
+
+```text
+{coordinator_command} status
+{coordinator_command} ready
+{coordinator_command} context WP-01
+```
+
+Use the [resumption template](../../tooling/coordination/templates/RESUME.md)
+when prior work was interrupted. If any digest is stale, refresh only after the
+underlying authority is understood.
 """.encode()
     current_readme = f"""# Current observed state
 

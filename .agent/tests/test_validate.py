@@ -490,6 +490,7 @@ class FacadeIntegratedFixtureTests(unittest.TestCase):
                        'tooling/coordination/harness.py --root . --state-root ' + state_root)
         self.assertIn(validation, handoff)
         for command in ('status', 'ready', 'context WP-01'):
+            self.assertIn(coordinator + ' ' + command, resume)
             self.assertIn(coordinator + ' ' + command, handoff)
         self.assertLess(handoff.index(validation), handoff.index('[transition]'))
 

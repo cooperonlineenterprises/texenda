@@ -163,7 +163,7 @@
         "facade": ".agent/validators.json",
         "external_state": ".agent/validators.json"
       },
-      "rule": "Delegates to existing validators; old command prose becomes a link at cutover."
+      "rule": "Delegates to existing validators; explanatory command prose does not become a second registry."
     },
     {
       "concern_id": "durable_decisions",
@@ -307,7 +307,7 @@
         "facade": "project-dossier/machine-readable/plan.json",
         "external_state": "project-dossier/machine-readable/plan.json"
       },
-      "rule": "Future adoption dependencies and acceptance only; cannot act as an active task ledger or mark WPs complete."
+      "rule": "Records completed adoption dependencies and any future acceptance plan; cannot act as an active task ledger or mark WPs complete."
     },
     {
       "concern_id": "consolidated_raidq",
