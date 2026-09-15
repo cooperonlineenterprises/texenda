@@ -1,0 +1,262 @@
+{
+  "schema_version": "2.0",
+  "kind": "review",
+  "task_id": "TRN-WSM-0001",
+  "candidate_revision": "59d16bc427840a3a35eaea07666eb473aacb3eda",
+  "observed_revision": "59d16bc427840a3a35eaea07666eb473aacb3eda",
+  "summary": "APPROVE exact corrected clean-maintenance candidate 59d16bc427840a3a35eaea07666eb473aacb3eda with zero unresolved findings. Original P2 missing physical mapped target is retained and corrected: required files/directories and exact archive-index metadata now fail closed. Interpreter, crosswalk/compatibility, Blueprint maintenance, forward archive baseline and preservation checks pass. No containing/future head, Blueprint upgrade, product readiness or external effect is approved.",
+  "profile_id": "gpt-6-astra-max",
+  "role": "reviewer",
+  "capability_tier": 1,
+  "routing_policy_digest": "61f0db448cf5ac5adad4d9340d568a7558c0369174e30aab92dd0ccf0d24bdf0",
+  "work_package_digest": "9ad162070c27e4c765ba145fc8a35d31dc288482453daaa39ec0bb6add8bd8d8",
+  "issued_at": "2026-09-15T18:02:12Z",
+  "qualifications": [
+    {
+      "profile_id": "gpt-6-astra-max",
+      "capability_tier": 1,
+      "model_id": "gpt-6-astra",
+      "reasoning_effort": "max",
+      "runtime_id": "codex-desktop-collaboration",
+      "client_version": "26.901.41600 (build 7982)",
+      "sign_in_mode": "subscription",
+      "billing_mode": "subscription",
+      "capabilities": [
+        "read",
+        "edit",
+        "test"
+      ],
+      "verified_at": "2026-09-13T21:44:31Z",
+      "expires_at": "2026-10-12T21:44:31Z",
+      "qualification_check_ids": [
+        "desktop-profile-gpt-6-astra-max"
+      ]
+    }
+  ],
+  "scope": "Exact corrected candidate 2 against accepted base 700565cd829871b04bde87e485c25d802505192c: local adoption interpreter and negatives, crosswalk v2/ten compatibility dispositions, dossier 1.3/supersession, external Blueprint maintenance, SRC-0008 forward baseline, validators/tests and generated views. Includes original P2 finding on 0a42d6e and its exact closure. TRN-WSM-0001 is an existing transition reference, not a new ledger/receipt.",
+  "notes": "Approved tree 1124909e331b846e3bda1a60241d24451f731b74; full-index base diff SHA 23bb92c8c860cc4e17e290270dbc03418b53898871dad5a339fb751744f847d5; correction SHA 298119b7467f71e57b21c15d441a91c2fd394fa43d78089a3dd415a54d3335a6. Author /root/clean_maintenance_author, reviewer /root/clean_setup_reviewer and integrator /root distinct. Initial review 50000 tokens/3000 seconds; corrected 35000/2100; evidence-only 20000/1200; subscription/API USD 0, no fallback/downshift/children. Markdown SHA 7c7dc268ddd32dd38e7f11e43cb30688058d71bda37ff924a9e9396cf9a94455 binds exact commands/results, original failure/correction, source/qualification limitations, archive counts/hashes, state/private proof and no-write scope. Provider tokens/model introspection unavailable. Containing commit/tree/file hashes reported separately.",
+  "checks": [
+    {
+      "id": "exact-corrected-subject-and-diffs",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Verify clean corrected HEAD 59d16bc427840a3a35eaea07666eb473aacb3eda/tree 1124909e331b846e3bda1a60241d24451f731b74 and complete delta from 700565cd829871b04bde87e485c25d802505192c. Canonical full-index digest 23bb92c8c860cc4e17e290270dbc03418b53898871dad5a339fb751744f847d5; correction from 0a42d6e full-index SHA 298119b7467f71e57b21c15d441a91c2fd394fa43d78089a3dd415a54d3335a6.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-maintenance-independent-review.md",
+      "sha256": "7c7dc268ddd32dd38e7f11e43cb30688058d71bda37ff924a9e9396cf9a94455"
+    },
+    {
+      "id": "independent-exact-qualified-reviewer",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Reviewer /root/clean_setup_reviewer is distinct from author /root/clean_maintenance_author and integrator /root. Live gpt-6-astra-max qualifies through 2026-10-12T21:44:31Z using owner-roster SHA 8e44034e6247ea47b3f0002100e6a343cfa6685d56138a24f55e8a13054173c0. Initial review bounds 50000/3000 sec; corrected 35000/2100 sec; evidence-only 20000/1200 sec; subscription/API USD 0, no fallback/downshift/children.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-maintenance-independent-review.md",
+      "sha256": "7c7dc268ddd32dd38e7f11e43cb30688058d71bda37ff924a9e9396cf9a94455"
+    },
+    {
+      "id": "p2-missing-physical-target-closed",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Inspect corrected local_contract and presence: every non-null relative mapped target must exist with regular-file versus trailing-slash-directory type. Null only for deferred/not_applicable. Original absent-assignment PASS is retained as a prior failure, not relabelled.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-maintenance-independent-review.md",
+      "sha256": "7c7dc268ddd32dd38e7f11e43cb30688058d71bda37ff924a9e9396cf9a94455"
+    },
+    {
+      "id": "independent-physical-target-denial-matrix",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "In disposable fixtures independently reproduce missing file, missing directory, file-as-directory, directory-as-file and symlink in both self-check and stock modes. All ten attempts reject with missing-owner, wrong-type or symlink errors; no actual project file is removed.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-maintenance-independent-review.md",
+      "sha256": "7c7dc268ddd32dd38e7f11e43cb30688058d71bda37ff924a9e9396cf9a94455"
+    },
+    {
+      "id": "archive-index-metadata-boundary",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "The sole permitted absolute mapping is the exact archive checkpoint index. Tests reject missing/file/symlink indexes; valid index checks use only symlink-free ancestor/directory metadata, with guards against content opens and enumeration.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-maintenance-independent-review.md",
+      "sha256": "7c7dc268ddd32dd38e7f11e43cb30688058d71bda37ff924a9e9396cf9a94455"
+    },
+    {
+      "id": "offline-interpreter-and-strict-stdin",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Inspect complete interpreter and tests: normal self-check uses only repository-owned validators; stdin mode is bounded to one MiB strict JSON. No source/planner execution, output file, apply, upgrade, qualification or seed option. Registry rejects installed-source or writing-mode substitution.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-maintenance-independent-review.md",
+      "sha256": "7c7dc268ddd32dd38e7f11e43cb30688058d71bda37ff924a9e9396cf9a94455"
+    },
+    {
+      "id": "partition-and-input-negative-coverage",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Tests deny wrong root/profile/version/schema/origin, duplicate keys, NaN/Infinity/overflow, duplicate/missing/extra/overlap/misclassified stock partitions, missing mapping rows, unknown roles, altered qualification/descriptor/seed, traversal, symlink and private paths. All 85 current mappings and physical targets are checked.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-maintenance-independent-review.md",
+      "sha256": "7c7dc268ddd32dd38e7f11e43cb30688058d71bda37ff924a9e9396cf9a94455"
+    },
+    {
+      "id": "real-stock-planner-pipe",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Run the exact installed plan_adoption.py --format json command and pipe stdout to the local --stock-plan - interpreter at the exact review root. Both exit 0 with empty stderr; 45 collisions/40 candidate paths; original stock limited origin observation preserved alongside validated local v3.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-maintenance-independent-review.md",
+      "sha256": "7c7dc268ddd32dd38e7f11e43cb30688058d71bda37ff924a9e9396cf9a94455"
+    },
+    {
+      "id": "clean-generator-dry-run",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Run installed scaffold_project.py with --profile high-assurance --dry-run at the documented absent target. Exit 0, 85 intended paths exactly match crosswalk, target absent before/after; no scaffold generated.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-maintenance-independent-review.md",
+      "sha256": "7c7dc268ddd32dd38e7f11e43cb30688058d71bda37ff924a9e9396cf9a94455"
+    },
+    {
+      "id": "crosswalk-v2-predecessor-and-dossier-version",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Verify v1 predecessor at 700565cd829871b04bde87e485c25d802505192c:project-dossier/transition/blueprint-adoption-crosswalk.json SHA 689d5ffedb15938b25679c0cb9215bd7cac850b3b8f09e257a0f7a0c4fade00e; stable DEFER-WSM IDs in maintenance_items, current external_state epoch, dossier 1.3 and exact SUP-0002 successor agree.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-maintenance-independent-review.md",
+      "sha256": "7c7dc268ddd32dd38e7f11e43cb30688058d71bda37ff924a9e9396cf9a94455"
+    },
+    {
+      "id": "ten-compatibility-dispositions-and-single-owners",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Validate all ten dispositions with owner/reason/risk/trigger/proof/recovery. Retain sealed-v1 pin, pre-binding default, four exact receipt inputs, recovery helper, absolute binding, v2 schema history, checked config mirror, live ready and intentional omissions; isolate stock view in small interpreter. No second authority or silent retirement.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-maintenance-independent-review.md",
+      "sha256": "7c7dc268ddd32dd38e7f11e43cb30688058d71bda37ff924a9e9396cf9a94455"
+    },
+    {
+      "id": "blueprint-external-maintenance-boundary",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "RAIDQ-0005 names the external source maintainer, expired source-activation fixture and authentic reviewed-seed blockers, complete exact qualification commands, clean-commit trigger, evidence, risk and recovery. Installed 1.0.0 remains structural; clean 4.2.0 PASS/PASS/FAIL and dirty uncommitted 4.3.0 stay distinct. No source repair/upgrade/seed.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-maintenance-independent-review.md",
+      "sha256": "7c7dc268ddd32dd38e7f11e43cb30688058d71bda37ff924a9e9396cf9a94455"
+    },
+    {
+      "id": "exact-ordinary-complete-check",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/validate.py --check --all --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda: exit 0 in 19.888 seconds; all ten registry commands exit 0, both refresh writers skipped.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-maintenance-independent-review.md",
+      "sha256": "7c7dc268ddd32dd38e7f11e43cb30688058d71bda37ff924a9e9396cf9a94455"
+    },
+    {
+      "id": "standalone-facade-and-interpreter-suites",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Standalone facade discovery: 36 tests PASS in 50.265 seconds without skips. Standalone test_adoption_interpreter.py discovery: 19 tests PASS in 1.357 seconds. Commands are reproduced in the bound Markdown.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-maintenance-independent-review.md",
+      "sha256": "7c7dc268ddd32dd38e7f11e43cb30688058d71bda37ff924a9e9396cf9a94455"
+    },
+    {
+      "id": "registered-suites-and-both-packages",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Full registered check passes workspace/coordinator/sealed suites and both package checksum validators, 14/14 per package. Protected byte audit preserves all eleven package differences; no product test or gate is inferred.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-maintenance-independent-review.md",
+      "sha256": "7c7dc268ddd32dd38e7f11e43cb30688058d71bda37ff924a9e9396cf9a94455"
+    },
+    {
+      "id": "parsing-links-owner-evidence-and-generated-views",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Validate 135 JSON, 1 TOML, 21 Python, 30 dossier paths, 3 instruction files, 130 links and 514 PASS/FAIL bindings. All eleven generated outputs reconstruct at generation 9a5278da0c9541cd4db75517f8268489350dfa3b391325808dff77a4366b12d4, source scope b3adced634a9d427f3cb4b25cf350cf64a67fee52bbcf2aa04ae00e9471cdfe6.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-maintenance-independent-review.md",
+      "sha256": "7c7dc268ddd32dd38e7f11e43cb30688058d71bda37ff924a9e9396cf9a94455"
+    },
+    {
+      "id": "no-explicit-write-preservation",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "367-path before/after review-worktree/external-state snapshot shows zero guaranteed content/path/mode/device/inode/size/mtime/ctime changes. OS-managed manifest atime advance is disclosed, not restored. Scope, concurrent read-only testing and exclusions are explicit.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-maintenance-independent-review.md",
+      "sha256": "7c7dc268ddd32dd38e7f11e43cb30688058d71bda37ff924a9e9396cf9a94455"
+    },
+    {
+      "id": "forward-archive-manifest-and-provenance",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Verify SRC-0008 manifest b682602668d10e96e9c50fbf317d5e3eee4124f1db613e5c49bd86b281656fde and provenance 32e5ee34be5482ee8da28630690cca64720371ef63ebdd84a4cfc91b29de766f. Check unique archive-only regular symlink-free paths with no private/CSV/traversal before content hashing.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-maintenance-independent-review.md",
+      "sha256": "7c7dc268ddd32dd38e7f11e43cb30688058d71bda37ff924a9e9396cf9a94455"
+    },
+    {
+      "id": "archive-checksums-and-no-mutation",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "From project home run shasum -a 256 -c archive/integrity/2026-09-15-preimplementation/CURRENT-SHA256SUMS with captured output: 5626 OK, zero non-success lines, empty stderr, exit 0 in 0.696 seconds. All 6081 measured metadata entries unchanged excluding OS atime; no raw payload display or archive mutation.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-maintenance-independent-review.md",
+      "sha256": "7c7dc268ddd32dd38e7f11e43cb30688058d71bda37ff924a9e9396cf9a94455"
+    },
+    {
+      "id": "forward-only-history-limits",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Archive record explicitly cannot reconstruct absent pre-migration hashes; future additions need separate baseline. Raw logs/bytecode/Git objects/sessions/bundles remain local non-authoritative history, not source/evidence authority/permission/readiness.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-maintenance-independent-review.md",
+      "sha256": "7c7dc268ddd32dd38e7f11e43cb30688058d71bda37ff924a9e9396cf9a94455"
+    },
+    {
+      "id": "state-and-receipt-input-preservation",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "State SHA b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235 retains 13 receipts/tip f39249184757101b108ea7ec5ea0ffebdd8237315b8ac3cad3ad0cc6ab3e827e, 11 profiles, zero leases/budget and empty gates. Four exact ignored canonical input hashes remain as recorded in the Markdown.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-maintenance-independent-review.md",
+      "sha256": "7c7dc268ddd32dd38e7f11e43cb30688058d71bda37ff924a9e9396cf9a94455"
+    },
+    {
+      "id": "private-and-protected-boundaries",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Exact private-file existence and Git ignore/tracking only, no private contents/size/hash/copy/parse/listing. Protected Git comparisons preserve prior evidence, origin schemas/record, .codex, harness/routing/relocation, permission/context, ADRs, history and sealed package. Complete git diff --check passes.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-maintenance-independent-review.md",
+      "sha256": "7c7dc268ddd32dd38e7f11e43cb30688058d71bda37ff924a9e9396cf9a94455"
+    },
+    {
+      "id": "cleanliness-runtime-and-no-external-effects",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Review worktree remains clean at exact approved head/tree. All command sessions completed, no children/background work. No project/archive/source/global/private/state/GitHub/Codex mutation, push, deployment, publication, spending, workflow activation or gate clearance; parent must observe later evidence-authoring runtime stop.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-maintenance-independent-review.md",
+      "sha256": "7c7dc268ddd32dd38e7f11e43cb30688058d71bda37ff924a9e9396cf9a94455"
+    },
+    {
+      "id": "original-missing-mapped-target-negative",
+      "required": false,
+      "status": "FAIL",
+      "command_or_procedure": "At earlier candidate 0a42d6e239133ddef9fe9499f88813d5273f2a1f, independent in-memory and physical disposable-fixture probes removed the synthetic ASSIGNMENT.md mapped target; interpreter still returned PASS, stock_plan_validated true and the functional checklist mapping. That failed negative oracle prevented approval and is retained here; corrected candidate rejects it.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-maintenance-independent-review.md",
+      "sha256": "7c7dc268ddd32dd38e7f11e43cb30688058d71bda37ff924a9e9396cf9a94455"
+    },
+    {
+      "id": "evidence-bearing-head-refresh-and-final-audit",
+      "required": false,
+      "status": "NOT_RUN",
+      "command_or_procedure": "Preserve these two evidence records, explicitly refresh only declared generated views, and independently audit the exact resulting head. This candidate approval does not approve its containing evidence commit or a future head."
+    },
+    {
+      "id": "local-integration-and-final-main",
+      "required": false,
+      "status": "NOT_RUN",
+      "command_or_procedure": "Local integration and verification of exact main remain integrator steps after final evidence-bearing-head approval."
+    },
+    {
+      "id": "upstream-source-requalification-and-upgrade",
+      "required": false,
+      "status": "NOT_RUN",
+      "command_or_procedure": "No new upstream full qualification, external source edit, install/upgrade, authentic seed creation or adoption. Prior clean-source FAIL remains controlling."
+    },
+    {
+      "id": "github-and-codex-registration-observation",
+      "required": false,
+      "status": "NOT_RUN",
+      "command_or_procedure": "This reviewer made no fresh GitHub state or Codex registration query; those remain the integrator's separate observation scope."
+    },
+    {
+      "id": "product-and-external-gates",
+      "required": false,
+      "status": "NOT_RUN",
+      "command_or_procedure": "No product execution, production readiness, WP-10/VAL-03 approval or external-gate clearance."
+    }
+  ]
+}
