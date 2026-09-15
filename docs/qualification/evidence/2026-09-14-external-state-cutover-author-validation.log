@@ -1,0 +1,1103 @@
+External-state cutover evidence/projection candidate: author validation
+Recorded: 2026-09-15 00:07:26 UTC (the September 14 local cutover task)
+Worktree: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+Branch: migration/external-state-cutover-evidence-20260914
+Base main: 01247b6ecc2368610d03d8a82b7ac911d4ad1622
+Base tree: 394741c97268edc81ad2587ba47156ac6a55a8f3
+Source/evidence/status commit: a30b43c8680acccf0d815a6efc7a2a8a4743c5a4
+Source commit tree: b648c6b6d81b54e04be64f58adf640ce471089e5
+Tested refresh candidate: 04174ae28396ec1b58498fa8013fd3f521fa8166
+Tested candidate tree: 8a84f6cdc45e2ffbc1f1e2999538d7a1095d1ea6
+Canonical base-to-tested-candidate diff SHA-256: 78e4585a3bf08c684b10bc69dcf3dd5f32dd61c51f413caace3db4d45d614441
+Diff procedure: git --no-optional-locks diff --no-ext-diff --no-textconv --full-index --binary BASE CANDIDATE | shasum -a 256
+Declared source-scope SHA-256: 1e8fefd861e8d4e28051189b104d89bf5282c0b04c431053a9e6b8de56fb7ed9
+Tested generation: af93d9d327035928fc003586b7457d2bb200578b72cf6ae6855754dbe77da474
+External root: /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda
+Live ledger SHA-256: b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235
+
+Role and scope:
+This is T1 Astra/max author evidence for the separate tracked candidate.
+Physical execution previously finished. This author did not run prepare/apply/recover,
+alter canonical main/live state/binding/private inputs, edit code/policy/package sources,
+or call GitHub/network/external systems. Independent review is NOT_RUN.
+Project-bootstrap 1.0.0 supplies high-assurance mapped-existing structure only.
+The source snapshot records current truth and one explicitly cataloged TRN-0006 evidence
+receipt. No stock generator or new authority/ledger/store was introduced.
+
+Results:
+- Standalone facade suite: 26 tests, exit 0, no skipped tests.
+- Standalone workspace suite: 77 tests, exit 0.
+- Standalone coordinator suite: 184 tests, exit 0.
+- Standalone sealed harness suite: 39 tests, exit 0.
+- Workspace contract: 42 concerns, 85 blueprint paths, 35 artifact types, 16 source moves,
+  294 bound qualification checks; 86 sealed and 88 preserved source files; exit 0.
+- Both package validators: 14/14 PASS, no errors/warnings.
+- Worktree bound --check and --check --all: exit 0, PASS.
+  --all executes all nine registered nonwriter checks and skips both refresh writers.
+  Its nested facade suite intentionally skips the recursive full-check test through
+  TEXENDA_CHECK_ALL_ACTIVE; standalone 26/26 above exercises that test.
+- Strict parsing, local links, schemas/origin/IDs, ownership/catalog, extension constraints,
+  evidence paths/hashes, deterministic eleven-output reconstruction: PASS through facade.
+- Exactly eleven generated views changed in the first refresh. Their current observation
+  names the external root and unchanged ledger hash/13 receipts/zero leases/budget.
+- Historical pre-refresh canonical check exit 2 is retained in the physical evidence log;
+  the worktree refresh resolves stale state-root observation. Canonical projections are
+  intentionally unchanged until separate integration.
+- Snapshot before/after: 456/456 scoped entries, hashes equal
+  cb87b177fc1a99b0c505bd64f7e06ec15234b7111c46c607cec9915220f48168; changed paths [].
+  Snapshot includes tracked, untracked and ignored/cache files, directories, live state/lock,
+  binding/recovery/journal/checkpoint records, canonical evidence/context and complete
+  preserved source package. SHA-256, inode/device/type/size, mtime_ns and ctime_ns plus
+  Git statuses/HEAD/tree match. Atime, Git internals, all private paths/CSV files and
+  disposable test fixtures outside these roots are excluded.
+- Worktree tracked/untracked/ignored status: empty after suites/checks. No cache relocation
+  was needed. The preserved source package's two preexisting caches remain untouched.
+- Canonical main remains clean at the approved base; only ignored .texenda and binding.
+- Live state, lock, binding metadata match the author-entry baseline, and state/binding
+  hashes remain exact. No receipt, lease, roster, budget or gate mutation occurred.
+- Read-only WP-00 replay (recorded in the physical observation evidence) validates the
+  retained real completion and 24 required checks; no new WP execution is claimed.
+
+Source/physical evidence artifact hashes:
+5ac1094c401d282011e3d57177f01c9defd809af54a387c9543a523930ac4999  project-dossier/transition/external-state-relocation-receipt.md
+22d5dfa06002c57aaf8caa20d77bbaa1344dd185b711be78c2633899400993c3  docs/qualification/evidence/2026-09-14-external-state-relocation.evidence.json
+758bd7a9569bc6587f422cbdf1d8ac04c0a9229a56804c1b110b3c46f2eaeac6  docs/qualification/evidence/2026-09-14-external-state-relocation-validation.log
+
+The exact local journal and helper activation artifact hashes remain bound in
+2026-09-14-external-state-relocation.evidence.json and its safe repository-relative log.
+All PASS/FAIL fields in this author record bind this safe repository-relative log.
+
+Commands and full captured results:
+
+PHASE: source-static-validation
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+env PYTHONDONTWRITEBYTECODE=1 python3 -B -c 'import sys,json; from pathlib import Path; sys.path.insert(0,".agent/scripts"); import validate; print(json.dumps(validate.validate(Path.cwd(),Path("/Users/jamesryancooper/Projects/texenda/local/agent-state/texenda"),generated=False),indent=2))'
+EXIT: 0
+OUTPUT:
+{
+  "status": "PASS",
+  "mode": "read_only",
+  "parsing": {
+    "json": 124,
+    "toml": 1,
+    "python": 19
+  },
+  "dossier_paths": 28,
+  "instruction_files": 3,
+  "local_links": 104,
+  "bound_pass_fail_evidence_checks": 284,
+  "registered_commands_run": [
+    {
+      "id": "facade-refresh",
+      "status": "SKIPPED_WRITER"
+    },
+    {
+      "id": "facade-refresh-recovery",
+      "status": "SKIPPED_WRITER"
+    },
+    {
+      "id": "workspace-contract",
+      "returncode": 0
+    }
+  ],
+  "private_input_content_accessed": false,
+  "external_effects": false,
+  "product_or_external_gate": "none"
+}
+
+PHASE: source-static-validation
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+git diff --check
+EXIT: 0
+OUTPUT:
+(empty)
+
+PHASE: source-static-validation
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+git diff --exit-code 01247b6ecc2368610d03d8a82b7ac911d4ad1622 -- tooling .agent/scripts .agent/policy.json .agent/context.json specs/texenda-handoff
+EXIT: 0
+OUTPUT:
+(empty)
+
+PHASE: source-static-validation
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+git status --porcelain=v1 --untracked-files=all --ignored=matching
+EXIT: 0
+OUTPUT:
+ M project-dossier/ARTIFACT_CATALOG.json
+ M project-dossier/conformance/findings.json
+ M project-dossier/machine-readable/plan.json
+ M project-dossier/machine-readable/raidq.json
+ M project-dossier/transition/README.md
+?? docs/qualification/evidence/2026-09-14-external-state-relocation-validation.log
+?? docs/qualification/evidence/2026-09-14-external-state-relocation.evidence.json
+?? project-dossier/transition/external-state-relocation-receipt.md
+
+PHASE: source-stage
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+git add -- project-dossier/ARTIFACT_CATALOG.json project-dossier/conformance/findings.json project-dossier/machine-readable/plan.json project-dossier/machine-readable/raidq.json project-dossier/transition/README.md project-dossier/transition/external-state-relocation-receipt.md docs/qualification/evidence/2026-09-14-external-state-relocation-validation.log docs/qualification/evidence/2026-09-14-external-state-relocation.evidence.json
+EXIT: 0
+OUTPUT:
+(empty)
+
+PHASE: source-commit
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+git commit -m 'Record verified external-state cutover and mapped lifecycle replay'
+EXIT: 0
+OUTPUT:
+[migration/external-state-cutover-evidence-20260914 a30b43c] Record verified external-state cutover and mapped lifecycle replay
+ 8 files changed, 1262 insertions(+), 36 deletions(-)
+ create mode 100644 docs/qualification/evidence/2026-09-14-external-state-relocation-validation.log
+ create mode 100644 docs/qualification/evidence/2026-09-14-external-state-relocation.evidence.json
+ create mode 100644 project-dossier/transition/external-state-relocation-receipt.md
+
+PHASE: first-refresh
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/refresh.py --refresh --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda
+EXIT: 0
+OUTPUT:
+{
+  "status": "REFRESHED",
+  "outputs": 11,
+  "generation_id": "af93d9d327035928fc003586b7457d2bb200578b72cf6ae6855754dbe77da474",
+  "next": "python3 -B .agent/scripts/validate.py --check"
+}
+
+PHASE: first-refresh-verification
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+git diff --name-only
+EXIT: 0
+OUTPUT:
+.agent/generated/manifest.json
+.agent/generated/validation-report.json
+.agent/state/RESUME.md
+.agent/state/current.json
+project-dossier/CANONICAL_SOURCE_MAP.md
+project-dossier/current-state/README.md
+project-dossier/current-state/current.json
+project-dossier/handoff/START_HERE.md
+project-dossier/machine-readable/evidence-index.json
+project-dossier/machine-readable/findings.json
+project-dossier/machine-readable/path-authority.json
+
+PHASE: first-refresh-verification
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+git diff --check
+EXIT: 0
+OUTPUT:
+(empty)
+
+PHASE: first-refresh-verification
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+git rev-parse HEAD 'HEAD^{tree}'
+EXIT: 0
+OUTPUT:
+a30b43c8680acccf0d815a6efc7a2a8a4743c5a4
+b648c6b6d81b54e04be64f58adf640ce471089e5
+
+PHASE: first-refresh-verification
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+jq '{ledger_sha256,receipt_count,receipt_tip,ledger_observation,source_git_revision,source_scope_sha256,generation_id}' .agent/state/current.json
+EXIT: 0
+OUTPUT:
+{
+  "ledger_sha256": "b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235",
+  "receipt_count": 13,
+  "receipt_tip": "f39249184757101b108ea7ec5ea0ffebdd8237315b8ac3cad3ad0cc6ab3e827e",
+  "ledger_observation": {
+    "state_root": "/Users/jamesryancooper/Projects/texenda/local/agent-state/texenda",
+    "state_version": "2.0",
+    "lease_count": 0,
+    "declared_budget_usd": 0.0
+  },
+  "source_git_revision": "a30b43c8680acccf0d815a6efc7a2a8a4743c5a4",
+  "source_scope_sha256": "1e8fefd861e8d4e28051189b104d89bf5282c0b04c431053a9e6b8de56fb7ed9",
+  "generation_id": "af93d9d327035928fc003586b7457d2bb200578b72cf6ae6855754dbe77da474"
+}
+
+PHASE: generated-stage
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+git add -- .agent/generated/manifest.json .agent/generated/validation-report.json .agent/state/RESUME.md .agent/state/current.json project-dossier/CANONICAL_SOURCE_MAP.md project-dossier/current-state/README.md project-dossier/current-state/current.json project-dossier/handoff/START_HERE.md project-dossier/machine-readable/evidence-index.json project-dossier/machine-readable/findings.json project-dossier/machine-readable/path-authority.json
+EXIT: 0
+OUTPUT:
+(empty)
+
+PHASE: generated-commit
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+git commit -m 'Refresh mapped views for the bound external state root'
+EXIT: 0
+OUTPUT:
+[migration/external-state-cutover-evidence-20260914 04174ae] Refresh mapped views for the bound external state root
+ 11 files changed, 92 insertions(+), 56 deletions(-)
+
+PHASE: facade-suite
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+env PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s .agent/tests -p 'test_*.py' -v
+EXIT: 0
+OUTPUT:
+test_agent_ledger_facts_enforce_binding_baseline_and_allow_append (test_validate.FacadeIntegratedFixtureTests.test_agent_ledger_facts_enforce_binding_baseline_and_allow_append) ... ok
+test_agent_ledger_facts_reject_pending_binding_activation_before_state_read (test_validate.FacadeIntegratedFixtureTests.test_agent_ledger_facts_reject_pending_binding_activation_before_state_read) ... ok
+test_agent_ledger_facts_reject_pending_state_write_before_state_read (test_validate.FacadeIntegratedFixtureTests.test_agent_ledger_facts_reject_pending_state_write_before_state_read) ... ok
+test_check_is_read_only_for_tracked_untracked_ignored_generated_cache_lock_and_timestamps (test_validate.FacadeIntegratedFixtureTests.test_check_is_read_only_for_tracked_untracked_ignored_generated_cache_lock_and_timestamps) ... ok
+test_complete_check_all_prebinding_and_bound_layouts_are_read_only (test_validate.FacadeIntegratedFixtureTests.test_complete_check_all_prebinding_and_bound_layouts_are_read_only) ... ok
+test_duplicate_owner_and_origin_overclaim_are_rejected (test_validate.FacadeIntegratedFixtureTests.test_duplicate_owner_and_origin_overclaim_are_rejected) ... ok
+test_every_generated_output_byte_is_deterministically_validated (test_validate.FacadeIntegratedFixtureTests.test_every_generated_output_byte_is_deterministically_validated) ... ok
+test_extension_escape_and_second_ledger_are_rejected (test_validate.FacadeIntegratedFixtureTests.test_extension_escape_and_second_ledger_are_rejected) ... ok
+test_extra_generated_directory_implementation_enters_source_and_is_stale (test_validate.FacadeIntegratedFixtureTests.test_extra_generated_directory_implementation_enters_source_and_is_stale) ... ok
+test_generation_id_and_validation_report_claim_tampering_are_rejected (test_validate.FacadeIntegratedFixtureTests.test_generation_id_and_validation_report_claim_tampering_are_rejected) ... ok
+test_interrupted_refresh_is_detected_and_recoverable (test_validate.FacadeIntegratedFixtureTests.test_interrupted_refresh_is_detected_and_recoverable) ... ok
+test_origin_full_schema_rejects_constants_hashes_nested_keys_and_revisions (test_validate.FacadeIntegratedFixtureTests.test_origin_full_schema_rejects_constants_hashes_nested_keys_and_revisions) ... ok
+test_pending_state_write_transaction_blocks_facade_check_without_reads_or_writes (test_validate.FacadeIntegratedFixtureTests.test_pending_state_write_transaction_blocks_facade_check_without_reads_or_writes) ... ok
+test_private_fixture_is_excluded_without_content_fingerprinting (test_validate.FacadeIntegratedFixtureTests.test_private_fixture_is_excluded_without_content_fingerprinting) ... ok
+test_registry_rejects_mislabeled_refresh_and_mutating_state_command (test_validate.FacadeIntegratedFixtureTests.test_registry_rejects_mislabeled_refresh_and_mutating_state_command) ... ok
+test_source_change_invalidates_generated_projection (test_validate.FacadeIntegratedFixtureTests.test_source_change_invalidates_generated_projection) ... ok
+test_check_all_never_dispatches_refresh_writers_and_resolves_context (test_validate.FacadeUnitTests.test_check_all_never_dispatches_refresh_writers_and_resolves_context) ... ok
+test_crosswalk_has_single_owner_and_dossier_evidence_correction (test_validate.FacadeUnitTests.test_crosswalk_has_single_owner_and_dossier_evidence_correction) ... ok
+test_duplicate_key_fixture_is_rejected (test_validate.FacadeUnitTests.test_duplicate_key_fixture_is_rejected) ... ok
+test_extension_is_restrictions_only_and_hash_bound (test_validate.FacadeUnitTests.test_extension_is_restrictions_only_and_hash_bound) ... ok
+test_kernel_and_origin_are_closed_and_truthful (test_validate.FacadeUnitTests.test_kernel_and_origin_are_closed_and_truthful) ... ok
+test_nested_instruction_weakening_fixture_is_rejected (test_validate.FacadeUnitTests.test_nested_instruction_weakening_fixture_is_rejected) ... ok
+test_no_second_task_decision_evidence_review_or_event_store (test_validate.FacadeUnitTests.test_no_second_task_decision_evidence_review_or_event_store) ... ok
+test_only_activation_transaction_temp_not_generated_source_is_ignored (test_validate.FacadeUnitTests.test_only_activation_transaction_temp_not_generated_source_is_ignored) ... ok
+test_shared_reader_rejects_fifo_socket_directory_device_and_substitution (test_validate.FacadeUnitTests.test_shared_reader_rejects_fifo_socket_directory_device_and_substitution) ... ok
+test_validation_registry_delegates_all_existing_suites (test_validate.FacadeUnitTests.test_validation_registry_delegates_all_existing_suites) ... ok
+
+----------------------------------------------------------------------
+Ran 26 tests in 55.472s
+
+OK
+
+PHASE: workspace-suite
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+env PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s tooling/workspace/tests -p 'test_*.py' -v
+EXIT: 0
+OUTPUT:
+test_active_state_move_cannot_take_whole_legacy_directory (test_contract.WorkspaceContractTests.test_active_state_move_cannot_take_whole_legacy_directory) ... ok
+test_all_qualification_pass_fail_checks_have_evidence_hashes (test_contract.WorkspaceContractTests.test_all_qualification_pass_fail_checks_have_evidence_hashes) ... ok
+test_author_cannot_be_own_required_reviewer (test_contract.WorkspaceContractTests.test_author_cannot_be_own_required_reviewer) ... ok
+test_check_cannot_refresh (test_contract.WorkspaceContractTests.test_check_cannot_refresh) ... ok
+test_checkpoint_move_cannot_escape_scope (test_contract.WorkspaceContractTests.test_checkpoint_move_cannot_escape_scope) ... ok
+test_complete_mapped_contract (test_contract.WorkspaceContractTests.test_complete_mapped_contract) ... ok
+test_duplicate_concern_owner (test_contract.WorkspaceContractTests.test_duplicate_concern_owner) ... ok
+test_duplicate_json_keys (test_contract.WorkspaceContractTests.test_duplicate_json_keys) ... ok
+test_every_source_top_level_entry_preserved (test_contract.WorkspaceContractTests.test_every_source_top_level_entry_preserved) ... ok
+test_false_generated_adoption (test_contract.WorkspaceContractTests.test_false_generated_adoption) ... ok
+test_false_source_qualification (test_contract.WorkspaceContractTests.test_false_source_qualification) ... ok
+test_legacy_receipt_inputs_retained (test_contract.WorkspaceContractTests.test_legacy_receipt_inputs_retained) ... ok
+test_missing_artifact_mapping (test_contract.WorkspaceContractTests.test_missing_artifact_mapping) ... ok
+test_missing_source_not_treated_as_completed_move (test_contract.WorkspaceContractTests.test_missing_source_not_treated_as_completed_move) ... ok
+test_move_target_traversal_or_other_project_denied (test_contract.WorkspaceContractTests.test_move_target_traversal_or_other_project_denied) ... ok
+test_no_delete_overwrite_symlink_or_external_effect (test_contract.WorkspaceContractTests.test_no_delete_overwrite_symlink_or_external_effect) ... ok
+test_nonfinite_json (test_contract.WorkspaceContractTests.test_nonfinite_json) ... ok
+test_operations_owner_matches_sealed_authority_register (test_contract.WorkspaceContractTests.test_operations_owner_matches_sealed_authority_register) ... ok
+test_operations_owner_rejects_migration_directory_in_every_epoch (test_contract.WorkspaceContractTests.test_operations_owner_rejects_migration_directory_in_every_epoch) ... ok
+test_ops_artifact_rejects_migration_directory (test_contract.WorkspaceContractTests.test_ops_artifact_rejects_migration_directory) ... ok
+test_premature_root_cutover (test_contract.WorkspaceContractTests.test_premature_root_cutover) ... ok
+test_private_content_access_hash_parse_copy_denied (test_contract.WorkspaceContractTests.test_private_content_access_hash_parse_copy_denied) ... ok
+test_private_file_cannot_enter_hash_scope (test_contract.WorkspaceContractTests.test_private_file_cannot_enter_hash_scope) ... ok
+test_qualification_absolute_traversal_and_private_paths_rejected (test_contract.WorkspaceContractTests.test_qualification_absolute_traversal_and_private_paths_rejected) ... ok
+test_qualification_evidence_hash_mismatch_rejected (test_contract.WorkspaceContractTests.test_qualification_evidence_hash_mismatch_rejected) ... ok
+test_qualification_missing_file_rejected (test_contract.WorkspaceContractTests.test_qualification_missing_file_rejected) ... ok
+test_qualification_pass_and_fail_require_path_and_hash (test_contract.WorkspaceContractTests.test_qualification_pass_and_fail_require_path_and_hash) ... ok
+test_repo_destination_not_created_first (test_contract.WorkspaceContractTests.test_repo_destination_not_created_first) ... ok
+test_review_successor_preserves_exact_rejected_json_and_review_semantics (test_contract.WorkspaceContractTests.test_review_successor_preserves_exact_rejected_json_and_review_semantics) ... ok
+test_second_authoritative_path (test_contract.WorkspaceContractTests.test_second_authoritative_path) ... ok
+test_second_live_task_roster_receipt_decision_evidence_owner (test_contract.WorkspaceContractTests.test_second_live_task_roster_receipt_decision_evidence_owner) ... ok
+test_source_difference_cannot_be_erased (test_contract.WorkspaceContractTests.test_source_difference_cannot_be_erased) ... ok
+test_source_variant_cannot_replace_sealed_authority (test_contract.WorkspaceContractTests.test_source_variant_cannot_replace_sealed_authority) ... ok
+test_state_binding_cannot_select_another_root (test_contract.WorkspaceContractTests.test_state_binding_cannot_select_another_root) ... ok
+test_two_owner_paths_in_one_epoch (test_contract.WorkspaceContractTests.test_two_owner_paths_in_one_epoch) ... ok
+test_unbound_projection (test_contract.WorkspaceContractTests.test_unbound_projection) ... ok
+test_inventory_preserves_preexisting_cache_files (test_relocation.RelocationAuditTests.test_inventory_preserves_preexisting_cache_files) ... ok
+test_missing_or_changed_state_denied_before_harness_import (test_relocation.RelocationAuditTests.test_missing_or_changed_state_denied_before_harness_import) ... ok
+test_physical_audit_requires_explicit_local_arguments (test_relocation.RelocationAuditTests.test_physical_audit_requires_explicit_local_arguments) ... ok
+test_private_boundary_denied_before_content_open (test_relocation.RelocationAuditTests.test_private_boundary_denied_before_content_open) ... ok
+test_source_byte_changes_and_extra_files_are_rejected (test_relocation.RelocationAuditTests.test_source_byte_changes_and_extra_files_are_rejected) ... ok
+test_symlink_leaf_and_parent_denied_before_open (test_relocation.RelocationAuditTests.test_symlink_leaf_and_parent_denied_before_open) ... ok
+test_traversal_and_relative_path_denied (test_relocation.RelocationAuditTests.test_traversal_and_relative_path_denied) ... ok
+test_activation_namespace_fsync_failure_retains_pending_recovery (test_state_relocation.StateRelocationTests.test_activation_namespace_fsync_failure_retains_pending_recovery) ... ok
+test_active_committed_recovery_rejects_corrupt_moving_archive (test_state_relocation.StateRelocationTests.test_active_committed_recovery_rejects_corrupt_moving_archive) ... ok
+test_apply_holds_destination_lock_through_private_move_and_activation (test_state_relocation.StateRelocationTests.test_apply_holds_destination_lock_through_private_move_and_activation) ... ok
+test_apply_preserves_state_bytes_and_relocates_private_directory (test_state_relocation.StateRelocationTests.test_apply_preserves_state_bytes_and_relocates_private_directory) ... ok
+test_apply_race_never_overwrites_concurrent_state_destination (test_state_relocation.StateRelocationTests.test_apply_race_never_overwrites_concurrent_state_destination) ... ok
+test_atomic_exclusive_rename_preserves_concurrent_directory_destination (test_state_relocation.StateRelocationTests.test_atomic_exclusive_rename_preserves_concurrent_directory_destination) ... ok
+test_atomic_exclusive_rename_preserves_concurrent_file_destination (test_state_relocation.StateRelocationTests.test_atomic_exclusive_rename_preserves_concurrent_file_destination) ... ok
+test_binding_activation_exchange_preserves_a_raced_valid_descriptor (test_state_relocation.StateRelocationTests.test_binding_activation_exchange_preserves_a_raced_valid_descriptor) ... ok
+test_binding_activation_interruption_rolls_back_and_resumes (test_state_relocation.StateRelocationTests.test_binding_activation_interruption_rolls_back_and_resumes) ... ok
+test_binding_substitution_before_activation_is_detected (test_state_relocation.StateRelocationTests.test_binding_substitution_before_activation_is_detected) ... ok
+test_both_or_neither_state_locations_fail_closed (test_state_relocation.StateRelocationTests.test_both_or_neither_state_locations_fail_closed) ... ok
+test_changed_state_after_prepare_stops_before_rename (test_state_relocation.StateRelocationTests.test_changed_state_after_prepare_stops_before_rename) ... ok
+test_completed_activation_is_idempotent_and_requires_exact_evidence (test_state_relocation.StateRelocationTests.test_completed_activation_is_idempotent_and_requires_exact_evidence) ... ok
+test_descriptor_relative_rename_blocks_late_ancestor_redirection_for_every_type (test_state_relocation.StateRelocationTests.test_descriptor_relative_rename_blocks_late_ancestor_redirection_for_every_type) ... ok
+test_divergent_store_interleaving_never_activates_binding (test_state_relocation.StateRelocationTests.test_divergent_store_interleaving_never_activates_binding) ... ok
+test_every_renamed_namespace_is_fsynced_before_activation_returns (test_state_relocation.StateRelocationTests.test_every_renamed_namespace_is_fsynced_before_activation_returns) ... ok
+test_hard_exit_after_completion_is_an_explicit_idempotent_resume (test_state_relocation.StateRelocationTests.test_hard_exit_after_completion_is_an_explicit_idempotent_resume) ... ok
+test_hard_exit_after_exchange_blocks_harness_until_helper_recovers (test_state_relocation.StateRelocationTests.test_hard_exit_after_exchange_blocks_harness_until_helper_recovers) ... ok
+test_held_lock_blocks_apply_and_leaves_moving_marker (test_state_relocation.StateRelocationTests.test_held_lock_blocks_apply_and_leaves_moving_marker) ... ok
+test_held_source_lock_blocks_prepare_before_baseline_marker (test_state_relocation.StateRelocationTests.test_held_source_lock_blocks_prepare_before_baseline_marker) ... ok
+test_interrupted_after_private_can_reverse_rename_rollback (test_state_relocation.StateRelocationTests.test_interrupted_after_private_can_reverse_rename_rollback) ... ok
+test_interrupted_after_state_resumes_without_copy_or_rewrite (test_state_relocation.StateRelocationTests.test_interrupted_after_state_resumes_without_copy_or_rewrite) ... ok
+test_missing_platform_exclusive_primitive_fails_without_move (test_state_relocation.StateRelocationTests.test_missing_platform_exclusive_primitive_fails_without_move) ... ok
+test_nonempty_or_existing_destinations_are_never_overwritten (test_state_relocation.StateRelocationTests.test_nonempty_or_existing_destinations_are_never_overwritten) ... ok
+test_pending_state_write_transaction_blocks_relocation_before_marker (test_state_relocation.StateRelocationTests.test_pending_state_write_transaction_blocks_relocation_before_marker) ... ok
+test_persisted_post_exchange_transaction_is_recovered_under_lock (test_state_relocation.StateRelocationTests.test_persisted_post_exchange_transaction_is_recovered_under_lock) ... ok
+test_prepare_writes_closed_moving_marker_before_any_rename (test_state_relocation.StateRelocationTests.test_prepare_writes_closed_moving_marker_before_any_rename) ... ok
+test_private_contents_are_not_opened_hashed_or_listed (test_state_relocation.StateRelocationTests.test_private_contents_are_not_opened_hashed_or_listed) ... ok
+test_private_symlink_is_denied_without_following_it (test_state_relocation.StateRelocationTests.test_private_symlink_is_denied_without_following_it) ... ok
+test_resume_rejects_a_held_destination_lock (test_state_relocation.StateRelocationTests.test_resume_rejects_a_held_destination_lock) ... ok
+test_rollback_binding_record_race_preserves_concurrent_destination (test_state_relocation.StateRelocationTests.test_rollback_binding_record_race_preserves_concurrent_destination) ... ok
+test_rollback_parent_symlink_substitution_is_denied_before_moves (test_state_relocation.StateRelocationTests.test_rollback_parent_symlink_substitution_is_denied_before_moves) ... ok
+test_source_and_ancestor_substitution_after_prepare_fail_closed (test_state_relocation.StateRelocationTests.test_source_and_ancestor_substitution_after_prepare_fail_closed) ... ok
+test_unsafe_migration_ids_are_rejected_before_marker_or_move (test_state_relocation.StateRelocationTests.test_unsafe_migration_ids_are_rejected_before_marker_or_move) ... ok
+
+----------------------------------------------------------------------
+Ran 77 tests in 0.929s
+
+OK
+
+PHASE: coordinator-suite
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+env PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s tooling/coordination/tests -p 'test_*.py' -v
+EXIT: 0
+OUTPUT:
+test_active_local_links_resolve_inside_repository (test_instruction_contracts.InstructionContracts.test_active_local_links_resolve_inside_repository) ... ok
+test_assignment_preserves_required_handoff_obligations (test_instruction_contracts.InstructionContracts.test_assignment_preserves_required_handoff_obligations) ... ok
+test_context_overflow_retains_mandatory_sources_and_route_slice (test_instruction_contracts.InstructionContracts.test_context_overflow_retains_mandatory_sources_and_route_slice) ... ok
+test_current_roster_binds_exact_profiles_to_observed_desktop_not_cli (test_instruction_contracts.InstructionContracts.test_current_roster_binds_exact_profiles_to_observed_desktop_not_cli) ... ok
+test_entrypoints_route_to_local_prompts_and_governing_decision (test_instruction_contracts.InstructionContracts.test_entrypoints_route_to_local_prompts_and_governing_decision) ... ok
+test_existing_qualification_envelope_hashes_and_profile_schema (test_instruction_contracts.InstructionContracts.test_existing_qualification_envelope_hashes_and_profile_schema) ... ok
+test_historical_roster_remains_unchanged_while_correction_is_new (test_instruction_contracts.InstructionContracts.test_historical_roster_remains_unchanged_while_correction_is_new) ... ok
+test_private_repository_and_bounded_ci_contract (test_instruction_contracts.InstructionContracts.test_private_repository_and_bounded_ci_contract) ... ok
+test_project_config_and_example_keep_safe_model_free_defaults (test_instruction_contracts.InstructionContracts.test_project_config_and_example_keep_safe_model_free_defaults) ... ok
+test_review_and_resume_require_evidence_identity_and_intervention (test_instruction_contracts.InstructionContracts.test_review_and_resume_require_evidence_identity_and_intervention) ... ok
+test_usage_and_untrusted_content_limits_remain_explicit (test_instruction_contracts.InstructionContracts.test_usage_and_untrusted_content_limits_remain_explicit) ... ok
+test_visualization_is_conditional_and_revision_bound (test_instruction_contracts.InstructionContracts.test_visualization_is_conditional_and_revision_bound) ... ok
+test_activation_gate_matching_scope_completes (test_routing_v2.LegacyLifecycleTests.test_activation_gate_matching_scope_completes) ... ok
+test_activation_gate_not_assumed (test_routing_v2.LegacyLifecycleTests.test_activation_gate_not_assumed) ... ok
+test_activation_gate_scope_checked (test_routing_v2.LegacyLifecycleTests.test_activation_gate_scope_checked) ... ok
+test_api_model_requires_budget (test_routing_v2.LegacyLifecycleTests.test_api_model_requires_budget) ... ok
+test_author_cannot_review (test_routing_v2.LegacyLifecycleTests.test_author_cannot_review) ... ok
+test_baseline_change_requires_explicit_migration (test_routing_v2.LegacyLifecycleTests.test_baseline_change_requires_explicit_migration) ... ok
+test_changed_evidence_detected (test_routing_v2.LegacyLifecycleTests.test_changed_evidence_detected) ... ok
+test_checkpoint_does_not_extend_without_request (test_routing_v2.LegacyLifecycleTests.test_checkpoint_does_not_extend_without_request) ... ok
+test_complete_requires_integration (test_routing_v2.LegacyLifecycleTests.test_complete_requires_integration) ... ok
+test_context_overflow_does_not_truncate (test_routing_v2.LegacyLifecycleTests.test_context_overflow_does_not_truncate) ... ok
+test_default_writer_limit_is_enforced (test_routing_v2.LegacyLifecycleTests.test_default_writer_limit_is_enforced) ... ok
+test_deferred_requires_observed_trigger (test_routing_v2.LegacyLifecycleTests.test_deferred_requires_observed_trigger) ... ok
+test_disjoint_parallel_assignments_allowed (test_routing_v2.LegacyLifecycleTests.test_disjoint_parallel_assignments_allowed) ... ok
+test_evidence_symlink_denied (test_routing_v2.LegacyLifecycleTests.test_evidence_symlink_denied) ... ok
+test_expired_lease_cannot_submit (test_routing_v2.LegacyLifecycleTests.test_expired_lease_cannot_submit) ... ok
+test_fake_human_label_rejected (test_routing_v2.LegacyLifecycleTests.test_fake_human_label_rejected) ... ok
+test_incomplete_dependency_denied (test_routing_v2.LegacyLifecycleTests.test_incomplete_dependency_denied) ... ok
+test_init_is_non_overwriting (test_routing_v2.LegacyLifecycleTests.test_init_is_non_overwriting) ... ok
+test_initial_ready_respects_dependencies_and_deferral (test_routing_v2.LegacyLifecycleTests.test_initial_ready_respects_dependencies_and_deferral) ... ok
+test_insufficient_review_tier_denied (test_routing_v2.LegacyLifecycleTests.test_insufficient_review_tier_denied) ... ok
+test_integration_without_stop_proof_denied (test_routing_v2.LegacyLifecycleTests.test_integration_without_stop_proof_denied) ... ok
+test_lifecycle_and_dependency_release (test_routing_v2.LegacyLifecycleTests.test_lifecycle_and_dependency_release) ... ok
+test_merge_semantic_change_requires_review (test_routing_v2.LegacyLifecycleTests.test_merge_semantic_change_requires_review) ... ok
+test_missing_test_log_denied (test_routing_v2.LegacyLifecycleTests.test_missing_test_log_denied) ... ok
+test_no_path_traversal (test_routing_v2.LegacyLifecycleTests.test_no_path_traversal) ... ok
+test_not_run_cannot_pass_review (test_routing_v2.LegacyLifecycleTests.test_not_run_cannot_pass_review) ... ok
+test_out_of_scope_changed_path_denied (test_routing_v2.LegacyLifecycleTests.test_out_of_scope_changed_path_denied) ... ok
+test_overlapping_leases_block_even_expired (test_routing_v2.LegacyLifecycleTests.test_overlapping_leases_block_even_expired) ... ok
+test_qualification_expiry_denies_assignment (test_routing_v2.LegacyLifecycleTests.test_qualification_expiry_denies_assignment) ... ok
+test_qualified_model_and_budget_allow_assignment (test_routing_v2.LegacyLifecycleTests.test_qualified_model_and_budget_allow_assignment) ... ok
+test_receipt_chain_corruption_detected (test_routing_v2.LegacyLifecycleTests.test_receipt_chain_corruption_detected) ... ok
+test_recovery_increments_fence (test_routing_v2.LegacyLifecycleTests.test_recovery_increments_fence) ... ok
+test_recovery_requires_stop_and_fence (test_routing_v2.LegacyLifecycleTests.test_recovery_requires_stop_and_fence) ... ok
+test_stale_candidate_denied (test_routing_v2.LegacyLifecycleTests.test_stale_candidate_denied) ... ok
+test_state_corruption_detected (test_routing_v2.LegacyLifecycleTests.test_state_corruption_detected) ... ok
+test_unknown_package_denied (test_routing_v2.LegacyLifecycleTests.test_unknown_package_denied) ... ok
+test_unverified_model_fails_closed (test_routing_v2.LegacyLifecycleTests.test_unverified_model_fails_closed) ... ok
+test_weaker_tier_rejected (test_routing_v2.LegacyLifecycleTests.test_weaker_tier_rejected) ... ok
+test_wrong_fence_cannot_start (test_routing_v2.LegacyLifecycleTests.test_wrong_fence_cannot_start) ... ok
+test_cli_init_context_check_and_dry_run_migration (test_routing_v2.MigrationTests.test_cli_init_context_check_and_dry_run_migration) ... ok
+test_exact_legacy_api_integrated_case_can_complete_after_migration (test_routing_v2.MigrationTests.test_exact_legacy_api_integrated_case_can_complete_after_migration) ... ok
+test_failed_migration_retains_exact_v1_and_checkpoint (test_routing_v2.MigrationTests.test_failed_migration_retains_exact_v1_and_checkpoint) ... ok
+test_immediate_rollback_keeps_both_checkpoints_and_restores_exact_bytes (test_routing_v2.MigrationTests.test_immediate_rollback_keeps_both_checkpoints_and_restores_exact_bytes) ... ok
+test_legacy_budget_cannot_fund_new_v2_author_or_reviewer (test_routing_v2.MigrationTests.test_legacy_budget_cannot_fund_new_v2_author_or_reviewer) ... ok
+test_legacy_cancelled_api_history_and_allocations_are_preserved (test_routing_v2.MigrationTests.test_legacy_cancelled_api_history_and_allocations_are_preserved) ... ok
+test_legacy_compatibility_cannot_expand_an_allocation (test_routing_v2.MigrationTests.test_legacy_compatibility_cannot_expand_an_allocation) ... ok
+test_legacy_completed_api_history_and_allocations_are_preserved (test_routing_v2.MigrationTests.test_legacy_completed_api_history_and_allocations_are_preserved) ... ok
+test_legacy_proof_survives_new_budget_replacement_and_expiry_only_for_old_work (test_routing_v2.MigrationTests.test_legacy_proof_survives_new_budget_replacement_and_expiry_only_for_old_work) ... ok
+test_legacy_recovered_api_history_and_allocations_are_preserved (test_routing_v2.MigrationTests.test_legacy_recovered_api_history_and_allocations_are_preserved) ... ok
+test_legacy_recovery_preserves_old_allocation_but_new_fence_requires_v2_proof (test_routing_v2.MigrationTests.test_legacy_recovery_preserves_old_allocation_but_new_fence_requires_v2_proof) ... ok
+test_migration_boundary_proof_must_remain_present (test_routing_v2.MigrationTests.test_migration_boundary_proof_must_remain_present) ... ok
+test_migration_dry_run_then_preserves_history_and_receipt_prefix (test_routing_v2.MigrationTests.test_migration_dry_run_then_preserves_history_and_receipt_prefix) ... ok
+test_migration_idempotency_preserves_fresh_v2_roster (test_routing_v2.MigrationTests.test_migration_idempotency_preserves_fresh_v2_roster) ... ok
+test_migration_rechecks_missing_and_tampered_historical_integration_chain (test_routing_v2.MigrationTests.test_migration_rechecks_missing_and_tampered_historical_integration_chain) ... ok
+test_migration_rechecks_missing_and_tampered_historical_recovery (test_routing_v2.MigrationTests.test_migration_rechecks_missing_and_tampered_historical_recovery) ... ok
+test_migration_rechecks_retained_checkpoint_and_its_log_after_recovery (test_routing_v2.MigrationTests.test_migration_rechecks_retained_checkpoint_and_its_log_after_recovery) ... ok
+test_migration_refuses_changed_work_package_baseline (test_routing_v2.MigrationTests.test_migration_refuses_changed_work_package_baseline) ... ok
+test_migration_refuses_corrupt_receipts_and_missing_chain (test_routing_v2.MigrationTests.test_migration_refuses_corrupt_receipts_and_missing_chain) ... ok
+test_migration_refuses_live_and_expired_leases (test_routing_v2.MigrationTests.test_migration_refuses_live_and_expired_leases) ... ok
+test_migration_refuses_non_owner_and_changed_terminal_evidence (test_routing_v2.MigrationTests.test_migration_refuses_non_owner_and_changed_terminal_evidence) ... ok
+test_migration_refuses_uncertain_states_even_without_lease (test_routing_v2.MigrationTests.test_migration_refuses_uncertain_states_even_without_lease) ... ok
+test_migration_refuses_unrecovered_blocked_assignment (test_routing_v2.MigrationTests.test_migration_refuses_unrecovered_blocked_assignment) ... ok
+test_migration_requires_true_historical_integration_stop_proof (test_routing_v2.MigrationTests.test_migration_requires_true_historical_integration_stop_proof) ... ok
+test_migration_validates_derived_recovery_fence_and_boolean_alias (test_routing_v2.MigrationTests.test_migration_validates_derived_recovery_fence_and_boolean_alias) ... ok
+test_missing_or_tampered_legacy_budget_blocks_migration (test_routing_v2.MigrationTests.test_missing_or_tampered_legacy_budget_blocks_migration) ... ok
+test_old_roster_is_invalidated_not_promoted (test_routing_v2.MigrationTests.test_old_roster_is_invalidated_not_promoted) ... ok
+test_replaced_budget_cannot_hide_missing_or_tampered_legacy_proof (test_routing_v2.MigrationTests.test_replaced_budget_cannot_hide_missing_or_tampered_legacy_proof) ... ok
+test_rollback_rechecks_retained_source_recovery_evidence (test_routing_v2.MigrationTests.test_rollback_rechecks_retained_source_recovery_evidence) ... ok
+test_rollback_refuses_after_any_later_v2_receipt (test_routing_v2.MigrationTests.test_rollback_refuses_after_any_later_v2_receipt) ... ok
+test_actual_policy_covers_44_routes_and_limits_parent_downshifts (test_routing_v2.RoutingTests.test_actual_policy_covers_44_routes_and_limits_parent_downshifts) ... ok
+test_all_four_max_defaults_and_exact_binding (test_routing_v2.RoutingTests.test_all_four_max_defaults_and_exact_binding) ... ok
+test_api_budget_is_retained_through_recovery (test_routing_v2.RoutingTests.test_api_budget_is_retained_through_recovery) ... ok
+test_api_review_budget_is_wired_through_cli (test_routing_v2.RoutingTests.test_api_review_budget_is_wired_through_cli) ... ok
+test_api_review_requires_positive_owner_allocation_and_records_bounds (test_routing_v2.RoutingTests.test_api_review_requires_positive_owner_allocation_and_records_bounds) ... ok
+test_attestation_expiry_boundary_and_new_fence (test_routing_v2.RoutingTests.test_attestation_expiry_boundary_and_new_fence) ... ok
+test_attestation_fields_and_checks_are_exact (test_routing_v2.RoutingTests.test_attestation_fields_and_checks_are_exact) ... ok
+test_attestation_log_and_record_tamper_deny_at_start (test_routing_v2.RoutingTests.test_attestation_log_and_record_tamper_deny_at_start) ... ok
+test_boolean_routing_tier_and_fence_are_not_integer_one (test_routing_v2.RoutingTests.test_boolean_routing_tier_and_fence_are_not_integer_one) ... ok
+test_budget_amount_scope_and_hash_tampering_cannot_authorize_new_work (test_routing_v2.RoutingTests.test_budget_amount_scope_and_hash_tampering_cannot_authorize_new_work) ... ok
+test_budget_evidence_is_rechecked_before_paid_work_and_approval (test_routing_v2.RoutingTests.test_budget_evidence_is_rechecked_before_paid_work_and_approval) ... ok
+test_budget_expiry_blocks_completion_of_v2_paid_work (test_routing_v2.RoutingTests.test_budget_expiry_blocks_completion_of_v2_paid_work) ... ok
+test_budget_expiry_blocks_integration_of_paid_review (test_routing_v2.RoutingTests.test_budget_expiry_blocks_integration_of_paid_review) ... ok
+test_budget_expiry_blocks_new_author_allocation_at_and_after_deadline (test_routing_v2.RoutingTests.test_budget_expiry_blocks_new_author_allocation_at_and_after_deadline) ... ok
+test_budget_expiry_blocks_new_reviewer_allocation (test_routing_v2.RoutingTests.test_budget_expiry_blocks_new_reviewer_allocation) ... ok
+test_budget_expiry_blocks_review_of_paid_author_even_after_new_global_budget (test_routing_v2.RoutingTests.test_budget_expiry_blocks_review_of_paid_author_even_after_new_global_budget) ... ok
+test_budget_expiry_blocks_start_of_paid_author (test_routing_v2.RoutingTests.test_budget_expiry_blocks_start_of_paid_author) ... ok
+test_budget_record_is_closed_amount_owner_scope_and_time_bound (test_routing_v2.RoutingTests.test_budget_record_is_closed_amount_owner_scope_and_time_bound) ... ok
+test_budget_scope_limits_each_paid_role_and_work_package (test_routing_v2.RoutingTests.test_budget_scope_limits_each_paid_role_and_work_package) ... ok
+test_canonical_policy_digest_ignores_formatting_but_denies_semantic_change (test_routing_v2.RoutingTests.test_canonical_policy_digest_ignores_formatting_but_denies_semantic_change) ... ok
+test_duplicate_json_policy_keys_are_denied (test_routing_v2.RoutingTests.test_duplicate_json_policy_keys_are_denied) ... ok
+test_each_allowed_lower_effort_requires_and_accepts_exact_attestation (test_routing_v2.RoutingTests.test_each_allowed_lower_effort_requires_and_accepts_exact_attestation) ... ok
+test_exact_profile_removal_or_same_tier_replacement_denies_start (test_routing_v2.RoutingTests.test_exact_profile_removal_or_same_tier_replacement_denies_start) ... ok
+test_explicit_fallback_only_sol_max_with_flag_and_reason (test_routing_v2.RoutingTests.test_explicit_fallback_only_sol_max_with_flag_and_reason) ... ok
+test_explicit_reviewer_fallback_is_recorded (test_routing_v2.RoutingTests.test_explicit_reviewer_fallback_is_recorded) ... ok
+test_explicit_stronger_substitution_preserves_floor (test_routing_v2.RoutingTests.test_explicit_stronger_substitution_preserves_floor) ... ok
+test_full_model_lifecycle_and_dependency_release (test_routing_v2.RoutingTests.test_full_model_lifecycle_and_dependency_release) ... ok
+test_insufficient_capability_or_unknown_profile_deny (test_routing_v2.RoutingTests.test_insufficient_capability_or_unknown_profile_deny) ... ok
+test_missing_default_never_selects_available_downshift (test_routing_v2.RoutingTests.test_missing_default_never_selects_available_downshift) ... ok
+test_named_profile_check_must_pass (test_routing_v2.RoutingTests.test_named_profile_check_must_pass) ... ok
+test_profile_catalog_mutations_and_duplicate_default_deny (test_routing_v2.RoutingTests.test_profile_catalog_mutations_and_duplicate_default_deny) ... ok
+test_profile_expiry_boundaries_and_over_age (test_routing_v2.RoutingTests.test_profile_expiry_boundaries_and_over_age) ... ok
+test_renewed_same_profile_requires_new_assignment_fence (test_routing_v2.RoutingTests.test_renewed_same_profile_requires_new_assignment_fence) ... ok
+test_repeated_lease_extensions_do_not_change_declared_runtime_bounds (test_routing_v2.RoutingTests.test_repeated_lease_extensions_do_not_change_declared_runtime_bounds)
+Characterize the existing meter limit; this is not extension authority. ... ok
+test_review_checks_exact_author_qualification_and_independence (test_routing_v2.RoutingTests.test_review_checks_exact_author_qualification_and_independence) ... ok
+test_review_downshift_requires_candidate_bound_attestation (test_routing_v2.RoutingTests.test_review_downshift_requires_candidate_bound_attestation) ... ok
+test_review_rejection_and_recovery_preserve_shared_allowance_once (test_routing_v2.RoutingTests.test_review_rejection_and_recovery_preserve_shared_allowance_once) ... ok
+test_review_rejects_wrong_reviewer_profile_or_expired_qualification (test_routing_v2.RoutingTests.test_review_rejects_wrong_reviewer_profile_or_expired_qualification) ... ok
+test_roster_bytes_and_logs_rechecked (test_routing_v2.RoutingTests.test_roster_bytes_and_logs_rechecked) ... ok
+test_roster_rejects_duplicate_and_mismatched_exact_profiles (test_routing_v2.RoutingTests.test_roster_rejects_duplicate_and_mismatched_exact_profiles) ... ok
+test_roster_requires_owner_and_current_policy (test_routing_v2.RoutingTests.test_roster_requires_owner_and_current_policy) ... ok
+test_sol_max_is_ordinary_t2_default (test_routing_v2.RoutingTests.test_sol_max_is_ordinary_t2_default) ... ok
+test_subscription_bounds_remain_enforced (test_routing_v2.RoutingTests.test_subscription_bounds_remain_enforced) ... ok
+test_unavailable_primary_never_silently_falls_back (test_routing_v2.RoutingTests.test_unavailable_primary_never_silently_falls_back) ... ok
+test_unbudgeted_older_api_approval_cannot_integrate_or_escape_through_recovery (test_routing_v2.RoutingTests.test_unbudgeted_older_api_approval_cannot_integrate_or_escape_through_recovery) ... ok
+test_untrusted_review_text_cannot_make_required_not_run_pass (test_routing_v2.RoutingTests.test_untrusted_review_text_cannot_make_required_not_run_pass) ... ok
+test_usage_interruption_preserves_binding_lease_and_unfinished_checks (test_routing_v2.RoutingTests.test_usage_interruption_preserves_binding_lease_and_unfinished_checks)
+A reported quota limit is evidence, not an automatic route/state repair. ... ok
+test_usage_pressure_text_cannot_supply_downshift_conditions (test_routing_v2.RoutingTests.test_usage_pressure_text_cannot_supply_downshift_conditions)
+Deterministic evidence boundary only, not a model prompt-injection eval. ... ok
+test_usage_recovery_keeps_history_and_resumes_default_at_new_fence (test_routing_v2.RoutingTests.test_usage_recovery_keeps_history_and_resumes_default_at_new_fence) ... ok
+test_v2_fields_cannot_be_smuggled_into_v1_evidence (test_routing_v2.RoutingTests.test_v2_fields_cannot_be_smuggled_into_v1_evidence) ... ok
+test_valid_exact_budget_covers_full_paid_lifecycle (test_routing_v2.RoutingTests.test_valid_exact_budget_covers_full_paid_lifecycle) ... ok
+test_any_pending_activation_transaction_blocks_bound_harness (test_state_root.StateRootTests.test_any_pending_activation_transaction_blocks_bound_harness) ... ok
+test_binding_baseline_count_prefix_and_unchanged_hash_are_enforced (test_state_root.StateRootTests.test_binding_baseline_count_prefix_and_unchanged_hash_are_enforced) ... ok
+test_binding_cannot_redirect_to_another_external_root (test_state_root.StateRootTests.test_binding_cannot_redirect_to_another_external_root) ... ok
+test_binding_migration_id_is_a_bounded_safe_filename (test_state_root.StateRootTests.test_binding_migration_id_is_a_bounded_safe_filename) ... ok
+test_binding_repository_mismatch_is_denied (test_state_root.StateRootTests.test_binding_repository_mismatch_is_denied) ... ok
+test_binding_requires_explicit_exact_state_root (test_state_root.StateRootTests.test_binding_requires_explicit_exact_state_root) ... ok
+test_binding_swap_at_final_state_boundary_cannot_append_receipt (test_state_root.StateRootTests.test_binding_swap_at_final_state_boundary_cannot_append_receipt) ... ok
+test_bound_initialization_is_always_denied (test_state_root.StateRootTests.test_bound_initialization_is_always_denied) ... ok
+test_bound_state_permits_legitimate_appended_receipts (test_state_root.StateRootTests.test_bound_state_permits_legitimate_appended_receipts) ... ok
+test_candidate_replacement_after_directory_fsync_cannot_enter_ready_record (test_state_root.StateRootTests.test_candidate_replacement_after_directory_fsync_cannot_enter_ready_record) ... ok
+test_check_cli_does_not_create_lock_when_state_has_none (test_state_root.StateRootTests.test_check_cli_does_not_create_lock_when_state_has_none) ... ok
+test_checkpoint_backed_rollback_resumes_after_exchange_boundaries (test_state_root.StateRootTests.test_checkpoint_backed_rollback_resumes_after_exchange_boundaries) ... ok
+test_cleanup_atomic_capture_never_unlinks_a_raced_competing_inode (test_state_root.StateRootTests.test_cleanup_atomic_capture_never_unlinks_a_raced_competing_inode) ... ok
+test_competing_valid_inode_at_exchange_is_restored_and_both_chains_survive (test_state_root.StateRootTests.test_competing_valid_inode_at_exchange_is_restored_and_both_chains_survive) ... ok
+test_concurrent_writer_lock_denies_mutation (test_state_root.StateRootTests.test_concurrent_writer_lock_denies_mutation) ... ok
+test_corrupt_missing_and_ambiguous_recovery_material_fail_closed (test_state_root.StateRootTests.test_corrupt_missing_and_ambiguous_recovery_material_fail_closed) ... ok
+test_default_state_location_remains_compatible_before_binding (test_state_root.StateRootTests.test_default_state_location_remains_compatible_before_binding) ... ok
+test_direct_and_ancestor_root_symlink_aliases_are_denied (test_state_root.StateRootTests.test_direct_and_ancestor_root_symlink_aliases_are_denied) ... ok
+test_dual_default_and_external_state_is_denied (test_state_root.StateRootTests.test_dual_default_and_external_state_is_denied) ... ok
+test_evidence_check_log_symlink_is_denied_before_hash (test_state_root.StateRootTests.test_evidence_check_log_symlink_is_denied_before_hash) ... ok
+test_evidence_check_logs_reject_private_csv_before_hash_or_read (test_state_root.StateRootTests.test_evidence_check_logs_reject_private_csv_before_hash_or_read) ... ok
+test_explicit_external_state_location_works_before_binding (test_state_root.StateRootTests.test_explicit_external_state_location_works_before_binding) ... ok
+test_final_boundary_denial_removes_only_its_exclusive_speculative_lock (test_state_root.StateRootTests.test_final_boundary_denial_removes_only_its_exclusive_speculative_lock) ... ok
+test_first_init_candidate_fsync_failure_has_a_recoverable_preparation_control (test_state_root.StateRootTests.test_first_init_candidate_fsync_failure_has_a_recoverable_preparation_control) ... ok
+test_hard_exit_after_commit_archive_needs_no_recovery (test_state_root.StateRootTests.test_hard_exit_after_commit_archive_needs_no_recovery) ... ok
+test_hard_exit_after_commit_candidate_capture_still_restores_previous_state (test_state_root.StateRootTests.test_hard_exit_after_commit_candidate_capture_still_restores_previous_state) ... ok
+test_hard_exit_after_durable_outcome_archive_finishes_forward (test_state_root.StateRootTests.test_hard_exit_after_durable_outcome_archive_finishes_forward) ... ok
+test_hard_interruptions_during_rollback_recovery_resume_deterministically (test_state_root.StateRootTests.test_hard_interruptions_during_rollback_recovery_resume_deterministically) ... ok
+test_hard_interruptions_recover_previous_state_at_every_precleanup_phase (test_state_root.StateRootTests.test_hard_interruptions_recover_previous_state_at_every_precleanup_phase) ... ok
+test_interrupted_initialization_restores_absence_then_can_reinitialize (test_state_root.StateRootTests.test_interrupted_initialization_restores_absence_then_can_reinitialize) ... ok
+test_missing_external_state_fails_without_initialization (test_state_root.StateRootTests.test_missing_external_state_fails_without_initialization) ... ok
+test_moving_or_nonclosed_binding_fails_closed (test_state_root.StateRootTests.test_moving_or_nonclosed_binding_fails_closed) ... ok
+test_nonregular_state_and_shared_reader_inputs_deny_without_hanging (test_state_root.StateRootTests.test_nonregular_state_and_shared_reader_inputs_deny_without_hanging) ... ok
+test_partial_staging_never_publishes_a_phase_control (test_state_root.StateRootTests.test_partial_staging_never_publishes_a_phase_control) ... ok
+test_post_exchange_and_rollback_fsync_failures_preserve_both_byte_sets (test_state_root.StateRootTests.test_post_exchange_and_rollback_fsync_failures_preserve_both_byte_sets) ... ok
+test_post_exchange_directory_fsync_failure_restores_exact_previous_state (test_state_root.StateRootTests.test_post_exchange_directory_fsync_failure_restores_exact_previous_state) ... ok
+test_post_replacement_binding_detection_atomically_restores_previous_state (test_state_root.StateRootTests.test_post_replacement_binding_detection_atomically_restores_previous_state) ... ok
+test_preparation_capture_rejects_byte_identical_replacement_inode (test_state_root.StateRootTests.test_preparation_capture_rejects_byte_identical_replacement_inode) ... ok
+test_preparation_checkpoint_resume_validates_exact_captured_material (test_state_root.StateRootTests.test_preparation_checkpoint_resume_validates_exact_captured_material) ... ok
+test_private_inputs_cannot_be_evidence_or_context_output (test_state_root.StateRootTests.test_private_inputs_cannot_be_evidence_or_context_output) ... ok
+test_receipt_and_state_corruption_are_denied_external (test_state_root.StateRootTests.test_receipt_and_state_corruption_are_denied_external) ... ok
+test_recovery_cli_requires_owner_stop_and_uses_no_receipt_rewrite (test_state_root.StateRootTests.test_recovery_cli_requires_owner_stop_and_uses_no_receipt_rewrite) ... ok
+test_relative_traversal_and_symlink_state_roots_are_denied (test_state_root.StateRootTests.test_relative_traversal_and_symlink_state_roots_are_denied) ... ok
+test_rollback_exchange_failure_preserves_both_ledgers_and_transaction (test_state_root.StateRootTests.test_rollback_exchange_failure_preserves_both_ledgers_and_transaction) ... ok
+test_speculative_lock_cleanup_never_unlinks_another_actors_raced_inode (test_state_root.StateRootTests.test_speculative_lock_cleanup_never_unlinks_another_actors_raced_inode) ... ok
+test_stable_read_detects_same_byte_replacement (test_state_root.StateRootTests.test_stable_read_detects_same_byte_replacement) ... ok
+test_stale_init_cannot_recreate_default_ledger_after_cooperative_cutover (test_state_root.StateRootTests.test_stale_init_cannot_recreate_default_ledger_after_cooperative_cutover) ... ok
+test_stale_mutation_cannot_leave_competing_default_lock_after_cutover (test_state_root.StateRootTests.test_stale_mutation_cannot_leave_competing_default_lock_after_cutover) ... ok
+test_state_file_symlink_is_denied (test_state_root.StateRootTests.test_state_file_symlink_is_denied) ... ok
+test_state_transaction_schema_is_closed_and_identity_bound (test_state_root.StateRootTests.test_state_transaction_schema_is_closed_and_identity_bound) ... ok
+test_status_and_writer_reject_nonregular_state_lock_without_hanging (test_state_root.StateRootTests.test_status_and_writer_reject_nonregular_state_lock_without_hanging) ... ok
+test_successful_state_transaction_leaves_sanitized_records_and_nonactive_checkpoint (test_state_root.StateRootTests.test_successful_state_transaction_leaves_sanitized_records_and_nonactive_checkpoint) ... ok
+
+----------------------------------------------------------------------
+Ran 184 tests in 6.381s
+
+OK
+{
+  "integrity": "PASS",
+  "meaning": "local state/receipt/policy integrity only; not production readiness"
+}
+
+PHASE: sealed-suite
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+env PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s specs/texenda-handoff/08-project-harness/tests -p 'test_*.py' -v
+EXIT: 0
+OUTPUT:
+test_activation_gate_matching_scope_completes (test_harness.HarnessTests.test_activation_gate_matching_scope_completes) ... ok
+test_activation_gate_not_assumed (test_harness.HarnessTests.test_activation_gate_not_assumed) ... ok
+test_activation_gate_scope_checked (test_harness.HarnessTests.test_activation_gate_scope_checked) ... ok
+test_api_model_requires_budget (test_harness.HarnessTests.test_api_model_requires_budget) ... ok
+test_author_cannot_review (test_harness.HarnessTests.test_author_cannot_review) ... ok
+test_baseline_change_requires_explicit_migration (test_harness.HarnessTests.test_baseline_change_requires_explicit_migration) ... ok
+test_changed_evidence_detected (test_harness.HarnessTests.test_changed_evidence_detected) ... ok
+test_checkpoint_does_not_extend_without_request (test_harness.HarnessTests.test_checkpoint_does_not_extend_without_request) ... ok
+test_complete_requires_integration (test_harness.HarnessTests.test_complete_requires_integration) ... ok
+test_context_overflow_does_not_truncate (test_harness.HarnessTests.test_context_overflow_does_not_truncate) ... ok
+test_default_writer_limit_is_enforced (test_harness.HarnessTests.test_default_writer_limit_is_enforced) ... ok
+test_deferred_requires_observed_trigger (test_harness.HarnessTests.test_deferred_requires_observed_trigger) ... ok
+test_disjoint_parallel_assignments_allowed (test_harness.HarnessTests.test_disjoint_parallel_assignments_allowed) ... ok
+test_evidence_symlink_denied (test_harness.HarnessTests.test_evidence_symlink_denied) ... ok
+test_expired_lease_cannot_submit (test_harness.HarnessTests.test_expired_lease_cannot_submit) ... ok
+test_fake_human_label_rejected (test_harness.HarnessTests.test_fake_human_label_rejected) ... ok
+test_incomplete_dependency_denied (test_harness.HarnessTests.test_incomplete_dependency_denied) ... ok
+test_init_is_non_overwriting (test_harness.HarnessTests.test_init_is_non_overwriting) ... ok
+test_initial_ready_respects_dependencies_and_deferral (test_harness.HarnessTests.test_initial_ready_respects_dependencies_and_deferral) ... ok
+test_insufficient_review_tier_denied (test_harness.HarnessTests.test_insufficient_review_tier_denied) ... ok
+test_integration_without_stop_proof_denied (test_harness.HarnessTests.test_integration_without_stop_proof_denied) ... ok
+test_lifecycle_and_dependency_release (test_harness.HarnessTests.test_lifecycle_and_dependency_release) ... ok
+test_merge_semantic_change_requires_review (test_harness.HarnessTests.test_merge_semantic_change_requires_review) ... ok
+test_missing_test_log_denied (test_harness.HarnessTests.test_missing_test_log_denied) ... ok
+test_no_path_traversal (test_harness.HarnessTests.test_no_path_traversal) ... ok
+test_not_run_cannot_pass_review (test_harness.HarnessTests.test_not_run_cannot_pass_review) ... ok
+test_out_of_scope_changed_path_denied (test_harness.HarnessTests.test_out_of_scope_changed_path_denied) ... ok
+test_overlapping_leases_block_even_expired (test_harness.HarnessTests.test_overlapping_leases_block_even_expired) ... ok
+test_qualification_expiry_denies_assignment (test_harness.HarnessTests.test_qualification_expiry_denies_assignment) ... ok
+test_qualified_model_and_budget_allow_assignment (test_harness.HarnessTests.test_qualified_model_and_budget_allow_assignment) ... ok
+test_receipt_chain_corruption_detected (test_harness.HarnessTests.test_receipt_chain_corruption_detected) ... ok
+test_recovery_increments_fence (test_harness.HarnessTests.test_recovery_increments_fence) ... ok
+test_recovery_requires_stop_and_fence (test_harness.HarnessTests.test_recovery_requires_stop_and_fence) ... ok
+test_stale_candidate_denied (test_harness.HarnessTests.test_stale_candidate_denied) ... ok
+test_state_corruption_detected (test_harness.HarnessTests.test_state_corruption_detected) ... ok
+test_unknown_package_denied (test_harness.HarnessTests.test_unknown_package_denied) ... ok
+test_unverified_model_fails_closed (test_harness.HarnessTests.test_unverified_model_fails_closed) ... ok
+test_weaker_tier_rejected (test_harness.HarnessTests.test_weaker_tier_rejected) ... ok
+test_wrong_fence_cannot_start (test_harness.HarnessTests.test_wrong_fence_cannot_start) ... ok
+
+----------------------------------------------------------------------
+Ran 39 tests in 0.220s
+
+OK
+
+PHASE: workspace-contract
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/workspace/validate_contract.py --check --audit
+EXIT: 0
+OUTPUT:
+{"status": "PASS", "concerns": 42, "blueprint_paths": 85, "artifact_types": 35, "source_moves": 16, "qualification_checks": 294, "audit": {"JSON": 124, "TOML": 1, "Python": 19, "new_markdown_links": 14, "sealed_files": 86, "source_files": 88}, "scope": "static transition contracts, Git-bound inputs and qualification evidence links", "live_state_checked": false, "moves_executed": false, "private_input_accessed": false, "approval": false}
+
+PHASE: sealed-package
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+env PYTHONDONTWRITEBYTECODE=1 python3 -B specs/texenda-handoff/10-validation/validate_package.py --checksums
+EXIT: 0
+OUTPUT:
+{
+  "package_version": "1.1.0",
+  "checked_at": "2026-09-15T00:04:31.953991+00:00",
+  "result": "PASS",
+  "checks": [
+    {
+      "check": "JSON parse",
+      "status": "PASS"
+    },
+    {
+      "check": "Prior artifacts byte integrity",
+      "status": "PASS"
+    },
+    {
+      "check": "Decision status and authority ownership",
+      "status": "PASS"
+    },
+    {
+      "check": "WP DAG, bounded contracts, gates and routing",
+      "status": "PASS"
+    },
+    {
+      "check": "Acceptance and requirement traceability, no product PASS",
+      "status": "PASS"
+    },
+    {
+      "check": "Release profile closure",
+      "status": "PASS"
+    },
+    {
+      "check": "Command authority metadata",
+      "status": "PASS"
+    },
+    {
+      "check": "ADR required fields",
+      "status": "PASS"
+    },
+    {
+      "check": "Model availability and spending truth",
+      "status": "PASS"
+    },
+    {
+      "check": "Harness non-runner boundary (static)",
+      "status": "PASS"
+    },
+    {
+      "check": "Source/archive provenance",
+      "status": "PASS"
+    },
+    {
+      "check": "Current Markdown local links and anchors",
+      "status": "PASS"
+    },
+    {
+      "check": "Manifest completeness",
+      "status": "PASS"
+    },
+    {
+      "check": "Final package checksums",
+      "status": "PASS"
+    }
+  ],
+  "errors": [],
+  "warnings": [],
+  "counts": {
+    "files": 86,
+    "work_packages": 44,
+    "product_acceptance_criteria": 125,
+    "invariants": 30,
+    "adrs": 35,
+    "external_gates": 14
+  },
+  "scope": "Offline package structure/traceability/link checks only. Synthetic harness unit tests reported separately. No application/production/provider/security/legal qualification performed.",
+  "archive_limitation": "No complete verbatim conversation export; exact prior artifacts plus explicitly abridged turn record."
+}
+
+PHASE: source-package
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+env PYTHONDONTWRITEBYTECODE=1 python3 -B /Users/jamesryancooper/Projects/texenda/sources/handoff-1.1.0-20260914/10-validation/validate_package.py --checksums
+EXIT: 0
+OUTPUT:
+{
+  "package_version": "1.1.0",
+  "checked_at": "2026-09-15T00:04:31.936758+00:00",
+  "result": "PASS",
+  "checks": [
+    {
+      "check": "JSON parse",
+      "status": "PASS"
+    },
+    {
+      "check": "Prior artifacts byte integrity",
+      "status": "PASS"
+    },
+    {
+      "check": "Decision status and authority ownership",
+      "status": "PASS"
+    },
+    {
+      "check": "WP DAG, bounded contracts, gates and routing",
+      "status": "PASS"
+    },
+    {
+      "check": "Acceptance and requirement traceability, no product PASS",
+      "status": "PASS"
+    },
+    {
+      "check": "Release profile closure",
+      "status": "PASS"
+    },
+    {
+      "check": "Command authority metadata",
+      "status": "PASS"
+    },
+    {
+      "check": "ADR required fields",
+      "status": "PASS"
+    },
+    {
+      "check": "Model availability and spending truth",
+      "status": "PASS"
+    },
+    {
+      "check": "Harness non-runner boundary (static)",
+      "status": "PASS"
+    },
+    {
+      "check": "Source/archive provenance",
+      "status": "PASS"
+    },
+    {
+      "check": "Current Markdown local links and anchors",
+      "status": "PASS"
+    },
+    {
+      "check": "Manifest completeness",
+      "status": "PASS"
+    },
+    {
+      "check": "Final package checksums",
+      "status": "PASS"
+    }
+  ],
+  "errors": [],
+  "warnings": [],
+  "counts": {
+    "files": 86,
+    "work_packages": 44,
+    "product_acceptance_criteria": 125,
+    "invariants": 30,
+    "adrs": 35,
+    "external_gates": 14
+  },
+  "scope": "Offline package structure/traceability/link checks only. Synthetic harness unit tests reported separately. No application/production/provider/security/legal qualification performed.",
+  "archive_limitation": "No complete verbatim conversation export; exact prior artifacts plus explicitly abridged turn record."
+}
+
+PHASE: candidate-identity
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+git rev-parse HEAD 'HEAD^{tree}'
+EXIT: 0
+OUTPUT:
+04174ae28396ec1b58498fa8013fd3f521fa8166
+8a84f6cdc45e2ffbc1f1e2999538d7a1095d1ea6
+
+PHASE: diff-check
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+git diff --check 01247b6ecc2368610d03d8a82b7ac911d4ad1622 HEAD
+EXIT: 0
+OUTPUT:
+(empty)
+
+PHASE: sealed-unchanged
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+git diff --exit-code 01247b6ecc2368610d03d8a82b7ac911d4ad1622 HEAD -- specs/texenda-handoff
+EXIT: 0
+OUTPUT:
+(empty)
+
+PHASE: facade-no-write-check-and-all
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+env PYTHONDONTWRITEBYTECODE=1 python3 -B /private/tmp/texenda-cutover-author.AhSiBy/snapshot_runner.py
+EXIT: 0
+OUTPUT:
+{
+  "scope": "Entire evidence worktree except .git; exact non-private live/binding/journal/completion/checkpoint paths; canonical historical evidence/context; complete preserved source package",
+  "exclusions": [
+    "All private-input paths and CSV files",
+    "Git internals",
+    "atime",
+    "Temporary test fixtures outside these roots"
+  ],
+  "before_entries": 456,
+  "after_entries": 456,
+  "before_snapshot_sha256": "cb87b177fc1a99b0c505bd64f7e06ec15234b7111c46c607cec9915220f48168",
+  "after_snapshot_sha256": "cb87b177fc1a99b0c505bd64f7e06ec15234b7111c46c607cec9915220f48168",
+  "changed_paths": [],
+  "all_equal": true,
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "-B",
+        ".agent/scripts/validate.py",
+        "--check",
+        "--state-root",
+        "/Users/jamesryancooper/Projects/texenda/local/agent-state/texenda"
+      ],
+      "cwd": "/Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence",
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"PASS\",\n  \"mode\": \"read_only\",\n  \"parsing\": {\n    \"json\": 124,\n    \"toml\": 1,\n    \"python\": 19\n  },\n  \"dossier_paths\": 28,\n  \"instruction_files\": 3,\n  \"local_links\": 104,\n  \"bound_pass_fail_evidence_checks\": 294,\n  \"registered_commands_run\": [\n    {\n      \"id\": \"facade-refresh\",\n      \"status\": \"SKIPPED_WRITER\"\n    },\n    {\n      \"id\": \"facade-refresh-recovery\",\n      \"status\": \"SKIPPED_WRITER\"\n    },\n    {\n      \"id\": \"workspace-contract\",\n      \"returncode\": 0\n    }\n  ],\n  \"private_input_content_accessed\": false,\n  \"external_effects\": false,\n  \"product_or_external_gate\": \"none\",\n  \"generated\": {\n    \"generation_id\": \"af93d9d327035928fc003586b7457d2bb200578b72cf6ae6855754dbe77da474\",\n    \"current_git_revision\": \"04174ae28396ec1b58498fa8013fd3f521fa8166\",\n    \"current_git_tree\": \"8a84f6cdc45e2ffbc1f1e2999538d7a1095d1ea6\",\n    \"source_scope_sha256\": \"1e8fefd861e8d4e28051189b104d89bf5282c0b04c431053a9e6b8de56fb7ed9\",\n    \"ledger_sha256\": \"b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235\"\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        ".agent/scripts/validate.py",
+        "--check",
+        "--all",
+        "--state-root",
+        "/Users/jamesryancooper/Projects/texenda/local/agent-state/texenda"
+      ],
+      "cwd": "/Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence",
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"PASS\",\n  \"mode\": \"read_only\",\n  \"parsing\": {\n    \"json\": 124,\n    \"toml\": 1,\n    \"python\": 19\n  },\n  \"dossier_paths\": 28,\n  \"instruction_files\": 3,\n  \"local_links\": 104,\n  \"bound_pass_fail_evidence_checks\": 294,\n  \"registered_commands_run\": [\n    {\n      \"id\": \"facade-refresh\",\n      \"status\": \"SKIPPED_WRITER\"\n    },\n    {\n      \"id\": \"facade-refresh-recovery\",\n      \"status\": \"SKIPPED_WRITER\"\n    },\n    {\n      \"id\": \"workspace-contract\",\n      \"returncode\": 0\n    },\n    {\n      \"id\": \"facade-tests\",\n      \"returncode\": 0\n    },\n    {\n      \"id\": \"workspace-tests\",\n      \"returncode\": 0\n    },\n    {\n      \"id\": \"coordination-tests\",\n      \"returncode\": 0\n    },\n    {\n      \"id\": \"sealed-harness-tests\",\n      \"returncode\": 0\n    },\n    {\n      \"id\": \"sealed-package-checksums\",\n      \"returncode\": 0\n    },\n    {\n      \"id\": \"source-package-checksums\",\n      \"returncode\": 0\n    },\n    {\n      \"id\": \"coordination-state-check\",\n      \"returncode\": 0\n    },\n    {\n      \"id\": \"git-diff-check\",\n      \"returncode\": 0\n    }\n  ],\n  \"private_input_content_accessed\": false,\n  \"external_effects\": false,\n  \"product_or_external_gate\": \"none\",\n  \"generated\": {\n    \"generation_id\": \"af93d9d327035928fc003586b7457d2bb200578b72cf6ae6855754dbe77da474\",\n    \"current_git_revision\": \"04174ae28396ec1b58498fa8013fd3f521fa8166\",\n    \"current_git_tree\": \"8a84f6cdc45e2ffbc1f1e2999538d7a1095d1ea6\",\n    \"source_scope_sha256\": \"1e8fefd861e8d4e28051189b104d89bf5282c0b04c431053a9e6b8de56fb7ed9\",\n    \"ledger_sha256\": \"b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235\"\n  }\n}\n",
+      "stderr": ""
+    }
+  ],
+  "private_content_accessed": false,
+  "background_processes_started": false
+}
+
+PHASE: tested-candidate-boundary
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+set -o pipefail
+git --no-optional-locks diff --no-ext-diff --no-textconv --full-index --binary 01247b6ecc2368610d03d8a82b7ac911d4ad1622 04174ae28396ec1b58498fa8013fd3f521fa8166 | shasum -a 256
+EXIT: 0
+OUTPUT:
+78e4585a3bf08c684b10bc69dcf3dd5f32dd61c51f413caace3db4d45d614441  -
+
+PHASE: tested-candidate-boundary
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+git --no-optional-locks status --porcelain=v1 --untracked-files=all --ignored=matching
+EXIT: 0
+OUTPUT:
+(empty)
+
+PHASE: tested-candidate-boundary
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+git --no-optional-locks -C /Users/jamesryancooper/Projects/texenda/repo status --porcelain=v1 --untracked-files=normal --ignored=matching
+EXIT: 0
+OUTPUT:
+!! .texenda-location.json
+!! .texenda/
+
+PHASE: tested-candidate-boundary
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+shasum -a 256 /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda/state.json /Users/jamesryancooper/Projects/texenda/repo/.texenda-location.json
+EXIT: 0
+OUTPUT:
+b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235  /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda/state.json
+a92b6137856b7f9c2b3f13f69f4e6dc92ed4da1be82eec1ddf21188ebdde0365  /Users/jamesryancooper/Projects/texenda/repo/.texenda-location.json
+
+PHASE: pre-author-record-boundary
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+shasum -a 256 project-dossier/transition/external-state-relocation-receipt.md docs/qualification/evidence/2026-09-14-external-state-relocation.evidence.json docs/qualification/evidence/2026-09-14-external-state-relocation-validation.log
+EXIT: 0
+OUTPUT:
+5ac1094c401d282011e3d57177f01c9defd809af54a387c9543a523930ac4999  project-dossier/transition/external-state-relocation-receipt.md
+22d5dfa06002c57aaf8caa20d77bbaa1344dd185b711be78c2633899400993c3  docs/qualification/evidence/2026-09-14-external-state-relocation.evidence.json
+758bd7a9569bc6587f422cbdf1d8ac04c0a9229a56804c1b110b3c46f2eaeac6  docs/qualification/evidence/2026-09-14-external-state-relocation-validation.log
+
+PHASE: pre-author-record-boundary
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+shasum -a 256 /private/tmp/texenda-cutover-author.AhSiBy/snapshot_runner.py
+EXIT: 0
+OUTPUT:
+831620847b5ee1c1d69cde93dc89e06c0a6a1d7944bf43080b3971b244340094  /private/tmp/texenda-cutover-author.AhSiBy/snapshot_runner.py
+
+PHASE: pre-author-record-boundary
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+git --no-optional-locks status --porcelain=v1 --untracked-files=all --ignored=matching
+EXIT: 0
+OUTPUT:
+(empty)
+
+PHASE: pre-author-record-boundary
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+git --no-optional-locks -C /Users/jamesryancooper/Projects/texenda/repo rev-parse HEAD 'HEAD^{tree}'
+EXIT: 0
+OUTPUT:
+01247b6ecc2368610d03d8a82b7ac911d4ad1622
+394741c97268edc81ad2587ba47156ac6a55a8f3
+
+PHASE: runtime-environment
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+python3 --version
+EXIT: 0
+OUTPUT:
+Python 3.13.9
+
+PHASE: runtime-environment
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+git --version
+EXIT: 0
+OUTPUT:
+git version 2.51.1
+
+PHASE: runtime-environment
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+uname -srm
+EXIT: 0
+OUTPUT:
+Darwin 25.6.0 arm64
+
+Snapshot driver source, retained outside the worktree at
+/private/tmp/texenda-cutover-author.AhSiBy/snapshot_runner.py
+SHA-256: 831620847b5ee1c1d69cde93dc89e06c0a6a1d7944bf43080b3971b244340094
+The exact source below is supplied for reproducibility, not as executable authority.
+The driver invokes only the two displayed read-only facade commands and rejects any
+private/CSV or symlink input before content access.
+--- BEGIN DRIVER ---
+#!/usr/bin/env python3
+"""Read-only snapshot oracle for this bounded external-state evidence candidate."""
+import hashlib
+import json
+import os
+from pathlib import Path
+import stat
+import subprocess
+import sys
+
+WORKTREE = Path("/Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence")
+PROJECT_HOME = Path("/Users/jamesryancooper/Projects/texenda")
+REPO = PROJECT_HOME / "repo"
+STATE = PROJECT_HOME / "local/agent-state/texenda"
+EXPLICIT = [
+    STATE / "state.json", STATE / "state.lock",
+    REPO / ".texenda-location.json",
+    REPO / ".texenda/state.v1.a2a58e20004c86c0081b1427087626e36f931c3804532e8a1caf1c94a49a609a.json",
+    PROJECT_HOME / "local/logs/workspace-relocation/phase-4-state-relocation-journal.json",
+    PROJECT_HOME / "local/logs/workspace-relocation/state-root-20260914.activated-moving.json",
+    PROJECT_HOME / "local/logs/workspace-relocation/state-root-20260914.activation-complete.207c592fdadc82c9.json",
+]
+TREES = [
+    WORKTREE,
+    REPO / ".texenda/evidence",
+    REPO / ".texenda/context",
+    PROJECT_HOME / "sources/handoff-1.1.0-20260914",
+]
+def digest(raw):
+    return hashlib.sha256(raw).hexdigest()
+def measure(path):
+    if "private-inputs" in path.parts or path.suffix.lower() == ".csv":
+        raise RuntimeError("Private input excluded before metadata/content access")
+    info = path.lstat()
+    if stat.S_ISLNK(info.st_mode):
+        raise RuntimeError("Symlink in non-private snapshot scope")
+    result = {"mode":info.st_mode, "device":info.st_dev, "inode":info.st_ino,
+              "size":info.st_size, "mtime_ns":info.st_mtime_ns, "ctime_ns":info.st_ctime_ns}
+    if stat.S_ISREG(info.st_mode):
+        flags = os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK
+        fd = os.open(path, flags)
+        try:
+            opened = os.fstat(fd)
+            if (opened.st_dev, opened.st_ino) != (info.st_dev, info.st_ino):
+                raise RuntimeError("Snapshot inode changed")
+            parts = []
+            while True:
+                data = os.read(fd, 1024 * 1024)
+                if not data:
+                    break
+                parts.append(data)
+            result["sha256"] = digest(b"".join(parts))
+        finally:
+            os.close(fd)
+        after = path.lstat()
+        if (info.st_ino,info.st_size,info.st_mtime_ns,info.st_ctime_ns) != (after.st_ino,after.st_size,after.st_mtime_ns,after.st_ctime_ns):
+            raise RuntimeError("Snapshot file changed")
+    elif not stat.S_ISDIR(info.st_mode):
+        raise RuntimeError("Nonregular snapshot input")
+    return result
+def snapshot():
+    rows = {}
+    for root in TREES:
+        for directory, names, files in os.walk(root, followlinks=False):
+            parent = Path(directory)
+            names[:] = sorted(n for n in names if n != ".git")
+            if "private-inputs" in names:
+                raise RuntimeError("Unexpected private directory in declared non-private tree")
+            rows[str(parent)] = measure(parent)
+            for name in sorted(files):
+                if name == ".git":
+                    continue
+                path = parent / name
+                rows[str(path)] = measure(path)
+    for path in EXPLICIT:
+        rows[str(path)] = measure(path)
+    for root in [WORKTREE, REPO]:
+        for arguments in [["status","--porcelain=v1","--untracked-files=all","--ignored=matching"],["rev-parse","HEAD","HEAD^{tree}"]]:
+            result = subprocess.run(["git","--no-optional-locks",*arguments],cwd=root,capture_output=True,text=True,check=True)
+            rows[str(root)+"/GIT:"+":".join(arguments)] = result.stdout
+    return rows
+def main():
+    before = snapshot()
+    commands = [
+        ["python3","-B",".agent/scripts/validate.py","--check","--state-root",str(STATE)],
+        ["python3","-B",".agent/scripts/validate.py","--check","--all","--state-root",str(STATE)],
+    ]
+    if len(sys.argv) > 1 and sys.argv[1] == "--check-only":
+        commands = commands[:1]
+    results = []
+    for argv in commands:
+        result = subprocess.run(argv,cwd=WORKTREE,capture_output=True,text=True,env={**os.environ,"PYTHONDONTWRITEBYTECODE":"1"})
+        results.append({"argv":argv,"cwd":str(WORKTREE),"exit_code":result.returncode,"stdout":result.stdout,"stderr":result.stderr})
+    after = snapshot()
+    changed = sorted(key for key in set(before) | set(after) if before.get(key) != after.get(key))
+    report = {"scope":"Entire evidence worktree except .git; exact non-private live/binding/journal/completion/checkpoint paths; canonical historical evidence/context; complete preserved source package",
+              "exclusions":["All private-input paths and CSV files","Git internals","atime","Temporary test fixtures outside these roots"],
+              "before_entries":len(before),"after_entries":len(after),
+              "before_snapshot_sha256":digest(json.dumps(before,sort_keys=True,separators=(",",":")).encode()),
+              "after_snapshot_sha256":digest(json.dumps(after,sort_keys=True,separators=(",",":")).encode()),
+              "changed_paths":changed,"all_equal":not changed,"commands":results,
+              "private_content_accessed":False,"background_processes_started":False}
+    print(json.dumps(report,indent=2))
+    return 0 if not changed and all(row["exit_code"] == 0 for row in results) else 1
+if __name__ == "__main__":
+    raise SystemExit(main())
+--- END DRIVER ---
+
+Tool-output collection note:
+A JavaScript store(undefined) serialization error occurred after the snapshot process had
+completed successfully. Its captured exit-0 report was already saved and then read back;
+no validator or state operation was retried and no output was lost.
+
+Finalization and limits:
+This immutable record binds the tested candidate above. It cannot include its own
+containing commit hash without a cycle. A subsequent evidence commit and eleven-view
+index refresh will preserve the exact source scope and ledger; final exact-tip checks
+are returned in the author handoff. The final independent reviewer must bind that exact
+handed-off HEAD/tree and canonical diff after these evidence-only/generated commits.
+Independent Astra/max review, canonical integration and final integrated-main audit are
+NOT_RUN. No product/external readiness, new runtime qualification, private content equality,
+physical power-loss proof or new maintenance-work execution is claimed.
+All test sessions exited; no child agent, service or background job remains.
+Parent observation is still required for final actor-stop proof.
