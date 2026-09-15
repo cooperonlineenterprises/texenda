@@ -1,0 +1,263 @@
+{
+  "schema_version": "2.0",
+  "kind": "review",
+  "task_id": "TRN-WSM-0001",
+  "candidate_revision": "2ff536f5435ea32ec03c687adecae0a6f74da81b",
+  "observed_revision": "2ff536f5435ea32ec03c687adecae0a6f74da81b",
+  "integrated_revision": "2ff536f5435ea32ec03c687adecae0a6f74da81b",
+  "summary": "APPROVE exact integrated main 2ff536f5435ea32ec03c687adecae0a6f74da81b/tree 2f28c815f7a00c452b1997fb113a3918e553f1d2 for clean pre-implementation repository operation. Both ordinary entries, suites/evidence/state/archive/private/GitHub observations pass. Normal repository work is clean-equivalent with intentional mapped differences. Saved Codex project still targets parent, so one manual folder-registration action remains; no complete app registration, product readiness, external activation or containing/future-head approval is claimed.",
+  "profile_id": "gpt-6-astra-max",
+  "role": "reviewer",
+  "capability_tier": 1,
+  "routing_policy_digest": "61f0db448cf5ac5adad4d9340d568a7558c0369174e30aab92dd0ccf0d24bdf0",
+  "work_package_digest": "9ad162070c27e4c765ba145fc8a35d31dc288482453daaa39ec0bb6add8bd8d8",
+  "issued_at": "2026-09-15T18:32:57Z",
+  "qualifications": [
+    {
+      "profile_id": "gpt-6-astra-max",
+      "capability_tier": 1,
+      "model_id": "gpt-6-astra",
+      "reasoning_effort": "max",
+      "runtime_id": "codex-desktop-collaboration",
+      "client_version": "26.901.41600 (build 7982)",
+      "sign_in_mode": "subscription",
+      "billing_mode": "subscription",
+      "capabilities": [
+        "read",
+        "edit",
+        "test"
+      ],
+      "verified_at": "2026-09-13T21:44:31Z",
+      "expires_at": "2026-10-12T21:44:31Z",
+      "qualification_check_ids": [
+        "desktop-profile-gpt-6-astra-max"
+      ]
+    }
+  ],
+  "scope": "Read-only audit of canonical integrated Texenda main and non-authoritative WORKSPACE navigation: exact FF identity, repo/home ordinary workflows, current authority/history/compatibility, interpreter/Blueprint/archive, inherited and corrective evidence, live state/private/package safety, fresh GitHub metadata and supported Codex saved-project observation. Excludes actual manual app registration, UI action, worktree removal during audit, containing/future heads, product readiness and external effects.",
+  "notes": "Reviewer /root/clean_setup_reviewer is distinct from authors /root/clean_workflow_author and /root/clean_maintenance_author and integrator /root. Audit bounds: 50000 tokens/3000 seconds; evidence-only: 20000 tokens/1200 seconds; subscription, API USD 0, no fallback/downshift/children. Canonical repo origin https://github.com/cooperonlineenterprises/texenda.git; main fast-forwarded through 700565c to 2ff536f. WORKSPACE SHA 6d6a9f487698207480958c91fe129cc643423ac7dd5d1e5c78d3479faf7d15cf. Markdown SHA e05a77a1adf3daff3f8d6304032671dabae772b87094347b3be91253ca66a534 binds exact tests, 483-path preservation, 24 WP-00 replay checks, 538 evidence bindings, 5626 archive checks, read-only GitHub observations and manual Codex limitation. Provider tokens/model introspection unavailable; OS-managed atime is outside the portable guarantee. Containing commit/tree/file hashes reported separately.",
+  "checks": [
+    {
+      "id": "exact-integrated-main-and-fast-forwards",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Inspect canonical /Users/jamesryancooper/Projects/texenda/repo main at 2ff536f5435ea32ec03c687adecae0a6f74da81b/tree 2f28c815f7a00c452b1997fb113a3918e553f1d2, origin https://github.com/cooperonlineenterprises/texenda.git, clean status and main reflog. Both cleanup integrations are fast-forwards through 700565c to the exact previously approved candidate 2 head.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-preimplementation-integrated-main-audit.md",
+      "sha256": "e05a77a1adf3daff3f8d6304032671dabae772b87094347b3be91253ca66a534"
+    },
+    {
+      "id": "reviewer-independence-profile-and-bounds",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Independent /root/clean_setup_reviewer is distinct from authors /root/clean_workflow_author and /root/clean_maintenance_author and integrator /root. Live Astra/max is available through 2026-10-12T21:44:31Z via owner-roster SHA 8e44034e6247ea47b3f0002100e6a343cfa6685d56138a24f55e8a13054173c0. Integrated audit bounds 50000 tokens/3000 seconds; evidence-only 20000/1200; subscription/API USD 0, no fallback/downshift/children.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-preimplementation-integrated-main-audit.md",
+      "sha256": "e05a77a1adf3daff3f8d6304032671dabae772b87094347b3be91253ca66a534"
+    },
+    {
+      "id": "workspace-navigation-and-non-git-home",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Verify project home has no .git marker and Git root discovery fails there; canonical repo and all stated directory roles exist. WORKSPACE.md remains non-authoritative navigation, SHA 6d6a9f487698207480958c91fe129cc643423ac7dd5d1e5c78d3479faf7d15cf, with exact repository command and one manual folder action.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-preimplementation-integrated-main-audit.md",
+      "sha256": "e05a77a1adf3daff3f8d6304032671dabae772b87094347b3be91253ca66a534"
+    },
+    {
+      "id": "ordinary-repository-entry",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "From canonical repo run env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/validate.py --check --all --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda: PASS/exit 0 in 18.396 seconds on exact main.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-preimplementation-integrated-main-audit.md",
+      "sha256": "e05a77a1adf3daff3f8d6304032671dabae772b87094347b3be91253ca66a534"
+    },
+    {
+      "id": "ordinary-project-home-entry",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "From non-Git project home run env PYTHONDONTWRITEBYTECODE=1 python3 -B repo/.agent/scripts/validate.py --check --all --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda: PASS/exit 0 in 18.294 seconds, same code/state/main. WORKSPACE also documents cd into canonical repo before the ordinary command.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-preimplementation-integrated-main-audit.md",
+      "sha256": "e05a77a1adf3daff3f8d6304032671dabae772b87094347b3be91253ca66a534"
+    },
+    {
+      "id": "all-registered-checks-and-generated-integrity",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Both entry checks execute all ten nonwriter registry commands successfully, skipping both refresh writers. Suites, interpreter, both 14/14 package validators and live-state check pass. Parse 136 JSON/1 TOML/21 Python; 30 dossier paths, 3 instruction files, 130 links, 538 PASS/FAIL bindings; all eleven outputs reconstruct at generation 69d5520752b2779e30d2e9e9428812fa678dc3b932ea4d70e281ef1330874339.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-preimplementation-integrated-main-audit.md",
+      "sha256": "e05a77a1adf3daff3f8d6304032671dabae772b87094347b3be91253ca66a534"
+    },
+    {
+      "id": "status-ready-context-and-assignment-routes",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Exact bound status/ready/context WP-01 commands exit 0: 11 profiles available, one completed and 43 planned WPs, ready WP-01/WP-18, READY WP-01 context with twelve owners and T1/max author/reviewer floors. Existing assignment/review/resumption contracts remain discoverable without migration history or implicit state selection.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-preimplementation-integrated-main-audit.md",
+      "sha256": "e05a77a1adf3daff3f8d6304032671dabae772b87094347b3be91253ca66a534"
+    },
+    {
+      "id": "current-epoch-status-and-no-duplicate-authority",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "PLAN-0001..0004 are completed with scoped evidence; crosswalk v2 is completed_current_contract/current_epoch external_state. Ten compatibility dispositions and existing owner-map checks pass; no duplicate task/receipt/routing/decision/evidence/permission/product authority.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-preimplementation-integrated-main-audit.md",
+      "sha256": "e05a77a1adf3daff3f8d6304032671dabae772b87094347b3be91253ca66a534"
+    },
+    {
+      "id": "history-predecessors-and-dossier-supersession",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Verify exact crosswalk v1 predecessor at 700565c SHA 689d5ffedb15938b25679c0cb9215bd7cac850b3b8f09e257a0f7a0c4fade00e, dossier 1.3/supersession and retained transition history SHA 1f5b0b1aa816f6bcd34f591a0b5f9f5b4e9d6e8bf35474ca77367418fb930919. Current navigation and optional history roles remain distinct.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-preimplementation-integrated-main-audit.md",
+      "sha256": "e05a77a1adf3daff3f8d6304032671dabae772b87094347b3be91253ca66a534"
+    },
+    {
+      "id": "inherited-and-corrective-review-evidence",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Revalidate exact old candidate envelopes for 48033f36 (23 required PASS), 0c0f202 (17), and 59d16bc (23), with documented unchanged hashes. Original P2 failures and delayed inherited-audit timing exception remain scoped to their historical subjects; no backdating or silent approval transfer.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-preimplementation-integrated-main-audit.md",
+      "sha256": "e05a77a1adf3daff3f8d6304032671dabae772b87094347b3be91253ca66a534"
+    },
+    {
+      "id": "intentional-compatibility-and-deferred-work",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Retain non-Git home/repo, external state/private inputs, both packages, pinned sealed-v1 primitives, pre-binding-only defaults, four receipt inputs, recovery helper, absolute binding, v2 schema history, config mirror and live ready. Optional generic capabilities remain deferred; local interpreter isolates stock-origin presentation without upstream execution/adoption.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-preimplementation-integrated-main-audit.md",
+      "sha256": "e05a77a1adf3daff3f8d6304032671dabae772b87094347b3be91253ca66a534"
+    },
+    {
+      "id": "blueprint-qualification-and-maintenance-boundary",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Installed 1.0.0 remains structural-only, clean 4.2.0 remains PASS/PASS/FAIL/unqualified, dirty uncommitted 4.3.0 separate. RAIDQ-0005 retains external owner, exact expired-fixture/seed blockers, retry trigger, full qualification commands, evidence and recovery. No new source repair/upgrade/seed or direct-CLI qualification.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-preimplementation-integrated-main-audit.md",
+      "sha256": "e05a77a1adf3daff3f8d6304032671dabae772b87094347b3be91253ca66a534"
+    },
+    {
+      "id": "integrated-no-explicit-write-snapshot",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "483-path snapshot across canonical repo including ignored receipt inputs, external state, preserved source and WORKSPACE shows no content/path/mode/device/inode/size/mtime/ctime changes during both entry checks. No atime change observed in this interval, while portable atime stability remains expressly excluded; private/Git-internal/fixture exclusions are stated.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-preimplementation-integrated-main-audit.md",
+      "sha256": "e05a77a1adf3daff3f8d6304032671dabae772b87094347b3be91253ca66a534"
+    },
+    {
+      "id": "live-state-and-binding-preservation",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "State SHA b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235, version 2.0, 13 receipts/tip f39249184757101b108ea7ec5ea0ffebdd8237315b8ac3cad3ad0cc6ab3e827e, 11 profiles, 0 leases/budget, empty gates. Binding SHA a92b6137856b7f9c2b3f13f69f4e6dc92ed4da1be82eec1ddf21188ebdde0365 unchanged.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-preimplementation-integrated-main-audit.md",
+      "sha256": "e05a77a1adf3daff3f8d6304032671dabae772b87094347b3be91253ca66a534"
+    },
+    {
+      "id": "retained-wp00-evidence-replay",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "After correcting a supplementary helper's nested-reference accessor, Harness.recheck validates exact WP-00 candidate and references with 8 submission + 11 review + 5 integration required PASS checks, 24 total. This is read-only historical replay, not new execution, receipts or current-actor stop proof.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-preimplementation-integrated-main-audit.md",
+      "sha256": "e05a77a1adf3daff3f8d6304032671dabae772b87094347b3be91253ca66a534"
+    },
+    {
+      "id": "protected-source-packages-and-private-boundary",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "git diff --check 338cd135..HEAD and protected comparisons preserve sealed/harness/routing/relocation/origin/.codex/permission/context. Both package manifest hashes and eleven differences remain. Private final existence and legacy ignore/untracked checks only; no private contents/size/hash/copy/parse/listing or equality claim.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-preimplementation-integrated-main-audit.md",
+      "sha256": "e05a77a1adf3daff3f8d6304032671dabae772b87094347b3be91253ca66a534"
+    },
+    {
+      "id": "archive-forward-integrity-baseline",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Verify manifest b682602668d10e96e9c50fbf317d5e3eee4124f1db613e5c49bd86b281656fde and provenance 32e5ee34be5482ee8da28630690cca64720371ef63ebdd84a4cfc91b29de766f; enforce 5626 unique archive-only regular symlink-free non-private/CSV/traversal paths. Run the recorded shasum -a 256 -c command from project home: 5626 OK, 0 non-success lines, empty stderr, exit 0 in 0.654 seconds.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-preimplementation-integrated-main-audit.md",
+      "sha256": "e05a77a1adf3daff3f8d6304032671dabae772b87094347b3be91253ca66a534"
+    },
+    {
+      "id": "archive-preservation-and-forward-only-limits",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "6081 measured archive file/directory metadata entries unchanged excluding OS atime; no raw payload display or archive write. Missing historical hashes cannot be reconstructed; future additions need a separate baseline, and raw artifacts are not source/evidence authority/approval/readiness.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-preimplementation-integrated-main-audit.md",
+      "sha256": "e05a77a1adf3daff3f8d6304032671dabae772b87094347b3be91253ca66a534"
+    },
+    {
+      "id": "fresh-github-read-only-state",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Run explicit GETs for repository metadata, branches, workflows and Actions permissions plus tracked-workflow and ls-remote heads checks. All complete successfully: private visibility, 0 hosted branches, 0 workflows, existing enabled=true/allowed_actions=all, default branch name main without a hosted ref. Current observations match expected baseline.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-preimplementation-integrated-main-audit.md",
+      "sha256": "e05a77a1adf3daff3f8d6304032671dabae772b87094347b3be91253ca66a534"
+    },
+    {
+      "id": "codex-saved-project-and-manual-boundary",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Supported list_projects returns local Texenda ID 8445df3c-0057-4a15-a026-9ee972cc1293 at parent /Users/jamesryancooper/Projects/texenda with isGitRepository=false. WORKSPACE gives one manual open/add /Users/jamesryancooper/Projects/texenda/repo action; no registration success, DB change or symlink workaround is claimed.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-preimplementation-integrated-main-audit.md",
+      "sha256": "e05a77a1adf3daff3f8d6304032671dabae772b87094347b3be91253ca66a534"
+    },
+    {
+      "id": "official-folder-guidance-context",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "On 2026-09-15 search and directly fetch official OpenAI app documentation. developers.openai.com/codex/app/ redirects to learn.chatgpt.com/docs/app, whose setup guidance supports opening a folder. This is product context only, not project authority or proof of a local UI action.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-preimplementation-integrated-main-audit.md",
+      "sha256": "e05a77a1adf3daff3f8d6304032671dabae772b87094347b3be91253ca66a534"
+    },
+    {
+      "id": "clean-worktrees-and-runtime-observation",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "All three named temporary worktrees are clean including ignored files. Live-agent listing shows author/inventory completion and only lead/auditor running; exact state/lock lsof returns empty with expected exit 1. All audit commands completed. Removal is deferred until parent observes this later evidence-authoring reviewer stopped; preserve branches/recovery material.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-preimplementation-integrated-main-audit.md",
+      "sha256": "e05a77a1adf3daff3f8d6304032671dabae772b87094347b3be91253ca66a534"
+    },
+    {
+      "id": "no-product-or-external-activation",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Review performs only local checks and read-only official-documentation/GitHub metadata queries. No GitHub mutation, push, dispatch, deployment, publication, spend, production-data/secret inspection or external-gate clearance. Repository cleanliness is not product readiness.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-preimplementation-integrated-main-audit.md",
+      "sha256": "e05a77a1adf3daff3f8d6304032671dabae772b87094347b3be91253ca66a534"
+    },
+    {
+      "id": "initial-supplementary-replay-helper",
+      "required": false,
+      "status": "FAIL",
+      "command_or_procedure": "A read-only supplementary helper initially passed the outer review/integration records to Harness.recheck and raised KeyError: path. Existing schema inspection showed nested evidence references; the bounded correction then revalidated all 24 checks. No source/state mutation or candidate defect occurred; the initial diagnostic failure is retained.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-preimplementation-integrated-main-audit.md",
+      "sha256": "e05a77a1adf3daff3f8d6304032671dabae772b87094347b3be91253ca66a534"
+    },
+    {
+      "id": "manual-codex-project-registration",
+      "required": false,
+      "status": "NOT_RUN",
+      "command_or_procedure": "Still pending: user opens/adds /Users/jamesryancooper/Projects/texenda/repo in Codex and uses that project. Supported listing still targets the non-Git parent. This audit does not mark that step complete."
+    },
+    {
+      "id": "ui-control-refusal-reproduction",
+      "required": false,
+      "status": "NOT_RUN",
+      "command_or_procedure": "Integrator reported Computer Use is not allowed to use app com.openai.codex for safety reasons. Reviewer did not reproduce or work around that refusal because UI actions were excluded; no DB/symlink control substitute."
+    },
+    {
+      "id": "temporary-worktree-removal",
+      "required": false,
+      "status": "NOT_RUN",
+      "command_or_procedure": "Do not remove temporary worktrees during this reviewer runtime. After observed stop, lead may remove only the already-verified clean temporary worktrees while retaining branches/recovery artifacts."
+    },
+    {
+      "id": "containing-evidence-head-refresh-and-final-audit",
+      "required": false,
+      "status": "NOT_RUN",
+      "command_or_procedure": "Preserve this evidence-only commit, explicitly refresh only declared generated views, then perform the required exact resulting-head audit. This record does not automatically approve its containing/future head."
+    },
+    {
+      "id": "upstream-cli-product-and-external-qualification",
+      "required": false,
+      "status": "NOT_RUN",
+      "command_or_procedure": "Future Blueprint or CLI qualification, authentic upgrade seed, product implementation, WP-10/VAL-03 evidence and external activation remain separately gated; no such completion is claimed."
+    }
+  ]
+}
