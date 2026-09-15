@@ -120,6 +120,24 @@ class InstructionContracts(unittest.TestCase):
         self.assertIn('Direct CLI remains unqualified by the desktop', text)
         self.assertIn('0.149.0', text)
 
+    def test_read_only_guidance_discloses_os_managed_atime_limit(self):
+        for path in (ROOT / 'project-dossier/validation/README.md',
+                     ROOT / '.agent/generated/README.md',
+                     ROOT / 'docs/decisions/ADR-0006-clean-ordinary-operating-contract.md'):
+            with self.subTest(path=str(path.relative_to(ROOT))):
+                text = ' '.join(path.read_text().split()).lower()
+                self.assertIn('no explicit project writes', text)
+                self.assertIn('atime', text)
+                self.assertIn('outside', text)
+                self.assertIn('portable', text)
+
+        tools = json.loads((ROOT / '.agent/tools.json').read_text())
+        facade = next(row for row in tools['tools'] if row['id'] == 'facade-validator')
+        self.assertEqual(
+            facade['side_effects'],
+            'no_explicit_project_writes_os_managed_atime_may_advance_on_read')
+        self.assertIn('portable_atime_stability_is_not_guaranteed', facade['constraints'])
+
     def test_assignment_preserves_required_handoff_obligations(self):
         self.assertTrue({
             'Parent and objective', 'Authority and prerequisites', 'Actor and route',

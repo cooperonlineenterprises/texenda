@@ -334,13 +334,14 @@ class FacadeIntegratedFixtureTests(unittest.TestCase):
             metadata = path.stat()
             rows[path.relative_to(self.fixture).as_posix()] = {
                 'sha256': hashlib.sha256(raw).hexdigest(),
+                'mode': metadata.st_mode,
                 'size': metadata.st_size,
                 'mtime_ns': metadata.st_mtime_ns,
                 'ctime_ns': metadata.st_ctime_ns,
             }
         return rows
 
-    def test_check_is_read_only_for_tracked_untracked_ignored_generated_cache_lock_and_timestamps(self):
+    def test_check_has_no_explicit_writes_and_preserves_content_mode_size_mtime_ctime(self):
         (self.fixture / 'docs/qualification/evidence/synthetic-untracked.tmp').write_text(
             'synthetic untracked evidence-only file\n')
         cache = self.fixture / 'synthetic-cache.pyc'
@@ -350,6 +351,14 @@ class FacadeIntegratedFixtureTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertEqual(before, self.snapshot())
         self.assertFalse(any(path.name == '__pycache__' for path in self.fixture.rglob('*')))
+        guarantee = json.loads(result.stdout)['project_write_guarantee']
+        self.assertFalse(guarantee['explicit_project_writes'])
+        self.assertFalse(guarantee['portable_atime_stability'])
+        self.assertIn('OS-managed atime may advance', guarantee['atime_limitation'])
+        self.assertEqual(set(guarantee['preserved_properties']), {
+            'content', 'path_membership', 'mode', 'size', 'mtime', 'ctime',
+            'generated_outputs', 'caches', 'locks', 'live_state',
+        })
 
     @unittest.skipIf(os.environ.get('TEXENDA_CHECK_ALL_ACTIVE') == '1',
                      'outer check-all already runs this suite; avoid recursive aggregation')
@@ -383,7 +392,7 @@ class FacadeIntegratedFixtureTests(unittest.TestCase):
         refresh.refresh(self.fixture, external)
         before_bound = self.snapshot()
         external_before = {
-            name: (path.stat().st_ino, path.stat().st_size, path.stat().st_mtime_ns,
+            name: (path.stat().st_ino, path.stat().st_mode, path.stat().st_size, path.stat().st_mtime_ns,
                    path.stat().st_ctime_ns,
                    hashlib.sha256(path.read_bytes()).hexdigest() if name == 'state' else None)
             for name, path in (('state', external / 'state.json'),
@@ -393,7 +402,7 @@ class FacadeIntegratedFixtureTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertEqual(before_bound, self.snapshot())
         external_after = {
-            name: (path.stat().st_ino, path.stat().st_size, path.stat().st_mtime_ns,
+            name: (path.stat().st_ino, path.stat().st_mode, path.stat().st_size, path.stat().st_mtime_ns,
                    path.stat().st_ctime_ns,
                    hashlib.sha256(path.read_bytes()).hexdigest() if name == 'state' else None)
             for name, path in (('state', external / 'state.json'),
@@ -512,6 +521,16 @@ class FacadeIntegratedFixtureTests(unittest.TestCase):
         with self.assertRaises(common.ValidationError):
             validate.validate_generated(self.fixture)
         report_path.write_bytes(original_report)
+
+    def test_generated_limitations_disclose_os_managed_atime(self):
+        manifest = json.loads((self.fixture / '.agent/generated/manifest.json').read_text())
+        report = json.loads((self.fixture / '.agent/generated/validation-report.json').read_text())
+        expected = ('Validation performs no explicit project writes and preserves content, path '
+                    'membership, mode, size, mtime, ctime, generated outputs, caches, locks, and '
+                    'live state; OS-managed atime may advance when files are read and is outside '
+                    'the portable no-write guarantee.')
+        self.assertIn(expected, manifest['limitations'])
+        self.assertEqual(report['limitations'], manifest['limitations'])
 
     def test_agent_ledger_facts_enforce_binding_baseline_and_allow_append(self):
         with tempfile.TemporaryDirectory() as directory:

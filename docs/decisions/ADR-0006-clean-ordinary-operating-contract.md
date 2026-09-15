@@ -25,6 +25,13 @@ binding continues to fail closed when the option is missing or wrong. Direct
 CLI model execution remains unqualified; desktop qualification evidence does
 not transfer to another runtime merely because a command is available.
 
+“Read-only” validation means no explicit project writes and preservation of
+content, path membership, mode, size, mtime, ctime, generated outputs, caches,
+locks, and live state. An operating system may advance a file's access time
+(`atime`) when validation reads it. Portable Python cannot prevent or restore
+that filesystem-managed update without mutation, so atime stability is outside
+the portable no-write guarantee and must not be claimed by review evidence.
+
 Current navigation leads to ordinary work. The detailed completed workspace
 procedure is retained byte-for-byte as history, with its hash and successor
 recorded. Recovery instructions that still protect live receipts remain

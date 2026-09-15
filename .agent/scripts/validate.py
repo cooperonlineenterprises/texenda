@@ -93,6 +93,14 @@ def validate_kernel(root=ROOT):
     require(tools['availability_source'] == 'live_coordination_status'
             and tools['permission_source'] == '.agent/policy.json'
             and 'roster' not in tools, 'tool file copied availability or roster authority')
+    facade_tool = next(row for row in tools['tools'] if row['id'] == 'facade-validator')
+    require(facade_tool['side_effects']
+            == 'no_explicit_project_writes_os_managed_atime_may_advance_on_read'
+            and 'portable_atime_stability_is_not_guaranteed' in facade_tool['constraints']
+            and all(name in facade_tool['constraints'] for name in
+                    ('content', 'path_membership', 'mode', 'size', 'mtime', 'ctime',
+                     'generated', 'cache', 'lock', 'live_state')),
+            'facade tool overclaims portable timestamp stability')
     project = values['project.json']
     require(project['adoption_mode'] == 'mapped-existing' and project['profile'] == 'high-assurance',
             'project adoption profile is false')
@@ -341,6 +349,9 @@ def validate_registry(root=ROOT):
     refresh = next((row for row in rows if row['id'] == 'facade-refresh'), None)
     require(check and check['mode'] == 'read_only' and refresh and refresh['mode'] == 'refresh_writer',
             'check/refresh command contract missing')
+    require('without explicit project writes' in check['purpose']
+            and 'OS-managed atime may advance' in check['purpose'],
+            'facade check purpose overclaims portable timestamp stability')
     state_check = next((row for row in rows if row['id'] == 'coordination-state-check'), None)
     require(state_check and state_check['argv'][-1] == 'check'
             and 'init' not in state_check['argv'],
@@ -680,6 +691,14 @@ def validate_generated(root=ROOT, state_root=None):
     report = load_json(root / '.agent/generated/validation-report.json')
     require(report['generation_id'] == generation_id and report['result'] == 'PASS',
             'generated validation report is partial or failed')
+    atime_limitation = (
+        'Validation performs no explicit project writes and preserves content, path membership, '
+        'mode, size, mtime, ctime, generated outputs, caches, locks, and live state; '
+        'OS-managed atime may advance when files are read and is outside the portable no-write guarantee.'
+    )
+    require(atime_limitation in manifest['limitations']
+            and report['limitations'] == manifest['limitations'],
+            'generated validation limitations overclaim portable atime stability')
     for name in ('project-dossier/current-state/current.json',
                  'project-dossier/machine-readable/evidence-index.json',
                  'project-dossier/machine-readable/findings.json',
@@ -770,6 +789,18 @@ def validate(root=ROOT, state_root=None, *, generated=True, run_all=False,
         'local_links': links,
         'bound_pass_fail_evidence_checks': evidence_checks,
         'registered_commands_run': registered,
+        'project_write_guarantee': {
+            'explicit_project_writes': False,
+            'preserved_properties': [
+                'content', 'path_membership', 'mode', 'size', 'mtime', 'ctime',
+                'generated_outputs', 'caches', 'locks', 'live_state',
+            ],
+            'portable_atime_stability': False,
+            'atime_limitation': (
+                'OS-managed atime may advance when files are read; preventing or '
+                'restoring it portably would require filesystem mutation.'
+            ),
+        },
         'private_input_content_accessed': False,
         'external_effects': False,
         'product_or_external_gate': 'none',

@@ -124,6 +124,7 @@ def build(root=ROOT, state_root=None, *, generated_at=None, source_identity=None
             'SHA-256 establishes byte identity only, not authority, correctness, approval, or product readiness.',
             'Private-input content is excluded and was not opened, listed, copied, parsed, or hashed.',
             'This projection is not the live task, receipt, roster, routing, decision, evidence, or permission owner.',
+            'Validation performs no explicit project writes and preserves content, path membership, mode, size, mtime, ctime, generated outputs, caches, locks, and live state; OS-managed atime may advance when files are read and is outside the portable no-write guarantee.',
         ],
     }
     current = {

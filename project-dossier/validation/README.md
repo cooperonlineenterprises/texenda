@@ -13,9 +13,13 @@ negative/recovery checks while skipping refresh writers. PASS is bounded evidenc
 only; it clears no product or external gate. Use explicit refresh only when a
 declared generated view is stale and the underlying source change is understood.
 
-`validate.py --check` must not write tracked, untracked, ignored, cache, lock,
-timestamp, or generated state. Only `refresh.py --refresh` may update generated
-views.
+`validate.py --check` performs no explicit project writes and must preserve file
+content, path membership, mode, size, modification time (`mtime`), metadata-change
+time (`ctime`), generated outputs, caches, locks, and live state. The operating
+system may advance access time (`atime`) merely because validation reads a file.
+Portable Python cannot prevent or restore that filesystem-managed update without
+performing a mutation, so atime stability is explicitly outside the no-write
+guarantee. Only `refresh.py --refresh` may update generated views.
 
 `validate.py --check --all` resolves shell-free registry argv from a validated
 repository/project-home/state-root context. It categorically skips every

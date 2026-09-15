@@ -19,7 +19,7 @@
       "run_in_check": false,
       "working_directory": "{repository_root}",
       "context_parameters": ["repository_root", "state_root_optional_before_binding"],
-      "purpose": "Validate mapped authority, strict records, links, hashes, state projection, and generated freshness without writes."
+      "purpose": "Validate mapped authority, strict records, links, hashes, state projection, and generated freshness without explicit project writes; OS-managed atime may advance on read."
     },
     {
       "id": "facade-refresh",
