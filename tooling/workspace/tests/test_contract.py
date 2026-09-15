@@ -35,7 +35,38 @@ class WorkspaceContractTests(unittest.TestCase):
                          contract.CROSSWALK_PREDECESSOR_SHA256)
         self.assertNotIn('deferred_semantic_work', self.crosswalk)
         self.assertEqual([row['id'] for row in self.crosswalk['maintenance_items']],
-                         ['DEFER-WSM-0001', 'DEFER-WSM-0002', 'DEFER-WSM-0003', 'DEFER-WSM-0004'])
+                         ['DEFER-WSM-' + str(i).zfill(4) for i in range(1, 8)])
+
+    def test_coordinated_inventory_and_mapping_substitution_is_rejected(self):
+        artifact_paths = {row['path'] for row in self.crosswalk['blueprint_artifact_type_inventory']}
+        original = next(path for path in self.crosswalk['blueprint_path_inventory']
+                        if path not in artifact_paths)
+        replacement = '.agent/substituted-baseline-path.json'
+        self.crosswalk['blueprint_path_inventory'] = [
+            replacement if path == original else path for path in self.crosswalk['blueprint_path_inventory']]
+        next(row for row in self.crosswalk['mappings']
+             if row['blueprint_path'] == original)['blueprint_path'] = replacement
+        self.assertEqual(sorted(self.crosswalk['blueprint_path_inventory']),
+                         sorted(row['blueprint_path'] for row in self.crosswalk['mappings']))
+        with self.assertRaisesRegex(contract.ContractError, 'immutable accepted baseline'):
+            contract.validate(self.crosswalk, self.baseline, self.manifest)
+
+    def test_every_mapping_disposition_field_is_pinned_to_accepted_history(self):
+        for field, value in (
+            ('blueprint_path', '.agent/changed-path.json'), ('mapped_path', 'AGENTS.md'),
+            ('concern_id', 'validation_commands'), ('role', 'index'),
+            ('equivalence', 'new'), ('materialize_phase', 'later'), ('reason', 'rewritten reason'),
+        ):
+            changed = copy.deepcopy(self.crosswalk)
+            row = next(row for row in changed['mappings'] if row.get(field) != value)
+            row[field] = value
+            with self.subTest(field=field), \
+                    self.assertRaisesRegex(contract.ContractError, 'immutable accepted baseline'):
+                contract.validate_accepted_mappings(changed)
+        changed = copy.deepcopy(self.crosswalk)
+        changed['mappings'][0]['unreviewed_field'] = 'extra'
+        with self.assertRaises(contract.ContractError):
+            contract.validate_accepted_mappings(changed)
 
     def test_crosswalk_rejects_unknown_schema_altered_predecessor_and_id_loss(self):
         original = copy.deepcopy(self.crosswalk)

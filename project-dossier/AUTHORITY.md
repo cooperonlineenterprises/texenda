@@ -35,3 +35,7 @@ freshness; conflicts are recorded rather than silently resolved.
 Structured catalog owner references resolve through the crosswalk's existing scoped
 owner sets. They provide navigation; symbols and local-role locators do not copy
 Git facts, ledger data, product semantics or authority.
+
+RAIDQ is the sole editable owner of deferred-work detail. The remediation
+register owns review disposition and a closed RAIDQ reference; validators
+resolve its required detail fields and reject local overrides or disagreement.

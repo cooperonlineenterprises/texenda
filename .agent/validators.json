@@ -18,6 +18,8 @@
         "-B",
         ".agent/scripts/validate.py",
         "--check",
+        "--scope",
+        "control",
         "--state-root",
         "{state_root}"
       ],
@@ -31,8 +33,29 @@
       ],
       "purpose": "Validate mapped authority, strict records, links, hashes, state projection, and generated freshness without explicit project writes; OS-managed atime may advance on read.",
       "scopes": [
-        "code",
         "control"
+      ]
+    },
+    {
+      "id": "facade-code-check",
+      "argv": [
+        "python3",
+        "-B",
+        ".agent/scripts/validate.py",
+        "--check",
+        "--scope",
+        "code"
+      ],
+      "mode": "read_only",
+      "required": true,
+      "run_in_check": false,
+      "working_directory": "{repository_root}",
+      "context_parameters": [
+        "repository_root"
+      ],
+      "purpose": "Validate repository-only source without explicit project writes; OS-managed atime may advance on read. Live/control/generated freshness remains unassessed.",
+      "scopes": [
+        "code"
       ]
     },
     {

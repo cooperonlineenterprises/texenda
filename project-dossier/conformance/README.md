@@ -8,5 +8,8 @@ refresh-only mirror.
 
 The authoritative [remediation register](remediation-register.json) records all
 review findings, validity, impact, dependencies, chosen dispositions, validation
-and completion limits. Deferred records name exact owners, blockers, triggers,
-evidence, next actions and recovery; no row is a live task or lease.
+and completion limits. Each deferred row has one closed `deferred_ref` naming
+the sole RAIDQ owner path and record ID. Repository validators resolve it into
+owner, blocker, trigger, risk, required evidence, exact next action and recovery;
+inline overrides, unknown fields and missing sources fail. No row is a live
+task or lease, and the register does not duplicate editable deferral details.

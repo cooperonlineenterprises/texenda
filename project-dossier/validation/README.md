@@ -2,6 +2,9 @@
 
 The single [registry](../../.agent/validators.json) owns all commands.
 
+Its `facade-code-check` and `facade-check` entries resolve explicitly to code and
+control scope. Aggregation never recursively dispatches either self-command.
+
 Code worktrees and clean clones run only repository-source and synthetic checks:
 
 ```text

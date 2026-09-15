@@ -41,6 +41,7 @@ KERNEL_KEYS = {
 INDEX_STORES = ('tasks', 'decisions', 'evidence', 'reviews')
 GENERATED_FILES = GENERATED_OUTPUT_PATHS
 RECORD_ID = re.compile(r'^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)*-[0-9]{4}$')
+FACADE_SELF_COMMANDS = {'facade-check', 'facade-code-check'}
 
 
 def strict_parsing(root=ROOT, *, scope='control'):
@@ -323,9 +324,9 @@ def validate_registry(root=ROOT):
                 'validator command argv must be a nonempty string array')
         require(row['mode'] in ('read_only', 'synthetic_writes_only', 'refresh_writer'),
                 'validator mode unknown')
-        require(row['scopes'] in (['code', 'control'], ['control']),
+        require(row['scopes'] in (['code', 'control'], ['control'], ['code']),
                 'validator scopes are unknown or incomplete')
-        if 'code' in row['scopes'] and row['id'] != 'facade-check':
+        if 'code' in row['scopes']:
             require('{state_root}' not in row['argv']
                     and not any('{project_home}' in part for part in row['argv'])
                     and row['mode'] != 'refresh_writer',
@@ -354,10 +355,26 @@ def validate_registry(root=ROOT):
             require(row['id'] in {'facade-refresh', 'facade-refresh-recovery'}
                     and row['run_in_check'] is False,
                     'refresh writer cannot be registered as a check')
+        names_facade = any(item.endswith('.agent/scripts/validate.py') for item in row['argv'])
+        require(names_facade == (row['id'] in FACADE_SELF_COMMANDS),
+                'facade self-command must use a declared nonrecursive ID')
     check = next((row for row in rows if row['id'] == 'facade-check'), None)
     refresh = next((row for row in rows if row['id'] == 'facade-refresh'), None)
     require(check and check['mode'] == 'read_only' and refresh and refresh['mode'] == 'refresh_writer',
             'check/refresh command contract missing')
+    self_argv = {
+        'facade-check': ['python3', '-B', '.agent/scripts/validate.py', '--check',
+                         '--scope', 'control', '--state-root', '{state_root}'],
+        'facade-code-check': ['python3', '-B', '.agent/scripts/validate.py', '--check',
+                              '--scope', 'code'],
+    }
+    for identifier, expected_argv in self_argv.items():
+        row = next((row for row in rows if row['id'] == identifier), None)
+        expected_scope = 'control' if identifier == 'facade-check' else 'code'
+        require(row and row['argv'] == expected_argv and row['scopes'] == [expected_scope]
+                and row['mode'] == 'read_only' and row['required'] is True
+                and row['run_in_check'] is False,
+                'facade self-command scope or nonrecursive contract is false')
     require('without explicit project writes' in check['purpose']
             and 'OS-managed atime may advance' in check['purpose'],
             'facade check purpose overclaims portable timestamp stability')
@@ -395,6 +412,7 @@ def execution_context(root=ROOT, state_root=None, *, scope='control'):
 
 
 def resolve_command(row, context):
+    require(context['scope'] in row['scopes'], 'cannot resolve a command outside its declared scope')
     argv = list(row['argv'])
     if context['state_root'] is None:
         while '{state_root}' in argv:
@@ -485,8 +503,8 @@ def validate_dossier(root=ROOT, *, generated=True):
     require(history_row is not None and history_row['classification'] == 'history',
             'completed transition history is not catalogued as history')
     supersession = load_json(root / 'project-dossier/SUPERSESSION.json')
-    require(supersession['current_version'] == '1.4.0-mapped-existing'
-            and len(supersession['records']) == 3
+    require(supersession['current_version'] == '1.4.1-mapped-existing'
+            and len(supersession['records']) == 4
             and supersession['records'][0]['prior_sha256'] == history_sha
             and supersession['records'][0]['retained_history_path'] == history_path,
             'dossier supersession does not preserve the completed transition')
@@ -638,7 +656,7 @@ def run_registry_checks(registry, root=ROOT, state_root=None, *, all_commands=Fa
         if row['mode'] == 'refresh_writer':
             results.append({'id': row['id'], 'status': 'SKIPPED_WRITER'})
             continue
-        if row['id'] == 'facade-check':
+        if row['id'] in FACADE_SELF_COMMANDS:
             continue
         if scope not in row['scopes']:
             results.append({'id': row['id'], 'status': 'NOT_ASSESSED_IN_CODE_SCOPE'})

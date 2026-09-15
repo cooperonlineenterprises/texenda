@@ -6,6 +6,10 @@ This guide covers occasional mapped-adoption maintenance. The
 owns the 85 structural mappings and compatibility dispositions; it does not
 grant permission or replace product, task, receipt or evidence owners.
 
+Validation pins the complete 85-path inventory and every mapping disposition
+to `git show 7de052690bbf3e2879f375c2b2e17207c7ee5bfe`, the immutable accepted
+baseline. Agreement between two edited current lists is insufficient.
+
 ## Local planner interpretation
 
 From the repository root, this self-check validates the current crosswalk and

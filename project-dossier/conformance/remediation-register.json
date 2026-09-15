@@ -1,5 +1,5 @@
 {
-  "schema_version": "texenda.workspace-remediation.v1",
+  "schema_version": "texenda.workspace-remediation.v2",
   "authority": "authoritative_remediation_dispositions_only_not_task_ledger",
   "owner_path": "project-dossier/conformance/remediation-register.json",
   "baseline_revision": "7de052690bbf3e2879f375c2b2e17207c7ee5bfe",
@@ -182,9 +182,10 @@
       },
       "current_evidence": [
         {
-          "observation": "Placement and Git ignore were checked; actual access/retention controls are unqualified.",
           "source": "project-dossier/machine-readable/raidq.json",
-          "scope": "bounded source/retained observation; fresh runtime evidence required for current activation"
+          "record_id": "RAIDQ-0006",
+          "observation": "Current deferral details are resolved from the sole RAIDQ owner; this row owns the review disposition.",
+          "scope": "Reference only; no duplicate editable detail or completion claim."
         }
       ],
       "still_valid": true,
@@ -193,28 +194,18 @@
         "RAIDQ-0006"
       ],
       "selected_disposition": "deferred",
-      "implementation_scope": "RAIDQ-0006 owns exact qualification and no-content boundary.",
-      "validation_method": "RAIDQ-0006 owns exact qualification and no-content boundary.",
+      "implementation_scope": "Disposition and closed owner reference only; editable deferral details belong solely to RAIDQ-0006.",
+      "validation_method": "Resolve the closed RAIDQ-0006 reference into required owner/blocker/trigger/risk/evidence/next-action/recovery fields; reject missing, unknown or conflicting reference fields.",
       "completion_evidence": {
         "status": "not_complete",
         "reference": "project-dossier/machine-readable/raidq.json",
         "limitation": "No product, external gate, new receipt or retrospective evidence approval."
       },
-      "deferred": {
-        "owner": "Ryan as data owner and the responsible host/security administrator",
-        "blocker": "No scoped qualification proves intended runtime principals, filesystem/ACL boundary, approved retention, backup and recovery.",
-        "trigger": "Explicit bounded private-input control qualification assigned by the data owner.",
-        "risk": "Readable sibling storage or inherited host access could be mistaken for a tested confidentiality boundary.",
-        "required_evidence": [
-          "Authorized metadata-only access/ACL assessment without actual content or size inspection",
-          "Synthetic nonpersonal fixture allow/deny tests under the intended actual runtime",
-          "Data-owner-approved retention, backup and recovery decision",
-          "Independent exact-scope review"
-        ],
-        "next_action": "Obtain the data owner's bounded metadata/synthetic access-control assessment scope and identified host/security owner before any private-input operation.",
-        "recovery": "Retain current placement and deny ordinary access; no content, size, hash, listing, parse, copy, chmod or deletion."
-      },
-      "validity_scope": "Retained control, explicit unknown or deferred concern; no closure is inferred."
+      "validity_scope": "Retained control, explicit unknown or deferred concern; no closure is inferred.",
+      "deferred_ref": {
+        "owner_path": "project-dossier/machine-readable/raidq.json",
+        "record_id": "RAIDQ-0006"
+      }
     },
     {
       "id": "REM-0007",
@@ -295,9 +286,10 @@
       },
       "current_evidence": [
         {
-          "observation": "Clean 4.2.0 retains PASS/PASS/FAIL, dirty 4.3.0 remains separate and reviewed seed missing.",
           "source": "project-dossier/machine-readable/raidq.json",
-          "scope": "bounded source/retained observation; fresh runtime evidence required for current activation"
+          "record_id": "RAIDQ-0005",
+          "observation": "Current deferral details are resolved from the sole RAIDQ owner; this row owns the review disposition.",
+          "scope": "Reference only; no duplicate editable detail or completion claim."
         }
       ],
       "still_valid": true,
@@ -306,26 +298,18 @@
         "RAIDQ-0005"
       ],
       "selected_disposition": "deferred",
-      "implementation_scope": "Retain exact RAIDQ-0005; no source repair or qualification claim.",
-      "validation_method": "Retain exact RAIDQ-0005; no source repair or qualification claim.",
+      "implementation_scope": "Disposition and closed owner reference only; editable deferral details belong solely to RAIDQ-0005.",
+      "validation_method": "Resolve the closed RAIDQ-0005 reference into required owner/blocker/trigger/risk/evidence/next-action/recovery fields; reject missing, unknown or conflicting reference fields.",
       "completion_evidence": {
         "status": "not_complete",
         "reference": "project-dossier/machine-readable/raidq.json",
         "limitation": "No product, external gate, new receipt or retrospective evidence approval."
       },
-      "deferred": {
-        "owner": "Octon Mini / Project Blueprint source maintainer",
-        "blocker": "Full validator failure and missing authentic reviewed seed.",
-        "trigger": "Clean committed source correction plus complete qualification and reviewed seed.",
-        "risk": "False qualification or imported authority.",
-        "required_evidence": [
-          "Exact corrected commit and all required qualification commands PASS",
-          "Authentic reviewed seed and separate Texenda upgrade review"
-        ],
-        "next_action": "After the source maintainer's corrected clean commit, run the exact requalification commands recorded in RAIDQ-0005 in that intended source checkout.",
-        "recovery": "Keep current selected 1.0.0 structural reference and failed evidence."
-      },
-      "validity_scope": "Retained control, explicit unknown or deferred concern; no closure is inferred."
+      "validity_scope": "Retained control, explicit unknown or deferred concern; no closure is inferred.",
+      "deferred_ref": {
+        "owner_path": "project-dossier/machine-readable/raidq.json",
+        "record_id": "RAIDQ-0005"
+      }
     },
     {
       "id": "REM-0010",
@@ -336,39 +320,30 @@
       },
       "current_evidence": [
         {
-          "observation": "No accepted Plectarium family contract or identified external accountable maintainer is supplied.",
           "source": "project-dossier/machine-readable/raidq.json",
-          "scope": "bounded source/retained observation; fresh runtime evidence required for current activation"
+          "record_id": "RAIDQ-0007",
+          "observation": "Current deferral details are resolved from the sole RAIDQ owner; this row owns the review disposition.",
+          "scope": "Reference only; no duplicate editable detail or completion claim."
         }
       ],
       "still_valid": true,
-      "practical_impact": "No accepted Plectarium family contract or identified external accountable maintainer is supplied.",
+      "practical_impact": "Plectarium has an established family contract; proposed new migration/adoption still requires accepted scope and an accountable owner.",
       "dependencies": [
         "RAIDQ-0007"
       ],
       "selected_disposition": "deferred",
-      "implementation_scope": "RAIDQ-0007; identify owner and concrete need before family work.",
-      "validation_method": "RAIDQ-0007; identify owner and concrete need before family work.",
+      "implementation_scope": "Disposition and closed owner reference only; editable deferral details belong solely to RAIDQ-0007.",
+      "validation_method": "Resolve the closed RAIDQ-0007 reference into required owner/blocker/trigger/risk/evidence/next-action/recovery fields; reject missing, unknown or conflicting reference fields.",
       "completion_evidence": {
         "status": "not_complete",
         "reference": "project-dossier/machine-readable/raidq.json",
         "limitation": "No product, external gate, new receipt or retrospective evidence approval."
       },
-      "deferred": {
-        "owner": "External Plectarium/Octon/Projects-family maintainer; accountable principal must be identified before work",
-        "blocker": "No exact accepted family contract, identified external owner, qualified source revision, authentic reviewed migration seed or bounded adoption/publication scope is supplied.",
-        "trigger": "An identified external owner supplies a concrete recurring need, exact accepted contract and qualified source, plus separately authorized reviewed migration or publication scope.",
-        "risk": "A family convention or partially qualified Blueprint could silently acquire Texenda authority or trigger unrelated external changes.",
-        "required_evidence": [
-          "Named external owner and exact accepted family contract/source revision",
-          "Complete intended-source qualification, clean version and authentic reviewed seed when migration requires it",
-          "Texenda mapping, compatibility, non-transfer and recovery review",
-          "Separately scoped publication authority and acceptance criteria before publishing a standard"
-        ],
-        "next_action": "Identify the external accountable maintainer and request the exact family contract and concrete Texenda use case; keep all family migration/publication work outside this candidate.",
-        "recovery": "Continue standalone Texenda with current local owners; preserve external observations and do not install, migrate, publish or edit external sources."
-      },
-      "validity_scope": "Retained control, explicit unknown or deferred concern; no closure is inferred."
+      "validity_scope": "Retained control, explicit unknown or deferred concern; no closure is inferred.",
+      "deferred_ref": {
+        "owner_path": "project-dossier/machine-readable/raidq.json",
+        "record_id": "RAIDQ-0007"
+      }
     },
     {
       "id": "REM-0011",
@@ -379,41 +354,30 @@
       },
       "current_evidence": [
         {
-          "observation": "No fully qualified source and authentic reviewed family migration plan/seed is supplied.",
           "source": "project-dossier/machine-readable/raidq.json",
-          "scope": "bounded source/retained observation; fresh runtime evidence required for current activation"
+          "record_id": "RAIDQ-0008",
+          "observation": "Current deferral details are resolved from the sole RAIDQ owner; this row owns the review disposition.",
+          "scope": "Reference only; no duplicate editable detail or completion claim."
         }
       ],
       "still_valid": true,
       "practical_impact": "No fully qualified source and authentic reviewed family migration plan/seed is supplied.",
       "dependencies": [
-        "RAIDQ-0005",
-        "RAIDQ-0007",
-        "RAIDQ-0007"
+        "RAIDQ-0008"
       ],
       "selected_disposition": "deferred",
-      "implementation_scope": "RAIDQ-0005 and RAIDQ-0007; preserve standalone operation.",
-      "validation_method": "RAIDQ-0005 and RAIDQ-0007; preserve standalone operation.",
+      "implementation_scope": "Disposition and closed owner reference only; editable deferral details belong solely to RAIDQ-0008.",
+      "validation_method": "Resolve the closed RAIDQ-0008 reference into required owner/blocker/trigger/risk/evidence/next-action/recovery fields; reject missing, unknown or conflicting reference fields.",
       "completion_evidence": {
         "status": "not_complete",
         "reference": "project-dossier/machine-readable/raidq.json",
         "limitation": "No product, external gate, new receipt or retrospective evidence approval."
       },
-      "deferred": {
-        "owner": "External Plectarium/Octon/Projects-family maintainer; accountable principal must be identified before work",
-        "blocker": "No exact accepted family contract, identified external owner, qualified source revision, authentic reviewed migration seed or bounded adoption/publication scope is supplied.",
-        "trigger": "An identified external owner supplies a concrete recurring need, exact accepted contract and qualified source, plus separately authorized reviewed migration or publication scope.",
-        "risk": "A family convention or partially qualified Blueprint could silently acquire Texenda authority or trigger unrelated external changes.",
-        "required_evidence": [
-          "Named external owner and exact accepted family contract/source revision",
-          "Complete intended-source qualification, clean version and authentic reviewed seed when migration requires it",
-          "Texenda mapping, compatibility, non-transfer and recovery review",
-          "Separately scoped publication authority and acceptance criteria before publishing a standard"
-        ],
-        "next_action": "Identify the external accountable maintainer and request the exact family contract and concrete Texenda use case; keep all family migration/publication work outside this candidate.",
-        "recovery": "Continue standalone Texenda with current local owners; preserve external observations and do not install, migrate, publish or edit external sources."
-      },
-      "validity_scope": "Retained control, explicit unknown or deferred concern; no closure is inferred."
+      "validity_scope": "Retained control, explicit unknown or deferred concern; no closure is inferred.",
+      "deferred_ref": {
+        "owner_path": "project-dossier/machine-readable/raidq.json",
+        "record_id": "RAIDQ-0008"
+      }
     },
     {
       "id": "REM-0012",
@@ -424,39 +388,30 @@
       },
       "current_evidence": [
         {
-          "observation": "This local target is not an authorized reusable-standard publication.",
           "source": "project-dossier/machine-readable/raidq.json",
-          "scope": "bounded source/retained observation; fresh runtime evidence required for current activation"
+          "record_id": "RAIDQ-0009",
+          "observation": "Current deferral details are resolved from the sole RAIDQ owner; this row owns the review disposition.",
+          "scope": "Reference only; no duplicate editable detail or completion claim."
         }
       ],
       "still_valid": true,
-      "practical_impact": "This local target is not an authorized reusable-standard publication.",
+      "practical_impact": "Standalone publication/upstream generator work needs its own exact target, owner and scope; it has no Plectarium dependency.",
       "dependencies": [
-        "RAIDQ-0007"
+        "RAIDQ-0009"
       ],
       "selected_disposition": "deferred",
-      "implementation_scope": "RAIDQ-0007; separate owner, scope, evidence and publication authority.",
-      "validation_method": "RAIDQ-0007; separate owner, scope, evidence and publication authority.",
+      "implementation_scope": "Disposition and closed owner reference only; editable deferral details belong solely to RAIDQ-0009.",
+      "validation_method": "Resolve the closed RAIDQ-0009 reference into required owner/blocker/trigger/risk/evidence/next-action/recovery fields; reject missing, unknown or conflicting reference fields.",
       "completion_evidence": {
         "status": "not_complete",
         "reference": "project-dossier/machine-readable/raidq.json",
         "limitation": "No product, external gate, new receipt or retrospective evidence approval."
       },
-      "deferred": {
-        "owner": "External Plectarium/Octon/Projects-family maintainer; accountable principal must be identified before work",
-        "blocker": "No exact accepted family contract, identified external owner, qualified source revision, authentic reviewed migration seed or bounded adoption/publication scope is supplied.",
-        "trigger": "An identified external owner supplies a concrete recurring need, exact accepted contract and qualified source, plus separately authorized reviewed migration or publication scope.",
-        "risk": "A family convention or partially qualified Blueprint could silently acquire Texenda authority or trigger unrelated external changes.",
-        "required_evidence": [
-          "Named external owner and exact accepted family contract/source revision",
-          "Complete intended-source qualification, clean version and authentic reviewed seed when migration requires it",
-          "Texenda mapping, compatibility, non-transfer and recovery review",
-          "Separately scoped publication authority and acceptance criteria before publishing a standard"
-        ],
-        "next_action": "Identify the external accountable maintainer and request the exact family contract and concrete Texenda use case; keep all family migration/publication work outside this candidate.",
-        "recovery": "Continue standalone Texenda with current local owners; preserve external observations and do not install, migrate, publish or edit external sources."
-      },
-      "validity_scope": "Retained control, explicit unknown or deferred concern; no closure is inferred."
+      "validity_scope": "Retained control, explicit unknown or deferred concern; no closure is inferred.",
+      "deferred_ref": {
+        "owner_path": "project-dossier/machine-readable/raidq.json",
+        "record_id": "RAIDQ-0009"
+      }
     },
     {
       "id": "REM-0013",
@@ -583,35 +538,30 @@
       },
       "current_evidence": [
         {
-          "observation": "Desktop qualification does not qualify direct CLI execution.",
-          "source": "docs/qualification/runtime-surface-correction-plan-2026-09-13.md",
-          "scope": "bounded source/retained observation; fresh runtime evidence required for current activation"
+          "source": "project-dossier/machine-readable/raidq.json",
+          "record_id": "RAIDQ-0010",
+          "observation": "Current deferral details are resolved from the sole RAIDQ owner; this row owns the review disposition.",
+          "scope": "Reference only; no duplicate editable detail or completion claim."
         }
       ],
       "still_valid": true,
       "practical_impact": "Desktop qualification does not qualify direct CLI execution.",
-      "dependencies": [],
+      "dependencies": [
+        "RAIDQ-0010"
+      ],
       "selected_disposition": "deferred",
-      "implementation_scope": "Require exact runtime/profile qualification before direct CLI dispatch.",
-      "validation_method": "Require exact runtime/profile qualification before direct CLI dispatch.",
+      "implementation_scope": "Disposition and closed owner reference only; editable deferral details belong solely to RAIDQ-0010.",
+      "validation_method": "Resolve the closed RAIDQ-0010 reference into required owner/blocker/trigger/risk/evidence/next-action/recovery fields; reject missing, unknown or conflicting reference fields.",
       "completion_evidence": {
         "status": "not_complete",
         "reference": "docs/qualification/runtime-surface-correction-plan-2026-09-13.md",
         "limitation": "No product, external gate, new receipt or retrospective evidence approval."
       },
-      "deferred": {
-        "owner": "Runtime qualification owner and repository owner",
-        "blocker": "No exact direct-CLI profile qualification.",
-        "trigger": "Explicit direct-CLI qualification assignment.",
-        "risk": "Desktop evidence could be misapplied to another runtime.",
-        "required_evidence": [
-          "Authenticated exact client/model/effort/tool/billing/sandbox profile",
-          "Bounded read/edit/test evidence and accepted qualification envelope"
-        ],
-        "next_action": "Use the existing runtime-surface correction plan to prepare an exact direct-CLI qualification task before any CLI model dispatch.",
-        "recovery": "Continue the qualified desktop route; no silent substitution."
-      },
-      "validity_scope": "Retained control, explicit unknown or deferred concern; no closure is inferred."
+      "validity_scope": "Retained control, explicit unknown or deferred concern; no closure is inferred.",
+      "deferred_ref": {
+        "owner_path": "project-dossier/machine-readable/raidq.json",
+        "record_id": "RAIDQ-0010"
+      }
     },
     {
       "id": "REM-0018",

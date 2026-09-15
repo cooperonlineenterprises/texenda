@@ -2048,7 +2048,7 @@
       "title": "Qualify a newer canonical reusable blueprint source before any version adoption claim",
       "owner_path": "project-dossier/machine-readable/raidq.json",
       "owner_record": "RAIDQ-0005",
-      "trigger": "The external source maintainer commits the fixture correction; exact full qualification and an authentic reviewed migration seed then permit a separately reviewed upgrade plan.",
+      "trigger": "Resolve current deferral details from RAIDQ-0005; this entry owns no editable trigger detail.",
       "status": "deferred",
       "does_not_import_project_facts": true
     },
@@ -2057,16 +2057,43 @@
       "title": "Qualify local private-input access and retention controls",
       "owner_path": "project-dossier/machine-readable/raidq.json",
       "owner_record": "RAIDQ-0006",
-      "trigger": "Exact data-owner-scoped metadata/synthetic qualification with identified host/security owner.",
+      "trigger": "Resolve current deferral details from RAIDQ-0006; this entry owns no editable trigger detail.",
       "status": "deferred",
       "private_content_or_size_access": false
     },
     {
       "id": "DEFER-WSM-0004",
-      "title": "Externally owned Plectarium/Octon family work and standalone-standard publication",
+      "title": "Proposed new Plectarium migration/adoption under its established family contract",
       "owner_path": "project-dossier/machine-readable/raidq.json",
       "owner_record": "RAIDQ-0007",
-      "trigger": "Identified external owner, exact accepted contract, qualified source and bounded authorized adoption/publication scope.",
+      "trigger": "Resolve current deferral details from RAIDQ-0007; this entry owns no editable trigger detail.",
+      "status": "deferred",
+      "ordinary_dependency": false
+    },
+    {
+      "id": "DEFER-WSM-0005",
+      "title": "Proposed Octon family migration",
+      "owner_path": "project-dossier/machine-readable/raidq.json",
+      "owner_record": "RAIDQ-0008",
+      "trigger": "Resolve current deferral details from RAIDQ-0008; this entry owns no editable trigger detail.",
+      "status": "deferred",
+      "ordinary_dependency": false
+    },
+    {
+      "id": "DEFER-WSM-0006",
+      "title": "Standalone-standard publication and upstream generator work",
+      "owner_path": "project-dossier/machine-readable/raidq.json",
+      "owner_record": "RAIDQ-0009",
+      "trigger": "Resolve current deferral details from RAIDQ-0009; this entry owns no editable trigger detail.",
+      "status": "deferred",
+      "ordinary_dependency": false
+    },
+    {
+      "id": "DEFER-WSM-0007",
+      "title": "Direct CLI runtime qualification",
+      "owner_path": "project-dossier/machine-readable/raidq.json",
+      "owner_record": "RAIDQ-0010",
+      "trigger": "Resolve current deferral details from RAIDQ-0010; this entry owns no editable trigger detail.",
       "status": "deferred",
       "ordinary_dependency": false
     }

@@ -289,6 +289,7 @@ class AdoptionInterpreterTests(unittest.TestCase):
 
     def test_self_check_never_executes_installed_source_or_reads_private_content(self):
         real_open = os.open
+        real_run = subprocess.run
 
         def guarded_open(path, flags, *args, **kwargs):
             name = str(path)
@@ -298,9 +299,15 @@ class AdoptionInterpreterTests(unittest.TestCase):
             self.assertEqual(flags & (os.O_WRONLY | os.O_RDWR | os.O_CREAT | os.O_TRUNC), 0)
             return real_open(path, flags, *args, **kwargs)
 
+        def only_accepted_git_read(argv, *args, **kwargs):
+            self.assertEqual(argv, ['git', '--no-optional-locks', 'show',
+                                   interpreter.contract.ACCEPTED_MAPPING_REVISION + ':'
+                                   + interpreter.contract.CROSSWALK])
+            self.assertEqual(kwargs['cwd'], interpreter.contract.ROOT)
+            return real_run(argv, *args, **kwargs)
+
         with mock.patch.object(os, 'open', side_effect=guarded_open), \
-                mock.patch.object(subprocess, 'run', side_effect=AssertionError('no source execution')), \
-                mock.patch.object(subprocess, 'check_output', side_effect=AssertionError('no source execution')):
+                mock.patch.object(subprocess, 'run', side_effect=only_accepted_git_read):
             interpreter.interpret(self.root)
 
 

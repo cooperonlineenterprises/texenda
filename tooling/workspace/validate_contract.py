@@ -52,6 +52,7 @@ ORDINARY_VALIDATION = operating.CONTROL_COMMAND
 ORDINARY_COORDINATOR = operating.COORDINATOR_COMMAND
 CROSSWALK_PREDECESSOR_REVISION = '700565cd829871b04bde87e485c25d802505192c'
 CROSSWALK_PREDECESSOR_SHA256 = '689d5ffedb15938b25679c0cb9215bd7cac850b3b8f09e257a0f7a0c4fade00e'
+ACCEPTED_MAPPING_REVISION = '7de052690bbf3e2879f375c2b2e17207c7ee5bfe'
 COMPATIBILITY_INPUTS = {
     '.texenda/context/WP-00.json',
     '.texenda/evidence/wp00-integration-verification.log',
@@ -104,6 +105,18 @@ def sealed_operations_owner(root=ROOT):
     require(owners[0] == '04-security-governance-and-operations/runbooks.md',
             'sealed operations-procedures baseline changed; explicit review required')
     return 'specs/texenda-handoff/' + owners[0]
+
+
+def validate_accepted_mappings(crosswalk):
+    """Use immutable accepted history as the oracle for all 85 dispositions."""
+    raw = subprocess.check_output(
+        ['git', '--no-optional-locks', 'show', ACCEPTED_MAPPING_REVISION + ':' + CROSSWALK],
+        cwd=ROOT)
+    accepted = loads(raw)
+    require(crosswalk['blueprint_path_inventory'] == accepted['blueprint_path_inventory'],
+            '85-path inventory differs from the immutable accepted baseline')
+    require(crosswalk['mappings'] == accepted['mappings'],
+            '85 mapping dispositions differ from the immutable accepted baseline')
 
 
 def validate(crosswalk, baseline, manifest, *, root=ROOT):
@@ -194,6 +207,7 @@ def validate(crosswalk, baseline, manifest, *, root=ROOT):
 
     mappings = crosswalk['mappings']
     inventory = crosswalk['blueprint_path_inventory']
+    validate_accepted_mappings(crosswalk)
     require(len(inventory) == len(set(inventory)) == 85, 'blueprint path inventory incomplete')
     require(sorted(row['blueprint_path'] for row in mappings) == sorted(inventory),
             'missing or duplicate blueprint mapping')
@@ -278,9 +292,10 @@ def validate(crosswalk, baseline, manifest, *, root=ROOT):
             acceptance['final_read_only_review_after_evidence_added'] is True,
             'authority or independent review boundary weakened')
     deferred = {row['id']: row for row in crosswalk['maintenance_items']}
-    require(len(crosswalk['maintenance_items']) == len(deferred) == 4
+    require(len(crosswalk['maintenance_items']) == len(deferred) == 7
             and set(deferred) == {'DEFER-WSM-0001', 'DEFER-WSM-0002',
-                                  'DEFER-WSM-0003', 'DEFER-WSM-0004'},
+                                  'DEFER-WSM-0003', 'DEFER-WSM-0004',
+                                  'DEFER-WSM-0005', 'DEFER-WSM-0006', 'DEFER-WSM-0007'},
             'maintenance IDs were lost, duplicated or replaced')
     editor_resolution = deferred.get('DEFER-WSM-0001', {})
     require(editor_resolution.get('status') == 'resolved_scoped_by_ADR-0005'
@@ -294,6 +309,14 @@ def validate(crosswalk, baseline, manifest, *, root=ROOT):
             and source_followup.get('status') == 'deferred'
             and source_followup.get('does_not_import_project_facts') is True,
             'Blueprint maintenance blocker was bypassed or lost its issue owner')
+    for number, record in enumerate(('RAIDQ-0005', 'RAIDQ-0006', 'RAIDQ-0007',
+                                     'RAIDQ-0008', 'RAIDQ-0009', 'RAIDQ-0010'), 2):
+        row = deferred['DEFER-WSM-' + str(number).zfill(4)]
+        require(row['owner_path'] == operating.RAIDQ and row['owner_record'] == record
+                and row['status'] == 'deferred'
+                and row['trigger'] == ('Resolve current deferral details from ' + record
+                                       + '; this entry owns no editable trigger detail.'),
+                'crosswalk deferral reference disagrees with its sole RAIDQ owner')
     validate_compatibility_dispositions(crosswalk)
 
     packages = baseline['packages']
@@ -698,8 +721,8 @@ def verify_clean_operating_contract(root):
             'current transition entry still embeds the migration procedure')
 
     supersession = loads((root / 'project-dossier/SUPERSESSION.json').read_text())
-    require(supersession['current_version'] == '1.4.0-mapped-existing'
-            and len(supersession['records']) == 3,
+    require(supersession['current_version'] == '1.4.1-mapped-existing'
+            and len(supersession['records']) == 4,
             'dossier version/supersession is not current')
     record = supersession['records'][0]
     require(record['prior_sha256'] == COMPLETED_TRANSITION_SHA256

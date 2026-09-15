@@ -76,7 +76,10 @@
       "const": [
         "RAIDQ-0005",
         "RAIDQ-0006",
-        "RAIDQ-0007"
+        "RAIDQ-0007",
+        "RAIDQ-0008",
+        "RAIDQ-0009",
+        "RAIDQ-0010"
       ]
     },
     "path_roles": {

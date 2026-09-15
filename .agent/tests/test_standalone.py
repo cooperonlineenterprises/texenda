@@ -141,7 +141,7 @@ class StandaloneContracts(unittest.TestCase):
             (operating.REMEDIATION, remediation,
              lambda value: value['items'][5].update(selected_disposition='completed')),
             (operating.REMEDIATION, remediation,
-             lambda value: value['items'][5]['deferred'].pop('blocker')),
+             lambda value: value['items'][5]['deferred_ref'].pop('record_id')),
             (operating.REMEDIATION, remediation, lambda value: value['items'].pop()),
         ]
         actual = operating.load_json
@@ -162,6 +162,75 @@ class StandaloneContracts(unittest.TestCase):
         ):
             with self.assertRaises(common.ValidationError):
                 operating.validate_reference(ROOT, ref)
+
+    def test_deferral_details_resolve_from_one_closed_raidq_reference(self):
+        register = common.load_json(ROOT / operating.REMEDIATION)
+        raidq = common.load_json(ROOT / operating.RAIDQ)
+        for row in register['items']:
+            if row['selected_disposition'] != 'deferred':
+                self.assertNotIn('deferred_ref', row)
+                continue
+            self.assertNotIn('deferred', row)
+            expected = operating.DEFERRED_TOPICS[row['affected_concern']['id']]
+            details = operating.resolve_deferral(ROOT, row['deferred_ref'],
+                                                  expected_record=expected, raidq=raidq)
+            self.assertEqual(set(details), set(operating.DEFERRED_FIELDS))
+            self.assertTrue(all(details.values()))
+        reference = {'owner_path': operating.RAIDQ, 'record_id': 'RAIDQ-0007'}
+        changed = copy.deepcopy(raidq)
+        next(row for row in changed['items'] if row['id'] == 'RAIDQ-0007')['blocker'] = (
+            'Synthetic changed detail in the sole owner')
+        self.assertEqual(operating.resolve_deferral(ROOT, reference, raidq=changed)['blocker'],
+                         'Synthetic changed detail in the sole owner')
+
+    def test_deferral_reference_rejects_conflict_unknown_fields_and_missing_source(self):
+        raidq = common.load_json(ROOT / operating.RAIDQ)
+        reference = {'owner_path': operating.RAIDQ, 'record_id': 'RAIDQ-0006'}
+        for changed in (
+            {**reference, 'blocker': 'inline conflicting detail'},
+            {**reference, 'record_id': 'RAIDQ-0007'},
+            {**reference, 'record_id': 'RAIDQ-9999'},
+            {**reference, 'owner_path': 'some-other-owner.json'},
+        ):
+            with self.assertRaises(common.ValidationError):
+                operating.resolve_deferral(ROOT, changed, expected_record='RAIDQ-0006', raidq=raidq)
+        for mutate in (
+            lambda rows: rows.pop(next(i for i, row in enumerate(rows) if row['id'] == 'RAIDQ-0006')),
+            lambda rows: next(row for row in rows if row['id'] == 'RAIDQ-0006').pop('owner'),
+            lambda rows: next(row for row in rows if row['id'] == 'RAIDQ-0006').update(blockers=['alias']),
+        ):
+            changed = copy.deepcopy(raidq)
+            mutate(changed['items'])
+            with self.assertRaises(common.ValidationError):
+                operating.resolve_deferral(ROOT, reference, raidq=changed)
+        with mock.patch.object(operating, 'load_json', side_effect=FileNotFoundError('missing owner')):
+            with self.assertRaises(FileNotFoundError):
+                operating.resolve_deferral(ROOT, reference)
+
+    def test_closed_disposition_rejects_detail_overrides_and_publication_family_dependency(self):
+        register = common.load_json(ROOT / operating.REMEDIATION)
+        raidq = common.load_json(ROOT / operating.RAIDQ)
+        actual = operating.load_json
+        for path, original, mutate in (
+            (operating.REMEDIATION, register,
+             lambda value: value['items'][5].update(deferred={'owner': 'second owner'})),
+            (operating.RAIDQ, raidq,
+             lambda value: next(row for row in value['items'] if row['id'] == 'RAIDQ-0009')
+             .update(dependencies=['RAIDQ-0007'])),
+        ):
+            changed = copy.deepcopy(original)
+            mutate(changed)
+
+            def replaced(candidate, path=path, changed=changed):
+                return changed if candidate == ROOT / path else actual(candidate)
+
+            with mock.patch.object(operating, 'load_json', side_effect=replaced), \
+                    self.assertRaises(common.ValidationError):
+                operating.validate_operating(ROOT)
+        prior = common.git('show', '7de052690bbf3e2879f375c2b2e17207c7ee5bfe:' + operating.RAIDQ,
+                           root=ROOT, text=False)
+        self.assertEqual(operating.raw_raidq_record((ROOT / operating.RAIDQ).read_bytes(), 'RAIDQ-0005'),
+                         operating.raw_raidq_record(prior, 'RAIDQ-0005'))
 
     def test_composite_catalog_requires_all_scoped_current_sources(self):
         original = common.load_json(ROOT / 'project-dossier/ARTIFACT_CATALOG.json')

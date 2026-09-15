@@ -79,9 +79,13 @@ placement, not proof of isolation.
 [Remediation dispositions](../../project-dossier/conformance/remediation-register.json)
 cover every reviewed concern without creating a task ledger.
 [RAIDQ](../../project-dossier/machine-readable/raidq.json) records exact private,
-Blueprint and family blockers. Plectarium, Octon family migration and publication
-of a reusable standalone standard require their external owners and bounded
-qualified plans; they are not ordinary Texenda dependencies. Direct CLI remains
+Blueprint, private-control, migration, publication and runtime deferral details.
+The remediation register uses closed RAIDQ references; it owns disposition,
+not a second editable copy of those details. Plectarium already has an established
+family contract; proposed new migration/adoption still needs accepted scope and
+an accountable owner. Octon family migration and standalone-standard/upstream
+generator work have separate records. Standalone publication does not depend on
+Plectarium. These are not ordinary Texenda dependencies. Direct CLI remains
 unqualified by desktop evidence. Hosted repository/CI creation remains WP-02 work
 under existing external-effect authority.
 
@@ -105,7 +109,10 @@ There is no independently edited machine companion.
   "deferred_records": [
     "RAIDQ-0005",
     "RAIDQ-0006",
-    "RAIDQ-0007"
+    "RAIDQ-0007",
+    "RAIDQ-0008",
+    "RAIDQ-0009",
+    "RAIDQ-0010"
   ],
   "scopes": {
     "code": {

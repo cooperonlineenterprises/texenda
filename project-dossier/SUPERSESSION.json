@@ -1,7 +1,7 @@
 {
   "schema_version": "texenda.dossier-supersession.v1",
   "authority": "Dossier artifact replacement metadata only; accepted decisions and sealed authority retain their existing owners.",
-  "current_version": "1.4.0-mapped-existing",
+  "current_version": "1.4.1-mapped-existing",
   "records": [
     {
       "id": "SUP-0001",
@@ -37,6 +37,20 @@
       "successor_version": "1.4.0-mapped-existing",
       "reason": "Compatible explicit operating-contract and owner-reference additions; preserve external_state epoch, 85 mappings and all compatibility history.",
       "prior_sha256": "2eb3c9c4fd990beb2d8e7c5c7fc8d9b87c337e728f9662b68ec336e7033fa0a5"
+    },
+    {
+      "id": "SUP-0004",
+      "prior_version": "1.4.0-mapped-existing",
+      "prior_path": "project-dossier/conformance/remediation-register.json",
+      "prior_revision": "a0bdca755d1df6f7c1cf791d9d1f7641c2baa107",
+      "prior_sha256": "60351bb8a234f7541be3462a1f9f0f031dc283ab8e1c9156526fd3a57c33d81b",
+      "retention": "exact_predecessor_in_preserved_Git_history",
+      "active_successor_path": "project-dossier/conformance/remediation-register.json",
+      "previous_schema": "texenda.workspace-remediation.v1",
+      "predecessor_status": "rejected_candidate_not_accepted_or_integrated",
+      "successor_schema": "texenda.workspace-remediation.v2",
+      "successor_version": "1.4.1-mapped-existing",
+      "reason": "Correct rejected duplicate deferral details into closed references to the sole RAIDQ detail owner; preserve all 18 disposition rows."
     }
   ],
   "rules": {

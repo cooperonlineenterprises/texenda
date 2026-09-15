@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import re
+import json
 from pathlib import PurePosixPath
 
 from common import (ROOT, load_json, loads, require, stable_file_bytes,
@@ -12,6 +13,17 @@ ADR = 'docs/decisions/ADR-0007-standalone-workspace-operating-contract.md'
 SCHEMA = '.agent/schemas/standalone-operating-contract.v1.schema.json'
 RETENTION = 'project-dossier/registers/workspace-retention.json'
 REMEDIATION = 'project-dossier/conformance/remediation-register.json'
+RAIDQ = 'project-dossier/machine-readable/raidq.json'
+DEFERRED_TOPICS = {
+    'blueprint_qualification': 'RAIDQ-0005',
+    'private_controls': 'RAIDQ-0006',
+    'plectarium_family': 'RAIDQ-0007',
+    'octon_family_migration': 'RAIDQ-0008',
+    'standalone_standard_publication': 'RAIDQ-0009',
+    'direct_cli_runtime': 'RAIDQ-0010',
+}
+DEFERRED_FIELDS = ('owner', 'blocker', 'trigger', 'risk', 'required_evidence',
+                   'next_action', 'recovery')
 CONTROL_COMMAND = ('env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/validate.py '
                    '--check --all --state-root "${TEXENDA_STATE_ROOT:?Set the verified absolute state root}"')
 CODE_COMMAND = ('env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/validate.py '
@@ -112,6 +124,62 @@ def owner_reference_sets(root=ROOT):
     return result
 
 
+def raw_raidq_record(raw, identifier):
+    """Extract an existing indented record's exact bytes for immutable retention."""
+    text = raw.decode() if isinstance(raw, bytes) else raw
+    match = re.search(r'(?m)^    \{\n      "id": "' + re.escape(identifier) + r'",', text)
+    require(match is not None, 'immutable RAIDQ record formatting or identity changed')
+    start = match.start() + 4
+    value, end = json.JSONDecoder().raw_decode(text, start)
+    require(value['id'] == identifier, 'immutable RAIDQ record identity changed')
+    return text[start:end].encode()
+
+
+def resolve_deferral(root, reference, *, expected_record=None, raidq=None):
+    """Resolve closed references into the sole RAIDQ owner's detail fields."""
+    require(isinstance(reference, dict)
+            and set(reference) == {'owner_path', 'record_id'},
+            'deferral reference is not closed; editable detail overrides are forbidden')
+    identifier = reference['record_id']
+    require(reference['owner_path'] == RAIDQ and identifier in DEFERRED_TOPICS.values()
+            and (expected_record is None or identifier == expected_record),
+            'deferral reference disagrees with its sole owner record')
+    source = load_json(root / RAIDQ) if raidq is None else raidq
+    records = [row for row in source['items'] if row['id'] == identifier]
+    require(len(records) == 1, 'deferral source record is missing or duplicated')
+    row = records[0]
+    if identifier == 'RAIDQ-0005':
+        prior = loads(git('show', '7de052690bbf3e2879f375c2b2e17207c7ee5bfe:' + RAIDQ, root=root))
+        require(row == next(item for item in prior['items'] if item['id'] == identifier),
+                'exact retained Blueprint blocker changed')
+        fields = {'owner': 'owner', 'blocker': 'blockers', 'trigger': 'retry_trigger',
+                  'risk': 'risk', 'required_evidence': 'required_evidence',
+                  'next_action': 'next_command_after_retry_trigger', 'recovery': 'recovery'}
+    else:
+        require(set(row) == {'id', 'type', 'status', 'statement', 'control', 'dependencies',
+                             *DEFERRED_FIELDS}, 'deferral source record is not closed')
+        require(row['status'] in ('gated', 'deferred')
+                and row['type'] in ('issue', 'dependency'), 'deferral source falsely closed')
+        require(isinstance(row['dependencies'], list)
+                and all(isinstance(item, str) for item in row['dependencies'])
+                and len(row['dependencies']) == len(set(row['dependencies'])),
+                'deferral source dependencies are invalid')
+        fields = {field: field for field in DEFERRED_FIELDS}
+    details = {field: row[source_field] for field, source_field in fields.items()}
+    require(all(details.values()), 'deferral owner lacks a required detail field')
+    require(all(isinstance(details[field], str) and details[field].strip()
+                for field in ('owner', 'trigger', 'risk', 'next_action', 'recovery')),
+            'deferral owner detail has an invalid type')
+    require((identifier == 'RAIDQ-0005' and isinstance(details['blocker'], list)
+             and all(isinstance(item, str) and item.strip() for item in details['blocker']))
+            or (isinstance(details['blocker'], str) and details['blocker'].strip()),
+            'deferral owner lacks a typed blocker')
+    require(isinstance(details['required_evidence'], list) and details['required_evidence']
+            and all(isinstance(item, str) and item.strip() for item in details['required_evidence']),
+            'deferral owner lacks exact required evidence')
+    return details
+
+
 def validate_operating(root=ROOT):
     contract = load_contract(root)
     roles = contract['path_roles']
@@ -178,7 +246,7 @@ def validate_operating(root=ROOT):
                 and all(concern in refs for concern in expected),
                 'catalog owner symbols are not navigable or complete')
     register = load_json(root / REMEDIATION)
-    require(register['schema_version'] == 'texenda.workspace-remediation.v1'
+    require(register['schema_version'] == 'texenda.workspace-remediation.v2'
             and register['authority'] == 'authoritative_remediation_dispositions_only_not_task_ledger'
             and register['owner_path'] == REMEDIATION,
             'remediation register became another task or permission owner')
@@ -189,18 +257,24 @@ def validate_operating(root=ROOT):
     required = {'id', 'original_classification', 'affected_concern', 'current_evidence',
                 'still_valid', 'practical_impact', 'dependencies', 'selected_disposition',
                 'implementation_scope', 'validation_method', 'completion_evidence'}
+    raidq = load_json(root / RAIDQ)
+    issues = {row['id']: row for row in raidq['items']}
+    require(len(issues) == len(raidq['items']), 'duplicate RAIDQ detail owner')
     for row in rows:
-        require(required <= set(row) and type(row['still_valid']) is bool
+        require(required <= set(row) <= required | {'validity_scope', 'deferred_ref'}
+                and type(row['still_valid']) is bool
                 and row['current_evidence'] and row['completion_evidence']
                 and all(row[key] for key in ('original_classification', 'affected_concern',
                                             'practical_impact', 'implementation_scope',
                                             'validation_method')),
                 'remediation row lacks a required review disposition field')
         if row['selected_disposition'] == 'deferred':
-            deferred = row.get('deferred', {})
-            require(set(deferred) == {'owner', 'blocker', 'trigger', 'risk',
-                                      'required_evidence', 'next_action', 'recovery'}
-                    and all(deferred.values()), 'deferred item lacks exact closure/recovery fields')
+            identifier = DEFERRED_TOPICS.get(row['affected_concern']['id'])
+            require(identifier is not None and row['dependencies'] == [identifier],
+                    'deferral disposition dependencies disagree with the sole detail owner')
+            resolve_deferral(root, row.get('deferred_ref'), expected_record=identifier, raidq=raidq)
+        else:
+            require('deferred_ref' not in row, 'nondeferred disposition has a deferral override')
     topics = {row['affected_concern']['id']: row for row in rows}
     for topic in ('private_controls', 'blueprint_qualification', 'plectarium_family',
                   'octon_family_migration', 'standalone_standard_publication', 'direct_cli_runtime'):
@@ -210,14 +284,15 @@ def validate_operating(root=ROOT):
     require(topics['codex_registration']['still_valid'] is False
             and topics['codex_registration']['selected_disposition'] == 'already_resolved',
             'current app observation was replaced by stale historical registration')
-    raidq = load_json(root / 'project-dossier/machine-readable/raidq.json')
-    issues = {row['id']: row for row in raidq['items']}
     workspace_contract.validate_blueprint_maintenance(raidq)
     baseline = '7de052690bbf3e2879f375c2b2e17207c7ee5bfe'
     prior_raidq = loads(git('show', baseline + ':project-dossier/machine-readable/raidq.json', root=root))
     require(issues['RAIDQ-0005'] == next(row for row in prior_raidq['items']
                                        if row['id'] == 'RAIDQ-0005'),
             'exact retained Blueprint blocker changed')
+    require(raw_raidq_record(stable_file_bytes(root / RAIDQ), 'RAIDQ-0005')
+            == raw_raidq_record(git('show', baseline + ':' + RAIDQ, root=root, text=False),
+                                'RAIDQ-0005'), 'retained RAIDQ-0005 bytes changed')
     supersession = load_json(root / 'project-dossier/SUPERSESSION.json')
     successor = next(row for row in supersession['records'] if row['id'] == 'SUP-0003')
     crosswalk_path = 'project-dossier/transition/blueprint-adoption-crosswalk.json'
@@ -228,11 +303,21 @@ def validate_operating(root=ROOT):
             and successor['prior_sha256'] == sha(git('show', baseline + ':' + crosswalk_path,
                                                     root=root, text=False)),
             'standalone compatible successor lost its exact v2 predecessor')
-    for identifier in ('RAIDQ-0006', 'RAIDQ-0007'):
-        row = issues[identifier]
-        require(row['status'] in ('gated', 'deferred')
-                and all(row.get(key) for key in ('owner', 'blocker', 'trigger', 'risk',
-                                                'required_evidence', 'next_action', 'recovery')),
-                'private/family deferral lacks explicit owner or closure/recovery')
+    detail_successor = next(row for row in supersession['records'] if row['id'] == 'SUP-0004')
+    rejected = 'a0bdca755d1df6f7c1cf791d9d1f7641c2baa107'
+    require(detail_successor['prior_revision'] == rejected
+            and detail_successor['prior_path'] == detail_successor['active_successor_path'] == REMEDIATION
+            and detail_successor['previous_schema'] == 'texenda.workspace-remediation.v1'
+            and detail_successor['successor_schema'] == 'texenda.workspace-remediation.v2'
+            and detail_successor['predecessor_status'] == 'rejected_candidate_not_accepted_or_integrated'
+            and detail_successor['prior_sha256'] == sha(git('show', rejected + ':' + REMEDIATION,
+                                                           root=root, text=False)),
+            'closed deferral-reference successor lost its rejected predecessor')
+    require(set(contract['deferred_records']) == set(DEFERRED_TOPICS.values())
+            and len(contract['deferred_records']) == len(DEFERRED_TOPICS),
+            'operating contract deferral references are incomplete')
+    require(issues['RAIDQ-0008']['dependencies'] == ['RAIDQ-0005']
+            and issues['RAIDQ-0009']['dependencies'] == [],
+            'Octon or standalone publication acquired the wrong dependency')
     return {'path_roles': len(roles), 'retention_classes': len(classes),
             'remediation_items': len(rows), 'owner_reference_sets': len(refs)}

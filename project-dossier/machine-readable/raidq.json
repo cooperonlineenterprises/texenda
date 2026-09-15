@@ -81,26 +81,88 @@
       ],
       "next_action": "Obtain the data owner's bounded metadata/synthetic access-control assessment scope and identified host/security owner before any private-input operation.",
       "recovery": "Retain current placement and deny ordinary access; no content, size, hash, listing, parse, copy, chmod or deletion.",
-      "control": "The repository facade is declarative defense and does not enforce host filesystem permissions."
+      "control": "The repository facade is declarative defense and does not enforce host filesystem permissions.",
+      "dependencies": []
     },
     {
       "id": "RAIDQ-0007",
       "type": "dependency",
       "status": "deferred",
-      "statement": "Plectarium integration, Octon family migration and reusable standalone-standard publication are externally owned work, not ordinary Texenda dependencies.",
-      "owner": "External Plectarium/Octon/Projects-family maintainer; accountable principal must be identified before work",
-      "blocker": "No exact accepted family contract, identified external owner, qualified source revision, authentic reviewed migration seed or bounded adoption/publication scope is supplied.",
-      "trigger": "An identified external owner supplies a concrete recurring need, exact accepted contract and qualified source, plus separately authorized reviewed migration or publication scope.",
-      "risk": "A family convention or partially qualified Blueprint could silently acquire Texenda authority or trigger unrelated external changes.",
+      "statement": "Plectarium already has an established family contract. Proposed new Texenda migration/adoption work has no accepted scope or assigned accountable owner.",
+      "owner": "Plectarium family maintainer and accountable owner for the proposed Texenda migration/adoption; assignment remains outstanding",
+      "blocker": "The existing family contract does not itself select or authorize the proposed new migration/adoption work; its exact scope and accountable owner remain unassigned.",
+      "trigger": "An accountable owner accepts a concrete Texenda migration/adoption scope under the established Plectarium family contract.",
+      "risk": "Established family governance could be mistaken for permission to perform new cross-project migration or adoption.",
       "required_evidence": [
-        "Named external owner and exact accepted family contract/source revision",
-        "Complete intended-source qualification, clean version and authentic reviewed seed when migration requires it",
-        "Texenda mapping, compatibility, non-transfer and recovery review",
-        "Separately scoped publication authority and acceptance criteria before publishing a standard"
+        "Identified accountable owner and accepted exact new-work scope",
+        "Applicable established family contract/version and scoped compatibility assessment",
+        "Exact affected-path migration/adoption plan, review and recovery evidence"
       ],
-      "next_action": "Identify the external accountable maintainer and request the exact family contract and concrete Texenda use case; keep all family migration/publication work outside this candidate.",
-      "recovery": "Continue standalone Texenda with current local owners; preserve external observations and do not install, migrate, publish or edit external sources.",
-      "control": "RAIDQ-0005 separately retains the exact Blueprint failed fixture and reviewed-seed blockers."
+      "next_action": "Obtain the accountable owner's accepted scope for the proposed new Plectarium migration/adoption work; then identify the exact applicable existing contract/version.",
+      "recovery": "Continue standalone Texenda with current local owners; do not change Plectarium or migrate/adopt on the basis of family membership alone.",
+      "control": "Plectarium migration/adoption is outside ordinary Texenda work; standalone-standard publication has no dependency on this item.",
+      "dependencies": []
+    },
+    {
+      "id": "RAIDQ-0008",
+      "type": "dependency",
+      "status": "deferred",
+      "statement": "Proposed Octon family migration is separate external work and has no accepted exact Texenda migration scope.",
+      "owner": "Octon family/Project Blueprint maintainer and accountable Texenda migration owner; exact new-work assignment remains outstanding",
+      "blocker": "An accepted exact migration scope, fully qualified intended source and authentic reviewed migration seed are missing. RAIDQ-0005 owns the existing source-qualification failure and seed details.",
+      "trigger": "The accountable owner accepts the migration scope after RAIDQ-0005 prerequisites are satisfied on the exact intended source.",
+      "risk": "A family migration could replace Texenda authority or receipt/recovery dependencies using a partially qualified source.",
+      "required_evidence": [
+        "Accepted owner and exact new migration scope",
+        "RAIDQ-0005 source qualification and authentic reviewed seed evidence",
+        "Exact mapped-authority, receipt, package and recovery compatibility review",
+        "Recoverable implementation plan and independent candidate review"
+      ],
+      "next_action": "Assign the proposed Octon migration owner and exact scope, then resolve RAIDQ-0005 before preparing any application plan.",
+      "recovery": "Keep the existing standalone Texenda contract, selected structural reference and preserved source evidence; perform no family migration.",
+      "control": "No source-repository modification, installation or migration is authorized by this record.",
+      "dependencies": [
+        "RAIDQ-0005"
+      ]
+    },
+    {
+      "id": "RAIDQ-0009",
+      "type": "dependency",
+      "status": "deferred",
+      "statement": "Publication of a reusable standalone standard and alignment of its upstream generator are separate proposed work.",
+      "owner": "Standalone standard/upstream generator maintainer and accountable publication owner; exact work assignment remains outstanding",
+      "blocker": "The exact standalone reference to publish, intended upstream generator target/version, responsible owner and bounded publication/generator work scope are not accepted.",
+      "trigger": "An accountable owner accepts the exact standalone-standard or upstream-generator task and any separately required publication authority.",
+      "risk": "A local Texenda candidate could be published as a qualified reusable standard or applied upstream without the target owner's acceptance.",
+      "required_evidence": [
+        "Exact independently reviewed standalone reference and intended generator target/version",
+        "Named accountable owner and accepted bounded change/publication scope",
+        "Standalone generation, clean-clone portability and non-transfer validation on that target",
+        "Exact candidate review and separately scoped publication authority when publication is requested"
+      ],
+      "next_action": "Identify the standalone standard/generator owner and accept the exact reference, upstream target and bounded task; qualify that standalone result before any authorized publication.",
+      "recovery": "Keep the local standalone Texenda result and perform no upstream edit or publication.",
+      "control": "This work does not depend on Plectarium membership, contract adoption or migration.",
+      "dependencies": []
+    },
+    {
+      "id": "RAIDQ-0010",
+      "type": "issue",
+      "status": "gated",
+      "statement": "Direct CLI model execution remains unqualified by the retained desktop-runtime evidence.",
+      "owner": "Runtime qualification owner and repository owner",
+      "blocker": "No accepted exact direct-CLI model/effort/client/tool/billing/sandbox qualification record is available.",
+      "trigger": "An explicit bounded direct-CLI qualification assignment names the intended exact runtime/profile.",
+      "risk": "Desktop qualification could be incorrectly reused for a different execution surface.",
+      "required_evidence": [
+        "Authenticated exact direct-CLI model, effort, client, tools, billing and sandbox profile",
+        "Bounded synthetic read/edit/test evidence and exact accepted qualification envelope",
+        "Separate runtime policy/owner attestation under the existing qualification contract"
+      ],
+      "next_action": "Prepare the exact direct-CLI qualification task using docs/qualification/runtime-surface-correction-plan-2026-09-13.md before any direct-CLI model dispatch.",
+      "recovery": "Continue only a separately qualified available route; do not silently substitute runtimes.",
+      "control": "Availability of a command or client version is not runtime qualification.",
+      "dependencies": []
     }
   ]
 }

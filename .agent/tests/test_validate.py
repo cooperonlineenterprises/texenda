@@ -333,6 +333,40 @@ class FacadeIntegratedFixtureTests(unittest.TestCase):
             }
         return rows
 
+    def test_resolved_facade_commands_execute_their_declared_scopes_without_recursion(self):
+        registry = validate.validate_registry(self.fixture)
+        by_id = {row['id']: row for row in registry['commands']}
+        before = self.snapshot()
+        state_before = (self.state_root / 'state.json').read_bytes()
+        for scope, identifier in (('code', 'facade-code-check'), ('control', 'facade-check')):
+            state_root = self.state_root if scope == 'control' else None
+            context = validate.execution_context(self.fixture, state_root, scope=scope)
+            argv = validate.resolve_command(by_id[identifier], context)
+            self.assertEqual(argv[argv.index('--scope') + 1], scope)
+            self.assertEqual('--state-root' in argv, scope == 'control')
+            result = subprocess.run(argv, cwd=self.fixture, capture_output=True, text=True,
+                                    env={**os.environ, 'PYTHONDONTWRITEBYTECODE': '1'})
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            self.assertEqual(json.loads(result.stdout)['scope'], scope)
+            completed = subprocess.CompletedProcess([], 0, stdout='', stderr='')
+            real_run = subprocess.run
+
+            def delegated(argv, *args, **kwargs):
+                if argv[:3] == ['git', '--no-optional-locks', 'rev-parse']:
+                    return real_run(argv, *args, **kwargs)
+                return completed
+
+            with mock.patch.object(validate.subprocess, 'run', side_effect=delegated) as runner:
+                validate.run_registry_checks(registry, self.fixture, state_root,
+                                             all_commands=True, scope=scope)
+            self.assertFalse(any(part.endswith('.agent/scripts/validate.py')
+                                 for call in runner.call_args_list for part in call.args[0]))
+            other = 'facade-check' if scope == 'code' else 'facade-code-check'
+            with self.assertRaisesRegex(common.ValidationError, 'outside its declared scope'):
+                validate.resolve_command(by_id[other], context)
+        self.assertEqual(before, self.snapshot())
+        self.assertEqual(state_before, (self.state_root / 'state.json').read_bytes())
+
     def test_check_has_no_explicit_writes_and_preserves_content_mode_size_mtime_ctime(self):
         (self.fixture / 'docs/qualification/evidence/synthetic-untracked.tmp').write_text(
             'synthetic untracked evidence-only file\n')
