@@ -1,12 +1,12 @@
 {
   "schema_version": "texenda.generated-integrity.v1",
-  "generation_id": "dbd839176b932d4b5bb9eaa3530f9aaaa2dd33c3e1d44d896fdb0f7f95af4bcb",
+  "generation_id": "653464bdda402a8bde53fe96461a6acbfc9157abf688ec58f17ff7cf38baf935",
   "generation_id_derivation": "sha256(canonical_json(source_scope_sha256,evidence_scope_sha256,ledger_sha256,receipt_count,receipt_tip))",
-  "generated_at": "2026-09-15T17:01:23+00:00",
+  "generated_at": "2026-09-15T17:33:23+00:00",
   "authority": "generated_non_authoritative",
-  "source_git_revision": "9010e1ff55ab1a17345f1c77f78ad2d5a22ff4d7",
-  "source_git_tree": "11099446e9f9bdc4b93b3940aed5e82ca677502e",
-  "source_scope_sha256": "fb2a83c6ed2e6756e078ce74a3f302b1c6bd91f81b0f334950a74e749ed3361d",
+  "source_git_revision": "8cf7a2914ee9666673f989e34f8b944a4e894ffc",
+  "source_git_tree": "b90e81d06c8fc6488cae854086fae625e36c3137",
+  "source_scope_sha256": "fca9c21f453bf3f11ec2e10714bbb6eb8bc23103e7aa00cc22706174717f5511",
   "source_scope_exclusions": [
     {
       "path": ".agent/generated/manifest.json",
@@ -128,7 +128,7 @@
     },
     {
       "path": ".agent/scripts/validate.py",
-      "sha256": "cdedbca74a1af3d9cc4d4e595f100fd1ea50ab38be0d7ae0b16f1d5102654d6c"
+      "sha256": "b4413f598a79924a9100664aa5fb0cab91afe05cfa0c1d8f0d2dacf6cdb6a38d"
     },
     {
       "path": ".agent/tasks/README.md",
@@ -148,7 +148,7 @@
     },
     {
       "path": ".agent/tests/test_validate.py",
-      "sha256": "dd748299fc3f18ee87da0306d2ba5d64ca00e0b2b94e75a78e50984a48b5d95a"
+      "sha256": "5f301037133b8bad7ccaf921bb5fee0c64c0e69f85d42e57385e71b1e41201f7"
     },
     {
       "path": ".agent/tools.json",
@@ -156,7 +156,7 @@
     },
     {
       "path": ".agent/validators.json",
-      "sha256": "c09d1d81888560ac08aba78b8bc367a9c96200aed39cc40589aeff241e26706c"
+      "sha256": "d8fdaedf7eed8926e80935f62b7b077705c7e02f59af13b77d106c5e4bef470f"
     },
     {
       "path": ".codex/config.toml",
@@ -404,11 +404,11 @@
     },
     {
       "path": "project-dossier/SUPERSESSION.json",
-      "sha256": "9f0f836eb5cdac3542c29a10863397e4316a4f04a9b7dfa13af2abdbcf832fa0"
+      "sha256": "d9a308b81f10049daeda3e54543ee8e0fe8f828cd2840abd76a46c2d32896d69"
     },
     {
       "path": "project-dossier/VERSION.md",
-      "sha256": "f5ffbcca1878be41b054c0fe71e618b50139561c40d4e97647e6ceca499aca79"
+      "sha256": "316ed2effd5d1d2173a26dcdef11481a4a9cf2913e42eb7bc1fa766c0f590cf9"
     },
     {
       "path": "project-dossier/conformance/README.md",
@@ -436,7 +436,7 @@
     },
     {
       "path": "project-dossier/machine-readable/raidq.json",
-      "sha256": "15c2b947ed833f51a5b4c5444eeeb5bd09fc306f86fe999e5831f2cd2d97d6b6"
+      "sha256": "b2d6f7ad5a106347372a0f6112debfa80aedfee50db68cfbe7851efa9d96e994"
     },
     {
       "path": "project-dossier/plans/README.md",
@@ -444,11 +444,11 @@
     },
     {
       "path": "project-dossier/provenance/README.md",
-      "sha256": "a5ddfd992f5932622587f694bc4377c2e85c6097ea618a3d04bb572b7b706833"
+      "sha256": "444dec3cfb9e314713bab68e3f4b5544d13c181c4bcad3c3b939385b04f63b4b"
     },
     {
       "path": "project-dossier/provenance/sources.json",
-      "sha256": "d01b1cd17e4bfefd0555bb0145d4511794e6a8542b0c24c36565188d25680a24"
+      "sha256": "add3da14781929de8c027ebf5ce70af41f35f1e9d67179a3276936dd657a645a"
     },
     {
       "path": "project-dossier/registers/README.md",
@@ -456,11 +456,11 @@
     },
     {
       "path": "project-dossier/transition/README.md",
-      "sha256": "846d8d161d3546d2da8012e415de46b49cb91fbd2d037f8993b0bb4783c0336d"
+      "sha256": "a252c7437060236e990cebd36c585d71805fbd6d4f4f046527f1b7e46789ecb4"
     },
     {
       "path": "project-dossier/transition/blueprint-adoption-crosswalk.json",
-      "sha256": "689d5ffedb15938b25679c0cb9215bd7cac850b3b8f09e257a0f7a0c4fade00e"
+      "sha256": "2eb3c9c4fd990beb2d8e7c5c7fc8d9b87c337e728f9662b68ec336e7033fa0a5"
     },
     {
       "path": "project-dossier/transition/external-state-relocation-receipt.md",
@@ -899,12 +899,24 @@
       "sha256": "7fcd0da5c424322dcf3df19dc6201a4b87cc2fce001f11828afeeb9383456c5a"
     },
     {
+      "path": "tooling/workspace/README.md",
+      "sha256": "331ff0b10a46a4476a15918e9f239152e54c05cdbca7d276d64f3e73bce6f3fe"
+    },
+    {
+      "path": "tooling/workspace/interpret_adoption.py",
+      "sha256": "c639dde93653f715d1f91a058cec0b42ba7e52ebcbceb00af09c9c20ec5abaa2"
+    },
+    {
       "path": "tooling/workspace/relocate_state.py",
       "sha256": "dc9652691614c1baf861939a894ae8e055aa1851e475d6ccbc769feaffc8a246"
     },
     {
+      "path": "tooling/workspace/tests/test_adoption_interpreter.py",
+      "sha256": "5e3d5e207f69e0cae1038e1234f9e5e6c46dd3ef2eecee19097b1a449bda9d2c"
+    },
+    {
       "path": "tooling/workspace/tests/test_contract.py",
-      "sha256": "1734f60135be47662dda8cf648c034c256af9e77bf23616ceb236bcc4ecd6f87"
+      "sha256": "b34d2eb3184334507a90566c6f6c190b7f3f4d4de247d27dec1661b4bed63b1f"
     },
     {
       "path": "tooling/workspace/tests/test_relocation.py",
@@ -916,7 +928,7 @@
     },
     {
       "path": "tooling/workspace/validate_contract.py",
-      "sha256": "980bad93a9e6bf021766c80f684622334ed95fec787d70d716e68c95781bf275"
+      "sha256": "e57379e17ac009a7894a9fea3331b77df22ccb42b8dbeeead243c6d1ae49582c"
     },
     {
       "path": "tooling/workspace/validate_relocation.py",
