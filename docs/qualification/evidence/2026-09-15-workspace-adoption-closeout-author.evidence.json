@@ -1,0 +1,177 @@
+{
+  "schema_version": "2.0",
+  "kind": "submission",
+  "task_id": "TRN-WSM-0001",
+  "candidate_revision": "532cc30528226cae231329e2078656cff9ae5c8c",
+  "observed_revision": "532cc30528226cae231329e2078656cff9ae5c8c",
+  "summary": "Proposed bounded P2 status-source correction for the already completed cutover review/integration/audit at 14682d798faed7cd398d21be3cf8076b84d5b0fe. Required author checks pass. This is not approval of the new closeout candidate; its independent review and separate integration remain NOT_RUN.",
+  "profile_id": "gpt-6-astra-max",
+  "role": "author",
+  "capability_tier": 1,
+  "routing_policy_digest": "61f0db448cf5ac5adad4d9340d568a7558c0369174e30aab92dd0ccf0d24bdf0",
+  "work_package_digest": "9ad162070c27e4c765ba145fc8a35d31dc288482453daaa39ec0bb6add8bd8d8",
+  "issued_at": "2026-09-15T01:24:35+00:00",
+  "scope": "Author evidence for the four-source closeout proposal and eleven generated views. TRN-WSM-0001 is the existing transition reference; this envelope is not a live WP submission or receipt. It excludes independent acceptance, later integration and product/external qualification.",
+  "changed_paths": [
+    ".agent/generated/manifest.json",
+    ".agent/generated/validation-report.json",
+    ".agent/state/RESUME.md",
+    ".agent/state/current.json",
+    "docs/qualification/evidence/2026-09-15-workspace-adoption-closeout-author.evidence.json",
+    "docs/qualification/evidence/2026-09-15-workspace-adoption-closeout-author.md",
+    "project-dossier/CANONICAL_SOURCE_MAP.md",
+    "project-dossier/conformance/findings.json",
+    "project-dossier/current-state/README.md",
+    "project-dossier/current-state/current.json",
+    "project-dossier/handoff/START_HERE.md",
+    "project-dossier/machine-readable/evidence-index.json",
+    "project-dossier/machine-readable/findings.json",
+    "project-dossier/machine-readable/path-authority.json",
+    "project-dossier/machine-readable/plan.json",
+    "project-dossier/machine-readable/raidq.json",
+    "project-dossier/transition/README.md"
+  ],
+  "notes": "Author /root/execute_external_state_relocation is distinct from auditor/reviewer /root/review_mapped_facade and integrator /root. Base e7632cf3644a40724a22ed5d121c2ad62a557a44/tree 666cf97e37305f2c433d71f96feee02b5bff67d7 preserves the two audit additions. Source commit acde40f41ca94cf3a6fe9117e59610a76f9875cf; tested candidate 532cc30528226cae231329e2078656cff9ae5c8c/tree ab2f6bff76ad3de97ece3073c6061b858ab4ba3f; canonical base-to-tested diff a3184d4b593164350cfce92173ed53041e70baef0622311285373bbfa1691f1d. Source scope c856f1055e329d1ba01a34ab9cb49b8aeff2762aee9df3fcd03067e866ed23fe; generation 892985fdecb5d2e5b9f2ddf9043cd38f21d8c14cba06077526bc082a3354d7a3. All older receipts/author/review/audit evidence, deferred findings and historical procedure are unchanged. Final evidence/index-only descendant identity and read-only proof are reported in the handoff. One unapplied patch was rejected by automatic approval review; after exact evidence checks, revised prior-subject/proposed-correction wording was accepted by the same tool without bypass. No external call, private-content access or live mutation. No child/background processes were started; parent must observe final actor stop. No executing-model introspection or private-content/atime assurance is claimed.",
+  "checks": [
+    {
+      "id": "bounded-source-status-correction",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Run the recorded base-versus-current JSON/procedure assertion: only PLAN-0003/0004, FIND-0001/0004/0006, RAIDQ-0003 and README introduction change; prior exact subjects are separated from the unapproved closeout proposal.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-workspace-adoption-closeout-author.md",
+      "sha256": "50c42d02fdd0f0d8ed37ffa854c9cf5f4a1d249c8d012a48e5f378dc277b2fe2"
+    },
+    {
+      "id": "prior-review-audit-and-cleanup-evidence",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Read and hash the exact cutover review and integrated-main audit; existing Harness.evidence(require_pass=True) validates 28 and 29 required checks; fresh Git/path checks corroborate prior worktree reconciliation.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-workspace-adoption-closeout-author.md",
+      "sha256": "50c42d02fdd0f0d8ed37ffa854c9cf5f4a1d249c8d012a48e5f378dc277b2fe2"
+    },
+    {
+      "id": "facade-suite",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "python3 -B -m unittest discover -s .agent/tests -p 'test_*.py' -v; 26/26, no skips.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-workspace-adoption-closeout-author.md",
+      "sha256": "50c42d02fdd0f0d8ed37ffa854c9cf5f4a1d249c8d012a48e5f378dc277b2fe2"
+    },
+    {
+      "id": "workspace-suite",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "python3 -B -m unittest discover -s tooling/workspace/tests -p 'test_*.py' -v; 77 tests pass.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-workspace-adoption-closeout-author.md",
+      "sha256": "50c42d02fdd0f0d8ed37ffa854c9cf5f4a1d249c8d012a48e5f378dc277b2fe2"
+    },
+    {
+      "id": "coordinator-suite",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "python3 -B -m unittest discover -s tooling/coordination/tests -p 'test_*.py' -v; 184 tests pass.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-workspace-adoption-closeout-author.md",
+      "sha256": "50c42d02fdd0f0d8ed37ffa854c9cf5f4a1d249c8d012a48e5f378dc277b2fe2"
+    },
+    {
+      "id": "sealed-suite",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "python3 -B -m unittest discover -s specs/texenda-handoff/08-project-harness/tests -p 'test_*.py' -v; 39 tests pass.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-workspace-adoption-closeout-author.md",
+      "sha256": "50c42d02fdd0f0d8ed37ffa854c9cf5f4a1d249c8d012a48e5f378dc277b2fe2"
+    },
+    {
+      "id": "contract-parse-links-schema-owner-evidence",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "python3 -B tooling/workspace/validate_contract.py --check --audit and the facade's strict nongenerated/full checks; exact counts and link/evidence/owner scope are recorded in the Markdown.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-workspace-adoption-closeout-author.md",
+      "sha256": "50c42d02fdd0f0d8ed37ffa854c9cf5f4a1d249c8d012a48e5f378dc277b2fe2"
+    },
+    {
+      "id": "both-package-checks",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Run both exact checksum-aware package commands recorded in the Markdown; each passes 14/14 with all 86 sealed and 88 preserved source files intact.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-workspace-adoption-closeout-author.md",
+      "sha256": "50c42d02fdd0f0d8ed37ffa854c9cf5f4a1d249c8d012a48e5f378dc277b2fe2"
+    },
+    {
+      "id": "eleven-output-refresh-and-compact-handoff",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "After source commit, run explicit refresh with the external state root; exactly eleven existing generated outputs change, reconstruct correctly, and retain compact 13/11-line resume/handoff routing.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-workspace-adoption-closeout-author.md",
+      "sha256": "50c42d02fdd0f0d8ed37ffa854c9cf5f4a1d249c8d012a48e5f378dc277b2fe2"
+    },
+    {
+      "id": "facade-check",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "python3 -B .agent/scripts/validate.py --check --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda; exit 0.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-workspace-adoption-closeout-author.md",
+      "sha256": "50c42d02fdd0f0d8ed37ffa854c9cf5f4a1d249c8d012a48e5f378dc277b2fe2"
+    },
+    {
+      "id": "facade-check-all",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "python3 -B .agent/scripts/validate.py --check --all --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda; exit 0, all nine nonwriters pass, both refresh writers skipped.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-workspace-adoption-closeout-author.md",
+      "sha256": "50c42d02fdd0f0d8ed37ffa854c9cf5f4a1d249c8d012a48e5f378dc277b2fe2"
+    },
+    {
+      "id": "lossless-no-write-snapshot",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Run the exact recorded driver around check/check-all; 802 entries across canonical/closeout/state/history/source/navigation match by hash, metadata and Git state. Nanosecond fields are lossless decimal strings; private/Git-internal/atime exclusions are named.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-workspace-adoption-closeout-author.md",
+      "sha256": "50c42d02fdd0f0d8ed37ffa854c9cf5f4a1d249c8d012a48e5f378dc277b2fe2"
+    },
+    {
+      "id": "physical-state-and-mapped-replay-preserved",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Canonical helper verify, bound Harness check and read-only WP-00 replay preserve exact state/binding, 13 receipts, 11 roster entries, zero leases/budget/gates and 24 required retained evidence checks; no receipt append.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-workspace-adoption-closeout-author.md",
+      "sha256": "50c42d02fdd0f0d8ed37ffa854c9cf5f4a1d249c8d012a48e5f378dc277b2fe2"
+    },
+    {
+      "id": "private-exact-path-boundary",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Use only exact final/old test -f and Git ignore/tracking scope checks. No real CSV content, size/detailed metadata or private-directory inventory is accessed.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-workspace-adoption-closeout-author.md",
+      "sha256": "50c42d02fdd0f0d8ed37ffa854c9cf5f4a1d249c8d012a48e5f378dc277b2fe2"
+    },
+    {
+      "id": "immutable-sealed-and-diff-preservation",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "The exact base-to-tested diff leaves every older qualification record, immutable receipt, code/policy/harness and sealed package unchanged; git diff --check passes.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-workspace-adoption-closeout-author.md",
+      "sha256": "50c42d02fdd0f0d8ed37ffa854c9cf5f4a1d249c8d012a48e5f378dc277b2fe2"
+    },
+    {
+      "id": "clean-worktree-and-runtime-boundary",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Check empty tracked/untracked/ignored status after suites and snapshot. No worktree cache relocation is needed; all test/command sessions end without child agents or background jobs.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-workspace-adoption-closeout-author.md",
+      "sha256": "50c42d02fdd0f0d8ed37ffa854c9cf5f4a1d249c8d012a48e5f378dc277b2fe2"
+    },
+    {
+      "id": "closeout-independent-review",
+      "required": false,
+      "status": "NOT_RUN",
+      "command_or_procedure": "A distinct qualified Astra/max reviewer must inspect the final closeout candidate and evidence; existing baseline approval cannot substitute."
+    },
+    {
+      "id": "closeout-integration",
+      "required": false,
+      "status": "NOT_RUN",
+      "command_or_procedure": "After independent review, root integrates separately and validates the resulting exact head. This is outside the earlier completed plan subjects."
+    }
+  ]
+}
