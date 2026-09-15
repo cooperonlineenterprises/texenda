@@ -8,7 +8,8 @@ Both remain subordinate to current platform, sandbox, tool, and operator authori
 Texenda product semantics and topic ownership remain in the sealed
 [handoff package](specs/texenda-handoff/README.md) and accepted scoped
 [mapped-workspace ADR](docs/decisions/ADR-0004-mapped-project-workspace.md) plus
-the other records it routes to. Preserve the sealed package byte-for-byte.
+the other records it routes to. The scoped [email-editor amendment](docs/decisions/ADR-0005-react-email-editor-reversible-default.md)
+owns only its named reversible editor fields. Preserve the sealed package byte-for-byte.
 Read nested `AGENTS.md` files for affected paths; child instructions may narrow,
 never weaken.
 

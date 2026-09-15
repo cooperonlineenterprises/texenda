@@ -97,10 +97,19 @@ def validate(crosswalk, baseline, manifest):
             source['qualification'] == 'inspected_structural_reference_only' and
             source['generated_new_project'] is False and
             source['newer_candidate_qualified'] is False and
+            source['newer_candidate_version'] == '4.2.0' and
+            source['newer_candidate_full_validator'] == 'FAIL' and
+            source['dirty_checkout_working_version'] == '4.3.0' and
+            source['dirty_checkout_version_committed'] is False and
             source['origin_record_created'] is True and
             source['origin_schema_supports_mapped_existing'] is True and
-            source['origin_schema'] == '.agent/schemas/project-blueprint-origin.v2.schema.json',
+            source['origin_schema'] == '.agent/schemas/project-blueprint-origin.v3.schema.json',
             'false blueprint provenance')
+    require(crosswalk.get('local_amendments') == [{
+        'id': 'ADR-0005',
+        'owner_path': 'docs/decisions/ADR-0005-react-email-editor-reversible-default.md',
+        'scope': 'email_editor_reversible_default_only', 'package_variants_modified': False}],
+        'local editor amendment scope/owner changed')
     require(set(crosswalk['roles']) == ROLES, 'role vocabulary changed')
     epochs = ['baseline', 'facade', 'external_state']
     require(crosswalk['epochs'] == epochs, 'ownership epochs missing')
@@ -286,6 +295,156 @@ def validate(crosswalk, baseline, manifest):
             'artifact_types': len(artifact_types), 'source_moves': len(moves)}
 
 
+EDITOR_ADR = 'docs/decisions/ADR-0005-react-email-editor-reversible-default.md'
+OBSERVATIONS = 'docs/qualification/evidence/2026-09-15-editor-blueprint-followup-observations.evidence.json'
+EDITOR_FIELDS = (
+    'schema_version',
+    'amendment_owner',
+    'status',
+    'renderer',
+    'composer',
+    'composer_version',
+    'composer_qualification',
+    'observed_release',
+    'host',
+    'document_codec',
+    'codec_versioned',
+    'canonical_email_document',
+    'compiled_outputs',
+    'retain_hashes',
+    'payload_lexical_is_canonical_email',
+    'block_allowlist',
+    'default_extensions_automatically_approved',
+    'arbitrary_react_allowed',
+    'javascript_allowed',
+    'raw_executable_content_allowed',
+    'fallback',
+    'preserve_old_codecs',
+    'preserve_compiled_outputs',
+    'required_qualification',
+    'qualification_gate',
+    'qualification_gate_passed',
+    'work_package',
+    'dependencies_installed',
+    'package_variants_modified',
+    'source_package_promoted',
+)
+
+
+def load_editor_contract(root):
+    path = root / EDITOR_ADR
+    require(path.is_file() and not path.is_symlink(), 'editor amendment owner missing')
+    text = path.read_text()
+    marker = '<!-- texenda-editor-default-contract -->'
+    require(text.count(marker) == 1, 'editor amendment needs exactly one owned contract')
+    matches = re.findall(re.escape(marker) + r'\s*\x60\x60\x60json\n(.*?)\n\x60\x60\x60', text, re.S)
+    require(len(matches) == 1, 'editor amendment contract block missing or ambiguous')
+    return loads(matches[0])
+
+
+def validate_followup_metadata(editor, provenance, origin):
+    require(set(editor) == set(EDITOR_FIELDS), 'editor amendment contract is not closed')
+    require(editor['schema_version'] == 'texenda.editor-default.v1'
+            and editor['amendment_owner'] == EDITOR_ADR
+            and editor['status'] == 'reversible_implementation_default'
+            and editor['renderer'] == 'React Email' and editor['composer'] == '@react-email/editor'
+            and editor['host'] == 'custom Payload/Next view'
+            and editor['document_codec'] == 'EmailDocumentCodec'
+            and editor['codec_versioned'] is True
+            and editor['canonical_email_document'] == 'versioned TipTap JSON',
+            'editor default/codec ownership changed')
+    require(editor['composer_version'] is None and editor['composer_qualification'] == 'UNVERIFIED'
+            and editor['observed_release'] == {
+                'version': '1.7.7', 'retrieved_on': '2026-09-15', 'selected': False}
+            and editor['qualification_gate'] == 'VAL-03'
+            and editor['qualification_gate_passed'] is False
+            and editor['work_package'] == 'WP-10' and editor['dependencies_installed'] is False,
+            'editor version pin or VAL-03 qualification bypass')
+    required = ['compatibility_manifest', 'license_and_SBOM', 'peer_dependency_closure',
+                'Next_React_Payload_integration', 'JSON_round_trip', 'build_performance',
+                'rendering_fixtures']
+    require(editor['required_qualification'] == required, 'editor qualification evidence omitted')
+    require(editor['block_allowlist'] == [
+                'text', 'heading', 'image', 'button', 'divider', 'callout',
+                'article/recipe card', 'immutable compliance-footer structure']
+            and editor['compiled_outputs'] == ['HTML', 'plain text']
+            and editor['retain_hashes'] is True
+            and editor['preserve_old_codecs'] is True
+            and editor['preserve_compiled_outputs'] is True
+            and editor['fallback'] == 'React Email with a small fixed-block composer',
+            'editor allowlist, retained outputs or fallback weakened')
+    require(all(editor[key] is False for key in (
+                'payload_lexical_is_canonical_email', 'default_extensions_automatically_approved',
+                'arbitrary_react_allowed', 'javascript_allowed', 'raw_executable_content_allowed',
+                'package_variants_modified', 'source_package_promoted')),
+            'editor implementation or package authority expanded')
+    sources = provenance['sources']
+    by_id = {row['id']: row for row in sources}
+    require(len(by_id) == len(sources) and set(by_id) == {
+                'SRC-0001', 'SRC-0002', 'SRC-0003', 'SRC-0004',
+                'SRC-0005', 'SRC-0006', 'SRC-0007'}, 'follow-up provenance IDs incomplete')
+    require(origin['schema_version'] == 'texenda.project-blueprint-origin.v3'
+            and origin['selected_version'] == by_id['SRC-0001']['version'] == '1.0.0'
+            and by_id['SRC-0001']['qualification']
+            == origin['reference_qualification'] == 'inspected_structural_reference_only'
+            and origin['clean_candidate']['qualified'] is False
+            and origin['clean_candidate']['adopted'] is False,
+            'selected blueprint structural reference changed')
+    clean, dirty = by_id['SRC-0002'], by_id['SRC-0005']
+    require(clean['version'] == origin['clean_candidate']['committed_version'] == '4.2.0'
+            and clean['revision'] == origin['clean_candidate']['revision']
+            == '5e2d3025aea6b1574ab984e5ebb89b5602a38535'
+            and clean['tree'] == origin['clean_candidate']['tree']
+            == '3c732979e580c80b020d09c22ce86f5202110518'
+            and clean['working_tree'] == 'clean' and clean['adopted'] is False
+            and clean['qualification'] == 'not_fully_qualified'
+            and clean['qualification_checks'] == origin['clean_candidate']['qualification_checks']
+            == {'source_contracts': 'PASS', 'acceptance': 'PASS', 'full_validator': 'FAIL'}
+            and clean['failed_check'] == origin['clean_candidate']['failed_check'],
+            'clean source qualification/version provenance mixed or overclaimed')
+    require(dirty['working_version'] == '4.3.0' and dirty['version_committed'] is False
+            and dirty['version_attributed_to_clean_revision'] is False
+            and dirty['adopted'] is False and 'revision' not in dirty and 'tree' not in dirty,
+            'dirty uncommitted version attributed to a clean commit')
+    require(provenance['package_difference_count'] == 11
+            and set(provenance['package_differing_paths']) == DIFFERENCES
+            and by_id['SRC-0003']['kind'] == 'implementation_repository_sealed_authority'
+            and by_id['SRC-0004']['kind'] == 'historical_source_unpromoted_variant'
+            and provenance['editor_amendment'] == {
+                'owner_path': EDITOR_ADR, 'status': 'resolved_by_local_amendment',
+                'package_variants_modified': False, 'package_difference_count': 11,
+                'qualification_gate': 'VAL-03', 'qualification_gate_passed': False},
+            'editor amendment promoted or changed a preserved package')
+    observed = by_id['SRC-0006']
+    require(observed['observed_editor_release'] == '1.7.7'
+            and observed['selected_version'] is None
+            and observed['qualification'] == 'UNVERIFIED'
+            and observed['local_amendment'] == EDITOR_ADR,
+            'upstream editor observation became a pin or qualification')
+    debug = by_id['SRC-0007']
+    require(debug['manifest'] == 'CURRENT-SHA256SUMS'
+            and debug['manifest_sha256'] == '8fca896ff26a00eb7d85d49fe54344a6a2d9b034d5938609ca920c3bc7ac2bd2'
+            and debug['provenance'] == 'PROVENANCE.md'
+            and debug['provenance_sha256'] == '5830d7d810d203a3e9e0f3fc9c2859778424be6d5bd4ccddcf512fc8699b0fa2'
+            and debug['current_file_count'] == 5 and debug['current_hashes_verified'] is True
+            and debug['pre_move_manifest_exists'] is False
+            and debug['historical_equality_reconstructed'] is False
+            and debug['authority'] == 'non_authoritative_forward_only'
+            and debug['debug_payloads_promoted_to_project_evidence'] is False,
+            'debug forward baseline overclaims historical equality or authority')
+    return {'origin': 'separated_v3', 'editor': 'reversible_unverified_default',
+            'debug_artifacts': 'forward_baseline_only'}
+
+
+def verify_followup_records(root):
+    require(EDITOR_ADR in (root / 'AGENTS.md').read_text(),
+            'root router does not identify the local editor amendment owner')
+    return validate_followup_metadata(
+        load_editor_contract(root),
+        loads((root / 'project-dossier/provenance/sources.json').read_text()),
+        loads((root / '.project-blueprint-origin.json').read_text()))
+
+
 def verify_bound_inputs(root, baseline):
     """Validate immutable input bytes at the exact original Git revision."""
     revision = baseline['subject']['main_revision']
@@ -319,14 +478,14 @@ def verify_actual_stores(root):
     origin = root / '.project-blueprint-origin.json'
     if origin.exists():
         value = loads(origin.read_text())
-        schema = root / '.agent/schemas/project-blueprint-origin.v2.schema.json'
+        schema = root / '.agent/schemas/project-blueprint-origin.v3.schema.json'
         require(schema.is_file() and not schema.is_symlink(), 'origin schema successor missing')
         schema_value = loads(schema.read_text())
-        require(value.get('schema_version') == 'texenda.project-blueprint-origin.v2' and
+        require(value.get('schema_version') == 'texenda.project-blueprint-origin.v3' and
                 value.get('adoption_mode') == 'mapped-existing' and
                 value.get('generated_new_project') is False and
                 value.get('reference_qualification') == 'inspected_structural_reference_only' and
-                schema_value.get('$id') == 'urn:texenda:project-blueprint-origin:v2' and
+                schema_value.get('$id') == 'urn:texenda:project-blueprint-origin:v3' and
                 schema_value.get('additionalProperties') is False,
                 'origin schema cannot truthfully represent mapped-existing')
 
@@ -426,6 +585,7 @@ def main():
         counts = validate(crosswalk, baseline, manifest)
         verify_bound_inputs(ROOT, baseline)
         verify_actual_stores(ROOT)
+        counts['followups'] = verify_followup_records(ROOT)
         counts['qualification_checks'] = verify_qualification_checks(ROOT)
         if args.audit:
             counts['audit'] = audit_candidate(ROOT, baseline)

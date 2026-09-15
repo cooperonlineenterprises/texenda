@@ -14,14 +14,35 @@
     },
     {
       "id": "SRC-0002",
-      "kind": "unqualified_newer_candidate",
-      "path": "/Users/jamesryancooper/Projects/octon-mini",
-      "version": "4.3.0",
+      "kind": "clean_committed_candidate",
+      "path": "/private/tmp/texenda-blueprint-qualification.BXFOTm/source",
+      "version": "4.2.0",
       "revision": "5e2d3025aea6b1574ab984e5ebb89b5602a38535",
       "tree": "3c732979e580c80b020d09c22ce86f5202110518",
-      "dirty_entry_count": 218,
-      "qualification": "unqualified_candidate",
-      "limitation": "Dirty source with interrupted full qualification; not selected or adopted."
+      "working_tree": "clean",
+      "local_and_observed_remote_main_match": true,
+      "qualification": "not_fully_qualified",
+      "qualification_checks": {
+        "source_contracts": "PASS",
+        "acceptance": "PASS",
+        "full_validator": "FAIL"
+      },
+      "failed_check": {
+        "test": "AutonomousDeliveryTests.test_source_activation_exercise_writes_only_external_receipt",
+        "reason": "fixed_fixture_valid_until_expired",
+        "valid_until": "2026-09-10T23:59:59-05:00",
+        "suite_tests": 20,
+        "suite_passed": 19,
+        "suite_failed": 1
+      },
+      "adopted": false,
+      "evidence": "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-observations.evidence.json",
+      "archive_bundle": {
+        "path": "/Users/jamesryancooper/Projects/texenda/archive/checkpoints/blueprint-qualification-20260915/octon-mini-4.2.0-5e2d302.bundle",
+        "sha256": "d8e1471a25c5d0d20bd560d0dd33f060d6d0013aa573e3f725b2ce93639b3d7e",
+        "verified": true
+      },
+      "limitation": "Exact committed VERSION is 4.2.0. The full validator fails the expired activation fixture; passing source/acceptance checks do not establish full qualification or a Texenda upgrade."
     },
     {
       "id": "SRC-0003",
@@ -45,7 +66,54 @@
       "path_nul_sha256": "c3b25ae42e74324fedd3f4d545fe4105e9a2607c2f777afe049af10e75d9fe98",
       "canonical_array_sha256": "26fa6487334c2782bdff8e98c49963e6720228824f6b91a9a7126e0d6cec2131",
       "qualification": "14_package_checks_pass_at_phase_0",
-      "limitation": "Eleven authoritative files differ from the sealed variant; no semantic selection or merge."
+      "limitation": "All eleven byte differences remain. ADR-0005 selects only the named editor refinement locally; this source variant is neither promoted nor merged, and both packages remain unchanged."
+    },
+    {
+      "id": "SRC-0005",
+      "kind": "historical_dirty_checkout_observation",
+      "path": "/Users/jamesryancooper/Projects/octon-mini",
+      "working_version": "4.3.0",
+      "dirty_entry_count": 218,
+      "working_tree": "dirty",
+      "version_committed": false,
+      "version_attributed_to_clean_revision": false,
+      "qualification": "unqualified_working_tree",
+      "adopted": false,
+      "historical_evidence": "docs/qualification/evidence/2026-09-14-workspace-phase-0-baseline.json",
+      "limitation": "The working VERSION is uncommitted and is not the VERSION of clean revision 5e2d3025aea6b1574ab984e5ebb89b5602a38535. The original checkout is not modified by this reconciliation."
+    },
+    {
+      "id": "SRC-0006",
+      "kind": "first_party_editor_observations",
+      "retrieved_on": "2026-09-15",
+      "urls": [
+        "https://react.email/docs/editor/overview",
+        "https://react.email/docs/editor/api-reference/email-editor",
+        "https://github.com/resend/react-email/releases"
+      ],
+      "observed_editor_release": "1.7.7",
+      "selected_version": null,
+      "qualification": "UNVERIFIED",
+      "local_amendment": "docs/decisions/ADR-0005-react-email-editor-reversible-default.md",
+      "evidence": "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-observations.evidence.json",
+      "limitation": "Dated API/architecture/release observations only; exact license/dependency/integration/round-trip/build/render qualification remains WP-10/VAL-03."
+    },
+    {
+      "id": "SRC-0007",
+      "kind": "debug_artifact_forward_baseline",
+      "path": "/Users/jamesryancooper/Projects/texenda/archive/reviewer-caches/pre-fix-check-all-KHHptR",
+      "manifest": "CURRENT-SHA256SUMS",
+      "manifest_sha256": "8fca896ff26a00eb7d85d49fe54344a6a2d9b034d5938609ca920c3bc7ac2bd2",
+      "provenance": "PROVENANCE.md",
+      "provenance_sha256": "5830d7d810d203a3e9e0f3fc9c2859778424be6d5bd4ccddcf512fc8699b0fa2",
+      "current_file_count": 5,
+      "current_hashes_verified": true,
+      "pre_move_manifest_exists": false,
+      "historical_equality_reconstructed": false,
+      "authority": "non_authoritative_forward_only",
+      "debug_payloads_promoted_to_project_evidence": false,
+      "evidence": "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-observations.evidence.json",
+      "limitation": "The five current hashes are the first durable forward baseline. No pre-move manifest exists; historical equality cannot be reconstructed, and raw debug/bytecode payloads are not source, approval or readiness evidence."
     }
   ],
   "package_difference_count": 11,
@@ -62,5 +130,13 @@
     "DECISION-STATUS.md",
     "SHA256SUMS"
   ],
-  "difference_owner": "docs/qualification/evidence/2026-09-14-workspace-phase-0-baseline.json"
+  "difference_owner": "docs/qualification/evidence/2026-09-14-workspace-phase-0-baseline.json",
+  "editor_amendment": {
+    "owner_path": "docs/decisions/ADR-0005-react-email-editor-reversible-default.md",
+    "status": "resolved_by_local_amendment",
+    "package_variants_modified": false,
+    "package_difference_count": 11,
+    "qualification_gate": "VAL-03",
+    "qualification_gate_passed": false
+  }
 }

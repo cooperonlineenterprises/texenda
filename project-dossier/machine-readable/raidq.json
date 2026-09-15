@@ -26,16 +26,16 @@
     {
       "id": "RAIDQ-0004",
       "type": "question",
-      "status": "deferred",
-      "statement": "Whether to reconcile the later @react-email/editor wording remains unresolved.",
-      "control": "Preserve both packages and open a separate project-local amendment only if requested."
+      "status": "resolved",
+      "statement": "The owner-requested local ADR-0005 adopts the later editor refinement only as a reversible initial composer/codec default.",
+      "control": "Preserve both packages and eleven differences. Keep exact version unpinned/UNVERIFIED, approved blocks and fixed-block fallback; WP-10/VAL-03 evidence still gates implementation compatibility and activation."
     },
     {
       "id": "RAIDQ-0005",
       "type": "issue",
-      "status": "deferred",
-      "statement": "A clean current Project Blueprint source newer than 1.0.0 is not qualified.",
-      "control": "Retain structural-reference-only provenance and make no 4.3.0 adoption claim."
+      "status": "gated",
+      "statement": "Clean committed Octon Mini 4.2.0 is identified but not fully qualified: the full validator fails the expired source-activation fixture. Dirty uncommitted working VERSION 4.3.0 is a separate observation.",
+      "control": "Retain source/acceptance PASS and full-validator FAIL explicitly. Do not upgrade until a clean source is fully qualified and an exact reviewed migration seed/plan is separately authorized; installed 1.0.0 remains structural-reference-only."
     }
   ]
 }

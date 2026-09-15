@@ -1,0 +1,163 @@
+{
+  "schema_version": "texenda.followup-observations.v1",
+  "id": "EVD-FOLLOWUP-0001",
+  "kind": "bounded_source_and_provenance_observations",
+  "information_role": "immutable_evidence",
+  "recorded_at": "2026-09-15T03:50:31Z",
+  "subject_base": "836e209020177267ccaa1c803b66779cd29d12ec",
+  "clean_source": {
+    "inspection_checkout": "/private/tmp/texenda-blueprint-qualification.BXFOTm/source",
+    "committed_version": "4.2.0",
+    "revision": "5e2d3025aea6b1574ab984e5ebb89b5602a38535",
+    "tree": "3c732979e580c80b020d09c22ce86f5202110518",
+    "local_main": "5e2d3025aea6b1574ab984e5ebb89b5602a38535",
+    "observed_remote_main": "5e2d3025aea6b1574ab984e5ebb89b5602a38535",
+    "working_tree": "clean",
+    "qualified": false,
+    "adopted": false,
+    "qualification_checks": {
+      "source_contracts": "PASS",
+      "acceptance": "PASS",
+      "full_validator": "FAIL"
+    },
+    "acceptance_scope": "automated_checks_and_project_demonstration_requirements_distinguished",
+    "failed_check": {
+      "test": "AutonomousDeliveryTests.test_source_activation_exercise_writes_only_external_receipt",
+      "reason": "fixed_fixture_valid_until_expired",
+      "valid_until": "2026-09-10T23:59:59-05:00",
+      "suite_tests": 20,
+      "suite_passed": 19,
+      "suite_failed": 1
+    },
+    "bundle": {
+      "path": "/Users/jamesryancooper/Projects/texenda/archive/checkpoints/blueprint-qualification-20260915/octon-mini-4.2.0-5e2d302.bundle",
+      "sha256": "d8e1471a25c5d0d20bd560d0dd33f060d6d0013aa573e3f725b2ce93639b3d7e",
+      "verified": true
+    }
+  },
+  "dirty_checkout_observation": {
+    "path": "/Users/jamesryancooper/Projects/octon-mini",
+    "working_version": "4.3.0",
+    "dirty_entry_count": 218,
+    "working_tree": "dirty",
+    "version_committed": false,
+    "version_attributed_to_clean_revision": false,
+    "qualified": false,
+    "adopted": false,
+    "historical_evidence": "docs/qualification/evidence/2026-09-14-workspace-phase-0-baseline.json"
+  },
+  "upgrade_plan": {
+    "initial_stop": "upgrade requires --authority-source or setup.upgrade-authority",
+    "supplied_authority_argument": "user:current-followup-request",
+    "supplied_evidence_ref": "docs/decisions/ADR-0004-mapped-project-workspace.md",
+    "subsequent_stop": "Project Blueprint 3.1.0 requires an exact reviewed --project-blueprint-seed",
+    "continuation_id": "OCTON-CONT-0001",
+    "authority_validated": false,
+    "reviewed_seed": null,
+    "output_written": false,
+    "applied": false
+  },
+  "editor_sources": {
+    "id": "SRC-0006",
+    "kind": "first_party_editor_observations",
+    "retrieved_on": "2026-09-15",
+    "urls": [
+      "https://react.email/docs/editor/overview",
+      "https://react.email/docs/editor/api-reference/email-editor",
+      "https://github.com/resend/react-email/releases"
+    ],
+    "observed_editor_release": "1.7.7",
+    "selected_version": null,
+    "qualification": "UNVERIFIED",
+    "local_amendment": "docs/decisions/ADR-0005-react-email-editor-reversible-default.md",
+    "evidence": "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-observations.evidence.json",
+    "limitation": "Dated API/architecture/release observations only; exact license/dependency/integration/round-trip/build/render qualification remains WP-10/VAL-03."
+  },
+  "debug_forward_baseline": {
+    "id": "SRC-0007",
+    "kind": "debug_artifact_forward_baseline",
+    "path": "/Users/jamesryancooper/Projects/texenda/archive/reviewer-caches/pre-fix-check-all-KHHptR",
+    "manifest": "CURRENT-SHA256SUMS",
+    "manifest_sha256": "8fca896ff26a00eb7d85d49fe54344a6a2d9b034d5938609ca920c3bc7ac2bd2",
+    "provenance": "PROVENANCE.md",
+    "provenance_sha256": "5830d7d810d203a3e9e0f3fc9c2859778424be6d5bd4ccddcf512fc8699b0fa2",
+    "current_file_count": 5,
+    "current_hashes_verified": true,
+    "pre_move_manifest_exists": false,
+    "historical_equality_reconstructed": false,
+    "authority": "non_authoritative_forward_only",
+    "debug_payloads_promoted_to_project_evidence": false,
+    "evidence": "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-observations.evidence.json",
+    "limitation": "The five current hashes are the first durable forward baseline. No pre-move manifest exists; historical equality cannot be reconstructed, and raw debug/bytecode payloads are not source, approval or readiness evidence."
+  },
+  "checks": [
+    {
+      "id": "clean-source-contracts",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "From the clean clone, env PYTHONDONTWRITEBYTECODE=1 python3 -B skills/octon-mini-project-bootstrap/scripts/validate_source_contracts.py; exit 0.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-observations.md",
+      "sha256": "d92e1b2de4b822b144ccb73d51f3f9cb672869f6821cfbe77eb32ce577987b63"
+    },
+    {
+      "id": "clean-source-acceptance",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "From the clean clone, env PYTHONDONTWRITEBYTECODE=1 python3 -B skills/octon-mini-project-bootstrap/scripts/test_acceptance.py; exit 0, automated_pass/project_demonstration_required remain distinct.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-observations.md",
+      "sha256": "d92e1b2de4b822b144ccb73d51f3f9cb672869f6821cfbe77eb32ce577987b63"
+    },
+    {
+      "id": "clean-source-full-validator",
+      "required": false,
+      "status": "FAIL",
+      "command_or_procedure": "From the clean clone, env PYTHONDONTWRITEBYTECODE=1 python3 -B skills/octon-mini-project-bootstrap/scripts/validate_octon_mini.py; exit 1, exactly one failed expired-authorization fixture, 19/20 in the reported sub-suite pass. No clock/source patch or qualification override.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-observations.md",
+      "sha256": "d92e1b2de4b822b144ccb73d51f3f9cb672869f6821cfbe77eb32ce577987b63"
+    },
+    {
+      "id": "clean-version-and-bundle",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Verify clean HEAD/tree/main/origin-main, git show HEAD:VERSION=4.2.0, clean status before/after, and the exact preserved bundle hash plus git bundle verify exit 0.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-observations.md",
+      "sha256": "d92e1b2de4b822b144ccb73d51f3f9cb672869f6821cfbe77eb32ce577987b63"
+    },
+    {
+      "id": "blocked-upgrade-plan-no-mutation",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Run both exact documented read-only plan attempts: missing authority then missing reviewed seed, both exit 2/OCTON-CONT-0001/mutation false; exact output path remains absent.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-observations.md",
+      "sha256": "d92e1b2de4b822b144ccb73d51f3f9cb672869f6821cfbe77eb32ce577987b63"
+    },
+    {
+      "id": "public-editor-observations",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Read-only GET the three exact first-party URLs on 2026-09-15 UTC; record API/architecture/build caveat and observed 1.7.7 without pinning or qualification.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-observations.md",
+      "sha256": "d92e1b2de4b822b144ccb73d51f3f9cb672869f6821cfbe77eb32ce577987b63"
+    },
+    {
+      "id": "debug-current-forward-baseline",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Verify CURRENT-SHA256SUMS and PROVENANCE.md exact hashes; shasum -a 256 -c CURRENT-SHA256SUMS passes all five current files. Retain absent pre-move manifest and no historical equality claim.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-observations.md",
+      "sha256": "d92e1b2de4b822b144ccb73d51f3f9cb672869f6821cfbe77eb32ce577987b63"
+    }
+  ],
+  "limitations": [
+    "The selected installed 1.0.0 source remains structural-reference-only.",
+    "Clean committed 4.2.0 is not fully qualified or adopted; dirty uncommitted 4.3.0 is a separate historical checkout observation.",
+    "The planner's legacy 3.1.0 seed error is literal diagnostic wording, not Texenda's selected version.",
+    "No editor dependency is installed or pinned; WP-10/VAL-03 remain unverified.",
+    "The new candidate requires independent review/integration; no product or external gate is cleared.",
+    "No preexisting stdout-file hash is claimed; this record was created after the author reran the checks."
+  ],
+  "private_content_accessed": false,
+  "external_writes": false,
+  "source_files_modified": false,
+  "upgrade_applied": false
+}

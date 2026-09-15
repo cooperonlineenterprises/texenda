@@ -21,12 +21,16 @@
     "selected_source": "/Users/jamesryancooper/.codex/skills/project-bootstrap/assets/blueprint-source",
     "qualification": "inspected_structural_reference_only",
     "generated_new_project": false,
-    "newer_candidate_version": "4.3.0",
+    "newer_candidate_version": "4.2.0",
     "newer_candidate_qualified": false,
     "origin_schema_supports_mapped_existing": true,
     "origin_record_created": true,
-    "origin_schema": ".agent/schemas/project-blueprint-origin.v2.schema.json",
-    "limitation": "A deliberate local origin.v2 successor now records mapped-existing truthfully. Installed source validator/acceptance still fail on source-layout assumptions, and a dirty Octon Mini 4.3.0 candidate remains unqualified. No facts, accepted decisions, permissions, evidence or status are imported from either source."
+    "origin_schema": ".agent/schemas/project-blueprint-origin.v3.schema.json",
+    "limitation": "Origin v3 separates selected installed 1.0.0, clean committed 4.2.0 with incomplete qualification, and dirty uncommitted working 4.3.0. V2 remains immutable. Source/acceptance PASS do not erase the full-validator FAIL or missing reviewed seed. No project facts, permissions, accepted decisions, evidence, status or readiness transfer from a blueprint.",
+    "newer_candidate_revision": "5e2d3025aea6b1574ab984e5ebb89b5602a38535",
+    "newer_candidate_full_validator": "FAIL",
+    "dirty_checkout_working_version": "4.3.0",
+    "dirty_checkout_version_committed": false
   },
   "roles": [
     "authoritative",
@@ -1592,6 +1596,14 @@
       "trigger": "A complete intended-layout source validation with a clean identifiable source",
       "status": "deferred",
       "does_not_import_project_facts": true
+    }
+  ],
+  "local_amendments": [
+    {
+      "id": "ADR-0005",
+      "owner_path": "docs/decisions/ADR-0005-react-email-editor-reversible-default.md",
+      "scope": "email_editor_reversible_default_only",
+      "package_variants_modified": false
     }
   ]
 }

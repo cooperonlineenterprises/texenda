@@ -5,7 +5,9 @@ import copy
 import importlib.util
 from pathlib import Path
 import subprocess
+import tempfile
 import unittest
+from unittest import mock
 
 ROOT = Path(__file__).resolve().parents[3]
 spec = importlib.util.spec_from_file_location('workspace_contract', ROOT / 'tooling/workspace/validate_contract.py')
@@ -224,6 +226,93 @@ class WorkspaceContractTests(unittest.TestCase):
     def test_author_cannot_be_own_required_reviewer(self):
         self.crosswalk['facade_acceptance']['reviewer_distinct_from_author_and_integrator'] = False
         self.reject()
+
+
+class FollowupContractTests(unittest.TestCase):
+    def setUp(self):
+        self.editor = contract.load_editor_contract(ROOT)
+        self.provenance = contract.loads(
+            (ROOT / 'project-dossier/provenance/sources.json').read_text())
+        self.origin = contract.loads((ROOT / '.project-blueprint-origin.json').read_text())
+
+    def reject(self, mutate):
+        editor, provenance, origin = copy.deepcopy((self.editor, self.provenance, self.origin))
+        mutate(editor, provenance, origin)
+        with self.assertRaises(contract.ContractError):
+            contract.validate_followup_metadata(editor, provenance, origin)
+
+    def test_followup_metadata_has_one_unverified_editor_and_separated_origin(self):
+        self.assertEqual(contract.validate_followup_metadata(
+            self.editor, self.provenance, self.origin)['debug_artifacts'], 'forward_baseline_only')
+
+    def test_editor_pin_and_val03_bypass_are_rejected(self):
+        for key, value in (('composer_version', '1.7.7'), ('qualification_gate_passed', True),
+                           ('composer_qualification', 'PASS'), ('dependencies_installed', True)):
+            with self.subTest(key=key):
+                self.reject(lambda editor, _p, _o, key=key, value=value: editor.update({key: value}))
+
+    def test_editor_allowlist_codec_and_executable_boundaries_cannot_expand(self):
+        for key in ('javascript_allowed', 'arbitrary_react_allowed',
+                    'raw_executable_content_allowed', 'payload_lexical_is_canonical_email'):
+            with self.subTest(key=key):
+                self.reject(lambda editor, _p, _o, key=key: editor.update({key: True}))
+        self.reject(lambda editor, _p, _o: editor['block_allowlist'].append('arbitrary-component'))
+        self.reject(lambda editor, _p, _o: editor.update(preserve_old_codecs=False))
+        self.reject(lambda editor, _p, _o: editor['required_qualification'].remove('build_performance'))
+
+    def test_clean_dirty_versions_and_false_qualification_are_rejected(self):
+        self.reject(lambda _e, _p, origin: origin['clean_candidate'].update(qualified=True))
+        self.reject(lambda _e, provenance, _o: provenance['sources'][1].update(version='4.3.0'))
+        self.reject(lambda _e, provenance, _o: next(
+            row for row in provenance['sources'] if row['id'] == 'SRC-0005').update(revision='a' * 40))
+
+    def test_upstream_release_and_source_variant_cannot_be_promoted(self):
+        self.reject(lambda editor, _p, _o: editor.update(source_package_promoted=True))
+        self.reject(lambda _e, provenance, _o: next(
+            row for row in provenance['sources'] if row['id'] == 'SRC-0006').update(selected_version='1.7.7'))
+        self.reject(lambda _e, provenance, _o: provenance.update(package_difference_count=0))
+
+    def test_debug_forward_baseline_cannot_invent_history_or_authority(self):
+        for key, value in (('pre_move_manifest_exists', True), ('historical_equality_reconstructed', True),
+                           ('debug_payloads_promoted_to_project_evidence', True),
+                           ('authority', 'authoritative')):
+            with self.subTest(key=key):
+                self.reject(lambda _e, provenance, _o, key=key, value=value: next(
+                    row for row in provenance['sources'] if row['id'] == 'SRC-0007').update({key: value}))
+
+    def test_actual_sealed_byte_mutation_is_rejected(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            name = 'specs/texenda-handoff/README.md'
+            path = root / name
+            path.parent.mkdir(parents=True)
+            path.write_bytes(b'changed synthetic package')
+            baseline = {'subject': {'main_revision': 'a' * 40}}
+            with mock.patch.object(contract.subprocess, 'check_output',
+                                   side_effect=[(name + chr(0)).encode(), b'original synthetic package']):
+                with self.assertRaisesRegex(contract.ContractError, 'sealed package changed'):
+                    contract.audit_candidate(root, baseline)
+
+    def test_actual_preserved_source_byte_mutation_is_rejected(self):
+        with tempfile.TemporaryDirectory() as directory:
+            fixture_home = Path(directory)
+            root = fixture_home / 'repo'
+            root.mkdir()
+            for name in ('docs/decisions/ADR-0004-mapped-project-workspace.md',
+                         'project-dossier/transition/README.md',
+                         'docs/qualification/evidence/2026-09-14-workspace-architecture-independent-review.md'):
+                path = root / name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text('# synthetic fixture')
+            source = fixture_home / 'sources/handoff-1.1.0-20260914'
+            source.mkdir(parents=True)
+            (source / 'fixture.txt').write_bytes(b'changed synthetic source')
+            baseline = {'filesystem': {'author_source_files': [
+                {'path': 'fixture.txt', 'sha256': contract.sha(b'original synthetic source')}]}}
+            with (mock.patch.object(contract, 'HOME', str(fixture_home)),
+                  mock.patch.object(contract.subprocess, 'check_output', return_value=b'')):
+                with self.assertRaisesRegex(contract.ContractError, 'source package changed'):
+                    contract.audit_candidate(root, baseline)
 
 
 if __name__ == '__main__':

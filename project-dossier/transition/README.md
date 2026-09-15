@@ -29,11 +29,12 @@ approve this correction, a later head, or unqualified full adoption.
 
 Manual supported reopen/add of
 `/Users/jamesryancooper/Projects/texenda/repo` in Codex remains a separate
-follow-up; no app path or database is changed by this closeout. Deliberate
-[deferrals](../conformance/findings.json) remain: installed Project Blueprint
-1.0.0 is structural-reference-only, a clean newer source is unqualified, and
-the eleven-file editor wording divergence between preserved 1.1.0 packages
-requires a separately requested amendment. Generic `.agents` capabilities
+follow-up; no app path or database is changed by this closeout. Current [follow-up findings](../conformance/findings.json) distinguish installed
+Project Blueprint 1.0.0 from clean committed 4.2.0, which fails full qualification,
+and dirty uncommitted working 4.3.0. No blueprint upgrade occurred.
+[ADR-0005](../../docs/decisions/ADR-0005-react-email-editor-reversible-default.md)
+resolves the editor wording locally while both preserved packages retain all
+eleven byte differences; exact editor/VAL-03 qualification remains unverified. Generic `.agents` capabilities
 remain deliberately unnecessary. Historical GitHub observations retain their
 dates; this correction makes no current remote, product or external readiness
 claim.

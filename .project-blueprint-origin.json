@@ -1,5 +1,5 @@
 {
-  "schema_version": "texenda.project-blueprint-origin.v2",
+  "schema_version": "texenda.project-blueprint-origin.v3",
   "blueprint_name": "project-blueprint",
   "selected_version": "1.0.0",
   "selected_source": "/Users/jamesryancooper/.codex/skills/project-bootstrap/assets/blueprint-source",
@@ -8,15 +8,59 @@
   "adoption_mode": "mapped-existing",
   "generated_new_project": false,
   "reference_qualification": "inspected_structural_reference_only",
-  "newer_candidate": {
-    "path": "/Users/jamesryancooper/Projects/octon-mini",
-    "declared_version": "4.3.0",
+  "clean_candidate": {
+    "inspection_checkout": "/private/tmp/texenda-blueprint-qualification.BXFOTm/source",
+    "committed_version": "4.2.0",
     "revision": "5e2d3025aea6b1574ab984e5ebb89b5602a38535",
     "tree": "3c732979e580c80b020d09c22ce86f5202110518",
+    "local_main": "5e2d3025aea6b1574ab984e5ebb89b5602a38535",
+    "observed_remote_main": "5e2d3025aea6b1574ab984e5ebb89b5602a38535",
+    "working_tree": "clean",
+    "qualified": false,
+    "adopted": false,
+    "qualification_checks": {
+      "source_contracts": "PASS",
+      "acceptance": "PASS",
+      "full_validator": "FAIL"
+    },
+    "acceptance_scope": "automated_checks_and_project_demonstration_requirements_distinguished",
+    "failed_check": {
+      "test": "AutonomousDeliveryTests.test_source_activation_exercise_writes_only_external_receipt",
+      "reason": "fixed_fixture_valid_until_expired",
+      "valid_until": "2026-09-10T23:59:59-05:00",
+      "suite_tests": 20,
+      "suite_passed": 19,
+      "suite_failed": 1
+    },
+    "bundle": {
+      "path": "/Users/jamesryancooper/Projects/texenda/archive/checkpoints/blueprint-qualification-20260915/octon-mini-4.2.0-5e2d302.bundle",
+      "sha256": "d8e1471a25c5d0d20bd560d0dd33f060d6d0013aa573e3f725b2ce93639b3d7e",
+      "verified": true
+    }
+  },
+  "dirty_checkout_observation": {
+    "path": "/Users/jamesryancooper/Projects/octon-mini",
+    "working_version": "4.3.0",
     "dirty_entry_count": 218,
     "working_tree": "dirty",
-    "qualified": false
+    "version_committed": false,
+    "version_attributed_to_clean_revision": false,
+    "qualified": false,
+    "adopted": false,
+    "historical_evidence": "docs/qualification/evidence/2026-09-14-workspace-phase-0-baseline.json"
   },
+  "upgrade_plan": {
+    "initial_stop": "upgrade requires --authority-source or setup.upgrade-authority",
+    "supplied_authority_argument": "user:current-followup-request",
+    "supplied_evidence_ref": "docs/decisions/ADR-0004-mapped-project-workspace.md",
+    "subsequent_stop": "Project Blueprint 3.1.0 requires an exact reviewed --project-blueprint-seed",
+    "continuation_id": "OCTON-CONT-0001",
+    "authority_validated": false,
+    "reviewed_seed": null,
+    "output_written": false,
+    "applied": false
+  },
+  "qualification_evidence": "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-observations.evidence.json",
   "transfer_boundary": {
     "project_facts": false,
     "permissions": false,
@@ -26,10 +70,10 @@
     "readiness": false
   },
   "schema_provenance": {
-    "supersedes_schema": "project-blueprint-origin.v1",
-    "predecessor_path": "/Users/jamesryancooper/.codex/skills/project-bootstrap/assets/blueprint-source/shared/schemas/project-blueprint-origin.schema.json",
-    "predecessor_sha256": "42726c4542fddbc63f3d149c2582a5ef76f2c545b7283c4f043f4542b6e3c7a1",
-    "reason": "add_mapped_existing_without_generation_claim",
+    "supersedes_schema": "texenda.project-blueprint-origin.v2",
+    "predecessor_path": ".agent/schemas/project-blueprint-origin.v2.schema.json",
+    "predecessor_sha256": "e6ba4f8b1617b30a1aa2a130fd603e2e74f3ecdac81de5801521f526f7de63cc",
+    "reason": "separate_clean_committed_and_dirty_worktree_provenance",
     "decision": "docs/decisions/ADR-0004-mapped-project-workspace.md"
   },
   "adoption_contract": "project-dossier/transition/blueprint-adoption-crosswalk.json"

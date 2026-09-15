@@ -95,7 +95,9 @@ class FacadeUnitTests(unittest.TestCase):
         origin = validate.validate_origin(ROOT)
         self.assertEqual(origin['adoption_mode'], 'mapped-existing')
         self.assertFalse(origin['generated_new_project'])
-        self.assertFalse(origin['newer_candidate']['qualified'])
+        self.assertFalse(origin['clean_candidate']['qualified'])
+        self.assertEqual(origin['clean_candidate']['committed_version'], '4.2.0')
+        self.assertFalse(origin['dirty_checkout_observation']['version_committed'])
 
     def test_no_second_task_decision_evidence_review_or_event_store(self):
         validate.validate_indexes(ROOT)
@@ -178,6 +180,72 @@ class FacadeUnitTests(unittest.TestCase):
         self.assertTrue(crosswalk['blueprint']['origin_record_created'])
         self.assertEqual(len({row['concern_id'] for row in crosswalk['ownership']}),
                          len(crosswalk['ownership']))
+
+
+class OriginV3Tests(unittest.TestCase):
+    def setUp(self):
+        self.record = common.load_json(ROOT / '.project-blueprint-origin.json')
+        self.schema = common.load_json(ROOT / '.agent/schemas/project-blueprint-origin.v3.schema.json')
+        self.evidence = common.load_json(
+            ROOT / 'docs/qualification/evidence/2026-09-15-editor-blueprint-followup-observations.evidence.json')
+
+    def reject_record(self, mutate):
+        value = __import__('copy').deepcopy(self.record)
+        mutate(value)
+        with self.assertRaises(common.ValidationError):
+            validate.validate_schema_instance(value, self.schema)
+
+    def test_separated_committed_and_working_versions_validate(self):
+        validate.validate_schema_instance(self.record, self.schema)
+        validate.validate_origin_evidence(self.record, self.evidence)
+        self.assertEqual(self.record['clean_candidate']['committed_version'], '4.2.0')
+        self.assertEqual(self.record['dirty_checkout_observation']['working_version'], '4.3.0')
+
+    def test_origin_version_mixing_and_commit_attribution_are_rejected(self):
+        self.reject_record(lambda row: row['clean_candidate'].update(committed_version='4.3.0'))
+        self.reject_record(lambda row: row['dirty_checkout_observation'].update(
+            revision=row['clean_candidate']['revision']))
+        self.reject_record(lambda row: row['dirty_checkout_observation'].update(
+            version_attributed_to_clean_revision=True))
+
+    def test_false_source_qualification_and_adoption_are_rejected(self):
+        for key in ('qualified', 'adopted'):
+            with self.subTest(key=key):
+                self.reject_record(lambda row, key=key: row['clean_candidate'].update({key: True}))
+        self.reject_record(lambda row: row.update(selected_version='4.2.0'))
+        self.reject_record(lambda row: row['transfer_boundary'].update(readiness=True))
+
+    def test_missing_failed_check_cannot_hide_qualification_failure(self):
+        self.reject_record(lambda row: row['clean_candidate']['qualification_checks'].pop('full_validator'))
+        evidence = __import__('copy').deepcopy(self.evidence)
+        evidence['checks'] = [row for row in evidence['checks']
+                              if row['id'] != 'clean-source-full-validator']
+        with self.assertRaisesRegex(common.ValidationError, 'exact passing/failed check'):
+            validate.validate_origin_evidence(self.record, evidence)
+
+    def test_failed_result_cannot_be_relabelled_as_pass(self):
+        evidence = __import__('copy').deepcopy(self.evidence)
+        row = next(row for row in evidence['checks'] if row['id'] == 'clean-source-full-validator')
+        row['status'] = 'PASS'
+        with self.assertRaises(common.ValidationError):
+            validate.validate_origin_evidence(self.record, evidence)
+        self.reject_record(lambda row: row['clean_candidate']['qualification_checks'].update(
+            full_validator='PASS'))
+
+    def test_blocked_upgrade_does_not_authorize_seed_output_or_apply(self):
+        for key in ('authority_validated', 'output_written', 'applied'):
+            with self.subTest(key=key):
+                self.reject_record(lambda row, key=key: row['upgrade_plan'].update({key: True}))
+        self.reject_record(lambda row: row['upgrade_plan'].update(reviewed_seed='fabricated.json'))
+
+    def test_v2_predecessor_is_retained_and_evidence_version_matches(self):
+        self.assertEqual(common.sha(common.stable_file_bytes(
+            ROOT / '.agent/schemas/project-blueprint-origin.v2.schema.json')),
+            'e6ba4f8b1617b30a1aa2a130fd603e2e74f3ecdac81de5801521f526f7de63cc')
+        evidence = __import__('copy').deepcopy(self.evidence)
+        evidence['clean_source']['committed_version'] = '4.3.0'
+        with self.assertRaises(common.ValidationError):
+            validate.validate_origin_evidence(self.record, evidence)
 
 
 class FacadeIntegratedFixtureTests(unittest.TestCase):
@@ -540,9 +608,9 @@ class FacadeIntegratedFixtureTests(unittest.TestCase):
             lambda value: value.update(selected_source='/wrong/source'),
             lambda value: value.update(selected_reference_descriptor_sha256='bad'),
             lambda value: value['schema_provenance'].update(predecessor_sha256='0' * 63),
-            lambda value: value['newer_candidate'].update(extra='forbidden'),
-            lambda value: value['newer_candidate'].update(revision='abc'),
-            lambda value: value['newer_candidate'].update(tree=123),
+            lambda value: value['clean_candidate'].update(extra='forbidden'),
+            lambda value: value['clean_candidate'].update(revision='abc'),
+            lambda value: value['clean_candidate'].update(tree=123),
         ]
         for mutate in mutations:
             with self.subTest(mutation=mutations.index(mutate)):

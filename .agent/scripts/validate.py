@@ -177,33 +177,83 @@ def validate_schema_instance(value, schema, path='$'):
             validate_schema_instance(item, schema['items'], f'{path}[{index}]')
 
 
+def validate_origin_evidence(record, evidence):
+    """Bind the separated origin facts to the retained failed qualification."""
+    require(evidence.get('schema_version') == 'texenda.followup-observations.v1',
+            'origin qualification evidence has an unknown schema')
+    require(evidence.get('clean_source') == record['clean_candidate'],
+            'clean committed origin differs from its qualification evidence')
+    require(evidence.get('dirty_checkout_observation') == record['dirty_checkout_observation'],
+            'dirty checkout origin differs from its historical observation')
+    expected = {
+        'clean-source-contracts': 'PASS',
+        'clean-source-acceptance': 'PASS',
+        'clean-source-full-validator': 'FAIL',
+    }
+    checks = evidence.get('checks')
+    require(isinstance(checks, list), 'origin qualification checks are missing')
+    for identifier, status in expected.items():
+        matches = [check for check in checks if isinstance(check, dict)
+                   and check.get('id') == identifier]
+        require(len(matches) == 1 and matches[0].get('status') == status,
+                'origin qualification is missing its exact passing/failed check: ' + identifier)
+
+
 def validate_origin(root=ROOT):
-    schema_path = root / '.agent/schemas/project-blueprint-origin.v2.schema.json'
+    schema_path = root / '.agent/schemas/project-blueprint-origin.v3.schema.json'
     schema = load_json(schema_path)
-    require(schema.get('$id') == 'urn:texenda:project-blueprint-origin:v2'
+    require(schema.get('$id') == 'urn:texenda:project-blueprint-origin:v3'
             and schema.get('additionalProperties') is False,
             'origin successor schema is not strict/versioned')
     record = load_json(root / '.project-blueprint-origin.json')
     required = set(schema['required'])
     require(set(record) == required == set(schema['properties']), 'origin record is not closed')
     validate_schema_instance(record, schema)
-    require(record['schema_version'] == 'texenda.project-blueprint-origin.v2'
+    require(record['schema_version'] == 'texenda.project-blueprint-origin.v3'
             and record['adoption_mode'] == 'mapped-existing'
             and record['generated_new_project'] is False
             and record['reference_qualification'] == 'inspected_structural_reference_only'
             and record['selected_version'] == '1.0.0'
             and record['profile'] == 'high-assurance', 'origin record overclaims adoption')
-    newer = record['newer_candidate']
-    require(newer['declared_version'] == '4.3.0' and newer['qualified'] is False
-            and newer['working_tree'] == 'dirty', 'newer blueprint limitation was lost')
+    clean = record['clean_candidate']
+    require(clean['committed_version'] == '4.2.0'
+            and clean['revision'] == clean['local_main'] == clean['observed_remote_main']
+            == '5e2d3025aea6b1574ab984e5ebb89b5602a38535'
+            and clean['tree'] == '3c732979e580c80b020d09c22ce86f5202110518'
+            and clean['working_tree'] == 'clean'
+            and clean['qualified'] is False and clean['adopted'] is False
+            and clean['qualification_checks'] == {
+                'source_contracts': 'PASS', 'acceptance': 'PASS', 'full_validator': 'FAIL'},
+            'clean committed candidate version/qualification boundary changed')
+    dirty = record['dirty_checkout_observation']
+    require(dirty['working_version'] == '4.3.0' and dirty['working_tree'] == 'dirty'
+            and dirty['version_committed'] is False
+            and dirty['version_attributed_to_clean_revision'] is False
+            and 'revision' not in dirty and 'tree' not in dirty
+            and dirty['qualified'] is False and dirty['adopted'] is False,
+            'dirty working version was attributed to a commit or adopted')
+    upgrade = record['upgrade_plan']
+    require(upgrade['reviewed_seed'] is None and upgrade['applied'] is False
+            and upgrade['output_written'] is False and upgrade['authority_validated'] is False
+            and upgrade['continuation_id'] == 'OCTON-CONT-0001',
+            'blocked upgrade acquired a seed, approval, output or adoption')
     boundary = record['transfer_boundary']
     require(all(boundary[key] is False for key in
                 ('project_facts', 'permissions', 'accepted_decisions', 'evidence',
                  'status', 'readiness')), 'blueprint authority/facts were transferred')
     predecessor = record['schema_provenance']
-    require(predecessor['supersedes_schema'] == 'project-blueprint-origin.v1'
-            and predecessor['reason'] == 'add_mapped_existing_without_generation_claim',
-            'origin schema successor is not deliberate')
+    require(predecessor['supersedes_schema'] == 'texenda.project-blueprint-origin.v2'
+            and predecessor['reason'] == 'separate_clean_committed_and_dirty_worktree_provenance'
+            and predecessor['predecessor_path'] == '.agent/schemas/project-blueprint-origin.v2.schema.json'
+            and predecessor['predecessor_sha256']
+            == 'e6ba4f8b1617b30a1aa2a130fd603e2e74f3ecdac81de5801521f526f7de63cc',
+            'origin schema successor lost the preserved v2 boundary')
+    require(sha(stable_file_bytes(root / predecessor['predecessor_path'], 'origin v2 predecessor'))
+            == predecessor['predecessor_sha256'], 'historical origin v2 schema changed')
+    evidence_path = record['qualification_evidence']
+    require(evidence_path == 'docs/qualification/evidence/2026-09-15-editor-blueprint-followup-observations.evidence.json',
+            'origin qualification evidence path changed')
+    validate_origin_evidence(record, load_json(root / evidence_path))
     return record
 
 
