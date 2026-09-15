@@ -1,10 +1,10 @@
 {
   "schema_version": "texenda.dossier-evidence-index.generated.v1",
-  "generation_id": "69d5520752b2779e30d2e9e9428812fa678dc3b932ea4d70e281ef1330874339",
-  "generated_at": "2026-09-15T18:03:48+00:00",
+  "generation_id": "127c160a4baec288b33841e8914bd9430ecc1513c77ee1cd18a28362330c3f18",
+  "generated_at": "2026-09-15T18:36:33+00:00",
   "authority": "generated_hash_index_only",
   "owner_path": "docs/qualification/evidence/",
-  "evidence_scope_sha256": "fd751cae33b479cb87b380f2d244172ab8b7b1aa6ac2dc2bf64ee73ff2631f4f",
+  "evidence_scope_sha256": "f12a0ff6d358b7867e933f2db1cdb192e31258852ed92f43856d8c7bc806efc0",
   "evidence": [
     {
       "path": "docs/qualification/evidence/2026-09-14-external-state-cutover-author-validation.log",
@@ -165,6 +165,14 @@
     {
       "path": "docs/qualification/evidence/2026-09-15-clean-maintenance-review.evidence.json",
       "sha256": "d07cea3155bbbca31d410167bba9d1c3782f3ee3b6a909e9afb442eb73133b6c"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-15-clean-preimplementation-integrated-main-audit.evidence.json",
+      "sha256": "326d17db1f0971f04f3d1d4aabb0eb71f96febf60bda789def5fa2c04e46f6c7"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-15-clean-preimplementation-integrated-main-audit.md",
+      "sha256": "e05a77a1adf3daff3f8d6304032671dabae772b87094347b3be91253ca66a534"
     },
     {
       "path": "docs/qualification/evidence/2026-09-15-clean-workflow-atime-correction-independent-review.md",

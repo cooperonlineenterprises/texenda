@@ -1,7 +1,7 @@
 {
   "schema_version": "texenda.dossier-findings.generated.v1",
-  "generation_id": "69d5520752b2779e30d2e9e9428812fa678dc3b932ea4d70e281ef1330874339",
-  "generated_at": "2026-09-15T18:03:48+00:00",
+  "generation_id": "127c160a4baec288b33841e8914bd9430ecc1513c77ee1cd18a28362330c3f18",
+  "generated_at": "2026-09-15T18:36:33+00:00",
   "authority": "generated_from_project-dossier/conformance/findings.json",
   "source_sha256": "bb71a2f099d6d3d9d8c64d62c8c1a3e6e3d87b27599d83da75ea35a50ff0ab0b",
   "findings": [

@@ -1,11 +1,11 @@
 {
   "schema_version": "texenda.generated-integrity.v1",
-  "generation_id": "69d5520752b2779e30d2e9e9428812fa678dc3b932ea4d70e281ef1330874339",
+  "generation_id": "127c160a4baec288b33841e8914bd9430ecc1513c77ee1cd18a28362330c3f18",
   "generation_id_derivation": "sha256(canonical_json(source_scope_sha256,evidence_scope_sha256,ledger_sha256,receipt_count,receipt_tip))",
-  "generated_at": "2026-09-15T18:03:48+00:00",
+  "generated_at": "2026-09-15T18:36:33+00:00",
   "authority": "generated_non_authoritative",
-  "source_git_revision": "ea8ed2a21255e7d8759b5caf05db975a1f8bb537",
-  "source_git_tree": "1a08dcdbbd9a68c2b046e5523b169eb62f43d101",
+  "source_git_revision": "f6f431160a5b4e6654ed909af4e5505adeef6243",
+  "source_git_tree": "9e5c8d50f4dc5caf3a2038c8815aec47b7cea4fe",
   "source_scope_sha256": "b3adced634a9d427f3cb4b25cf350cf64a67fee52bbcf2aa04ae00e9471cdfe6",
   "source_scope_exclusions": [
     {
@@ -935,7 +935,7 @@
       "sha256": "faca2d70ca7ae67b89b3d23561f9df1df0c9bab219aa8ae4f39e9cc35d573832"
     }
   ],
-  "evidence_scope_sha256": "fd751cae33b479cb87b380f2d244172ab8b7b1aa6ac2dc2bf64ee73ff2631f4f",
+  "evidence_scope_sha256": "f12a0ff6d358b7867e933f2db1cdb192e31258852ed92f43856d8c7bc806efc0",
   "evidence_files": [
     {
       "path": "docs/qualification/evidence/2026-09-14-external-state-cutover-author-validation.log",
@@ -1096,6 +1096,14 @@
     {
       "path": "docs/qualification/evidence/2026-09-15-clean-maintenance-review.evidence.json",
       "sha256": "d07cea3155bbbca31d410167bba9d1c3782f3ee3b6a909e9afb442eb73133b6c"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-15-clean-preimplementation-integrated-main-audit.evidence.json",
+      "sha256": "326d17db1f0971f04f3d1d4aabb0eb71f96febf60bda789def5fa2c04e46f6c7"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-15-clean-preimplementation-integrated-main-audit.md",
+      "sha256": "e05a77a1adf3daff3f8d6304032671dabae772b87094347b3be91253ca66a534"
     },
     {
       "path": "docs/qualification/evidence/2026-09-15-clean-workflow-atime-correction-independent-review.md",
