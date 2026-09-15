@@ -1,10 +1,10 @@
 {
   "schema_version": "texenda.dossier-evidence-index.generated.v1",
-  "generation_id": "9a5278da0c9541cd4db75517f8268489350dfa3b391325808dff77a4366b12d4",
-  "generated_at": "2026-09-15T17:49:43+00:00",
+  "generation_id": "69d5520752b2779e30d2e9e9428812fa678dc3b932ea4d70e281ef1330874339",
+  "generated_at": "2026-09-15T18:03:48+00:00",
   "authority": "generated_hash_index_only",
   "owner_path": "docs/qualification/evidence/",
-  "evidence_scope_sha256": "b797355899e81efe37e04df128473ad89f5dbdff7c43bfdfa60dfec7607e6fda",
+  "evidence_scope_sha256": "fd751cae33b479cb87b380f2d244172ab8b7b1aa6ac2dc2bf64ee73ff2631f4f",
   "evidence": [
     {
       "path": "docs/qualification/evidence/2026-09-14-external-state-cutover-author-validation.log",
@@ -157,6 +157,14 @@
     {
       "path": "docs/qualification/evidence/2026-09-14-workspace-review-envelope-validation.log",
       "sha256": "8d5ac89db42de07c59fe960b552ce2bfb6a26fd4d615adbfa7556c679025f262"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-15-clean-maintenance-independent-review.md",
+      "sha256": "7c7dc268ddd32dd38e7f11e43cb30688058d71bda37ff924a9e9396cf9a94455"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-15-clean-maintenance-review.evidence.json",
+      "sha256": "d07cea3155bbbca31d410167bba9d1c3782f3ee3b6a909e9afb442eb73133b6c"
     },
     {
       "path": "docs/qualification/evidence/2026-09-15-clean-workflow-atime-correction-independent-review.md",
