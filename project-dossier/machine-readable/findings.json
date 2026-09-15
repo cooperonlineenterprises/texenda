@@ -1,9 +1,9 @@
 {
   "schema_version": "texenda.dossier-findings.generated.v1",
-  "generation_id": "127c160a4baec288b33841e8914bd9430ecc1513c77ee1cd18a28362330c3f18",
-  "generated_at": "2026-09-15T18:36:33+00:00",
+  "generation_id": "6918b3222b1b8a17e1e99ded9d17ed68edd511a901f70ee009b36541e6218927",
+  "generated_at": "2026-09-15T23:29:59+00:00",
   "authority": "generated_from_project-dossier/conformance/findings.json",
-  "source_sha256": "bb71a2f099d6d3d9d8c64d62c8c1a3e6e3d87b27599d83da75ea35a50ff0ab0b",
+  "source_sha256": "11a058f6117522864f9e1c442e8068e7a04dd508ec3ca36e214eba864dad77ff",
   "findings": [
     {
       "id": "FIND-0001",
@@ -64,6 +64,16 @@
       "evidence": "docs/qualification/evidence/2026-09-15-workspace-adoption-integrated-main-audit.evidence.json",
       "disposition": "mapped_lifecycle_demonstration_complete",
       "limitations": "This is the approved demonstration for the exact recorded baseline. It is not a new WP execution, receipt, lease, gate, model requalification or post-cutover operational run."
+    },
+    {
+      "id": "FIND-0007",
+      "classification": "gated",
+      "subject": "Standalone source remediation candidate",
+      "basis": "docs/decisions/ADR-0007-standalone-workspace-operating-contract.md",
+      "observation": "The complete source remediation disposition register owns current findings, retained controls and exact deferrals for the ADR-0007 candidate.",
+      "evidence": "project-dossier/conformance/remediation-register.json",
+      "disposition": "candidate_requires_independent_source_and_control_review",
+      "limitations": "Prior completed workspace findings remain scoped to their recorded revisions; no current candidate approval, product readiness or gate is inferred."
     }
   ]
 }

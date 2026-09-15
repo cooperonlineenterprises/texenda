@@ -1,189 +1,801 @@
 {
   "schema_version": "texenda.dossier-path-authority.generated.v1",
-  "generation_id": "127c160a4baec288b33841e8914bd9430ecc1513c77ee1cd18a28362330c3f18",
-  "generated_at": "2026-09-15T18:36:33+00:00",
+  "generation_id": "6918b3222b1b8a17e1e99ded9d17ed68edd511a901f70ee009b36541e6218927",
+  "generated_at": "2026-09-15T23:29:59+00:00",
   "authority": "generated_from_project-dossier/ARTIFACT_CATALOG.json",
-  "source_sha256": "19f3d74b293f4769d1ba57b4f7409d667d5a7479a0d098cf062521eed7efe603",
+  "source_sha256": "121db944b7ef6d373aa38b9317f613dbc7ecb009f0d62e298f421584082f3f53",
   "paths": [
     {
       "path": "project-dossier/README.md",
       "classification": "navigation",
       "owner_path": "project-dossier/AUTHORITY.md",
-      "concern_id": "dossier_interpretation"
+      "concern_id": "dossier_interpretation",
+      "owner_refs": [
+        {
+          "concern_id": "dossier_interpretation"
+        }
+      ]
     },
     {
       "path": "project-dossier/AUTHORITY.md",
       "classification": "authoritative",
       "owner_path": "project-dossier/AUTHORITY.md",
-      "concern_id": "dossier_interpretation"
+      "concern_id": "dossier_interpretation",
+      "owner_refs": [
+        {
+          "concern_id": "dossier_interpretation"
+        }
+      ]
     },
     {
       "path": "project-dossier/CANONICAL_SOURCE_MAP.md",
       "classification": "generated_view",
       "owner_path": "project-dossier/transition/blueprint-adoption-crosswalk.json",
-      "concern_id": "adoption_transition"
+      "concern_id": "adoption_transition",
+      "owner_refs": [
+        {
+          "concern_id": "adoption_transition"
+        }
+      ]
     },
     {
       "path": "project-dossier/ARTIFACT_CATALOG.json",
       "classification": "authoritative",
       "owner_path": "project-dossier/ARTIFACT_CATALOG.json",
-      "concern_id": "artifact_classification"
+      "concern_id": "artifact_classification",
+      "owner_refs": [
+        {
+          "concern_id": "artifact_classification"
+        }
+      ]
     },
     {
       "path": "project-dossier/VERSION.md",
       "classification": "authoritative",
       "owner_path": "project-dossier/VERSION.md",
-      "concern_id": "dossier_version"
+      "concern_id": "dossier_version",
+      "owner_refs": [
+        {
+          "concern_id": "dossier_version"
+        }
+      ]
     },
     {
       "path": "project-dossier/SUPERSESSION.json",
       "classification": "authoritative",
       "owner_path": "project-dossier/SUPERSESSION.json",
-      "concern_id": "dossier_supersession"
+      "concern_id": "dossier_supersession",
+      "owner_refs": [
+        {
+          "concern_id": "dossier_supersession"
+        }
+      ]
     },
     {
       "path": "project-dossier/current-state/README.md",
       "classification": "generated_view",
       "owner_path": "direct_git_build_and_harness_evidence",
-      "concern_id": "git_observation"
+      "concern_id": "git_observation",
+      "owner_refs": [
+        {
+          "concern_id": "git_observation"
+        },
+        {
+          "concern_id": "build_observation"
+        },
+        {
+          "concern_id": "active_tasks"
+        },
+        {
+          "concern_id": "receipts"
+        },
+        {
+          "concern_id": "live_qualification"
+        }
+      ]
     },
     {
       "path": "project-dossier/current-state/current.json",
       "classification": "generated_view",
       "owner_path": "direct_git_build_and_harness_evidence",
-      "concern_id": "git_observation"
+      "concern_id": "git_observation",
+      "owner_refs": [
+        {
+          "concern_id": "git_observation"
+        },
+        {
+          "concern_id": "build_observation"
+        },
+        {
+          "concern_id": "active_tasks"
+        },
+        {
+          "concern_id": "receipts"
+        },
+        {
+          "concern_id": "live_qualification"
+        }
+      ]
     },
     {
       "path": "project-dossier/conformance/README.md",
       "classification": "navigation",
       "owner_path": "project-dossier/conformance/findings.json",
-      "concern_id": "conformance_findings"
+      "concern_id": "conformance_findings",
+      "owner_refs": [
+        {
+          "concern_id": "conformance_findings"
+        }
+      ]
     },
     {
       "path": "project-dossier/conformance/findings.json",
       "classification": "authoritative",
       "owner_path": "project-dossier/conformance/findings.json",
-      "concern_id": "conformance_findings"
+      "concern_id": "conformance_findings",
+      "owner_refs": [
+        {
+          "concern_id": "conformance_findings"
+        }
+      ]
     },
     {
       "path": "project-dossier/plans/README.md",
       "classification": "navigation",
       "owner_path": "project-dossier/machine-readable/plan.json",
-      "concern_id": "adoption_plan"
+      "concern_id": "adoption_plan",
+      "owner_refs": [
+        {
+          "concern_id": "adoption_plan"
+        }
+      ]
     },
     {
       "path": "project-dossier/machine-readable/plan.json",
       "classification": "plan",
       "owner_path": "project-dossier/machine-readable/plan.json",
-      "concern_id": "adoption_plan"
+      "concern_id": "adoption_plan",
+      "owner_refs": [
+        {
+          "concern_id": "adoption_plan"
+        }
+      ]
     },
     {
       "path": "project-dossier/registers/README.md",
       "classification": "navigation",
       "owner_path": "project-dossier/machine-readable/raidq.json",
-      "concern_id": "consolidated_raidq"
+      "concern_id": "consolidated_raidq",
+      "owner_refs": [
+        {
+          "concern_id": "consolidated_raidq"
+        }
+      ]
     },
     {
       "path": "project-dossier/machine-readable/raidq.json",
       "classification": "authoritative",
       "owner_path": "project-dossier/machine-readable/raidq.json",
-      "concern_id": "consolidated_raidq"
+      "concern_id": "consolidated_raidq",
+      "owner_refs": [
+        {
+          "concern_id": "consolidated_raidq"
+        }
+      ]
     },
     {
       "path": "project-dossier/provenance/README.md",
       "classification": "navigation",
       "owner_path": "project-dossier/provenance/sources.json",
-      "concern_id": "adoption_provenance"
+      "concern_id": "adoption_provenance",
+      "owner_refs": [
+        {
+          "concern_id": "adoption_provenance"
+        }
+      ]
     },
     {
       "path": "project-dossier/provenance/sources.json",
       "classification": "authoritative",
       "owner_path": "project-dossier/provenance/sources.json",
-      "concern_id": "adoption_provenance"
+      "concern_id": "adoption_provenance",
+      "owner_refs": [
+        {
+          "concern_id": "adoption_provenance"
+        }
+      ]
     },
     {
       "path": "project-dossier/validation/README.md",
       "classification": "navigation",
       "owner_path": ".agent/validators.json",
-      "concern_id": "validation_commands"
+      "concern_id": "validation_commands",
+      "owner_refs": [
+        {
+          "concern_id": "validation_commands"
+        }
+      ]
     },
     {
       "path": "project-dossier/evidence/README.md",
       "classification": "navigation",
       "owner_path": "docs/qualification/evidence/",
-      "concern_id": "qualification_evidence"
+      "concern_id": "qualification_evidence",
+      "owner_refs": [
+        {
+          "concern_id": "qualification_evidence"
+        }
+      ]
     },
     {
       "path": "project-dossier/handoff/START_HERE.md",
       "classification": "generated_view",
       "owner_path": "external_live_state_and_direct_evidence",
-      "concern_id": "active_tasks"
+      "concern_id": "active_tasks",
+      "owner_refs": [
+        {
+          "concern_id": "active_tasks"
+        },
+        {
+          "concern_id": "git_observation"
+        },
+        {
+          "concern_id": "build_observation"
+        }
+      ]
     },
     {
       "path": "project-dossier/transition/README.md",
       "classification": "navigation",
       "owner_path": "project-dossier/transition/blueprint-adoption-crosswalk.json",
-      "concern_id": "adoption_transition"
+      "concern_id": "adoption_transition",
+      "owner_refs": [
+        {
+          "concern_id": "adoption_transition"
+        }
+      ]
     },
     {
       "path": "project-dossier/transition/blueprint-adoption-crosswalk.json",
       "classification": "authoritative",
       "owner_path": "project-dossier/transition/blueprint-adoption-crosswalk.json",
-      "concern_id": "adoption_transition"
+      "concern_id": "adoption_transition",
+      "owner_refs": [
+        {
+          "concern_id": "adoption_transition"
+        }
+      ]
     },
     {
       "path": "project-dossier/transition/workspace-move-manifest.json",
       "classification": "plan",
       "owner_path": "project-dossier/transition/workspace-move-manifest.json",
-      "concern_id": "adoption_transition"
+      "concern_id": "adoption_transition",
+      "owner_refs": [
+        {
+          "concern_id": "adoption_transition"
+        }
+      ]
     },
     {
       "path": "project-dossier/transition/workspace-relocation-receipt.md",
       "classification": "evidence",
       "owner_path": "project-dossier/transition/workspace-relocation-receipt.md",
-      "concern_id": "adoption_transition"
+      "concern_id": "adoption_transition",
+      "owner_refs": [
+        {
+          "concern_id": "adoption_transition"
+        }
+      ]
     },
     {
       "path": "project-dossier/transition/post-relocation-adoption-plan.json",
       "classification": "history",
       "owner_path": "project-dossier/transition/post-relocation-adoption-plan.json",
-      "concern_id": "adoption_transition"
+      "concern_id": "adoption_transition",
+      "owner_refs": [
+        {
+          "concern_id": "adoption_transition"
+        }
+      ]
     },
     {
       "path": "project-dossier/transition/external-state-relocation-receipt.md",
       "classification": "evidence",
       "owner_path": "project-dossier/transition/external-state-relocation-receipt.md",
-      "concern_id": "adoption_transition"
+      "concern_id": "adoption_transition",
+      "owner_refs": [
+        {
+          "concern_id": "adoption_transition"
+        }
+      ]
     },
     {
       "path": "project-dossier/history/README.md",
       "classification": "navigation",
       "owner_path": "project-dossier/transition/blueprint-adoption-crosswalk.json",
-      "concern_id": "adoption_transition"
+      "concern_id": "adoption_transition",
+      "owner_refs": [
+        {
+          "concern_id": "adoption_transition"
+        }
+      ]
     },
     {
       "path": "project-dossier/history/2026-09-15-workspace-transition-completed.md",
       "classification": "history",
       "owner_path": "project-dossier/history/2026-09-15-workspace-transition-completed.md",
-      "concern_id": "adoption_transition"
+      "concern_id": "adoption_transition",
+      "owner_refs": [
+        {
+          "concern_id": "adoption_transition"
+        }
+      ]
     },
     {
       "path": "project-dossier/machine-readable/path-authority.json",
       "classification": "generated_view",
       "owner_path": "project-dossier/ARTIFACT_CATALOG.json",
-      "concern_id": "artifact_classification"
+      "concern_id": "artifact_classification",
+      "owner_refs": [
+        {
+          "concern_id": "artifact_classification"
+        }
+      ]
     },
     {
       "path": "project-dossier/machine-readable/findings.json",
       "classification": "generated_view",
       "owner_path": "project-dossier/conformance/findings.json",
-      "concern_id": "conformance_findings"
+      "concern_id": "conformance_findings",
+      "owner_refs": [
+        {
+          "concern_id": "conformance_findings"
+        }
+      ]
     },
     {
       "path": "project-dossier/machine-readable/evidence-index.json",
       "classification": "generated_view",
       "owner_path": "docs/qualification/evidence/",
-      "concern_id": "qualification_evidence"
+      "concern_id": "qualification_evidence",
+      "owner_refs": [
+        {
+          "concern_id": "qualification_evidence"
+        }
+      ]
+    },
+    {
+      "path": "project-dossier/conformance/remediation-register.json",
+      "classification": "authoritative",
+      "owner_path": "project-dossier/conformance/remediation-register.json",
+      "concern_id": "remediation_dispositions",
+      "owner_refs": [
+        {
+          "concern_id": "remediation_dispositions"
+        }
+      ]
+    },
+    {
+      "path": "project-dossier/registers/workspace-retention.json",
+      "classification": "authoritative",
+      "owner_path": "project-dossier/registers/workspace-retention.json",
+      "concern_id": "workspace_retention",
+      "owner_refs": [
+        {
+          "concern_id": "workspace_retention"
+        }
+      ]
     }
-  ]
+  ],
+  "owner_reference_sets": {
+    "product_semantics": [
+      {
+        "kind": "repository",
+        "path": "specs/texenda-handoff/01-foundation/authority-register.json",
+        "scope": "product_semantics",
+        "role": "sealed_topic_dispatch"
+      },
+      {
+        "kind": "repository",
+        "path": "docs/decisions/ADR-0005-react-email-editor-reversible-default.md",
+        "scope": "only_ADR_0005_named_editor_fields_WP10_VAL03_retained",
+        "role": "scoped_amendment"
+      }
+    ],
+    "canonical_definition": [
+      {
+        "kind": "repository",
+        "path": "specs/texenda-handoff/01-foundation/product-and-brand.md",
+        "scope": "canonical_definition",
+        "role": "definition"
+      }
+    ],
+    "canonical_requirements": [
+      {
+        "kind": "repository",
+        "path": "specs/texenda-handoff/01-foundation/authority-register.json",
+        "scope": "canonical_requirements",
+        "role": "sealed_topic_dispatch"
+      },
+      {
+        "kind": "repository",
+        "path": "docs/decisions/ADR-0005-react-email-editor-reversible-default.md",
+        "scope": "only_ADR_0005_named_editor_fields_WP10_VAL03_retained",
+        "role": "scoped_amendment"
+      }
+    ],
+    "canonical_architecture": [
+      {
+        "kind": "repository",
+        "path": "specs/texenda-handoff/01-foundation/authority-register.json",
+        "scope": "canonical_architecture",
+        "role": "sealed_topic_dispatch"
+      },
+      {
+        "kind": "repository",
+        "path": "docs/decisions/ADR-0005-react-email-editor-reversible-default.md",
+        "scope": "only_ADR_0005_named_editor_fields_WP10_VAL03_retained",
+        "role": "scoped_amendment"
+      }
+    ],
+    "external_gates": [
+      {
+        "kind": "repository",
+        "path": "specs/texenda-handoff/01-foundation/external-validation-gates.json",
+        "scope": "external_gates",
+        "role": "definition"
+      }
+    ],
+    "model_routing": [
+      {
+        "kind": "repository",
+        "path": "tooling/coordination/routing-policy.json",
+        "scope": "model_routing",
+        "role": "definition"
+      },
+      {
+        "kind": "repository",
+        "path": "docs/decisions/ADR-0001-quality-first-model-routing.md",
+        "scope": "local_model_and_effort_overlay_only",
+        "role": "scoped_amendment"
+      }
+    ],
+    "wp_lifecycle": [
+      {
+        "kind": "repository",
+        "path": "tooling/coordination/harness.py",
+        "scope": "wp_lifecycle",
+        "role": "definition"
+      }
+    ],
+    "active_tasks": [
+      {
+        "kind": "bound_ledger",
+        "path": ".agent/project.json",
+        "scope": "active_tasks",
+        "role": "location_or_observation_route"
+      }
+    ],
+    "receipts": [
+      {
+        "kind": "bound_ledger",
+        "path": ".agent/project.json",
+        "scope": "receipts",
+        "role": "location_or_observation_route"
+      }
+    ],
+    "live_qualification": [
+      {
+        "kind": "bound_ledger",
+        "path": ".agent/project.json",
+        "scope": "live_qualification",
+        "role": "location_or_observation_route"
+      }
+    ],
+    "agent_permission_classes": [
+      {
+        "kind": "repository",
+        "path": ".agent/policy.json",
+        "scope": "agent_permission_classes",
+        "role": "definition"
+      }
+    ],
+    "precedence_trust": [
+      {
+        "kind": "repository",
+        "path": ".agent/context.json",
+        "scope": "precedence_trust",
+        "role": "definition"
+      }
+    ],
+    "validation_commands": [
+      {
+        "kind": "repository",
+        "path": ".agent/validators.json",
+        "scope": "validation_commands",
+        "role": "definition"
+      }
+    ],
+    "durable_decisions": [
+      {
+        "kind": "repository",
+        "path": "docs/decisions/",
+        "scope": "durable_decisions",
+        "role": "definition"
+      }
+    ],
+    "qualification_evidence": [
+      {
+        "kind": "repository",
+        "path": "docs/qualification/evidence/",
+        "scope": "qualification_evidence",
+        "role": "definition"
+      }
+    ],
+    "review_records": [
+      {
+        "kind": "repository",
+        "path": "docs/qualification/evidence/",
+        "scope": "review_records",
+        "role": "definition"
+      }
+    ],
+    "git_observation": [
+      {
+        "kind": "direct_git",
+        "path": "AGENTS.md",
+        "scope": "git_observation",
+        "role": "location_or_observation_route"
+      }
+    ],
+    "build_observation": [
+      {
+        "kind": "repository",
+        "path": "docs/qualification/evidence/",
+        "scope": "build_observation",
+        "role": "definition"
+      }
+    ],
+    "generic_record_vocabulary": [
+      {
+        "kind": "repository",
+        "path": ".agent/schema.json",
+        "scope": "generic_record_vocabulary",
+        "role": "definition"
+      }
+    ],
+    "generic_lifecycle": [
+      {
+        "kind": "repository",
+        "path": ".agent/lifecycle.json",
+        "scope": "generic_lifecycle",
+        "role": "definition"
+      }
+    ],
+    "tool_contracts": [
+      {
+        "kind": "repository",
+        "path": ".agent/tools.json",
+        "scope": "tool_contracts",
+        "role": "definition"
+      }
+    ],
+    "stable_project_hooks": [
+      {
+        "kind": "repository",
+        "path": ".agent/project.json",
+        "scope": "stable_project_hooks",
+        "role": "definition"
+      }
+    ],
+    "dossier_interpretation": [
+      {
+        "kind": "repository",
+        "path": "project-dossier/AUTHORITY.md",
+        "scope": "dossier_interpretation",
+        "role": "definition"
+      }
+    ],
+    "artifact_classification": [
+      {
+        "kind": "repository",
+        "path": "project-dossier/ARTIFACT_CATALOG.json",
+        "scope": "artifact_classification",
+        "role": "definition"
+      }
+    ],
+    "dossier_version": [
+      {
+        "kind": "repository",
+        "path": "project-dossier/VERSION.md",
+        "scope": "dossier_version",
+        "role": "definition"
+      }
+    ],
+    "dossier_supersession": [
+      {
+        "kind": "repository",
+        "path": "project-dossier/SUPERSESSION.json",
+        "scope": "dossier_supersession",
+        "role": "definition"
+      }
+    ],
+    "conformance_findings": [
+      {
+        "kind": "repository",
+        "path": "project-dossier/conformance/findings.json",
+        "scope": "conformance_findings",
+        "role": "definition"
+      }
+    ],
+    "adoption_transition": [
+      {
+        "kind": "repository",
+        "path": "project-dossier/transition/blueprint-adoption-crosswalk.json",
+        "scope": "adoption_transition",
+        "role": "definition"
+      }
+    ],
+    "adoption_plan": [
+      {
+        "kind": "repository",
+        "path": "project-dossier/machine-readable/plan.json",
+        "scope": "adoption_plan",
+        "role": "definition"
+      }
+    ],
+    "consolidated_raidq": [
+      {
+        "kind": "repository",
+        "path": "project-dossier/machine-readable/raidq.json",
+        "scope": "consolidated_raidq",
+        "role": "definition"
+      }
+    ],
+    "adoption_provenance": [
+      {
+        "kind": "repository",
+        "path": "project-dossier/provenance/sources.json",
+        "scope": "adoption_provenance",
+        "role": "definition"
+      }
+    ],
+    "domain_models": [
+      {
+        "kind": "repository",
+        "path": "specs/texenda-handoff/01-foundation/authority-register.json",
+        "scope": "domain_models",
+        "role": "sealed_topic_dispatch"
+      },
+      {
+        "kind": "repository",
+        "path": "docs/decisions/ADR-0005-react-email-editor-reversible-default.md",
+        "scope": "only_ADR_0005_named_editor_fields_WP10_VAL03_retained",
+        "role": "scoped_amendment"
+      }
+    ],
+    "security_data": [
+      {
+        "kind": "repository",
+        "path": "specs/texenda-handoff/01-foundation/authority-register.json",
+        "scope": "security_data",
+        "role": "sealed_topic_dispatch"
+      }
+    ],
+    "operations_recovery": [
+      {
+        "kind": "repository",
+        "path": "specs/texenda-handoff/04-security-governance-and-operations/runbooks.md",
+        "scope": "operations_recovery",
+        "role": "definition"
+      }
+    ],
+    "supply_chain": [
+      {
+        "kind": "repository",
+        "path": "specs/texenda-handoff/03-domain-and-architecture/technology-baseline.md",
+        "scope": "supply_chain",
+        "role": "definition"
+      },
+      {
+        "kind": "repository",
+        "path": "docs/decisions/ADR-0005-react-email-editor-reversible-default.md",
+        "scope": "only_ADR_0005_named_editor_fields_WP10_VAL03_retained",
+        "role": "scoped_amendment"
+      }
+    ],
+    "external_research": [
+      {
+        "kind": "repository",
+        "path": "specs/texenda-handoff/09-reference/source-register.json",
+        "scope": "external_research",
+        "role": "definition"
+      }
+    ],
+    "assignment_protocol": [
+      {
+        "kind": "repository",
+        "path": "tooling/coordination/templates/",
+        "scope": "assignment_protocol",
+        "role": "definition"
+      }
+    ],
+    "quality_rubric": [
+      {
+        "kind": "repository",
+        "path": "specs/texenda-handoff/10-validation/",
+        "scope": "quality_rubric",
+        "role": "definition"
+      }
+    ],
+    "context_routing": [
+      {
+        "kind": "repository",
+        "path": "specs/texenda-handoff/07-agent-orchestration/context-routing.json",
+        "scope": "context_routing",
+        "role": "definition"
+      }
+    ],
+    "historical_compatibility": [
+      {
+        "kind": "local_role",
+        "path": "project-dossier/transition/blueprint-adoption-crosswalk.json",
+        "scope": "historical_compatibility",
+        "role": "location_or_observation_route"
+      }
+    ],
+    "local_state_binding": [
+      {
+        "kind": "local_binding",
+        "path": "tooling/coordination/schemas/state-location.schema.json",
+        "scope": "local_state_binding",
+        "role": "location_or_observation_route"
+      }
+    ],
+    "private_inputs": [
+      {
+        "kind": "local_role",
+        "path": "docs/decisions/ADR-0007-standalone-workspace-operating-contract.md",
+        "scope": "private_inputs",
+        "role": "location_or_observation_route"
+      }
+    ],
+    "standalone_operation": [
+      {
+        "kind": "repository",
+        "path": "docs/decisions/ADR-0007-standalone-workspace-operating-contract.md",
+        "scope": "standalone_operation",
+        "role": "definition"
+      },
+      {
+        "kind": "repository",
+        "path": "docs/decisions/ADR-0004-mapped-project-workspace.md",
+        "scope": "preservation_layout_and_recovery",
+        "role": "retained_scoped_decision"
+      },
+      {
+        "kind": "repository",
+        "path": "docs/decisions/ADR-0006-clean-ordinary-operating-contract.md",
+        "scope": "read_only_atime_and_history_routing",
+        "role": "retained_scoped_decision"
+      }
+    ],
+    "remediation_dispositions": [
+      {
+        "kind": "repository",
+        "path": "project-dossier/conformance/remediation-register.json",
+        "scope": "remediation_dispositions",
+        "role": "definition"
+      }
+    ],
+    "workspace_retention": [
+      {
+        "kind": "repository",
+        "path": "project-dossier/registers/workspace-retention.json",
+        "scope": "workspace_retention",
+        "role": "definition"
+      }
+    ]
+  }
 }
