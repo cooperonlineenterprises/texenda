@@ -19,9 +19,9 @@
     {
       "id": "RAIDQ-0003",
       "type": "dependency",
-      "status": "open",
-      "statement": "The code candidate is independently reviewed and integrated, while the external-state evidence/projection candidate and final integrated head still require distinct Astra/max review.",
-      "control": "Keep candidate review/integration and final integrated-head audit explicitly pending; do not treat physical-move or read-only replay evidence as approval."
+      "status": "controlled",
+      "statement": "For the recorded state-root-20260914 cutover subjects, review, integration at 14682d798faed7cd398d21be3cf8076b84d5b0fe and the exact integrated-main baseline audit are complete.",
+      "control": "Retain the exact review/audit and prior runtime-stop/worktree evidence. This status correction is a separate proposed, unapproved candidate and becomes canonical only after its own independent review and integration. Every future consequential revision also needs fresh review; prior approval is not transferable."
     },
     {
       "id": "RAIDQ-0004",

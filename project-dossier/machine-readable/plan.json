@@ -33,7 +33,7 @@
     },
     {
       "id": "PLAN-0003",
-      "status": "review_required",
+      "status": "completed",
       "objective": "Independently review and integrate the external-state evidence/projection candidate, including read-only conformance replay of the existing completed WP-00 lifecycle.",
       "dependencies": [
         "PLAN-0002"
@@ -44,12 +44,15 @@
         "distinct qualified Astra/max candidate review and separate serial integration",
         "no new WP execution lease receipt second ledger or external effect"
       ],
-      "evidence": "project-dossier/transition/external-state-relocation-receipt.md",
-      "limitation": "Replay is complete as author evidence; independent candidate review/integration remain NOT_RUN."
+      "evidence": "docs/qualification/evidence/2026-09-15-external-state-cutover-review.evidence.json",
+      "limitation": "The exact cutover review/integration and approved read-only WP-00 demonstration are complete. This proposed source correction remains unapproved until its own independent review and integration. No new WP execution or product/external readiness is claimed.",
+      "status_scope": "The prior cutover candidate review and integration at the exact recorded revision; excludes this proposed status-correction candidate.",
+      "completion_evidence": "docs/qualification/evidence/2026-09-15-external-state-cutover-review.evidence.json",
+      "observed_integration_revision": "14682d798faed7cd398d21be3cf8076b84d5b0fe"
     },
     {
       "id": "PLAN-0004",
-      "status": "gated",
+      "status": "completed",
       "objective": "Obtain final exact integrated-head read-only review after review evidence is added.",
       "dependencies": [
         "PLAN-0003"
@@ -59,7 +62,14 @@
         "final check read-only proof passes",
         "all reviewer runtimes stopped and clean temporary worktrees reconciled"
       ],
-      "limitation": "Final integrated-head audit and review-evidence-head verification remain NOT_RUN."
+      "limitation": "The audit approves only the exact recorded baseline and retains its P2 stale-status finding. The current closeout branch proposes the wording correction; that proposal is not yet independently reviewed or integrated. No later-head, full-adoption or product/external approval is inferred.",
+      "status_scope": "The previously performed integrated-main baseline audit and prior cutover runtime/worktree reconciliation; not a review of this proposed closeout correction.",
+      "completion_evidence": "docs/qualification/evidence/2026-09-15-workspace-adoption-integrated-main-audit.evidence.json",
+      "observed_audit_revision": "14682d798faed7cd398d21be3cf8076b84d5b0fe",
+      "observed_audit_tree": "09d8475a6fc746640edef52efa7c10b340a9299e",
+      "audit_observed_at": "2026-09-15T00:54:06+00:00",
+      "runtime_stop_and_worktree_evidence": "docs/qualification/evidence/2026-09-15-workspace-adoption-integrated-main-audit.md",
+      "worktree_reconciliation_observed_at": "2026-09-15T01:00:34+00:00"
     }
   ]
 }

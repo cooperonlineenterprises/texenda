@@ -6,15 +6,39 @@ It routes to the [accepted structural decision](../../docs/decisions/ADR-0004-ma
 [move manifest](workspace-move-manifest.json) and immutable
 [Phase-0 baseline](../../docs/qualification/evidence/2026-09-14-workspace-phase-0-baseline.json).
 Documentation is not permission, runtime-stop proof, live state or a product
-readiness result. The [Phase-1 receipt](workspace-relocation-receipt.md) records
-the physical relocation and [post-relocation planner inventory](post-relocation-adoption-plan.json).
-The independently reviewed facade/state-root code is integrated at
-`01247b6ecc2368610d03d8a82b7ac911d4ad1622`. The
-[external-state relocation receipt](external-state-relocation-receipt.md) records
-the verified physical cutover and read-only conformance replay of the existing
-completed `WP-00`. Its tracked evidence/projection candidate still needs distinct
-Astra/max review and integration. The final integrated-head audit remains
-`NOT_RUN`; no product or external readiness is implied.
+readiness result. The [Phase-1 receipt](workspace-relocation-receipt.md) and
+[external-state receipt](external-state-relocation-receipt.md) retain the
+historical physical moves and mapped read-only replay of completed `WP-00`.
+
+Dated baseline facts, 2026-09-15: facade/state-root code was integrated at
+`01247b6ecc2368610d03d8a82b7ac911d4ad1622`; the
+[independently reviewed cutover candidate](../../docs/qualification/evidence/2026-09-15-external-state-cutover-review.evidence.json)
+was integrated at `14682d798faed7cd398d21be3cf8076b84d5b0fe`, tree
+`09d8475a6fc746640edef52efa7c10b340a9299e`.
+The [integrated-main audit](../../docs/qualification/evidence/2026-09-15-workspace-adoption-integrated-main-audit.evidence.json)
+approved that exact baseline and accepted the mapped read-only lifecycle
+demonstration. Its [dated audit and cleanup record](../../docs/qualification/evidence/2026-09-15-workspace-adoption-integrated-main-audit.md)
+binds prior runtime stop and clean removal of both cutover worktrees with
+branches/commits retained. The [plan](../machine-readable/plan.json) records
+completion only of those exact prior review/integration/audit subjects.
+
+This closeout author's source snapshot proposes the audit's bounded P2 status
+correction. The proposal is unapproved and becomes canonical only through its
+own independent review and integration. Prior milestone completion does not
+approve this correction, a later head, or unqualified full adoption.
+
+Manual supported reopen/add of
+`/Users/jamesryancooper/Projects/texenda/repo` in Codex remains a separate
+follow-up; no app path or database is changed by this closeout. Deliberate
+[deferrals](../conformance/findings.json) remain: installed Project Blueprint
+1.0.0 is structural-reference-only, a clean newer source is unqualified, and
+the eleven-file editor wording divergence between preserved 1.1.0 packages
+requires a separately requested amendment. Generic `.agents` capabilities
+remain deliberately unnecessary. Historical GitHub observations retain their
+dates; this correction makes no current remote, product or external readiness
+claim.
+
+The historical operator procedure below is preserved unchanged.
 
 1. Review the exact architecture candidate and evidence with a distinct
    qualified Astra/max actor. Preserve its commit, review and branch. Recheck
