@@ -1,9 +1,9 @@
 {
   "schema_version": "texenda.dossier-findings.generated.v1",
-  "generation_id": "830c86e6250e52fd1ad95b2ee54d7f96abeec843ead0e90c80521c6d6f00463d",
-  "generated_at": "2026-09-15T05:04:07+00:00",
+  "generation_id": "8fca60b8a528b424656b61fa197e3231c2766c475e70ad6e8fa66d45f47ed621",
+  "generated_at": "2026-09-15T16:19:29+00:00",
   "authority": "generated_from_project-dossier/conformance/findings.json",
-  "source_sha256": "ca0494bb37d345063f0690313bbdd5ad0baa5a76821ccdeb8f615b0dfe6be52a",
+  "source_sha256": "bb71a2f099d6d3d9d8c64d62c8c1a3e6e3d87b27599d83da75ea35a50ff0ab0b",
   "findings": [
     {
       "id": "FIND-0001",
@@ -12,8 +12,8 @@
       "basis": "docs/decisions/ADR-0004-mapped-project-workspace.md",
       "observation": "At the 2026-09-15 audit, facade/state-root code and independently reviewed cutover evidence/projections were integrated at 14682d798faed7cd398d21be3cf8076b84d5b0fe, tree 09d8475a6fc746640edef52efa7c10b340a9299e. The exact baseline integrity was approved.",
       "evidence": "docs/qualification/evidence/2026-09-15-workspace-adoption-integrated-main-audit.evidence.json",
-      "disposition": "prior_integrated_baseline_verified",
-      "limitations": "Conformance is limited to the exact audited code/governance/evidence baseline. Its preserved P2 wording correction is proposed in this unapproved closeout candidate; neither full adoption nor later-candidate/product/external approval is asserted."
+      "disposition": "operational_at_external_state_epoch",
+      "limitations": "Conformance is limited to the audited mapped-workspace code, governance, evidence, and the separately reviewed bounded status correction at 1a088a40119859e3b97d275f7d367cb14d77bace. Every later consequential candidate needs fresh review; no product or external approval is asserted."
     },
     {
       "id": "FIND-0002",
@@ -33,7 +33,7 @@
       "observation": "ADR-0005 resolves the named editor wording locally as a reversible implementation default. Both 1.1.0 packages and all eleven byte differences remain intact.",
       "evidence": "docs/decisions/ADR-0005-react-email-editor-reversible-default.md",
       "disposition": "resolved_by_local_amendment",
-      "limitations": "This selects only the initial composer/codec direction. Exact version stays UNVERIFIED/unpinned; WP-10/VAL-03 qualification and this candidate's independent review/integration remain separate. Neither package is promoted or merged."
+      "limitations": "This selects only the initial composer/codec direction. Exact version stays UNVERIFIED/unpinned, and WP-10/VAL-03 qualification remains gated. Neither package is promoted or merged."
     },
     {
       "id": "FIND-0004",
@@ -42,8 +42,8 @@
       "basis": "project-dossier/transition/workspace-move-manifest.json",
       "observation": "The state-root-20260914 physical move and external-root projections were independently accepted and reverified at integrated main 14682d798faed7cd398d21be3cf8076b84d5b0fe. One external ledger retains the exact state hash, 13 receipts, 11 roster entries and zero leases/budget/gates.",
       "evidence": "docs/qualification/evidence/2026-09-15-workspace-adoption-integrated-main-audit.evidence.json",
-      "disposition": "prior_physical_cutover_and_projection_integrity_verified",
-      "limitations": "The historical pre-refresh failure is resolved by the audited integrated projections, not by assuming this closeout candidate is approved. Private checks remain exact-path-only, with no content/size inspection or equality claim; no new receipt or external gate was created."
+      "disposition": "external_state_epoch_completed",
+      "limitations": "The historical pre-refresh failure was resolved by the audited integrated projections. Private checks remain exact-path-only, with no content/size inspection or equality claim; no new receipt or external gate was created."
     },
     {
       "id": "FIND-0005",
@@ -62,8 +62,8 @@
       "basis": "docs/decisions/ADR-0004-mapped-project-workspace.md",
       "observation": "The independent cutover review and integrated-main audit at 14682d798faed7cd398d21be3cf8076b84d5b0fe accepted the read-only mapped replay of the real September 13 WP-00 completion and all 24 required submission/review/integration checks.",
       "evidence": "docs/qualification/evidence/2026-09-15-workspace-adoption-integrated-main-audit.evidence.json",
-      "disposition": "mapped_lifecycle_replay_accepted_for_recorded_baseline",
-      "limitations": "This is the approved demonstration for the prior exact baseline, not approval of the current status-correction candidate. It is not a new WP execution, receipt, lease, gate, model requalification or post-cutover operational run."
+      "disposition": "mapped_lifecycle_demonstration_complete",
+      "limitations": "This is the approved demonstration for the exact recorded baseline. It is not a new WP execution, receipt, lease, gate, model requalification or post-cutover operational run."
     }
   ]
 }

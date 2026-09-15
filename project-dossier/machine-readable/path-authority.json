@@ -1,9 +1,9 @@
 {
   "schema_version": "texenda.dossier-path-authority.generated.v1",
-  "generation_id": "830c86e6250e52fd1ad95b2ee54d7f96abeec843ead0e90c80521c6d6f00463d",
-  "generated_at": "2026-09-15T05:04:07+00:00",
+  "generation_id": "8fca60b8a528b424656b61fa197e3231c2766c475e70ad6e8fa66d45f47ed621",
+  "generated_at": "2026-09-15T16:19:29+00:00",
   "authority": "generated_from_project-dossier/ARTIFACT_CATALOG.json",
-  "source_sha256": "fd1fb1bb7231a37fb3fddcff2d36d599252bdfacfbdd8797e17870a6652223a1",
+  "source_sha256": "19f3d74b293f4769d1ba57b4f7409d667d5a7479a0d098cf062521eed7efe603",
   "paths": [
     {
       "path": "project-dossier/README.md",
@@ -153,6 +153,18 @@
       "path": "project-dossier/transition/external-state-relocation-receipt.md",
       "classification": "evidence",
       "owner_path": "project-dossier/transition/external-state-relocation-receipt.md",
+      "concern_id": "adoption_transition"
+    },
+    {
+      "path": "project-dossier/history/README.md",
+      "classification": "navigation",
+      "owner_path": "project-dossier/transition/blueprint-adoption-crosswalk.json",
+      "concern_id": "adoption_transition"
+    },
+    {
+      "path": "project-dossier/history/2026-09-15-workspace-transition-completed.md",
+      "classification": "history",
+      "owner_path": "project-dossier/history/2026-09-15-workspace-transition-completed.md",
       "concern_id": "adoption_transition"
     },
     {

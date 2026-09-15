@@ -1,51 +1,52 @@
 # Canonical source map
 
 Generated, non-authoritative navigation. Documentation is not permission.
-Generation: `830c86e6250e52fd1ad95b2ee54d7f96abeec843ead0e90c80521c6d6f00463d` at `2026-09-15T05:04:07+00:00`.
+Generation: `8fca60b8a528b424656b61fa197e3231c2766c475e70ad6e8fa66d45f47ed621` at `2026-09-15T16:19:29+00:00`.
+Current ownership epoch: `external_state`.
 
-| Concern | Baseline owner | Facade owner | External-state owner |
-|---|---|---|---|
-| `product_semantics` | `specs/texenda-handoff/` | `specs/texenda-handoff/` | `specs/texenda-handoff/` |
-| `canonical_definition` | `specs/texenda-handoff/01-foundation/product-and-brand.md` | `specs/texenda-handoff/01-foundation/product-and-brand.md` | `specs/texenda-handoff/01-foundation/product-and-brand.md` |
-| `canonical_requirements` | `specs/texenda-handoff/` | `specs/texenda-handoff/` | `specs/texenda-handoff/` |
-| `canonical_architecture` | `specs/texenda-handoff/03-domain-and-architecture/` | `specs/texenda-handoff/03-domain-and-architecture/` | `specs/texenda-handoff/03-domain-and-architecture/` |
-| `external_gates` | `specs/texenda-handoff/01-foundation/external-validation-gates.json` | `specs/texenda-handoff/01-foundation/external-validation-gates.json` | `specs/texenda-handoff/01-foundation/external-validation-gates.json` |
-| `model_routing` | `tooling/coordination/routing-policy.json` | `tooling/coordination/routing-policy.json` | `tooling/coordination/routing-policy.json` |
-| `wp_lifecycle` | `tooling/coordination/harness.py` | `tooling/coordination/harness.py` | `tooling/coordination/harness.py` |
-| `active_tasks` | `/Users/jamesryancooper/Projects/texenda-app/.texenda/state.json` | `/Users/jamesryancooper/Projects/texenda/repo/.texenda/state.json` | `/Users/jamesryancooper/Projects/texenda/local/agent-state/texenda/state.json` |
-| `receipts` | `/Users/jamesryancooper/Projects/texenda-app/.texenda/state.json` | `/Users/jamesryancooper/Projects/texenda/repo/.texenda/state.json` | `/Users/jamesryancooper/Projects/texenda/local/agent-state/texenda/state.json` |
-| `live_qualification` | `/Users/jamesryancooper/Projects/texenda-app/.texenda/state.json` | `/Users/jamesryancooper/Projects/texenda/repo/.texenda/state.json` | `/Users/jamesryancooper/Projects/texenda/local/agent-state/texenda/state.json` |
-| `agent_permission_classes` | `AGENTS.md` | `.agent/policy.json` | `.agent/policy.json` |
-| `precedence_trust` | `AGENTS.md` | `.agent/context.json` | `.agent/context.json` |
-| `validation_commands` | `tooling/coordination/README.md` | `.agent/validators.json` | `.agent/validators.json` |
-| `durable_decisions` | `docs/decisions/` | `docs/decisions/` | `docs/decisions/` |
-| `qualification_evidence` | `docs/qualification/evidence/` | `docs/qualification/evidence/` | `docs/qualification/evidence/` |
-| `review_records` | `docs/qualification/evidence/` | `docs/qualification/evidence/` | `docs/qualification/evidence/` |
-| `git_observation` | `.git/` | `.git/` | `.git/` |
-| `build_observation` | `docs/qualification/evidence/` | `docs/qualification/evidence/` | `docs/qualification/evidence/` |
-| `generic_record_vocabulary` | none | `.agent/schema.json` | `.agent/schema.json` |
-| `generic_lifecycle` | none | `.agent/lifecycle.json` | `.agent/lifecycle.json` |
-| `tool_contracts` | none | `.agent/tools.json` | `.agent/tools.json` |
-| `stable_project_hooks` | none | `.agent/project.json` | `.agent/project.json` |
-| `dossier_interpretation` | none | `project-dossier/AUTHORITY.md` | `project-dossier/AUTHORITY.md` |
-| `artifact_classification` | none | `project-dossier/ARTIFACT_CATALOG.json` | `project-dossier/ARTIFACT_CATALOG.json` |
-| `dossier_version` | none | `project-dossier/VERSION.md` | `project-dossier/VERSION.md` |
-| `dossier_supersession` | none | `project-dossier/SUPERSESSION.json` | `project-dossier/SUPERSESSION.json` |
-| `conformance_findings` | none | `project-dossier/conformance/findings.json` | `project-dossier/conformance/findings.json` |
-| `adoption_transition` | `project-dossier/transition/blueprint-adoption-crosswalk.json` | `project-dossier/transition/blueprint-adoption-crosswalk.json` | `project-dossier/transition/blueprint-adoption-crosswalk.json` |
-| `adoption_plan` | none | `project-dossier/machine-readable/plan.json` | `project-dossier/machine-readable/plan.json` |
-| `consolidated_raidq` | none | `project-dossier/machine-readable/raidq.json` | `project-dossier/machine-readable/raidq.json` |
-| `adoption_provenance` | none | `project-dossier/provenance/sources.json` | `project-dossier/provenance/sources.json` |
-| `domain_models` | `specs/texenda-handoff/03-domain-and-architecture/` | `specs/texenda-handoff/03-domain-and-architecture/` | `specs/texenda-handoff/03-domain-and-architecture/` |
-| `security_data` | `specs/texenda-handoff/04-security-governance-and-operations/` | `specs/texenda-handoff/04-security-governance-and-operations/` | `specs/texenda-handoff/04-security-governance-and-operations/` |
-| `operations_recovery` | `specs/texenda-handoff/04-security-governance-and-operations/runbooks.md` | `specs/texenda-handoff/04-security-governance-and-operations/runbooks.md` | `specs/texenda-handoff/04-security-governance-and-operations/runbooks.md` |
-| `supply_chain` | `specs/texenda-handoff/03-domain-and-architecture/technology-baseline.md` | `specs/texenda-handoff/03-domain-and-architecture/technology-baseline.md` | `specs/texenda-handoff/03-domain-and-architecture/technology-baseline.md` |
-| `external_research` | `specs/texenda-handoff/09-reference/source-register.json` | `specs/texenda-handoff/09-reference/source-register.json` | `specs/texenda-handoff/09-reference/source-register.json` |
-| `assignment_protocol` | `tooling/coordination/templates/` | `tooling/coordination/templates/` | `tooling/coordination/templates/` |
-| `quality_rubric` | `specs/texenda-handoff/10-validation/` | `specs/texenda-handoff/10-validation/` | `specs/texenda-handoff/10-validation/` |
-| `context_routing` | `specs/texenda-handoff/07-agent-orchestration/context-routing.json` | `specs/texenda-handoff/07-agent-orchestration/context-routing.json` | `specs/texenda-handoff/07-agent-orchestration/context-routing.json` |
-| `historical_compatibility` | `.texenda/` | `.texenda/` | `.texenda/` |
-| `local_state_binding` | none | none | `.texenda-location.json` |
-| `private_inputs` | `/Users/jamesryancooper/Projects/texenda-app/.texenda/private-inputs` | `/Users/jamesryancooper/Projects/texenda/repo/.texenda/private-inputs` | `/Users/jamesryancooper/Projects/texenda/local/private-inputs` |
+| Concern | Current owner | Rule |
+|---|---|---|
+| `product_semantics` | `specs/texenda-handoff/` | Sealed normative topic owners; accepted local ADRs amend only their explicitly accepted scopes. |
+| `canonical_definition` | `specs/texenda-handoff/01-foundation/product-and-brand.md` | No new dossier canonical definition. |
+| `canonical_requirements` | `specs/texenda-handoff/` | The sealed owner register dispatches to requirements, invariants and acceptance criteria; no copied requirements registry. |
+| `canonical_architecture` | `specs/texenda-handoff/03-domain-and-architecture/` | No new dossier canonical architecture. |
+| `external_gates` | `specs/texenda-handoff/01-foundation/external-validation-gates.json` | A criterion is not a gate clearance. |
+| `model_routing` | `tooling/coordination/routing-policy.json` | Registered restrictions-only extension; policy digest stays canonical JSON digest. |
+| `wp_lifecycle` | `tooling/coordination/harness.py` | Existing WP state machine remains the only WP transition implementation. |
+| `active_tasks` | `/Users/jamesryancooper/Projects/texenda/local/agent-state/texenda/state.json` | One active tasks field in the existing receipt-bound ledger. |
+| `receipts` | `/Users/jamesryancooper/Projects/texenda/local/agent-state/texenda/state.json` | The same existing receipt chain is relocated byte-for-byte. |
+| `live_qualification` | `/Users/jamesryancooper/Projects/texenda/local/agent-state/texenda/state.json` | Live roster references qualified evidence; snapshots never become another roster. |
+| `agent_permission_classes` | `.agent/policy.json` | The reviewed facade cutover activated this owner and removed duplicated root policy; later owner changes require another exact reviewed cutover. |
+| `precedence_trust` | `.agent/context.json` | The reviewed facade cutover activated this owner and routed root/guide prose to it; later owner changes require another exact reviewed cutover. |
+| `validation_commands` | `.agent/validators.json` | Delegates to existing validators; explanatory command prose does not become a second registry. |
+| `durable_decisions` | `docs/decisions/` | Preserve accepted ADR IDs and history; .agent/decisions is an index only. |
+| `qualification_evidence` | `docs/qualification/evidence/` | Existing linked envelopes outside this directory remain immutable source records; indexes do not duplicate them. |
+| `review_records` | `docs/qualification/evidence/` | Retain exact-candidate independent reviews under their existing evidence owner. |
+| `git_observation` | `.git/` | Direct Git revision/tree/refs are the owner for Git facts; generated state is a projection. |
+| `build_observation` | `docs/qualification/evidence/` | Only exact-revision direct build/check evidence supports implementation claims. |
+| `generic_record_vocabulary` | `.agent/schema.json` | New universal IDs/statuses only; no product schema or WP status replacement. |
+| `generic_lifecycle` | `.agent/lifecycle.json` | Generic metadata lifecycle only; coordinator owns live WP transitions. |
+| `tool_contracts` | `.agent/tools.json` | Availability and permission are separate; reference live qualification, never copy its roster. |
+| `stable_project_hooks` | `.agent/project.json` | Stable project hooks register the Texenda coordinator; no mutable status report. |
+| `dossier_interpretation` | `project-dossier/AUTHORITY.md` | Dossier information roles only; precedence and action permission are linked to their active owners. |
+| `artifact_classification` | `project-dossier/ARTIFACT_CATALOG.json` | One catalog owns per-file role/cadence metadata; path-authority is generated. |
+| `dossier_version` | `project-dossier/VERSION.md` | Dossier contract version only; neither package variant is reversioned. |
+| `dossier_supersession` | `project-dossier/SUPERSESSION.json` | Dossier artifact replacement metadata only; accepted decisions stay under docs/decisions. |
+| `conformance_findings` | `project-dossier/conformance/findings.json` | Own new conformance findings; machine-readable/findings.json is generated from this owner. |
+| `adoption_transition` | `project-dossier/transition/blueprint-adoption-crosswalk.json` | This project-local transition crosswalk owns mapped-adoption contracts, not domain policy. |
+| `adoption_plan` | `project-dossier/machine-readable/plan.json` | Records completed adoption dependencies and any future acceptance plan; cannot act as an active task ledger or mark WPs complete. |
+| `consolidated_raidq` | `project-dossier/machine-readable/raidq.json` | New consolidated risks, assumptions, issues, dependencies and questions; do not repeat external gate authority. |
+| `adoption_provenance` | `project-dossier/provenance/sources.json` | New adoption/source-variant provenance only; sealed source register stays sealed. |
+| `domain_models` | `specs/texenda-handoff/03-domain-and-architecture/` | Existing schemas/interfaces are functional equivalents. |
+| `security_data` | `specs/texenda-handoff/04-security-governance-and-operations/` | Existing security/privacy/AI authority owners; no inferred readiness. |
+| `operations_recovery` | `specs/texenda-handoff/04-security-governance-and-operations/runbooks.md` | The sealed authority-register operations-procedures owner is runbooks.md (RB-01 through RB-10, including incident, restore, release and rollback). Local workspace recovery remains the separate adoption transition concern. |
+| `supply_chain` | `specs/texenda-handoff/03-domain-and-architecture/technology-baseline.md` | Compatibility template and future qualification are indexed, not newly passed. |
+| `external_research` | `specs/texenda-handoff/09-reference/source-register.json` | Existing source records remain reference evidence; new mutable external facts need fresh evidence. |
+| `assignment_protocol` | `tooling/coordination/templates/` | Existing local assignment/review/resumption templates are functional equivalents. |
+| `quality_rubric` | `specs/texenda-handoff/10-validation/` | Existing acceptance/test mapping remains authority; new facade tests are scoped implementation checks. |
+| `context_routing` | `specs/texenda-handoff/07-agent-orchestration/context-routing.json` | Existing context router plus reviewed local instructions; no copied context pack. |
+| `historical_compatibility` | `.texenda/` | After cutover contains only ignored immutable evidence/context/v1 checkpoint inputs; never state.json or active locks. |
+| `local_state_binding` | `.texenda-location.json` | Ignored local configuration only: exact repo/state-root association and move status, never ledger contents. |
+| `private_inputs` | `/Users/jamesryancooper/Projects/texenda/local/private-inputs` | Only existence/ignore/tracking/location checks and verified same-filesystem moves; no content access. |
 
-Source: [reviewed adoption crosswalk](transition/blueprint-adoption-crosswalk.json).
+Historical ownership epochs remain in the [reviewed adoption crosswalk](transition/blueprint-adoption-crosswalk.json).
