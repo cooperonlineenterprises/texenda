@@ -1,9 +1,9 @@
 {
   "schema_version": "texenda.dossier-findings.generated.v1",
-  "generation_id": "1dac64ba225dade5e710c51693e6d9c001652600d330fd64c4678fa4ad53664c",
-  "generated_at": "2026-09-15T01:59:55+00:00",
+  "generation_id": "4e7a29d07b9d02dcc7e2bb453044abda5a93fa080cdc4606f77326b180910e5f",
+  "generated_at": "2026-09-15T03:57:52+00:00",
   "authority": "generated_from_project-dossier/conformance/findings.json",
-  "source_sha256": "ff18aa613bf62cfa5ef6d2f5aab12b80ca9dcd26d757bc512076b0963ba295e5",
+  "source_sha256": "ca0494bb37d345063f0690313bbdd5ad0baa5a76821ccdeb8f615b0dfe6be52a",
   "findings": [
     {
       "id": "FIND-0001",
@@ -17,23 +17,23 @@
     },
     {
       "id": "FIND-0002",
-      "classification": "deferred",
+      "classification": "gated",
       "subject": "Project Blueprint source qualification",
       "basis": "docs/qualification/evidence/2026-09-14-workspace-phase-0-baseline.json",
-      "observation": "Installed 1.0.0 is structural-reference-only; the dirty 4.3.0 candidate is unqualified.",
+      "observation": "Installed 1.0.0 remains the selected structural reference. Clean commit 5e2d3025aea6b1574ab984e5ebb89b5602a38535 declares 4.2.0; source contracts and acceptance pass, but the full validator fails one expired activation-fixture test. Dirty working VERSION 4.3.0/218 entries is a separate uncommitted observation.",
       "evidence": ".project-blueprint-origin.json",
-      "disposition": "future_clean_source_qualification",
-      "limitations": "No newer blueprint version is adopted."
+      "disposition": "provenance_corrected_full_qualification_and_reviewed_seed_still_required",
+      "limitations": "No 4.2.0/4.3.0 adoption or upgrade. The supplied-authority upgrade plan stops before mutation for an exact reviewed seed, OCTON-CONT-0001; no seed is fabricated."
     },
     {
       "id": "FIND-0003",
-      "classification": "deferred",
+      "classification": "conformant",
       "subject": "handoff package editor wording divergence",
       "basis": "docs/qualification/evidence/2026-09-14-workspace-phase-0-baseline.json",
-      "observation": "The two preserved 1.1.0 variants still differ in eleven authoritative files.",
-      "evidence": "project-dossier/provenance/sources.json",
-      "disposition": "future_project_local_amendment_if_requested",
-      "limitations": "Neither package is modified, selected, or semantically merged."
+      "observation": "ADR-0005 resolves the named editor wording locally as a reversible implementation default. Both 1.1.0 packages and all eleven byte differences remain intact.",
+      "evidence": "docs/decisions/ADR-0005-react-email-editor-reversible-default.md",
+      "disposition": "resolved_by_local_amendment",
+      "limitations": "This selects only the initial composer/codec direction. Exact version stays UNVERIFIED/unpinned; WP-10/VAL-03 qualification and this candidate's independent review/integration remain separate. Neither package is promoted or merged."
     },
     {
       "id": "FIND-0004",

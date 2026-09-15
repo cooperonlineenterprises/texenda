@@ -1,10 +1,10 @@
 {
   "schema_version": "texenda.dossier-evidence-index.generated.v1",
-  "generation_id": "1dac64ba225dade5e710c51693e6d9c001652600d330fd64c4678fa4ad53664c",
-  "generated_at": "2026-09-15T01:59:55+00:00",
+  "generation_id": "4e7a29d07b9d02dcc7e2bb453044abda5a93fa080cdc4606f77326b180910e5f",
+  "generated_at": "2026-09-15T03:57:52+00:00",
   "authority": "generated_hash_index_only",
   "owner_path": "docs/qualification/evidence/",
-  "evidence_scope_sha256": "332feb725b1e39e2e43fe4b47a338c200cc70b56d28a34c2175f17ca0db5426e",
+  "evidence_scope_sha256": "e11d6c3eb94d33e1b433184023eb19b4f921f2f05ef1ba4da665d8902ebd6033",
   "evidence": [
     {
       "path": "docs/qualification/evidence/2026-09-14-external-state-cutover-author-validation.log",
@@ -157,6 +157,14 @@
     {
       "path": "docs/qualification/evidence/2026-09-14-workspace-review-envelope-validation.log",
       "sha256": "8d5ac89db42de07c59fe960b552ce2bfb6a26fd4d615adbfa7556c679025f262"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-observations.evidence.json",
+      "sha256": "b22d0791941b83166513da307cf749e45bcf191db85c3b7311e0e08ce602593c"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-observations.md",
+      "sha256": "d92e1b2de4b822b144ccb73d51f3f9cb672869f6821cfbe77eb32ce577987b63"
     },
     {
       "path": "docs/qualification/evidence/2026-09-15-external-state-cutover-independent-review.md",

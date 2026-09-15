@@ -1,12 +1,12 @@
 {
   "schema_version": "texenda.generated-integrity.v1",
-  "generation_id": "1dac64ba225dade5e710c51693e6d9c001652600d330fd64c4678fa4ad53664c",
+  "generation_id": "4e7a29d07b9d02dcc7e2bb453044abda5a93fa080cdc4606f77326b180910e5f",
   "generation_id_derivation": "sha256(canonical_json(source_scope_sha256,evidence_scope_sha256,ledger_sha256,receipt_count,receipt_tip))",
-  "generated_at": "2026-09-15T01:59:55+00:00",
+  "generated_at": "2026-09-15T03:57:52+00:00",
   "authority": "generated_non_authoritative",
-  "source_git_revision": "97022bc85f89eefb468dc00fb792f4b832a6fe8a",
-  "source_git_tree": "b33416ab860223a2553566ee1dddd52d8fdee83e",
-  "source_scope_sha256": "c856f1055e329d1ba01a34ab9cb49b8aeff2762aee9df3fcd03067e866ed23fe",
+  "source_git_revision": "15075bcb0bdce8f6fc3f9195d01c9af67da78929",
+  "source_git_tree": "e1577b07582d4cc188f18a2cb0c2de56c3407fb4",
+  "source_scope_sha256": "ed42a7f8fc518e5a111d82c10adc84278b8f0b4ff7d942bf1e54c5e48cb8ea0d",
   "source_scope_exclusions": [
     {
       "path": ".agent/generated/manifest.json",
@@ -115,6 +115,10 @@
       "sha256": "e6ba4f8b1617b30a1aa2a130fd603e2e74f3ecdac81de5801521f526f7de63cc"
     },
     {
+      "path": ".agent/schemas/project-blueprint-origin.v3.schema.json",
+      "sha256": "937a1ab4485b7ffb83e64fb8efbb338ce4cdc72d8a3e2271b7d63d0344e0b95b"
+    },
+    {
       "path": ".agent/scripts/common.py",
       "sha256": "f4a2cdac87da0cbd699fa567a89826aece268e261a5bb3709f7696c95b78bf20"
     },
@@ -124,7 +128,7 @@
     },
     {
       "path": ".agent/scripts/validate.py",
-      "sha256": "5d41ae0ca32baed02985d290643cadab2c5519c3d96b667bb82784db4b06d5cc"
+      "sha256": "9261d04899a2bc8a413b7ba049d9380b2c4bc41615c8e6e927f0a7b2a5a1b3d6"
     },
     {
       "path": ".agent/tasks/README.md",
@@ -144,7 +148,7 @@
     },
     {
       "path": ".agent/tests/test_validate.py",
-      "sha256": "dbc99e5f693d8a6826d8816a9342104fdb60b19a3d1271691ffe73ed28ab6ef5"
+      "sha256": "88d00ea0a0c66094216786fc6435dc3da83cf2469bde84ae8296a6641c6ef614"
     },
     {
       "path": ".agent/tools.json",
@@ -168,11 +172,11 @@
     },
     {
       "path": ".project-blueprint-origin.json",
-      "sha256": "9ebe8a7cd007f6805b5e838771792e4baff8bd976a4068b8cfae409088f95c9c"
+      "sha256": "fdd1d44e965a1e15f5ad963b50ad4f95bd1c6cfa9333e5e986a111745389c6c4"
     },
     {
       "path": "AGENTS.md",
-      "sha256": "1532dd6be102d971b8dc1cdb0b9cd4748b31328643ed6c379d5d65225166a2bd"
+      "sha256": "91073b7dd8623f1a8cf8ec146fb38fd8eed8a092185e64dbe34f1441c459e1ad"
     },
     {
       "path": "docs/agents/operating-guide.md",
@@ -213,6 +217,10 @@
     {
       "path": "docs/decisions/ADR-0004-mapped-project-workspace.md",
       "sha256": "e1594f793c892adecfebbf86ce76c7fb180d79cc66497d936fd215ea773b8b08"
+    },
+    {
+      "path": "docs/decisions/ADR-0005-react-email-editor-reversible-default.md",
+      "sha256": "8c4f1a72ec3fb7efa19de7b013612cec34b09cf4c8acd40035949f22fe5101be"
     },
     {
       "path": "docs/operations/github-ci-policy.md",
@@ -396,7 +404,7 @@
     },
     {
       "path": "project-dossier/VERSION.md",
-      "sha256": "3177331a8f31e1f17470d01eb34256f8ad5527ef861778cb88d927f1581d605c"
+      "sha256": "0baff3d0cb07c5d1ef602a4ae52f69283ddb25e019df63943463ea0ca1a17561"
     },
     {
       "path": "project-dossier/conformance/README.md",
@@ -404,7 +412,7 @@
     },
     {
       "path": "project-dossier/conformance/findings.json",
-      "sha256": "ff18aa613bf62cfa5ef6d2f5aab12b80ca9dcd26d757bc512076b0963ba295e5"
+      "sha256": "ca0494bb37d345063f0690313bbdd5ad0baa5a76821ccdeb8f615b0dfe6be52a"
     },
     {
       "path": "project-dossier/evidence/README.md",
@@ -416,7 +424,7 @@
     },
     {
       "path": "project-dossier/machine-readable/raidq.json",
-      "sha256": "ee6b00d55f9a29f9893d733d401d8702661260f2c81e9a2d8be9ca7c5cfef795"
+      "sha256": "99d0fa57a92130801c08b14dc1cb571d2f788c1f5cd1628cf5ac9d209f949761"
     },
     {
       "path": "project-dossier/plans/README.md",
@@ -424,11 +432,11 @@
     },
     {
       "path": "project-dossier/provenance/README.md",
-      "sha256": "be825af7702de2e41a41f8aafadeb26c166e9fe913b87c731c2470d1d46b2c40"
+      "sha256": "a5ddfd992f5932622587f694bc4377c2e85c6097ea618a3d04bb572b7b706833"
     },
     {
       "path": "project-dossier/provenance/sources.json",
-      "sha256": "8e263af29759692fb1711ebb272f373c8dfba3c0c98a9e35fa3940bd14ce095a"
+      "sha256": "d01b1cd17e4bfefd0555bb0145d4511794e6a8542b0c24c36565188d25680a24"
     },
     {
       "path": "project-dossier/registers/README.md",
@@ -436,11 +444,11 @@
     },
     {
       "path": "project-dossier/transition/README.md",
-      "sha256": "8139c3ee8136d40139222b7bcfdd4b44bc805b8e2114b05c2c55848aebfd0c83"
+      "sha256": "1f5b0b1aa816f6bcd34f591a0b5f9f5b4e9d6e8bf35474ca77367418fb930919"
     },
     {
       "path": "project-dossier/transition/blueprint-adoption-crosswalk.json",
-      "sha256": "427e39ffaf7d5557886b53f8a80d42639bb299c6dc1d76e297400206d9abbb16"
+      "sha256": "0f4e4aeb8493366a4765b75f30b797671786dd940d454a009ba31d52f3cf91a2"
     },
     {
       "path": "project-dossier/transition/external-state-relocation-receipt.md",
@@ -884,7 +892,7 @@
     },
     {
       "path": "tooling/workspace/tests/test_contract.py",
-      "sha256": "e976cb4a91b367a31e87e4298bab53c6e7a9aa5cd95e6e3fd22a0cbc53edd2a3"
+      "sha256": "a91d9ad9b8631305365883cff7ccf0e7f8292ad13e1a60d1af4a4d41fbb3cbff"
     },
     {
       "path": "tooling/workspace/tests/test_relocation.py",
@@ -896,14 +904,14 @@
     },
     {
       "path": "tooling/workspace/validate_contract.py",
-      "sha256": "985001a9d3d54f7bf2f67b0cb0bf1d78931b3b265fcd4f90fa14d56d471b4532"
+      "sha256": "313bccb594282f4a99d20235d657aaa9208fe3542a419525fc315fc640784198"
     },
     {
       "path": "tooling/workspace/validate_relocation.py",
       "sha256": "faca2d70ca7ae67b89b3d23561f9df1df0c9bab219aa8ae4f39e9cc35d573832"
     }
   ],
-  "evidence_scope_sha256": "332feb725b1e39e2e43fe4b47a338c200cc70b56d28a34c2175f17ca0db5426e",
+  "evidence_scope_sha256": "e11d6c3eb94d33e1b433184023eb19b4f921f2f05ef1ba4da665d8902ebd6033",
   "evidence_files": [
     {
       "path": "docs/qualification/evidence/2026-09-14-external-state-cutover-author-validation.log",
@@ -1056,6 +1064,14 @@
     {
       "path": "docs/qualification/evidence/2026-09-14-workspace-review-envelope-validation.log",
       "sha256": "8d5ac89db42de07c59fe960b552ce2bfb6a26fd4d615adbfa7556c679025f262"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-observations.evidence.json",
+      "sha256": "b22d0791941b83166513da307cf749e45bcf191db85c3b7311e0e08ce602593c"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-15-editor-blueprint-followup-observations.md",
+      "sha256": "d92e1b2de4b822b144ccb73d51f3f9cb672869f6821cfbe77eb32ce577987b63"
     },
     {
       "path": "docs/qualification/evidence/2026-09-15-external-state-cutover-independent-review.md",
