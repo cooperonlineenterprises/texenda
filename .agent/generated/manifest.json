@@ -1,12 +1,12 @@
 {
   "schema_version": "texenda.generated-integrity.v1",
-  "generation_id": "653464bdda402a8bde53fe96461a6acbfc9157abf688ec58f17ff7cf38baf935",
+  "generation_id": "9a5278da0c9541cd4db75517f8268489350dfa3b391325808dff77a4366b12d4",
   "generation_id_derivation": "sha256(canonical_json(source_scope_sha256,evidence_scope_sha256,ledger_sha256,receipt_count,receipt_tip))",
-  "generated_at": "2026-09-15T17:33:23+00:00",
+  "generated_at": "2026-09-15T17:49:43+00:00",
   "authority": "generated_non_authoritative",
-  "source_git_revision": "8cf7a2914ee9666673f989e34f8b944a4e894ffc",
-  "source_git_tree": "b90e81d06c8fc6488cae854086fae625e36c3137",
-  "source_scope_sha256": "fca9c21f453bf3f11ec2e10714bbb6eb8bc23103e7aa00cc22706174717f5511",
+  "source_git_revision": "9659307012d3edc553ab1620cca141761590662d",
+  "source_git_tree": "c4a45ef7cab84d353c25468c349e0402a5fef431",
+  "source_scope_sha256": "b3adced634a9d427f3cb4b25cf350cf64a67fee52bbcf2aa04ae00e9471cdfe6",
   "source_scope_exclusions": [
     {
       "path": ".agent/generated/manifest.json",
@@ -900,11 +900,11 @@
     },
     {
       "path": "tooling/workspace/README.md",
-      "sha256": "331ff0b10a46a4476a15918e9f239152e54c05cdbca7d276d64f3e73bce6f3fe"
+      "sha256": "ea8eb00ab702739bf0411a8c1c3196a537247fd365c3cdb7f2725eb4bbc6df46"
     },
     {
       "path": "tooling/workspace/interpret_adoption.py",
-      "sha256": "c639dde93653f715d1f91a058cec0b42ba7e52ebcbceb00af09c9c20ec5abaa2"
+      "sha256": "ee547c92534f6919f5b158069ed6881bcaf4a7ced8a59ed9339b8dc1665fbfd6"
     },
     {
       "path": "tooling/workspace/relocate_state.py",
@@ -912,7 +912,7 @@
     },
     {
       "path": "tooling/workspace/tests/test_adoption_interpreter.py",
-      "sha256": "5e3d5e207f69e0cae1038e1234f9e5e6c46dd3ef2eecee19097b1a449bda9d2c"
+      "sha256": "6ca9b815c762a60cabf2844be7fd9f207c80e89db6ad9e8a6fbc8e02da3e2bfa"
     },
     {
       "path": "tooling/workspace/tests/test_contract.py",
