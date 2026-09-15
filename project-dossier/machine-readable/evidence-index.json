@@ -1,10 +1,10 @@
 {
   "schema_version": "texenda.dossier-evidence-index.generated.v1",
-  "generation_id": "b3688c5847b3419f4a401a76a3991e336c6b705d53b06685f301e272392cdc23",
-  "generated_at": "2026-09-15T00:10:46+00:00",
+  "generation_id": "a9d3bd11d5d742dd83d19f262d4cadd993e71203577dcce931dcb63a31eb3d07",
+  "generated_at": "2026-09-15T00:39:30+00:00",
   "authority": "generated_hash_index_only",
   "owner_path": "docs/qualification/evidence/",
-  "evidence_scope_sha256": "2b638a26ae5e3ffb916647291b5b583086b97e98f70f39541fd25827a9942a25",
+  "evidence_scope_sha256": "84510bc1157080b985b5ba01a9f5bb5db0ba3dbc7b31f26e633e94d4ee267976",
   "evidence": [
     {
       "path": "docs/qualification/evidence/2026-09-14-external-state-cutover-author-validation.log",
@@ -157,6 +157,14 @@
     {
       "path": "docs/qualification/evidence/2026-09-14-workspace-review-envelope-validation.log",
       "sha256": "8d5ac89db42de07c59fe960b552ce2bfb6a26fd4d615adbfa7556c679025f262"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-15-external-state-cutover-independent-review.md",
+      "sha256": "355e6df7961c3f9ce8dfec80c5316d082f0999785c789aa0535a784b4b46dab1"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-15-external-state-cutover-review.evidence.json",
+      "sha256": "f0f8331828497738f49a41adca6f0b1a1ed5273e3ad742b480a15e99bb8da138"
     },
     {
       "path": "docs/qualification/evidence/history/2026-09-14-workspace-architecture-review.rejected.json.txt",

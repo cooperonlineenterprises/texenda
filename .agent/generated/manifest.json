@@ -1,11 +1,11 @@
 {
   "schema_version": "texenda.generated-integrity.v1",
-  "generation_id": "b3688c5847b3419f4a401a76a3991e336c6b705d53b06685f301e272392cdc23",
+  "generation_id": "a9d3bd11d5d742dd83d19f262d4cadd993e71203577dcce931dcb63a31eb3d07",
   "generation_id_derivation": "sha256(canonical_json(source_scope_sha256,evidence_scope_sha256,ledger_sha256,receipt_count,receipt_tip))",
-  "generated_at": "2026-09-15T00:10:46+00:00",
+  "generated_at": "2026-09-15T00:39:30+00:00",
   "authority": "generated_non_authoritative",
-  "source_git_revision": "b18d5c0b60e09cdf233610cda9c19c4cd9535b9b",
-  "source_git_tree": "710ce03929d3fb90f384cc85981360a4566971b8",
+  "source_git_revision": "b4b792a807bbb8a604cf69d7d4e93e8331465ee8",
+  "source_git_tree": "6212988f4e412f6d108d199ac8b67bd141047d62",
   "source_scope_sha256": "1e8fefd861e8d4e28051189b104d89bf5282c0b04c431053a9e6b8de56fb7ed9",
   "source_scope_exclusions": [
     {
@@ -903,7 +903,7 @@
       "sha256": "faca2d70ca7ae67b89b3d23561f9df1df0c9bab219aa8ae4f39e9cc35d573832"
     }
   ],
-  "evidence_scope_sha256": "2b638a26ae5e3ffb916647291b5b583086b97e98f70f39541fd25827a9942a25",
+  "evidence_scope_sha256": "84510bc1157080b985b5ba01a9f5bb5db0ba3dbc7b31f26e633e94d4ee267976",
   "evidence_files": [
     {
       "path": "docs/qualification/evidence/2026-09-14-external-state-cutover-author-validation.log",
@@ -1056,6 +1056,14 @@
     {
       "path": "docs/qualification/evidence/2026-09-14-workspace-review-envelope-validation.log",
       "sha256": "8d5ac89db42de07c59fe960b552ce2bfb6a26fd4d615adbfa7556c679025f262"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-15-external-state-cutover-independent-review.md",
+      "sha256": "355e6df7961c3f9ce8dfec80c5316d082f0999785c789aa0535a784b4b46dab1"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-15-external-state-cutover-review.evidence.json",
+      "sha256": "f0f8331828497738f49a41adca6f0b1a1ed5273e3ad742b480a15e99bb8da138"
     },
     {
       "path": "docs/qualification/evidence/history/2026-09-14-workspace-architecture-review.rejected.json.txt",
