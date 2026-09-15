@@ -1,10 +1,10 @@
 {
   "schema_version": "texenda.dossier-evidence-index.generated.v1",
-  "generation_id": "e393135a44b4c84896e47c90ae776f37e92866f770b3e06fcf8877c9a9fae633",
-  "generated_at": "2026-09-15T16:51:11+00:00",
+  "generation_id": "dbd839176b932d4b5bb9eaa3530f9aaaa2dd33c3e1d44d896fdb0f7f95af4bcb",
+  "generated_at": "2026-09-15T17:01:23+00:00",
   "authority": "generated_hash_index_only",
   "owner_path": "docs/qualification/evidence/",
-  "evidence_scope_sha256": "ff2e7818e24284572d7b354a37622c744e43da30799ee79e5a32529224d1c67d",
+  "evidence_scope_sha256": "b797355899e81efe37e04df128473ad89f5dbdff7c43bfdfa60dfec7607e6fda",
   "evidence": [
     {
       "path": "docs/qualification/evidence/2026-09-14-external-state-cutover-author-validation.log",
@@ -157,6 +157,14 @@
     {
       "path": "docs/qualification/evidence/2026-09-14-workspace-review-envelope-validation.log",
       "sha256": "8d5ac89db42de07c59fe960b552ce2bfb6a26fd4d615adbfa7556c679025f262"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-15-clean-workflow-atime-correction-independent-review.md",
+      "sha256": "602a2d4499e9a26d28ee809f75f3a0fc27791dc533d3a6ddadf90e820d5d163d"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-15-clean-workflow-atime-correction-review.evidence.json",
+      "sha256": "08a0abf07c113220c80b197ba34e51b4bb55030c02a372be8a5f835b0f1a1803"
     },
     {
       "path": "docs/qualification/evidence/2026-09-15-clean-workflow-independent-review.md",
