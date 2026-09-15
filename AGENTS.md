@@ -5,10 +5,21 @@ Start with [`.agent/START_HERE.md`](.agent/START_HERE.md). The reviewed facade's
 boundaries; its [context contract](.agent/context.json) owns precedence and trust.
 Both remain subordinate to current platform, sandbox, tool, and operator authority.
 
+From this canonical repository root, run the complete ordinary read-only check:
+
+```text
+env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/validate.py --check --all --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda
+```
+
+Use the active bound coordinator commands in [the entry point](.agent/START_HERE.md)
+to inspect status, ready work, and the WP-01 context before preparing an
+assignment. Do not omit or infer the external state root.
+
 Texenda product semantics and topic ownership remain in the sealed
 [handoff package](specs/texenda-handoff/README.md) and accepted scoped
 [mapped-workspace ADR](docs/decisions/ADR-0004-mapped-project-workspace.md) plus
-the other records it routes to. The scoped [email-editor amendment](docs/decisions/ADR-0005-react-email-editor-reversible-default.md)
+the [ordinary-operation amendment](docs/decisions/ADR-0006-clean-ordinary-operating-contract.md)
+and other records it routes to. The scoped [email-editor amendment](docs/decisions/ADR-0005-react-email-editor-reversible-default.md)
 owns only its named reversible editor fields. Preserve the sealed package byte-for-byte.
 Read nested `AGENTS.md` files for affected paths; child instructions may narrow,
 never weaken.

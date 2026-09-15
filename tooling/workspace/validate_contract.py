@@ -37,6 +37,21 @@ LEGACY = {
     '.texenda/evidence/', '.texenda/context/',
     '.texenda/state.v1.a2a58e20004c86c0081b1427087626e36f931c3804532e8a1caf1c94a49a609a.json',
 }
+COMPLETED_TRANSITION_HISTORY = (
+    'project-dossier/history/2026-09-15-workspace-transition-completed.md'
+)
+COMPLETED_TRANSITION_SHA256 = (
+    '1f5b0b1aa816f6bcd34f591a0b5f9f5b4e9d6e8bf35474ca77367418fb930919'
+)
+ORDINARY_STATE_ROOT = HOME + '/local/agent-state/texenda'
+ORDINARY_VALIDATION = (
+    'env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/validate.py '
+    '--check --all --state-root ' + ORDINARY_STATE_ROOT
+)
+ORDINARY_COORDINATOR = (
+    'env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py '
+    '--root . --state-root ' + ORDINARY_STATE_ROOT
+)
 
 
 class ContractError(ValueError):
@@ -92,6 +107,9 @@ def validate(crosswalk, baseline, manifest):
     require(manifest['schema_version'] == 'texenda.workspace-move-manifest.v1', 'unknown move schema')
     require(crosswalk['adoption_mode'] == 'mapped-existing', 'false adoption mode')
     require(crosswalk['profile'] == 'high-assurance', 'required profile missing')
+    require(crosswalk['status'] == 'completed_current_contract'
+            and crosswalk.get('current_epoch') == 'external_state',
+            'crosswalk does not identify the completed current epoch')
     source = crosswalk['blueprint']
     require(source['selected_version'] == '1.0.0' and
             source['qualification'] == 'inspected_structural_reference_only' and
@@ -108,7 +126,11 @@ def validate(crosswalk, baseline, manifest):
     require(crosswalk.get('local_amendments') == [{
         'id': 'ADR-0005',
         'owner_path': 'docs/decisions/ADR-0005-react-email-editor-reversible-default.md',
-        'scope': 'email_editor_reversible_default_only', 'package_variants_modified': False}],
+        'scope': 'email_editor_reversible_default_only', 'package_variants_modified': False}, {
+        'id': 'ADR-0006',
+        'owner_path': 'docs/decisions/ADR-0006-clean-ordinary-operating-contract.md',
+        'scope': 'ordinary_entry_current_epoch_and_history_routing_only',
+        'package_variants_modified': False}],
         'local editor amendment scope/owner changed')
     require(set(crosswalk['roles']) == ROLES, 'role vocabulary changed')
     epochs = ['baseline', 'facade', 'external_state']
@@ -155,6 +177,23 @@ def validate(crosswalk, baseline, manifest):
     require(len(inventory) == len(set(inventory)) == 85, 'blueprint path inventory incomplete')
     require(sorted(row['blueprint_path'] for row in mappings) == sorted(inventory),
             'missing or duplicate blueprint mapping')
+    origin_schema_mapping = next(row for row in mappings
+                                 if row['blueprint_path']
+                                 == '.agent/schemas/project-blueprint-origin.schema.json')
+    require(origin_schema_mapping['mapped_path']
+            == '.agent/schemas/project-blueprint-origin.v3.schema.json'
+            and origin_schema_mapping['role'] == 'adapter',
+            'active origin mapping is not v3')
+    origin_record_mapping = next(row for row in mappings
+                                 if row['blueprint_path'] == '.project-blueprint-origin.json')
+    require('origin.v3 record' in origin_record_mapping['reason']
+            and 'v2 predecessor' in origin_record_mapping['reason'],
+            'origin record mapping lost v3/current or v2/predecessor distinction')
+    history_mapping = next(row for row in mappings
+                           if row['blueprint_path'] == 'project-dossier/history/README.md')
+    require(history_mapping['mapped_path'] == 'project-dossier/history/README.md'
+            and history_mapping['role'] == 'historical_source',
+            'completed migration history is not isolated behind its tracked index')
     operations_mapping = next(row for row in mappings
                               if row['blueprint_path'] == 'project-dossier/operations/README.md')
     require(operations_mapping['mapped_path'] == operations_owner and
@@ -201,10 +240,19 @@ def validate(crosswalk, baseline, manifest):
     acceptance = crosswalk['facade_acceptance']
     require(acceptance['new_product_canonical_files'] is False and
             acceptance['registered_extension_authority'] == 'restrictions_only' and
+            acceptance['origin_schema_successor_present'] is True and
+            acceptance['real_mapped_task_lifecycle_demonstrated'] is True and
             acceptance['independent_review_profile'] == 'gpt-6-astra-max' and
             acceptance['reviewer_distinct_from_author_and_integrator'] is True and
             acceptance['final_read_only_review_after_evidence_added'] is True,
             'authority or independent review boundary weakened')
+    deferred = {row['id']: row for row in crosswalk['deferred_semantic_work']}
+    editor_resolution = deferred.get('DEFER-WSM-0001', {})
+    require(editor_resolution.get('status') == 'resolved_scoped_by_ADR-0005'
+            and editor_resolution.get('does_not_modify_packages') is True
+            and 'WP-10' in editor_resolution.get('remaining_gate', '')
+            and 'VAL-03' in editor_resolution.get('remaining_gate', ''),
+            'editor wording resolution overclaims package or qualification scope')
 
     packages = baseline['packages']
     require(packages['sealed']['role'] == 'implementation_repository_sealed_authority' and
@@ -445,6 +493,82 @@ def verify_followup_records(root):
         loads((root / '.project-blueprint-origin.json').read_text()))
 
 
+def verify_clean_operating_contract(root):
+    """Require current entry/status/history routing without rewriting history."""
+    entry_paths = (
+        'AGENTS.md', '.agent/START_HERE.md', 'docs/agents/operating-guide.md',
+        'project-dossier/README.md', 'project-dossier/validation/README.md',
+        'tooling/coordination/README.md',
+    )
+    for name in entry_paths:
+        require(ORDINARY_VALIDATION in (root / name).read_text(),
+                'ordinary explicit-state validation missing from ' + name)
+    tools = loads((root / '.agent/tools.json').read_text())
+    by_id = {row['id']: row for row in tools['tools']}
+    require(by_id['facade-validator']['availability_check'] == ORDINARY_VALIDATION,
+            'facade tool does not expose the ordinary validation command')
+    registry = loads((root / '.agent/validators.json').read_text())
+    require(registry['execution_context']['ordinary_entry_command'] == ORDINARY_VALIDATION,
+            'validation registry does not expose the ordinary entry command')
+    for name in ('.agent/START_HERE.md', 'docs/agents/operating-guide.md',
+                 'tooling/coordination/README.md'):
+        text = (root / name).read_text()
+        for command in ('status', 'ready', 'context WP-01'):
+            require(ORDINARY_COORDINATOR + ' ' + command in text,
+                    'active coordinator entry command missing from ' + name)
+        require(text.index(ORDINARY_COORDINATOR + ' status')
+                < text.find('migrate-v1') if 'migrate-v1' in text else True,
+                'legacy migration appears before ordinary active commands')
+
+    current_sources = (
+        'project-dossier/machine-readable/plan.json',
+        'project-dossier/conformance/findings.json',
+        'project-dossier/machine-readable/raidq.json',
+        'project-dossier/transition/README.md',
+        CROSSWALK,
+    )
+    stale = ('proposed source correction', 'unapproved closeout',
+             'current status-correction candidate', 'reviewable_transition_contract',
+             'the local origin.v2 record')
+    for name in current_sources:
+        normalized = ' '.join((root / name).read_text().lower().split())
+        require(not any(phrase in normalized for phrase in stale),
+                'stale migration status remains in current source: ' + name)
+
+    history = root / COMPLETED_TRANSITION_HISTORY
+    require(history.is_file() and not history.is_symlink()
+            and sha(history.read_bytes()) == COMPLETED_TRANSITION_SHA256,
+            'completed transition history bytes changed or are missing')
+    original = subprocess.check_output(
+        ['git', 'show', '338cd13505d6faffdb645c450b44ea9230aadd75:'
+         'project-dossier/transition/README.md'], cwd=root)
+    require(original == history.read_bytes(),
+            'completed transition history differs from its exact source revision')
+    current_transition = (root / 'project-dossier/transition/README.md').read_text()
+    require(len(current_transition.splitlines()) < 80
+            and 'The historical operator procedure below is preserved unchanged.'
+            not in current_transition,
+            'current transition entry still embeds the migration procedure')
+
+    supersession = loads((root / 'project-dossier/SUPERSESSION.json').read_text())
+    require(supersession['current_version'] == '1.2.0-mapped-existing'
+            and len(supersession['records']) == 1,
+            'dossier version/supersession is not current')
+    record = supersession['records'][0]
+    require(record['prior_sha256'] == COMPLETED_TRANSITION_SHA256
+            and record['retained_history_path'] == COMPLETED_TRANSITION_HISTORY
+            and record['active_successor_path'] == 'project-dossier/transition/README.md',
+            'transition successor does not bind the retained history')
+    catalog = loads((root / 'project-dossier/ARTIFACT_CATALOG.json').read_text())
+    artifacts = {row['path']: row for row in catalog['artifacts']}
+    require(artifacts[COMPLETED_TRANSITION_HISTORY]['classification'] == 'history'
+            and artifacts['project-dossier/history/README.md']['classification'] == 'navigation',
+            'history paths have incorrect current information roles')
+    return {'ordinary_entry_documents': len(entry_paths),
+            'completed_transition_history_sha256': COMPLETED_TRANSITION_SHA256,
+            'current_epoch': 'external_state'}
+
+
 def verify_bound_inputs(root, baseline):
     """Validate immutable input bytes at the exact original Git revision."""
     revision = baseline['subject']['main_revision']
@@ -586,6 +710,7 @@ def main():
         verify_bound_inputs(ROOT, baseline)
         verify_actual_stores(ROOT)
         counts['followups'] = verify_followup_records(ROOT)
+        counts['clean_operation'] = verify_clean_operating_contract(ROOT)
         counts['qualification_checks'] = verify_qualification_checks(ROOT)
         if args.audit:
             counts['audit'] = audit_candidate(ROOT, baseline)

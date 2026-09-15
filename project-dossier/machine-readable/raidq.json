@@ -21,7 +21,7 @@
       "type": "dependency",
       "status": "controlled",
       "statement": "For the recorded state-root-20260914 cutover subjects, review, integration at 14682d798faed7cd398d21be3cf8076b84d5b0fe and the exact integrated-main baseline audit are complete.",
-      "control": "Retain the exact review/audit and prior runtime-stop/worktree evidence. This status correction is a separate proposed, unapproved candidate and becomes canonical only after its own independent review and integration. Every future consequential revision also needs fresh review; prior approval is not transferable."
+      "control": "Retain the exact review/audit and prior runtime-stop/worktree evidence. The bounded status correction was independently approved at 1a088a40119859e3b97d275f7d367cb14d77bace and incorporated into the local main lineage at 836e209020177267ccaa1c803b66779cd29d12ec. Every future consequential revision needs fresh review; prior approval is not transferable."
     },
     {
       "id": "RAIDQ-0004",

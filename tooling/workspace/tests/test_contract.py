@@ -29,6 +29,70 @@ class WorkspaceContractTests(unittest.TestCase):
         result = contract.validate(self.crosswalk, self.baseline, self.manifest)
         self.assertEqual((result['blueprint_paths'], result['source_moves']), (85, 16))
 
+    def test_completed_current_epoch_and_active_origin_v3_are_required(self):
+        self.assertEqual(self.crosswalk['status'], 'completed_current_contract')
+        self.assertEqual(self.crosswalk['current_epoch'], 'external_state')
+        mapping = next(row for row in self.crosswalk['mappings']
+                       if row['blueprint_path']
+                       == '.agent/schemas/project-blueprint-origin.schema.json')
+        self.assertEqual(mapping['mapped_path'],
+                         '.agent/schemas/project-blueprint-origin.v3.schema.json')
+
+        self.crosswalk['current_epoch'] = 'facade'
+        self.reject()
+        self.setUp()
+        mapping = next(row for row in self.crosswalk['mappings']
+                       if row['blueprint_path']
+                       == '.agent/schemas/project-blueprint-origin.schema.json')
+        mapping['mapped_path'] = '.agent/schemas/project-blueprint-origin.v2.schema.json'
+        self.reject()
+
+    def test_clean_entry_and_history_contract_is_current(self):
+        result = contract.verify_clean_operating_contract(ROOT)
+        self.assertEqual(result['current_epoch'], 'external_state')
+        self.assertEqual(result['completed_transition_history_sha256'],
+                         contract.COMPLETED_TRANSITION_SHA256)
+
+    def test_clean_entry_rejects_lost_history_bytes_and_stale_current_status(self):
+        history = ROOT / contract.COMPLETED_TRANSITION_HISTORY
+        original_bytes = Path.read_bytes
+
+        def altered_bytes(path, *args, **kwargs):
+            if path == history:
+                return b'changed history\n'
+            return original_bytes(path, *args, **kwargs)
+
+        with mock.patch.object(Path, 'read_bytes', altered_bytes), \
+                self.assertRaisesRegex(contract.ContractError, 'history bytes'):
+            contract.verify_clean_operating_contract(ROOT)
+
+        plan = ROOT / 'project-dossier/machine-readable/plan.json'
+        original_text = Path.read_text
+
+        def stale_text(path, *args, **kwargs):
+            value = original_text(path, *args, **kwargs)
+            if path == plan:
+                return value + '\nThis proposed source correction remains.\n'
+            return value
+
+        with mock.patch.object(Path, 'read_text', stale_text), \
+                self.assertRaisesRegex(contract.ContractError, 'stale migration status'):
+            contract.verify_clean_operating_contract(ROOT)
+
+    def test_clean_entry_rejects_missing_explicit_state_root_command(self):
+        entry = ROOT / 'AGENTS.md'
+        original_text = Path.read_text
+
+        def missing_command(path, *args, **kwargs):
+            value = original_text(path, *args, **kwargs)
+            if path == entry:
+                return value.replace(contract.ORDINARY_VALIDATION, 'python3 validate.py')
+            return value
+
+        with mock.patch.object(Path, 'read_text', missing_command), \
+                self.assertRaisesRegex(contract.ContractError, 'explicit-state validation'):
+            contract.verify_clean_operating_contract(ROOT)
+
     def test_all_qualification_pass_fail_checks_have_evidence_hashes(self):
         self.assertGreater(contract.verify_qualification_checks(ROOT), 0)
 
@@ -143,6 +207,12 @@ class WorkspaceContractTests(unittest.TestCase):
 
     def test_false_generated_adoption(self):
         self.crosswalk['adoption_mode'] = 'generated-new-project'
+        self.reject()
+
+    def test_editor_resolution_cannot_clear_wp10_or_val03(self):
+        item = next(row for row in self.crosswalk['deferred_semantic_work']
+                    if row['id'] == 'DEFER-WSM-0001')
+        item['remaining_gate'] = 'resolved'
         self.reject()
 
     def test_false_source_qualification(self):

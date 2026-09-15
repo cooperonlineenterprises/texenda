@@ -23,10 +23,20 @@ CI_GUIDE = ROOT / 'docs/operations/github-ci-policy.md'
 VISIBILITY_ADR = (
     ROOT / 'docs/decisions/ADR-0003-private-repository-and-bounded-github-actions.md'
 )
+ORDINARY_STATE_ROOT = '/Users/jamesryancooper/Projects/texenda/local/agent-state/texenda'
+ORDINARY_VALIDATION = (
+    'env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/validate.py '
+    '--check --all --state-root ' + ORDINARY_STATE_ROOT
+)
+ORDINARY_COORDINATOR = (
+    'env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py '
+    '--root . --state-root ' + ORDINARY_STATE_ROOT
+)
 ACTIVE_DOCS = [
     ROOT / 'AGENTS.md', GUIDE, CI_GUIDE, ROOT / 'docs/agents/visualization.md',
     ROOT / 'tooling/coordination/AGENTS.md', ROOT / 'tooling/coordination/README.md',
     ROOT / 'docs/decisions/ADR-0002-astra-agent-operating-guidance.md',
+    ROOT / 'docs/decisions/ADR-0006-clean-ordinary-operating-contract.md',
     VISIBILITY_ADR,
     ROOT / 'docs/qualification/README.md',
     ROOT / 'docs/qualification/runtime-surface-correction-activation-receipt.md',
@@ -67,6 +77,48 @@ class InstructionContracts(unittest.TestCase):
             self.assertIn(template, set(local_links(ROOT / 'tooling/coordination/AGENTS.md')))
             self.assertIn(GUIDE, set(local_links(template)))
             self.assertIn('Status: TEMPLATE.', template.read_text())
+
+    def test_ordinary_entry_uses_one_explicit_bound_validation_and_current_commands(self):
+        for path in (ROOT / 'AGENTS.md', ROOT / '.agent/START_HERE.md', GUIDE,
+                     ROOT / 'project-dossier/README.md',
+                     ROOT / 'project-dossier/validation/README.md',
+                     ROOT / 'tooling/coordination/README.md'):
+            with self.subTest(path=str(path.relative_to(ROOT))):
+                self.assertIn(ORDINARY_VALIDATION, path.read_text())
+
+        tools = json.loads((ROOT / '.agent/tools.json').read_text())
+        by_id = {row['id']: row for row in tools['tools']}
+        self.assertEqual(by_id['facade-validator']['availability_check'], ORDINARY_VALIDATION)
+        for path in (ROOT / '.agent/START_HERE.md', GUIDE,
+                     ROOT / 'tooling/coordination/README.md'):
+            text = path.read_text()
+            for command in ('status', 'ready', 'context WP-01'):
+                self.assertIn(ORDINARY_COORDINATOR + ' ' + command, text)
+            if 'migrate-v1' in text:
+                self.assertLess(text.index(ORDINARY_COORDINATOR + ' status'),
+                                text.index('migrate-v1'))
+
+    def test_current_transition_status_is_not_migration_candidate_language(self):
+        current = [
+            ROOT / 'project-dossier/machine-readable/plan.json',
+            ROOT / 'project-dossier/conformance/findings.json',
+            ROOT / 'project-dossier/machine-readable/raidq.json',
+            ROOT / 'project-dossier/transition/README.md',
+            ROOT / 'project-dossier/transition/blueprint-adoption-crosswalk.json',
+        ]
+        text = ' '.join(path.read_text().lower() for path in current)
+        for stale in ('proposed source correction', 'unapproved closeout',
+                      'current status-correction candidate',
+                      'reviewable_transition_contract', 'the local origin.v2 record'):
+            self.assertNotIn(stale, text)
+        crosswalk = json.loads(current[-1].read_text())
+        self.assertEqual(crosswalk['current_epoch'], 'external_state')
+
+    def test_direct_cli_observation_is_not_desktop_qualification(self):
+        text = ' '.join((GUIDE.read_text() +
+                         (ROOT / 'tooling/coordination/README.md').read_text()).split())
+        self.assertIn('Direct CLI remains unqualified by the desktop', text)
+        self.assertIn('0.149.0', text)
 
     def test_assignment_preserves_required_handoff_obligations(self):
         self.assertTrue({

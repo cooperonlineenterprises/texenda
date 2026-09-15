@@ -113,6 +113,11 @@ class FacadeUnitTests(unittest.TestCase):
 
     def test_validation_registry_delegates_all_existing_suites(self):
         registry = validate.validate_registry(ROOT)
+        self.assertEqual(
+            registry['execution_context']['ordinary_entry_command'],
+            'env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/validate.py '
+            '--check --all --state-root '
+            '/Users/jamesryancooper/Projects/texenda/local/agent-state/texenda')
         ids = {row['id'] for row in registry['commands']}
         self.assertTrue({'workspace-contract', 'workspace-tests', 'coordination-tests',
                          'sealed-harness-tests', 'sealed-package-checksums',
@@ -178,6 +183,12 @@ class FacadeUnitTests(unittest.TestCase):
     def test_crosswalk_has_single_owner_and_dossier_evidence_correction(self):
         crosswalk = validate.validate_crosswalk_correction(ROOT)
         self.assertTrue(crosswalk['blueprint']['origin_record_created'])
+        self.assertEqual(crosswalk['current_epoch'], 'external_state')
+        origin = next(row for row in crosswalk['mappings']
+                      if row['blueprint_path']
+                      == '.agent/schemas/project-blueprint-origin.schema.json')
+        self.assertEqual(origin['mapped_path'],
+                         '.agent/schemas/project-blueprint-origin.v3.schema.json')
         self.assertEqual(len({row['concern_id'] for row in crosswalk['ownership']}),
                          len(crosswalk['ownership']))
 
@@ -462,6 +473,25 @@ class FacadeIntegratedFixtureTests(unittest.TestCase):
                 with self.assertRaises(common.ValidationError):
                     validate.validate_generated(self.fixture)
                 path.write_bytes(original)
+
+    def test_generated_navigation_leads_to_ordinary_work_not_migration(self):
+        source_map = (self.fixture / 'project-dossier/CANONICAL_SOURCE_MAP.md').read_text()
+        self.assertIn('| Concern | Current owner | Rule |', source_map)
+        self.assertNotIn('| Baseline owner |', source_map)
+
+        resume = (self.fixture / '.agent/state/RESUME.md').read_text()
+        self.assertTrue(resume.startswith('# Resume ordinary Texenda work\n'))
+
+        handoff = (self.fixture / 'project-dossier/handoff/START_HERE.md').read_text()
+        state_root = str(self.fixture / '.texenda')
+        validation = ('env PYTHONDONTWRITEBYTECODE=1 python3 -B '
+                      '.agent/scripts/validate.py --check --all --state-root ' + state_root)
+        coordinator = ('env PYTHONDONTWRITEBYTECODE=1 python3 -B '
+                       'tooling/coordination/harness.py --root . --state-root ' + state_root)
+        self.assertIn(validation, handoff)
+        for command in ('status', 'ready', 'context WP-01'):
+            self.assertIn(coordinator + ' ' + command, handoff)
+        self.assertLess(handoff.index(validation), handoff.index('[transition]'))
 
     def test_generation_id_and_validation_report_claim_tampering_are_rejected(self):
         manifest_path = self.fixture / '.agent/generated/manifest.json'

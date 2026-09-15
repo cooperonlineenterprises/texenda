@@ -13,25 +13,32 @@ must be supplemented with the applicable local instruction/template hashes.
 The sealed generic assignment prompt remains package reference.
 
 Use Python 3.11+ on a single POSIX host. No dependency installation is needed.
-Every command takes `--root`; it remains the repository/evidence root. Before a
-state-location binding exists, omitted `--state-root` retains the `.texenda`
-default. An active ignored `.texenda-location.json` requires the exact absolute
+Ordinary work starts in `/Users/jamesryancooper/Projects/texenda/repo` with these
+read-only commands:
+
+```text
+env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/validate.py --check --all --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda
+env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda status
+env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda ready
+env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda context WP-01
+```
+
+The `context WP-01` result is an input to the local assignment template, not an
+admission or assignment. Use the [assignment](templates/ASSIGNMENT.md),
+[review](templates/REVIEW.md), and [resumption](templates/RESUME.md) templates
+for those transitions.
+
+Every coordinator command takes `--root`; it remains the repository/evidence
+root. The active ignored `.texenda-location.json` requires the exact absolute
 `--state-root`; a moving, missing, wrong, relative, symlinked, traversing, or
 competing root fails closed. Never initialize after binding, initialize over an
 existing ledger, or use the sealed v1 CLI on a v2 ledger.
 
-An explicit state root without an active binding is available only for detached
+Before a state-location binding exists, omitted `--state-root` retains the
+`.texenda` default. An explicit state root without an active binding is available only for detached
 read-only `status`, `ready`, `check`, and context inspection. It cannot initialize,
 append a receipt, acquire/create a lock, or write context output. This prevents a
 second unbound active ledger while retaining review of an already relocated copy.
-
-```sh
-# Empty ledger only; init is non-overwriting and starts with no qualified profiles.
-python3 tooling/coordination/harness.py --root . init
-python3 tooling/coordination/harness.py --root . status
-python3 tooling/coordination/harness.py --root . check
-python3 tooling/coordination/harness.py --root . context WP-00
-```
 
 `status`, `ready`, and `check` use stable repeated reads and never create/open a
 lock for write, initialize state, or update caches/reports. Mutations use the
@@ -83,16 +90,25 @@ Capabilities use T1–T4, strongest first; they are distinct from product comman
 consequence classes C0–C4. Use the canonical digest printed by the harness,
 not a raw `shasum` of the policy file.
 
+## Pre-binding and legacy-ledger maintenance
+
+These commands are not ordinary project entry. For a new pre-binding empty
+ledger, `init` is non-overwriting and starts with no qualified profiles:
+
+```text
+env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . init
+```
+
 For an existing v1 ledger, stop and reconcile all author runtimes with the v1
 recovery protocol first. Even an expired lease blocks migration. Retain the
 existing state and its evidence; do not copy arbitrary state from a worktree.
 The owner-authorized migration workflow is:
 
 ```sh
-python3 tooling/coordination/harness.py --root . migrate-v1 --actor human:owner
+env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . migrate-v1 --actor human:owner
 # Review the dry run, source receipt tip, checkpoint path, and policy digest.
-python3 tooling/coordination/harness.py --root . migrate-v1 --actor human:owner --apply
-python3 tooling/coordination/harness.py --root . check
+env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . migrate-v1 --actor human:owner --apply
+env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . check
 ```
 
 Migration preserves task/history records and all old receipt objects/hashes.
@@ -129,8 +145,8 @@ Immediate rollback is limited to the migration with no later v2 receipts or
 leases, and requires the owner's actual runtime-stop attestation:
 
 ```sh
-python3 tooling/coordination/harness.py --root . rollback-v2 --actor human:owner --runtime-stopped
-python3 tooling/coordination/harness.py --root . rollback-v2 --actor human:owner --runtime-stopped --apply
+env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . rollback-v2 --actor human:owner --runtime-stopped
+env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . rollback-v2 --actor human:owner --runtime-stopped --apply
 ```
 
 Rollback restores exact v1 bytes and retains a content-addressed v2 checkpoint.
@@ -144,7 +160,7 @@ separately from WP lifecycle recovery. Stop every runtime and use the exact
 selected state root:
 
 ```sh
-python3 tooling/coordination/harness.py --root . [--state-root ABSOLUTE_BOUND_ROOT] \
+env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda \
   recover-state-write --actor human:owner --runtime-stopped
 ```
 
@@ -180,7 +196,7 @@ days; stale or changed evidence makes the profile unavailable.
 
 ```sh
 # Replace the example path with the separately reviewed, owner-attested record:
-python3 tooling/coordination/harness.py --root . set-roster --actor human:owner --record path/to/reviewed-roster.evidence.json
+env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda set-roster --actor human:owner --record path/to/reviewed-roster.evidence.json
 ```
 
 For the installed roster's dated history, see the
@@ -189,6 +205,8 @@ inspect live `status` rather than assuming that snapshot is current. Before any
 roster replacement, follow the [runtime correction plan](../../docs/qualification/runtime-surface-correction-plan-2026-09-13.md):
 desktop collaboration and direct CLI execution require separate qualification,
 and the historical CLI 0.149.0 field does not identify the desktop app version.
+Direct CLI remains unqualified by the desktop roster; that dated version is not
+a durable requirement or a qualification for the currently installed CLI.
 The source workspace installed a v2 roster; a fresh Git worktree carries these
 committed evidence files but no ignored `.texenda/` ledger. Do not initialize or
 copy state merely to make a read-only audit's `status` succeed.
@@ -202,10 +220,10 @@ its selected tier while retaining the WP capability floor. Unlisted profiles or
 efforts, or weaker whole-parent assignments, are denied.
 
 ```sh
-python3 tooling/coordination/harness.py --root . admit WP-01 --actor astra
-python3 tooling/coordination/harness.py --root . assign WP-01 --actor astra --agent agent:contract-author --profile-id gpt-6-astra-max --max-seconds 3600 --max-tokens 50000
+env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda admit WP-01 --actor astra
+env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda assign WP-01 --actor astra --agent agent:contract-author --profile-id gpt-6-astra-max --max-seconds 3600 --max-tokens 50000
 # Explicit T1 fallback; only Sol/max is eligible:
-python3 tooling/coordination/harness.py --root . assign WP-01 --actor astra --agent agent:contract-author --tier 1 --profile-id gpt-5.6-sol-max --fallback --fallback-reason 'Owner-approved bounded fallback for this assignment'
+env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda assign WP-01 --actor astra --agent agent:contract-author --tier 1 --profile-id gpt-5.6-sol-max --fallback --fallback-reason 'Owner-approved bounded fallback for this assignment'
 ```
 
 The two assignment examples are alternatives, not sequential operations. Run
@@ -238,7 +256,7 @@ no longer than 30 days. The template is deliberately expired and NOT_RUN.
 
 ```sh
 # Only with separately obtained owner approval; the evidence amount must equal --usd.
-python3 tooling/coordination/harness.py --root . set-budget --actor human:owner --usd 1 --record docs/qualification/development-budget.evidence.json
+env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda set-budget --actor human:owner --usd 1 --record docs/qualification/development-budget.evidence.json
 ```
 
 Each positive allocation binds its exact budget reference and approved cap.

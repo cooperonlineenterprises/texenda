@@ -44,21 +44,27 @@ def atomic_bytes(path, raw):
 
 
 def source_map(crosswalk, generation_id, generated_at):
+    current_epoch = crosswalk['current_epoch']
     lines = [
         '# Canonical source map',
         '',
         'Generated, non-authoritative navigation. Documentation is not permission.',
         f'Generation: `{generation_id}` at `{generated_at}`.',
+        f'Current ownership epoch: `{current_epoch}`.',
         '',
-        '| Concern | Baseline owner | Facade owner | External-state owner |',
-        '|---|---|---|---|',
+        '| Concern | Current owner | Rule |',
+        '|---|---|---|',
     ]
     for row in crosswalk['ownership']:
-        owners = row['owner_by_epoch']
-        display = lambda value: f'`{value}`' if value is not None else 'none'
-        lines.append(f"| `{row['concern_id']}` | {display(owners['baseline'])} | "
-                     f"{display(owners['facade'])} | {display(owners['external_state'])} |")
-    lines += ['', 'Source: [reviewed adoption crosswalk](transition/blueprint-adoption-crosswalk.json).', '']
+        owner = row['owner_by_epoch'][current_epoch]
+        display = f'`{owner}`' if owner is not None else 'none'
+        lines.append(f"| `{row['concern_id']}` | {display} | {row['rule']} |")
+    lines += [
+        '',
+        'Historical ownership epochs remain in the '
+        '[reviewed adoption crosswalk](transition/blueprint-adoption-crosswalk.json).',
+        '',
+    ]
     return '\n'.join(lines).encode()
 
 
@@ -186,7 +192,16 @@ def build(root=ROOT, state_root=None, *, generated_at=None, source_identity=None
         'ledger_sha256': ledger['ledger_sha256'],
         'limitations': manifest['limitations'],
     }
-    resume = f"""# Resume Texenda mapped workspace work
+    state_path = ledger['state_root']
+    validation_command = (
+        'env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/validate.py '
+        f'--check --all --state-root {state_path}'
+    )
+    coordinator_command = (
+        'env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py '
+        f'--root . --state-root {state_path}'
+    )
+    resume = f"""# Resume ordinary Texenda work
 
 Generated, non-authoritative projection. Documentation is not permission.
 
@@ -197,8 +212,17 @@ Generated, non-authoritative projection. Documentation is not permission.
 - Receipt count/tip: `{ledger['receipt_count']}` / `{ledger['receipt_tip']}`
 - Live task/receipt/roster authority: `{ledger['state_root']}/state.json`
 
-Start with [`.agent/START_HERE.md`](../START_HERE.md). Re-run the read-only check;
-if any digest is stale, run refresh only after the underlying authority is understood.
+From the repository root, start with [`.agent/START_HERE.md`](../START_HERE.md)
+and run:
+
+```text
+{validation_command}
+```
+
+Then inspect `{coordinator_command} status`, `ready`, and `context WP-01`. Use the
+[resumption template](../../tooling/coordination/templates/RESUME.md) when prior
+work was interrupted. If any digest is stale, refresh only after the underlying
+authority is understood.
 """.encode()
     current_readme = f"""# Current observed state
 
@@ -209,15 +233,32 @@ Generation `{generation_id}` binds source revision `{revision}`, tree `{tree}`,
 source scope `{scope}`, and live ledger `{ledger['ledger_sha256']}`. Freshness is
 decided by the read-only facade check, not by this prose.
 """.encode()
-    handoff = f"""# Texenda handoff entry point
+    handoff = f"""# Texenda ordinary handoff
 
 Generated navigation only; documentation is not permission or live state.
 
 1. Read [root instructions](../../AGENTS.md) and [`.agent/START_HERE.md`](../../.agent/START_HERE.md).
-2. Confirm generation `{generation_id}` with the [read-only validation registry](../validation/README.md).
-3. Read [current observed state](../current-state/README.md), then the
-   [transition owner](../transition/README.md) only when migration work is in scope.
-4. Use the existing coordination ledger and templates; do not create dossier tasks or receipts.
+2. From the repository root, run the [registered read-only validation](../validation/README.md):
+
+   ```text
+   {validation_command}
+   ```
+
+3. Inspect the active ledger without writing:
+
+   ```text
+   {coordinator_command} status
+   {coordinator_command} ready
+   {coordinator_command} context WP-01
+   ```
+
+4. Prepare work with the existing [assignment](../../tooling/coordination/templates/ASSIGNMENT.md),
+   [review](../../tooling/coordination/templates/REVIEW.md), or
+   [resumption](../../tooling/coordination/templates/RESUME.md) template. Do not
+   create dossier tasks or receipts.
+5. Read the [current observed state](../current-state/README.md). Use
+   [transition](../transition/README.md) or [history](../history/README.md) only
+   for maintenance, provenance, or recovery work.
 
 Source revision/tree: `{revision}` / `{tree}`. Live ledger hash: `{ledger['ledger_sha256']}`.
 """.encode()
@@ -264,7 +305,10 @@ def refresh(root=ROOT, state_root=None, *, fail_after=None, recover_interrupted=
             'status': 'REFRESHED',
             'outputs': len(outputs),
             'generation_id': load_json(root / '.agent/generated/manifest.json')['generation_id'],
-            'next': 'python3 -B .agent/scripts/validate.py --check',
+            'next': ('env PYTHONDONTWRITEBYTECODE=1 python3 -B '
+                     '.agent/scripts/validate.py --check --all --state-root '
+                     + load_json(root / '.agent/generated/manifest.json')
+                     ['ledger_observation']['state_root']),
         }
     except BaseException:
         # Preserve the marker so check fails closed on any partial replacement.

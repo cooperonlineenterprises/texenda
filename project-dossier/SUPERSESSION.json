@@ -1,8 +1,20 @@
 {
   "schema_version": "texenda.dossier-supersession.v1",
   "authority": "Dossier artifact replacement metadata only; accepted decisions and sealed authority retain their existing owners.",
-  "current_version": "1.0.0-mapped-existing",
-  "records": [],
+  "current_version": "1.2.0-mapped-existing",
+  "records": [
+    {
+      "id": "SUP-0001",
+      "prior_version": "1.1.0-mapped-existing",
+      "prior_path": "project-dossier/transition/README.md",
+      "prior_revision": "338cd13505d6faffdb645c450b44ea9230aadd75",
+      "prior_sha256": "1f5b0b1aa816f6bcd34f591a0b5f9f5b4e9d6e8bf35474ca77367418fb930919",
+      "retained_history_path": "project-dossier/history/2026-09-15-workspace-transition-completed.md",
+      "active_successor_path": "project-dossier/transition/README.md",
+      "successor_version": "1.2.0-mapped-existing",
+      "reason": "Separate the completed migration procedure from ordinary current navigation without changing its bytes."
+    }
+  ],
   "rules": {
     "silent_replacement": false,
     "successor_required": true,

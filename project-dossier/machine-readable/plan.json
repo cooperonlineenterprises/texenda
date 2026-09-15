@@ -1,6 +1,6 @@
 {
   "schema_version": "texenda.dossier-adoption-plan.v1",
-  "authority": "Future mapped-adoption dependency plan only; not an active task ledger, assignment, lease, receipt, or permission source.",
+  "authority": "Mapped-adoption completion and dependency record only; not an active task ledger, assignment, lease, receipt, or permission source.",
   "items": [
     {
       "id": "PLAN-0001",
@@ -29,7 +29,7 @@
         "private input verified by location existence ignore and tracking only"
       ],
       "completion_evidence": "project-dossier/transition/external-state-relocation-receipt.md",
-      "limitation": "Physical relocation verified; this entry does not approve the subsequent evidence/projection candidate."
+      "limitation": "Physical relocation alone did not approve the subsequent evidence/projection candidate; PLAN-0003 and its exact evidence record that later approval."
     },
     {
       "id": "PLAN-0003",
@@ -45,8 +45,8 @@
         "no new WP execution lease receipt second ledger or external effect"
       ],
       "evidence": "docs/qualification/evidence/2026-09-15-external-state-cutover-review.evidence.json",
-      "limitation": "The exact cutover review/integration and approved read-only WP-00 demonstration are complete. This proposed source correction remains unapproved until its own independent review and integration. No new WP execution or product/external readiness is claimed.",
-      "status_scope": "The prior cutover candidate review and integration at the exact recorded revision; excludes this proposed status-correction candidate.",
+      "limitation": "The exact cutover review/integration and approved read-only WP-00 demonstration are complete. No new WP execution or product/external readiness is claimed.",
+      "status_scope": "The cutover candidate review and integration at the exact recorded revision; every later consequential candidate requires its own review.",
       "completion_evidence": "docs/qualification/evidence/2026-09-15-external-state-cutover-review.evidence.json",
       "observed_integration_revision": "14682d798faed7cd398d21be3cf8076b84d5b0fe"
     },
@@ -62,14 +62,17 @@
         "final check read-only proof passes",
         "all reviewer runtimes stopped and clean temporary worktrees reconciled"
       ],
-      "limitation": "The audit approves only the exact recorded baseline and retains its P2 stale-status finding. The current closeout branch proposes the wording correction; that proposal is not yet independently reviewed or integrated. No later-head, full-adoption or product/external approval is inferred.",
-      "status_scope": "The previously performed integrated-main baseline audit and prior cutover runtime/worktree reconciliation; not a review of this proposed closeout correction.",
+      "limitation": "The integrated-main audit approved only its exact recorded baseline and retained a P2 stale-status finding. The bounded correction was subsequently approved at 1a088a40119859e3b97d275f7d367cb14d77bace and incorporated into the local main lineage. No product or external approval is inferred.",
+      "status_scope": "The performed integrated-main baseline audit, prior cutover runtime/worktree reconciliation, and the separately reviewed bounded status correction; every future consequential revision requires fresh review.",
       "completion_evidence": "docs/qualification/evidence/2026-09-15-workspace-adoption-integrated-main-audit.evidence.json",
       "observed_audit_revision": "14682d798faed7cd398d21be3cf8076b84d5b0fe",
       "observed_audit_tree": "09d8475a6fc746640edef52efa7c10b340a9299e",
       "audit_observed_at": "2026-09-15T00:54:06+00:00",
       "runtime_stop_and_worktree_evidence": "docs/qualification/evidence/2026-09-15-workspace-adoption-integrated-main-audit.md",
-      "worktree_reconciliation_observed_at": "2026-09-15T01:00:34+00:00"
+      "worktree_reconciliation_observed_at": "2026-09-15T01:00:34+00:00",
+      "status_correction_review": "docs/qualification/evidence/2026-09-15-workspace-adoption-closeout-review.evidence.json",
+      "status_correction_revision": "1a088a40119859e3b97d275f7d367cb14d77bace",
+      "observed_closeout_lineage_revision": "836e209020177267ccaa1c803b66779cd29d12ec"
     }
   ]
 }

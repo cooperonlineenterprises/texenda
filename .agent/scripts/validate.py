@@ -294,9 +294,14 @@ def validate_registry(root=ROOT):
     require(len(ids) == len(set(ids)), 'duplicate validator command ID')
     context = registry['execution_context']
     require(set(context) == {'shell', 'working_directory', 'repository_root', 'project_home',
-                             'state_root', 'global_option_placement'}
+                             'state_root', 'global_option_placement',
+                             'ordinary_entry_command'}
             and context['shell'] is False
-            and context['working_directory'] == '{repository_root}',
+            and context['working_directory'] == '{repository_root}'
+            and context['ordinary_entry_command']
+            == ('env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/validate.py '
+                '--check --all --state-root '
+                '/Users/jamesryancooper/Projects/texenda/local/agent-state/texenda'),
             'validator execution context is not closed or shell-free')
     row_fields = {'id', 'argv', 'mode', 'required', 'run_in_check', 'purpose',
                   'working_directory', 'context_parameters'}
@@ -446,6 +451,21 @@ def validate_dossier(root=ROOT, *, generated=True):
             require(row['owner_path'] != row['path']
                     or row['classification'] in ('evidence', 'plan', 'history'),
                     'non-authoritative dossier view claims ownership')
+    history_path = 'project-dossier/history/2026-09-15-workspace-transition-completed.md'
+    history = root / history_path
+    history_sha = '1f5b0b1aa816f6bcd34f591a0b5f9f5b4e9d6e8bf35474ca77367418fb930919'
+    require(history.is_file()
+            and sha(stable_file_bytes(history, 'transition history')) == history_sha,
+            'completed transition history bytes changed')
+    history_row = next((row for row in rows if row['path'] == history_path), None)
+    require(history_row is not None and history_row['classification'] == 'history',
+            'completed transition history is not catalogued as history')
+    supersession = load_json(root / 'project-dossier/SUPERSESSION.json')
+    require(supersession['current_version'] == '1.2.0-mapped-existing'
+            and len(supersession['records']) == 1
+            and supersession['records'][0]['prior_sha256'] == history_sha
+            and supersession['records'][0]['retained_history_path'] == history_path,
+            'dossier supersession does not preserve the completed transition')
     if generated:
         mirror = load_json(root / 'project-dossier/machine-readable/path-authority.json')
         expected = [{key: row[key] for key in ('path', 'classification', 'owner_path', 'concern_id')}
@@ -462,6 +482,13 @@ def validate_links(root=ROOT, *, allow_generated_missing=False):
                  and (name.startswith('.agent/') or name.startswith('project-dossier/')))
     selected = [root / name for name in sorted(names)]
     for path in selected:
+        if path.relative_to(root).as_posix() == (
+                'project-dossier/history/2026-09-15-workspace-transition-completed.md'):
+            # This exact, separately hash-validated snapshot keeps its bytes and
+            # therefore its original transition/-relative links. Current
+            # navigation is supplied by history/README.md; rewriting the snapshot
+            # would falsify its provenance.
+            continue
         no_symlink_components(path.absolute(), 'Markdown path')
         if not path.is_file():
             continue
@@ -493,9 +520,35 @@ def validate_links(root=ROOT, *, allow_generated_missing=False):
 def validate_crosswalk_correction(root=ROOT):
     crosswalk = load_json(root / 'project-dossier/transition/blueprint-adoption-crosswalk.json')
     blueprint = crosswalk['blueprint']
+    require(crosswalk['status'] == 'completed_current_contract'
+            and crosswalk.get('current_epoch') == 'external_state'
+            and crosswalk['epochs'][-1] == crosswalk['current_epoch'],
+            'crosswalk current epoch is stale or incomplete')
     require(blueprint['origin_schema_supports_mapped_existing'] is True
-            and blueprint['origin_record_created'] is True,
+            and blueprint['origin_record_created'] is True
+            and blueprint['origin_schema']
+            == '.agent/schemas/project-blueprint-origin.v3.schema.json',
             'crosswalk does not record completed origin-schema successor')
+    origin_schema = next(row for row in crosswalk['mappings']
+                         if row['blueprint_path']
+                         == '.agent/schemas/project-blueprint-origin.schema.json')
+    require(origin_schema['mapped_path']
+            == '.agent/schemas/project-blueprint-origin.v3.schema.json',
+            'crosswalk still maps the active origin schema to v2')
+    history = next(row for row in crosswalk['mappings']
+                   if row['blueprint_path'] == 'project-dossier/history/README.md')
+    require(history['mapped_path'] == 'project-dossier/history/README.md'
+            and history['role'] == 'historical_source',
+            'tracked transition history index is not the active mapping')
+    editor = next(row for row in crosswalk['deferred_semantic_work']
+                  if row['id'] == 'DEFER-WSM-0001')
+    require(editor['status'] == 'resolved_scoped_by_ADR-0005'
+            and editor['does_not_modify_packages'] is True
+            and all(value in editor['remaining_gate'] for value in ('WP-10', 'VAL-03')),
+            'editor wording resolution lost its remaining gate boundary')
+    require(crosswalk['facade_acceptance']['origin_schema_successor_present'] is True
+            and crosswalk['facade_acceptance']['real_mapped_task_lifecycle_demonstrated'] is True,
+            'completed facade/origin demonstrations are still represented as pending')
     evidence_rows_ = [row for row in crosswalk['supplemental_mappings']
                       if row.get('mapped_path') == 'project-dossier/evidence/README.md']
     require(len(evidence_rows_) == 1 and evidence_rows_[0]['role'] == 'index'
@@ -642,6 +695,33 @@ def validate_generated(root=ROOT, state_root=None):
     require(findings_mirror['source_sha256'] == sha(stable_file_bytes(
                 root / 'project-dossier/conformance/findings.json', 'conformance findings'))
             and findings_mirror['findings'] == findings['findings'], 'findings mirror is stale')
+    state_root_text = facts['state_root']
+    validation_command = (
+        'env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/validate.py '
+        '--check --all --state-root ' + state_root_text
+    )
+    coordinator_command = (
+        'env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py '
+        '--root . --state-root ' + state_root_text
+    )
+    source_map_text = stable_file_bytes(
+        root / 'project-dossier/CANONICAL_SOURCE_MAP.md', 'canonical source map').decode()
+    require('Current ownership epoch: `external_state`.' in source_map_text
+            and '| Concern | Current owner | Rule |' in source_map_text
+            and '| Baseline owner |' not in source_map_text,
+            'canonical source map does not lead with current ownership')
+    resume_text = stable_file_bytes(root / '.agent/state/RESUME.md', 'resume view').decode()
+    require(resume_text.startswith('# Resume ordinary Texenda work\n')
+            and validation_command in resume_text,
+            'resume view does not route ordinary work through explicit validation')
+    handoff_text = stable_file_bytes(
+        root / 'project-dossier/handoff/START_HERE.md', 'handoff view').decode()
+    require(handoff_text.startswith('# Texenda ordinary handoff\n')
+            and validation_command in handoff_text
+            and all(coordinator_command + ' ' + command in handoff_text
+                    for command in ('status', 'ready', 'context WP-01'))
+            and handoff_text.index(validation_command) < handoff_text.index('[transition]'),
+            'handoff is missing ordinary commands or leads with migration history')
     # Reconstruct every generated byte from validated sources, the recorded
     # source identity/time, and the stable ledger. This covers all eleven
     # outputs, including every Markdown byte and all manifest/report claims.

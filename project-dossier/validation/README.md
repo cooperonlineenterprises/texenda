@@ -1,10 +1,17 @@
 # Validation
 
 The single command registry is [`.agent/validators.json`](../../.agent/validators.json).
-Run the read-only facade check after explicit refresh. Run the registered local,
-sealed, package, schema/link/owner/evidence, and negative/recovery suites for an
-exact candidate. PASS is bounded evidence only; it clears no product or external
-gate.
+From `/Users/jamesryancooper/Projects/texenda/repo`, the ordinary complete
+read-only command is:
+
+```text
+env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/validate.py --check --all --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda
+```
+
+It runs the registered local, sealed, package, schema/link/owner/evidence, and
+negative/recovery checks while skipping refresh writers. PASS is bounded evidence
+only; it clears no product or external gate. Use explicit refresh only when a
+declared generated view is stale and the underlying source change is understood.
 
 `validate.py --check` must not write tracked, untracked, ignored, cache, lock,
 timestamp, or generated state. Only `refresh.py --refresh` may update generated

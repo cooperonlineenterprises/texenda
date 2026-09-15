@@ -200,6 +200,20 @@
       "concern_id": "adoption_transition"
     },
     {
+      "id": "HIS-0001",
+      "path": "project-dossier/history/README.md",
+      "classification": "navigation",
+      "owner_path": "project-dossier/transition/blueprint-adoption-crosswalk.json",
+      "concern_id": "adoption_transition"
+    },
+    {
+      "id": "HIS-0002",
+      "path": "project-dossier/history/2026-09-15-workspace-transition-completed.md",
+      "classification": "history",
+      "owner_path": "project-dossier/history/2026-09-15-workspace-transition-completed.md",
+      "concern_id": "adoption_transition"
+    },
+    {
       "id": "MRR-0001",
       "path": "project-dossier/machine-readable/path-authority.json",
       "classification": "generated_view",

@@ -6,6 +6,28 @@ work, or resuming an interrupted run. It specializes the root instructions;
 scope. For coordinator changes, also read
 [tooling/coordination/AGENTS.md](../../tooling/coordination/AGENTS.md).
 
+## Ordinary repository entry
+
+Start in `/Users/jamesryancooper/Projects/texenda/repo` and run:
+
+```text
+env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/validate.py --check --all --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda
+```
+
+Then inspect the bound ledger before preparing work:
+
+```text
+env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda status
+env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda ready
+env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda context WP-01
+```
+
+Use the existing [assignment](../../tooling/coordination/templates/ASSIGNMENT.md),
+[review](../../tooling/coordination/templates/REVIEW.md), and
+[resumption](../../tooling/coordination/templates/RESUME.md) templates. The
+explicit state root is intentional and must not be inferred or replaced by a
+default. These commands inspect and validate; they do not admit or assign WP-01.
+
 ## Authority and context
 
 Runtime system/developer instructions govern execution. The machine-readable
@@ -194,7 +216,9 @@ defaults for new sessions in a trusted project; existing sessions do not reload
 it as proof of changed permissions. Verify effective settings on the actual
 route. It omits the model so the qualified assignment selects it explicitly.
 Config parsing, desktop probes and a CLI version check do not qualify another
-runtime. See the [runtime correction plan](../qualification/runtime-surface-correction-plan-2026-09-13.md).
+runtime. Direct CLI remains unqualified by the desktop evidence; the recorded
+CLI 0.149.0 value is a dated observation, not a current qualification or durable
+version requirement. See the [runtime correction plan](../qualification/runtime-surface-correction-plan-2026-09-13.md).
 
 ## Verification and safety
 

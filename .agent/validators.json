@@ -7,7 +7,8 @@
     "repository_root": "validated canonical absolute directory containing this registry",
     "project_home": "validated canonical workspace parent; repo/ parent or worktrees/ grandparent",
     "state_root": "validated canonical absolute directory; required when a binding is active, optional and omitted as an argv pair before binding",
-    "global_option_placement": "--state-root is inserted before the harness subcommand"
+    "global_option_placement": "--state-root is inserted before the harness subcommand",
+    "ordinary_entry_command": "env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/validate.py --check --all --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda"
   },
   "commands": [
     {

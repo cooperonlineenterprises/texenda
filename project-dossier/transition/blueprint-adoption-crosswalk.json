@@ -3,8 +3,8 @@
   "id": "TRN-WSM-0001",
   "adoption_mode": "mapped-existing",
   "profile": "high-assurance",
-  "status": "reviewable_transition_contract",
-  "authority": "Project-local adoption transition contract. Documentation is not permission. Planned new owners become active only at their reviewed cutover epoch.",
+  "status": "completed_current_contract",
+  "authority": "Project-local adoption transition contract. Documentation is not permission. The owner map for current_epoch is active; later owner changes require their own reviewed cutover.",
   "decision": "docs/decisions/ADR-0004-mapped-project-workspace.md",
   "baseline": "docs/qualification/evidence/2026-09-14-workspace-phase-0-baseline.json",
   "profile_triggers": [
@@ -46,6 +46,7 @@
     "facade",
     "external_state"
   ],
+  "current_epoch": "external_state",
   "ownership": [
     {
       "concern_id": "product_semantics",
@@ -144,7 +145,7 @@
         "facade": ".agent/policy.json",
         "external_state": ".agent/policy.json"
       },
-      "rule": "Cut over only in the same exact reviewed candidate that removes duplicated root policy."
+      "rule": "The reviewed facade cutover activated this owner and removed duplicated root policy; later owner changes require another exact reviewed cutover."
     },
     {
       "concern_id": "precedence_trust",
@@ -153,7 +154,7 @@
         "facade": ".agent/context.json",
         "external_state": ".agent/context.json"
       },
-      "rule": "Cut over only in the same exact reviewed candidate that routes root and operating guide to the new owner."
+      "rule": "The reviewed facade cutover activated this owner and routed root/guide prose to it; later owner changes require another exact reviewed cutover."
     },
     {
       "concern_id": "validation_commands",
@@ -427,9 +428,9 @@
     }
   ],
   "epoch_rules": {
-    "baseline": "Existing owners remain active, except new transition documents within the explicit owner migration scope.",
-    "facade": "Independent exact-candidate approval and serial integration activate policy/context/validator ownership in the same candidate that removes duplicate old prose.",
-    "external_state": "Approved state-root code and serial byte-preserving move activate external state binding. Old default calls fail closed when a binding exists."
+    "baseline": "Historical initial-owner snapshot before mapped adoption.",
+    "facade": "Historical reviewed cutover that activated policy/context/validator ownership while removing duplicate old-owner prose.",
+    "external_state": "Current epoch: the reviewed state-root code and byte-preserving move activated the external binding; omitted or competing state roots fail closed."
   },
   "blueprint_path_inventory": [
     ".agent/START_HERE.md",
@@ -888,12 +889,12 @@
     },
     {
       "blueprint_path": ".agent/schemas/project-blueprint-origin.schema.json",
-      "mapped_path": ".agent/schemas/project-blueprint-origin.v2.schema.json",
+      "mapped_path": ".agent/schemas/project-blueprint-origin.v3.schema.json",
       "concern_id": "generic_record_vocabulary",
       "role": "adapter",
       "equivalence": "functional",
       "materialize_phase": "phase_3",
-      "reason": "The deliberately versioned local successor adds mapped-existing and structural-reference-only qualification without copying the installed closed origin.v1 schema or importing project facts."
+      "reason": "Origin v3 is the active strict local adapter for mapped-existing provenance and separates selected installed, clean committed, and dirty working-source observations. The hash-bound v2 schema remains predecessor history through .project-blueprint-origin.json."
     },
     {
       "blueprint_path": ".agent/scripts/refresh.py",
@@ -1115,7 +1116,7 @@
       "role": "historical_source",
       "equivalence": "functional",
       "materialize_phase": "phase_3",
-      "reason": "The local origin.v2 record truthfully identifies 1.0.0 as inspected structural reference only, high-assurance mapped-existing adoption, and 4.3.0 as dirty/unqualified. The adoption provenance registry remains the mutable owner."
+      "reason": "The local origin.v3 record truthfully separates installed 1.0.0 as structural reference, clean committed 4.2.0 as unqualified, and dirty working 4.3.0 as uncommitted/unqualified. Its schema provenance retains the exact v2 predecessor hash; the adoption provenance registry remains the mutable owner."
     },
     {
       "blueprint_path": "AGENTS.md",
@@ -1287,12 +1288,12 @@
     },
     {
       "blueprint_path": "project-dossier/history/README.md",
-      "mapped_path": "/Users/jamesryancooper/Projects/texenda/archive/",
-      "concern_id": "adoption_provenance",
+      "mapped_path": "project-dossier/history/README.md",
+      "concern_id": "adoption_transition",
       "role": "historical_source",
-      "equivalence": "functional",
-      "materialize_phase": "existing",
-      "reason": "Local checkpoints/history outside Git; retained Git commits preserve tracked history."
+      "equivalence": "direct",
+      "materialize_phase": "clean_operation",
+      "reason": "Tracked navigation now separates the exact completed procedure from current transition status; local bundles, checkpoints, and raw logs remain outside Git under archive/."
     },
     {
       "blueprint_path": "project-dossier/machine-readable/evidence-index.json",
@@ -1418,7 +1419,7 @@
       "role": "index",
       "equivalence": "direct",
       "materialize_phase": "phase_3",
-      "reason": "Operator procedure indexes the reviewed manifest and frozen contracts."
+      "reason": "Concise current status and maintenance index; the exact completed operator procedure is retained under project-dossier/history/."
     },
     {
       "blueprint_path": "project-dossier/validation/QUALITY_GATES.json",
@@ -1559,8 +1560,8 @@
     "single_receipt_chain": "existing external ledger events",
     "new_product_canonical_files": false,
     "registered_extension_authority": "restrictions_only",
-    "origin_schema_successor_required": true,
-    "real_mapped_task_lifecycle_required": true,
+    "origin_schema_successor_present": true,
+    "real_mapped_task_lifecycle_demonstrated": true,
     "independent_review_profile": "gpt-6-astra-max",
     "reviewer_distinct_from_author_and_integrator": true,
     "final_read_only_review_after_evidence_added": true
@@ -1583,10 +1584,12 @@
   "deferred_semantic_work": [
     {
       "id": "DEFER-WSM-0001",
-      "title": "Assess separate project-local amendment for package editor wording divergence",
+      "title": "Package editor wording divergence resolved only within the local amendment scope",
       "owner_path": "docs/decisions/",
       "trigger": "Explicit later reconciliation task with relevant sealed topic owner and VAL-03 review",
-      "status": "deferred",
+      "status": "resolved_scoped_by_ADR-0005",
+      "resolution": "ADR-0005 selects @react-email/editor and EmailDocumentCodec as a reversible default without modifying or promoting either package variant.",
+      "remaining_gate": "WP-10 and VAL-03 still require exact version, compatibility, license/SBOM, dependency, performance, round-trip, and rendering evidence.",
       "does_not_modify_packages": true
     },
     {
@@ -1603,6 +1606,12 @@
       "id": "ADR-0005",
       "owner_path": "docs/decisions/ADR-0005-react-email-editor-reversible-default.md",
       "scope": "email_editor_reversible_default_only",
+      "package_variants_modified": false
+    },
+    {
+      "id": "ADR-0006",
+      "owner_path": "docs/decisions/ADR-0006-clean-ordinary-operating-contract.md",
+      "scope": "ordinary_entry_current_epoch_and_history_routing_only",
       "package_variants_modified": false
     }
   ]
