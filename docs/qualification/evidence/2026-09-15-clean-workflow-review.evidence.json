@@ -1,0 +1,260 @@
+{
+  "schema_version": "2.0",
+  "kind": "review",
+  "task_id": "TRN-WSM-0001",
+  "candidate_revision": "48033f36b448167511bddd379fde04684918fdb1",
+  "observed_revision": "48033f36b448167511bddd379fde04684918fdb1",
+  "summary": "APPROVE exact clean-workflow candidate 48033f36b448167511bddd379fde04684918fdb1 with zero unresolved findings. Also approve a delayed present audit of inherited 338cd13505d6faffdb645c450b44ea9230aadd75 while preserving the original integration-before-final-audit timing exception. This does not approve the containing evidence commit, future refresh/integration, Blueprint upgrade, product or external gates.",
+  "profile_id": "gpt-6-astra-max",
+  "role": "reviewer",
+  "capability_tier": 1,
+  "routing_policy_digest": "61f0db448cf5ac5adad4d9340d568a7558c0369174e30aab92dd0ccf0d24bdf0",
+  "work_package_digest": "9ad162070c27e4c765ba145fc8a35d31dc288482453daaa39ec0bb6add8bd8d8",
+  "issued_at": "2026-09-15T16:35:40Z",
+  "qualifications": [
+    {
+      "profile_id": "gpt-6-astra-max",
+      "capability_tier": 1,
+      "model_id": "gpt-6-astra",
+      "reasoning_effort": "max",
+      "runtime_id": "codex-desktop-collaboration",
+      "client_version": "26.901.41600 (build 7982)",
+      "sign_in_mode": "subscription",
+      "billing_mode": "subscription",
+      "capabilities": [
+        "read",
+        "edit",
+        "test"
+      ],
+      "verified_at": "2026-09-13T21:44:31Z",
+      "expires_at": "2026-10-12T21:44:31Z",
+      "qualification_check_ids": [
+        "desktop-profile-gpt-6-astra-max"
+      ]
+    }
+  ],
+  "scope": "Exact candidate review: ordinary entry, mutable current status, ADR-0006 scope, completed epoch/origin mapping, historical transition snapshot, validators/tests and generated outputs. Includes delayed present audit of inherited editor/Blueprint records and 338cd135 head. TRN-WSM-0001 is an existing transition reference, not a new live WP or receipt. Excludes containing/future heads, Codex registration, later compatibility work, source repair, upgrade, product qualification and external effects.",
+  "notes": "Base 338cd13505d6faffdb645c450b44ea9230aadd75/tree fcb8ec5b252663fea73d188e18768c54d544399a; candidate tree 0ab6e4014bf43a3378874c4ed70b2112793e2a64; canonical full-index binary diff SHA 65650d9a011401084da7d801427010d55532a88c7e6ef121c7707286a0e81f04. Author /root/clean_workflow_author, reviewer /root/clean_setup_reviewer, integrator /root distinct. Review bounds 80000 tokens/3600 seconds; evidence-only follow-up 20000 tokens/1200 seconds; subscription, API USD 0, no fallback/downshift/children. Markdown SHA ae2a4fb0ff2fdd40ca6167d01b17f91e8c8b17cc59fd8c6ec56968e846341f2b binds exact commands/results, unchanged state/package/private boundary, 360-path no-write proof and inherited timing exception. Old review evidence is preserved; this audit closes present assurance only and cannot reconstruct a timely historical audit. Provider model/token introspection unavailable. Containing commit/tree/file hashes reported separately.",
+  "checks": [
+    {
+      "id": "exact-subject-and-canonical-diff",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Verify clean detached HEAD 48033f36b448167511bddd379fde04684918fdb1/tree 0ab6e4014bf43a3378874c4ed70b2112793e2a64 and inspect the complete 38-file delta from 338cd13505d6faffdb645c450b44ea9230aadd75. Canonical full-index binary diff SHA 65650d9a011401084da7d801427010d55532a88c7e6ef121c7707286a0e81f04; abbreviated serialization difference resolved without edits.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-workflow-independent-review.md",
+      "sha256": "ae2a4fb0ff2fdd40ca6167d01b17f91e8c8b17cc59fd8c6ec56968e846341f2b"
+    },
+    {
+      "id": "reviewer-independence-and-exact-qualification",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Reviewer /root/clean_setup_reviewer is distinct from author /root/clean_workflow_author and integrator /root. Live harness reports exact gpt-6-astra-max available, qualification expiry 2026-10-12T21:44:31Z, roster evidence SHA 8e44034e6247ea47b3f0002100e6a343cfa6685d56138a24f55e8a13054173c0. Subscription, review cap 80000 tokens/3600 seconds, evidence-only cap 20000 tokens/1200 seconds, API USD 0.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-workflow-independent-review.md",
+      "sha256": "ae2a4fb0ff2fdd40ca6167d01b17f91e8c8b17cc59fd8c6ec56968e846341f2b"
+    },
+    {
+      "id": "ordinary-entry-and-bound-workflow",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Inspect all six current entry documents, .agent tools/registry, operating guide and templates. Reproduce explicit-root status, ready and context WP-01: exits 0, ready WP-01/WP-18, context READY. No wrapper, hidden state selection, assignment mutation or second ready ledger.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-workflow-independent-review.md",
+      "sha256": "ae2a4fb0ff2fdd40ca6167d01b17f91e8c8b17cc59fd8c6ec56968e846341f2b"
+    },
+    {
+      "id": "missing-state-root-denied",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "From canonical repo run python3 -B .agent/scripts/validate.py --check and python3 -B tooling/coordination/harness.py --root . status without --state-root. Both exit 2 with explicit-binding errors; live state SHA unchanged.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-workflow-independent-review.md",
+      "sha256": "ae2a4fb0ff2fdd40ca6167d01b17f91e8c8b17cc59fd8c6ec56968e846341f2b"
+    },
+    {
+      "id": "current-status-and-authority-scope",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Inspect current sources and ADR-0006: completed_current_contract/external_state is explicit; v3 active origin and hash-bound v2 predecessor are distinguished. Stale candidate interpretations are superseded within ordinary-operation scope only; ADR-0001/4/5 and existing evidence bytes remain unchanged.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-workflow-independent-review.md",
+      "sha256": "ae2a4fb0ff2fdd40ca6167d01b17f91e8c8b17cc59fd8c6ec56968e846341f2b"
+    },
+    {
+      "id": "editor-and-package-boundaries",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Confirm ADR-0005 remains sole scoped editor amendment; exact version null/UNVERIFIED, WP-10/VAL-03 unpassed, both 1.1.0 variants retain original roles and eleven differences. No package promotion, product permission or gate clearance.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-workflow-independent-review.md",
+      "sha256": "ae2a4fb0ff2fdd40ca6167d01b17f91e8c8b17cc59fd8c6ec56968e846341f2b"
+    },
+    {
+      "id": "exact-transition-history-and-successor",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Compare the 219-line history snapshot with Git object 338cd135:project-dossier/transition/README.md and SHA 1f5b0b1aa816f6bcd34f591a0b5f9f5b4e9d6e8bf35474ca77367418fb930919. Catalog/supersession and concise current successor validate; historical relative links remain byte-preserved behind a current index.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-workflow-independent-review.md",
+      "sha256": "ae2a4fb0ff2fdd40ca6167d01b17f91e8c8b17cc59fd8c6ec56968e846341f2b"
+    },
+    {
+      "id": "no-duplicate-authority-and-generated-integrity",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Validate 42 owner concerns and no second task/receipt/routing/decision/evidence/permission authority. All eleven generated outputs reconstruct exactly at generation 8fca60b8a528b424656b61fa197e3231c2766c475e70ad6e8fa66d45f47ed621, source scope 36d57188cfcf38cd8de13bff24f5e6d28d284157ce12d826664fc662ae39fb70.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-workflow-independent-review.md",
+      "sha256": "ae2a4fb0ff2fdd40ca6167d01b17f91e8c8b17cc59fd8c6ec56968e846341f2b"
+    },
+    {
+      "id": "exact-documented-check-all",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/validate.py --check --all --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda: exit 0 in 17.771 seconds; all nine dispatched registry commands exit 0; both refresh writers skipped.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-workflow-independent-review.md",
+      "sha256": "ae2a4fb0ff2fdd40ca6167d01b17f91e8c8b17cc59fd8c6ec56968e846341f2b"
+    },
+    {
+      "id": "standalone-facade-suite",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "env PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s .agent/tests -p 'test_*.py' -v: 34 tests pass in 49.571 seconds without skips, including complete-check fixture skipped during recursive --all.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-workflow-independent-review.md",
+      "sha256": "ae2a4fb0ff2fdd40ca6167d01b17f91e8c8b17cc59fd8c6ec56968e846341f2b"
+    },
+    {
+      "id": "workspace-coordination-and-sealed-suites",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "The exact registered unittest commands in the Markdown pass; independent discovery counts are 90 workspace, 187 coordination and 39 sealed tests. Includes instruction, authority, state-root, lock, receipt, stale-view, private-boundary and recovery negative cases.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-workflow-independent-review.md",
+      "sha256": "ae2a4fb0ff2fdd40ca6167d01b17f91e8c8b17cc59fd8c6ec56968e846341f2b"
+    },
+    {
+      "id": "both-package-checksums",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Both exact validate_package.py --checksums commands in the Markdown exit 0 with 14/14 checks; workspace audit verifies 86 sealed and 88 source files against the recorded baseline. Both manifest digests and eleven variant differences remain preserved.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-workflow-independent-review.md",
+      "sha256": "ae2a4fb0ff2fdd40ca6167d01b17f91e8c8b17cc59fd8c6ec56968e846341f2b"
+    },
+    {
+      "id": "parse-schema-link-owner-evidence",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "python3 -B tooling/workspace/validate_contract.py --check --audit and facade validation pass: 133 JSON, 1 TOML, 19 Python, 30 dossier paths, 3 instruction files, 126 local links and 473 bound PASS/FAIL evidence checks; 42 concerns, 85 paths, 35 artifact types and 16 retained moves.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-workflow-independent-review.md",
+      "sha256": "ae2a4fb0ff2fdd40ca6167d01b17f91e8c8b17cc59fd8c6ec56968e846341f2b"
+    },
+    {
+      "id": "read-only-snapshot",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "In-memory snapshots surrounding candidate --check --all compare all 360 review-worktree/external-state paths: no byte, path, mode, size or nanosecond atime/mtime/ctime change. Scope excludes private inputs, shared Git internals beyond the .git pointer and disposable fixtures outside measured roots; no private path was traversed.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-workflow-independent-review.md",
+      "sha256": "ae2a4fb0ff2fdd40ca6167d01b17f91e8c8b17cc59fd8c6ec56968e846341f2b"
+    },
+    {
+      "id": "live-state-roster-lease-budget-and-gates",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Recheck state SHA b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235, version 2.0, 13 receipts/tip f39249184757101b108ea7ec5ea0ffebdd8237315b8ac3cad3ad0cc6ab3e827e, 11 qualified profiles, zero leases/budget/spend, null budget approval and empty gates; WP-10 planned.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-workflow-independent-review.md",
+      "sha256": "ae2a4fb0ff2fdd40ca6167d01b17f91e8c8b17cc59fd8c6ec56968e846341f2b"
+    },
+    {
+      "id": "private-existence-ignore-and-tracking-only",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Exact final CSV test -f passes; legacy relative CSV path remains ignored and Git tracking queries return no private CSV. No private content, size, hash, copy, parse or directory listing; no equality claim.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-workflow-independent-review.md",
+      "sha256": "ae2a4fb0ff2fdd40ca6167d01b17f91e8c8b17cc59fd8c6ec56968e846341f2b"
+    },
+    {
+      "id": "protected-paths-and-cleanliness",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Candidate and inherited git diff --check pass; exact protected comparisons preserve sealed package, ADR-0001/4/5, existing evidence, harness, routing, policy/context and origin. Candidate and canonical main remain clean at their exact observed heads during review.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-workflow-independent-review.md",
+      "sha256": "ae2a4fb0ff2fdd40ca6167d01b17f91e8c8b17cc59fd8c6ec56968e846341f2b"
+    },
+    {
+      "id": "planner-and-clean-generator-dry-run",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Run installed project-bootstrap 1.0.0 plan_adoption.py with high-assurance: exit 0, 45 collisions/40 candidate paths, all 85 mapped. Run scaffold_project.py --dry-run at exact absent target: exit 0, 85 intended paths, target absent before/after. Stock origin-v3 limitation remains explicit; no generation or upgrade.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-workflow-independent-review.md",
+      "sha256": "ae2a4fb0ff2fdd40ca6167d01b17f91e8c8b17cc59fd8c6ec56968e846341f2b"
+    },
+    {
+      "id": "inherited-delta-and-delayed-present-audit",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Audit 836e209020177267ccaa1c803b66779cd29d12ec..338cd13505d6faffdb645c450b44ea9230aadd75, canonical diff SHA 40f7cde73d8c79490b5d3b4ab53b6a6dbd3a0ec063c9f0c30f5d17d1b21e8b59. After approved 36e17d8 only two review files plus eleven generated views changed; source bytes identical. Record the historical integration-before-final-audit timing exception, without rewriting or backdating evidence.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-workflow-independent-review.md",
+      "sha256": "ae2a4fb0ff2fdd40ca6167d01b17f91e8c8b17cc59fd8c6ec56968e846341f2b"
+    },
+    {
+      "id": "inherited-canonical-head-verification",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "From canonical repo at 338cd13505d6faffdb645c450b44ea9230aadd75/tree fcb8ec5b252663fea73d188e18768c54d544399a run exact --check --all with external root: all nine commands pass, 28 dossier paths/111 links/473 evidence checks; generated bytes reconstruct and source scope ed42a7f8fc518e5a111d82c10adc84278b8f0b4ff7d942bf1e54c5e48cb8ea0d remains intact. Head/tree/status unchanged.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-workflow-independent-review.md",
+      "sha256": "ae2a4fb0ff2fdd40ca6167d01b17f91e8c8b17cc59fd8c6ec56968e846341f2b"
+    },
+    {
+      "id": "blueprint-failure-preserved-and-bundle-valid",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Inspect retained origin-v3 and independent source evidence: selected 1.0.0 structural-only, clean 4.2.0 PASS/PASS/FAIL/unqualified, dirty uncommitted 4.3.0 separate, no reviewed seed. Independently verify complete-history bundle and SHA d8e1471a25c5d0d20bd560d0dd33f060d6d0013aa573e3f725b2ce93639b3d7e. No source repair or new qualification claim.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-workflow-independent-review.md",
+      "sha256": "ae2a4fb0ff2fdd40ca6167d01b17f91e8c8b17cc59fd8c6ec56968e846341f2b"
+    },
+    {
+      "id": "archive-forward-baseline",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "From exact reviewer-cache archive run shasum -a 256 -c CURRENT-SHA256SUMS: all five entries OK. Manifest SHA 8fca896ff26a00eb7d85d49fe54344a6a2d9b034d5938609ca920c3bc7ac2bd2 and provenance SHA 5830d7d810d203a3e9e0f3fc9c2859778424be6d5bd4ccddcf512fc8699b0fa2 match. No pre-migration equality reconstruction or raw-payload promotion.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-workflow-independent-review.md",
+      "sha256": "ae2a4fb0ff2fdd40ca6167d01b17f91e8c8b17cc59fd8c6ec56968e846341f2b"
+    },
+    {
+      "id": "review-runtime-and-external-effect-boundaries",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "All completed review command sessions are reaped; no child agents or background jobs remain. No network, GitHub, Codex UI, private-input, package, upstream/global-skill or live-state mutation; no push, deployment, publication, spending, activation or gate clearance. Parent must observe the later evidence-authoring runtime stop.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-clean-workflow-independent-review.md",
+      "sha256": "ae2a4fb0ff2fdd40ca6167d01b17f91e8c8b17cc59fd8c6ec56968e846341f2b"
+    },
+    {
+      "id": "evidence-bearing-head-refresh-and-audit",
+      "required": false,
+      "status": "NOT_RUN",
+      "command_or_procedure": "Preserve these two review records, explicitly refresh only declared generated views, then independently audit the exact resulting head. This approval does not approve its containing evidence commit or future head."
+    },
+    {
+      "id": "new-candidate-local-integration-and-canonical-verification",
+      "required": false,
+      "status": "NOT_RUN",
+      "command_or_procedure": "Local integration of the clean-workflow candidate and verification of its exact integrated main are future integrator steps; this evidence writer does not perform them."
+    },
+    {
+      "id": "codex-registration-and-project-home-navigation",
+      "required": false,
+      "status": "NOT_RUN",
+      "command_or_procedure": "Codex registration and project-home WORKSPACE.md are outside the reviewed Git candidate. No application registration or UI result is claimed by this review."
+    },
+    {
+      "id": "upstream-full-validator-rerun-or-upgrade",
+      "required": false,
+      "status": "NOT_RUN",
+      "command_or_procedure": "No upstream full-validator rerun, source repair, Blueprint upgrade, reviewed seed creation or qualification occurred. Its preserved failure remains controlling."
+    },
+    {
+      "id": "fresh-github-state-query",
+      "required": false,
+      "status": "NOT_RUN",
+      "command_or_procedure": "Reviewer performed no fresh GitHub visibility/branch/workflow query. Integrator retains its separate external-state observation; no external change was made."
+    },
+    {
+      "id": "product-or-external-gate-qualification",
+      "required": false,
+      "status": "NOT_RUN",
+      "command_or_procedure": "No new product execution, dependency qualification, WP-10/VAL-03 approval, production readiness or external-effect gate clearance."
+    }
+  ]
+}
