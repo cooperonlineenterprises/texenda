@@ -12,16 +12,16 @@
     {
       "id": "RAIDQ-0002",
       "type": "risk",
-      "status": "gated",
-      "statement": "Interrupted live-state relocation could leave ambiguous active stores.",
-      "control": "Closed moving marker, exactly-one-location checks, stable bytes, and verified resume/reverse rename."
+      "status": "controlled",
+      "statement": "The physical relocation completed with one active external ledger and exact retained state/receipt bytes; a future interrupted migration could still require explicit recovery.",
+      "control": "Verified active binding, archived moving descriptor, completion transaction, preserved inodes, and no pending blockers. Retain the helper recovery path and never initialize or recreate default state."
     },
     {
       "id": "RAIDQ-0003",
       "type": "dependency",
       "status": "open",
-      "statement": "Consequential candidate and final integrated head require distinct Astra/max review.",
-      "control": "Do not integrate or execute live moves before exact approval."
+      "statement": "The code candidate is independently reviewed and integrated, while the external-state evidence/projection candidate and final integrated head still require distinct Astra/max review.",
+      "control": "Keep candidate review/integration and final integrated-head audit explicitly pending; do not treat physical-move or read-only replay evidence as approval."
     },
     {
       "id": "RAIDQ-0004",

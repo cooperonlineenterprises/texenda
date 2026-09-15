@@ -1,0 +1,929 @@
+External state relocation: physical observation and mapped lifecycle replay
+Observation: 2026-09-14 23:57:06 UTC
+Role: immutable sanitized author evidence; not approval or a live task/receipt store.
+Base main: 01247b6ecc2368610d03d8a82b7ac911d4ad1622
+Base tree: 394741c97268edc81ad2587ba47156ac6a55a8f3
+Author assignment: T1 gpt-6-astra-max, separate tracked evidence candidate.
+Project-bootstrap: installed 1.0.0, high-assurance, mapped-existing; structural reference only.
+Planner result: 44 literal collisions and 41 optional candidate paths; no generator, no copied authority.
+
+The exact local journal was re-read and matched its verified original bytes and SHA-256:
+08c1254c9642a66de202b4909047887e83345a96ccb49ad65a2941204b5be8bf
+It records the completed physical executor role. No helper prepare/apply/recover ran in this author assignment.
+Independent review and final integrated-head audit of this candidate: NOT_RUN.
+
+Physical before/after observations from the hash-verified local journal:
+{
+  "state": {
+    "before": {
+      "version": "2.0",
+      "state_sha256": "b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235",
+      "receipt_count": 13,
+      "receipt_tip": "f39249184757101b108ea7ec5ea0ffebdd8237315b8ac3cad3ad0cc6ab3e827e",
+      "receipt_hashes": [
+        "a50f2e78119801bf484a55fa202b75fa61429948b1aea100437cae11d451e30f",
+        "f20b9a18bfb06899eb33fd33316e666c635c50233c964416ccc8d522074c3479",
+        "c49e2db85fe183c0e96b9e35c57f68ac31b0960dfbd353bc3586d32c39c23e12",
+        "c5f8e6e0c69b3097b5f3eec7e08769b4bf9d8a0a6a28072db9adbdbd313b2803",
+        "dc0d2166f55822d4098603f32355b175a0d5a91caf1bc0bc4d6dd51d832d18e9",
+        "650f62b3d26feb6b3ebb017209a8d0d25ea59d6cfe14ee5c8ff947868164a933",
+        "c0b30bd9764aec6bdf924b28ddada7ea23de8425eb344211e2b1df3c9730206b",
+        "7158517d0578da4129b466a79e9fb0d2745fde8b8f7031b69e307fdf183b629b",
+        "a29aedfcc97546dfa4610d55744a6601e5e0184e25faee2c943127190afb3c59",
+        "93dd403aeb020f44431c590201eb245ef78b395776c7514c6c807f4e4a778155",
+        "cc086a2451520e2e17bb9ea986312a9031cbfafcfcaca72604dbeef045c249b5",
+        "a60e550b634c28cdfdab677e44481bc5fb5803d2056c10f6787df35fefe05092",
+        "f39249184757101b108ea7ec5ea0ffebdd8237315b8ac3cad3ad0cc6ab3e827e"
+      ],
+      "roster_count": 11,
+      "leases": [],
+      "budget_usd": 0,
+      "budget_approval": null,
+      "gates": {}
+    },
+    "after": {
+      "version": "2.0",
+      "state_sha256": "b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235",
+      "receipt_count": 13,
+      "receipt_tip": "f39249184757101b108ea7ec5ea0ffebdd8237315b8ac3cad3ad0cc6ab3e827e",
+      "receipt_hashes": [
+        "a50f2e78119801bf484a55fa202b75fa61429948b1aea100437cae11d451e30f",
+        "f20b9a18bfb06899eb33fd33316e666c635c50233c964416ccc8d522074c3479",
+        "c49e2db85fe183c0e96b9e35c57f68ac31b0960dfbd353bc3586d32c39c23e12",
+        "c5f8e6e0c69b3097b5f3eec7e08769b4bf9d8a0a6a28072db9adbdbd313b2803",
+        "dc0d2166f55822d4098603f32355b175a0d5a91caf1bc0bc4d6dd51d832d18e9",
+        "650f62b3d26feb6b3ebb017209a8d0d25ea59d6cfe14ee5c8ff947868164a933",
+        "c0b30bd9764aec6bdf924b28ddada7ea23de8425eb344211e2b1df3c9730206b",
+        "7158517d0578da4129b466a79e9fb0d2745fde8b8f7031b69e307fdf183b629b",
+        "a29aedfcc97546dfa4610d55744a6601e5e0184e25faee2c943127190afb3c59",
+        "93dd403aeb020f44431c590201eb245ef78b395776c7514c6c807f4e4a778155",
+        "cc086a2451520e2e17bb9ea986312a9031cbfafcfcaca72604dbeef045c249b5",
+        "a60e550b634c28cdfdab677e44481bc5fb5803d2056c10f6787df35fefe05092",
+        "f39249184757101b108ea7ec5ea0ffebdd8237315b8ac3cad3ad0cc6ab3e827e"
+      ],
+      "roster_count": 11,
+      "leases": [],
+      "budget_usd": 0,
+      "budget_approval": null,
+      "gates": {}
+    },
+    "facts_and_receipt_prefix_equal": true,
+    "receipt_append_count": 0,
+    "old_state_absent": true,
+    "old_lock_absent": true,
+    "external_state_regular_non_symlink": true,
+    "external_lock_regular_non_symlink": true,
+    "no_second_active_ledger": true
+  },
+  "state_and_lock_identity": {
+    "device": 16777232,
+    "state": {
+      "source_inode": 670498844,
+      "destination_inode": 670498844,
+      "inode_preserved": true,
+      "mode": "100600",
+      "bytes": 29776,
+      "mtime_before": 1789339036,
+      "mtime_after": 1789339036,
+      "ctime_before": 1789339036,
+      "ctime_after": 1789429386
+    },
+    "lock": {
+      "source_inode": 670332379,
+      "destination_inode": 670332379,
+      "inode_preserved": true,
+      "mode": "100644",
+      "bytes": 0,
+      "mtime_before": 1789317254,
+      "mtime_after": 1789317254,
+      "ctime_before": 1789317254,
+      "ctime_after": 1789429386
+    },
+    "ctime_note": "Namespace renames changed ctime as expected; mtime, mode, and inode were preserved. This section contains state/lock metadata only, never private-file metadata."
+  },
+  "private_inputs": {
+    "old_directory": "/Users/jamesryancooper/Projects/texenda/repo/.texenda/private-inputs",
+    "new_directory": "/Users/jamesryancooper/Projects/texenda/local/private-inputs",
+    "old_directory_exists_after": false,
+    "new_directory_exists_after": true,
+    "old_csv": {
+      "path": "/Users/jamesryancooper/Projects/texenda/repo/.texenda/private-inputs/kit/ohw/2026-09-14/subscribers.csv",
+      "exists_before": true,
+      "exists_after": false,
+      "ignored_before": true,
+      "untracked_before": true,
+      "content_accessed": false
+    },
+    "new_csv": {
+      "path": "/Users/jamesryancooper/Projects/texenda/local/private-inputs/kit/ohw/2026-09-14/subscribers.csv",
+      "exists_after": true,
+      "ignored_after": null,
+      "ignored_after_explanation": "Not applicable: the exact destination is outside the Git repository.",
+      "untracked_after": true,
+      "content_accessed": false
+    },
+    "content_accessed": false
+  },
+  "binding_and_completion": {
+    "binding": {
+      "schema_version": "texenda.state-location.v1",
+      "migration_id": "state-root-20260914",
+      "repository_root": "/Users/jamesryancooper/Projects/texenda/repo",
+      "state_root": "/Users/jamesryancooper/Projects/texenda/local/agent-state/texenda",
+      "status": "active",
+      "baseline": {
+        "state_sha256": "b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235",
+        "receipt_count": 13,
+        "receipt_tip": "f39249184757101b108ea7ec5ea0ffebdd8237315b8ac3cad3ad0cc6ab3e827e"
+      }
+    },
+    "transaction": {
+      "candidate_active_sha256": "a92b6137856b7f9c2b3f13f69f4e6dc92ed4da1be82eec1ddf21188ebdde0365",
+      "expected_moving_sha256": "11438325ffa2203718b10dd3cc879ed16b95704d3921a9ef83c4cc7a20854950",
+      "migration_id": "state-root-20260914",
+      "schema_version": "texenda.state-location-activation.v1",
+      "temporary_name": ".texenda-location.activation-207c592fdadc82c9",
+      "token": "207c592fdadc82c9"
+    },
+    "completed_path": "/Users/jamesryancooper/Projects/texenda/local/logs/workspace-relocation/state-root-20260914.activation-complete.207c592fdadc82c9.json",
+    "binding_regular_non_symlink": true,
+    "binding_ignored": true,
+    "binding_untracked": true,
+    "baseline_exact": true,
+    "completion_validated": true
+  },
+  "artifacts": [
+    {
+      "path": "/Users/jamesryancooper/Projects/texenda/local/agent-state/texenda/state.json",
+      "sha256": "b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235"
+    },
+    {
+      "path": "/Users/jamesryancooper/Projects/texenda/local/agent-state/texenda/state.lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/Users/jamesryancooper/Projects/texenda/repo/.texenda-location.json",
+      "sha256": "a92b6137856b7f9c2b3f13f69f4e6dc92ed4da1be82eec1ddf21188ebdde0365"
+    },
+    {
+      "path": "/Users/jamesryancooper/Projects/texenda/local/logs/workspace-relocation/state-root-20260914.activated-moving.json",
+      "sha256": "11438325ffa2203718b10dd3cc879ed16b95704d3921a9ef83c4cc7a20854950"
+    },
+    {
+      "path": "/Users/jamesryancooper/Projects/texenda/local/logs/workspace-relocation/state-root-20260914.activation-complete.207c592fdadc82c9.json",
+      "sha256": "74e25a1bff59f9cde722157e14826a90c280704bdd76e5f77ddb4cfe75e760ea"
+    },
+    {
+      "path": "/Users/jamesryancooper/Projects/texenda/repo/tooling/workspace/relocate_state.py",
+      "sha256": "dc9652691614c1baf861939a894ae8e055aa1851e475d6ccbc769feaffc8a246"
+    },
+    {
+      "path": "/Users/jamesryancooper/Projects/texenda/repo/.texenda/state.v1.a2a58e20004c86c0081b1427087626e36f931c3804532e8a1caf1c94a49a609a.json",
+      "sha256": "a2a58e20004c86c0081b1427087626e36f931c3804532e8a1caf1c94a49a609a"
+    }
+  ],
+  "historical_compatibility": {
+    "retained_roots": [
+      "/Users/jamesryancooper/Projects/texenda/repo/.texenda/evidence",
+      "/Users/jamesryancooper/Projects/texenda/repo/.texenda/context"
+    ],
+    "files_before": [
+      {
+        "path": "/Users/jamesryancooper/Projects/texenda/repo/.texenda/context/WP-00.json",
+        "sha256": "e13a3eded54663caeb3c3d84ad1a968dde0a9b8eb247be8f6b73350ca8e5435e"
+      },
+      {
+        "path": "/Users/jamesryancooper/Projects/texenda/repo/.texenda/evidence/wp00-integration-verification.log",
+        "sha256": "be034ce2eb69d9f943a2f78ded7915237c1abb4927335c8dd780f52da1f54e23"
+      },
+      {
+        "path": "/Users/jamesryancooper/Projects/texenda/repo/.texenda/evidence/wp00-integration.evidence.json",
+        "sha256": "ba2c632509b41aae33f7efb02e2d07cff5d39882ec876b0bd9d860f02d42042e"
+      }
+    ],
+    "files_after": [
+      {
+        "path": "/Users/jamesryancooper/Projects/texenda/repo/.texenda/evidence/wp00-integration-verification.log",
+        "sha256": "be034ce2eb69d9f943a2f78ded7915237c1abb4927335c8dd780f52da1f54e23"
+      },
+      {
+        "path": "/Users/jamesryancooper/Projects/texenda/repo/.texenda/evidence/wp00-integration.evidence.json",
+        "sha256": "ba2c632509b41aae33f7efb02e2d07cff5d39882ec876b0bd9d860f02d42042e"
+      },
+      {
+        "path": "/Users/jamesryancooper/Projects/texenda/repo/.texenda/context/WP-00.json",
+        "sha256": "e13a3eded54663caeb3c3d84ad1a968dde0a9b8eb247be8f6b73350ca8e5435e"
+      }
+    ],
+    "all_retained_file_hashes_equal": true,
+    "v1_checkpoint": {
+      "path": "/Users/jamesryancooper/Projects/texenda/repo/.texenda/state.v1.a2a58e20004c86c0081b1427087626e36f931c3804532e8a1caf1c94a49a609a.json",
+      "sha256_before": "a2a58e20004c86c0081b1427087626e36f931c3804532e8a1caf1c94a49a609a",
+      "sha256_after": "a2a58e20004c86c0081b1427087626e36f931c3804532e8a1caf1c94a49a609a"
+    },
+    "symlink_scan_scope": "Historical evidence/context and external state directory; relocation root components and state/lock/binding also validated by the reviewed helper. No recursive private-input scan.",
+    "symlinks_found": []
+  },
+  "freeze": {
+    "root_report": "Root freshly observed the facade author, nested adversarial auditor, and independent reviewer completed/stopped; their worktrees were removed. Only root orchestrator and serial executor were active. Root committed to no coordinator/state/binding/relocation/private-path tools during the cutover.",
+    "local_state_lock_holders_before": [],
+    "local_state_lock_holders_after": [],
+    "lsof_exit_code_before": 1,
+    "lsof_exit_code_after": 1,
+    "lsof_empty_output_meaning": "No processes held the exact state.json/state.lock paths when observed.",
+    "source_state_write_blockers": [],
+    "destination_state_write_blockers": [],
+    "activation_transactions_before": [],
+    "activation_transactions_after": [],
+    "activation_temporaries_before": [],
+    "activation_temporaries_after": [],
+    "leases_before": [],
+    "leases_after": []
+  },
+  "git": {
+    "before": {
+      "head": "01247b6ecc2368610d03d8a82b7ac911d4ad1622",
+      "tree": "394741c97268edc81ad2587ba47156ac6a55a8f3",
+      "branch": "main",
+      "clean": true,
+      "worktrees": [
+        "/Users/jamesryancooper/Projects/texenda/repo"
+      ],
+      "ignored_status": [
+        ".texenda/"
+      ]
+    },
+    "after": {
+      "head": "01247b6ecc2368610d03d8a82b7ac911d4ad1622",
+      "tree": "394741c97268edc81ad2587ba47156ac6a55a8f3",
+      "branch": "main",
+      "clean": true,
+      "worktrees": [
+        "/Users/jamesryancooper/Projects/texenda/repo"
+      ],
+      "ignored_status": [
+        ".texenda-location.json",
+        ".texenda/"
+      ]
+    },
+    "tracked_files_changed": false,
+    "commits_created": false,
+    "parent_and_local_are_outside_git": true
+  }
+}
+
+Physical helper execution (historical command/result evidence; not replayed by this author):
+[
+  {
+    "phase": "prepare",
+    "command": "env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/workspace/relocate_state.py --repo-root /Users/jamesryancooper/Projects/texenda/repo --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda prepare --migration-id state-root-20260914",
+    "cwd": "/Users/jamesryancooper/Projects/texenda/repo",
+    "exit_code": 0,
+    "result": {
+      "status": "moving",
+      "binding": "/Users/jamesryancooper/Projects/texenda/repo/.texenda-location.json",
+      "state_sha256": "b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235",
+      "receipt_count": 13,
+      "receipt_tip": "f39249184757101b108ea7ec5ea0ffebdd8237315b8ac3cad3ad0cc6ab3e827e"
+    }
+  },
+  {
+    "phase": "apply",
+    "command": "env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/workspace/relocate_state.py --repo-root /Users/jamesryancooper/Projects/texenda/repo --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda apply",
+    "cwd": "/Users/jamesryancooper/Projects/texenda/repo",
+    "exit_code": 0,
+    "result": {
+      "state_sha256": "b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235",
+      "receipt_count": 13,
+      "receipt_tip": "f39249184757101b108ea7ec5ea0ffebdd8237315b8ac3cad3ad0cc6ab3e827e",
+      "private_input_check": "location_only_no_content_access",
+      "status": "active",
+      "already_completed": false,
+      "recovered_activation": false
+    }
+  },
+  {
+    "phase": "verify",
+    "command": "env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/workspace/relocate_state.py --repo-root /Users/jamesryancooper/Projects/texenda/repo --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda verify",
+    "cwd": "/Users/jamesryancooper/Projects/texenda/repo",
+    "exit_code": 0,
+    "result": {
+      "state_sha256": "b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235",
+      "receipt_count": 13,
+      "receipt_tip": "f39249184757101b108ea7ec5ea0ffebdd8237315b8ac3cad3ad0cc6ab3e827e",
+      "private_input_check": "location_only_no_content_access",
+      "status": "active",
+      "migration_id": "state-root-20260914"
+    }
+  }
+]
+
+Physical post-move validators:
+[
+  {
+    "command": "env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root /Users/jamesryancooper/Projects/texenda/repo --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda check",
+    "cwd": "/Users/jamesryancooper/Projects/texenda/repo",
+    "exit_code": 0,
+    "result": {
+      "integrity": "PASS",
+      "meaning": "local state/receipt/policy integrity only; not production readiness"
+    }
+  },
+  {
+    "command": "env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/validate.py --check --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda",
+    "cwd": "/Users/jamesryancooper/Projects/texenda/repo",
+    "exit_code": 2,
+    "result": {
+      "status": "FAIL",
+      "error": "generated state-root observation is stale"
+    }
+  },
+  {
+    "command": "env PYTHONDONTWRITEBYTECODE=1 python3 -B specs/texenda-handoff/10-validation/validate_package.py --checksums",
+    "cwd": "/Users/jamesryancooper/Projects/texenda/repo",
+    "exit_code": 0,
+    "result": {
+      "package_version": "1.1.0",
+      "checked_at": "2026-09-14T23:44:27.832160+00:00",
+      "result": "PASS",
+      "checks": [
+        {
+          "check": "JSON parse",
+          "status": "PASS"
+        },
+        {
+          "check": "Prior artifacts byte integrity",
+          "status": "PASS"
+        },
+        {
+          "check": "Decision status and authority ownership",
+          "status": "PASS"
+        },
+        {
+          "check": "WP DAG, bounded contracts, gates and routing",
+          "status": "PASS"
+        },
+        {
+          "check": "Acceptance and requirement traceability, no product PASS",
+          "status": "PASS"
+        },
+        {
+          "check": "Release profile closure",
+          "status": "PASS"
+        },
+        {
+          "check": "Command authority metadata",
+          "status": "PASS"
+        },
+        {
+          "check": "ADR required fields",
+          "status": "PASS"
+        },
+        {
+          "check": "Model availability and spending truth",
+          "status": "PASS"
+        },
+        {
+          "check": "Harness non-runner boundary (static)",
+          "status": "PASS"
+        },
+        {
+          "check": "Source/archive provenance",
+          "status": "PASS"
+        },
+        {
+          "check": "Current Markdown local links and anchors",
+          "status": "PASS"
+        },
+        {
+          "check": "Manifest completeness",
+          "status": "PASS"
+        },
+        {
+          "check": "Final package checksums",
+          "status": "PASS"
+        }
+      ],
+      "errors": [],
+      "warnings": [],
+      "counts": {
+        "files": 86,
+        "work_packages": 44,
+        "product_acceptance_criteria": 125,
+        "invariants": 30,
+        "adrs": 35,
+        "external_gates": 14
+      },
+      "scope": "Offline package structure/traceability/link checks only. Synthetic harness unit tests reported separately. No application/production/provider/security/legal qualification performed.",
+      "archive_limitation": "No complete verbatim conversation export; exact prior artifacts plus explicitly abridged turn record."
+    }
+  },
+  {
+    "command": "env PYTHONDONTWRITEBYTECODE=1 python3 -B /Users/jamesryancooper/Projects/texenda/sources/handoff-1.1.0-20260914/10-validation/validate_package.py --checksums",
+    "cwd": "/Users/jamesryancooper/Projects/texenda/repo",
+    "exit_code": 0,
+    "result": {
+      "package_version": "1.1.0",
+      "checked_at": "2026-09-14T23:44:27.848216+00:00",
+      "result": "PASS",
+      "checks": [
+        {
+          "check": "JSON parse",
+          "status": "PASS"
+        },
+        {
+          "check": "Prior artifacts byte integrity",
+          "status": "PASS"
+        },
+        {
+          "check": "Decision status and authority ownership",
+          "status": "PASS"
+        },
+        {
+          "check": "WP DAG, bounded contracts, gates and routing",
+          "status": "PASS"
+        },
+        {
+          "check": "Acceptance and requirement traceability, no product PASS",
+          "status": "PASS"
+        },
+        {
+          "check": "Release profile closure",
+          "status": "PASS"
+        },
+        {
+          "check": "Command authority metadata",
+          "status": "PASS"
+        },
+        {
+          "check": "ADR required fields",
+          "status": "PASS"
+        },
+        {
+          "check": "Model availability and spending truth",
+          "status": "PASS"
+        },
+        {
+          "check": "Harness non-runner boundary (static)",
+          "status": "PASS"
+        },
+        {
+          "check": "Source/archive provenance",
+          "status": "PASS"
+        },
+        {
+          "check": "Current Markdown local links and anchors",
+          "status": "PASS"
+        },
+        {
+          "check": "Manifest completeness",
+          "status": "PASS"
+        },
+        {
+          "check": "Final package checksums",
+          "status": "PASS"
+        }
+      ],
+      "errors": [],
+      "warnings": [],
+      "counts": {
+        "files": 86,
+        "work_packages": 44,
+        "product_acceptance_criteria": 125,
+        "invariants": 30,
+        "adrs": 35,
+        "external_gates": 14
+      },
+      "scope": "Offline package structure/traceability/link checks only. Synthetic harness unit tests reported separately. No application/production/provider/security/legal qualification performed.",
+      "archive_limitation": "No complete verbatim conversation export; exact prior artifacts plus explicitly abridged turn record."
+    }
+  },
+  {
+    "command": "git diff --check",
+    "cwd": "/Users/jamesryancooper/Projects/texenda/repo",
+    "exit_code": 0,
+    "result": {
+      "status": "PASS",
+      "output": ""
+    }
+  }
+]
+
+The facade exit 2 is the expected pre-refresh failure, not a completed facade check.
+Refresh/check evidence will follow in a separate immutable author validation record.
+No content comparison of the private CSV is claimed. Permitted exact-path existence/Git checks only;
+no private directory inventory, CSV size/metadata logging, content access, hashing, parsing or copying.
+
+Current author verification commands and exact results:
+
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+shasum -a 256 /Users/jamesryancooper/Projects/texenda/local/logs/workspace-relocation/phase-4-state-relocation-journal.json /Users/jamesryancooper/Projects/texenda/repo/.texenda-location.json /Users/jamesryancooper/Projects/texenda/local/logs/workspace-relocation/state-root-20260914.activated-moving.json /Users/jamesryancooper/Projects/texenda/local/logs/workspace-relocation/state-root-20260914.activation-complete.207c592fdadc82c9.json /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda/state.json
+EXIT: 0
+OUTPUT:
+08c1254c9642a66de202b4909047887e83345a96ccb49ad65a2941204b5be8bf  /Users/jamesryancooper/Projects/texenda/local/logs/workspace-relocation/phase-4-state-relocation-journal.json
+a92b6137856b7f9c2b3f13f69f4e6dc92ed4da1be82eec1ddf21188ebdde0365  /Users/jamesryancooper/Projects/texenda/repo/.texenda-location.json
+11438325ffa2203718b10dd3cc879ed16b95704d3921a9ef83c4cc7a20854950  /Users/jamesryancooper/Projects/texenda/local/logs/workspace-relocation/state-root-20260914.activated-moving.json
+74e25a1bff59f9cde722157e14826a90c280704bdd76e5f77ddb4cfe75e760ea  /Users/jamesryancooper/Projects/texenda/local/logs/workspace-relocation/state-root-20260914.activation-complete.207c592fdadc82c9.json
+b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235  /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda/state.json
+
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+env PYTHONDONTWRITEBYTECODE=1 python3 -B /Users/jamesryancooper/.codex/skills/project-bootstrap/scripts/plan_adoption.py --target /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence --profile high-assurance --format json
+EXIT: 0
+OUTPUT:
+{
+  "blueprint_version": "1.0.0",
+  "profile": "high-assurance",
+  "collisions": 44,
+  "candidate_new_paths": 41,
+  "action": "read-only inventory only"
+}
+
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+env PYTHONDONTWRITEBYTECODE=1 python3 -B /Users/jamesryancooper/Projects/texenda/repo/tooling/workspace/relocate_state.py --repo-root /Users/jamesryancooper/Projects/texenda/repo --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda verify
+EXIT: 0
+OUTPUT:
+{
+  "state_sha256": "b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235",
+  "receipt_count": 13,
+  "receipt_tip": "f39249184757101b108ea7ec5ea0ffebdd8237315b8ac3cad3ad0cc6ab3e827e",
+  "private_input_check": "location_only_no_content_access",
+  "status": "active",
+  "migration_id": "state-root-20260914"
+}
+
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root /Users/jamesryancooper/Projects/texenda/repo --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda check
+EXIT: 0
+OUTPUT:
+{
+  "integrity": "PASS",
+  "meaning": "local state/receipt/policy integrity only; not production readiness"
+}
+
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda check
+EXIT: 0
+OUTPUT:
+{
+  "integrity": "PASS",
+  "meaning": "local state/receipt/policy integrity only; not production readiness"
+}
+
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+env PYTHONDONTWRITEBYTECODE=1 python3 -B -c 'import importlib.util, json, hashlib
+from pathlib import Path
+repo = Path("/Users/jamesryancooper/Projects/texenda/repo")
+spec = importlib.util.spec_from_file_location("replay_coordination", repo / "tooling/coordination/harness.py")
+m = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(m)
+h = m.Harness(repo, state_root=Path("/Users/jamesryancooper/Projects/texenda/local/agent-state/texenda"))
+before = h._stable_state_bytes()
+s = h._read()
+h._validate_retained_evidence(s)
+t = s["tasks"]["WP-00"]
+selected = [e for e in s["events"] if e["operation"] == "init" or e.get("task_id") == "WP-00"]
+expected = [(1,"init"),(2,"admit"),(4,"assign"),(5,"start"),(7,"submit"),(8,"approve-review"),(9,"record-integration"),(10,"complete")]
+assert [(e["sequence"],e["operation"]) for e in selected] == expected
+assert t["state"] == "completed" and t["lease"] is None and t["fence"] == 1
+refs = {"submission":t["submission"],"review":t["review"]["evidence"],"integration":t["integration"]["evidence"]}
+validated = {}
+for kind, ref in refs.items():
+    record = h.recheck(ref, kind=kind, task="WP-00", candidate=t["candidate"], require_pass=True)
+    validated[kind] = {"reference":ref,"required_pass_checks":sum(c["required"] for c in record["checks"]),"checks":[{"id":c["id"],"status":c["status"],"evidence_path":c.get("evidence_path"),"sha256":c.get("sha256")} for c in record["checks"]],"runtime_stopped":record.get("runtime_stopped")}
+assert t["review"]["approved"] is True
+assert validated["integration"]["runtime_stopped"] is True
+assert h._stable_state_bytes() == before
+print(json.dumps({"mode":"read_only_conformance_replay_of_existing_completion","owner":"tooling/coordination/harness.py","state_sha256":hashlib.sha256(before).hexdigest(),"receipt_count":len(s["events"]),"receipt_tip":s["events"][-1]["hash"],"task_id":"WP-00","task_state":t["state"],"fence":t["fence"],"lease":t["lease"],"planned_basis":"Retained init receipt plus sealed Harness.init default planned task state; no separate planned operation is fabricated.","receipts":[{k:e[k] for k in ("sequence","at","operation","task_id","actor","hash")} for e in selected],"candidate_revision":t["candidate"],"integrated_revision":t["integration"]["integrated_revision"],"author":t["assignment"]["agent"],"reviewer":t["review"]["actor"],"integrator":t["integration"]["actor"],"validated_evidence":validated,"retained_evidence_validation":"PASS","new_lifecycle_operations":0,"receipt_append_count":0,"state_bytes_unchanged":True,"private_content_accessed":False,"external_effects":False},indent=2))'
+EXIT: 0
+OUTPUT:
+{
+  "mode": "read_only_conformance_replay_of_existing_completion",
+  "owner": "tooling/coordination/harness.py",
+  "state_sha256": "b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235",
+  "receipt_count": 13,
+  "receipt_tip": "f39249184757101b108ea7ec5ea0ffebdd8237315b8ac3cad3ad0cc6ab3e827e",
+  "task_id": "WP-00",
+  "task_state": "completed",
+  "fence": 1,
+  "lease": null,
+  "planned_basis": "Retained init receipt plus sealed Harness.init default planned task state; no separate planned operation is fabricated.",
+  "receipts": [
+    {
+      "sequence": 1,
+      "at": "2026-09-13T16:34:14.071252+00:00",
+      "operation": "init",
+      "task_id": null,
+      "actor": "human:owner",
+      "hash": "a50f2e78119801bf484a55fa202b75fa61429948b1aea100437cae11d451e30f"
+    },
+    {
+      "sequence": 2,
+      "at": "2026-09-13T16:35:50.482088+00:00",
+      "operation": "admit",
+      "task_id": "WP-00",
+      "actor": "astra",
+      "hash": "f20b9a18bfb06899eb33fd33316e666c635c50233c964416ccc8d522074c3479"
+    },
+    {
+      "sequence": 4,
+      "at": "2026-09-13T16:48:42.167677+00:00",
+      "operation": "assign",
+      "task_id": "WP-00",
+      "actor": "astra",
+      "hash": "c5f8e6e0c69b3097b5f3eec7e08769b4bf9d8a0a6a28072db9adbdbd313b2803"
+    },
+    {
+      "sequence": 5,
+      "at": "2026-09-13T16:48:50.582814+00:00",
+      "operation": "start",
+      "task_id": "WP-00",
+      "actor": "agent:wp00-terra",
+      "hash": "dc0d2166f55822d4098603f32355b175a0d5a91caf1bc0bc4d6dd51d832d18e9"
+    },
+    {
+      "sequence": 7,
+      "at": "2026-09-13T17:04:43.820870+00:00",
+      "operation": "submit",
+      "task_id": "WP-00",
+      "actor": "agent:wp00-terra",
+      "hash": "c0b30bd9764aec6bdf924b28ddada7ea23de8425eb344211e2b1df3c9730206b"
+    },
+    {
+      "sequence": 8,
+      "at": "2026-09-13T17:04:54.700163+00:00",
+      "operation": "approve-review",
+      "task_id": "WP-00",
+      "actor": "agent:wp00-review-terra",
+      "hash": "7158517d0578da4129b466a79e9fb0d2745fde8b8f7031b69e307fdf183b629b"
+    },
+    {
+      "sequence": 9,
+      "at": "2026-09-13T17:08:09.024718+00:00",
+      "operation": "record-integration",
+      "task_id": "WP-00",
+      "actor": "astra",
+      "hash": "a29aedfcc97546dfa4610d55744a6601e5e0184e25faee2c943127190afb3c59"
+    },
+    {
+      "sequence": 10,
+      "at": "2026-09-13T17:08:16.538982+00:00",
+      "operation": "complete",
+      "task_id": "WP-00",
+      "actor": "astra",
+      "hash": "93dd403aeb020f44431c590201eb245ef78b395776c7514c6c807f4e4a778155"
+    }
+  ],
+  "candidate_revision": "c95d01162fb6fc7fe0a669cf213bdd73813eb7a8",
+  "integrated_revision": "12e19b167d7fd59722dc2a3194ce591f499de0e7",
+  "author": "agent:wp00-terra",
+  "reviewer": "agent:wp00-review-terra",
+  "integrator": "astra",
+  "validated_evidence": {
+    "submission": {
+      "reference": {
+        "path": "docs/qualification/evidence/wp00-submission.evidence.json",
+        "sha256": "d6f611d2be064c822fe5c4c9c8c507ea01a0c83d117dfa554864a3aab642906f"
+      },
+      "required_pass_checks": 8,
+      "checks": [
+        {
+          "id": "author-verification-log",
+          "status": "PASS",
+          "evidence_path": "docs/qualification/evidence/wp00-author-verification.log",
+          "sha256": "a72379baa97571d3cfef4b753a3e34e809e221fffa627c7444c1adcbf70eaf82"
+        },
+        {
+          "id": "runtime-inventory",
+          "status": "PASS",
+          "evidence_path": "docs/qualification/runtime-inventory.json",
+          "sha256": "9a7615dbec54b796c01274315c7d345253d8a639bdfaa42d41fb425a8f39e049"
+        },
+        {
+          "id": "model-roster",
+          "status": "PASS",
+          "evidence_path": "docs/qualification/model-roster.evidence.json",
+          "sha256": "2c1faf1e067e31615111b2821d687c269524390c11f1dac7c504f9fa60a84e17"
+        },
+        {
+          "id": "model-qualification-verification",
+          "status": "PASS",
+          "evidence_path": "docs/qualification/model-qualification-verification.md",
+          "sha256": "418a84f629b8751dc22e5131ebd2fa69d88fadb86b10a3f6c80d63055373791c"
+        },
+        {
+          "id": "tier-1-probe",
+          "status": "PASS",
+          "evidence_path": "docs/qualification/probes/gpt-6-astra.json",
+          "sha256": "6ab0d7b121630937de88441c1aedf1e46de1da1d0319ac01806bb7435fdf726f"
+        },
+        {
+          "id": "tier-1-fallback-probe",
+          "status": "PASS",
+          "evidence_path": "docs/qualification/probes/gpt-5.6-sol.json",
+          "sha256": "b3517e156c382bc9fb45ed29994a8ff573854ddcd03436fee88ed053810ae300"
+        },
+        {
+          "id": "tier-2-probe",
+          "status": "PASS",
+          "evidence_path": "docs/qualification/probes/gpt-5.6-terra.json",
+          "sha256": "1c81e33c60d7da2e23b1d9f4fc1c8e8647bb26dfce3ff9fcce6dc3d1d19aeda3"
+        },
+        {
+          "id": "tier-3-probe",
+          "status": "PASS",
+          "evidence_path": "docs/qualification/probes/gpt-5.6-luna.json",
+          "sha256": "469723e6801d3a2c91d29d52ca3ed69c4bcdc6206d7a85cceb12c472b08ab00f"
+        }
+      ],
+      "runtime_stopped": true
+    },
+    "review": {
+      "reference": {
+        "path": "docs/qualification/evidence/wp00-review.evidence.json",
+        "sha256": "371d47a3b2b47df6b5f2cf49bd73f8c8b849ff09a8bcb47586da8a77fbed8caf"
+      },
+      "required_pass_checks": 11,
+      "checks": [
+        {
+          "id": "independent-review-log",
+          "status": "PASS",
+          "evidence_path": "docs/qualification/evidence/wp00-review-verification.log",
+          "sha256": "e518542da6d15a80eaa592d4814725746ec0b235ff10fdcc4922a492394f5178"
+        },
+        {
+          "id": "committed-roster-evidence",
+          "status": "PASS",
+          "evidence_path": "docs/qualification/model-roster.evidence.json",
+          "sha256": "2c1faf1e067e31615111b2821d687c269524390c11f1dac7c504f9fa60a84e17"
+        },
+        {
+          "id": "committed-runtime-inventory",
+          "status": "PASS",
+          "evidence_path": "docs/qualification/runtime-inventory.json",
+          "sha256": "9a7615dbec54b796c01274315c7d345253d8a639bdfaa42d41fb425a8f39e049"
+        },
+        {
+          "id": "committed-qualification-verification",
+          "status": "PASS",
+          "evidence_path": "docs/qualification/model-qualification-verification.md",
+          "sha256": "418a84f629b8751dc22e5131ebd2fa69d88fadb86b10a3f6c80d63055373791c"
+        },
+        {
+          "id": "committed-tier-probes",
+          "status": "PASS",
+          "evidence_path": "docs/qualification/probes/gpt-6-astra.json",
+          "sha256": "6ab0d7b121630937de88441c1aedf1e46de1da1d0319ac01806bb7435fdf726f"
+        },
+        {
+          "id": "committed-tier-1-fallback-probe",
+          "status": "PASS",
+          "evidence_path": "docs/qualification/probes/gpt-5.6-sol.json",
+          "sha256": "b3517e156c382bc9fb45ed29994a8ff573854ddcd03436fee88ed053810ae300"
+        },
+        {
+          "id": "committed-tier-2-probe",
+          "status": "PASS",
+          "evidence_path": "docs/qualification/probes/gpt-5.6-terra.json",
+          "sha256": "1c81e33c60d7da2e23b1d9f4fc1c8e8647bb26dfce3ff9fcce6dc3d1d19aeda3"
+        },
+        {
+          "id": "committed-tier-3-probe",
+          "status": "PASS",
+          "evidence_path": "docs/qualification/probes/gpt-5.6-luna.json",
+          "sha256": "469723e6801d3a2c91d29d52ca3ed69c4bcdc6206d7a85cceb12c472b08ab00f"
+        },
+        {
+          "id": "package-validation",
+          "status": "PASS",
+          "evidence_path": "docs/qualification/evidence/wp00-review-verification.log",
+          "sha256": "e518542da6d15a80eaa592d4814725746ec0b235ff10fdcc4922a492394f5178"
+        },
+        {
+          "id": "harness-unit-tests",
+          "status": "PASS",
+          "evidence_path": "docs/qualification/evidence/wp00-review-verification.log",
+          "sha256": "e518542da6d15a80eaa592d4814725746ec0b235ff10fdcc4922a492394f5178"
+        },
+        {
+          "id": "candidate-diff-check",
+          "status": "PASS",
+          "evidence_path": "docs/qualification/evidence/wp00-review-verification.log",
+          "sha256": "e518542da6d15a80eaa592d4814725746ec0b235ff10fdcc4922a492394f5178"
+        }
+      ],
+      "runtime_stopped": true
+    },
+    "integration": {
+      "reference": {
+        "path": ".texenda/evidence/wp00-integration.evidence.json",
+        "sha256": "ba2c632509b41aae33f7efb02e2d07cff5d39882ec876b0bd9d860f02d42042e"
+      },
+      "required_pass_checks": 5,
+      "checks": [
+        {
+          "id": "integrated-head-verification",
+          "status": "PASS",
+          "evidence_path": ".texenda/evidence/wp00-integration-verification.log",
+          "sha256": "be034ce2eb69d9f943a2f78ded7915237c1abb4927335c8dd780f52da1f54e23"
+        },
+        {
+          "id": "integrated-package-validation",
+          "status": "PASS",
+          "evidence_path": ".texenda/evidence/wp00-integration-verification.log",
+          "sha256": "be034ce2eb69d9f943a2f78ded7915237c1abb4927335c8dd780f52da1f54e23"
+        },
+        {
+          "id": "integrated-harness-tests",
+          "status": "PASS",
+          "evidence_path": ".texenda/evidence/wp00-integration-verification.log",
+          "sha256": "be034ce2eb69d9f943a2f78ded7915237c1abb4927335c8dd780f52da1f54e23"
+        },
+        {
+          "id": "author-runtime-stopped",
+          "status": "PASS",
+          "evidence_path": "docs/qualification/evidence/wp00-author-verification.log",
+          "sha256": "a72379baa97571d3cfef4b753a3e34e809e221fffa627c7444c1adcbf70eaf82"
+        },
+        {
+          "id": "independent-review-runtime-stopped",
+          "status": "PASS",
+          "evidence_path": "docs/qualification/evidence/wp00-review-verification.log",
+          "sha256": "e518542da6d15a80eaa592d4814725746ec0b235ff10fdcc4922a492394f5178"
+        }
+      ],
+      "runtime_stopped": true
+    }
+  },
+  "retained_evidence_validation": "PASS",
+  "new_lifecycle_operations": 0,
+  "receipt_append_count": 0,
+  "state_bytes_unchanged": true,
+  "private_content_accessed": false,
+  "external_effects": false
+}
+
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+rg -n 'def init|state.*planned' specs/texenda-handoff/08-project-harness/harness.py
+EXIT: 0
+OUTPUT:
+110:    def init(self,actor='human:owner'):
+115:               'tasks':{w:{'state':'planned','fence':0,'lease':None,'assignment':None,'candidate':None,
+127:        return [w for w,t in s['tasks'].items() if t['state']=='planned' and all(s['tasks'][d]['state']=='completed' for d in self.work[w]['dependencies']) and self.work[w]['activation']!='DEFER UNTIL TRIGGERED']
+297:            if t['state'] in ('completed','cancelled','planned'):raise Denied('cannot recover terminal or never-admitted task')
+
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+test -f /Users/jamesryancooper/Projects/texenda/local/private-inputs/kit/ohw/2026-09-14/subscribers.csv
+EXIT: 0
+OUTPUT:
+
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+test -f /Users/jamesryancooper/Projects/texenda/repo/.texenda/private-inputs/kit/ohw/2026-09-14/subscribers.csv
+EXIT: 1
+OUTPUT:
+
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+git -C /Users/jamesryancooper/Projects/texenda/repo check-ignore -v -- .texenda/private-inputs/kit/ohw/2026-09-14/subscribers.csv
+EXIT: 0
+OUTPUT:
+.gitignore:1:.texenda/	.texenda/private-inputs/kit/ohw/2026-09-14/subscribers.csv
+
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+git -C /Users/jamesryancooper/Projects/texenda/repo ls-files --error-unmatch -- /Users/jamesryancooper/Projects/texenda/local/private-inputs/kit/ohw/2026-09-14/subscribers.csv
+EXIT: 128
+OUTPUT:
+fatal: /Users/jamesryancooper/Projects/texenda/local/private-inputs/kit/ohw/2026-09-14/subscribers.csv: '/Users/jamesryancooper/Projects/texenda/local/private-inputs/kit/ohw/2026-09-14/subscribers.csv' is outside repository at '/Users/jamesryancooper/Projects/texenda/repo'
+
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+git merge-base --is-ancestor c95d01162fb6fc7fe0a669cf213bdd73813eb7a8 12e19b167d7fd59722dc2a3194ce591f499de0e7
+EXIT: 0
+OUTPUT:
+
+CWD: /Users/jamesryancooper/Projects/texenda/worktrees/external-state-cutover-evidence
+COMMAND:
+git merge-base --is-ancestor 12e19b167d7fd59722dc2a3194ce591f499de0e7 01247b6ecc2368610d03d8a82b7ac911d4ad1622
+EXIT: 0
+OUTPUT:
+
+Lifecycle interpretation: retained init establishes planned tasks by sealed Harness.init,
+then retained admit/assign/start/submit/approve-review/record-integration/complete map the real
+WP-00 phases. _validate_retained_evidence and the three rechecks passed; 8+11+5 required
+checks were validated. No lifecycle mutator, new receipt, lease or external effect occurred.
+Historical integration evidence was resolved from canonical repo/.texenda/evidence only.
+Both historical candidate and integrated revision are ancestors of the approved base.
+No model-profile requalification or current product readiness follows from old completion.
+
+Remaining work: commit source/evidence/status candidate; explicitly refresh eleven generated
+views; run registered and required suites; record final author evidence and refresh its index;
+obtain distinct Astra/max review and separate integration; final integrated-head audit.

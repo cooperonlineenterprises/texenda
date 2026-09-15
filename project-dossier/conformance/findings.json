@@ -7,10 +7,10 @@
       "classification": "transitional",
       "subject": "mapped .agent and dossier facade",
       "basis": "docs/decisions/ADR-0004-mapped-project-workspace.md",
-      "observation": "The facade and external-state code are a bounded candidate pending exact independent review and integration.",
-      "evidence": "project-dossier/transition/blueprint-adoption-crosswalk.json",
-      "disposition": "review_required",
-      "limitations": "No operational adoption or product readiness claim."
+      "observation": "The independently reviewed mapped facade and external-state code are integrated in main at 01247b6ecc2368610d03d8a82b7ac911d4ad1622. The subsequent external-state evidence/projection candidate still requires its own independent review and integration.",
+      "evidence": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-review.evidence.json",
+      "disposition": "external_state_evidence_candidate_review_required",
+      "limitations": "The final integrated-head audit remains NOT_RUN; no product or external readiness claim."
     },
     {
       "id": "FIND-0002",
@@ -34,13 +34,13 @@
     },
     {
       "id": "FIND-0004",
-      "classification": "gated",
+      "classification": "transitional",
       "subject": "external live state and private-input relocation",
       "basis": "project-dossier/transition/workspace-move-manifest.json",
-      "observation": "Code and synthetic recovery tests do not execute the live move.",
-      "evidence": "tooling/workspace/relocate_state.py",
-      "disposition": "requires_T1_exact_review_freeze_and_serial_execution",
-      "limitations": "Private-input content remains outside every inspection scope."
+      "observation": "The serial state-root-20260914 move was verified at the approved main. One active external ledger retains the exact state hash and all 13 receipts; the private-input directory moved outside Git without content access.",
+      "evidence": "project-dossier/transition/external-state-relocation-receipt.md",
+      "disposition": "physical_move_verified_evidence_and_projection_candidate_review_required",
+      "limitations": "The canonical pre-refresh facade check reported stale state-root observation. Refresh verification belongs to the separate candidate; no private-content comparison or final integrated-head approval is claimed."
     },
     {
       "id": "FIND-0005",
@@ -51,6 +51,16 @@
       "evidence": "docs/agents/operating-guide.md",
       "disposition": "deferred_until_concrete_recurring_need",
       "limitations": "Absence is deliberate and does not waive required independent review."
+    },
+    {
+      "id": "FIND-0006",
+      "classification": "transitional",
+      "subject": "mapped read-only replay of completed WP-00",
+      "basis": "docs/decisions/ADR-0004-mapped-project-workspace.md",
+      "observation": "The existing coordinator revalidated the retained init/admit/assign/start/submit/review/integration/complete receipts and all 24 required submission/review/integration checks for the real September 13 WP-00 completion.",
+      "evidence": "project-dossier/transition/external-state-relocation-receipt.md",
+      "disposition": "replay_verified_pending_independent_candidate_review",
+      "limitations": "This demonstrates mapped access to pre-existing completion. It is not a new WP execution, receipt, lease, gate, or post-cutover operational run."
     }
   ]
 }

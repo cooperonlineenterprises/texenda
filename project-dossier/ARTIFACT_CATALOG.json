@@ -193,6 +193,13 @@
       "concern_id": "adoption_transition"
     },
     {
+      "id": "TRN-0006",
+      "path": "project-dossier/transition/external-state-relocation-receipt.md",
+      "classification": "evidence",
+      "owner_path": "project-dossier/transition/external-state-relocation-receipt.md",
+      "concern_id": "adoption_transition"
+    },
+    {
       "id": "MRR-0001",
       "path": "project-dossier/machine-readable/path-authority.json",
       "classification": "generated_view",

@@ -1,0 +1,141 @@
+{
+  "schema_version": "texenda.external-state-relocation-evidence.v1",
+  "id": "EVD-STATE-MOVE-0001",
+  "kind": "physical_relocation_and_read_only_lifecycle_observation",
+  "information_role": "immutable_evidence",
+  "recorded_at": "2026-09-14T23:57:06Z",
+  "actor": "agent:external-state-cutover-evidence-astra",
+  "requested_profile": "gpt-6-astra-max",
+  "reasoning_effort": "max",
+  "runtime_id": "codex-desktop-collaboration",
+  "status": "physical_move_verified_candidate_not_independently_reviewed",
+  "authority_limitation": "Evidence only; not a task ledger, receipt, permission, independent review, or gate clearance.",
+  "base_revision": "01247b6ecc2368610d03d8a82b7ac911d4ad1622",
+  "base_tree": "394741c97268edc81ad2587ba47156ac6a55a8f3",
+  "local_journal": {
+    "path": "/Users/jamesryancooper/Projects/texenda/local/logs/workspace-relocation/phase-4-state-relocation-journal.json",
+    "sha256": "08c1254c9642a66de202b4909047887e83345a96ccb49ad65a2941204b5be8bf",
+    "authority": false
+  },
+  "checks": [
+    {
+      "id": "adoption-planner",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Run installed Project Blueprint 1.0.0 read-only plan_adoption.py for high-assurance; preserve mapped-existing owners and record 44 literal collisions/41 candidate paths without generation.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-external-state-relocation-validation.log",
+      "sha256": "758bd7a9569bc6587f422cbdf1d8ac04c0a9229a56804c1b110b3c46f2eaeac6"
+    },
+    {
+      "id": "physical-journal-and-artifacts",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Re-read and hash the exact sanitized journal, active binding, archived moving descriptor and completed activation transaction; compare all supplied exact SHA-256 values.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-external-state-relocation-validation.log",
+      "sha256": "758bd7a9569bc6587f422cbdf1d8ac04c0a9229a56804c1b110b3c46f2eaeac6"
+    },
+    {
+      "id": "physical-helper-success",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Inspect hash-verified journal prepare/apply/verify exit 0 results; independently run only the canonical relocation helper verify with the exact external state root.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-external-state-relocation-validation.log",
+      "sha256": "758bd7a9569bc6587f422cbdf1d8ac04c0a9229a56804c1b110b3c46f2eaeac6"
+    },
+    {
+      "id": "bound-state-and-inode-preservation",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Compare state SHA/count/prefix/tip, roster/leases/budget/gates, source/destination state/lock inode and mtime evidence; require one external active ledger, no old active paths and no pending blockers.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-external-state-relocation-validation.log",
+      "sha256": "758bd7a9569bc6587f422cbdf1d8ac04c0a9229a56804c1b110b3c46f2eaeac6"
+    },
+    {
+      "id": "canonical-and-detached-harness-integrity",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Run the existing coordinator check against canonical repo and detached evidence worktree with explicit external --state-root; each exits 0.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-external-state-relocation-validation.log",
+      "sha256": "758bd7a9569bc6587f422cbdf1d8ac04c0a9229a56804c1b110b3c46f2eaeac6"
+    },
+    {
+      "id": "wp00-read-only-conformance-replay",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Use canonical Harness._read, _validate_retained_evidence and recheck(require_pass=True) for exact WP-00 submission, review and integration references; validate 8+11+5 required checks, exact phase receipts, and unchanged ledger bytes.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-external-state-relocation-validation.log",
+      "sha256": "758bd7a9569bc6587f422cbdf1d8ac04c0a9229a56804c1b110b3c46f2eaeac6"
+    },
+    {
+      "id": "wp00-git-lineage",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Verify historical candidate c95d01162fb6fc7fe0a669cf213bdd73813eb7a8 is an ancestor of integration 12e19b167d7fd59722dc2a3194ce591f499de0e7, which is an ancestor of approved base 01247b6ecc2368610d03d8a82b7ac911d4ad1622.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-external-state-relocation-validation.log",
+      "sha256": "758bd7a9569bc6587f422cbdf1d8ac04c0a9229a56804c1b110b3c46f2eaeac6"
+    },
+    {
+      "id": "private-input-path-boundary",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Use only exact new-path test -f, old-path test -f absence, exact old ignore rule and exact new Git tracking rejection outside the repository; inspect no CSV contents or directory inventory.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-external-state-relocation-validation.log",
+      "sha256": "758bd7a9569bc6587f422cbdf1d8ac04c0a9229a56804c1b110b3c46f2eaeac6"
+    },
+    {
+      "id": "historical-and-package-preservation",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Inspect the hash-verified journal before/after historical evidence/context/v1 hashes and both post-move 14/14 package checks; no package or historical source changes were made.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-external-state-relocation-validation.log",
+      "sha256": "758bd7a9569bc6587f422cbdf1d8ac04c0a9229a56804c1b110b3c46f2eaeac6"
+    },
+    {
+      "id": "pre-refresh-facade-observation",
+      "required": false,
+      "status": "FAIL",
+      "command_or_procedure": "The physical executor ran the bound facade check at approved main; exit 2 was generated state-root observation is stale. This immutable historical failure requires the separate projection refresh candidate.",
+      "evidence_path": "docs/qualification/evidence/2026-09-14-external-state-relocation-validation.log",
+      "sha256": "758bd7a9569bc6587f422cbdf1d8ac04c0a9229a56804c1b110b3c46f2eaeac6"
+    },
+    {
+      "id": "new-candidate-independent-review",
+      "required": false,
+      "status": "NOT_RUN",
+      "command_or_procedure": "A distinct Astra/max actor must independently review the completed evidence/projection candidate."
+    },
+    {
+      "id": "new-candidate-integration-and-final-audit",
+      "required": false,
+      "status": "NOT_RUN",
+      "command_or_procedure": "Separate integration and final integrated-head audit remain pending."
+    }
+  ],
+  "read_only_replay": {
+    "task_id": "WP-00",
+    "real_completion_date": "2026-09-13",
+    "new_wp_execution": false,
+    "receipt_append_count": 0,
+    "retained_required_evidence_checks": 24,
+    "current_candidate_approval": false
+  },
+  "private_input_proof": {
+    "content_opened": false,
+    "content_listed": false,
+    "content_hashed": false,
+    "content_parsed": false,
+    "content_copied": false,
+    "content_logged": false,
+    "directory_inventoried": false,
+    "size_inspected": false,
+    "permitted_exact_path_checks_only": true
+  },
+  "external_effects": [],
+  "limitations": [
+    "The tracked author-validation record will bind the projection refresh and required candidate checks; this physical observation record predates those checks.",
+    "The replay maps and revalidates pre-existing completion rather than executing a new maintenance work package.",
+    "Historical roster/model qualifications are not requalified by the replay.",
+    "No application, product, legal/privacy, security, provider, deployment, publication, spending or external-gate readiness is claimed.",
+    "Installed Project Blueprint 1.0.0 remains structural-reference-only; preserved 1.1.0 source variants remain unreconciled."
+  ]
+}

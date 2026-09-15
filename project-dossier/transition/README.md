@@ -8,7 +8,13 @@ It routes to the [accepted structural decision](../../docs/decisions/ADR-0004-ma
 Documentation is not permission, runtime-stop proof, live state or a product
 readiness result. The [Phase-1 receipt](workspace-relocation-receipt.md) records
 the physical relocation and [post-relocation planner inventory](post-relocation-adoption-plan.json).
-Facade adoption and external live-state cutover remain subsequent reviewed work.
+The independently reviewed facade/state-root code is integrated at
+`01247b6ecc2368610d03d8a82b7ac911d4ad1622`. The
+[external-state relocation receipt](external-state-relocation-receipt.md) records
+the verified physical cutover and read-only conformance replay of the existing
+completed `WP-00`. Its tracked evidence/projection candidate still needs distinct
+Astra/max review and integration. The final integrated-head audit remains
+`NOT_RUN`; no product or external readiness is implied.
 
 1. Review the exact architecture candidate and evidence with a distinct
    qualified Astra/max actor. Preserve its commit, review and branch. Recheck
@@ -61,13 +67,15 @@ Facade adoption and external live-state cutover remain subsequent reviewed work.
    move evidence; append no ledger event if the state bytes did not change.
    Any proposed byte mutation needs a fresh exact reviewed migration that
    appends an owner-authorized receipt and preserves the existing chain.
-8. Demonstrate one real mapped maintenance task through assignment,
-   validation, independent review, integration and handoff using existing
-   coordination/evidence owners. A synthetic lifecycle fixture alone is not
-   operational adoption. Refresh derived integrity explicitly, run all
-   registered checks on integrated main, and obtain final distinct Astra/max
-   read-only review after the review evidence commit. Observe all reviewers
-   stopped; remove only clean temporary worktrees, retaining branches/commits.
+8. For this cutover candidate, demonstrate mapped ownership by read-only
+   conformance replay of the existing real `WP-00` completion through the
+   coordinator and retained submission/review/integration evidence. This is
+   not a new work-package run, lease, receipt, or post-cutover execution.
+   Refresh exactly the existing eleven derived views with the external state
+   root. Independently review and integrate this evidence/projection candidate,
+   then run all registered checks on integrated main and obtain final distinct
+   Astra/max read-only review after the review evidence commit. Observe all
+   reviewers stopped; remove only clean temporary worktrees, retaining branches/commits.
    Retain all checkpoints/source variants. Do not delete an old path while
    an active tool or saved project still uses it.
 

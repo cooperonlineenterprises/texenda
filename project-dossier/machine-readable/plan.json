@@ -4,48 +4,62 @@
   "items": [
     {
       "id": "PLAN-0001",
-      "status": "review_required",
+      "status": "completed",
       "objective": "Independently review and locally integrate the exact mapped facade and external-state code candidate.",
       "dependencies": [],
       "acceptance": [
         "distinct qualified gpt-6-astra-max reviewer",
         "exact candidate and evidence hashes bound",
         "all registered required checks pass"
-      ]
+      ],
+      "completion_evidence": "docs/qualification/evidence/2026-09-14-mapped-agent-facade-review.evidence.json",
+      "observed_integration_revision": "01247b6ecc2368610d03d8a82b7ac911d4ad1622"
     },
     {
       "id": "PLAN-0002",
-      "status": "gated",
+      "status": "completed",
       "objective": "Move live state and private-input directory through the reviewed helper without byte or receipt change.",
-      "dependencies": ["PLAN-0001"],
+      "dependencies": [
+        "PLAN-0001"
+      ],
       "acceptance": [
         "all affected runtimes leases and locks proved stopped",
         "moving marker precedes renames",
         "state hash receipt tip roster and budget preserved",
         "private input verified by location existence ignore and tracking only"
-      ]
+      ],
+      "completion_evidence": "project-dossier/transition/external-state-relocation-receipt.md",
+      "limitation": "Physical relocation verified; this entry does not approve the subsequent evidence/projection candidate."
     },
     {
       "id": "PLAN-0003",
-      "status": "gated",
-      "objective": "Demonstrate one real mapped maintenance lifecycle using the existing ledger and evidence owners.",
-      "dependencies": ["PLAN-0002"],
+      "status": "review_required",
+      "objective": "Independently review and integrate the external-state evidence/projection candidate, including read-only conformance replay of the existing completed WP-00 lifecycle.",
+      "dependencies": [
+        "PLAN-0002"
+      ],
       "acceptance": [
-        "existing coordinator records assignment review integration and handoff",
-        "no second task review or receipt store",
-        "no external effect"
-      ]
+        "retained WP-00 receipts and exact submission review integration evidence revalidated through the existing coordinator",
+        "eleven generated views refreshed from the external root and unchanged ledger",
+        "distinct qualified Astra/max candidate review and separate serial integration",
+        "no new WP execution lease receipt second ledger or external effect"
+      ],
+      "evidence": "project-dossier/transition/external-state-relocation-receipt.md",
+      "limitation": "Replay is complete as author evidence; independent candidate review/integration remain NOT_RUN."
     },
     {
       "id": "PLAN-0004",
       "status": "gated",
       "objective": "Obtain final exact integrated-head read-only review after review evidence is added.",
-      "dependencies": ["PLAN-0003"],
+      "dependencies": [
+        "PLAN-0003"
+      ],
       "acceptance": [
         "generated integrity refreshed",
         "final check read-only proof passes",
         "all reviewer runtimes stopped and clean temporary worktrees reconciled"
-      ]
+      ],
+      "limitation": "Final integrated-head audit and review-evidence-head verification remain NOT_RUN."
     }
   ]
 }
