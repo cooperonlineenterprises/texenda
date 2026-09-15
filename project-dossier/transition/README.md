@@ -46,3 +46,8 @@ recovery dependencies with owners, risks and retirement proof. Its v2 successor
 preserves the exact v1 Git record and stable maintenance IDs. The external
 Blueprint correction and retry commands belong to
 [RAIDQ-0005](../machine-readable/raidq.json).
+
+[ADR-0007](../../docs/decisions/ADR-0007-standalone-workspace-operating-contract.md)
+adds portable current operation and code/control separation within the same
+external_state epoch. Its source candidate and canonical integration acceptance
+are separately recorded in the [remediation register](../conformance/remediation-register.json).

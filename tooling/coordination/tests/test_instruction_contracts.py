@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 import re
 import tempfile
+import sys
 import unittest
 from urllib.parse import unquote, urlsplit
 
@@ -23,15 +24,10 @@ CI_GUIDE = ROOT / 'docs/operations/github-ci-policy.md'
 VISIBILITY_ADR = (
     ROOT / 'docs/decisions/ADR-0003-private-repository-and-bounded-github-actions.md'
 )
-ORDINARY_STATE_ROOT = '/Users/jamesryancooper/Projects/texenda/local/agent-state/texenda'
-ORDINARY_VALIDATION = (
-    'env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/validate.py '
-    '--check --all --state-root ' + ORDINARY_STATE_ROOT
-)
-ORDINARY_COORDINATOR = (
-    'env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py '
-    '--root . --state-root ' + ORDINARY_STATE_ROOT
-)
+sys.path.insert(0, str(ROOT / '.agent/scripts'))
+import operating
+ORDINARY_VALIDATION = operating.CONTROL_COMMAND
+ORDINARY_COORDINATOR = operating.COORDINATOR_COMMAND
 ACTIVE_DOCS = [
     ROOT / 'AGENTS.md', GUIDE, CI_GUIDE, ROOT / 'docs/agents/visualization.md',
     ROOT / 'tooling/coordination/AGENTS.md', ROOT / 'tooling/coordination/README.md',
@@ -92,7 +88,7 @@ class InstructionContracts(unittest.TestCase):
         for path in (ROOT / '.agent/START_HERE.md', GUIDE,
                      ROOT / 'tooling/coordination/README.md'):
             text = path.read_text()
-            for command in ('status', 'ready', 'context WP-01'):
+            for command in ('status', 'ready', operating.SELECTED_CONTEXT):
                 self.assertIn(ORDINARY_COORDINATOR + ' ' + command, text)
             if 'migrate-v1' in text:
                 self.assertLess(text.index(ORDINARY_COORDINATOR + ' status'),

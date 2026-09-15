@@ -3,7 +3,7 @@
   "project_id": "texenda",
   "adoption_mode": "mapped-existing",
   "profile": "high-assurance",
-  "repository_role": "canonical_git_checkout_and_integration_worktree_under_project_home",
+  "repository_role": "canonical_repo_controls_live_coordination_and_serial_integration_worktrees_hold_candidate_code",
   "dossier": {
     "path": "project-dossier/",
     "permission_channel": false,
@@ -22,6 +22,8 @@
     "binding_tracked": false,
     "default_before_binding": ".texenda",
     "explicit_after_binding": true,
-    "generated_state_is_authority": false
+    "generated_state_is_authority": false,
+    "operating_contract": "docs/decisions/ADR-0007-standalone-workspace-operating-contract.md",
+    "facade_control_requires_binding": true
   }
 }

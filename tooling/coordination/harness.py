@@ -2348,6 +2348,8 @@ def main(argv=None):
     parser.add_argument('--state-root', type=Path,
                         help='absolute external state directory; required by an active binding')
     parser.add_argument('--package', type=Path, default=PACKAGE)
+    parser.add_argument('--read-only', action='store_true',
+                        help='Inspection only; reject mutations and context output before state access.')
     sub = parser.add_subparsers(dest='cmd', required=True)
     for name in ('init', 'status', 'ready', 'check'):
         command = sub.add_parser(name)
@@ -2404,6 +2406,9 @@ def main(argv=None):
             command.add_argument('--max-bytes', type=int, default=200000)
     args = parser.parse_args(argv)
     try:
+        if args.read_only and (args.cmd not in ('status', 'ready', 'check', 'context')
+                              or getattr(args, 'out', None) is not None):
+            raise Denied('read-only inspection rejects mutations and context output')
         harness = Harness(args.root, args.package, state_root=args.state_root,
                           allow_state_recovery=args.cmd == 'recover-state-write')
         op = args.cmd

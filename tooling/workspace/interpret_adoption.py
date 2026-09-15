@@ -84,7 +84,7 @@ def presence(root, name, *, directory=None):
     return True
 
 
-def local_contract(root):
+def local_contract(root, *, scope='code'):
     reject_private_name(str(root), 'repository root')
     require(not {'.git', '.texenda'} & set(Path(root).parts), 'local state is not a repository root')
     root = resolved_directory(Path(root), 'repository root')
@@ -124,7 +124,8 @@ def local_contract(root):
                     'mapping escapes the repository or permitted archive index')
             # The sole external mapping requires this exact directory. Inspect
             # only it and its ancestor metadata; never enumerate/read contents.
-            resolved_directory(Path(ARCHIVE_INDEX), 'required archive index')
+            if scope == 'control':
+                resolved_directory(root.parent / 'archive/checkpoints', 'required archive index')
         else:
             require(isinstance(mapped, str) and bool(mapped), 'mapping path is malformed')
             require(presence(root, relative_name(mapped.rstrip('/')),
@@ -171,8 +172,9 @@ def validate_stock(plan, root, origin, observed):
             'stock partitions must cover exactly the mapped inventory without overlap')
 
 
-def interpret(root, stock_plan=None):
-    root, origin, crosswalk, observed, sources = local_contract(root)
+def interpret(root, stock_plan=None, *, scope='code'):
+    require(scope in ('code', 'control'), 'unknown interpretation scope')
+    root, origin, crosswalk, observed, sources = local_contract(root, scope=scope)
     if stock_plan is not None:
         validate_stock(stock_plan, root, origin, observed)
     rows = [{key: row[key] for key in ('blueprint_path', 'mapped_path', 'concern_id',
@@ -201,6 +203,7 @@ def interpret(root, stock_plan=None):
             ('working_version', 'version_committed', 'qualified', 'adopted')
         },
         'stock_plan_validated': stock_plan is not None,
+        'local_obligations': 'checked' if scope == 'control' else 'unassessed',
         'stock_origin_observation': stock_plan['origin'] if stock_plan is not None else None,
         'counts': {'mapped_paths': len(rows), **dict(Counter(observed.values()))},
         'roles': dict(sorted(Counter(row['role'] for row in rows).items())),
@@ -229,19 +232,25 @@ def main(argv=None):
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument('--check', action='store_true', help='Offline repository-owned self-check.')
     mode.add_argument('--stock-plan', choices=('-',), help='Read stock planner JSON only from stdin.')
+    parser.add_argument('--scope', choices=('code', 'control'), default='code')
+    parser.add_argument('--state-root', type=Path)
     args = parser.parse_args(argv)
     try:
+        if args.scope == 'control':
+            __import__('common').control_context(args.root, args.state_root)
+        else:
+            require(args.state_root is None, 'code scope rejects --state-root')
         plan = None
         if args.stock_plan:
             raw = sys.stdin.buffer.read(MAX_STOCK_BYTES + 1)
             require(len(raw) <= MAX_STOCK_BYTES, 'stock plan exceeds the one-MiB input bound')
             plan = strict_json(raw)
             require(isinstance(plan, dict), 'stock plan must be a JSON object')
-        result = interpret(args.root, plan)
+        result = interpret(args.root, plan, scope=args.scope)
         if args.check:
             result = {key: result[key] for key in (
                 'schema_version', 'status', 'scope', 'source_hashes', 'current_epoch',
-                'selected_reference', 'counts', 'roles', 'boundary', 'limitations')}
+                'selected_reference', 'counts', 'roles', 'boundary', 'limitations', 'local_obligations')}
     except (ValidationError, contract.ContractError, ValueError, OSError, KeyError,
             TypeError, AttributeError, StopIteration, RecursionError) as exc:
         print(json.dumps({'status': 'FAIL', 'reason': str(exc), 'writes': False}), file=sys.stderr)

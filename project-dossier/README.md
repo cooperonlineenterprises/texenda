@@ -4,10 +4,11 @@ This mapped dossier distinguishes intended product authority, current
 observation, conformance, future plans, evidence, provenance, transition, and
 handoff. It does not grant permission, clear a gate, or copy sealed authority.
 
-From `/Users/jamesryancooper/Projects/texenda/repo`, the ordinary validation is:
+Code worktrees use repository-only checks; canonical control uses its explicit
+local binding. See [ordinary entry](../.agent/START_HERE.md).
 
 ```text
-env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/validate.py --check --all --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda
+env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/validate.py --check --all --state-root "${TEXENDA_STATE_ROOT:?Set the verified absolute state root}"
 ```
 
 Read in this order:
@@ -22,6 +23,10 @@ Read in this order:
 
 The [transition status](transition/README.md) and [history](history/README.md) are
 maintenance routes, not prerequisites for ordinary development.
+
+The [remediation register](conformance/remediation-register.json) records every
+reviewed concern, retained control, and exact deferral. [Local retention](registers/workspace-retention.json)
+classifies preservation obligations without authorizing deletion.
 
 The [artifact catalog](ARTIFACT_CATALOG.json) owns per-path information roles.
 The generated path-authority mirror is never independently edited.

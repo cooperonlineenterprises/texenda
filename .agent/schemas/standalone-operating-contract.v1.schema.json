@@ -1,0 +1,190 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:texenda:standalone-operating:v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "id",
+    "owner_path",
+    "authority",
+    "permission_grant",
+    "ownership_epoch",
+    "command_registry",
+    "retention_policy",
+    "remediation_register",
+    "scopes",
+    "ready_selection",
+    "deferred_records",
+    "path_roles"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "texenda.standalone-operating.v1"
+    },
+    "id": {
+      "const": "OPS-WSM-0001"
+    },
+    "owner_path": {
+      "const": "docs/decisions/ADR-0007-standalone-workspace-operating-contract.md"
+    },
+    "authority": {
+      "const": "portable_workspace_operating_metadata_only"
+    },
+    "permission_grant": {
+      "const": false
+    },
+    "ownership_epoch": {
+      "const": "external_state"
+    },
+    "command_registry": {
+      "const": ".agent/validators.json"
+    },
+    "retention_policy": {
+      "const": "project-dossier/registers/workspace-retention.json"
+    },
+    "remediation_register": {
+      "const": "project-dossier/conformance/remediation-register.json"
+    },
+    "scopes": {
+      "const": {
+        "code": {
+          "repository_only": true,
+          "state_root_allowed": false,
+          "live_state_checked": false,
+          "generated_freshness": "unassessed"
+        },
+        "control": {
+          "canonical_repository_required": true,
+          "active_binding_required": true,
+          "explicit_absolute_state_root_required": true,
+          "implicit_discovery": false,
+          "worktree_store_copy": false
+        }
+      }
+    },
+    "ready_selection": {
+      "const": {
+        "source": "live_coordinator_ready",
+        "selection": "explicit_task_consistent_with_current_objective",
+        "empty_result": "inspect_status_and_dependencies_without_fallback",
+        "resumption": "recorded_task_and_fence",
+        "context_is_assignment": false
+      }
+    },
+    "deferred_records": {
+      "const": [
+        "RAIDQ-0005",
+        "RAIDQ-0006",
+        "RAIDQ-0007"
+      ]
+    },
+    "path_roles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "path",
+          "anchor",
+          "information_role",
+          "tracking",
+          "requirement",
+          "retention_class",
+          "owner",
+          "lifecycle",
+          "validation",
+          "recovery"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "anchor": {
+            "type": "string",
+            "minLength": 1,
+            "enum": [
+              "repository",
+              "project_home",
+              "external"
+            ]
+          },
+          "information_role": {
+            "type": "string",
+            "minLength": 1,
+            "enum": [
+              "canonical_control",
+              "candidate_code",
+              "governance_and_derived_views",
+              "durable_decisions",
+              "bounded_evidence",
+              "classified_information",
+              "sealed_product_authority",
+              "unpromoted_source_variant",
+              "local_binding",
+              "live_coordination",
+              "receipt_compatibility",
+              "relocation_recovery",
+              "retained_local_history",
+              "private_inputs",
+              "transient_run_outputs",
+              "machine_navigation",
+              "runtime_defaults",
+              "optional_capability_packages",
+              "external_structural_sources"
+            ]
+          },
+          "tracking": {
+            "type": "string",
+            "minLength": 1,
+            "enum": [
+              "tracked",
+              "ignored",
+              "local",
+              "tracked_if_triggered",
+              "external"
+            ]
+          },
+          "requirement": {
+            "type": "string",
+            "minLength": 1,
+            "enum": [
+              "required",
+              "required_for_control",
+              "conditional",
+              "omitted_until_trigger",
+              "omitted_from_ordinary_dependencies"
+            ]
+          },
+          "retention_class": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^RET-000[1-7]$"
+          },
+          "owner": {
+            "type": "string",
+            "minLength": 1
+          },
+          "lifecycle": {
+            "type": "string",
+            "minLength": 1
+          },
+          "validation": {
+            "type": "string",
+            "minLength": 1
+          },
+          "recovery": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}

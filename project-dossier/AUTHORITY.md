@@ -23,8 +23,15 @@ One mutable concern has one owner:
 | Adoption plan | [`machine-readable/plan.json`](machine-readable/plan.json) | Completion/dependency record; not active work |
 | Adoption RAIDQ | [`machine-readable/raidq.json`](machine-readable/raidq.json) | New authoritative concern |
 | Adoption provenance | [`provenance/sources.json`](provenance/sources.json) | New authoritative concern |
+| Standalone operating metadata | [ADR-0007](../docs/decisions/ADR-0007-standalone-workspace-operating-contract.md) | Scoped operating contract reference |
+| Remediation dispositions | [conformance/remediation-register.json](conformance/remediation-register.json) | Complete review dispositions; not active tasks |
+| Workspace retention | [registers/workspace-retention.json](registers/workspace-retention.json) | Local dependency classes; no deletion authority |
 | Handoff | [`handoff/START_HERE.md`](handoff/START_HERE.md) | Generated navigation |
 
 The transition crosswalk identifies `external_state` as the current epoch and
 retains prior epochs as history. Generated views must identify source hashes and
 freshness; conflicts are recorded rather than silently resolved.
+
+Structured catalog owner references resolve through the crosswalk's existing scoped
+owner sets. They provide navigation; symbols and local-role locators do not copy
+Git facts, ledger data, product semantics or authority.

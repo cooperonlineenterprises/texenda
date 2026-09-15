@@ -22,6 +22,7 @@ sys.path.insert(0, str(SCRIPTS))
 import common
 import refresh
 import validate
+import operating
 
 
 class FacadeUnitTests(unittest.TestCase):
@@ -115,9 +116,7 @@ class FacadeUnitTests(unittest.TestCase):
         registry = validate.validate_registry(ROOT)
         self.assertEqual(
             registry['execution_context']['ordinary_entry_command'],
-            'env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/validate.py '
-            '--check --all --state-root '
-            '/Users/jamesryancooper/Projects/texenda/local/agent-state/texenda')
+            operating.CONTROL_COMMAND)
         ids = {row['id'] for row in registry['commands']}
         self.assertTrue({'workspace-contract', 'adoption-interpretation', 'workspace-tests', 'coordination-tests',
                          'sealed-harness-tests', 'sealed-package-checksums',
@@ -139,47 +138,18 @@ class FacadeUnitTests(unittest.TestCase):
 
     def test_check_all_never_dispatches_refresh_writers_and_resolves_context(self):
         registry = validate.validate_registry(ROOT)
-        with tempfile.TemporaryDirectory() as directory:
-            home = (Path(directory) / 'home').resolve()
-            repository = home / 'repo'
-            repository.mkdir(parents=True)
-            (home / 'WORKSPACE.md').write_text('synthetic workspace')
-            (repository / '.agent/generated').mkdir(parents=True)
-            direct_scripts = (
-                '.agent/scripts/validate.py',
-                'tooling/workspace/validate_contract.py',
-                'tooling/workspace/interpret_adoption.py',
-                'specs/texenda-handoff/10-validation/validate_package.py',
-                'tooling/coordination/harness.py',
-            )
-            for name in direct_scripts:
-                path = repository / name
-                path.parent.mkdir(parents=True, exist_ok=True)
-                path.write_text('# synthetic resolver fixture\n')
-            source_script = home / 'sources/handoff-1.1.0-20260914/10-validation/validate_package.py'
-            source_script.parent.mkdir(parents=True)
-            source_script.write_text('# synthetic resolver fixture\n')
-            state_root = home / 'synthetic-unbound-state'
-            state_root.mkdir()
-            completed = subprocess.CompletedProcess([], 0, stdout='', stderr='')
-            with mock.patch.object(validate.subprocess, 'run', return_value=completed) as runner:
-                results = validate.run_registry_checks(
-                    registry, repository, state_root, all_commands=True)
-            unbound_context = validate.execution_context(repository)
-            state_row = next(row for row in registry['commands']
-                             if row['id'] == 'coordination-state-check')
-            unbound = validate.resolve_command(state_row, unbound_context)
+        completed = subprocess.CompletedProcess([], 0, stdout='', stderr='')
+        with mock.patch.object(validate.subprocess, 'run', return_value=completed) as runner:
+            results = validate.run_registry_checks(registry, ROOT, all_commands=True, scope='code')
         skipped = {row['id'] for row in results if row.get('status') == 'SKIPPED_WRITER'}
         self.assertEqual(skipped, {'facade-refresh', 'facade-refresh-recovery'})
         invoked = [call.args[0] for call in runner.call_args_list]
-        self.assertFalse(any('refresh.py' in argument for argv in invoked for argument in argv))
-        state_argv = next(argv for argv in invoked if 'tooling/coordination/harness.py' in argv)
-        self.assertLess(state_argv.index('--state-root'), state_argv.index('check'))
-        self.assertNotIn('--state-root', unbound)
-        self.assertEqual(unbound[-1], 'check')
-        source_argv = next(argv for argv in invoked if any('sources/handoff-1.1.0' in item
-                                                           for item in argv))
-        self.assertTrue(Path(source_argv[2]).is_absolute())
+        self.assertFalse(any('refresh.py' in part for argv in invoked for part in argv))
+        self.assertFalse(any('--state-root' in argv for argv in invoked))
+        self.assertFalse(any('sources/handoff' in part for argv in invoked for part in argv))
+        context = validate.execution_context(ROOT, scope='code')
+        self.assertIsNone(context['state_root'])
+        self.assertIsNone(context['project_home'])
 
     def test_crosswalk_has_single_owner_and_dossier_evidence_correction(self):
         crosswalk = validate.validate_crosswalk_correction(ROOT)
@@ -290,7 +260,23 @@ class FacadeIntegratedFixtureTests(unittest.TestCase):
         cls.harness_module.Harness(cls.fixture).init('human:synthetic-fixture')
         synthetic_source = cls.fixture.parent / 'sources/handoff-1.1.0-20260914'
         shutil.copytree(cls.fixture / 'specs/texenda-handoff', synthetic_source)
-        refresh.refresh(cls.fixture)
+        default = cls.fixture / '.texenda'
+        cls.state_root = cls.fixture.parent / 'local/agent-state/texenda'
+        cls.state_root.mkdir(parents=True)
+        raw = (default / 'state.json').read_bytes()
+        state = json.loads(raw)
+        os.rename(default / 'state.json', cls.state_root / 'state.json')
+        os.rename(default / 'state.lock', cls.state_root / 'state.lock')
+        (cls.fixture / '.texenda-location.json').write_text(json.dumps({
+            'schema_version': 'texenda.state-location.v1',
+            'migration_id': 'synthetic-facade-fixture',
+            'repository_root': str(cls.fixture), 'state_root': str(cls.state_root),
+            'status': 'active', 'baseline': {
+                'state_sha256': hashlib.sha256(raw).hexdigest(),
+                'receipt_count': len(state['events']), 'receipt_tip': state['events'][-1]['hash'],
+            },
+        }))
+        refresh.refresh(cls.fixture, cls.state_root)
         subprocess.run(['git', 'add', '-A'], cwd=cls.fixture, check=True)
         subprocess.run(['git', 'commit', '--quiet', '-m', 'synthetic generated baseline'],
                        cwd=cls.fixture, check=True)
@@ -306,6 +292,9 @@ class FacadeIntegratedFixtureTests(unittest.TestCase):
             marker.unlink()
 
     def tearDown(self):
+        pending = self.state_root / '.state-write-transaction.json'
+        if pending.exists():
+            pending.unlink()
         for name in ('.agent/tasks/active.json',
                      'docs/qualification/evidence/synthetic-untracked.tmp',
                      '.agent/generated/synthetic_implementation.py',
@@ -315,8 +304,10 @@ class FacadeIntegratedFixtureTests(unittest.TestCase):
             if path.exists():
                 path.unlink()
 
-    def run_check(self, *, all_commands=False, state_root=None):
-        command = [sys.executable, '-B', '.agent/scripts/validate.py', '--check']
+    def run_check(self, *, all_commands=False, state_root=None, scope='control'):
+        if state_root is None and scope == 'control':
+            state_root = self.state_root
+        command = [sys.executable, '-B', '.agent/scripts/validate.py', '--check', '--scope', scope]
         if all_commands:
             command.append('--all')
         if state_root is not None:
@@ -363,57 +354,16 @@ class FacadeIntegratedFixtureTests(unittest.TestCase):
 
     @unittest.skipIf(os.environ.get('TEXENDA_CHECK_ALL_ACTIVE') == '1',
                      'outer check-all already runs this suite; avoid recursive aggregation')
-    def test_complete_check_all_prebinding_and_bound_layouts_are_read_only(self):
+    def test_complete_code_check_and_bound_control_check_are_read_only(self):
         before = self.snapshot()
-        result = self.run_check(all_commands=True)
+        state_before = (self.state_root / 'state.json').read_bytes()
+        result = self.run_check(all_commands=True, scope='code')
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        control = self.run_check()
+        self.assertEqual(control.returncode, 0, control.stdout + control.stderr)
         self.assertEqual(before, self.snapshot())
-
-        default = self.fixture / '.texenda'
-        raw = (default / 'state.json').read_bytes()
-        state = json.loads(raw)
-        external = self.fixture.parent / 'local/agent-state/texenda'
-        external.mkdir(parents=True)
-        os.rename(default / 'state.json', external / 'state.json')
-        os.rename(default / 'state.lock', external / 'state.lock')
-        binding = {
-            'schema_version': 'texenda.state-location.v1',
-            'migration_id': 'synthetic-bound-check-all',
-            'repository_root': str(self.fixture),
-            'state_root': str(external),
-            'status': 'active',
-            'baseline': {
-                'state_sha256': hashlib.sha256(raw).hexdigest(),
-                'receipt_count': len(state['events']),
-                'receipt_tip': state['events'][-1]['hash'],
-            },
-        }
-        binding_path = self.fixture / '.texenda-location.json'
-        binding_path.write_text(json.dumps(binding))
-        refresh.refresh(self.fixture, external)
-        before_bound = self.snapshot()
-        external_before = {
-            name: (path.stat().st_ino, path.stat().st_mode, path.stat().st_size, path.stat().st_mtime_ns,
-                   path.stat().st_ctime_ns,
-                   hashlib.sha256(path.read_bytes()).hexdigest() if name == 'state' else None)
-            for name, path in (('state', external / 'state.json'),
-                               ('lock', external / 'state.lock'))
-        }
-        result = self.run_check(all_commands=True, state_root=external)
-        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
-        self.assertEqual(before_bound, self.snapshot())
-        external_after = {
-            name: (path.stat().st_ino, path.stat().st_mode, path.stat().st_size, path.stat().st_mtime_ns,
-                   path.stat().st_ctime_ns,
-                   hashlib.sha256(path.read_bytes()).hexdigest() if name == 'state' else None)
-            for name, path in (('state', external / 'state.json'),
-                               ('lock', external / 'state.lock'))
-        }
-        self.assertEqual(external_before, external_after)
-        binding_path.unlink()
-        os.rename(external / 'state.json', default / 'state.json')
-        os.rename(external / 'state.lock', default / 'state.lock')
-        refresh.refresh(self.fixture)
+        self.assertEqual(state_before, (self.state_root / 'state.json').read_bytes())
+        self.assertFalse((self.fixture / '.texenda/state.json').exists())
 
     def test_source_change_invalidates_generated_projection(self):
         policy = self.fixture / '.agent/policy.json'
@@ -434,19 +384,19 @@ class FacadeIntegratedFixtureTests(unittest.TestCase):
 
     def test_interrupted_refresh_is_detected_and_recoverable(self):
         with self.assertRaisesRegex(RuntimeError, 'interrupted refresh'):
-            refresh.refresh(self.fixture, fail_after=2)
+            refresh.refresh(self.fixture, self.state_root, fail_after=2)
         result = self.run_check()
         self.assertNotEqual(result.returncode, 0)
         self.assertIn('interrupted refresh marker', result.stderr)
         with mock.patch.object(validate, 'run_registry_checks',
                                side_effect=AssertionError('delegation occurred')):
             with self.assertRaisesRegex(common.ValidationError, 'interrupted refresh marker'):
-                validate.validate(self.fixture, run_all=True)
-        refresh.refresh(self.fixture, recover_interrupted=True)
+                validate.validate(self.fixture, self.state_root, run_all=True)
+        refresh.refresh(self.fixture, self.state_root, recover_interrupted=True)
         self.assertEqual(self.run_check().returncode, 0)
 
     def test_pending_state_write_transaction_blocks_facade_check_without_reads_or_writes(self):
-        marker = self.fixture / '.texenda/.state-write-transaction.json'
+        marker = self.state_root / '.state-write-transaction.json'
         marker.write_text('{}\n')
         before = self.snapshot()
         result = self.run_check()
@@ -481,7 +431,7 @@ class FacadeIntegratedFixtureTests(unittest.TestCase):
             with self.subTest(path=name):
                 path.write_bytes(original + b' ')
                 with self.assertRaises(common.ValidationError):
-                    validate.validate_generated(self.fixture)
+                    validate.validate_generated(self.fixture, self.state_root)
                 path.write_bytes(original)
 
     def test_generated_navigation_leads_to_ordinary_work_not_migration(self):
@@ -493,16 +443,18 @@ class FacadeIntegratedFixtureTests(unittest.TestCase):
         self.assertTrue(resume.startswith('# Resume ordinary Texenda work\n'))
 
         handoff = (self.fixture / 'project-dossier/handoff/START_HERE.md').read_text()
-        state_root = str(self.fixture / '.texenda')
+        state_root = str(self.state_root)
         validation = ('env PYTHONDONTWRITEBYTECODE=1 python3 -B '
                       '.agent/scripts/validate.py --check --all --state-root ' + state_root)
         coordinator = ('env PYTHONDONTWRITEBYTECODE=1 python3 -B '
                        'tooling/coordination/harness.py --root . --state-root ' + state_root)
-        self.assertIn(validation, handoff)
-        for command in ('status', 'ready', 'context WP-01'):
+        self.assertIn(operating.CONTROL_COMMAND, handoff)
+        self.assertIn(validation, resume)
+        for command in ('status', 'ready', operating.SELECTED_CONTEXT):
             self.assertIn(coordinator + ' ' + command, resume)
-            self.assertIn(coordinator + ' ' + command, handoff)
-        self.assertLess(handoff.index(validation), handoff.index('[transition]'))
+            self.assertIn(operating.COORDINATOR_COMMAND + ' ' + command, handoff)
+        self.assertNotIn('context WP-01', resume + handoff)
+        self.assertLess(handoff.index(operating.CONTROL_COMMAND), handoff.index('[transition]'))
 
     def test_generation_id_and_validation_report_claim_tampering_are_rejected(self):
         manifest_path = self.fixture / '.agent/generated/manifest.json'
@@ -511,7 +463,7 @@ class FacadeIntegratedFixtureTests(unittest.TestCase):
         manifest['generation_id'] = '0' * 64
         manifest_path.write_text(json.dumps(manifest, indent=2) + '\n')
         with self.assertRaisesRegex(common.ValidationError, 'transaction ID'):
-            validate.validate_generated(self.fixture)
+            validate.validate_generated(self.fixture, self.state_root)
         manifest_path.write_bytes(original_manifest)
         report_path = self.fixture / '.agent/generated/validation-report.json'
         report = json.loads(report_path.read_text())
@@ -520,7 +472,7 @@ class FacadeIntegratedFixtureTests(unittest.TestCase):
         report['checks'][0]['status'] = 'FAIL'
         report_path.write_text(json.dumps(report, indent=2) + '\n')
         with self.assertRaises(common.ValidationError):
-            validate.validate_generated(self.fixture)
+            validate.validate_generated(self.fixture, self.state_root)
         report_path.write_bytes(original_report)
 
     def test_generated_limitations_disclose_os_managed_atime(self):

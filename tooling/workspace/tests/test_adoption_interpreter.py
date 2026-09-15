@@ -195,33 +195,24 @@ class AdoptionInterpreterTests(unittest.TestCase):
         path.symlink_to(retained, target_is_directory=True)
         self.reject()
 
-    def test_archive_index_is_required_metadata_only_directory(self):
-        archive = self.root.parent / 'synthetic-archive-index'
-        self.rewrite(interpreter.contract.CROSSWALK, lambda value: next(
-            row for row in value['mappings']
-            if row['blueprint_path'] == '.agent/checkpoints/README.md'
-        ).update(mapped_path=str(archive) + '/'))
-        with mock.patch.object(interpreter, 'ARCHIVE_INDEX', str(archive) + '/'):
-            self.reject()  # Missing required directory.
-            archive.write_text('synthetic wrong type')
-            self.reject()
-            archive.unlink()
-            archive.symlink_to(self.root, target_is_directory=True)
-            self.reject()
-            archive.unlink()
-            archive.mkdir()
-            (archive / 'opaque-unread-file').write_text('synthetic archive payload')
-            real_open = os.open
+    def test_archive_index_is_control_only_metadata_without_content_read(self):
+        archive = self.root.parent / 'archive/checkpoints'
+        # Repository-only interpretation succeeds with local archive absent.
+        self.assertEqual(interpreter.interpret(self.root)['local_obligations'], 'unassessed')
+        with self.assertRaises(interpreter.ValidationError):
+            interpreter.local_contract(self.root, scope='control')
+        archive.mkdir(parents=True)
+        (archive / 'opaque-unread-file').write_text('synthetic archive payload')
+        original = os.open
 
-            def no_archive_open(path, flags, *args, **kwargs):
-                self.assertFalse(str(path).startswith(str(archive)),
-                                 'archive contents must not be opened')
-                return real_open(path, flags, *args, **kwargs)
+        def no_archive_open(path, flags, *args, **kwargs):
+            self.assertFalse(str(path).startswith(str(archive)), 'archive payload opened')
+            return original(path, flags, *args, **kwargs)
 
-            with mock.patch.object(os, 'open', side_effect=no_archive_open), \
-                    mock.patch.object(Path, 'iterdir', side_effect=AssertionError('no archive enumeration')), \
-                    mock.patch.object(Path, 'rglob', side_effect=AssertionError('no archive traversal')):
-                self.assertEqual(interpreter.interpret(self.root)['status'], 'PASS')
+        with (mock.patch.object(os, 'open', side_effect=no_archive_open),
+              mock.patch.object(Path, 'iterdir', side_effect=AssertionError('archive enumeration')),
+              mock.patch.object(Path, 'rglob', side_effect=AssertionError('archive traversal'))):
+            interpreter.local_contract(self.root, scope='control')
 
     def test_stock_lexical_escape_and_private_paths_are_rejected(self):
         for name in ('../outside', '/outside', '.agent/../outside', '.agent//empty',

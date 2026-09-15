@@ -7,21 +7,21 @@
     {
       "id": "texenda-coordinator",
       "path": "tooling/coordination/harness.py",
-      "availability_check": "env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda status",
+      "availability_check": "env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . --state-root \"${TEXENDA_STATE_ROOT:?Set the verified absolute state root}\" status",
       "side_effects": "command_dependent",
       "constraints": "existing leases receipts evidence routing budget external gates and explicit owner/runtime-stopped state-write recovery"
     },
     {
       "id": "facade-validator",
       "path": ".agent/scripts/validate.py",
-      "availability_check": "env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/validate.py --check --all --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda",
+      "availability_check": "env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/validate.py --check --all --state-root \"${TEXENDA_STATE_ROOT:?Set the verified absolute state root}\"",
       "side_effects": "no_explicit_project_writes_os_managed_atime_may_advance_on_read",
       "constraints": "preserve_content_path_membership_mode_size_mtime_ctime_generated_cache_lock_and_live_state; portable_atime_stability_is_not_guaranteed"
     },
     {
       "id": "facade-refresh",
       "path": ".agent/scripts/refresh.py",
-      "availability_check": "env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/refresh.py --refresh --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda",
+      "availability_check": "python3 -B .agent/scripts/refresh.py --help",
       "side_effects": "tracked_generated_views_only",
       "constraints": "explicit_refresh_atomic_files_interruption_marker"
     },

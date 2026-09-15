@@ -6,6 +6,7 @@ does not create a lease, model qualification, budget or external approval.
 
 | Contract field | Required value |
 |---|---|
+| Code and control roots | <exact candidate code root/revision; canonical control/evidence root; explicit bound state root; code versus control checks; no copied binding/ledger/receipt inputs> |
 | Parent and objective | <WP or owner-authorized maintenance task; concrete intended result> |
 | Authority and prerequisites | <accepted decisions; integrated dependency/contract revisions; separate external authority if any> |
 | Actor and route | <assignee; exact profile/model/effort/runtime/client; subscription or API; qualification evidence and expiry> |

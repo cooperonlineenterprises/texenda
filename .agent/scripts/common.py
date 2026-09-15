@@ -299,6 +299,33 @@ def binding(root=ROOT):
     return value
 
 
+def control_context(root=ROOT, state_root=None):
+    """Require the explicit canonical control binding before any ledger read."""
+    require(state_root is not None, 'control scope requires explicit --state-root')
+    repository = resolved_directory(Path(root).absolute(), 'control repository')
+    require(repository.name == 'repo', 'control scope requires the canonical repo directory')
+    marker = repository / '.git'
+    no_symlink_components(marker, 'canonical Git directory')
+    require(marker.is_dir(), 'control scope rejects linked worktrees; use canonical repo')
+    require(git('rev-parse', '--show-toplevel', root=repository).strip() == str(repository),
+            'control repository differs from its Git root')
+    location = binding(repository)
+    require(location is not None, 'control scope requires the canonical active binding')
+    require(location['status'] == 'active', 'state relocation is moving')
+    requested = Path(state_root)
+    require(requested.is_absolute() and '..' not in requested.parts,
+            'state root must be absolute and traversal-free')
+    selected = resolved_directory(requested, 'control state root')
+    require(str(selected) == location['state_root'], 'state root does not match active binding')
+    require(not (repository / '.texenda/state.json').exists()
+            and not (repository / '.texenda/state.lock').exists(),
+            'competing default state remains')
+    require(not state_transaction_blockers(selected),
+            'state-write transaction is pending explicit recovery')
+    return {'repository_root': str(repository), 'project_home': str(repository.parent),
+            'state_root': str(selected), 'scope': 'control'}
+
+
 def ledger_facts(root=ROOT, state_root=None, fallback_state_root=None):
     location = binding(root)
     if location and location['status'] != 'active':

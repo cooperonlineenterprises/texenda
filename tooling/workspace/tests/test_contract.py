@@ -35,7 +35,7 @@ class WorkspaceContractTests(unittest.TestCase):
                          contract.CROSSWALK_PREDECESSOR_SHA256)
         self.assertNotIn('deferred_semantic_work', self.crosswalk)
         self.assertEqual([row['id'] for row in self.crosswalk['maintenance_items']],
-                         ['DEFER-WSM-0001', 'DEFER-WSM-0002'])
+                         ['DEFER-WSM-0001', 'DEFER-WSM-0002', 'DEFER-WSM-0003', 'DEFER-WSM-0004'])
 
     def test_crosswalk_rejects_unknown_schema_altered_predecessor_and_id_loss(self):
         original = copy.deepcopy(self.crosswalk)
@@ -436,7 +436,7 @@ class FollowupContractTests(unittest.TestCase):
 
     def test_actual_preserved_source_byte_mutation_is_rejected(self):
         with tempfile.TemporaryDirectory() as directory:
-            fixture_home = Path(directory)
+            fixture_home = Path(directory).resolve()
             root = fixture_home / 'repo'
             root.mkdir()
             for name in ('docs/decisions/ADR-0004-mapped-project-workspace.md',
@@ -453,7 +453,7 @@ class FollowupContractTests(unittest.TestCase):
             with (mock.patch.object(contract, 'HOME', str(fixture_home)),
                   mock.patch.object(contract.subprocess, 'check_output', return_value=b'')):
                 with self.assertRaisesRegex(contract.ContractError, 'source package changed'):
-                    contract.audit_candidate(root, baseline)
+                    contract.audit_candidate(root, baseline, scope='control')
 
 
 if __name__ == '__main__':

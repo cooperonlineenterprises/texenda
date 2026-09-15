@@ -9,6 +9,7 @@ import json
 import os
 from pathlib import Path, PurePosixPath
 import re
+import shlex
 import subprocess
 import sys
 import tomllib
@@ -19,7 +20,8 @@ from common import (EVIDENCE_PREFIX, GENERATED_OUTPUT_PATHS, ROOT, SOURCE_SCOPE_
                     ValidationError, binding, candidate_paths, canonical, evidence_rows,
                     git, git_identity, ledger_facts, load_json, loads, require, resolved_directory, sha,
                     no_symlink_components, reject_private_name, revision_source_rows,
-                    source_rows, scope_digest, stable_file_bytes, valid_sha)
+                    source_rows, scope_digest, stable_file_bytes, valid_sha, control_context)
+import operating
 
 
 KERNEL_KEYS = {
@@ -41,9 +43,11 @@ GENERATED_FILES = GENERATED_OUTPUT_PATHS
 RECORD_ID = re.compile(r'^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)*-[0-9]{4}$')
 
 
-def strict_parsing(root=ROOT):
+def strict_parsing(root=ROOT, *, scope='control'):
     counts = {'json': 0, 'toml': 0, 'python': 0}
     for name in candidate_paths(root):
+        if scope == 'code' and name in GENERATED_FILES:
+            continue
         reject_private_name(name, 'parse candidate')
         path = root / name
         no_symlink_components(path.absolute(), 'parse candidate')
@@ -307,12 +311,10 @@ def validate_registry(root=ROOT):
             and context['shell'] is False
             and context['working_directory'] == '{repository_root}'
             and context['ordinary_entry_command']
-            == ('env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/validate.py '
-                '--check --all --state-root '
-                '/Users/jamesryancooper/Projects/texenda/local/agent-state/texenda'),
+            == operating.CONTROL_COMMAND,
             'validator execution context is not closed or shell-free')
     row_fields = {'id', 'argv', 'mode', 'required', 'run_in_check', 'purpose',
-                  'working_directory', 'context_parameters'}
+                  'working_directory', 'context_parameters', 'scopes'}
     for row in rows:
         require(set(row) == row_fields,
                 'validator command is not closed: ' + row.get('id', '?'))
@@ -321,6 +323,13 @@ def validate_registry(root=ROOT):
                 'validator command argv must be a nonempty string array')
         require(row['mode'] in ('read_only', 'synthetic_writes_only', 'refresh_writer'),
                 'validator mode unknown')
+        require(row['scopes'] in (['code', 'control'], ['control']),
+                'validator scopes are unknown or incomplete')
+        if 'code' in row['scopes'] and row['id'] != 'facade-check':
+            require('{state_root}' not in row['argv']
+                    and not any('{project_home}' in part for part in row['argv'])
+                    and row['mode'] != 'refresh_writer',
+                    'code command can access local control inputs or write projections')
         require(not any(item in {'sh', 'bash', 'zsh', '-c'} for item in row['argv']),
                 'shell command delegation is forbidden')
         require(row['working_directory'] == '{repository_root}'
@@ -359,34 +368,30 @@ def validate_registry(root=ROOT):
     interpreter = next((row for row in rows if row['id'] == 'adoption-interpretation'), None)
     require(interpreter and interpreter['argv'] == [
                 'python3', '-B', 'tooling/workspace/interpret_adoption.py',
-                '--root', '{repository_root}', '--check']
+                '--root', '{repository_root}', '--check', '--scope', 'code']
             and interpreter['mode'] == 'read_only' and interpreter['required'] is True
             and interpreter['run_in_check'] is True
             and interpreter['context_parameters'] == ['repository_root'],
             'adoption interpreter self-check cannot depend on an installed planner or write mode')
+    tools = {row['id']: row for row in load_json(root / '.agent/tools.json')['tools']}
+    require(tools['facade-refresh']['availability_check'] == operating.REFRESH_HELP,
+            'refresh availability must be the exact read-only help probe')
+    require(tools['facade-validator']['availability_check'] == context['ordinary_entry_command']
+            and tools['texenda-coordinator']['availability_check']
+            == operating.COORDINATOR_COMMAND + ' status',
+            'tool availability differs from registered ordinary commands')
     return registry
 
 
-def execution_context(root=ROOT, state_root=None):
+def execution_context(root=ROOT, state_root=None, *, scope='control'):
     repository = resolved_directory(Path(root).absolute(), 'validator repository root')
-    if repository.name == 'repo' and (repository.parent / 'WORKSPACE.md').is_file():
-        project_home = repository.parent
-    elif (repository.parent.name == 'worktrees'
-          and (repository.parent.parent / 'WORKSPACE.md').is_file()):
-        project_home = repository.parent.parent
-    else:
-        project_home = repository.parent
-    project_home = resolved_directory(project_home.absolute(), 'validator project home')
-    selected_state = None
-    if state_root is not None:
-        selected_state = resolved_directory(Path(state_root).absolute(), 'validator state root')
-    elif binding(repository):
-        raise ValidationError('active binding requires explicit --state-root for delegated checks')
-    return {
-        'repository_root': str(repository),
-        'project_home': str(project_home),
-        'state_root': str(selected_state) if selected_state else None,
-    }
+    require(scope in ('code', 'control'), 'unknown validation scope')
+    if scope == 'control':
+        return control_context(repository, state_root)
+    require(state_root is None, 'code scope rejects --state-root')
+    # Do not inspect a binding, WORKSPACE.md, or any project-home path here.
+    return {'repository_root': str(repository), 'project_home': None,
+            'state_root': None, 'scope': 'code'}
 
 
 def resolve_command(row, context):
@@ -417,9 +422,9 @@ def resolve_command(row, context):
             script = script if script.is_absolute() else Path(context['repository_root']) / script
             script = Path(os.path.abspath(script))
             repository = Path(context['repository_root'])
-            project_home = Path(context['project_home'])
+            project_home = Path(context['project_home']) if context['project_home'] else None
             require(script.is_relative_to(repository)
-                    or script.is_relative_to(project_home / 'sources'),
+                    or (project_home is not None and script.is_relative_to(project_home / 'sources')),
                     'validator script escapes the validated repository/source roots')
             reject_private_name(script.as_posix(), 'validator script')
             no_symlink_components(script, 'validator script')
@@ -480,20 +485,20 @@ def validate_dossier(root=ROOT, *, generated=True):
     require(history_row is not None and history_row['classification'] == 'history',
             'completed transition history is not catalogued as history')
     supersession = load_json(root / 'project-dossier/SUPERSESSION.json')
-    require(supersession['current_version'] == '1.3.0-mapped-existing'
-            and len(supersession['records']) == 2
+    require(supersession['current_version'] == '1.4.0-mapped-existing'
+            and len(supersession['records']) == 3
             and supersession['records'][0]['prior_sha256'] == history_sha
             and supersession['records'][0]['retained_history_path'] == history_path,
             'dossier supersession does not preserve the completed transition')
     if generated:
         mirror = load_json(root / 'project-dossier/machine-readable/path-authority.json')
-        expected = [{key: row[key] for key in ('path', 'classification', 'owner_path', 'concern_id')}
+        expected = [{key: row[key] for key in ('path', 'classification', 'owner_path', 'concern_id', 'owner_refs')}
                     for row in rows]
         require(mirror['paths'] == expected, 'path-authority mirror differs from artifact catalog')
     return catalog
 
 
-def validate_links(root=ROOT, *, allow_generated_missing=False):
+def validate_links(root=ROOT, *, allow_generated_missing=False, scope='control'):
     count = 0
     names = {'AGENTS.md', 'docs/agents/operating-guide.md'}
     names.update(name for name in candidate_paths(root)
@@ -501,6 +506,8 @@ def validate_links(root=ROOT, *, allow_generated_missing=False):
                  and (name.startswith('.agent/') or name.startswith('project-dossier/')))
     selected = [root / name for name in sorted(names)]
     for path in selected:
+        if scope == 'code' and path.relative_to(root).as_posix() in GENERATED_FILES:
+            continue
         if path.relative_to(root).as_posix() == (
                 'project-dossier/history/2026-09-15-workspace-transition-completed.md'):
             # This exact, separately hash-validated snapshot keeps its bytes and
@@ -623,9 +630,9 @@ def ensure_no_interrupted_refresh(root=ROOT):
 
 
 def run_registry_checks(registry, root=ROOT, state_root=None, *, all_commands=False,
-                        allow_refresh_marker=False):
+                        allow_refresh_marker=False, scope='control'):
     results = []
-    context = execution_context(root, state_root)
+    context = execution_context(root, state_root, scope=scope)
     for row in registry['commands']:
         # A check can never dispatch a writer, even under --all.
         if row['mode'] == 'refresh_writer':
@@ -633,9 +640,12 @@ def run_registry_checks(registry, root=ROOT, state_root=None, *, all_commands=Fa
             continue
         if row['id'] == 'facade-check':
             continue
+        if scope not in row['scopes']:
+            results.append({'id': row['id'], 'status': 'NOT_ASSESSED_IN_CODE_SCOPE'})
+            continue
         if not (all_commands or row['run_in_check']):
             continue
-        if not allow_refresh_marker:
+        if scope == 'control' and not allow_refresh_marker:
             ensure_no_interrupted_refresh(root)
         argv = resolve_command(row, context)
         environment = {**dict(os.environ), 'PYTHONDONTWRITEBYTECODE': '1'}
@@ -651,6 +661,7 @@ def run_registry_checks(registry, root=ROOT, state_root=None, *, all_commands=Fa
 
 
 def validate_generated(root=ROOT, state_root=None):
+    control_context(root, state_root)
     ensure_no_interrupted_refresh(root)
     for name in GENERATED_FILES:
         path = root / name
@@ -727,7 +738,7 @@ def validate_generated(root=ROOT, state_root=None):
     require(findings_mirror['source_sha256'] == sha(stable_file_bytes(
                 root / 'project-dossier/conformance/findings.json', 'conformance findings'))
             and findings_mirror['findings'] == findings['findings'], 'findings mirror is stale')
-    state_root_text = facts['state_root']
+    state_root_text = shlex.quote(facts['state_root'])
     validation_command = (
         'env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/validate.py '
         '--check --all --state-root ' + state_root_text
@@ -749,10 +760,11 @@ def validate_generated(root=ROOT, state_root=None):
     handoff_text = stable_file_bytes(
         root / 'project-dossier/handoff/START_HERE.md', 'handoff view').decode()
     require(handoff_text.startswith('# Texenda ordinary handoff\n')
-            and validation_command in handoff_text
-            and all(coordinator_command + ' ' + command in handoff_text
-                    for command in ('status', 'ready', 'context WP-01'))
-            and handoff_text.index(validation_command) < handoff_text.index('[transition]'),
+            and operating.CONTROL_COMMAND in handoff_text
+            and all(operating.COORDINATOR_COMMAND + ' ' + command in handoff_text
+                    for command in ('status', 'ready', operating.SELECTED_CONTEXT))
+            and 'context WP-01' not in handoff_text + resume_text
+            and handoff_text.index(operating.CONTROL_COMMAND) < handoff_text.index('[transition]'),
             'handoff is missing ordinary commands or leads with migration history')
     # Reconstruct every generated byte from validated sources, the recorded
     # source identity/time, and the stable ledger. This covers all eleven
@@ -775,11 +787,14 @@ def validate_generated(root=ROOT, state_root=None):
 
 
 def validate(root=ROOT, state_root=None, *, generated=True, run_all=False,
-             allow_refresh_marker=False):
+             allow_refresh_marker=False, scope='control'):
     require(sys.version_info >= (3, 11), 'Python 3.11 or newer is required')
-    if not allow_refresh_marker:
+    execution_context(root, state_root, scope=scope)
+    if scope == 'code':
+        generated = False
+    if scope == 'control' and not allow_refresh_marker:
         ensure_no_interrupted_refresh(root)
-    parsing = strict_parsing(root)
+    parsing = strict_parsing(root, scope=scope)
     validate_kernel(root)
     instruction_files = validate_instruction_scope(root)
     validate_origin(root)
@@ -787,15 +802,20 @@ def validate(root=ROOT, state_root=None, *, generated=True, run_all=False,
     validate_extension(root)
     registry = validate_registry(root)
     validate_crosswalk_correction(root)
+    operating.validate_operating(root)
     catalog = validate_dossier(root, generated=generated)
-    links = validate_links(root, allow_generated_missing=not generated)
+    links = validate_links(root, allow_generated_missing=not generated, scope=scope)
     evidence_checks = validate_evidence_records(root)
     generated_result = validate_generated(root, state_root) if generated else None
     registered = run_registry_checks(registry, root, state_root, all_commands=run_all,
-                                     allow_refresh_marker=allow_refresh_marker)
+                                     allow_refresh_marker=allow_refresh_marker, scope=scope)
     result = {
         'status': 'PASS',
         'mode': 'read_only',
+        'scope': scope,
+        'live_state_checked': scope == 'control',
+        'control_validation': 'performed' if scope == 'control' else 'unassessed',
+        'generated_freshness': 'checked' if generated else 'unassessed',
         'parsing': parsing,
         'dossier_paths': len(catalog['artifacts']),
         'instruction_files': instruction_files,
@@ -827,10 +847,11 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--check', action='store_true', required=True)
     parser.add_argument('--state-root', type=Path)
+    parser.add_argument('--scope', choices=('code', 'control'), default='control')
     parser.add_argument('--all', action='store_true', help='run every registered non-refresh command')
     args = parser.parse_args(argv)
     try:
-        print(json.dumps(validate(ROOT, args.state_root, run_all=args.all), indent=2))
+        print(json.dumps(validate(ROOT, args.state_root, run_all=args.all, scope=args.scope), indent=2))
         return 0
     except (ValidationError, OSError, ValueError, KeyError, TypeError,
             subprocess.CalledProcessError) as exc:

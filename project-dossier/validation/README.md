@@ -1,38 +1,41 @@
 # Validation
 
-The single command registry is [`.agent/validators.json`](../../.agent/validators.json).
-From `/Users/jamesryancooper/Projects/texenda/repo`, the ordinary complete
-read-only command is:
+The single [registry](../../.agent/validators.json) owns all commands.
+
+Code worktrees and clean clones run only repository-source and synthetic checks:
 
 ```text
-env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/validate.py --check --all --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda
+env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/validate.py --check --scope code --all
 ```
 
-It runs the registered local, sealed, package, schema/link/owner/evidence, and
-negative/recovery checks while skipping refresh writers. PASS is bounded evidence
-only; it clears no product or external gate. Use explicit refresh only when a
-declared generated view is stale and the underlying source change is understood.
+Code scope rejects state-root input, does not inspect local binding/live state,
+project-home source/archive/private paths or installed skills, and reports
+control/live/generated freshness unassessed.
 
-`validate.py --check` performs no explicit project writes and must preserve file
-content, path membership, mode, size, modification time (`mtime`), metadata-change
-time (`ctime`), generated outputs, caches, locks, and live state. The operating
-system may advance access time (`atime`) merely because validation reads a file.
-Portable Python cannot prevent or restore that filesystem-managed update without
-performing a mutation, so atime stability is explicitly outside the no-write
-guarantee. Only `refresh.py --refresh` may update generated views.
+Canonical `repo/` performs complete control validation with its deliberately
+selected exact absolute state root:
 
-`validate.py --check --all` resolves shell-free registry argv from a validated
-repository/project-home/state-root context. It categorically skips every
-`refresh_writer`; state-root options precede coordinator subcommands. Both check
-modes reject an interrupted-refresh marker before delegation and deterministically
-reconstruct all eleven generated outputs byte-for-byte.
+```text
+env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/validate.py --check --all --state-root "${TEXENDA_STATE_ROOT:?Set the verified absolute state root}"
+```
 
-Shared facade/coordinator readers use nonblocking no-follow opens, require a
-regular descriptor before content access, and recheck path/inode identity. FIFO,
-socket, device, directory, and post-preflight substitutions fail promptly.
+The active binding is required; missing/wrong/moving/symlinked/competing roots and
+pending transactions fail closed. The full control check additionally verifies
+local source/archive preservation, both package variants, live receipts and all
+eleven generated outputs. The source-preservation command has no path fallback.
 
-Only those exact eleven paths are excluded from the source fingerprint.
-`.agent/generated/README.md` and any additional implementation file under that
-directory remain source; adding one makes an unrefreshed or uncommitted
-projection stale. Complete synthetic check-all proofs cover both the default
-pre-binding layout and an active external binding.
+Both scopes perform no explicit project writes and preserve content, membership,
+mode, size, mtime, ctime, caches, locks and existing outputs. OS-managed access time
+(`atime`) may advance on read and is outside the portable no-write guarantee.
+Synthetic suites write only disposable fixtures outside measured project roots.
+No timestamp restoration is attempted.
+
+Checks skip every refresh writer even under `--all`. Only explicit canonical
+refresh/recovery writes derived outputs; `refresh.py --help` is read-only discovery.
+Control validation rejects interrupted refresh and deterministically reconstructs
+all eleven outputs. Code validation leaves their live freshness unassessed.
+
+The [operating contract](../../docs/decisions/ADR-0007-standalone-workspace-operating-contract.md)
+and [entry point](../../.agent/START_HERE.md) define assignment/review/resumption,
+current ready-to-context selection and canonical-only control effects. PASS is
+bounded evidence, not permission, product readiness or external gate clearance.

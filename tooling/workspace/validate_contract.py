@@ -13,10 +13,14 @@ import json
 from pathlib import Path, PurePosixPath
 import re
 import subprocess
+import sys
 import tomllib
 import urllib.parse
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / '.agent/scripts'))
+import operating
+from common import control_context, ValidationError
 BASELINE = 'docs/qualification/evidence/2026-09-14-workspace-phase-0-baseline.json'
 CROSSWALK = 'project-dossier/transition/blueprint-adoption-crosswalk.json'
 MANIFEST = 'project-dossier/transition/workspace-move-manifest.json'
@@ -44,14 +48,8 @@ COMPLETED_TRANSITION_SHA256 = (
     '1f5b0b1aa816f6bcd34f591a0b5f9f5b4e9d6e8bf35474ca77367418fb930919'
 )
 ORDINARY_STATE_ROOT = HOME + '/local/agent-state/texenda'
-ORDINARY_VALIDATION = (
-    'env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/validate.py '
-    '--check --all --state-root ' + ORDINARY_STATE_ROOT
-)
-ORDINARY_COORDINATOR = (
-    'env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py '
-    '--root . --state-root ' + ORDINARY_STATE_ROOT
-)
+ORDINARY_VALIDATION = operating.CONTROL_COMMAND
+ORDINARY_COORDINATOR = operating.COORDINATOR_COMMAND
 CROSSWALK_PREDECESSOR_REVISION = '700565cd829871b04bde87e485c25d802505192c'
 CROSSWALK_PREDECESSOR_SHA256 = '689d5ffedb15938b25679c0cb9215bd7cac850b3b8f09e257a0f7a0c4fade00e'
 COMPATIBILITY_INPUTS = {
@@ -149,6 +147,9 @@ def validate(crosswalk, baseline, manifest, *, root=ROOT):
         'id': 'ADR-0006',
         'owner_path': 'docs/decisions/ADR-0006-clean-ordinary-operating-contract.md',
         'scope': 'ordinary_entry_current_epoch_and_history_routing_only',
+        'package_variants_modified': False}, {
+        'id': 'ADR-0007', 'owner_path': operating.ADR,
+        'scope': 'portable_standalone_operation_code_control_and_retention_references_only',
         'package_variants_modified': False}],
         'local editor amendment scope/owner changed')
     require(set(crosswalk['roles']) == ROLES, 'role vocabulary changed')
@@ -223,6 +224,17 @@ def validate(crosswalk, baseline, manifest, *, root=ROOT):
     require(len({row['id'] for row in artifact_types}) == len(artifact_types) == 35,
             'artifact type coverage incomplete')
     require(all(row['path'] in inventory for row in artifact_types), 'artifact path unmapped')
+    require(sorted((row['id'], row['path']) for row in artifact_types)
+            == sorted(tuple(row) for row in operating.EXPECTED_ARTIFACT_TYPES),
+            'exact 35 artifact type/path pairs changed')
+    require(sorted((row['mapped_path'], row['concern_id'], row['role'])
+                   for row in crosswalk['supplemental_mappings'])
+            == sorted(tuple(row) for row in operating.EXPECTED_SUPPLEMENTAL),
+            'exact six supplemental mappings changed')
+    require(sorted((row['id'], row['mapped_path'], row['concern_id'], row['role'])
+                   for row in crosswalk['supplemental_high_assurance_types'])
+            == sorted(tuple(row) for row in operating.EXPECTED_HIGH_ASSURANCE),
+            'exact five supplemental high-assurance types changed')
     require({row['id'] for row in crosswalk['supplemental_high_assurance_types']} ==
             {'SEC-0001', 'DAT-0001', 'SUP-0001', 'EVA-0001', 'CTX-0001'},
             'conditional artifact type coverage incomplete')
@@ -266,8 +278,9 @@ def validate(crosswalk, baseline, manifest, *, root=ROOT):
             acceptance['final_read_only_review_after_evidence_added'] is True,
             'authority or independent review boundary weakened')
     deferred = {row['id']: row for row in crosswalk['maintenance_items']}
-    require(len(crosswalk['maintenance_items']) == len(deferred) == 2
-            and set(deferred) == {'DEFER-WSM-0001', 'DEFER-WSM-0002'},
+    require(len(crosswalk['maintenance_items']) == len(deferred) == 4
+            and set(deferred) == {'DEFER-WSM-0001', 'DEFER-WSM-0002',
+                                  'DEFER-WSM-0003', 'DEFER-WSM-0004'},
             'maintenance IDs were lost, duplicated or replaced')
     editor_resolution = deferred.get('DEFER-WSM-0001', {})
     require(editor_resolution.get('status') == 'resolved_scoped_by_ADR-0005'
@@ -420,7 +433,7 @@ def verify_crosswalk_predecessor(root):
     current = loads((root / CROSSWALK).read_text())
     require(prior['schema_version'] == 'texenda.workspace-adoption-crosswalk.v1'
             and [row['id'] for row in prior['deferred_semantic_work']]
-            == [row['id'] for row in current['maintenance_items']],
+            == [row['id'] for row in current['maintenance_items'][:2]],
             'crosswalk successor changed stable maintenance IDs')
     return CROSSWALK_PREDECESSOR_SHA256
 
@@ -644,9 +657,12 @@ def verify_clean_operating_contract(root):
     for name in ('.agent/START_HERE.md', 'docs/agents/operating-guide.md',
                  'tooling/coordination/README.md'):
         text = (root / name).read_text()
-        for command in ('status', 'ready', 'context WP-01'):
+        for command in ('status', 'ready', operating.SELECTED_CONTEXT):
             require(ORDINARY_COORDINATOR + ' ' + command in text,
                     'active coordinator entry command missing from ' + name)
+        require('context WP-01' not in text.split('## Pre-binding', 1)[0]
+                and '/Users/' not in text.split('## Pre-binding', 1)[0],
+                'current ordinary entry contains a fixed WP or host path')
         require(text.index(ORDINARY_COORDINATOR + ' status')
                 < text.find('migrate-v1') if 'migrate-v1' in text else True,
                 'legacy migration appears before ordinary active commands')
@@ -682,8 +698,8 @@ def verify_clean_operating_contract(root):
             'current transition entry still embeds the migration procedure')
 
     supersession = loads((root / 'project-dossier/SUPERSESSION.json').read_text())
-    require(supersession['current_version'] == '1.3.0-mapped-existing'
-            and len(supersession['records']) == 2,
+    require(supersession['current_version'] == '1.4.0-mapped-existing'
+            and len(supersession['records']) == 3,
             'dossier version/supersession is not current')
     record = supersession['records'][0]
     require(record['prior_sha256'] == COMPLETED_TRANSITION_SHA256
@@ -790,7 +806,7 @@ def verify_qualification_checks(root):
     return count
 
 
-def audit_candidate(root, baseline):
+def audit_candidate(root, baseline, *, scope='code'):
     """Parse candidate files and compare only the explicit public package scope."""
     names = subprocess.check_output(
         ['git', 'ls-files', '--cached', '--others', '--exclude-standard', '-z'],
@@ -798,6 +814,8 @@ def audit_candidate(root, baseline):
     counts = {'JSON': 0, 'TOML': 0, 'Python': 0, 'new_markdown_links': 0,
               'sealed_files': 0, 'source_files': 0}
     for name in filter(None, names):
+        if scope == 'code' and name in __import__('common').GENERATED_OUTPUT_PATHS:
+            continue
         require(not name.startswith('.texenda/') and not name.lower().endswith('.csv'),
                 'private/local input entered candidate inspection scope')
         path = root / name
@@ -827,14 +845,14 @@ def audit_candidate(root, baseline):
             if target and '://' not in target:
                 require((path.parent / target).exists(), 'new local link missing: ' + target)
                 counts['new_markdown_links'] += 1
-    source = Path(HOME) / 'sources/handoff-1.1.0-20260914'
-    if not source.exists():
-        source = Path(HOME)
-    for row in baseline['filesystem']['author_source_files']:
-        path = source / row['path']
-        require(not path.is_symlink(), 'source package symlink denied')
-        require(sha(path.read_bytes()) == row['sha256'], 'source package changed: ' + row['path'])
-        counts['source_files'] += 1
+    if scope == 'control':
+        source = root.parent / 'sources/handoff-1.1.0-20260914'
+        __import__('common').resolved_directory(source, 'preserved source package')
+        for row in baseline['filesystem']['author_source_files']:
+            path = source / row['path']
+            raw = __import__('common').stable_file_bytes(path, 'preserved source file')
+            require(sha(raw) == row['sha256'], 'source package changed: ' + row['path'])
+            counts['source_files'] += 1
     return counts
 
 
@@ -842,8 +860,14 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--check', action='store_true', required=True)
     parser.add_argument('--audit', action='store_true', help='Also parse candidate files, links and package bytes.')
+    parser.add_argument('--scope', choices=('code', 'control'), default='code')
+    parser.add_argument('--state-root', type=Path)
     args = parser.parse_args()
     try:
+        if args.scope == 'control':
+            control_context(ROOT, args.state_root)
+        else:
+            require(args.state_root is None, 'code scope rejects --state-root')
         crosswalk, baseline, manifest = [loads((ROOT / p).read_text())
                                          for p in (CROSSWALK, BASELINE, MANIFEST)]
         counts = validate(crosswalk, baseline, manifest)
@@ -855,13 +879,18 @@ def main():
             loads((ROOT / 'project-dossier/machine-readable/raidq.json').read_text()))
         counts['clean_operation'] = verify_clean_operating_contract(ROOT)
         counts['qualification_checks'] = verify_qualification_checks(ROOT)
+        counts['standalone_operation'] = operating.validate_operating(ROOT)
         if args.audit:
-            counts['audit'] = audit_candidate(ROOT, baseline)
-    except (ContractError, KeyError, TypeError, OSError, subprocess.CalledProcessError) as exc:
+            counts['audit'] = audit_candidate(ROOT, baseline, scope=args.scope)
+        if args.scope == 'control':
+            import interpret_adoption
+            interpret_adoption.local_contract(ROOT, scope='control')
+    except (ContractError, ValidationError, KeyError, TypeError, OSError, subprocess.CalledProcessError) as exc:
         print(json.dumps({'status': 'FAIL', 'reason': str(exc)}))
         return 1
     print(json.dumps({'status': 'PASS', **counts,
-                      'scope': 'static transition contracts, Git-bound inputs and qualification evidence links',
+                      'scope': args.scope,
+                      'local_preservation': 'checked' if args.scope == 'control' else 'unassessed',
                       'live_state_checked': False, 'moves_executed': False,
                       'private_input_accessed': False, 'approval': False}))
     return 0

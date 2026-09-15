@@ -1,0 +1,83 @@
+{
+  "schema_version": "texenda.workspace-retention.v1",
+  "authority": "local_workspace_retention_metadata_only",
+  "owner_path": "project-dossier/registers/workspace-retention.json",
+  "decision": "docs/decisions/ADR-0007-standalone-workspace-operating-contract.md",
+  "deletion_authority": false,
+  "private_content_or_size_access": false,
+  "classes": [
+    {
+      "id": "RET-0001",
+      "classification": "maintained_versioned_source",
+      "owner": "current scoped source owner",
+      "retention": "Retain current sources and preserved Git history; use reviewed successors.",
+      "retirement_trigger": "Exact successor and reference reconciliation.",
+      "validation": "Source hashes, owners and supersession.",
+      "recovery": "Recover preserved revision without history rewrite."
+    },
+    {
+      "id": "RET-0002",
+      "classification": "immutable_evidence_or_source",
+      "owner": "source/evidence custodian",
+      "retention": "Preserve decisions, sealed/source packages, evidence, archives, branches and bundles.",
+      "retirement_trigger": "Separate exact owner decision with complete preservation proof.",
+      "validation": "Exact hashes, manifests and forward baselines.",
+      "recovery": "Restore verified bytes; append corrections."
+    },
+    {
+      "id": "RET-0003",
+      "classification": "active_coordination_and_binding",
+      "owner": "canonical coordinator and binding owner",
+      "retention": "Retain one live ledger, binding and required lock/transaction material.",
+      "retirement_trigger": "Reviewed migration or explicit completed recovery; never age alone.",
+      "validation": "Receipts, prefix, identities and pending transactions.",
+      "recovery": "Existing explicit state-write/relocation recovery after proved stop."
+    },
+    {
+      "id": "RET-0004",
+      "classification": "receipt_or_recovery_dependency",
+      "owner": "coordinator recovery owner",
+      "retention": "Retain four receipt inputs and relocation records at referenced paths.",
+      "retirement_trigger": "Reviewed forward reference migration preserving every chain.",
+      "validation": "Exact path/hash replay and recovery evidence.",
+      "recovery": "Restore verified originals; never rewrite receipts."
+    },
+    {
+      "id": "RET-0005",
+      "classification": "generated_projection",
+      "owner": ".agent/scripts/refresh.py",
+      "retention": "Keep exact eleven current projections and preserved Git history.",
+      "retirement_trigger": "Explicit complete refresh after committed source/evidence changes.",
+      "validation": "Deterministic reconstruction and source/evidence/ledger equality.",
+      "recovery": "Explicit interrupted-refresh recovery; no independent edits."
+    },
+    {
+      "id": "RET-0006",
+      "classification": "transient_run_output",
+      "owner": "bounded assignment/run owner",
+      "retention": "Keep until runtime stop and reference/evidence/recovery reconciliation.",
+      "retirement_trigger": "Separately authorized exact cleanup after preservation.",
+      "validation": "Exact paths, owner, actual stop and no retained dependencies.",
+      "recovery": "Preserve unknown/referenced outputs, candidates and checkpoints."
+    },
+    {
+      "id": "RET-0007",
+      "classification": "private_data_unqualified_retention",
+      "owner": "Ryan as data owner and responsible host/security administrator",
+      "retention": "Retain placement and deny ordinary access pending RAIDQ-0006.",
+      "retirement_trigger": "Data-owner-approved access, retention, backup and recovery decision.",
+      "validation": "Authorized metadata and synthetic tests; no actual content/size/hash.",
+      "recovery": "No automatic chmod, copying or deletion."
+    }
+  ],
+  "protected_receipt_inputs": [
+    ".texenda/context/WP-00.json",
+    ".texenda/evidence/wp00-integration-verification.log",
+    ".texenda/evidence/wp00-integration.evidence.json",
+    ".texenda/state.v1.a2a58e20004c86c0081b1427087626e36f931c3804532e8a1caf1c94a49a609a.json"
+  ],
+  "protected_receipt_retention_class": "RET-0004",
+  "generated_paths_owner": ".agent/scripts/common.py:GENERATED_OUTPUT_PATHS",
+  "generated_retention_class": "RET-0005",
+  "review_cadence": "on_path_dependency_or_retention_change"
+}

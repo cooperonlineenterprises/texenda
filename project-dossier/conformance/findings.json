@@ -61,6 +61,16 @@
       "evidence": "docs/qualification/evidence/2026-09-15-workspace-adoption-integrated-main-audit.evidence.json",
       "disposition": "mapped_lifecycle_demonstration_complete",
       "limitations": "This is the approved demonstration for the exact recorded baseline. It is not a new WP execution, receipt, lease, gate, model requalification or post-cutover operational run."
+    },
+    {
+      "id": "FIND-0007",
+      "classification": "gated",
+      "subject": "Standalone source remediation candidate",
+      "basis": "docs/decisions/ADR-0007-standalone-workspace-operating-contract.md",
+      "observation": "The complete source remediation disposition register owns current findings, retained controls and exact deferrals for the ADR-0007 candidate.",
+      "evidence": "project-dossier/conformance/remediation-register.json",
+      "disposition": "candidate_requires_independent_source_and_control_review",
+      "limitations": "Prior completed workspace findings remain scoped to their recorded revisions; no current candidate approval, product readiness or gate is inferred."
     }
   ]
 }

@@ -12,7 +12,7 @@ From the repository root, this self-check validates the current crosswalk and
 origin-v3 record using repository-owned validators only:
 
 ```text
-env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/workspace/interpret_adoption.py --root /Users/jamesryancooper/Projects/texenda/repo --check
+env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/workspace/interpret_adoption.py --root "${TEXENDA_REPOSITORY:?Set the exact repository root}" --check
 ```
 
 It is included in the ordinary facade check. It does not load the installed
@@ -25,10 +25,12 @@ produce JSON for the exact same target. Pipe its output directly into the local
 interpreter; neither command writes the target:
 
 ```text
-env PYTHONDONTWRITEBYTECODE=1 python3 -B /Users/jamesryancooper/.codex/skills/project-bootstrap/scripts/plan_adoption.py --target /Users/jamesryancooper/Projects/texenda/repo --profile high-assurance --format json | env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/workspace/interpret_adoption.py --root /Users/jamesryancooper/Projects/texenda/repo --stock-plan -
+env PYTHONDONTWRITEBYTECODE=1 python3 -B "${TEXENDA_BLUEPRINT_PLANNER:?Select a separately inspected planner}" --target "${TEXENDA_REPOSITORY:?Set the exact repository root}" --profile high-assurance --format json | env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/workspace/interpret_adoption.py --root "${TEXENDA_REPOSITORY:?Set the exact repository root}" --stock-plan -
 ```
 
 For a worktree, supply that worktree's exact absolute path to both commands.
+The default interpretation is repository-only code scope; local preservation
+remains unassessed. Full canonical control validation performs that local check.
 The interpreter accepts at most one MiB of strict JSON on stdin and exposes no
 output-file or apply option. It rejects duplicate keys, nonfinite numbers,
 wrong target/profile/version, duplicate or missing mappings, incorrect path
@@ -36,9 +38,10 @@ partitions, traversal, symlinks and private-input paths. The stock origin summar
 is retained as an observation alongside the validated local v3 interpretation.
 Every non-null mapped target must exist as the declared regular file or directory
 (a trailing slash declares a directory). Only null mappings with `deferred` or
-`not_applicable` roles may lack a target. The sole absolute mapping is the exact
-archive checkpoint index; its directory and ancestor metadata are checked, and
-its contents are never enumerated or read.
+`not_applicable` roles may lack a target. The retained absolute checkpoint mapping is historical metadata. Code scope
+validates its declared disposition without resolving that local path. Complete
+canonical control validation checks the actual archive directory and ancestors
+without enumerating or reading its contents.
 Output is a hash-bound, point-in-time view; it grants no permission and creates
 no second ledger. Operating-system access times may advance when files are read.
 

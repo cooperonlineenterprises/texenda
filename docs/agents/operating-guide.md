@@ -8,25 +8,35 @@ scope. For coordinator changes, also read
 
 ## Ordinary repository entry
 
-Start in `/Users/jamesryancooper/Projects/texenda/repo` and run:
+Use [the entry point](../../.agent/START_HERE.md) to distinguish candidate code
+from canonical control. A clean clone/worktree needs only repository sources:
 
 ```text
-env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/validate.py --check --all --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda
+env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/validate.py --check --scope code --all
 ```
 
-Then inspect the bound ledger before preparing work:
+In canonical `repo/`, deliberately set the verified absolute state root from the
+ignored binding, then run complete control validation and live inspection:
 
 ```text
-env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda status
-env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda ready
-env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda context WP-01
+env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/validate.py --check --all --state-root "${TEXENDA_STATE_ROOT:?Set the verified absolute state root}"
+env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . --state-root "${TEXENDA_STATE_ROOT:?Set the verified absolute state root}" status
+env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . --state-root "${TEXENDA_STATE_ROOT:?Set the verified absolute state root}" ready
+env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . --state-root "${TEXENDA_STATE_ROOT:?Set the verified absolute state root}" context "${TEXENDA_WORK_PACKAGE:?Select an ID from fresh ready output}"
 ```
+
+Choose the ID explicitly from fresh ready output for the current objective.
+Empty readiness has no fallback; resumption uses the recorded task/fence.
+Context is not admission. Do not copy bindings, ledgers or receipt inputs.
+Worktree inspection uses the canonical script and root with the entry point's
+`--read-only` flag. The flag restricts that invocation, not caller identity;
+policy/assignment scope remains a separate prohibition on control mutations.
 
 Use the existing [assignment](../../tooling/coordination/templates/ASSIGNMENT.md),
 [review](../../tooling/coordination/templates/REVIEW.md), and
-[resumption](../../tooling/coordination/templates/RESUME.md) templates. The
-explicit state root is intentional and must not be inferred or replaced by a
-default. These commands inspect and validate; they do not admit or assign WP-01.
+[resumption](../../tooling/coordination/templates/RESUME.md) templates.
+[ADR-0007](../decisions/ADR-0007-standalone-workspace-operating-contract.md)
+supplies portable operating metadata without changing product or permission owners.
 
 ## Authority and context
 

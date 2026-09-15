@@ -6,6 +6,7 @@ checkpoint/recovery evidence envelopes; do not invent a new lifecycle state.
 
 | Contract field | Required value |
 |---|---|
+| Code and control roots | <exact candidate code root/revision; canonical control/evidence root; explicit bound state root; code versus control checks; no copied binding/ledger/receipt inputs> |
 | Cause and observation | <usage window/reset or other interruption; date/time/timezone; source; unknown fields> |
 | Intervention and resumption | <quota/tool/safety/approval/unknown cause; provider pause/end and resumable/nonresumable/unknown disposition; available action evidence; required owner/security/runtime review; unresolved effects> |
 | Goal and authority | <original scoped objective; accepted decisions; pending material decision and owner> |

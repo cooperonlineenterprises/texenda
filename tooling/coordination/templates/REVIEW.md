@@ -6,6 +6,7 @@ Use the [operating guide](../../../docs/agents/operating-guide.md) and the
 
 | Contract field | Required value |
 |---|---|
+| Code and control roots | <exact candidate code root/revision; canonical control/evidence root; explicit bound state root; code versus control checks; no copied binding/ledger/receipt inputs> |
 | Candidate and base | <full exact candidate/base revisions; author identity; changed paths/hashes> |
 | Reviewer route | <different actor; required reviewer floor; exact profile/model/effort/runtime/client; current qualification and billing route> |
 | Authority and context | <assignment; accepted contracts/ADRs and hashes; policy digest; applicable instructions; this template hash> |

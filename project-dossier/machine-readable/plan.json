@@ -73,6 +73,35 @@
       "status_correction_review": "docs/qualification/evidence/2026-09-15-workspace-adoption-closeout-review.evidence.json",
       "status_correction_revision": "1a088a40119859e3b97d275f7d367cb14d77bace",
       "observed_closeout_lineage_revision": "836e209020177267ccaa1c803b66779cd29d12ec"
+    },
+    {
+      "id": "PLAN-0005",
+      "status": "proposed",
+      "objective": "Implement and independently review the exact ADR-0007 source candidate without changing live state or sealed bytes.",
+      "dependencies": [
+        "PLAN-0004"
+      ],
+      "acceptance": [
+        "Repository-only full code check and scoped negative/synthetic suites pass",
+        "Distinct exact-candidate T1 review with all remediation dispositions",
+        "No generated, sealed, private, local-state or external changes"
+      ],
+      "completion_evidence": null
+    },
+    {
+      "id": "PLAN-0006",
+      "status": "proposed",
+      "objective": "Stage the source candidate canonically, explicitly refresh, obtain exact control review and serial integration followed by final read-only audit.",
+      "dependencies": [
+        "PLAN-0005"
+      ],
+      "acceptance": [
+        "Exact active binding and unchanged receipt/ledger baseline",
+        "All eleven projections refreshed and full control checks pass",
+        "Evidence addition followed by explicit refresh and exact integrated-head review",
+        "Actual runtime-stop evidence and preserved recovery artifacts"
+      ],
+      "completion_evidence": null
     }
   ]
 }

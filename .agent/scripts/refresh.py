@@ -6,6 +6,7 @@ import argparse
 import datetime as dt
 import json
 import os
+import shlex
 from pathlib import Path
 import sys
 import tempfile
@@ -13,8 +14,9 @@ import tempfile
 sys.dont_write_bytecode = True
 from common import (GENERATED_OUTPUT_PATHS, ROOT, SOURCE_SCOPE_EXCLUSIONS, canonical, evidence_rows, git_identity,
                     ledger_facts, load_json, require, revision_source_rows, scope_digest, sha,
-                    source_rows, stable_file_bytes)
+                    source_rows, stable_file_bytes, control_context)
 import validate as checker
+import operating
 
 
 OUTPUTS = GENERATED_OUTPUT_PATHS
@@ -56,8 +58,9 @@ def source_map(crosswalk, generation_id, generated_at):
         '|---|---|---|',
     ]
     for row in crosswalk['ownership']:
-        owner = row['owner_by_epoch'][current_epoch]
-        display = f'`{owner}`' if owner is not None else 'none'
+        display = '<br>'.join(
+            f"[{ref['path']}](../{ref['path']}) ({ref['scope']}; {ref['role']})"
+            for ref in row['owner_refs'])
         lines.append(f"| `{row['concern_id']}` | {display} | {row['rule']} |")
     lines += [
         '',
@@ -70,6 +73,7 @@ def source_map(crosswalk, generation_id, generated_at):
 
 def build(root=ROOT, state_root=None, *, generated_at=None, source_identity=None,
           prevalidate=True, allow_refresh_marker=False):
+    control_context(root, state_root)
     # Validate adopted authorities and all non-generated sources before any write.
     if prevalidate:
         checker.validate(root, state_root, generated=False, run_all=False,
@@ -152,8 +156,9 @@ def build(root=ROOT, state_root=None, *, generated_at=None, source_identity=None
         'authority': 'generated_from_project-dossier/ARTIFACT_CATALOG.json',
         'source_sha256': sha(stable_file_bytes(root / 'project-dossier/ARTIFACT_CATALOG.json',
                                                'artifact catalog')),
-        'paths': [{key: row[key] for key in ('path', 'classification', 'owner_path', 'concern_id')}
+        'paths': [{key: row[key] for key in ('path', 'classification', 'owner_path', 'concern_id', 'owner_refs')}
                   for row in catalog['artifacts']],
+        'owner_reference_sets': operating.owner_reference_sets(root),
     }
     findings_source = root / 'project-dossier/conformance/findings.json'
     findings = load_json(findings_source)
@@ -193,7 +198,7 @@ def build(root=ROOT, state_root=None, *, generated_at=None, source_identity=None
         'ledger_sha256': ledger['ledger_sha256'],
         'limitations': manifest['limitations'],
     }
-    state_path = ledger['state_root']
+    state_path = shlex.quote(ledger['state_root'])
     validation_command = (
         'env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/validate.py '
         f'--check --all --state-root {state_path}'
@@ -225,10 +230,12 @@ Then inspect the active ledger without writing:
 ```text
 {coordinator_command} status
 {coordinator_command} ready
-{coordinator_command} context WP-01
+{coordinator_command} {operating.SELECTED_CONTEXT}
 ```
 
-Use the [resumption template](../../tooling/coordination/templates/RESUME.md)
+Select an ID explicitly from fresh ready output; empty readiness has no fallback.
+For interrupted work use its recorded task and fence, then the
+[resumption template](../../tooling/coordination/templates/RESUME.md)
 when prior work was interrupted. If any digest is stale, refresh only after the
 underlying authority is understood.
 """.encode()
@@ -249,18 +256,20 @@ Generated navigation only; documentation is not permission or live state.
 2. From the repository root, run the [registered read-only validation](../validation/README.md):
 
    ```text
-   {validation_command}
+   {operating.CONTROL_COMMAND}
    ```
 
 3. Inspect the active ledger without writing:
 
    ```text
-   {coordinator_command} status
-   {coordinator_command} ready
-   {coordinator_command} context WP-01
+   {operating.COORDINATOR_COMMAND} status
+   {operating.COORDINATOR_COMMAND} ready
+   {operating.COORDINATOR_COMMAND} {operating.SELECTED_CONTEXT}
    ```
 
-4. Prepare work with the existing [assignment](../../tooling/coordination/templates/ASSIGNMENT.md),
+4. Explicitly select an ID from fresh ready output; empty readiness has no fallback.
+   For a code worktree use the [repository-only check](../../.agent/START_HERE.md).
+   Prepare work with the existing [assignment](../../tooling/coordination/templates/ASSIGNMENT.md),
    [review](../../tooling/coordination/templates/REVIEW.md), or
    [resumption](../../tooling/coordination/templates/RESUME.md) template. Do not
    create dossier tasks or receipts.

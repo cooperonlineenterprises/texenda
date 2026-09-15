@@ -13,20 +13,30 @@ must be supplemented with the applicable local instruction/template hashes.
 The sealed generic assignment prompt remains package reference.
 
 Use Python 3.11+ on a single POSIX host. No dependency installation is needed.
-Ordinary work starts in `/Users/jamesryancooper/Projects/texenda/repo` with these
-read-only commands:
+A code worktree uses repository-only validation:
 
 ```text
-env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/validate.py --check --all --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda
-env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda status
-env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda ready
-env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda context WP-01
+env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/validate.py --check --scope code --all
 ```
 
-The `context WP-01` result is an input to the local assignment template, not an
-admission or assignment. Use the [assignment](templates/ASSIGNMENT.md),
-[review](templates/REVIEW.md), and [resumption](templates/RESUME.md) templates
-for those transitions.
+In canonical `repo/`, set the exact absolute `TEXENDA_STATE_ROOT` deliberately
+from its ignored binding and run ordinary control validation/inspection:
+
+```text
+env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/validate.py --check --all --state-root "${TEXENDA_STATE_ROOT:?Set the verified absolute state root}"
+env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . --state-root "${TEXENDA_STATE_ROOT:?Set the verified absolute state root}" status
+env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . --state-root "${TEXENDA_STATE_ROOT:?Set the verified absolute state root}" ready
+env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . --state-root "${TEXENDA_STATE_ROOT:?Set the verified absolute state root}" context "${TEXENDA_WORK_PACKAGE:?Select an ID from fresh ready output}"
+```
+
+Choose an ID explicitly from fresh ready output; empty readiness has no fallback.
+For resumption use the recorded task/fence. Context is not an admission or
+assignment. The [entry point](../../.agent/START_HERE.md) gives the canonical-script,
+canonical-root `--read-only` invocation for worktree inspections. That flag rejects
+all mutations and context output before harness construction; it is not caller
+authentication and cannot prevent deliberately omitting the flag. Policy and
+assignment scope separately prohibit those worktree effects. Never copy a binding,
+ledger or receipt inputs to a worktree.
 
 Every coordinator command takes `--root`; it remains the repository/evidence
 root. The active ignored `.texenda-location.json` requires the exact absolute
@@ -160,7 +170,7 @@ separately from WP lifecycle recovery. Stop every runtime and use the exact
 selected state root:
 
 ```sh
-env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda \
+env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . --state-root "${TEXENDA_STATE_ROOT:?Set the verified absolute state root}" \
   recover-state-write --actor human:owner --runtime-stopped
 ```
 
@@ -196,7 +206,7 @@ days; stale or changed evidence makes the profile unavailable.
 
 ```sh
 # Replace the example path with the separately reviewed, owner-attested record:
-env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda set-roster --actor human:owner --record path/to/reviewed-roster.evidence.json
+env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . --state-root "${TEXENDA_STATE_ROOT:?Set the verified absolute state root}" set-roster --actor human:owner --record path/to/reviewed-roster.evidence.json
 ```
 
 For the installed roster's dated history, see the
@@ -220,10 +230,10 @@ its selected tier while retaining the WP capability floor. Unlisted profiles or
 efforts, or weaker whole-parent assignments, are denied.
 
 ```sh
-env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda admit WP-01 --actor astra
-env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda assign WP-01 --actor astra --agent agent:contract-author --profile-id gpt-6-astra-max --max-seconds 3600 --max-tokens 50000
+env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . --state-root "${TEXENDA_STATE_ROOT:?Set the verified absolute state root}" admit WP-01 --actor astra
+env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . --state-root "${TEXENDA_STATE_ROOT:?Set the verified absolute state root}" assign WP-01 --actor astra --agent agent:contract-author --profile-id gpt-6-astra-max --max-seconds 3600 --max-tokens 50000
 # Explicit T1 fallback; only Sol/max is eligible:
-env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda assign WP-01 --actor astra --agent agent:contract-author --tier 1 --profile-id gpt-5.6-sol-max --fallback --fallback-reason 'Owner-approved bounded fallback for this assignment'
+env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . --state-root "${TEXENDA_STATE_ROOT:?Set the verified absolute state root}" assign WP-01 --actor astra --agent agent:contract-author --tier 1 --profile-id gpt-5.6-sol-max --fallback --fallback-reason 'Owner-approved bounded fallback for this assignment'
 ```
 
 The two assignment examples are alternatives, not sequential operations. Run
@@ -256,7 +266,7 @@ no longer than 30 days. The template is deliberately expired and NOT_RUN.
 
 ```sh
 # Only with separately obtained owner approval; the evidence amount must equal --usd.
-env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda set-budget --actor human:owner --usd 1 --record docs/qualification/development-budget.evidence.json
+env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . --state-root "${TEXENDA_STATE_ROOT:?Set the verified absolute state root}" set-budget --actor human:owner --usd 1 --record docs/qualification/development-budget.evidence.json
 ```
 
 Each positive allocation binds its exact budget reference and approved cap.

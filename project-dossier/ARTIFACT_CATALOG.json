@@ -29,210 +29,414 @@
       "path": "project-dossier/README.md",
       "classification": "navigation",
       "owner_path": "project-dossier/AUTHORITY.md",
-      "concern_id": "dossier_interpretation"
+      "concern_id": "dossier_interpretation",
+      "owner_refs": [
+        {
+          "concern_id": "dossier_interpretation"
+        }
+      ]
     },
     {
       "id": "DOS-0002",
       "path": "project-dossier/AUTHORITY.md",
       "classification": "authoritative",
       "owner_path": "project-dossier/AUTHORITY.md",
-      "concern_id": "dossier_interpretation"
+      "concern_id": "dossier_interpretation",
+      "owner_refs": [
+        {
+          "concern_id": "dossier_interpretation"
+        }
+      ]
     },
     {
       "id": "DOS-0003",
       "path": "project-dossier/CANONICAL_SOURCE_MAP.md",
       "classification": "generated_view",
       "owner_path": "project-dossier/transition/blueprint-adoption-crosswalk.json",
-      "concern_id": "adoption_transition"
+      "concern_id": "adoption_transition",
+      "owner_refs": [
+        {
+          "concern_id": "adoption_transition"
+        }
+      ]
     },
     {
       "id": "DOS-0004",
       "path": "project-dossier/ARTIFACT_CATALOG.json",
       "classification": "authoritative",
       "owner_path": "project-dossier/ARTIFACT_CATALOG.json",
-      "concern_id": "artifact_classification"
+      "concern_id": "artifact_classification",
+      "owner_refs": [
+        {
+          "concern_id": "artifact_classification"
+        }
+      ]
     },
     {
       "id": "DOS-0005",
       "path": "project-dossier/VERSION.md",
       "classification": "authoritative",
       "owner_path": "project-dossier/VERSION.md",
-      "concern_id": "dossier_version"
+      "concern_id": "dossier_version",
+      "owner_refs": [
+        {
+          "concern_id": "dossier_version"
+        }
+      ]
     },
     {
       "id": "DOS-0006",
       "path": "project-dossier/SUPERSESSION.json",
       "classification": "authoritative",
       "owner_path": "project-dossier/SUPERSESSION.json",
-      "concern_id": "dossier_supersession"
+      "concern_id": "dossier_supersession",
+      "owner_refs": [
+        {
+          "concern_id": "dossier_supersession"
+        }
+      ]
     },
     {
       "id": "CUR-0001",
       "path": "project-dossier/current-state/README.md",
       "classification": "generated_view",
       "owner_path": "direct_git_build_and_harness_evidence",
-      "concern_id": "git_observation"
+      "concern_id": "git_observation",
+      "owner_refs": [
+        {
+          "concern_id": "git_observation"
+        },
+        {
+          "concern_id": "build_observation"
+        },
+        {
+          "concern_id": "active_tasks"
+        },
+        {
+          "concern_id": "receipts"
+        },
+        {
+          "concern_id": "live_qualification"
+        }
+      ]
     },
     {
       "id": "CUR-0002",
       "path": "project-dossier/current-state/current.json",
       "classification": "generated_view",
       "owner_path": "direct_git_build_and_harness_evidence",
-      "concern_id": "git_observation"
+      "concern_id": "git_observation",
+      "owner_refs": [
+        {
+          "concern_id": "git_observation"
+        },
+        {
+          "concern_id": "build_observation"
+        },
+        {
+          "concern_id": "active_tasks"
+        },
+        {
+          "concern_id": "receipts"
+        },
+        {
+          "concern_id": "live_qualification"
+        }
+      ]
     },
     {
       "id": "CNF-0001",
       "path": "project-dossier/conformance/README.md",
       "classification": "navigation",
       "owner_path": "project-dossier/conformance/findings.json",
-      "concern_id": "conformance_findings"
+      "concern_id": "conformance_findings",
+      "owner_refs": [
+        {
+          "concern_id": "conformance_findings"
+        }
+      ]
     },
     {
       "id": "CNF-0002",
       "path": "project-dossier/conformance/findings.json",
       "classification": "authoritative",
       "owner_path": "project-dossier/conformance/findings.json",
-      "concern_id": "conformance_findings"
+      "concern_id": "conformance_findings",
+      "owner_refs": [
+        {
+          "concern_id": "conformance_findings"
+        }
+      ]
     },
     {
       "id": "PLN-0001",
       "path": "project-dossier/plans/README.md",
       "classification": "navigation",
       "owner_path": "project-dossier/machine-readable/plan.json",
-      "concern_id": "adoption_plan"
+      "concern_id": "adoption_plan",
+      "owner_refs": [
+        {
+          "concern_id": "adoption_plan"
+        }
+      ]
     },
     {
       "id": "PLN-0002",
       "path": "project-dossier/machine-readable/plan.json",
       "classification": "plan",
       "owner_path": "project-dossier/machine-readable/plan.json",
-      "concern_id": "adoption_plan"
+      "concern_id": "adoption_plan",
+      "owner_refs": [
+        {
+          "concern_id": "adoption_plan"
+        }
+      ]
     },
     {
       "id": "REG-0001",
       "path": "project-dossier/registers/README.md",
       "classification": "navigation",
       "owner_path": "project-dossier/machine-readable/raidq.json",
-      "concern_id": "consolidated_raidq"
+      "concern_id": "consolidated_raidq",
+      "owner_refs": [
+        {
+          "concern_id": "consolidated_raidq"
+        }
+      ]
     },
     {
       "id": "REG-0002",
       "path": "project-dossier/machine-readable/raidq.json",
       "classification": "authoritative",
       "owner_path": "project-dossier/machine-readable/raidq.json",
-      "concern_id": "consolidated_raidq"
+      "concern_id": "consolidated_raidq",
+      "owner_refs": [
+        {
+          "concern_id": "consolidated_raidq"
+        }
+      ]
     },
     {
       "id": "PRV-0001",
       "path": "project-dossier/provenance/README.md",
       "classification": "navigation",
       "owner_path": "project-dossier/provenance/sources.json",
-      "concern_id": "adoption_provenance"
+      "concern_id": "adoption_provenance",
+      "owner_refs": [
+        {
+          "concern_id": "adoption_provenance"
+        }
+      ]
     },
     {
       "id": "PRV-0002",
       "path": "project-dossier/provenance/sources.json",
       "classification": "authoritative",
       "owner_path": "project-dossier/provenance/sources.json",
-      "concern_id": "adoption_provenance"
+      "concern_id": "adoption_provenance",
+      "owner_refs": [
+        {
+          "concern_id": "adoption_provenance"
+        }
+      ]
     },
     {
       "id": "VAL-0001",
       "path": "project-dossier/validation/README.md",
       "classification": "navigation",
       "owner_path": ".agent/validators.json",
-      "concern_id": "validation_commands"
+      "concern_id": "validation_commands",
+      "owner_refs": [
+        {
+          "concern_id": "validation_commands"
+        }
+      ]
     },
     {
       "id": "EVD-0001",
       "path": "project-dossier/evidence/README.md",
       "classification": "navigation",
       "owner_path": "docs/qualification/evidence/",
-      "concern_id": "qualification_evidence"
+      "concern_id": "qualification_evidence",
+      "owner_refs": [
+        {
+          "concern_id": "qualification_evidence"
+        }
+      ]
     },
     {
       "id": "HOF-0001",
       "path": "project-dossier/handoff/START_HERE.md",
       "classification": "generated_view",
       "owner_path": "external_live_state_and_direct_evidence",
-      "concern_id": "active_tasks"
+      "concern_id": "active_tasks",
+      "owner_refs": [
+        {
+          "concern_id": "active_tasks"
+        },
+        {
+          "concern_id": "git_observation"
+        },
+        {
+          "concern_id": "build_observation"
+        }
+      ]
     },
     {
       "id": "TRN-0001",
       "path": "project-dossier/transition/README.md",
       "classification": "navigation",
       "owner_path": "project-dossier/transition/blueprint-adoption-crosswalk.json",
-      "concern_id": "adoption_transition"
+      "concern_id": "adoption_transition",
+      "owner_refs": [
+        {
+          "concern_id": "adoption_transition"
+        }
+      ]
     },
     {
       "id": "TRN-0002",
       "path": "project-dossier/transition/blueprint-adoption-crosswalk.json",
       "classification": "authoritative",
       "owner_path": "project-dossier/transition/blueprint-adoption-crosswalk.json",
-      "concern_id": "adoption_transition"
+      "concern_id": "adoption_transition",
+      "owner_refs": [
+        {
+          "concern_id": "adoption_transition"
+        }
+      ]
     },
     {
       "id": "TRN-0003",
       "path": "project-dossier/transition/workspace-move-manifest.json",
       "classification": "plan",
       "owner_path": "project-dossier/transition/workspace-move-manifest.json",
-      "concern_id": "adoption_transition"
+      "concern_id": "adoption_transition",
+      "owner_refs": [
+        {
+          "concern_id": "adoption_transition"
+        }
+      ]
     },
     {
       "id": "TRN-0004",
       "path": "project-dossier/transition/workspace-relocation-receipt.md",
       "classification": "evidence",
       "owner_path": "project-dossier/transition/workspace-relocation-receipt.md",
-      "concern_id": "adoption_transition"
+      "concern_id": "adoption_transition",
+      "owner_refs": [
+        {
+          "concern_id": "adoption_transition"
+        }
+      ]
     },
     {
       "id": "TRN-0005",
       "path": "project-dossier/transition/post-relocation-adoption-plan.json",
       "classification": "history",
       "owner_path": "project-dossier/transition/post-relocation-adoption-plan.json",
-      "concern_id": "adoption_transition"
+      "concern_id": "adoption_transition",
+      "owner_refs": [
+        {
+          "concern_id": "adoption_transition"
+        }
+      ]
     },
     {
       "id": "TRN-0006",
       "path": "project-dossier/transition/external-state-relocation-receipt.md",
       "classification": "evidence",
       "owner_path": "project-dossier/transition/external-state-relocation-receipt.md",
-      "concern_id": "adoption_transition"
+      "concern_id": "adoption_transition",
+      "owner_refs": [
+        {
+          "concern_id": "adoption_transition"
+        }
+      ]
     },
     {
       "id": "HIS-0001",
       "path": "project-dossier/history/README.md",
       "classification": "navigation",
       "owner_path": "project-dossier/transition/blueprint-adoption-crosswalk.json",
-      "concern_id": "adoption_transition"
+      "concern_id": "adoption_transition",
+      "owner_refs": [
+        {
+          "concern_id": "adoption_transition"
+        }
+      ]
     },
     {
       "id": "HIS-0002",
       "path": "project-dossier/history/2026-09-15-workspace-transition-completed.md",
       "classification": "history",
       "owner_path": "project-dossier/history/2026-09-15-workspace-transition-completed.md",
-      "concern_id": "adoption_transition"
+      "concern_id": "adoption_transition",
+      "owner_refs": [
+        {
+          "concern_id": "adoption_transition"
+        }
+      ]
     },
     {
       "id": "MRR-0001",
       "path": "project-dossier/machine-readable/path-authority.json",
       "classification": "generated_view",
       "owner_path": "project-dossier/ARTIFACT_CATALOG.json",
-      "concern_id": "artifact_classification"
+      "concern_id": "artifact_classification",
+      "owner_refs": [
+        {
+          "concern_id": "artifact_classification"
+        }
+      ]
     },
     {
       "id": "MRR-0002",
       "path": "project-dossier/machine-readable/findings.json",
       "classification": "generated_view",
       "owner_path": "project-dossier/conformance/findings.json",
-      "concern_id": "conformance_findings"
+      "concern_id": "conformance_findings",
+      "owner_refs": [
+        {
+          "concern_id": "conformance_findings"
+        }
+      ]
     },
     {
       "id": "MRR-0003",
       "path": "project-dossier/machine-readable/evidence-index.json",
       "classification": "generated_view",
       "owner_path": "docs/qualification/evidence/",
-      "concern_id": "qualification_evidence"
+      "concern_id": "qualification_evidence",
+      "owner_refs": [
+        {
+          "concern_id": "qualification_evidence"
+        }
+      ]
+    },
+    {
+      "id": "CNF-0003",
+      "path": "project-dossier/conformance/remediation-register.json",
+      "classification": "authoritative",
+      "owner_path": "project-dossier/conformance/remediation-register.json",
+      "concern_id": "remediation_dispositions",
+      "owner_refs": [
+        {
+          "concern_id": "remediation_dispositions"
+        }
+      ]
+    },
+    {
+      "id": "REG-0003",
+      "path": "project-dossier/registers/workspace-retention.json",
+      "classification": "authoritative",
+      "owner_path": "project-dossier/registers/workspace-retention.json",
+      "concern_id": "workspace_retention",
+      "owner_refs": [
+        {
+          "concern_id": "workspace_retention"
+        }
+      ]
     }
   ]
 }

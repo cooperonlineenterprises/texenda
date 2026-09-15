@@ -1,0 +1,644 @@
+{
+  "schema_version": "texenda.workspace-remediation.v1",
+  "authority": "authoritative_remediation_dispositions_only_not_task_ledger",
+  "owner_path": "project-dossier/conformance/remediation-register.json",
+  "baseline_revision": "7de052690bbf3e2879f375c2b2e17207c7ee5bfe",
+  "decision": "docs/decisions/ADR-0007-standalone-workspace-operating-contract.md",
+  "live_tasks_owner": "tooling/coordination/harness.py",
+  "items": [
+    {
+      "id": "REM-0001",
+      "original_classification": "defect",
+      "affected_concern": {
+        "id": "refresh_discovery",
+        "owner_path": ".agent/tools.json"
+      },
+      "current_evidence": [
+        {
+          "observation": "Baseline finding: Availability currently calls the refresh writer.",
+          "source": ".agent/tools.json",
+          "scope": "bounded source/retained observation; fresh runtime evidence required for current activation",
+          "subject_revision": "7de052690bbf3e2879f375c2b2e17207c7ee5bfe"
+        },
+        {
+          "observation": "The current source candidate implements this selected remediation; independent source/control acceptance remains outstanding.",
+          "source": ".agent/tools.json",
+          "subject": "current_source_candidate",
+          "validation_reference": ".agent/validators.json",
+          "scope": "Source implementation and synthetic checks only; no integrated control approval."
+        }
+      ],
+      "still_valid": true,
+      "practical_impact": "Availability currently calls the refresh writer.",
+      "dependencies": [],
+      "selected_disposition": "fix_in_this_candidate",
+      "implementation_scope": "Assigned repository source/docs/tests only; generated/local integration remains the integrator's follow-up.",
+      "validation_method": "Read-only --help discovery and registry consistency tests.",
+      "completion_evidence": {
+        "status": "candidate_requires_independent_review",
+        "reference": ".agent/tools.json",
+        "limitation": "No product, external gate, new receipt or retrospective evidence approval."
+      },
+      "validity_scope": "Valid finding against the exact baseline; addressed in the source candidate, with acceptance still pending."
+    },
+    {
+      "id": "REM-0002",
+      "original_classification": "architectural_gap",
+      "affected_concern": {
+        "id": "code_control_worktrees",
+        "owner_path": ".agent/validators.json"
+      },
+      "current_evidence": [
+        {
+          "observation": "Baseline finding: Full check conflates candidate source and canonical local preservation.",
+          "source": ".agent/validators.json",
+          "scope": "bounded source/retained observation; fresh runtime evidence required for current activation",
+          "subject_revision": "7de052690bbf3e2879f375c2b2e17207c7ee5bfe"
+        },
+        {
+          "observation": "The current source candidate implements this selected remediation; independent source/control acceptance remains outstanding.",
+          "source": ".agent/validators.json",
+          "subject": "current_source_candidate",
+          "validation_reference": ".agent/validators.json",
+          "scope": "Source implementation and synthetic checks only; no integrated control approval."
+        }
+      ],
+      "still_valid": true,
+      "practical_impact": "Full check conflates candidate source and canonical local preservation.",
+      "dependencies": [],
+      "selected_disposition": "fix_in_this_candidate",
+      "implementation_scope": "Assigned repository source/docs/tests only; generated/local integration remains the integrator's follow-up.",
+      "validation_method": "Explicit code scope and canonical control scope with isolated fixture tests.",
+      "completion_evidence": {
+        "status": "candidate_requires_independent_review",
+        "reference": ".agent/validators.json",
+        "limitation": "No product, external gate, new receipt or retrospective evidence approval."
+      },
+      "validity_scope": "Valid finding against the exact baseline; addressed in the source candidate, with acceptance still pending."
+    },
+    {
+      "id": "REM-0003",
+      "original_classification": "stale_current_guidance",
+      "affected_concern": {
+        "id": "ready_context_selection",
+        "owner_path": ".agent/START_HERE.md"
+      },
+      "current_evidence": [
+        {
+          "observation": "Baseline finding: Ordinary entry hard-codes context WP-01 after live ready.",
+          "source": ".agent/START_HERE.md",
+          "scope": "bounded source/retained observation; fresh runtime evidence required for current activation",
+          "subject_revision": "7de052690bbf3e2879f375c2b2e17207c7ee5bfe"
+        },
+        {
+          "observation": "The current source candidate implements this selected remediation; independent source/control acceptance remains outstanding.",
+          "source": ".agent/START_HERE.md",
+          "subject": "current_source_candidate",
+          "validation_reference": ".agent/validators.json",
+          "scope": "Source implementation and synthetic checks only; no integrated control approval."
+        }
+      ],
+      "still_valid": true,
+      "practical_impact": "Ordinary entry hard-codes context WP-01 after live ready.",
+      "dependencies": [],
+      "selected_disposition": "fix_in_this_candidate",
+      "implementation_scope": "Assigned repository source/docs/tests only; generated/local integration remains the integrator's follow-up.",
+      "validation_method": "Fresh ready followed by explicit selected task; empty/resume cases.",
+      "completion_evidence": {
+        "status": "candidate_requires_independent_review",
+        "reference": ".agent/START_HERE.md",
+        "limitation": "No product, external gate, new receipt or retrospective evidence approval."
+      },
+      "validity_scope": "Valid finding against the exact baseline; addressed in the source candidate, with acceptance still pending."
+    },
+    {
+      "id": "REM-0004",
+      "original_classification": "portability_gap",
+      "affected_concern": {
+        "id": "portable_guidance",
+        "owner_path": "docs/agents/operating-guide.md"
+      },
+      "current_evidence": [
+        {
+          "observation": "Baseline finding: Current tracked commands embed one user's host path.",
+          "source": "docs/agents/operating-guide.md",
+          "scope": "bounded source/retained observation; fresh runtime evidence required for current activation",
+          "subject_revision": "7de052690bbf3e2879f375c2b2e17207c7ee5bfe"
+        },
+        {
+          "observation": "The current source candidate implements this selected remediation; independent source/control acceptance remains outstanding.",
+          "source": "docs/agents/operating-guide.md",
+          "subject": "current_source_candidate",
+          "validation_reference": ".agent/validators.json",
+          "scope": "Source implementation and synthetic checks only; no integrated control approval."
+        }
+      ],
+      "still_valid": true,
+      "practical_impact": "Current tracked commands embed one user's host path.",
+      "dependencies": [],
+      "selected_disposition": "fix_in_this_candidate",
+      "implementation_scope": "Assigned repository source/docs/tests only; generated/local integration remains the integrator's follow-up.",
+      "validation_method": "Quoted explicit parameters and retained fail-closed absolute local binding.",
+      "completion_evidence": {
+        "status": "candidate_requires_independent_review",
+        "reference": "docs/agents/operating-guide.md",
+        "limitation": "No product, external gate, new receipt or retrospective evidence approval."
+      },
+      "validity_scope": "Valid finding against the exact baseline; addressed in the source candidate, with acceptance still pending."
+    },
+    {
+      "id": "REM-0005",
+      "original_classification": "previous_blocker",
+      "affected_concern": {
+        "id": "codex_registration",
+        "owner_path": "AGENTS.md"
+      },
+      "current_evidence": [
+        {
+          "observation": "Fresh integrator app observation says saved texenda targets canonical repo and isGitRepository=true; parent navigation is stale.",
+          "source": "integrator live list_projects observation supplied 2026-09-15",
+          "scope": "bounded source/retained observation; fresh runtime evidence required for current activation"
+        }
+      ],
+      "still_valid": false,
+      "practical_impact": "Fresh integrator app observation says saved texenda targets canonical repo and isGitRepository=true; parent navigation is stale.",
+      "dependencies": [],
+      "selected_disposition": "already_resolved",
+      "implementation_scope": "Integrator updates only current local navigation and retains a dated app observation.",
+      "validation_method": "Integrator updates only current local navigation and retains a dated app observation.",
+      "completion_evidence": {
+        "status": "observed_resolution_local_navigation_pending",
+        "reference": null,
+        "limitation": "No product, external gate, new receipt or retrospective evidence approval."
+      },
+      "validity_scope": "Fresh app observation resolves the old registration finding; local navigation/evidence follow-up belongs to the integrator."
+    },
+    {
+      "id": "REM-0006",
+      "original_classification": "unknown",
+      "affected_concern": {
+        "id": "private_controls",
+        "owner_path": "project-dossier/machine-readable/raidq.json"
+      },
+      "current_evidence": [
+        {
+          "observation": "Placement and Git ignore were checked; actual access/retention controls are unqualified.",
+          "source": "project-dossier/machine-readable/raidq.json",
+          "scope": "bounded source/retained observation; fresh runtime evidence required for current activation"
+        }
+      ],
+      "still_valid": true,
+      "practical_impact": "Placement and Git ignore were checked; actual access/retention controls are unqualified.",
+      "dependencies": [
+        "RAIDQ-0006"
+      ],
+      "selected_disposition": "deferred",
+      "implementation_scope": "RAIDQ-0006 owns exact qualification and no-content boundary.",
+      "validation_method": "RAIDQ-0006 owns exact qualification and no-content boundary.",
+      "completion_evidence": {
+        "status": "not_complete",
+        "reference": "project-dossier/machine-readable/raidq.json",
+        "limitation": "No product, external gate, new receipt or retrospective evidence approval."
+      },
+      "deferred": {
+        "owner": "Ryan as data owner and the responsible host/security administrator",
+        "blocker": "No scoped qualification proves intended runtime principals, filesystem/ACL boundary, approved retention, backup and recovery.",
+        "trigger": "Explicit bounded private-input control qualification assigned by the data owner.",
+        "risk": "Readable sibling storage or inherited host access could be mistaken for a tested confidentiality boundary.",
+        "required_evidence": [
+          "Authorized metadata-only access/ACL assessment without actual content or size inspection",
+          "Synthetic nonpersonal fixture allow/deny tests under the intended actual runtime",
+          "Data-owner-approved retention, backup and recovery decision",
+          "Independent exact-scope review"
+        ],
+        "next_action": "Obtain the data owner's bounded metadata/synthetic access-control assessment scope and identified host/security owner before any private-input operation.",
+        "recovery": "Retain current placement and deny ordinary access; no content, size, hash, listing, parse, copy, chmod or deletion."
+      },
+      "validity_scope": "Retained control, explicit unknown or deferred concern; no closure is inferred."
+    },
+    {
+      "id": "REM-0007",
+      "original_classification": "navigation_gap",
+      "affected_concern": {
+        "id": "composite_owner_navigation",
+        "owner_path": "project-dossier/transition/blueprint-adoption-crosswalk.json"
+      },
+      "current_evidence": [
+        {
+          "observation": "Baseline finding: Single string/symbol owners do not navigate the complete scoped owner set.",
+          "source": "project-dossier/transition/blueprint-adoption-crosswalk.json",
+          "scope": "bounded source/retained observation; fresh runtime evidence required for current activation",
+          "subject_revision": "7de052690bbf3e2879f375c2b2e17207c7ee5bfe"
+        },
+        {
+          "observation": "The current source candidate implements this selected remediation; independent source/control acceptance remains outstanding.",
+          "source": "project-dossier/transition/blueprint-adoption-crosswalk.json",
+          "subject": "current_source_candidate",
+          "validation_reference": ".agent/validators.json",
+          "scope": "Source implementation and synthetic checks only; no integrated control approval."
+        }
+      ],
+      "still_valid": true,
+      "practical_impact": "Single string/symbol owners do not navigate the complete scoped owner set.",
+      "dependencies": [],
+      "selected_disposition": "fix_in_this_candidate",
+      "implementation_scope": "Assigned repository source/docs/tests only; generated/local integration remains the integrator's follow-up.",
+      "validation_method": "Structured existing-owner references, resolving generated source map/path authority.",
+      "completion_evidence": {
+        "status": "candidate_requires_independent_review",
+        "reference": "project-dossier/transition/blueprint-adoption-crosswalk.json",
+        "limitation": "No product, external gate, new receipt or retrospective evidence approval."
+      },
+      "validity_scope": "Valid finding against the exact baseline; addressed in the source candidate, with acceptance still pending."
+    },
+    {
+      "id": "REM-0008",
+      "original_classification": "missing_local_contract",
+      "affected_concern": {
+        "id": "workspace_retention",
+        "owner_path": "project-dossier/registers/workspace-retention.json"
+      },
+      "current_evidence": [
+        {
+          "observation": "Baseline finding: Local operational, recovery, evidence and transient retention classes are not explicit.",
+          "source": "project-dossier/registers/workspace-retention.json",
+          "scope": "bounded source/retained observation; fresh runtime evidence required for current activation",
+          "subject_revision": "7de052690bbf3e2879f375c2b2e17207c7ee5bfe"
+        },
+        {
+          "observation": "The current source candidate implements this selected remediation; independent source/control acceptance remains outstanding.",
+          "source": "project-dossier/registers/workspace-retention.json",
+          "subject": "current_source_candidate",
+          "validation_reference": ".agent/validators.json",
+          "scope": "Source implementation and synthetic checks only; no integrated control approval."
+        }
+      ],
+      "still_valid": true,
+      "practical_impact": "Local operational, recovery, evidence and transient retention classes are not explicit.",
+      "dependencies": [],
+      "selected_disposition": "fix_in_this_candidate",
+      "implementation_scope": "Assigned repository source/docs/tests only; generated/local integration remains the integrator's follow-up.",
+      "validation_method": "Dependency-based classes and no cleanup authority; protect receipt inputs.",
+      "completion_evidence": {
+        "status": "candidate_requires_independent_review",
+        "reference": "project-dossier/registers/workspace-retention.json",
+        "limitation": "No product, external gate, new receipt or retrospective evidence approval."
+      },
+      "validity_scope": "Valid finding against the exact baseline; addressed in the source candidate, with acceptance still pending."
+    },
+    {
+      "id": "REM-0009",
+      "original_classification": "external_blocker",
+      "affected_concern": {
+        "id": "blueprint_qualification",
+        "owner_path": "project-dossier/machine-readable/raidq.json"
+      },
+      "current_evidence": [
+        {
+          "observation": "Clean 4.2.0 retains PASS/PASS/FAIL, dirty 4.3.0 remains separate and reviewed seed missing.",
+          "source": "project-dossier/machine-readable/raidq.json",
+          "scope": "bounded source/retained observation; fresh runtime evidence required for current activation"
+        }
+      ],
+      "still_valid": true,
+      "practical_impact": "Clean 4.2.0 retains PASS/PASS/FAIL, dirty 4.3.0 remains separate and reviewed seed missing.",
+      "dependencies": [
+        "RAIDQ-0005"
+      ],
+      "selected_disposition": "deferred",
+      "implementation_scope": "Retain exact RAIDQ-0005; no source repair or qualification claim.",
+      "validation_method": "Retain exact RAIDQ-0005; no source repair or qualification claim.",
+      "completion_evidence": {
+        "status": "not_complete",
+        "reference": "project-dossier/machine-readable/raidq.json",
+        "limitation": "No product, external gate, new receipt or retrospective evidence approval."
+      },
+      "deferred": {
+        "owner": "Octon Mini / Project Blueprint source maintainer",
+        "blocker": "Full validator failure and missing authentic reviewed seed.",
+        "trigger": "Clean committed source correction plus complete qualification and reviewed seed.",
+        "risk": "False qualification or imported authority.",
+        "required_evidence": [
+          "Exact corrected commit and all required qualification commands PASS",
+          "Authentic reviewed seed and separate Texenda upgrade review"
+        ],
+        "next_action": "After the source maintainer's corrected clean commit, run the exact requalification commands recorded in RAIDQ-0005 in that intended source checkout.",
+        "recovery": "Keep current selected 1.0.0 structural reference and failed evidence."
+      },
+      "validity_scope": "Retained control, explicit unknown or deferred concern; no closure is inferred."
+    },
+    {
+      "id": "REM-0010",
+      "original_classification": "external_recommendation",
+      "affected_concern": {
+        "id": "plectarium_family",
+        "owner_path": "project-dossier/machine-readable/raidq.json"
+      },
+      "current_evidence": [
+        {
+          "observation": "No accepted Plectarium family contract or identified external accountable maintainer is supplied.",
+          "source": "project-dossier/machine-readable/raidq.json",
+          "scope": "bounded source/retained observation; fresh runtime evidence required for current activation"
+        }
+      ],
+      "still_valid": true,
+      "practical_impact": "No accepted Plectarium family contract or identified external accountable maintainer is supplied.",
+      "dependencies": [
+        "RAIDQ-0007"
+      ],
+      "selected_disposition": "deferred",
+      "implementation_scope": "RAIDQ-0007; identify owner and concrete need before family work.",
+      "validation_method": "RAIDQ-0007; identify owner and concrete need before family work.",
+      "completion_evidence": {
+        "status": "not_complete",
+        "reference": "project-dossier/machine-readable/raidq.json",
+        "limitation": "No product, external gate, new receipt or retrospective evidence approval."
+      },
+      "deferred": {
+        "owner": "External Plectarium/Octon/Projects-family maintainer; accountable principal must be identified before work",
+        "blocker": "No exact accepted family contract, identified external owner, qualified source revision, authentic reviewed migration seed or bounded adoption/publication scope is supplied.",
+        "trigger": "An identified external owner supplies a concrete recurring need, exact accepted contract and qualified source, plus separately authorized reviewed migration or publication scope.",
+        "risk": "A family convention or partially qualified Blueprint could silently acquire Texenda authority or trigger unrelated external changes.",
+        "required_evidence": [
+          "Named external owner and exact accepted family contract/source revision",
+          "Complete intended-source qualification, clean version and authentic reviewed seed when migration requires it",
+          "Texenda mapping, compatibility, non-transfer and recovery review",
+          "Separately scoped publication authority and acceptance criteria before publishing a standard"
+        ],
+        "next_action": "Identify the external accountable maintainer and request the exact family contract and concrete Texenda use case; keep all family migration/publication work outside this candidate.",
+        "recovery": "Continue standalone Texenda with current local owners; preserve external observations and do not install, migrate, publish or edit external sources."
+      },
+      "validity_scope": "Retained control, explicit unknown or deferred concern; no closure is inferred."
+    },
+    {
+      "id": "REM-0011",
+      "original_classification": "external_prerequisite",
+      "affected_concern": {
+        "id": "octon_family_migration",
+        "owner_path": "project-dossier/machine-readable/raidq.json"
+      },
+      "current_evidence": [
+        {
+          "observation": "No fully qualified source and authentic reviewed family migration plan/seed is supplied.",
+          "source": "project-dossier/machine-readable/raidq.json",
+          "scope": "bounded source/retained observation; fresh runtime evidence required for current activation"
+        }
+      ],
+      "still_valid": true,
+      "practical_impact": "No fully qualified source and authentic reviewed family migration plan/seed is supplied.",
+      "dependencies": [
+        "RAIDQ-0005",
+        "RAIDQ-0007",
+        "RAIDQ-0007"
+      ],
+      "selected_disposition": "deferred",
+      "implementation_scope": "RAIDQ-0005 and RAIDQ-0007; preserve standalone operation.",
+      "validation_method": "RAIDQ-0005 and RAIDQ-0007; preserve standalone operation.",
+      "completion_evidence": {
+        "status": "not_complete",
+        "reference": "project-dossier/machine-readable/raidq.json",
+        "limitation": "No product, external gate, new receipt or retrospective evidence approval."
+      },
+      "deferred": {
+        "owner": "External Plectarium/Octon/Projects-family maintainer; accountable principal must be identified before work",
+        "blocker": "No exact accepted family contract, identified external owner, qualified source revision, authentic reviewed migration seed or bounded adoption/publication scope is supplied.",
+        "trigger": "An identified external owner supplies a concrete recurring need, exact accepted contract and qualified source, plus separately authorized reviewed migration or publication scope.",
+        "risk": "A family convention or partially qualified Blueprint could silently acquire Texenda authority or trigger unrelated external changes.",
+        "required_evidence": [
+          "Named external owner and exact accepted family contract/source revision",
+          "Complete intended-source qualification, clean version and authentic reviewed seed when migration requires it",
+          "Texenda mapping, compatibility, non-transfer and recovery review",
+          "Separately scoped publication authority and acceptance criteria before publishing a standard"
+        ],
+        "next_action": "Identify the external accountable maintainer and request the exact family contract and concrete Texenda use case; keep all family migration/publication work outside this candidate.",
+        "recovery": "Continue standalone Texenda with current local owners; preserve external observations and do not install, migrate, publish or edit external sources."
+      },
+      "validity_scope": "Retained control, explicit unknown or deferred concern; no closure is inferred."
+    },
+    {
+      "id": "REM-0012",
+      "original_classification": "external_recommendation",
+      "affected_concern": {
+        "id": "standalone_standard_publication",
+        "owner_path": "project-dossier/machine-readable/raidq.json"
+      },
+      "current_evidence": [
+        {
+          "observation": "This local target is not an authorized reusable-standard publication.",
+          "source": "project-dossier/machine-readable/raidq.json",
+          "scope": "bounded source/retained observation; fresh runtime evidence required for current activation"
+        }
+      ],
+      "still_valid": true,
+      "practical_impact": "This local target is not an authorized reusable-standard publication.",
+      "dependencies": [
+        "RAIDQ-0007"
+      ],
+      "selected_disposition": "deferred",
+      "implementation_scope": "RAIDQ-0007; separate owner, scope, evidence and publication authority.",
+      "validation_method": "RAIDQ-0007; separate owner, scope, evidence and publication authority.",
+      "completion_evidence": {
+        "status": "not_complete",
+        "reference": "project-dossier/machine-readable/raidq.json",
+        "limitation": "No product, external gate, new receipt or retrospective evidence approval."
+      },
+      "deferred": {
+        "owner": "External Plectarium/Octon/Projects-family maintainer; accountable principal must be identified before work",
+        "blocker": "No exact accepted family contract, identified external owner, qualified source revision, authentic reviewed migration seed or bounded adoption/publication scope is supplied.",
+        "trigger": "An identified external owner supplies a concrete recurring need, exact accepted contract and qualified source, plus separately authorized reviewed migration or publication scope.",
+        "risk": "A family convention or partially qualified Blueprint could silently acquire Texenda authority or trigger unrelated external changes.",
+        "required_evidence": [
+          "Named external owner and exact accepted family contract/source revision",
+          "Complete intended-source qualification, clean version and authentic reviewed seed when migration requires it",
+          "Texenda mapping, compatibility, non-transfer and recovery review",
+          "Separately scoped publication authority and acceptance criteria before publishing a standard"
+        ],
+        "next_action": "Identify the external accountable maintainer and request the exact family contract and concrete Texenda use case; keep all family migration/publication work outside this candidate.",
+        "recovery": "Continue standalone Texenda with current local owners; preserve external observations and do not install, migrate, publish or edit external sources."
+      },
+      "validity_scope": "Retained control, explicit unknown or deferred concern; no closure is inferred."
+    },
+    {
+      "id": "REM-0013",
+      "original_classification": "retained_design",
+      "affected_concern": {
+        "id": "compatibility_layers",
+        "owner_path": "project-dossier/transition/blueprint-adoption-crosswalk.json"
+      },
+      "current_evidence": [
+        {
+          "observation": "All ten compatibility dispositions protect existing consumers and history.",
+          "source": "project-dossier/transition/blueprint-adoption-crosswalk.json",
+          "scope": "bounded source/retained observation; fresh runtime evidence required for current activation"
+        }
+      ],
+      "still_valid": true,
+      "practical_impact": "All ten compatibility dispositions protect existing consumers and history.",
+      "dependencies": [],
+      "selected_disposition": "retain",
+      "implementation_scope": "Keep sealed adapter, defaults, receipt inputs, recovery, binding, origins and config mirror.",
+      "validation_method": "Keep sealed adapter, defaults, receipt inputs, recovery, binding, origins and config mirror.",
+      "completion_evidence": {
+        "status": "retained_current_disposition",
+        "reference": "project-dossier/transition/blueprint-adoption-crosswalk.json",
+        "limitation": "No product, external gate, new receipt or retrospective evidence approval."
+      },
+      "validity_scope": "Retained control, explicit unknown or deferred concern; no closure is inferred."
+    },
+    {
+      "id": "REM-0014",
+      "original_classification": "validation_gap",
+      "affected_concern": {
+        "id": "mapped_coverage",
+        "owner_path": "project-dossier/transition/blueprint-adoption-crosswalk.json"
+      },
+      "current_evidence": [
+        {
+          "observation": "Baseline finding: 85 mappings exist; exact supplemental and artifact-pair coverage need stronger assertions.",
+          "source": "project-dossier/transition/blueprint-adoption-crosswalk.json",
+          "scope": "bounded source/retained observation; fresh runtime evidence required for current activation",
+          "subject_revision": "7de052690bbf3e2879f375c2b2e17207c7ee5bfe"
+        },
+        {
+          "observation": "The current source candidate implements this selected remediation; independent source/control acceptance remains outstanding.",
+          "source": "project-dossier/transition/blueprint-adoption-crosswalk.json",
+          "subject": "current_source_candidate",
+          "validation_reference": ".agent/validators.json",
+          "scope": "Source implementation and synthetic checks only; no integrated control approval."
+        }
+      ],
+      "still_valid": true,
+      "practical_impact": "85 mappings exist; exact supplemental and artifact-pair coverage need stronger assertions.",
+      "dependencies": [],
+      "selected_disposition": "fix_in_this_candidate",
+      "implementation_scope": "Assigned repository source/docs/tests only; generated/local integration remains the integrator's follow-up.",
+      "validation_method": "Exact 85 mappings, six supplemental mappings, five high-assurance path/role types and 35 artifact/path pairs.",
+      "completion_evidence": {
+        "status": "candidate_requires_independent_review",
+        "reference": "project-dossier/transition/blueprint-adoption-crosswalk.json",
+        "limitation": "No product, external gate, new receipt or retrospective evidence approval."
+      },
+      "validity_scope": "Valid finding against the exact baseline; addressed in the source candidate, with acceptance still pending."
+    },
+    {
+      "id": "REM-0015",
+      "original_classification": "deliberate_omission",
+      "affected_concern": {
+        "id": "optional_capabilities",
+        "owner_path": "docs/agents/operating-guide.md"
+      },
+      "current_evidence": [
+        {
+          "observation": "Existing scoped guides/templates cover current work; no recurring capability gap.",
+          "source": "docs/agents/operating-guide.md",
+          "scope": "bounded source/retained observation; fresh runtime evidence required for current activation"
+        }
+      ],
+      "still_valid": true,
+      "practical_impact": "Existing scoped guides/templates cover current work; no recurring capability gap.",
+      "dependencies": [],
+      "selected_disposition": "deliberately_omitted",
+      "implementation_scope": "Keep .agents absent until exact justified recurring need.",
+      "validation_method": "Keep .agents absent until exact justified recurring need.",
+      "completion_evidence": {
+        "status": "retained_current_disposition",
+        "reference": "docs/agents/operating-guide.md",
+        "limitation": "No product, external gate, new receipt or retrospective evidence approval."
+      },
+      "validity_scope": "Retained control, explicit unknown or deferred concern; no closure is inferred."
+    },
+    {
+      "id": "REM-0016",
+      "original_classification": "retained_history",
+      "affected_concern": {
+        "id": "historical_residue",
+        "owner_path": "project-dossier/history/README.md"
+      },
+      "current_evidence": [
+        {
+          "observation": "Stale historical wording, archives and rejected evidence retain provenance/recovery roles.",
+          "source": "project-dossier/history/README.md",
+          "scope": "bounded source/retained observation; fresh runtime evidence required for current activation"
+        }
+      ],
+      "still_valid": true,
+      "practical_impact": "Stale historical wording, archives and rejected evidence retain provenance/recovery roles.",
+      "dependencies": [],
+      "selected_disposition": "retain",
+      "implementation_scope": "Preserve bytes; current entry routes to active successors.",
+      "validation_method": "Preserve bytes; current entry routes to active successors.",
+      "completion_evidence": {
+        "status": "retained_current_disposition",
+        "reference": "project-dossier/history/README.md",
+        "limitation": "No product, external gate, new receipt or retrospective evidence approval."
+      },
+      "validity_scope": "Retained control, explicit unknown or deferred concern; no closure is inferred."
+    },
+    {
+      "id": "REM-0017",
+      "original_classification": "unqualified_runtime",
+      "affected_concern": {
+        "id": "direct_cli_runtime",
+        "owner_path": "docs/qualification/runtime-surface-correction-plan-2026-09-13.md"
+      },
+      "current_evidence": [
+        {
+          "observation": "Desktop qualification does not qualify direct CLI execution.",
+          "source": "docs/qualification/runtime-surface-correction-plan-2026-09-13.md",
+          "scope": "bounded source/retained observation; fresh runtime evidence required for current activation"
+        }
+      ],
+      "still_valid": true,
+      "practical_impact": "Desktop qualification does not qualify direct CLI execution.",
+      "dependencies": [],
+      "selected_disposition": "deferred",
+      "implementation_scope": "Require exact runtime/profile qualification before direct CLI dispatch.",
+      "validation_method": "Require exact runtime/profile qualification before direct CLI dispatch.",
+      "completion_evidence": {
+        "status": "not_complete",
+        "reference": "docs/qualification/runtime-surface-correction-plan-2026-09-13.md",
+        "limitation": "No product, external gate, new receipt or retrospective evidence approval."
+      },
+      "deferred": {
+        "owner": "Runtime qualification owner and repository owner",
+        "blocker": "No exact direct-CLI profile qualification.",
+        "trigger": "Explicit direct-CLI qualification assignment.",
+        "risk": "Desktop evidence could be misapplied to another runtime.",
+        "required_evidence": [
+          "Authenticated exact client/model/effort/tool/billing/sandbox profile",
+          "Bounded read/edit/test evidence and accepted qualification envelope"
+        ],
+        "next_action": "Use the existing runtime-surface correction plan to prepare an exact direct-CLI qualification task before any CLI model dispatch.",
+        "recovery": "Continue the qualified desktop route; no silent substitution."
+      },
+      "validity_scope": "Retained control, explicit unknown or deferred concern; no closure is inferred."
+    },
+    {
+      "id": "REM-0018",
+      "original_classification": "preimplementation_state",
+      "affected_concern": {
+        "id": "hosted_remote_ci",
+        "owner_path": "docs/operations/github-ci-policy.md"
+      },
+      "current_evidence": [
+        {
+          "observation": "Latest retained audit observes private empty hosted remote and zero hosted workflows before WP-02.",
+          "source": "docs/qualification/evidence/2026-09-15-clean-preimplementation-integrated-main-audit.md",
+          "scope": "bounded source/retained observation; fresh runtime evidence required for current activation"
+        }
+      ],
+      "still_valid": true,
+      "practical_impact": "Latest retained audit observes private empty hosted remote and zero hosted workflows before WP-02.",
+      "dependencies": [],
+      "selected_disposition": "retain",
+      "implementation_scope": "Preserve external boundary; WP-02 owns bounded initial CI under existing separate authority.",
+      "validation_method": "Preserve external boundary; WP-02 owns bounded initial CI under existing separate authority.",
+      "completion_evidence": {
+        "status": "retained_current_disposition",
+        "reference": "docs/operations/github-ci-policy.md",
+        "limitation": "No product, external gate, new receipt or retrospective evidence approval."
+      },
+      "validity_scope": "Retained control, explicit unknown or deferred concern; no closure is inferred."
+    }
+  ]
+}

@@ -63,6 +63,44 @@
       "next_command_after_retry_trigger": "env PYTHONDONTWRITEBYTECODE=1 python3 -B skills/octon-mini-project-bootstrap/scripts/validate_source_contracts.py",
       "planner_diagnostic_after_full_qualification": "env PYTHONDONTWRITEBYTECODE=1 python3 -B octon upgrade --help",
       "recovery": "Keep Texenda on the current mapped 1.0.0 structural reference and preserve failed evidence. Requalification or planner diagnostics do not themselves authorize installation, upgrade or source-repository changes."
+    },
+    {
+      "id": "RAIDQ-0006",
+      "type": "issue",
+      "status": "gated",
+      "statement": "Local private-input access-control and retention qualification is unknown; external Git placement is not proof of enforced isolation.",
+      "owner": "Ryan as data owner and the responsible host/security administrator",
+      "blocker": "No scoped qualification proves intended runtime principals, filesystem/ACL boundary, approved retention, backup and recovery.",
+      "trigger": "Explicit bounded private-input control qualification assigned by the data owner.",
+      "risk": "Readable sibling storage or inherited host access could be mistaken for a tested confidentiality boundary.",
+      "required_evidence": [
+        "Authorized metadata-only access/ACL assessment without actual content or size inspection",
+        "Synthetic nonpersonal fixture allow/deny tests under the intended actual runtime",
+        "Data-owner-approved retention, backup and recovery decision",
+        "Independent exact-scope review"
+      ],
+      "next_action": "Obtain the data owner's bounded metadata/synthetic access-control assessment scope and identified host/security owner before any private-input operation.",
+      "recovery": "Retain current placement and deny ordinary access; no content, size, hash, listing, parse, copy, chmod or deletion.",
+      "control": "The repository facade is declarative defense and does not enforce host filesystem permissions."
+    },
+    {
+      "id": "RAIDQ-0007",
+      "type": "dependency",
+      "status": "deferred",
+      "statement": "Plectarium integration, Octon family migration and reusable standalone-standard publication are externally owned work, not ordinary Texenda dependencies.",
+      "owner": "External Plectarium/Octon/Projects-family maintainer; accountable principal must be identified before work",
+      "blocker": "No exact accepted family contract, identified external owner, qualified source revision, authentic reviewed migration seed or bounded adoption/publication scope is supplied.",
+      "trigger": "An identified external owner supplies a concrete recurring need, exact accepted contract and qualified source, plus separately authorized reviewed migration or publication scope.",
+      "risk": "A family convention or partially qualified Blueprint could silently acquire Texenda authority or trigger unrelated external changes.",
+      "required_evidence": [
+        "Named external owner and exact accepted family contract/source revision",
+        "Complete intended-source qualification, clean version and authentic reviewed seed when migration requires it",
+        "Texenda mapping, compatibility, non-transfer and recovery review",
+        "Separately scoped publication authority and acceptance criteria before publishing a standard"
+      ],
+      "next_action": "Identify the external accountable maintainer and request the exact family contract and concrete Texenda use case; keep all family migration/publication work outside this candidate.",
+      "recovery": "Continue standalone Texenda with current local owners; preserve external observations and do not install, migrate, publish or edit external sources.",
+      "control": "RAIDQ-0005 separately retains the exact Blueprint failed fixture and reviewed-seed blockers."
     }
   ]
 }
