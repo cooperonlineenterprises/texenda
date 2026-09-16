@@ -1,0 +1,136 @@
+{
+  "schema_version": "2.0",
+  "kind": "review",
+  "task_id": "OPS-WSM-0001",
+  "candidate_revision": "f33337daae8b2f1292bb8f5ab5e11cdbed917799",
+  "observed_revision": "f33337daae8b2f1292bb8f5ab5e11cdbed917799",
+  "summary": "APPROVE the exact implementation-readiness closeout source-and-generated candidate f33337daae8b2f1292bb8f5ab5e11cdbed917799, tree ee65578efaabc250d80869d8b92e2612d11b886e, with zero unresolved findings. The prior Astra/max reviewer independently approved the same candidate and then hit a subscription usage limit while beginning evidence recording; this is a fresh independent Sol/max review under the explicit T1 fallback, with Sol/max truthfully retained as native capability tier 2. No containing-commit, future-head, product-readiness, external-gate, or external-effect approval is asserted.",
+  "profile_id": "gpt-5.6-sol-max",
+  "role": "reviewer",
+  "capability_tier": 2,
+  "routing_policy_digest": "61f0db448cf5ac5adad4d9340d568a7558c0369174e30aab92dd0ccf0d24bdf0",
+  "work_package_digest": "9ad162070c27e4c765ba145fc8a35d31dc288482453daaa39ec0bb6add8bd8d8",
+  "issued_at": "2026-09-16T22:53:29Z",
+  "qualifications": [
+    {
+      "profile_id": "gpt-5.6-sol-max",
+      "capability_tier": 2,
+      "model_id": "gpt-5.6-sol",
+      "reasoning_effort": "max",
+      "runtime_id": "codex-desktop-collaboration",
+      "client_version": "26.901.41600 (build 7982)",
+      "sign_in_mode": "subscription",
+      "billing_mode": "subscription",
+      "capabilities": [
+        "read",
+        "edit",
+        "test"
+      ],
+      "verified_at": "2026-09-13T21:45:13Z",
+      "expires_at": "2026-10-12T21:45:13Z",
+      "qualification_check_ids": [
+        "desktop-profile-gpt-5.6-sol-max"
+      ]
+    }
+  ],
+  "scope": "Exact independent review of base 087c0d65cf97c8f553b8915dd3cc93dddc46d4c4 through rejected candidate 799e22e6637421d7f86b03c425e975b75a3ce0f1, corrected source 02c42959501c7edd06e9c7fabf35460dfa745182, and final source-and-generated candidate f33337daae8b2f1292bb8f5ab5e11cdbed917799. Covers closeout validator/tests, FIND-0007, PLAN-0005/0006, seven completed remediation rows, retained rows, VERSION/SUP-0005, old 82da-only envelope scope, historical Git/generated integration observations, reconstruction, and protected preservation. OPS-WSM-0001 is an operating-contract reference, not a new live WP, lease, receipt, or permission. Excludes this containing evidence commit, future refresh/head/integration, product readiness, external gates, private-input inspection, and external effects.",
+  "notes": "Author /root/implementation_readiness_closeout_author, first reviewer /root/architecture_synthesis_reviewer, fallback reviewer /root/implementation_readiness_fallback_reviewer, and integrator /root are distinct. The first reviewer used gpt-6-astra-max/max, independently approved the exact candidate, and then errored on the subscription usage limit while beginning evidence recording. Explicit fallback reason: complete a fresh independent evidence-bound review because that distinct Astra/max approval could not be recorded after the usage-limit interruption; do not reduce source, checks, scope, max effort, or review criteria. Selected gpt-5.6-sol-max is the sole ADR-0001 T1 fallback but remains native T2, as recorded by top-level and qualification capability_tier 2. API allowance/spend USD 0; no reset, purchase, effort downshift, child reviewer, source change, refresh, live-state write, private access, or external mutation. Numeric delegated token/wall-time bounds and provider executing-model/token introspection were unavailable and are not invented. Markdown docs/qualification/evidence/2026-09-16-implementation-readiness-closeout-independent-review.md SHA-256 a112dfbf8280ec7dd526dd54ecde0f31a8118d3cb83ceb6bb594308bed90eb39 binds exact commands, results, history, finding/resolution, qualification, preservation, and limitations. Base-to-candidate canonical diff SHA-256 fff990d175d3de70a09e0824509dd8417f035be09f101dbfc1ce6bd328b57bf5. Containing commit/tree and final file hashes are returned separately to avoid self-reference.",
+  "checks": [
+    {
+      "id": "exact-candidate-lineage-and-diff",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Verify exact base/tree, four-commit single-parent lineage, rejected/corrected/final trees, every changed path, and canonical full-index binary diff SHA-256 fff990d175d3de70a09e0824509dd8417f035be09f101dbfc1ce6bd328b57bf5. Net scope is 21 paths with no sealed, decision, coordinator, state, binding, private, source-package, or external path change.",
+      "evidence_path": "docs/qualification/evidence/2026-09-16-implementation-readiness-closeout-independent-review.md",
+      "sha256": "a112dfbf8280ec7dd526dd54ecde0f31a8118d3cb83ceb6bb594308bed90eb39"
+    },
+    {
+      "id": "rejected-scope-inflation-finding-closed",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Load 799e22e operating.py directly from Git in memory and replay the exact remediation-scope, finding-limitations, and plan-status-scope overclaims. Confirm all three are accepted by the rejected implementation and rejected by 02c4295/f33337d canonical whole-record pins, without checking out or changing a file.",
+      "evidence_path": "docs/qualification/evidence/2026-09-16-implementation-readiness-closeout-independent-review.md",
+      "sha256": "a112dfbf8280ec7dd526dd54ecde0f31a8118d3cb83ceb6bb594308bed90eb39"
+    },
+    {
+      "id": "expanded-canonical-record-mutation-matrix",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Deep-copy and patch in memory 22 representative metadata, complete-record, nested-field, unknown-field, SUP-0005, and VERSION variants; require every variant to fail with the scoped pin. Reorder object keys only as a positive canonicalization control and require PASS.",
+      "evidence_path": "docs/qualification/evidence/2026-09-16-implementation-readiness-closeout-independent-review.md",
+      "sha256": "a112dfbf8280ec7dd526dd54ecde0f31a8118d3cb83ceb6bb594308bed90eb39"
+    },
+    {
+      "id": "status-and-supersession-truth",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Read authoritative sources and exact 087c0d6 predecessors: FIND-0007 is operational/conformant; PLAN-0005/0006 are completed; VERSION is current 1.4.2; SUP-0005 is exact; seven named remediation rows are completed; the other eleven parsed records are unchanged.",
+      "evidence_path": "docs/qualification/evidence/2026-09-16-implementation-readiness-closeout-independent-review.md",
+      "sha256": "a112dfbf8280ec7dd526dd54ecde0f31a8118d3cb83ceb6bb594308bed90eb39"
+    },
+    {
+      "id": "prior-review-and-integration-scope-separation",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Hash and inspect the immutable old envelope/Markdown, require exact 82da candidate and observed revision with sixteen PASS checks, verify the 82da->1ad two-evidence-file and 1ad->087 eleven-generated-output parent/delta chain, reproduce historical manifest/index identities, and require integrated_audit_record not_separately_committed plus explicit no-product/no-external/no-future boundaries.",
+      "evidence_path": "docs/qualification/evidence/2026-09-16-implementation-readiness-closeout-independent-review.md",
+      "sha256": "a112dfbf8280ec7dd526dd54ecde0f31a8118d3cb83ceb6bb594308bed90eb39"
+    },
+    {
+      "id": "repository-code-check-all",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "env PYTHONDONTWRITEBYTECODE=1 GIT_OPTIONAL_LOCKS=0 python3 -B .agent/scripts/validate.py --check --scope code --all: exit 0; eight eligible registered commands return zero, both refresh writers skip, and live/control/generated freshness remains unassessed.",
+      "evidence_path": "docs/qualification/evidence/2026-09-16-implementation-readiness-closeout-independent-review.md",
+      "sha256": "a112dfbf8280ec7dd526dd54ecde0f31a8118d3cb83ceb6bb594308bed90eb39"
+    },
+    {
+      "id": "canonical-control-check-all",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "env PYTHONDONTWRITEBYTECODE=1 GIT_OPTIONAL_LOCKS=0 python3 -B .agent/scripts/validate.py --check --all --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda: exit 0; every eligible registered command returns zero, including source/sealed package checks, state integrity, and local preservation; both refresh writers skip.",
+      "evidence_path": "docs/qualification/evidence/2026-09-16-implementation-readiness-closeout-independent-review.md",
+      "sha256": "a112dfbf8280ec7dd526dd54ecde0f31a8118d3cb83ceb6bb594308bed90eb39"
+    },
+    {
+      "id": "targeted-closeout-tests-and-probes",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Run unittest discovery for test_closeout.py: 18 tests PASS in 2.970s. Run the exact three named scope-overclaim tests separately: 3 PASS in 0.002s.",
+      "evidence_path": "docs/qualification/evidence/2026-09-16-implementation-readiness-closeout-independent-review.md",
+      "sha256": "a112dfbf8280ec7dd526dd54ecde0f31a8118d3cb83ceb6bb594308bed90eb39"
+    },
+    {
+      "id": "eleven-output-generated-reconstruction",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Call refresh.build in memory with recorded 2026-09-16T21:49:02+00:00 time and 02c4295/tree source identity, prevalidate false. Compare each of eleven returned byte sequences to disk and git show f33337d:path; all match. Generation/source/evidence/ledger identities match the manifest.",
+      "evidence_path": "docs/qualification/evidence/2026-09-16-implementation-readiness-closeout-independent-review.md",
+      "sha256": "a112dfbf8280ec7dd526dd54ecde0f31a8118d3cb83ceb6bb594308bed90eb39"
+    },
+    {
+      "id": "binding-state-and-protected-input-preservation",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Compare before/after SHA-256 and device/inode/mode/size/mtime/ctime for active binding, external state/lock, and four retained receipt inputs around the full control check. Every value remains identical; ledger is b993eebd..., 13 receipts, eleven profiles, zero leases/budget/gates. Git state stays clean before evidence writing.",
+      "evidence_path": "docs/qualification/evidence/2026-09-16-implementation-readiness-closeout-independent-review.md",
+      "sha256": "a112dfbf8280ec7dd526dd54ecde0f31a8118d3cb83ceb6bb594308bed90eb39"
+    },
+    {
+      "id": "explicit-t1-fallback-native-t2-qualification",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Record prior distinct Astra/max exact-candidate approval followed by usage-limit failure. Recheck bound Harness.qualified for gpt-5.6-sol-max and roster SHA 8e44034e...; apply ADR-0001's explicit nonempty-reason Sol/max-only T1 fallback while preserving the selected profile's native capability_tier 2 and max effort. No automatic fallback or relabeling.",
+      "evidence_path": "docs/qualification/evidence/2026-09-16-implementation-readiness-closeout-independent-review.md",
+      "sha256": "a112dfbf8280ec7dd526dd54ecde0f31a8118d3cb83ceb6bb594308bed90eb39"
+    },
+    {
+      "id": "bounded-decision-and-external-effects",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Confirm zero unresolved candidate findings; no refresh, private access, ledger/receipt write, source edit, reset, purchase, API spend, or other external mutation. Preserve explicit no-containing-commit/no-future-head/no-product/no-external-gate limits and return containing hashes separately.",
+      "evidence_path": "docs/qualification/evidence/2026-09-16-implementation-readiness-closeout-independent-review.md",
+      "sha256": "a112dfbf8280ec7dd526dd54ecde0f31a8118d3cb83ceb6bb594308bed90eb39"
+    }
+  ]
+}
