@@ -1,10 +1,10 @@
 {
   "schema_version": "texenda.dossier-evidence-index.generated.v1",
-  "generation_id": "7bc4fe7f60f9ba5d35e39191e1d2cca058aac766553104c78755f4fa3a25f5a9",
-  "generated_at": "2026-09-16T00:13:23+00:00",
+  "generation_id": "c6b999d898a7a31aa0f21194f7e7e9dcbbae1e4c769c2690b359e8cdf139a9a4",
+  "generated_at": "2026-09-16T00:27:32+00:00",
   "authority": "generated_hash_index_only",
   "owner_path": "docs/qualification/evidence/",
-  "evidence_scope_sha256": "f12a0ff6d358b7867e933f2db1cdb192e31258852ed92f43856d8c7bc806efc0",
+  "evidence_scope_sha256": "273b944b37687171d567e9c002067bf601e393bf4d55f2ac9db051f73d245e8b",
   "evidence": [
     {
       "path": "docs/qualification/evidence/2026-09-14-external-state-cutover-author-validation.log",
@@ -221,6 +221,14 @@
     {
       "path": "docs/qualification/evidence/2026-09-15-external-state-cutover-review.evidence.json",
       "sha256": "f0f8331828497738f49a41adca6f0b1a1ed5273e3ad742b480a15e99bb8da138"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-15-standalone-reference-independent-review.md",
+      "sha256": "eacd76e4a6c9769abf175d8fe6a0d3ecea405495e71135c4986fcb571f03cb3b"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-15-standalone-reference-review.evidence.json",
+      "sha256": "673d3d1ec4711af55de7523d968c679313ccc413345d991cfd7fdd1087cb4cf7"
     },
     {
       "path": "docs/qualification/evidence/2026-09-15-workspace-adoption-closeout-author.evidence.json",
