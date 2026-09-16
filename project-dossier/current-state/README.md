@@ -3,6 +3,6 @@
 Generated, non-authoritative view from [`current.json`](current.json). It does not
 define the target, grant permission, or mark a product/external gate passed.
 
-Generation `660d08d54a8d610a6d4c78a51385130a87f5cd31d5e4520e378f630306d34fff` binds source revision `9f3d4db74577b15d79424f7bc5c7bbc1fb24cee3`, tree `fc2f0824f126d3675d89facabb7acf35acf43c09`,
-source scope `c52186b775d007d6ccd69233ce5a17a821bc4394598540d3e3f840539cd735fd`, and live ledger `b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235`. Freshness is
+Generation `7bc4fe7f60f9ba5d35e39191e1d2cca058aac766553104c78755f4fa3a25f5a9` binds source revision `8a3920e6c4fdb7a738b7044e56b3d48b7f918e52`, tree `ce8bf52393f4b00be8f2d27a1d1efbf1eb2c982b`,
+source scope `8426d44e52f8513128ae90fb65e61c2b7ac38d3d4680a50d440fb958012ce7be`, and live ledger `b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235`. Freshness is
 decided by the read-only facade check, not by this prose.
