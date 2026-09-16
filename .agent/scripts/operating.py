@@ -26,6 +26,32 @@ STANDALONE_REVIEW = 'docs/qualification/evidence/2026-09-15-standalone-reference
 STANDALONE_REVIEW_MD = 'docs/qualification/evidence/2026-09-15-standalone-reference-independent-review.md'
 REVIEWED_REMEDIATIONS = {'REM-0001', 'REM-0002', 'REM-0003', 'REM-0004',
                        'REM-0007', 'REM-0008', 'REM-0014'}
+# These are byte-identity expectations for the existing bounded statements, not
+# evidence of approval. The dossier remains their information owner. Pin whole
+# canonical records (including nested and unknown fields) so prose cannot extend
+# the exact candidate review while leaving its checked revision IDs unchanged.
+# A semantic successor needs exact independent review and updated expectations.
+CLOSEOUT_SCOPE_PINS = {
+    FINDINGS: ('findings', '73843393b29bc943089bbfc0ab57b109a533bc52aff68aa91189d1883dc84c14', {
+        'FIND-0007': '81bdc6071b4b649181b03fead5f5844ba529c8e256cde63ce29a09432f780114',
+    }),
+    PLAN: ('items', '61dbeab58537da5ef1bec053be6f5b9116f152cfe032068ae0305413f9c9dec5', {
+        'PLAN-0005': 'a5f39a6c69bd9328733e34ddf285017036d136ce192371a082280505bf75799d',
+        'PLAN-0006': '66422cd3053aeb7e8d9cb8d554b4c6075e9736d6d9db81f291a1cd80f24df4cf',
+    }),
+    REMEDIATION: ('items', 'cd1cbbbafdae6cb96a24eecd0025a9dd3b24a2cc5a95c87166fbf68ceccf7254', {
+        'REM-0001': 'd8c1721492103124f73fedf3ca4a9dbd6d29d13e6a67aadc408c19c033be4388',
+        'REM-0002': 'f165255e83c097b56b57cef92dbdb8770a77baa1032e2df0bf4922157811b080',
+        'REM-0003': '7302a79cbcb0962f470b49311c036779006f81eb7dab38f0a25ccdd0ab9ecd42',
+        'REM-0004': 'c33a4781d77a2b9f8da57d38f2ac017c92c47306fb5ec35ec2ad921ea14e1b46',
+        'REM-0007': '3089439d410cf1744d5898fd824193138dca631664b5ca1a2784b42cc04a4c01',
+        'REM-0008': '008e49878435f126a596ea0fea65362abde0461a3113b70ac30489caa571a2c0',
+        'REM-0014': '5a8bbae7a318dd3ab105fa943d448f730750fe90a3e19e8ea797383d08efcab0',
+    }),
+}
+CLOSEOUT_VERSION_SHA256 = '9b63b48badbb86adff8e9133ed358e97f9640925725d6616741f2514299c5947'
+CLOSEOUT_SUPERSESSION_METADATA_SHA256 = 'ba5a169539efab6f297a91f2e71df9a2f77dc157c96b90428c2772baf19849c9'
+CLOSEOUT_SUCCESSOR_SHA256 = '1d63172c75d9542054429ab81e391967a16efc33cc4372e656d60eba6a53e344'
 DEFERRED_TOPICS = {
     'blueprint_qualification': 'RAIDQ-0005',
     'private_controls': 'RAIDQ-0006',
@@ -206,6 +232,18 @@ def validate_closeout(root=ROOT):
         require(len(result) == len(rows), 'duplicate closeout ' + label)
         return result
 
+    scoped_sources = {}
+    for path, (records_key, metadata_digest, record_digests) in CLOSEOUT_SCOPE_PINS.items():
+        source = load_json(root / path)
+        metadata = {key: value for key, value in source.items() if key != records_key}
+        require(sha(canonical(metadata)) == metadata_digest,
+                'closeout source scope or authority metadata changed: ' + path)
+        records = indexed(source[records_key], 'scope record ID')
+        for identifier, digest in record_digests.items():
+            require(identifier in records and sha(canonical(records[identifier])) == digest,
+                    'closed closeout scope record changed: ' + identifier)
+        scoped_sources[path] = source
+
     review_raw = historical(STANDALONE_REVIEW, REVIEW_RECORDING)
     review = loads(review_raw)
     require(review['kind'] == 'review' and review['task_id'] == 'OPS-WSM-0001'
@@ -234,7 +272,7 @@ def validate_closeout(root=ROOT):
                 'post-candidate integration delta exceeds its declared evidence/generated scope')
     git('merge-base', '--is-ancestor', REMEDIATION_INTEGRATION, 'HEAD', root=root)
 
-    plan = load_json(root / PLAN)
+    plan = scoped_sources[PLAN]
     require(plan['authority'] == loads(historical(PLAN))['authority'],
             'completion record acquired task or permission authority')
     plans = indexed(plan['items'], 'plan ID')
@@ -289,7 +327,7 @@ def validate_closeout(root=ROOT):
             'historical generation or review evidence index is inconsistent')
 
     integration_ref = {'owner_path': PLAN, 'record_id': 'PLAN-0006'}
-    findings = indexed(load_json(root / FINDINGS)['findings'], 'finding ID')
+    findings = indexed(scoped_sources[FINDINGS]['findings'], 'finding ID')
     finding = findings['FIND-0007']
     require(finding['classification'] == 'conformant'
             and finding['subject'] == 'Reviewed integrated standalone workspace remediation'
@@ -299,7 +337,7 @@ def validate_closeout(root=ROOT):
             and finding['observed_integration_revision'] == REMEDIATION_INTEGRATION
             and finding['integration_record'] == integration_ref,
             'current standalone finding regressed or lost its bounded reviewed integration')
-    current_rows = indexed(load_json(root / REMEDIATION)['items'], 'remediation ID')
+    current_rows = indexed(scoped_sources[REMEDIATION]['items'], 'remediation ID')
     prior_rows = indexed(loads(historical(REMEDIATION))['items'], 'historical remediation ID')
     require(set(current_rows) == set(prior_rows), 'closeout lost remediation coverage')
     stale = ('current source candidate', 'current_source_candidate',
@@ -338,12 +376,17 @@ def validate_closeout(root=ROOT):
                 'stale candidate status remains in active remediation text')
 
     supersession = load_json(root / SUPERSESSION)
+    supersession_metadata = {key: value for key, value in supersession.items() if key != 'records'}
+    require(sha(canonical(supersession_metadata)) == CLOSEOUT_SUPERSESSION_METADATA_SHA256,
+            'closeout supersession scope or authority metadata changed')
     prior_supersession = loads(historical(SUPERSESSION))
     require(supersession['current_version'] == DOSSIER_VERSION
             and len(supersession['records']) == 5
             and supersession['records'][:4] == prior_supersession['records'],
             'closeout supersession regressed or rewrote prior records')
     successor = supersession['records'][-1]
+    require(sha(canonical(successor)) == CLOSEOUT_SUCCESSOR_SHA256,
+            'closeout successor scope statement changed')
     require(successor['id'] == 'SUP-0005'
             and successor['prior_version'] == prior_supersession['current_version']
             == '1.4.1-mapped-existing'
@@ -355,7 +398,10 @@ def validate_closeout(root=ROOT):
             and successor['successor_version'] == DOSSIER_VERSION
             and successor['affected_current_sources'] == [FINDINGS, PLAN, REMEDIATION],
             'closeout successor lost the exact integrated 1.4.1 predecessor')
-    version = stable_file_bytes(root / VERSION, 'current dossier version').decode()
+    version_raw = stable_file_bytes(root / VERSION, 'current dossier version')
+    require(sha(version_raw) == CLOSEOUT_VERSION_SHA256,
+            'current dossier version scope statement changed')
+    version = version_raw.decode()
     require(version.splitlines()[2] == 'Current operational contract version: `' + DOSSIER_VERSION + '`.'
             and 'Candidate contract version:' not in version,
             'current dossier version regressed to candidate or pending operation')

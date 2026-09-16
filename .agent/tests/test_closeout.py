@@ -15,7 +15,17 @@ import operating
 
 
 class ReviewedIntegrationCloseoutTests(unittest.TestCase):
-    def reject_record(self, path, mutate):
+    REVIEW_SCOPE_OVERCLAIM = (
+        'The 82da candidate envelope approves 087c0d65cf97c8f553b8915dd3cc93dddc46d4c4 '
+        'and all future integrated heads.'
+    )
+    SCOPE_OVERCLAIMS = (
+        REVIEW_SCOPE_OVERCLAIM,
+        'The 82da candidate envelope approves this closeout candidate without independent review.',
+        'The 82da candidate envelope establishes product readiness and clears every external gate.',
+    )
+
+    def reject_record(self, path, mutate, pattern=''):
         changed = copy.deepcopy(common.load_json(ROOT / path))
         mutate(changed)
         actual = operating.load_json
@@ -24,12 +34,18 @@ class ReviewedIntegrationCloseoutTests(unittest.TestCase):
             return changed if target == ROOT / path else actual(target)
 
         with mock.patch.object(operating, 'load_json', side_effect=replaced), \
-                self.assertRaises(common.ValidationError):
+                self.assertRaisesRegex(common.ValidationError, pattern):
             operating.validate_closeout(ROOT)
 
     @staticmethod
     def item(value, identifier, key='items'):
         return next(row for row in value[key] if row['id'] == identifier)
+
+    @staticmethod
+    def replace_field(record, field_path, value):
+        for key in field_path[:-1]:
+            record = record[key]
+        record[field_path[-1]] = value
 
     def test_exact_review_and_integration_are_distinct_repository_only_observations(self):
         actual = operating.stable_file_bytes
@@ -90,6 +106,109 @@ class ReviewedIntegrationCloseoutTests(unittest.TestCase):
             with self.subTest(generated_field=key):
                 self.reject_record(operating.PLAN, lambda value: self.item(
                     value, 'PLAN-0006')['generated_evidence'].update({key: 'incorrect'}))
+
+    def test_review_probe_remediation_scope_cannot_inherit_candidate_approval(self):
+        self.reject_record(operating.REMEDIATION, lambda value: self.item(
+            value, 'REM-0001')['current_evidence'][1].update(scope=self.REVIEW_SCOPE_OVERCLAIM),
+            'scope')
+
+    def test_review_probe_finding_limitations_cannot_inherit_candidate_approval(self):
+        self.reject_record(operating.FINDINGS, lambda value: self.item(
+            value, 'FIND-0007', 'findings').update(limitations=self.REVIEW_SCOPE_OVERCLAIM),
+            'scope')
+
+    def test_review_probe_plan_status_scope_cannot_inherit_candidate_approval(self):
+        self.reject_record(operating.PLAN, lambda value: self.item(
+            value, 'PLAN-0006').update(status_scope=self.REVIEW_SCOPE_OVERCLAIM), 'scope')
+
+    def test_all_implemented_remediation_scope_fields_reject_approval_inflation(self):
+        fields = (('current_evidence', 1, 'scope'), ('current_evidence', 1, 'observation'),
+                  ('validity_scope',), ('completion_evidence', 'limitation'),
+                  ('implementation_scope',), ('practical_impact',), ('validation_method',))
+        for identifier in sorted(operating.REVIEWED_REMEDIATIONS):
+            for field in fields:
+                for claim in self.SCOPE_OVERCLAIMS:
+                    with self.subTest(identifier=identifier, field=field, claim=claim):
+                        self.reject_record(operating.REMEDIATION, lambda value: self.replace_field(
+                            self.item(value, identifier), field, claim), 'scope')
+            # Matching duplicated observations must not make a coordinated overclaim valid.
+            def coordinated(value):
+                row = self.item(value, identifier)
+                row['practical_impact'] = row['current_evidence'][1]['observation'] = self.REVIEW_SCOPE_OVERCLAIM
+
+            self.reject_record(operating.REMEDIATION, coordinated, 'scope')
+
+    def test_finding_and_plan_scope_fields_reject_approval_inflation(self):
+        targets = [
+            (operating.FINDINGS, 'findings', 'FIND-0007', (field,))
+            for field in ('subject', 'observation', 'limitations')
+        ] + [
+            (operating.PLAN, 'items', identifier, field)
+            for identifier in ('PLAN-0005', 'PLAN-0006')
+            for field in (('objective',), ('status_scope',), ('limitation',), ('acceptance', 0))
+        ] + [(operating.PLAN, 'items', 'PLAN-0006', ('integration_basis',))]
+        for path, key, identifier, field in targets:
+            for claim in self.SCOPE_OVERCLAIMS:
+                with self.subTest(identifier=identifier, field=field, claim=claim):
+                    self.reject_record(path, lambda value: self.replace_field(
+                        self.item(value, identifier, key), field, claim), 'scope')
+
+    def test_scope_records_reject_added_approval_fields_and_missing_limitations(self):
+        targets = [(operating.FINDINGS, 'findings', 'FIND-0007', ('limitations',)),
+                   *[(operating.PLAN, 'items', identifier, ('limitation',))
+                     for identifier in ('PLAN-0005', 'PLAN-0006')],
+                   *[(operating.REMEDIATION, 'items', identifier, ('completion_evidence', 'limitation'))
+                     for identifier in sorted(operating.REVIEWED_REMEDIATIONS)]]
+        for path, key, identifier, limitation in targets:
+            with self.subTest(identifier=identifier):
+                self.reject_record(path, lambda value: self.item(value, identifier, key).update(
+                    approval_scope=self.REVIEW_SCOPE_OVERCLAIM), 'scope')
+
+                def missing(value):
+                    row = self.item(value, identifier, key)
+                    for field in limitation[:-1]:
+                        row = row[field]
+                    row.pop(limitation[-1])
+
+                self.reject_record(path, missing, 'scope')
+        for identifier in sorted(operating.REVIEWED_REMEDIATIONS):
+            for nested in (('completion_evidence',), ('current_evidence', 1)):
+                self.reject_record(operating.REMEDIATION, lambda value: self.replace_field(
+                    self.item(value, identifier), (*nested, 'approval_scope'), self.REVIEW_SCOPE_OVERCLAIM),
+                    'scope')
+        self.reject_record(operating.PLAN, lambda value: self.item(
+            value, 'PLAN-0006')['generated_evidence'].update(approval_scope=self.REVIEW_SCOPE_OVERCLAIM), 'scope')
+
+    def test_scope_authority_metadata_version_and_successor_cannot_extend_approval(self):
+        for path in (operating.FINDINGS, operating.PLAN, operating.REMEDIATION, operating.SUPERSESSION):
+            for field in ('authority', 'approval_scope'):
+                self.reject_record(path, lambda value: value.update({field: self.REVIEW_SCOPE_OVERCLAIM}), 'scope')
+        self.reject_record(operating.SUPERSESSION, lambda value: self.item(
+            value, 'SUP-0005', 'records').update(reason=self.REVIEW_SCOPE_OVERCLAIM), 'scope')
+        actual = operating.stable_file_bytes
+
+        def inflated_version(path, *args, **kwargs):
+            raw = actual(path, *args, **kwargs)
+            return raw + ('\n' + self.REVIEW_SCOPE_OVERCLAIM).encode() if path == ROOT / operating.VERSION else raw
+
+        with mock.patch.object(operating, 'stable_file_bytes', side_effect=inflated_version), \
+                self.assertRaisesRegex(common.ValidationError, 'scope'):
+            operating.validate_closeout(ROOT)
+
+    def test_scope_record_pins_ignore_json_object_key_order(self):
+        sources = {}
+        for path, key in ((operating.FINDINGS, 'findings'), (operating.PLAN, 'items'),
+                          (operating.REMEDIATION, 'items')):
+            source = common.load_json(ROOT / path)
+            source[key] = [dict(reversed(list(row.items()))) for row in source[key]]
+            sources[ROOT / path] = source
+        actual = operating.load_json
+
+        def reordered(path):
+            return sources[path] if path in sources else actual(path)
+
+        with mock.patch.object(operating, 'load_json', side_effect=reordered):
+            self.assertEqual(operating.validate_closeout(ROOT)['completed_remediations'], 7)
 
     def test_every_implemented_remediation_requires_consistent_completed_disposition(self):
         for identifier in sorted(operating.REVIEWED_REMEDIATIONS):
