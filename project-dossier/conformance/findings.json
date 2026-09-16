@@ -64,13 +64,19 @@
     },
     {
       "id": "FIND-0007",
-      "classification": "gated",
-      "subject": "Standalone source remediation candidate",
+      "classification": "conformant",
+      "subject": "Reviewed integrated standalone workspace remediation",
       "basis": "docs/decisions/ADR-0007-standalone-workspace-operating-contract.md",
-      "observation": "The complete source remediation disposition register owns current findings, retained controls and exact deferrals for the ADR-0007 candidate.",
-      "evidence": "project-dossier/conformance/remediation-register.json",
-      "disposition": "candidate_requires_independent_source_and_control_review",
-      "limitations": "Prior completed workspace findings remain scoped to their recorded revisions; no current candidate approval, product readiness or gate is inferred."
+      "observation": "The ADR-0007 source-and-generated candidate 82da3f644ea82d6bc7531c1711c63b54eb3b9f5b was independently approved. Direct Git history and retained generated records establish that integration revision 087c0d65cf97c8f553b8915dd3cc93dddc46d4c4 adds only that review evidence and eleven refreshed projections; the reviewed source implementation is unchanged.",
+      "evidence": "docs/qualification/evidence/2026-09-15-standalone-reference-review.evidence.json",
+      "disposition": "operational_reviewed_source_at_recorded_integration",
+      "limitations": "Conformance is limited to the reviewed ADR-0007 workspace remediation and the separately verifiable integration facts in PLAN-0006. The candidate envelope does not approve 087c0d6; the prior integrated audit was not separately committed. This record does not approve its containing revision. No product readiness, external gate, live-state freshness or future-head approval is inferred.",
+      "reviewed_candidate_revision": "82da3f644ea82d6bc7531c1711c63b54eb3b9f5b",
+      "observed_integration_revision": "087c0d65cf97c8f553b8915dd3cc93dddc46d4c4",
+      "integration_record": {
+        "owner_path": "project-dossier/machine-readable/plan.json",
+        "record_id": "PLAN-0006"
+      }
     }
   ]
 }

@@ -503,8 +503,8 @@ def validate_dossier(root=ROOT, *, generated=True):
     require(history_row is not None and history_row['classification'] == 'history',
             'completed transition history is not catalogued as history')
     supersession = load_json(root / 'project-dossier/SUPERSESSION.json')
-    require(supersession['current_version'] == '1.4.1-mapped-existing'
-            and len(supersession['records']) == 4
+    require(supersession['current_version'] == operating.DOSSIER_VERSION
+            and len(supersession['records']) == 5
             and supersession['records'][0]['prior_sha256'] == history_sha
             and supersession['records'][0]['retained_history_path'] == history_path,
             'dossier supersession does not preserve the completed transition')

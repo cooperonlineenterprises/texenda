@@ -76,7 +76,7 @@
     },
     {
       "id": "PLAN-0005",
-      "status": "proposed",
+      "status": "completed",
       "objective": "Implement and independently review the exact ADR-0007 source candidate without changing live state or sealed bytes.",
       "dependencies": [
         "PLAN-0004"
@@ -86,11 +86,21 @@
         "Distinct exact-candidate T1 review with all remediation dispositions",
         "No generated, sealed, private, local-state or external changes"
       ],
-      "completion_evidence": null
+      "completion_evidence": "docs/qualification/evidence/2026-09-15-standalone-reference-review.evidence.json",
+      "source_revisions": [
+        "385ce8eddef06fdc0ab9d46222e4c347fa1c11bd",
+        "9f3d4db74577b15d79424f7bc5c7bbc1fb24cee3",
+        "8a3920e6c4fdb7a738b7044e56b3d48b7f918e52"
+      ],
+      "reviewed_candidate_revision": "82da3f644ea82d6bc7531c1711c63b54eb3b9f5b",
+      "reviewed_candidate_tree": "d8d1f195e686a7c6071f54eb1a40bb2afbfd61c1",
+      "observed_integration_revision": "087c0d65cf97c8f553b8915dd3cc93dddc46d4c4",
+      "status_scope": "Completed source implementation and independent source/control review of the exact candidate; PLAN-0006 owns the subsequent integration and historical generated observations.",
+      "limitation": "The immutable envelope approves only 82da3f6 and records the rejected predecessors. It does not approve its containing evidence commit, 087c0d6, this closeout correction or future heads. This adoption record is not a task, assignment or permission, and establishes no product readiness or external gate."
     },
     {
       "id": "PLAN-0006",
-      "status": "proposed",
+      "status": "completed",
       "objective": "Stage the source candidate canonically, explicitly refresh, obtain exact control review and serial integration followed by final read-only audit.",
       "dependencies": [
         "PLAN-0005"
@@ -101,7 +111,27 @@
         "Evidence addition followed by explicit refresh and exact integrated-head review",
         "Actual runtime-stop evidence and preserved recovery artifacts"
       ],
-      "completion_evidence": null
+      "completion_evidence": "docs/qualification/evidence/2026-09-15-standalone-reference-review.evidence.json",
+      "candidate_review_scope": "exact_candidate_only",
+      "reviewed_candidate_revision": "82da3f644ea82d6bc7531c1711c63b54eb3b9f5b",
+      "reviewed_candidate_tree": "d8d1f195e686a7c6071f54eb1a40bb2afbfd61c1",
+      "review_evidence_revision": "1ad95e9cdd0c8d2f0e09aa5f6c14a86e055e1a0c",
+      "observed_integration_revision": "087c0d65cf97c8f553b8915dd3cc93dddc46d4c4",
+      "observed_integration_tree": "66185760ae2a603e88a0234845b264d4488545f1",
+      "integration_basis": "Direct Git observation of local main at 087c0d6 and the preserved 82da3f6 -> 1ad95e9 -> 087c0d6 parent chain. The first successor adds only the immutable review pair; the second changes exactly the eleven declared generated outputs. These facts do not extend candidate approval.",
+      "generated_evidence": {
+        "revision": "087c0d65cf97c8f553b8915dd3cc93dddc46d4c4",
+        "manifest_path": ".agent/generated/manifest.json",
+        "evidence_index_path": "project-dossier/machine-readable/evidence-index.json",
+        "generation_id": "c6b999d898a7a31aa0f21194f7e7e9dcbbae1e4c769c2690b359e8cdf139a9a4",
+        "source_git_revision": "1ad95e9cdd0c8d2f0e09aa5f6c14a86e055e1a0c",
+        "source_git_tree": "dfcca239fffacaa7925c42ec417f49302fe0eedd",
+        "source_scope_sha256": "8426d44e52f8513128ae90fb65e61c2b7ac38d3d4680a50d440fb958012ce7be",
+        "evidence_scope_sha256": "273b944b37687171d567e9c002067bf601e393bf4d55f2ac9db051f73d245e8b"
+      },
+      "integrated_audit_record": "not_separately_committed",
+      "status_scope": "Completed reviewed-source integration and evidence/projection closeout at the recorded revision. Historical generated identities are reproducible Git observations, not a current control check or approval of their containing commit.",
+      "limitation": "The prior final integrated-head audit was reported in the main task but was not separately committed; conversation output is not a validator input or hidden authority. This completion record supplies no independent approval of its own containing revision. No new runtime-stop proof, private inspection, ledger mutation, receipt, product readiness, external gate or future-head approval is claimed."
     }
   ]
 }

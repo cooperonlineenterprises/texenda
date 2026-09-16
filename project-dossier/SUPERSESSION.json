@@ -1,7 +1,7 @@
 {
   "schema_version": "texenda.dossier-supersession.v1",
   "authority": "Dossier artifact replacement metadata only; accepted decisions and sealed authority retain their existing owners.",
-  "current_version": "1.4.1-mapped-existing",
+  "current_version": "1.4.2-mapped-existing",
   "records": [
     {
       "id": "SUP-0001",
@@ -51,6 +51,23 @@
       "successor_schema": "texenda.workspace-remediation.v2",
       "successor_version": "1.4.1-mapped-existing",
       "reason": "Correct rejected duplicate deferral details into closed references to the sole RAIDQ detail owner; preserve all 18 disposition rows."
+    },
+    {
+      "id": "SUP-0005",
+      "prior_version": "1.4.1-mapped-existing",
+      "prior_path": "project-dossier/VERSION.md",
+      "prior_revision": "087c0d65cf97c8f553b8915dd3cc93dddc46d4c4",
+      "prior_sha256": "963b2dbf0ed16054d8e515232caf31695d5bfadcbf3122110e684e5a3f0d8dbc",
+      "retention": "exact_predecessor_in_preserved_Git_history",
+      "predecessor_status": "reviewed_source_integrated_with_stale_candidate_metadata",
+      "active_successor_path": "project-dossier/VERSION.md",
+      "successor_version": "1.4.2-mapped-existing",
+      "affected_current_sources": [
+        "project-dossier/conformance/findings.json",
+        "project-dossier/machine-readable/plan.json",
+        "project-dossier/conformance/remediation-register.json"
+      ],
+      "reason": "Close the stale current-status metadata for the reviewed ADR-0007 implementation without extending the exact 82da3f6 candidate approval to 087c0d6. Preserve the complete 1.4.1 predecessor at that integration revision, all earlier supersession records and rejected candidates; require deterministic checks of the separate integration and generated observations."
     }
   ],
   "rules": {

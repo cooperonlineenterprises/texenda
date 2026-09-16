@@ -721,8 +721,8 @@ def verify_clean_operating_contract(root):
             'current transition entry still embeds the migration procedure')
 
     supersession = loads((root / 'project-dossier/SUPERSESSION.json').read_text())
-    require(supersession['current_version'] == '1.4.1-mapped-existing'
-            and len(supersession['records']) == 4,
+    require(supersession['current_version'] == operating.DOSSIER_VERSION
+            and len(supersession['records']) == 5,
             'dossier version/supersession is not current')
     record = supersession['records'][0]
     require(record['prior_sha256'] == COMPLETED_TRANSITION_SHA256

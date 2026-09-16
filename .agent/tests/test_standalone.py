@@ -258,7 +258,10 @@ class StandaloneContracts(unittest.TestCase):
                                         + operating.RAIDQ, root=ROOT))
         self.assertEqual([row for row in raidq['items'] if row['id'] not in ('RAIDQ-0007', 'RAIDQ-0008')],
                          [row for row in prior['items'] if row['id'] not in ('RAIDQ-0007', 'RAIDQ-0008')])
-        self.assertEqual((ROOT / operating.REMEDIATION).read_bytes(),
+        # The later status closeout changes current completion metadata only;
+        # preserve the exact register retained by the original scope correction.
+        self.assertEqual(common.git('show', operating.REMEDIATION_INTEGRATION + ':'
+                                    + operating.REMEDIATION, root=ROOT, text=False),
                          common.git('show', '486e65dc9fe8331274d00c7fc06685ff1897fafb:'
                                     + operating.REMEDIATION, root=ROOT, text=False))
 

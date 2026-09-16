@@ -21,25 +21,34 @@
           "subject_revision": "7de052690bbf3e2879f375c2b2e17207c7ee5bfe"
         },
         {
-          "observation": "The current source candidate implements this selected remediation; independent source/control acceptance remains outstanding.",
+          "observation": "Refresh discovery uses read-only --help, and checks never dispatch refresh writers.",
           "source": ".agent/tools.json",
-          "subject": "current_source_candidate",
+          "subject": "reviewed_integrated_remediation",
+          "subject_revision": "087c0d65cf97c8f553b8915dd3cc93dddc46d4c4",
+          "reviewed_candidate_revision": "82da3f644ea82d6bc7531c1711c63b54eb3b9f5b",
+          "review_reference": "docs/qualification/evidence/2026-09-15-standalone-reference-review.evidence.json",
           "validation_reference": ".agent/validators.json",
-          "scope": "Source implementation and synthetic checks only; no integrated control approval."
+          "scope": "Candidate approval binds only 82da3f6; PLAN-0006 records the separate Git and historical generated observations at 087c0d6."
         }
       ],
-      "still_valid": true,
-      "practical_impact": "Availability currently calls the refresh writer.",
+      "still_valid": false,
+      "practical_impact": "Refresh discovery uses read-only --help, and checks never dispatch refresh writers.",
       "dependencies": [],
-      "selected_disposition": "fix_in_this_candidate",
-      "implementation_scope": "Assigned repository source/docs/tests only; generated/local integration remains the integrator's follow-up.",
+      "selected_disposition": "completed_reviewed_and_integrated",
+      "implementation_scope": "The reviewed ADR-0007 source remediation is present at the exact recorded integration revision; this disposition grants no further work or control authority.",
       "validation_method": "Read-only --help discovery and registry consistency tests.",
       "completion_evidence": {
-        "status": "candidate_requires_independent_review",
-        "reference": ".agent/tools.json",
-        "limitation": "No product, external gate, new receipt or retrospective evidence approval."
+        "status": "reviewed_and_integrated",
+        "reference": "docs/qualification/evidence/2026-09-15-standalone-reference-review.evidence.json",
+        "reviewed_candidate_revision": "82da3f644ea82d6bc7531c1711c63b54eb3b9f5b",
+        "observed_integration_revision": "087c0d65cf97c8f553b8915dd3cc93dddc46d4c4",
+        "integration_record": {
+          "owner_path": "project-dossier/machine-readable/plan.json",
+          "record_id": "PLAN-0006"
+        },
+        "limitation": "The envelope approves only 82da3f6. Integration is a separate direct Git/historical generated observation; the prior integrated audit was not separately committed. No product, external gate, receipt, live-state or future-head approval."
       },
-      "validity_scope": "Valid finding against the exact baseline; addressed in the source candidate, with acceptance still pending."
+      "validity_scope": "The exact baseline finding remains historical; the defect or gap is resolved in the reviewed integrated remediation at 087c0d6."
     },
     {
       "id": "REM-0002",
@@ -56,25 +65,34 @@
           "subject_revision": "7de052690bbf3e2879f375c2b2e17207c7ee5bfe"
         },
         {
-          "observation": "The current source candidate implements this selected remediation; independent source/control acceptance remains outstanding.",
+          "observation": "Repository-only code checks and explicitly bound canonical control checks have separate enforced scopes.",
           "source": ".agent/validators.json",
-          "subject": "current_source_candidate",
+          "subject": "reviewed_integrated_remediation",
+          "subject_revision": "087c0d65cf97c8f553b8915dd3cc93dddc46d4c4",
+          "reviewed_candidate_revision": "82da3f644ea82d6bc7531c1711c63b54eb3b9f5b",
+          "review_reference": "docs/qualification/evidence/2026-09-15-standalone-reference-review.evidence.json",
           "validation_reference": ".agent/validators.json",
-          "scope": "Source implementation and synthetic checks only; no integrated control approval."
+          "scope": "Candidate approval binds only 82da3f6; PLAN-0006 records the separate Git and historical generated observations at 087c0d6."
         }
       ],
-      "still_valid": true,
-      "practical_impact": "Full check conflates candidate source and canonical local preservation.",
+      "still_valid": false,
+      "practical_impact": "Repository-only code checks and explicitly bound canonical control checks have separate enforced scopes.",
       "dependencies": [],
-      "selected_disposition": "fix_in_this_candidate",
-      "implementation_scope": "Assigned repository source/docs/tests only; generated/local integration remains the integrator's follow-up.",
+      "selected_disposition": "completed_reviewed_and_integrated",
+      "implementation_scope": "The reviewed ADR-0007 source remediation is present at the exact recorded integration revision; this disposition grants no further work or control authority.",
       "validation_method": "Explicit code scope and canonical control scope with isolated fixture tests.",
       "completion_evidence": {
-        "status": "candidate_requires_independent_review",
-        "reference": ".agent/validators.json",
-        "limitation": "No product, external gate, new receipt or retrospective evidence approval."
+        "status": "reviewed_and_integrated",
+        "reference": "docs/qualification/evidence/2026-09-15-standalone-reference-review.evidence.json",
+        "reviewed_candidate_revision": "82da3f644ea82d6bc7531c1711c63b54eb3b9f5b",
+        "observed_integration_revision": "087c0d65cf97c8f553b8915dd3cc93dddc46d4c4",
+        "integration_record": {
+          "owner_path": "project-dossier/machine-readable/plan.json",
+          "record_id": "PLAN-0006"
+        },
+        "limitation": "The envelope approves only 82da3f6. Integration is a separate direct Git/historical generated observation; the prior integrated audit was not separately committed. No product, external gate, receipt, live-state or future-head approval."
       },
-      "validity_scope": "Valid finding against the exact baseline; addressed in the source candidate, with acceptance still pending."
+      "validity_scope": "The exact baseline finding remains historical; the defect or gap is resolved in the reviewed integrated remediation at 087c0d6."
     },
     {
       "id": "REM-0003",
@@ -91,25 +109,34 @@
           "subject_revision": "7de052690bbf3e2879f375c2b2e17207c7ee5bfe"
         },
         {
-          "observation": "The current source candidate implements this selected remediation; independent source/control acceptance remains outstanding.",
+          "observation": "Ordinary entry selects a task explicitly from fresh ready output; empty readiness has no fallback.",
           "source": ".agent/START_HERE.md",
-          "subject": "current_source_candidate",
+          "subject": "reviewed_integrated_remediation",
+          "subject_revision": "087c0d65cf97c8f553b8915dd3cc93dddc46d4c4",
+          "reviewed_candidate_revision": "82da3f644ea82d6bc7531c1711c63b54eb3b9f5b",
+          "review_reference": "docs/qualification/evidence/2026-09-15-standalone-reference-review.evidence.json",
           "validation_reference": ".agent/validators.json",
-          "scope": "Source implementation and synthetic checks only; no integrated control approval."
+          "scope": "Candidate approval binds only 82da3f6; PLAN-0006 records the separate Git and historical generated observations at 087c0d6."
         }
       ],
-      "still_valid": true,
-      "practical_impact": "Ordinary entry hard-codes context WP-01 after live ready.",
+      "still_valid": false,
+      "practical_impact": "Ordinary entry selects a task explicitly from fresh ready output; empty readiness has no fallback.",
       "dependencies": [],
-      "selected_disposition": "fix_in_this_candidate",
-      "implementation_scope": "Assigned repository source/docs/tests only; generated/local integration remains the integrator's follow-up.",
+      "selected_disposition": "completed_reviewed_and_integrated",
+      "implementation_scope": "The reviewed ADR-0007 source remediation is present at the exact recorded integration revision; this disposition grants no further work or control authority.",
       "validation_method": "Fresh ready followed by explicit selected task; empty/resume cases.",
       "completion_evidence": {
-        "status": "candidate_requires_independent_review",
-        "reference": ".agent/START_HERE.md",
-        "limitation": "No product, external gate, new receipt or retrospective evidence approval."
+        "status": "reviewed_and_integrated",
+        "reference": "docs/qualification/evidence/2026-09-15-standalone-reference-review.evidence.json",
+        "reviewed_candidate_revision": "82da3f644ea82d6bc7531c1711c63b54eb3b9f5b",
+        "observed_integration_revision": "087c0d65cf97c8f553b8915dd3cc93dddc46d4c4",
+        "integration_record": {
+          "owner_path": "project-dossier/machine-readable/plan.json",
+          "record_id": "PLAN-0006"
+        },
+        "limitation": "The envelope approves only 82da3f6. Integration is a separate direct Git/historical generated observation; the prior integrated audit was not separately committed. No product, external gate, receipt, live-state or future-head approval."
       },
-      "validity_scope": "Valid finding against the exact baseline; addressed in the source candidate, with acceptance still pending."
+      "validity_scope": "The exact baseline finding remains historical; the defect or gap is resolved in the reviewed integrated remediation at 087c0d6."
     },
     {
       "id": "REM-0004",
@@ -126,25 +153,34 @@
           "subject_revision": "7de052690bbf3e2879f375c2b2e17207c7ee5bfe"
         },
         {
-          "observation": "The current source candidate implements this selected remediation; independent source/control acceptance remains outstanding.",
+          "observation": "Tracked ordinary commands use quoted explicit parameters while canonical control retains its absolute local binding.",
           "source": "docs/agents/operating-guide.md",
-          "subject": "current_source_candidate",
+          "subject": "reviewed_integrated_remediation",
+          "subject_revision": "087c0d65cf97c8f553b8915dd3cc93dddc46d4c4",
+          "reviewed_candidate_revision": "82da3f644ea82d6bc7531c1711c63b54eb3b9f5b",
+          "review_reference": "docs/qualification/evidence/2026-09-15-standalone-reference-review.evidence.json",
           "validation_reference": ".agent/validators.json",
-          "scope": "Source implementation and synthetic checks only; no integrated control approval."
+          "scope": "Candidate approval binds only 82da3f6; PLAN-0006 records the separate Git and historical generated observations at 087c0d6."
         }
       ],
-      "still_valid": true,
-      "practical_impact": "Current tracked commands embed one user's host path.",
+      "still_valid": false,
+      "practical_impact": "Tracked ordinary commands use quoted explicit parameters while canonical control retains its absolute local binding.",
       "dependencies": [],
-      "selected_disposition": "fix_in_this_candidate",
-      "implementation_scope": "Assigned repository source/docs/tests only; generated/local integration remains the integrator's follow-up.",
+      "selected_disposition": "completed_reviewed_and_integrated",
+      "implementation_scope": "The reviewed ADR-0007 source remediation is present at the exact recorded integration revision; this disposition grants no further work or control authority.",
       "validation_method": "Quoted explicit parameters and retained fail-closed absolute local binding.",
       "completion_evidence": {
-        "status": "candidate_requires_independent_review",
-        "reference": "docs/agents/operating-guide.md",
-        "limitation": "No product, external gate, new receipt or retrospective evidence approval."
+        "status": "reviewed_and_integrated",
+        "reference": "docs/qualification/evidence/2026-09-15-standalone-reference-review.evidence.json",
+        "reviewed_candidate_revision": "82da3f644ea82d6bc7531c1711c63b54eb3b9f5b",
+        "observed_integration_revision": "087c0d65cf97c8f553b8915dd3cc93dddc46d4c4",
+        "integration_record": {
+          "owner_path": "project-dossier/machine-readable/plan.json",
+          "record_id": "PLAN-0006"
+        },
+        "limitation": "The envelope approves only 82da3f6. Integration is a separate direct Git/historical generated observation; the prior integrated audit was not separately committed. No product, external gate, receipt, live-state or future-head approval."
       },
-      "validity_scope": "Valid finding against the exact baseline; addressed in the source candidate, with acceptance still pending."
+      "validity_scope": "The exact baseline finding remains historical; the defect or gap is resolved in the reviewed integrated remediation at 087c0d6."
     },
     {
       "id": "REM-0005",
@@ -222,25 +258,34 @@
           "subject_revision": "7de052690bbf3e2879f375c2b2e17207c7ee5bfe"
         },
         {
-          "observation": "The current source candidate implements this selected remediation; independent source/control acceptance remains outstanding.",
+          "observation": "Structured references navigate the complete existing scoped owner sets without copying their authority.",
           "source": "project-dossier/transition/blueprint-adoption-crosswalk.json",
-          "subject": "current_source_candidate",
+          "subject": "reviewed_integrated_remediation",
+          "subject_revision": "087c0d65cf97c8f553b8915dd3cc93dddc46d4c4",
+          "reviewed_candidate_revision": "82da3f644ea82d6bc7531c1711c63b54eb3b9f5b",
+          "review_reference": "docs/qualification/evidence/2026-09-15-standalone-reference-review.evidence.json",
           "validation_reference": ".agent/validators.json",
-          "scope": "Source implementation and synthetic checks only; no integrated control approval."
+          "scope": "Candidate approval binds only 82da3f6; PLAN-0006 records the separate Git and historical generated observations at 087c0d6."
         }
       ],
-      "still_valid": true,
-      "practical_impact": "Single string/symbol owners do not navigate the complete scoped owner set.",
+      "still_valid": false,
+      "practical_impact": "Structured references navigate the complete existing scoped owner sets without copying their authority.",
       "dependencies": [],
-      "selected_disposition": "fix_in_this_candidate",
-      "implementation_scope": "Assigned repository source/docs/tests only; generated/local integration remains the integrator's follow-up.",
+      "selected_disposition": "completed_reviewed_and_integrated",
+      "implementation_scope": "The reviewed ADR-0007 source remediation is present at the exact recorded integration revision; this disposition grants no further work or control authority.",
       "validation_method": "Structured existing-owner references, resolving generated source map/path authority.",
       "completion_evidence": {
-        "status": "candidate_requires_independent_review",
-        "reference": "project-dossier/transition/blueprint-adoption-crosswalk.json",
-        "limitation": "No product, external gate, new receipt or retrospective evidence approval."
+        "status": "reviewed_and_integrated",
+        "reference": "docs/qualification/evidence/2026-09-15-standalone-reference-review.evidence.json",
+        "reviewed_candidate_revision": "82da3f644ea82d6bc7531c1711c63b54eb3b9f5b",
+        "observed_integration_revision": "087c0d65cf97c8f553b8915dd3cc93dddc46d4c4",
+        "integration_record": {
+          "owner_path": "project-dossier/machine-readable/plan.json",
+          "record_id": "PLAN-0006"
+        },
+        "limitation": "The envelope approves only 82da3f6. Integration is a separate direct Git/historical generated observation; the prior integrated audit was not separately committed. No product, external gate, receipt, live-state or future-head approval."
       },
-      "validity_scope": "Valid finding against the exact baseline; addressed in the source candidate, with acceptance still pending."
+      "validity_scope": "The exact baseline finding remains historical; the defect or gap is resolved in the reviewed integrated remediation at 087c0d6."
     },
     {
       "id": "REM-0008",
@@ -257,25 +302,34 @@
           "subject_revision": "7de052690bbf3e2879f375c2b2e17207c7ee5bfe"
         },
         {
-          "observation": "The current source candidate implements this selected remediation; independent source/control acceptance remains outstanding.",
+          "observation": "Explicit dependency-based retention classes protect operational, recovery and evidence inputs without granting cleanup authority.",
           "source": "project-dossier/registers/workspace-retention.json",
-          "subject": "current_source_candidate",
+          "subject": "reviewed_integrated_remediation",
+          "subject_revision": "087c0d65cf97c8f553b8915dd3cc93dddc46d4c4",
+          "reviewed_candidate_revision": "82da3f644ea82d6bc7531c1711c63b54eb3b9f5b",
+          "review_reference": "docs/qualification/evidence/2026-09-15-standalone-reference-review.evidence.json",
           "validation_reference": ".agent/validators.json",
-          "scope": "Source implementation and synthetic checks only; no integrated control approval."
+          "scope": "Candidate approval binds only 82da3f6; PLAN-0006 records the separate Git and historical generated observations at 087c0d6."
         }
       ],
-      "still_valid": true,
-      "practical_impact": "Local operational, recovery, evidence and transient retention classes are not explicit.",
+      "still_valid": false,
+      "practical_impact": "Explicit dependency-based retention classes protect operational, recovery and evidence inputs without granting cleanup authority.",
       "dependencies": [],
-      "selected_disposition": "fix_in_this_candidate",
-      "implementation_scope": "Assigned repository source/docs/tests only; generated/local integration remains the integrator's follow-up.",
+      "selected_disposition": "completed_reviewed_and_integrated",
+      "implementation_scope": "The reviewed ADR-0007 source remediation is present at the exact recorded integration revision; this disposition grants no further work or control authority.",
       "validation_method": "Dependency-based classes and no cleanup authority; protect receipt inputs.",
       "completion_evidence": {
-        "status": "candidate_requires_independent_review",
-        "reference": "project-dossier/registers/workspace-retention.json",
-        "limitation": "No product, external gate, new receipt or retrospective evidence approval."
+        "status": "reviewed_and_integrated",
+        "reference": "docs/qualification/evidence/2026-09-15-standalone-reference-review.evidence.json",
+        "reviewed_candidate_revision": "82da3f644ea82d6bc7531c1711c63b54eb3b9f5b",
+        "observed_integration_revision": "087c0d65cf97c8f553b8915dd3cc93dddc46d4c4",
+        "integration_record": {
+          "owner_path": "project-dossier/machine-readable/plan.json",
+          "record_id": "PLAN-0006"
+        },
+        "limitation": "The envelope approves only 82da3f6. Integration is a separate direct Git/historical generated observation; the prior integrated audit was not separately committed. No product, external gate, receipt, live-state or future-head approval."
       },
-      "validity_scope": "Valid finding against the exact baseline; addressed in the source candidate, with acceptance still pending."
+      "validity_scope": "The exact baseline finding remains historical; the defect or gap is resolved in the reviewed integrated remediation at 087c0d6."
     },
     {
       "id": "REM-0009",
@@ -455,25 +509,34 @@
           "subject_revision": "7de052690bbf3e2879f375c2b2e17207c7ee5bfe"
         },
         {
-          "observation": "The current source candidate implements this selected remediation; independent source/control acceptance remains outstanding.",
+          "observation": "Validation pins all 85 mappings to accepted history and checks six supplemental mappings, five high-assurance entries and 35 artifact/path pairs.",
           "source": "project-dossier/transition/blueprint-adoption-crosswalk.json",
-          "subject": "current_source_candidate",
+          "subject": "reviewed_integrated_remediation",
+          "subject_revision": "087c0d65cf97c8f553b8915dd3cc93dddc46d4c4",
+          "reviewed_candidate_revision": "82da3f644ea82d6bc7531c1711c63b54eb3b9f5b",
+          "review_reference": "docs/qualification/evidence/2026-09-15-standalone-reference-review.evidence.json",
           "validation_reference": ".agent/validators.json",
-          "scope": "Source implementation and synthetic checks only; no integrated control approval."
+          "scope": "Candidate approval binds only 82da3f6; PLAN-0006 records the separate Git and historical generated observations at 087c0d6."
         }
       ],
-      "still_valid": true,
-      "practical_impact": "85 mappings exist; exact supplemental and artifact-pair coverage need stronger assertions.",
+      "still_valid": false,
+      "practical_impact": "Validation pins all 85 mappings to accepted history and checks six supplemental mappings, five high-assurance entries and 35 artifact/path pairs.",
       "dependencies": [],
-      "selected_disposition": "fix_in_this_candidate",
-      "implementation_scope": "Assigned repository source/docs/tests only; generated/local integration remains the integrator's follow-up.",
+      "selected_disposition": "completed_reviewed_and_integrated",
+      "implementation_scope": "The reviewed ADR-0007 source remediation is present at the exact recorded integration revision; this disposition grants no further work or control authority.",
       "validation_method": "Exact 85 mappings, six supplemental mappings, five high-assurance path/role types and 35 artifact/path pairs.",
       "completion_evidence": {
-        "status": "candidate_requires_independent_review",
-        "reference": "project-dossier/transition/blueprint-adoption-crosswalk.json",
-        "limitation": "No product, external gate, new receipt or retrospective evidence approval."
+        "status": "reviewed_and_integrated",
+        "reference": "docs/qualification/evidence/2026-09-15-standalone-reference-review.evidence.json",
+        "reviewed_candidate_revision": "82da3f644ea82d6bc7531c1711c63b54eb3b9f5b",
+        "observed_integration_revision": "087c0d65cf97c8f553b8915dd3cc93dddc46d4c4",
+        "integration_record": {
+          "owner_path": "project-dossier/machine-readable/plan.json",
+          "record_id": "PLAN-0006"
+        },
+        "limitation": "The envelope approves only 82da3f6. Integration is a separate direct Git/historical generated observation; the prior integrated audit was not separately committed. No product, external gate, receipt, live-state or future-head approval."
       },
-      "validity_scope": "Valid finding against the exact baseline; addressed in the source candidate, with acceptance still pending."
+      "validity_scope": "The exact baseline finding remains historical; the defect or gap is resolved in the reviewed integrated remediation at 087c0d6."
     },
     {
       "id": "REM-0015",

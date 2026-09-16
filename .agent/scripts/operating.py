@@ -5,8 +5,8 @@ import re
 import json
 from pathlib import PurePosixPath
 
-from common import (ROOT, load_json, loads, require, stable_file_bytes,
-                    reject_private_name, no_symlink_components, git, sha)
+from common import (ROOT, GENERATED_OUTPUT_PATHS, canonical, load_json, loads, require,
+                    stable_file_bytes, reject_private_name, no_symlink_components, git, sha)
 
 
 ADR = 'docs/decisions/ADR-0007-standalone-workspace-operating-contract.md'
@@ -14,6 +14,18 @@ SCHEMA = '.agent/schemas/standalone-operating-contract.v1.schema.json'
 RETENTION = 'project-dossier/registers/workspace-retention.json'
 REMEDIATION = 'project-dossier/conformance/remediation-register.json'
 RAIDQ = 'project-dossier/machine-readable/raidq.json'
+FINDINGS = 'project-dossier/conformance/findings.json'
+PLAN = 'project-dossier/machine-readable/plan.json'
+SUPERSESSION = 'project-dossier/SUPERSESSION.json'
+VERSION = 'project-dossier/VERSION.md'
+DOSSIER_VERSION = '1.4.2-mapped-existing'
+REVIEWED_CANDIDATE = '82da3f644ea82d6bc7531c1711c63b54eb3b9f5b'
+REVIEW_RECORDING = '1ad95e9cdd0c8d2f0e09aa5f6c14a86e055e1a0c'
+REMEDIATION_INTEGRATION = '087c0d65cf97c8f553b8915dd3cc93dddc46d4c4'
+STANDALONE_REVIEW = 'docs/qualification/evidence/2026-09-15-standalone-reference-review.evidence.json'
+STANDALONE_REVIEW_MD = 'docs/qualification/evidence/2026-09-15-standalone-reference-independent-review.md'
+REVIEWED_REMEDIATIONS = {'REM-0001', 'REM-0002', 'REM-0003', 'REM-0004',
+                       'REM-0007', 'REM-0008', 'REM-0014'}
 DEFERRED_TOPICS = {
     'blueprint_qualification': 'RAIDQ-0005',
     'private_controls': 'RAIDQ-0006',
@@ -180,6 +192,179 @@ def resolve_deferral(root, reference, *, expected_record=None, raidq=None):
     return details
 
 
+def validate_closeout(root=ROOT):
+    """Bind current completion to immutable review and separate historical Git facts.
+
+    This reads no current generated output, branch-name assumption, conversation,
+    binding or ledger. It neither replays nor invents an integrated-head approval.
+    """
+    def historical(path, revision=REMEDIATION_INTEGRATION):
+        return git('show', revision + ':' + path, root=root, text=False)
+
+    def indexed(rows, label):
+        result = {row['id']: row for row in rows}
+        require(len(result) == len(rows), 'duplicate closeout ' + label)
+        return result
+
+    review_raw = historical(STANDALONE_REVIEW, REVIEW_RECORDING)
+    review = loads(review_raw)
+    require(review['kind'] == 'review' and review['task_id'] == 'OPS-WSM-0001'
+            and review['candidate_revision'] == review['observed_revision'] == REVIEWED_CANDIDATE
+            and review['checks'] and all(row['status'] == 'PASS' for row in review['checks']),
+            'standalone completion lacks exact passing candidate review')
+    review_hashes = {}
+    for path in (STANDALONE_REVIEW, STANDALONE_REVIEW_MD):
+        raw = historical(path, REVIEW_RECORDING)
+        require(stable_file_bytes(root / path, 'retained standalone review') == raw,
+                'immutable standalone review evidence changed')
+        review_hashes[path] = sha(raw)
+    require(all(row['evidence_path'] == STANDALONE_REVIEW_MD
+                and row['sha256'] == review_hashes[STANDALONE_REVIEW_MD]
+                for row in review['checks']), 'candidate review lost its exact bound report')
+    for parent, revision, expected in (
+        (REVIEWED_CANDIDATE, REVIEW_RECORDING, ['A\t' + path for path in review_hashes]),
+        (REVIEW_RECORDING, REMEDIATION_INTEGRATION,
+         ['M\t' + path for path in GENERATED_OUTPUT_PATHS]),
+    ):
+        require(git('show', '-s', '--format=%P', revision, root=root).strip() == parent,
+                'reviewed integration parent chain changed')
+        changed = git('diff', '--name-status', '--no-renames', parent, revision,
+                      root=root).splitlines()
+        require(sorted(changed) == sorted(expected),
+                'post-candidate integration delta exceeds its declared evidence/generated scope')
+    git('merge-base', '--is-ancestor', REMEDIATION_INTEGRATION, 'HEAD', root=root)
+
+    plan = load_json(root / PLAN)
+    require(plan['authority'] == loads(historical(PLAN))['authority'],
+            'completion record acquired task or permission authority')
+    plans = indexed(plan['items'], 'plan ID')
+    for identifier in ('PLAN-0005', 'PLAN-0006'):
+        row = plans[identifier]
+        require(row['status'] == 'completed' and row['completion_evidence'] == STANDALONE_REVIEW
+                and row['reviewed_candidate_revision'] == REVIEWED_CANDIDATE
+                and row['reviewed_candidate_tree']
+                == git('rev-parse', REVIEWED_CANDIDATE + '^{tree}', root=root).strip()
+                and row['observed_integration_revision'] == REMEDIATION_INTEGRATION,
+                'reviewed integrated adoption plan regressed or lost exact completion evidence')
+    source_revisions = re.findall(
+        r'\| (?:Initial source commit/tree|First corrected source commit/tree|'
+        r'Final scope-correction source commit/tree) \| `([0-9a-f]{40})`',
+        historical(STANDALONE_REVIEW_MD, REVIEW_RECORDING).decode())
+    require(len(source_revisions) == 3 and plans['PLAN-0005']['source_revisions'] == source_revisions,
+            'source completion revisions differ from the immutable candidate review')
+    integrated = plans['PLAN-0006']
+    require(integrated['candidate_review_scope'] == 'exact_candidate_only'
+            and integrated['review_evidence_revision'] == REVIEW_RECORDING
+            and integrated['observed_integration_tree']
+            == git('rev-parse', REMEDIATION_INTEGRATION + '^{tree}', root=root).strip()
+            and integrated['integrated_audit_record'] == 'not_separately_committed',
+            'integration record extends candidate approval or invents durable final-audit evidence')
+    manifest_path = '.agent/generated/manifest.json'
+    index_path = 'project-dossier/machine-readable/evidence-index.json'
+    manifest = loads(historical(manifest_path))
+    candidate_manifest = loads(historical(manifest_path, REVIEWED_CANDIDATE))
+    evidence_index = loads(historical(index_path))
+    generated_keys = ('generation_id', 'source_git_revision', 'source_git_tree',
+                      'source_scope_sha256', 'evidence_scope_sha256')
+    require(integrated['generated_evidence'] == {
+        'revision': REMEDIATION_INTEGRATION, 'manifest_path': manifest_path,
+        'evidence_index_path': index_path, **{key: manifest[key] for key in generated_keys}},
+        'completion generated evidence differs from the exact integration revision')
+    require(manifest['source_git_revision'] == REVIEW_RECORDING
+            and manifest['source_git_tree']
+            == git('rev-parse', REVIEW_RECORDING + '^{tree}', root=root).strip()
+            and manifest['source_files'] == candidate_manifest['source_files']
+            and manifest['source_scope_sha256'] == candidate_manifest['source_scope_sha256']
+            == sha(canonical(manifest['source_files']))
+            and manifest['evidence_scope_sha256'] == evidence_index['evidence_scope_sha256']
+            == sha(canonical(manifest['evidence_files']))
+            and evidence_index['evidence'] == manifest['evidence_files']
+            and evidence_index['generation_id'] == manifest['generation_id'],
+            'historical generated source/evidence identity does not preserve the reviewed source')
+    generation_basis = {key: manifest[key] for key in (
+        'source_scope_sha256', 'evidence_scope_sha256', 'ledger_sha256', 'receipt_count', 'receipt_tip')}
+    require(manifest['generation_id'] == sha(canonical(generation_basis))
+            and all({'path': path, 'sha256': digest} in evidence_index['evidence']
+                    for path, digest in review_hashes.items()),
+            'historical generation or review evidence index is inconsistent')
+
+    integration_ref = {'owner_path': PLAN, 'record_id': 'PLAN-0006'}
+    findings = indexed(load_json(root / FINDINGS)['findings'], 'finding ID')
+    finding = findings['FIND-0007']
+    require(finding['classification'] == 'conformant'
+            and finding['subject'] == 'Reviewed integrated standalone workspace remediation'
+            and finding['disposition'] == 'operational_reviewed_source_at_recorded_integration'
+            and finding['evidence'] == STANDALONE_REVIEW
+            and finding['reviewed_candidate_revision'] == REVIEWED_CANDIDATE
+            and finding['observed_integration_revision'] == REMEDIATION_INTEGRATION
+            and finding['integration_record'] == integration_ref,
+            'current standalone finding regressed or lost its bounded reviewed integration')
+    current_rows = indexed(load_json(root / REMEDIATION)['items'], 'remediation ID')
+    prior_rows = indexed(loads(historical(REMEDIATION))['items'], 'historical remediation ID')
+    require(set(current_rows) == set(prior_rows), 'closeout lost remediation coverage')
+    stale = ('current source candidate', 'current_source_candidate',
+             'acceptance still pending', 'acceptance remains outstanding',
+             'candidate_requires_independent', 'fix_in_this_candidate',
+             'currently calls the refresh writer')
+    for identifier, row in current_rows.items():
+        prior = prior_rows[identifier]
+        if identifier not in REVIEWED_REMEDIATIONS:
+            require(row == prior, 'closeout changed a retained, resolved, omitted or deferred disposition')
+            continue
+        completion = row['completion_evidence']
+        require(row['still_valid'] is False
+                and row['selected_disposition'] == 'completed_reviewed_and_integrated'
+                and completion['status'] == 'reviewed_and_integrated'
+                and completion['reference'] == STANDALONE_REVIEW
+                and completion['reviewed_candidate_revision'] == REVIEWED_CANDIDATE
+                and completion['observed_integration_revision'] == REMEDIATION_INTEGRATION
+                and completion['integration_record'] == integration_ref,
+                'implemented remediation regressed or lost its exact reviewed completion')
+        require(len(row['current_evidence']) == 2
+                and row['current_evidence'][0] == prior['current_evidence'][0],
+                'closeout changed the exact historical baseline finding')
+        observation = row['current_evidence'][1]
+        require(observation['subject'] == 'reviewed_integrated_remediation'
+                and observation['subject_revision'] == REMEDIATION_INTEGRATION
+                and observation['reviewed_candidate_revision'] == REVIEWED_CANDIDATE
+                and observation['review_reference'] == STANDALONE_REVIEW
+                and row['practical_impact'] == observation['observation']
+                and row['practical_impact'] != prior['practical_impact'],
+                'implemented remediation still describes its historical defect as current')
+        active = {key: value for key, value in row.items() if key != 'current_evidence'}
+        active['current_evidence'] = [observation]
+        normalized = ' '.join(json.dumps(active).lower().split())
+        require(not any(phrase in normalized for phrase in stale),
+                'stale candidate status remains in active remediation text')
+
+    supersession = load_json(root / SUPERSESSION)
+    prior_supersession = loads(historical(SUPERSESSION))
+    require(supersession['current_version'] == DOSSIER_VERSION
+            and len(supersession['records']) == 5
+            and supersession['records'][:4] == prior_supersession['records'],
+            'closeout supersession regressed or rewrote prior records')
+    successor = supersession['records'][-1]
+    require(successor['id'] == 'SUP-0005'
+            and successor['prior_version'] == prior_supersession['current_version']
+            == '1.4.1-mapped-existing'
+            and successor['prior_revision'] == REMEDIATION_INTEGRATION
+            and successor['prior_path'] == successor['active_successor_path'] == VERSION
+            and successor['prior_sha256'] == sha(historical(VERSION))
+            and successor['retention'] == 'exact_predecessor_in_preserved_Git_history'
+            and successor['predecessor_status'] == 'reviewed_source_integrated_with_stale_candidate_metadata'
+            and successor['successor_version'] == DOSSIER_VERSION
+            and successor['affected_current_sources'] == [FINDINGS, PLAN, REMEDIATION],
+            'closeout successor lost the exact integrated 1.4.1 predecessor')
+    version = stable_file_bytes(root / VERSION, 'current dossier version').decode()
+    require(version.splitlines()[2] == 'Current operational contract version: `' + DOSSIER_VERSION + '`.'
+            and 'Candidate contract version:' not in version,
+            'current dossier version regressed to candidate or pending operation')
+    return {'reviewed_candidate_revision': REVIEWED_CANDIDATE,
+            'observed_integration_revision': REMEDIATION_INTEGRATION,
+            'completed_remediations': len(REVIEWED_REMEDIATIONS),
+            'integrated_audit_record': integrated['integrated_audit_record']}
+
+
 def validate_operating(root=ROOT):
     contract = load_contract(root)
     roles = contract['path_roles']
@@ -333,5 +518,7 @@ def validate_operating(root=ROOT):
             and 'Blueprint qualification is separate from family layout authority'
             in issues['RAIDQ-0008']['control'],
             'Octon repository scope or separate qualification boundary is missing')
+    closeout = validate_closeout(root)
     return {'path_roles': len(roles), 'retention_classes': len(classes),
-            'remediation_items': len(rows), 'owner_reference_sets': len(refs)}
+            'remediation_items': len(rows), 'owner_reference_sets': len(refs),
+            'reviewed_integration_closeout': closeout}
