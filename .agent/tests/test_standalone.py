@@ -232,6 +232,56 @@ class StandaloneContracts(unittest.TestCase):
         self.assertEqual(operating.raw_raidq_record((ROOT / operating.RAIDQ).read_bytes(), 'RAIDQ-0005'),
                          operating.raw_raidq_record(prior, 'RAIDQ-0005'))
 
+    def test_family_work_targets_its_own_repositories_with_texenda_advisory_only(self):
+        raidq = common.load_json(ROOT / operating.RAIDQ)
+        issues = {row['id']: row for row in raidq['items']}
+        plectarium, octon = issues['RAIDQ-0007'], issues['RAIDQ-0008']
+        self.assertIn("Plectarium's own independent repositories", plectarium['statement'])
+        self.assertIn('established family contract', plectarium['statement'])
+        self.assertIn("Plectarium family's accountable owner", plectarium['owner'])
+        self.assertIn('qualified revisions', plectarium['blocker'])
+        for name in ('octon', 'octonos', 'octon-mini'):
+            self.assertIn(name, octon['statement'])
+            self.assertIn(name, octon['owner'])
+        evidence = ' '.join(octon['required_evidence']).lower()
+        for prerequisite in ('dirty', 'worktree', 'unborn', 'qualification', 'only when'):
+            self.assertIn(prerequisite, evidence)
+        self.assertIn('Blueprint qualification is separate from family layout authority', octon['control'])
+        for row in (plectarium, octon):
+            self.assertEqual(row['dependencies'], [])
+            self.assertNotIn('texenda', row['owner'].lower())
+            self.assertIn('advisory reference evidence only', row['control'])
+            for field in ('blocker', 'trigger', 'risk', 'next_action', 'recovery'):
+                self.assertNotIn('texenda', row[field].lower())
+        # This correction preserves every other RAIDQ record and all closed references.
+        prior = common.loads(common.git('show', '486e65dc9fe8331274d00c7fc06685ff1897fafb:'
+                                        + operating.RAIDQ, root=ROOT))
+        self.assertEqual([row for row in raidq['items'] if row['id'] not in ('RAIDQ-0007', 'RAIDQ-0008')],
+                         [row for row in prior['items'] if row['id'] not in ('RAIDQ-0007', 'RAIDQ-0008')])
+        self.assertEqual((ROOT / operating.REMEDIATION).read_bytes(),
+                         common.git('show', '486e65dc9fe8331274d00c7fc06685ff1897fafb:'
+                                    + operating.REMEDIATION, root=ROOT, text=False))
+
+    def test_family_scope_rejects_texenda_owner_subject_or_qualification_dependency(self):
+        original = common.load_json(ROOT / operating.RAIDQ)
+        actual = operating.load_json
+        for identifier, fields in (
+            ('RAIDQ-0007', {'owner': 'Plectarium and Texenda migration owner'}),
+            ('RAIDQ-0007', {'statement': 'Proposed Texenda migration/adoption'}),
+            ('RAIDQ-0008', {'next_action': 'Prepare a Texenda migration plan'}),
+            ('RAIDQ-0008', {'dependencies': ['RAIDQ-0005']}),
+        ):
+            changed = copy.deepcopy(original)
+            next(row for row in changed['items'] if row['id'] == identifier).update(fields)
+
+            def replaced(path, changed=changed):
+                return changed if path == ROOT / operating.RAIDQ else actual(path)
+
+            with self.subTest(record=identifier, fields=fields), \
+                    mock.patch.object(operating, 'load_json', side_effect=replaced), \
+                    self.assertRaises(common.ValidationError):
+                operating.validate_operating(ROOT)
+
     def test_composite_catalog_requires_all_scoped_current_sources(self):
         original = common.load_json(ROOT / 'project-dossier/ARTIFACT_CATALOG.json')
         changed = copy.deepcopy(original)

@@ -88,42 +88,43 @@
       "id": "RAIDQ-0007",
       "type": "dependency",
       "status": "deferred",
-      "statement": "Plectarium already has an established family contract. Proposed new Texenda migration/adoption work has no accepted scope or assigned accountable owner.",
-      "owner": "Plectarium family maintainer and accountable owner for the proposed Texenda migration/adoption; assignment remains outstanding",
-      "blocker": "The existing family contract does not itself select or authorize the proposed new migration/adoption work; its exact scope and accountable owner remain unassigned.",
-      "trigger": "An accountable owner accepts a concrete Texenda migration/adoption scope under the established Plectarium family contract.",
-      "risk": "Established family governance could be mistaken for permission to perform new cross-project migration or adoption.",
+      "statement": "Proposed future migration/adoption work concerns Plectarium's own independent repositories under its established family contract. Texenda supplies advisory reference evidence only.",
+      "owner": "Plectarium family's accountable owner and the owners of its affected independent repositories; the exact proposed implementation assignment remains outstanding",
+      "blocker": "The established family contract exists, but the exact accepted implementation scope, named accountable owner, target repositories and qualified revisions for this proposed work are not supplied.",
+      "trigger": "Plectarium's accountable family owner accepts a bounded implementation scope for its own repositories, with assigned owners, exact target/base revisions and applicable qualification evidence.",
+      "risk": "An established family contract or an advisory example could be mistaken for authorization to perform new work across Plectarium's repositories.",
       "required_evidence": [
-        "Identified accountable owner and accepted exact new-work scope",
-        "Applicable established family contract/version and scoped compatibility assessment",
-        "Exact affected-path migration/adoption plan, review and recovery evidence"
+        "Plectarium family owner's accepted implementation scope and named accountable owners",
+        "Exact list of Plectarium's affected independent repositories and qualified target/base revisions",
+        "Applicable established family contract/version and compatibility assessment",
+        "Current repository/worktree inventories, preservation plan, independent review and recovery evidence under the family's own rules"
       ],
-      "next_action": "Obtain the accountable owner's accepted scope for the proposed new Plectarium migration/adoption work; then identify the exact applicable existing contract/version.",
-      "recovery": "Continue standalone Texenda with current local owners; do not change Plectarium or migrate/adopt on the basis of family membership alone.",
-      "control": "Plectarium migration/adoption is outside ordinary Texenda work; standalone-standard publication has no dependency on this item.",
+      "next_action": "Through a separate Plectarium-owned task, have the family's accountable owner identify its own target repositories and accept the exact implementation scope, responsible owners and qualified revisions before preparing migration/adoption changes.",
+      "recovery": "Leave Plectarium's repositories in their current arrangement, preserve their existing work, and return the proposed scope to the family's accountable owner if prerequisites are missing.",
+      "control": "Texenda supplies advisory reference evidence only. It is not a work subject, dependency, authority or accountable migration owner for this family work.",
       "dependencies": []
     },
     {
       "id": "RAIDQ-0008",
       "type": "dependency",
       "status": "deferred",
-      "statement": "Proposed Octon family migration is separate external work and has no accepted exact Texenda migration scope.",
-      "owner": "Octon family/Project Blueprint maintainer and accountable Texenda migration owner; exact new-work assignment remains outstanding",
-      "blocker": "An accepted exact migration scope, fully qualified intended source and authentic reviewed migration seed are missing. RAIDQ-0005 owns the existing source-qualification failure and seed details.",
-      "trigger": "The accountable owner accepts the migration scope after RAIDQ-0005 prerequisites are satisfied on the exact intended source.",
-      "risk": "A family migration could replace Texenda authority or receipt/recovery dependencies using a partially qualified source.",
+      "statement": "Proposed future organization/migration work concerns the external owners' own independent repositories: octon, octonos and octon-mini. Texenda supplies advisory reference evidence only.",
+      "owner": "The respective external owners of octon, octonos and octon-mini; accountable implementation assignments for the proposed organization/migration scopes remain outstanding",
+      "blocker": "Exact accepted implementation scopes, accountable owners and target/base revisions for these repositories remain outstanding. Existing dirty changes, worktree state and any unborn branch must be verified and preserved by their owners. Blueprint source qualification is a separate prerequisite only where the proposed work actually adopts or changes that source.",
+      "trigger": "The respective external owners accept bounded organization/migration plans for their own repositories after verifying dirty/worktree/unborn state and preservation. They qualify exact revisions where the accepted scope requires it; source adoption or upgrade follows its own qualification and seed requirements.",
+      "risk": "Directory organization could discard uncommitted work, disrupt active worktrees or invent history for an unborn branch. Treating Blueprint qualification as family layout authority could also authorize unrelated changes.",
       "required_evidence": [
-        "Accepted owner and exact new migration scope",
-        "RAIDQ-0005 source qualification and authentic reviewed seed evidence",
-        "Exact mapped-authority, receipt, package and recovery compatibility review",
-        "Recoverable implementation plan and independent candidate review"
+        "Accepted per-repository scope and accountable external owners for octon, octonos and octon-mini",
+        "Fresh owner-supplied inventories of dirty/untracked/ignored changes and registered/active worktrees, with exact HEAD/tree where present and explicit unborn status where no HEAD exists",
+        "Preservation checkpoints and runtime-stop evidence as applicable before any repository or worktree movement",
+        "Qualified target/base revisions and independent review appropriate to each accepted organization/migration scope",
+        "Separate Octon Mini Blueprint qualification and authentic reviewed seed evidence only when actual source adoption/upgrade triggers that source contract; these do not establish family layout authority",
+        "Non-overwriting per-repository plans and recoverable procedures under the respective owners' contracts"
       ],
-      "next_action": "Assign the proposed Octon migration owner and exact scope, then resolve RAIDQ-0005 before preparing any application plan.",
-      "recovery": "Keep the existing standalone Texenda contract, selected structural reference and preserved source evidence; perform no family migration.",
-      "control": "No source-repository modification, installation or migration is authorized by this record.",
-      "dependencies": [
-        "RAIDQ-0005"
-      ]
+      "next_action": "Through separately owned tasks, have the octon, octonos and octon-mini owners verify their current dirty/worktree/unborn states and accept exact organization/migration scopes. Assess Blueprint qualification separately only if source adoption or upgrade is included.",
+      "recovery": "Preserve each external repository's current layout, branches, worktrees, uncommitted data and unborn state. Pause only its dependent proposed changes and obtain its owner's recovery decision; do not initialize, reset or reorganize repositories to manufacture prerequisites.",
+      "control": "Texenda supplies advisory reference evidence only. It is not a work subject, dependency, authority or accountable migration owner. Octon Mini Blueprint qualification is separate from family layout authority.",
+      "dependencies": []
     },
     {
       "id": "RAIDQ-0009",

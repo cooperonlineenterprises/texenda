@@ -316,8 +316,22 @@ def validate_operating(root=ROOT):
     require(set(contract['deferred_records']) == set(DEFERRED_TOPICS.values())
             and len(contract['deferred_records']) == len(DEFERRED_TOPICS),
             'operating contract deferral references are incomplete')
-    require(issues['RAIDQ-0008']['dependencies'] == ['RAIDQ-0005']
+    require(issues['RAIDQ-0007']['dependencies'] == []
+            and issues['RAIDQ-0008']['dependencies'] == []
             and issues['RAIDQ-0009']['dependencies'] == [],
-            'Octon or standalone publication acquired the wrong dependency')
+            'external family work or standalone publication acquired a Texenda dependency')
+    for identifier, family in (('RAIDQ-0007', 'plectarium'), ('RAIDQ-0008', 'octon')):
+        row = issues[identifier]
+        require(family in row['owner'].lower() and 'texenda' not in row['owner'].lower()
+                and 'own independent repositories' in row['statement']
+                and 'advisory reference evidence only' in row['control'],
+                'external family scope acquired a Texenda subject or owner')
+        for field in ('blocker', 'trigger', 'risk', 'next_action', 'recovery'):
+            require('texenda' not in row[field].lower(),
+                    'external family action details acquired a Texenda migration scope')
+    require(all(name in issues['RAIDQ-0008']['statement'] for name in ('octon', 'octonos', 'octon-mini'))
+            and 'Blueprint qualification is separate from family layout authority'
+            in issues['RAIDQ-0008']['control'],
+            'Octon repository scope or separate qualification boundary is missing')
     return {'path_roles': len(roles), 'retention_classes': len(classes),
             'remediation_items': len(rows), 'owner_reference_sets': len(refs)}
