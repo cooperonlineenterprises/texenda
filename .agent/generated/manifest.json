@@ -1,12 +1,12 @@
 {
   "schema_version": "texenda.generated-integrity.v1",
-  "generation_id": "6918b3222b1b8a17e1e99ded9d17ed68edd511a901f70ee009b36541e6218927",
+  "generation_id": "660d08d54a8d610a6d4c78a51385130a87f5cd31d5e4520e378f630306d34fff",
   "generation_id_derivation": "sha256(canonical_json(source_scope_sha256,evidence_scope_sha256,ledger_sha256,receipt_count,receipt_tip))",
-  "generated_at": "2026-09-15T23:29:59+00:00",
+  "generated_at": "2026-09-16T00:01:00+00:00",
   "authority": "generated_non_authoritative",
-  "source_git_revision": "385ce8eddef06fdc0ab9d46222e4c347fa1c11bd",
-  "source_git_tree": "6b57fa35b5afb7c00c2eb119b53ee1d0a524b3e8",
-  "source_scope_sha256": "4b9b92e7ba4983752abf7e110731e9202e49fbbc5e65d992acbf0ffe9c9afa2a",
+  "source_git_revision": "9f3d4db74577b15d79424f7bc5c7bbc1fb24cee3",
+  "source_git_tree": "fc2f0824f126d3675d89facabb7acf35acf43c09",
+  "source_scope_sha256": "c52186b775d007d6ccd69233ce5a17a821bc4394598540d3e3f840539cd735fd",
   "source_scope_exclusions": [
     {
       "path": ".agent/generated/manifest.json",
@@ -120,7 +120,7 @@
     },
     {
       "path": ".agent/schemas/standalone-operating-contract.v1.schema.json",
-      "sha256": "8075591da8630b1150f1af697f0487bd724bab53895e37755a280af2379047df"
+      "sha256": "6d30380c2dd4d038a63b233372c09db405a5bb3bf4060353792bf5473dc5d369"
     },
     {
       "path": ".agent/scripts/common.py",
@@ -128,7 +128,7 @@
     },
     {
       "path": ".agent/scripts/operating.py",
-      "sha256": "870c7288ab8e765ee6cc5f56c8b3ab91398408e2df03a59352abbfae5f2096da"
+      "sha256": "ceb8376f2622d4c1871265f56f695182b4cbbbbe2ffb82ed14b9bccd9ff119c2"
     },
     {
       "path": ".agent/scripts/refresh.py",
@@ -136,7 +136,7 @@
     },
     {
       "path": ".agent/scripts/validate.py",
-      "sha256": "2eaa775bd2f057c2f801414089f45fc463abac48ab475d949e6b3eefac3791a5"
+      "sha256": "9f0a88299d81e1f796aaf18fbc323056729bf70c638c041b2302cb5aeb0f763b"
     },
     {
       "path": ".agent/tasks/README.md",
@@ -156,11 +156,11 @@
     },
     {
       "path": ".agent/tests/test_standalone.py",
-      "sha256": "061aa057b4abfb8de14dadc4fc1551524370f00b49ec14770b9e665a379d4d98"
+      "sha256": "6dfa1be8bd51d43bf6edd37ae277722f4e8913c4c9708de5344689f69b454081"
     },
     {
       "path": ".agent/tests/test_validate.py",
-      "sha256": "98b856c077b8c970d6ce07a824b5bb08658e6b4569c9f9100922df1bb3bc4208"
+      "sha256": "2e6d3ecda48b12fcd97ddb1c8c3135c28c7b9c14a2dcd07c34658c3e169dc7ff"
     },
     {
       "path": ".agent/tools.json",
@@ -168,7 +168,7 @@
     },
     {
       "path": ".agent/validators.json",
-      "sha256": "44819892583519297491314c9971cb5ae84351ec0584e6390978358661beff36"
+      "sha256": "247ef70566a47f800b389595b198571929581548e86f90094a3817bd1eb3c205"
     },
     {
       "path": ".codex/config.toml",
@@ -240,7 +240,7 @@
     },
     {
       "path": "docs/decisions/ADR-0007-standalone-workspace-operating-contract.md",
-      "sha256": "d1736ed4d215a43467011ee6f76e0de5bae7a7db4a37418cdc25ee4bd9f84251"
+      "sha256": "3c811bd57c384cc3cd8f5997b1c80f59bdd1fb1c70d9d42ce4330b94810cb57c"
     },
     {
       "path": "docs/operations/github-ci-policy.md",
@@ -412,7 +412,7 @@
     },
     {
       "path": "project-dossier/AUTHORITY.md",
-      "sha256": "8c3c1a9d89a2189f4dde174dd6b2a529e3d958a5c7171cd64e7166f46e1ab23e"
+      "sha256": "3a5a0718d20bf6900766e054a2fdb070ade6a60f5da397e89d76ffd1decb4e11"
     },
     {
       "path": "project-dossier/README.md",
@@ -420,15 +420,15 @@
     },
     {
       "path": "project-dossier/SUPERSESSION.json",
-      "sha256": "e442027aee51a3ceead27fd41cc56678bd78aae1e941b411a03db6c41c7b7ba2"
+      "sha256": "6b80755add8a054466754fbc97146b1b025463e76c7cf127006575f3bd1fb84a"
     },
     {
       "path": "project-dossier/VERSION.md",
-      "sha256": "8cfd03af5619e36b3a7a1ffcf24b44e5736a7598ec97e1bfb57633669528c84d"
+      "sha256": "963b2dbf0ed16054d8e515232caf31695d5bfadcbf3122110e684e5a3f0d8dbc"
     },
     {
       "path": "project-dossier/conformance/README.md",
-      "sha256": "dcd503339a0a1c7bd421a05b7e94321232dbd16b3c88d05080408284740ff9fa"
+      "sha256": "f9014d8d21c235ef10d06d574297b572e2d237d4d4b508a02578ab232c3c1e48"
     },
     {
       "path": "project-dossier/conformance/findings.json",
@@ -436,7 +436,7 @@
     },
     {
       "path": "project-dossier/conformance/remediation-register.json",
-      "sha256": "60351bb8a234f7541be3462a1f9f0f031dc283ab8e1c9156526fd3a57c33d81b"
+      "sha256": "9e37fae1dcbc2b427429d378a17fbe6ac456a086b304b4a741bd2245d4516ede"
     },
     {
       "path": "project-dossier/evidence/README.md",
@@ -456,7 +456,7 @@
     },
     {
       "path": "project-dossier/machine-readable/raidq.json",
-      "sha256": "1f68aa91b41d022117e740c9114a261e00cda779f4c7a5afd3bee81ead006430"
+      "sha256": "26eae2405797375ea39effb31f8cb3f3bbfd94c31001d66cc042e52b502c65a6"
     },
     {
       "path": "project-dossier/plans/README.md",
@@ -484,7 +484,7 @@
     },
     {
       "path": "project-dossier/transition/blueprint-adoption-crosswalk.json",
-      "sha256": "af62199afbf6cdda3768a3a272e11d33c0ceeb3a39c49ed7f3fbd2dba2db7820"
+      "sha256": "54bd7fc4c5e5977e5015064bba3f75e311c94ff3835f3f13d12c9ac76d2385b8"
     },
     {
       "path": "project-dossier/transition/external-state-relocation-receipt.md",
@@ -504,7 +504,7 @@
     },
     {
       "path": "project-dossier/validation/README.md",
-      "sha256": "99ed7dfec70ecc8c8ab51587f1a40ab8862cbf64c62b60f4f5e96f533e5ba149"
+      "sha256": "6079399d663d00aea56029796ac650b80495fbd10d62be2f88642dd6a1e34a13"
     },
     {
       "path": "specs/texenda-handoff/01-foundation/adr-index.md",
@@ -924,7 +924,7 @@
     },
     {
       "path": "tooling/workspace/README.md",
-      "sha256": "f60d8309b2b0bba794c74aa670d5132e965d3858f4eb3ee027f879d7bf1d733e"
+      "sha256": "72292137e0c955db18d79a3af7fff8c3fd40170d51376f6e20f0d8222bde486c"
     },
     {
       "path": "tooling/workspace/interpret_adoption.py",
@@ -936,11 +936,11 @@
     },
     {
       "path": "tooling/workspace/tests/test_adoption_interpreter.py",
-      "sha256": "326b1565747c3af2952976c78774a6515371c357b34aa2b93e32bf19a4e0d026"
+      "sha256": "9a6e02b4855909d5628947dd4eee24930d49d8d059f6f5f829b6d16240ceb2bd"
     },
     {
       "path": "tooling/workspace/tests/test_contract.py",
-      "sha256": "7a27e5f4aba08735fc7c1335b88bce1921ccfbc90e0f054338822c482f77936f"
+      "sha256": "acd8fa24ef796442bbe5873f05ae7120a9e07fb38cc06a7b7b5412b46e58a4c8"
     },
     {
       "path": "tooling/workspace/tests/test_relocation.py",
@@ -952,7 +952,7 @@
     },
     {
       "path": "tooling/workspace/validate_contract.py",
-      "sha256": "963cc7194f49ce72dc45b9f68cda61e8ac15372c85bcb9d3f7d1f1f991fdc088"
+      "sha256": "d6b34c0b38f233abc58d983e4ffe6ea5c7fcb81c686976f34d7496e46490aeff"
     },
     {
       "path": "tooling/workspace/validate_relocation.py",

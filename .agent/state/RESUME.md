@@ -2,9 +2,9 @@
 
 Generated, non-authoritative projection. Documentation is not permission.
 
-- Generation: `6918b3222b1b8a17e1e99ded9d17ed68edd511a901f70ee009b36541e6218927` at `2026-09-15T23:29:59+00:00`
-- Source revision/tree: `385ce8eddef06fdc0ab9d46222e4c347fa1c11bd` / `6b57fa35b5afb7c00c2eb119b53ee1d0a524b3e8`
-- Source-scope SHA-256: `4b9b92e7ba4983752abf7e110731e9202e49fbbc5e65d992acbf0ffe9c9afa2a`
+- Generation: `660d08d54a8d610a6d4c78a51385130a87f5cd31d5e4520e378f630306d34fff` at `2026-09-16T00:01:00+00:00`
+- Source revision/tree: `9f3d4db74577b15d79424f7bc5c7bbc1fb24cee3` / `fc2f0824f126d3675d89facabb7acf35acf43c09`
+- Source-scope SHA-256: `c52186b775d007d6ccd69233ce5a17a821bc4394598540d3e3f840539cd735fd`
 - Live-ledger SHA-256: `b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235`
 - Receipt count/tip: `13` / `f39249184757101b108ea7ec5ea0ffebdd8237315b8ac3cad3ad0cc6ab3e827e`
 - Live task/receipt/roster authority: `/Users/jamesryancooper/Projects/texenda/local/agent-state/texenda/state.json`
