@@ -1,12 +1,12 @@
 {
   "schema_version": "texenda.generated-integrity.v1",
-  "generation_id": "c6b999d898a7a31aa0f21194f7e7e9dcbbae1e4c769c2690b359e8cdf139a9a4",
+  "generation_id": "21ec223114932ed08b3877ef547bd73d610d7806888fbc00fa3bd6b0b37045f9",
   "generation_id_derivation": "sha256(canonical_json(source_scope_sha256,evidence_scope_sha256,ledger_sha256,receipt_count,receipt_tip))",
-  "generated_at": "2026-09-16T00:27:32+00:00",
+  "generated_at": "2026-09-16T21:23:58+00:00",
   "authority": "generated_non_authoritative",
-  "source_git_revision": "1ad95e9cdd0c8d2f0e09aa5f6c14a86e055e1a0c",
-  "source_git_tree": "dfcca239fffacaa7925c42ec417f49302fe0eedd",
-  "source_scope_sha256": "8426d44e52f8513128ae90fb65e61c2b7ac38d3d4680a50d440fb958012ce7be",
+  "source_git_revision": "f1f4816b68772ac26f598900668f591a6fdcceb0",
+  "source_git_tree": "4a6fc3db937aac9eca5db2c030e88d0111c0dd4c",
+  "source_scope_sha256": "8b1a9009751381298c75631be9e1ba8f563ed271e60a4494241a559070208152",
   "source_scope_exclusions": [
     {
       "path": ".agent/generated/manifest.json",
@@ -128,7 +128,7 @@
     },
     {
       "path": ".agent/scripts/operating.py",
-      "sha256": "33a1883caccec7603fbd7ec5242a190e10260e9476be1e38af04a4b6a532439c"
+      "sha256": "3102ceebe48bd1d5c27eb9312c57f188719a0c2aee2ab153fd89b690f1f12899"
     },
     {
       "path": ".agent/scripts/refresh.py",
@@ -136,7 +136,7 @@
     },
     {
       "path": ".agent/scripts/validate.py",
-      "sha256": "9f0a88299d81e1f796aaf18fbc323056729bf70c638c041b2302cb5aeb0f763b"
+      "sha256": "47740549b4c52dfb30db1f1634fce3e462e08d4b979b5d00b7eda0375bdab8d2"
     },
     {
       "path": ".agent/tasks/README.md",
@@ -155,8 +155,12 @@
       "sha256": "8113f946d8fad10917a892cf77a258cb30046ae2baf1a829909a340f896532c0"
     },
     {
+      "path": ".agent/tests/test_closeout.py",
+      "sha256": "b6c17860cf6ebdfa7a0eaaf78aa4d0daf11fbd4bf060ce363b72e0d9a26b23f2"
+    },
+    {
       "path": ".agent/tests/test_standalone.py",
-      "sha256": "126fa092eff6c69a3748fe5a04664a53945993515058a7a973918028d9bfd193"
+      "sha256": "69237d9b135b2d1391b81b1e772afdd1db112d1fd0c98712782e67157392716c"
     },
     {
       "path": ".agent/tests/test_validate.py",
@@ -420,11 +424,11 @@
     },
     {
       "path": "project-dossier/SUPERSESSION.json",
-      "sha256": "6b80755add8a054466754fbc97146b1b025463e76c7cf127006575f3bd1fb84a"
+      "sha256": "f78b49bb2bc9754dcdf32b9bfbab18bfa08d97ef5c84735e6083207e55f375ac"
     },
     {
       "path": "project-dossier/VERSION.md",
-      "sha256": "963b2dbf0ed16054d8e515232caf31695d5bfadcbf3122110e684e5a3f0d8dbc"
+      "sha256": "9b63b48badbb86adff8e9133ed358e97f9640925725d6616741f2514299c5947"
     },
     {
       "path": "project-dossier/conformance/README.md",
@@ -432,11 +436,11 @@
     },
     {
       "path": "project-dossier/conformance/findings.json",
-      "sha256": "11a058f6117522864f9e1c442e8068e7a04dd508ec3ca36e214eba864dad77ff"
+      "sha256": "205bcbee24138f782fb74dae7e0d1d5c4e7b5865e19fe71d9b3f8fb089420e8b"
     },
     {
       "path": "project-dossier/conformance/remediation-register.json",
-      "sha256": "9e37fae1dcbc2b427429d378a17fbe6ac456a086b304b4a741bd2245d4516ede"
+      "sha256": "4c280d3d57aab25a6cb9b77cf2abb76f1fdadd57a6a77f01b5453a7fda0c2d7c"
     },
     {
       "path": "project-dossier/evidence/README.md",
@@ -452,7 +456,7 @@
     },
     {
       "path": "project-dossier/machine-readable/plan.json",
-      "sha256": "e136acf238927cbc7dda0af3e0382993566de5be9a657e0e852a8cef6cab7f39"
+      "sha256": "83df551d9242d7ef5d54dc62d628889a485578a8ba6996c86324295bd68cc363"
     },
     {
       "path": "project-dossier/machine-readable/raidq.json",
@@ -952,7 +956,7 @@
     },
     {
       "path": "tooling/workspace/validate_contract.py",
-      "sha256": "d6b34c0b38f233abc58d983e4ffe6ea5c7fcb81c686976f34d7496e46490aeff"
+      "sha256": "5d5374f58e3053286c4c33b152794edcbb1e31b71310186aa32d6474f1bc046c"
     },
     {
       "path": "tooling/workspace/validate_relocation.py",
