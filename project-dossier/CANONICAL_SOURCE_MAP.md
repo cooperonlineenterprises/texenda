@@ -1,7 +1,7 @@
 # Canonical source map
 
 Generated, non-authoritative navigation. Documentation is not permission.
-Generation: `21ec223114932ed08b3877ef547bd73d610d7806888fbc00fa3bd6b0b37045f9` at `2026-09-16T21:23:58+00:00`.
+Generation: `9c45b0bc0550b5c12a0c63b55ded8e080501de528ad59ee72bed7857fc4e8119` at `2026-09-16T21:49:02+00:00`.
 Current ownership epoch: `external_state`.
 
 | Concern | Current owner | Rule |

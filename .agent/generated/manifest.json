@@ -1,12 +1,12 @@
 {
   "schema_version": "texenda.generated-integrity.v1",
-  "generation_id": "21ec223114932ed08b3877ef547bd73d610d7806888fbc00fa3bd6b0b37045f9",
+  "generation_id": "9c45b0bc0550b5c12a0c63b55ded8e080501de528ad59ee72bed7857fc4e8119",
   "generation_id_derivation": "sha256(canonical_json(source_scope_sha256,evidence_scope_sha256,ledger_sha256,receipt_count,receipt_tip))",
-  "generated_at": "2026-09-16T21:23:58+00:00",
+  "generated_at": "2026-09-16T21:49:02+00:00",
   "authority": "generated_non_authoritative",
-  "source_git_revision": "f1f4816b68772ac26f598900668f591a6fdcceb0",
-  "source_git_tree": "4a6fc3db937aac9eca5db2c030e88d0111c0dd4c",
-  "source_scope_sha256": "8b1a9009751381298c75631be9e1ba8f563ed271e60a4494241a559070208152",
+  "source_git_revision": "02c42959501c7edd06e9c7fabf35460dfa745182",
+  "source_git_tree": "87923746d5c92c6ea245d31f2ecc983217739d5d",
+  "source_scope_sha256": "ef6447364e48c7cac2125609b6446cfa90e5ff7381c9bbe7b73ccb7bb8b8eec6",
   "source_scope_exclusions": [
     {
       "path": ".agent/generated/manifest.json",
@@ -128,7 +128,7 @@
     },
     {
       "path": ".agent/scripts/operating.py",
-      "sha256": "3102ceebe48bd1d5c27eb9312c57f188719a0c2aee2ab153fd89b690f1f12899"
+      "sha256": "626d0da59e8589e7ce2baf44e1d10856b1d72008fe75ee30d6fed636a039b7fe"
     },
     {
       "path": ".agent/scripts/refresh.py",
@@ -156,7 +156,7 @@
     },
     {
       "path": ".agent/tests/test_closeout.py",
-      "sha256": "b6c17860cf6ebdfa7a0eaaf78aa4d0daf11fbd4bf060ce363b72e0d9a26b23f2"
+      "sha256": "2f2a409289d2f266e8170ab5533ac9097b99a542881d47bbfec93dd86d0d4818"
     },
     {
       "path": ".agent/tests/test_standalone.py",
