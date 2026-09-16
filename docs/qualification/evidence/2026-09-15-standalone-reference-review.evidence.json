@@ -1,0 +1,167 @@
+{
+  "schema_version": "2.0",
+  "kind": "review",
+  "task_id": "OPS-WSM-0001",
+  "candidate_revision": "82da3f644ea82d6bc7531c1711c63b54eb3b9f5b",
+  "observed_revision": "82da3f644ea82d6bc7531c1711c63b54eb3b9f5b",
+  "summary": "APPROVE the exact standalone-reference source-and-generated candidate 82da3f644ea82d6bc7531c1711c63b54eb3b9f5b with zero unresolved findings, following rejection and correction of a0bdca7 and 486e65d. This does not approve the containing evidence commit, future refresh/integration/head, a family migration, Blueprint upgrade, product readiness or external gates.",
+  "profile_id": "gpt-6-astra-max",
+  "role": "reviewer",
+  "capability_tier": 1,
+  "routing_policy_digest": "61f0db448cf5ac5adad4d9340d568a7558c0369174e30aab92dd0ccf0d24bdf0",
+  "issued_at": "2026-09-16T00:18:55Z",
+  "qualifications": [
+    {
+      "profile_id": "gpt-6-astra-max",
+      "capability_tier": 1,
+      "model_id": "gpt-6-astra",
+      "reasoning_effort": "max",
+      "runtime_id": "codex-desktop-collaboration",
+      "client_version": "26.901.41600 (build 7982)",
+      "sign_in_mode": "subscription",
+      "billing_mode": "subscription",
+      "capabilities": [
+        "read",
+        "edit",
+        "test"
+      ],
+      "verified_at": "2026-09-13T21:44:31Z",
+      "expires_at": "2026-10-12T21:44:31Z",
+      "qualification_check_ids": [
+        "desktop-profile-gpt-6-astra-max"
+      ]
+    }
+  ],
+  "scope": "Exact independent source-and-generated candidate review for standalone Texenda remediation, including registry, code/control/worktrees, disposition/detail ownership, 85/6/5/35 mapping coverage, retention, external-family scope and preservation. OPS-WSM-0001 is an operating-contract reference, not a live WP, lease or new receipt. The subsequent two-file evidence-recording assignment is separately authorized and does not extend candidate approval to its own containing head.",
+  "notes": "Base 7de052690bbf3e2879f375c2b2e17207c7ee5bfe; final candidate tree d8d1f195e686a7c6071f54eb1a40bb2afbfd61c1; canonical full-index diff SHA 792b297946e52871dbe8c235e636eb6f18806474d5155dc5cd077d722af9f707. Markdown SHA eacd76e4a6c9769abf175d8fe6a0d3ecea405495e71135c4986fcb571f03cb3b binds source commits, rejected candidates, exact checks and limitations. Author /root/standalone_contract_author, reviewer /root/architecture_synthesis_reviewer, integrator /root are distinct. Subscription, no fallback/downshift/review children; no API effects/spend. Numeric delegated allocation and provider metering unavailable/not supplied; no runtime-stop or actual provider identity claim. The Markdown attributes the integrator's metadata-size exception without retaining its value. Evidence addition makes generated evidence inputs stale until the integrator's designated refresh and separate final review.",
+  "checks": [
+    {
+      "id": "exact-subject-and-canonical-diff",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Verify clean candidate 82da3f644ea82d6bc7531c1711c63b54eb3b9f5b/tree d8d1f195e686a7c6071f54eb1a40bb2afbfd61c1 and the declared full-index base-to-candidate diff SHA-256 792b297946e52871dbe8c235e636eb6f18806474d5155dc5cd077d722af9f707; review initial source and successive corrections.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-standalone-reference-independent-review.md",
+      "sha256": "eacd76e4a6c9769abf175d8fe6a0d3ecea405495e71135c4986fcb571f03cb3b"
+    },
+    {
+      "id": "independent-reviewer-and-qualification",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Reviewer /root/architecture_synthesis_reviewer is distinct from source author /root/standalone_contract_author and integrator /root. Verify exact gpt-6-astra-max desktop profile, expiry 2026-10-12T21:44:31Z and roster file SHA-256 8e44034e6247ea47b3f0002100e6a343cfa6685d56138a24f55e8a13054173c0; preserve runtime identity and allocation limitations.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-standalone-reference-independent-review.md",
+      "sha256": "eacd76e4a6c9769abf175d8fe6a0d3ecea405495e71135c4986fcb571f03cb3b"
+    },
+    {
+      "id": "rejected-candidates-and-resolutions",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Preserve a0bdca755d1df6f7c1cf791d9d1f7641c2baa107 and 486e65dc9fe8331274d00c7fc06685ff1897fafb with the four P2 findings and exact corrected behavior described in the Markdown; historical test passes do not approve rejected candidates.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-standalone-reference-independent-review.md",
+      "sha256": "eacd76e4a6c9769abf175d8fe6a0d3ecea405495e71135c4986fcb571f03cb3b"
+    },
+    {
+      "id": "scoped-registry-and-nonrecursive-checks",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Execute resolved facade-code-check and facade-check in their declared code/control contexts; both return 0 with matching reported scope. Reject out-of-scope resolution, skip both self-commands during aggregation, and skip refresh writers.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-standalone-reference-independent-review.md",
+      "sha256": "eacd76e4a6c9769abf175d8fe6a0d3ecea405495e71135c4986fcb571f03cb3b"
+    },
+    {
+      "id": "single-owner-deferrals-and-complete-dispositions",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Validate all 18 remediation dispositions, closed deferred_ref records, seven retention classes, nineteen path roles and 45 navigable owner-reference sets. Resolve sole RAIDQ detail owners and reject inline overrides, incorrect IDs and missing or unknown detail sources.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-standalone-reference-independent-review.md",
+      "sha256": "eacd76e4a6c9769abf175d8fe6a0d3ecea405495e71135c4986fcb571f03cb3b"
+    },
+    {
+      "id": "exact-blueprint-mappings",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Compare all 85 inventory entries and full mapping records with immutable 7de052690bbf3e2879f375c2b2e17207c7ee5bfe history; coordinated substitution now fails. Preserve and enforce six supplemental mappings, five high-assurance entries and 35 artifact/path pairs.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-standalone-reference-independent-review.md",
+      "sha256": "eacd76e4a6c9769abf175d8fe6a0d3ecea405495e71135c4986fcb571f03cb3b"
+    },
+    {
+      "id": "standalone-and-family-scope",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Inspect RAIDQ-0007/-0008 and passing negative tests: external families own their own repositories; Texenda supplies advisory reference evidence only. Octon scope names octon, octonos and octon-mini and separates source qualification from layout authority. No Plectarium dependency is assigned to standalone publication.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-standalone-reference-independent-review.md",
+      "sha256": "eacd76e4a6c9769abf175d8fe6a0d3ecea405495e71135c4986fcb571f03cb3b"
+    },
+    {
+      "id": "code-control-and-worktree-boundaries",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Review explicit canonical binding/control requirements, code state-root rejection, no live/local/installed source dependency in code scope, and canonical --read-only worktree inspection. Existing/new tests deny mutations and context output before construction without claiming caller authentication.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-standalone-reference-independent-review.md",
+      "sha256": "eacd76e4a6c9769abf175d8fe6a0d3ecea405495e71135c4986fcb571f03cb3b"
+    },
+    {
+      "id": "ready-context-and-retention",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Inspect explicit live ready-to-selected-context flow, empty readiness without fallback and recorded-task/fence resumption. Verify retention protects receipts/packages/evidence/archives/binding/recovery and grants no deletion or private-control qualification.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-standalone-reference-independent-review.md",
+      "sha256": "eacd76e4a6c9769abf175d8fe6a0d3ecea405495e71135c4986fcb571f03cb3b"
+    },
+    {
+      "id": "final-code-check-all",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/validate.py --check --scope code --all: exit 0/PASS on the exact approved candidate; eight delegated checks, live/control/generated freshness unassessed.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-standalone-reference-independent-review.md",
+      "sha256": "eacd76e4a6c9769abf175d8fe6a0d3ecea405495e71135c4986fcb571f03cb3b"
+    },
+    {
+      "id": "final-control-check-all",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "env PYTHONDONTWRITEBYTECODE=1 python3 -B .agent/scripts/validate.py --check --all --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda: exit 0/PASS on the exact approved candidate; eleven delegated checks, both refresh writers skipped.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-standalone-reference-independent-review.md",
+      "sha256": "eacd76e4a6c9769abf175d8fe6a0d3ecea405495e71135c4986fcb571f03cb3b"
+    },
+    {
+      "id": "registered-suites-and-package-checks",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Final aggregates return 0 for facade/workspace/coordinator/sealed suites, both package checksum validators and local source preservation. The earlier independent standalone run passed all 11 then-existing tests including nonrecursive clean-clone/worktree aggregation; its exact scope and later recursive skips are disclosed.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-standalone-reference-independent-review.md",
+      "sha256": "eacd76e4a6c9769abf175d8fe6a0d3ecea405495e71135c4986fcb571f03cb3b"
+    },
+    {
+      "id": "generated-and-structured-integrity",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Final control check reconstructs all eleven outputs at generation 7bc4fe7f60f9ba5d35e39191e1d2cca058aac766553104c78755f4fa3a25f5a9/source scope 8426d44e52f8513128ae90fb65e61c2b7ac38d3d4680a50d440fb958012ce7be. Validate 140 JSON/1 TOML/23 Python, 32 dossier paths, 3 instruction files, 200 links and 562 preexisting bound evidence checks.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-standalone-reference-independent-review.md",
+      "sha256": "eacd76e4a6c9769abf175d8fe6a0d3ecea405495e71135c4986fcb571f03cb3b"
+    },
+    {
+      "id": "protected-history-blueprint-and-package-boundaries",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Empty protected base-to-candidate comparisons and matching mapped history preserve sealed package, origin, prior evidence, policy/context/routing/relocation helper. Selected 1.0.0 remains structural; 4.2.0 full qualification fails, dirty 4.3.0 is separate, authentic reviewed seed absent; no product/package/receipt amendment or upstream action.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-standalone-reference-independent-review.md",
+      "sha256": "eacd76e4a6c9769abf175d8fe6a0d3ecea405495e71135c4986fcb571f03cb3b"
+    },
+    {
+      "id": "reviewer-no-write-and-state-preservation",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Final reviewer before/after metadata digests match across repo including Git metadata, sources, archive, local state and logs. State SHA b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235 and binding SHA a92b6137856b7f9c2b3f13f69f4e6dc92ed4da1be82eec1ddf21188ebdde0365 remain unchanged. Atime and private trees are excluded; the separate authorized evidence write is not part of that interval.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-standalone-reference-independent-review.md",
+      "sha256": "eacd76e4a6c9769abf175d8fe6a0d3ecea405495e71135c4986fcb571f03cb3b"
+    },
+    {
+      "id": "limits-and-no-gate-claim",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Disclose the attributed integrator metadata-size exception without its value and distinguish reviewer actions. No reviewer private content/size inspection or external effect; no containing/future-head, runtime-stop, product-readiness, external-gate, whole-archive byte or whole-workflow no-size-access claim.",
+      "evidence_path": "docs/qualification/evidence/2026-09-15-standalone-reference-independent-review.md",
+      "sha256": "eacd76e4a6c9769abf175d8fe6a0d3ecea405495e71135c4986fcb571f03cb3b"
+    }
+  ]
+}
