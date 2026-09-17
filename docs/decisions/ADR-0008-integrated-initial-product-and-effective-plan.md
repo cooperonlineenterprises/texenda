@@ -95,6 +95,17 @@ completion never clears a gate or marks a real-environment acceptance row passed
 AC-IP18 is post-approval activation/operation evidence owned by WP-20/33/42,
 not a prerequisite for preactivation readiness; AC-IP17 and applicable sealed
 operational criteria require the rehearsed plan and accountable owners first.
+Likewise AC-M04/05/06/07/09 retain their exact actual-transfer/canary/observation
+meaning, but apply at WP-20/33 execution and email-pilot completion, not before
+initial-production readiness. WP-17 requires actual inventory/dry-run/recovery
+qualification (AC-M01/02/03/08), verified continuity or explicit holds, and a
+reviewed transfer-readiness packet. A scoped VAL-10 readiness attestation is not
+completed cutover: WP-20 must recheck current gates, perform actual source fencing
+before target handoff, and prove every remaining transfer/legacy-link/canary/
+observation criterion. No required safety check is waived or falsely passed.
+The email-pilot profile additionally requires WP-20; it cannot be completed from
+preactivation evidence. This is an explicit applicability amendment to the sealed
+release profile, not a rewrite of its criteria or migration protocol.
 A scoped synthetic analogue may pass while its real qualification remains NOT RUN.
 Actual operator and actual external-agent observations cannot be fabricated by a
 scripted browser driver; record precisely which was exercised.
@@ -229,7 +240,8 @@ Human summaries are navigation; research and test fixtures cannot change this ow
           "WP-05",
           "WP-07",
           "WP-10",
-          "WP-11"
+          "WP-11",
+          "WP-15"
         ],
         "scope": "Texenda-owned fixed-layout signup and thank-you authoring/preview/publication/versioning; property-scoped forms, disclosures, confirmation, requested-resource delivery through shared effects; abuse protection; staged field-mapped imports/exports."
       },
@@ -336,13 +348,20 @@ Human summaries are navigation; research and test fixtures cannot change this ow
       "reason": "Actual source discovery is separately authorized; documented API/MCP availability is not a grant.",
       "replace": {
         "activation": "DEFER UNTIL TRIGGERED",
-        "triggers": "Exact owner-approved read-only Kit discovery scope, data-handling boundary and qualified extraction method; no write credentials or account connection inferred."
+        "triggers": "Exact owner-approved read-only Kit discovery scope, data-handling boundary and qualified extraction method; no write credentials or account connection inferred.",
+        "acceptance_ids": [
+          "AC-M01",
+          "AC-M02",
+          "AC-IP11",
+          "AC-IP12"
+        ]
       },
       "append": {
         "acceptance_criteria": [
           "Inventory all status classes, complete pagination, source field absent/blank/value semantics, legacy opt-outs and every required live workflow.",
           "Exported definitions/content and entry timestamps are not per-recipient next-unsent-step evidence; unknown progress stays held.",
-          "Kit MCP documentation does not establish read-only enforcement, account access, audit coverage or client/model privacy qualification."
+          "Kit MCP documentation does not establish read-only enforcement, account access, audit coverage or client/model privacy qualification.",
+          "Inventory completion does not claim actual source pause, transfer, canary or observation passed; actual AC-M04/05/06/07/09 remain WP-20/33 obligations."
         ],
         "acceptance_ids": [
           "AC-IP11",
@@ -658,10 +677,10 @@ Human summaries are navigation; research and test fixtures cannot change this ow
       "append": {
         "acceptance_criteria": [
           "Built-in contextual AI, structured external-agent and representative actual computer-use evaluations are qualified for initial production; no manual-only email pilot is called the first usable product.",
-          "All applicable real AC-D/S/L/W/C/A/R/M/P/O and non-voice AC-I criteria need actual required evidence; synthetic analogues alone cannot pass them.",
+          "All applicable preactivation real AC-D/S/L/W/C/A/R/P/O and non-voice AC-I criteria plus AC-M01/02/03/08 and AC-IP17 need actual required evidence. AC-M04/05/06/07/09 are actual transfer/canary/observation obligations of WP-20/33, not preactivation prerequisites; their definitions and safety boundaries remain mandatory there.",
           "Production activation, public page publication/DNS, paid resources and data access require separate current approvals; VAL-01 or accepted neutral identity applies before public branding."
         ],
-      "acceptance_ids": [
+        "acceptance_ids": [
           "AC-IP17"
         ]
       }
@@ -1210,12 +1229,7 @@ Human summaries are navigation; research and test fixtures cannot change this ow
         "AC-M01",
         "AC-M02",
         "AC-M03",
-        "AC-M04",
-        "AC-M05",
-        "AC-M06",
-        "AC-M07",
         "AC-M08",
-        "AC-M09",
         "AC-P01",
         "AC-P02",
         "AC-P03",
@@ -1300,9 +1314,13 @@ Human summaries are navigation; research and test fixtures cannot change this ow
         "parents": [
           "initial-production"
         ],
-        "scope": "Bounded transport/cutover canary within the integrated initial-production release; no longer an independently sufficient first usable product."
+        "scope": "Bounded transport/cutover canary and completed observation within the integrated initial-production release; requires WP-20 and retains all sealed migration criteria. Not an independently sufficient first usable product."
       },
-      "append": {}
+      "append": {
+        "requires_work_packages": [
+          "WP-20"
+        ]
+      }
     }
   ],
   "synthetic_forbidden_dependencies": [
