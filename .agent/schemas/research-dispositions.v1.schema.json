@@ -1,0 +1,177 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Scoped research impact dispositions; not requirements or task state",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "id",
+    "owner_path",
+    "authority",
+    "assessed_revision",
+    "decision",
+    "source_packages",
+    "limitations",
+    "rows"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "texenda.research-dispositions.v1"
+    },
+    "id": {
+      "const": "RESEARCH-IP-0001"
+    },
+    "owner_path": {
+      "type": "string"
+    },
+    "authority": {
+      "type": "string"
+    },
+    "assessed_revision": {
+      "type": "string"
+    },
+    "decision": {
+      "type": "string"
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "source_packages": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "location",
+          "date",
+          "manifest_sha256",
+          "files"
+        ],
+        "properties": {
+          "location": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          },
+          "manifest_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "files": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      }
+    },
+    "rows": {
+      "type": "array",
+      "minItems": 16,
+      "maxItems": 16,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "finding",
+          "source_locations",
+          "original_classification",
+          "selected_disposition",
+          "change_or_retain",
+          "authoritative_owners",
+          "work_packages",
+          "acceptance_refs",
+          "deferred_refs",
+          "owner_decision_compatibility",
+          "current_evidence",
+          "completion_evidence"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "finding": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_locations": {
+            "type": "string",
+            "minLength": 1
+          },
+          "original_classification": {
+            "type": "string",
+            "minLength": 1
+          },
+          "selected_disposition": {
+            "type": "string",
+            "minLength": 1
+          },
+          "change_or_retain": {
+            "type": "string",
+            "minLength": 1
+          },
+          "owner_decision_compatibility": {
+            "type": "string",
+            "minLength": 1
+          },
+          "current_evidence": {
+            "type": "string",
+            "minLength": 1
+          },
+          "authoritative_owners": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "work_packages": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "acceptance_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "deferred_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "completion_evidence": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "scope",
+              "contract",
+              "validation"
+            ],
+            "properties": {
+              "scope": {
+                "type": "string"
+              },
+              "contract": {
+                "type": "string"
+              },
+              "validation": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

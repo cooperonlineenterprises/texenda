@@ -163,6 +163,9 @@ def validate(crosswalk, baseline, manifest, *, root=ROOT):
         'package_variants_modified': False}, {
         'id': 'ADR-0007', 'owner_path': operating.ADR,
         'scope': 'portable_standalone_operation_code_control_and_retention_references_only',
+        'package_variants_modified': False}, {
+        'id': 'ADR-0008', 'owner_path': operating.INITIAL_PRODUCT_ADR,
+        'scope': 'integrated_initial_product_scoped_plan_release_and_acceptance_delta_only',
         'package_variants_modified': False}],
         'local editor amendment scope/owner changed')
     require(set(crosswalk['roles']) == ROLES, 'role vocabulary changed')

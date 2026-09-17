@@ -100,6 +100,7 @@ def build(root=ROOT, state_root=None, *, generated_at=None, source_identity=None
         'state_version': ledger['state_version'],
         'lease_count': ledger['lease_count'],
         'declared_budget_usd': ledger['declared_budget_usd'],
+        'effective_plan_digest': ledger.get('effective_plan_digest'),
     }
     freshness = ('Recompute the complete declared source scope, separately indexed evidence, and '
                  'stable live-ledger snapshot. Any mismatch is stale; current full HEAD/tree are '
@@ -218,6 +219,12 @@ Generated, non-authoritative projection. Documentation is not permission.
 - Receipt count/tip: `{ledger['receipt_count']}` / `{ledger['receipt_tip']}`
 - Live task/receipt/roster authority: `{ledger['state_root']}/state.json`
 
+For intended product scope and stage separation, use the
+[integrated implementation path](../../docs/implementation/initial-product.md)
+and [ADR-0008](../../docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md).
+Fresh coordinator status/context must bind the active effective plan; this view
+is not a task ledger or a product acceptance result.
+
 From the repository root, start with [`.agent/START_HERE.md`](../START_HERE.md)
 and run:
 
@@ -274,6 +281,10 @@ Generated navigation only; documentation is not permission or live state.
    [resumption](../../tooling/coordination/templates/RESUME.md) template. Do not
    create dossier tasks or receipts.
 5. Read the [current observed state](../current-state/README.md). Use
+   [the integrated implementation path](../../docs/implementation/initial-product.md)
+   for the initial synthetic product and later external qualification; its
+   [ADR-0008 owner](../../docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md)
+   supersedes only named sealed plan/release/acceptance fields. Use
    [transition](../transition/README.md) or [history](../history/README.md) only
    for maintenance, provenance, or recovery work.
 

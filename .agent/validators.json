@@ -129,6 +129,52 @@
       ]
     },
     {
+      "id": "effective-product-plan",
+      "argv": [
+        "python3",
+        "-B",
+        "tooling/coordination/plan.py",
+        "--check",
+        "--root",
+        "{repository_root}"
+      ],
+      "mode": "read_only",
+      "required": true,
+      "run_in_check": true,
+      "working_directory": "{repository_root}",
+      "context_parameters": [
+        "repository_root"
+      ],
+      "purpose": "Validate the sole scoped effective product plan, synthetic closure, profiles, acceptance and source identity; no state or gate mutation.",
+      "scopes": [
+        "code",
+        "control"
+      ]
+    },
+    {
+      "id": "initial-product-records",
+      "argv": [
+        "python3",
+        "-B",
+        ".agent/scripts/product.py",
+        "--check",
+        "--root",
+        "{repository_root}"
+      ],
+      "mode": "read_only",
+      "required": true,
+      "run_in_check": true,
+      "working_directory": "{repository_root}",
+      "context_parameters": [
+        "repository_root"
+      ],
+      "purpose": "Validate complete research dispositions, owner supersession and exact deferred qualification records; no product acceptance or state writes.",
+      "scopes": [
+        "code",
+        "control"
+      ]
+    },
+    {
       "id": "adoption-interpretation",
       "argv": [
         "python3",
@@ -317,7 +363,7 @@
       ],
       "mode": "read_only",
       "required": true,
-      "run_in_check": false,
+      "run_in_check": true,
       "working_directory": "{repository_root}",
       "context_parameters": [
         "repository_root",

@@ -32,6 +32,13 @@ The transition crosswalk identifies `external_state` as the current epoch and
 retains prior epochs as history. Generated views must identify source hashes and
 freshness; conflicts are recorded rather than silently resolved.
 
+[ADR-0008](../docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md)
+owns its explicit integrated-product plan/release/acceptance deltas. The effective
+plan composes those deltas with the sealed owners; this dossier is an index only.
+The existing RAIDQ register now also owns precise product qualification/dependency
+details, not gate definitions or gate results. Product task status stays in the
+same coordinator ledger. Research disposition evidence does not become requirements.
+
 Structured catalog owner references resolve through the crosswalk's existing scoped
 owner sets. They provide navigation; symbols and local-role locators do not copy
 Git facts, ledger data, product semantics or authority.

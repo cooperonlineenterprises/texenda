@@ -38,6 +38,11 @@ Set `TEXENDA_WORK_PACKAGE` explicitly to an ID from fresh ready output that
 matches the current objective. If no work is ready, inspect status/dependencies;
 there is no fallback WP. For resumption use the recorded task and fence.
 Context is not admission or assignment.
+The [initial-product path](../docs/implementation/initial-product.md) explains the
+integrated synthetic release and later real qualification. The accepted
+[ADR-0008](../docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md)
+is the sole scoped plan delta. Dispatch requires active effective-plan identity;
+an old sealed-only context is not current assignment authority.
 
 ## Worktree inspection and handoff
 

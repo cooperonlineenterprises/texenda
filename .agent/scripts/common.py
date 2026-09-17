@@ -372,6 +372,7 @@ def ledger_facts(root=ROOT, state_root=None, fallback_state_root=None):
         'lease_count': sum(task.get('lease') is not None for task in state.get('tasks', {}).values()),
         'declared_budget_usd': state.get('budget_usd'),
         'state_version': state.get('version'),
+        'effective_plan_digest': state.get('effective_plan_digest'),
     }
 
 

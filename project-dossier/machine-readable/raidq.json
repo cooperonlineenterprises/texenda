@@ -1,6 +1,6 @@
 {
   "schema_version": "texenda.dossier-raidq.v1",
-  "authority": "Authoritative only for consolidated mapped-workspace adoption RAIDQ; product gates retain sealed owners.",
+  "authority": "Consolidated workspace and product qualification/dependency RAIDQ under ADR-0008; requirements, plan and external gates retain their existing scoped owners. This register grants no permission.",
   "items": [
     {
       "id": "RAIDQ-0001",
@@ -163,6 +163,367 @@
       "next_action": "Prepare the exact direct-CLI qualification task using docs/qualification/runtime-surface-correction-plan-2026-09-13.md before any direct-CLI model dispatch.",
       "recovery": "Continue only a separately qualified available route; do not silently substitute runtimes.",
       "control": "Availability of a command or client version is not runtime qualification.",
+      "dependencies": []
+    },
+    {
+      "id": "RAIDQ-0011",
+      "type": "dependency",
+      "status": "gated",
+      "statement": "Kit discovery, parity and continuity",
+      "control": "ADR-0008 records this dependency only; sealed gate owners and separate current authority remain controlling. No gate is cleared and no product implementation is claimed.",
+      "owner": "Migration owner, initially founder; data owner",
+      "blocker": "No separately approved account discovery, actual topology, all-status extracts, required workflow inventory, stop controls or recipient-level cursor proof.",
+      "trigger": "Before actual WP-18 discovery or any WP-17/20/33 cutover, obtain the exact read-only grant and qualified extraction method.",
+      "risk": "Unverified source semantics could cause lost permission, repeated/missed messages or broken legacy opt-outs.",
+      "required_evidence": [
+        "Owner discovery scope and data-handling approval",
+        "Complete all-status/pagination/count and field-map evidence",
+        "Required source-program parity and verified cursor or approved hold/retirement",
+        "Source-side fencing and legacy opt-out continuity"
+      ],
+      "next_action": "Prepare WP-18's trigger packet with named accounts/scopes and metadata handling; do not connect an account or inspect private inputs until separately authorized.",
+      "recovery": "Continue synthetic WP-12/19 fixtures; retain Kit source programs and hold affected migration units; never dual send or guess progress.",
+      "dependencies": [
+        "WP-18",
+        "WP-19",
+        "WP-20",
+        "VAL-10",
+        "RAIDQ-0006"
+      ]
+    },
+    {
+      "id": "RAIDQ-0012",
+      "type": "dependency",
+      "status": "gated",
+      "statement": "Real built-in AI qualification",
+      "control": "ADR-0008 records this dependency only; sealed gate owners and separate current authority remain controlling. No gate is cleared and no product implementation is claimed.",
+      "owner": "Engineering/Product Owner",
+      "blocker": "No exact product-model/provider, terms, permitted data, quality/injection, cost or outage evaluation is qualified.",
+      "trigger": "After integrated synthetic assistant workflows exist and an owner authorizes bounded nonproduction model access and any spending.",
+      "risk": "An attractive synthetic assistant can conceal poor real-model quality, privacy handling or unbounded cost.",
+      "required_evidence": [
+        "Exact provider/model/configuration and data-processing terms",
+        "Representative tasks, malformed output/injection/outage evaluations",
+        "Token/cost reservations, bounded retries and measured correction effort",
+        "Independent review tied to release revision"
+      ],
+      "next_action": "Prepare the VAL-09 evaluation packet from WP-27/32 using synthetic prompts; separately obtain the real-provider account and budget authority.",
+      "recovery": "Keep deterministic synthetic adapter visibly simulated; complete manual UI remains usable. Do not call the real integrated product qualified.",
+      "dependencies": [
+        "WP-27",
+        "WP-32",
+        "WP-17",
+        "VAL-09"
+      ]
+    },
+    {
+      "id": "RAIDQ-0013",
+      "type": "dependency",
+      "status": "gated",
+      "statement": "Actual external-agent and computer-use qualification",
+      "control": "ADR-0008 records this dependency only; sealed gate owners and separate current authority remain controlling. No gate is cleared and no product implementation is claimed.",
+      "owner": "Security/engineering owner and delegating human",
+      "blocker": "No exact product client/principal/token/browser isolation, revocation, data-handling or real-agent task evidence is qualified.",
+      "trigger": "After shared application flows and synthetic delegation/browser tests pass, before enabling actual external-agent access.",
+      "risk": "Coding-agent entitlement or visible UI could be mistaken for product authority or proven agent usability.",
+      "required_evidence": [
+        "Exact client/protocol/model and grant boundaries",
+        "Actual resulting-state verification for representative computer-use journeys",
+        "Human-only approval separation, revocation/expiry/stop and scope negatives",
+        "Privacy/rate/spend evidence and independent exact review"
+      ],
+      "next_action": "Prepare VAL-11 with a named client and constrained identity; request only the separately authorized narrow read/proposal pilot before any expanded operation.",
+      "recovery": "Use local simulated principals and scripted interface tests, labeled as such; retain full manual workflows; no human-cookie fallback.",
+      "dependencies": [
+        "WP-28",
+        "WP-29",
+        "WP-31",
+        "WP-17",
+        "VAL-08",
+        "VAL-11"
+      ]
+    },
+    {
+      "id": "RAIDQ-0014",
+      "type": "dependency",
+      "status": "gated",
+      "statement": "Real email service and sender qualification",
+      "control": "ADR-0008 records this dependency only; sealed gate owners and separate current authority remain controlling. No gate is cleared and no product implementation is claimed.",
+      "owner": "Sending/deliverability owner and Engineering/Product Owner",
+      "blocker": "Intended-use terms, actual account/region/quota/cost, sender/domain control, headers, callbacks, suppression and idempotency behavior remain unverified.",
+      "trigger": "Before real nonproduction mail tests or production sender activation under separate authority.",
+      "risk": "Fakes cannot prove provider-specific acceptance, deliverability, suppression scope or invoices.",
+      "required_evidence": [
+        "Exact account/provider/version and allowed newsletter use",
+        "SPF/DKIM/DMARC and one-click/header seed results",
+        "Actual webhook, suppression and unknown-outcome contracts",
+        "Approved costs, canary ceilings and independent incident route"
+      ],
+      "next_action": "Assemble WP-17/VAL-04 qualification checklist and obtain bounded account/domain/seed-recipient authority; no account creation or DNS change follows from this plan.",
+      "recovery": "Keep MailProvider fake/Mailpit and live sending disabled; hold on missing readiness or uncertain acceptance.",
+      "dependencies": [
+        "WP-09",
+        "WP-11",
+        "WP-17",
+        "VAL-04"
+      ]
+    },
+    {
+      "id": "RAIDQ-0015",
+      "type": "dependency",
+      "status": "gated",
+      "statement": "Staging, production infrastructure and recovery qualification",
+      "control": "ADR-0008 records this dependency only; sealed gate owners and separate current authority remain controlling. No gate is cleared and no product implementation is claimed.",
+      "owner": "Infrastructure/operations owner plus security reviewer",
+      "blocker": "No authorized provisioned host/database/storage/backup/key/alert environment or purchased retention/PITR evidence exists.",
+      "trigger": "After local WP-39/41 mechanisms pass and owner approves bounded nonproduction infrastructure and costs.",
+      "risk": "Local recovery success may not survive real host, key, retention or provider failures.",
+      "required_evidence": [
+        "Isolated staging and production identities/configuration",
+        "Actual backup/journal/key and timed restore/rollback drill",
+        "Qualified workload/capacity, logging/redaction and independent alert delivery",
+        "Security review, maintenance/escalation/on-call responsibilities and cost approval"
+      ],
+      "next_action": "Prepare the WP-17/VAL-05 environment packet from WP-39/41, name accountable operators and request exact provisioning/budget scope before any external action.",
+      "recovery": "Run isolated local drills, preserve disabled-send defaults and synthetic labels; do not claim actual RPO/RTO, availability or operational alert delivery.",
+      "dependencies": [
+        "WP-39",
+        "WP-41",
+        "WP-17",
+        "VAL-05",
+        "VAL-08"
+      ]
+    },
+    {
+      "id": "RAIDQ-0016",
+      "type": "dependency",
+      "status": "gated",
+      "statement": "Privacy, legal sender, retention and public identity",
+      "control": "ADR-0008 records this dependency only; sealed gate owners and separate current authority remain controlling. No gate is cleared and no product implementation is claimed.",
+      "owner": "Product Owner and qualified counsel/privacy reviewer",
+      "blocker": "Actual jurisdictions, source provenance, sender/controller scope, disclosures, data processing, retention/erasure and public-brand clearance are unqualified.",
+      "trigger": "Before real personal-data handling or public production surfaces; VAL-01 or accepted neutral public identity before public Texenda branding.",
+      "risk": "Internal operation does not remove privacy, licensing, sender or public-brand obligations.",
+      "required_evidence": [
+        "Actual intended-use and audience/jurisdiction assessment",
+        "Reviewed forms/resource/marketing purpose separation and disclosures",
+        "Processor/subprocessor, retention/erasure and source provenance evidence",
+        "Public brand clearance or explicit neutral identity decision"
+      ],
+      "next_action": "Prepare VAL-02 using synthetic example disclosures and declared intended use, plus VAL-01 public-identity review scope; retain private-input prohibition.",
+      "recovery": "Use synthetic data/local origins; keep public publication and real-data import disabled; hold uncertain proof.",
+      "dependencies": [
+        "VAL-01",
+        "VAL-02",
+        "WP-12",
+        "WP-17",
+        "RAIDQ-0006"
+      ]
+    },
+    {
+      "id": "RAIDQ-0017",
+      "type": "dependency",
+      "status": "gated",
+      "statement": "Observed operator usability and handoff burden",
+      "control": "ADR-0008 records this dependency only; sealed gate owners and separate current authority remain controlling. No gate is cleared and no product implementation is claimed.",
+      "owner": "Product Owner and representative routine operators; accessibility reviewer",
+      "blocker": "No actual new/returning-user, human-agent handoff or measured review/correction evidence exists.",
+      "trigger": "When runnable representative initial workflows exist, before production qualification and wider rollout.",
+      "risk": "Generation speed or a mean score may hide returning-user confusion, unsafe approval or substantial correction burden.",
+      "required_evidence": [
+        "Defined tasks and starting fixtures",
+        "Completion, time/errors, prompting/review/correction/recovery effort",
+        "Separate consequence comprehension and keyboard/screen-reader evidence",
+        "Actual operators and actual agent outcomes distinguished from scripted UI tests"
+      ],
+      "next_action": "Execute WP-25/31/32 scenarios and AC-IP10 with the intended operators under a bounded usability session; preserve failures and repair before qualification.",
+      "recovery": "Keep target budgets as hypotheses; manual/direct workflow remains complete; do not replace existing navigation without evidence.",
+      "dependencies": [
+        "WP-25",
+        "WP-31",
+        "WP-32",
+        "VAL-06"
+      ]
+    },
+    {
+      "id": "RAIDQ-0018",
+      "type": "dependency",
+      "status": "gated",
+      "statement": "Exact renderer/editor and dependency qualification",
+      "control": "ADR-0008 records this dependency only; sealed gate owners and separate current authority remain controlling. No gate is cleared and no product implementation is claimed.",
+      "owner": "Engineering and supply-chain/security owners",
+      "blocker": "Selected dependency versions, licenses/SBOM, editor codec round trips, real email-client fidelity and peer compatibility remain unqualified.",
+      "trigger": "During WP-02/10 dependency selection and before VAL-03/production qualification.",
+      "risk": "An installed package or desk-research license label is not compatibility, safety or rendering proof.",
+      "required_evidence": [
+        "Locked compatible versions, license/SBOM and dependency closure",
+        "Approved-block roundtrip/render/sanitization fixtures",
+        "Measured build behavior and real supported email-client results"
+      ],
+      "next_action": "Run the ADR-0005 WP-10 qualification contract on selected pinned versions; record the actual results and any fixed-block fallback without modifying either package.",
+      "recovery": "Retain React Email and the approved fixed-block composer fallback; preserve prior codecs/compiled immutable messages.",
+      "dependencies": [
+        "WP-02",
+        "WP-10",
+        "VAL-03",
+        "RAIDQ-0004"
+      ]
+    },
+    {
+      "id": "RAIDQ-0019",
+      "type": "dependency",
+      "status": "deferred",
+      "statement": "Voice profile",
+      "control": "ADR-0008 records this dependency only; sealed gate owners and separate current authority remain controlling. No gate is cleared and no product implementation is claimed.",
+      "owner": "Product Owner, Engineering and privacy reviewer",
+      "blocker": "No selected voice release scope or qualified speech-provider/data-handling evidence.",
+      "trigger": "Owner selects the accepted voice profile and approves bounded speech qualification.",
+      "risk": "Premature speech activation could introduce privacy and ambiguous-approval risk.",
+      "required_evidence": [
+        "Exact selected speech/runtime/data-retention configuration",
+        "Negation/names/dates/interruption and mic-stop tests",
+        "Accessible manual/text fallback and VAL-12 result"
+      ],
+      "next_action": "Prepare WP-30 trigger and the existing voice-profile/VAL-12 evaluation packet; do not enable microphone capture or provider access from this record.",
+      "recovery": "Initial integrated non-voice product remains complete; voice direction is retained, never always-on by default.",
+      "dependencies": [
+        "WP-30",
+        "VAL-12"
+      ]
+    },
+    {
+      "id": "RAIDQ-0020",
+      "type": "dependency",
+      "status": "deferred",
+      "statement": "Additional marketing channels",
+      "control": "ADR-0008 records this dependency only; sealed gate owners and separate current authority remain controlling. No gate is cleared and no product implementation is claimed.",
+      "owner": "Product Owner and named channel/legal/operations owner",
+      "blocker": "No demonstrated recurring onsite/push/phone/app job with qualified permission, provider, cost and operational footprint.",
+      "trigger": "Existing WP-34/35/38 demand triggers plus selection of the relevant release profile; WP-36/37 follow qualified dependencies.",
+      "risk": "Additional surfaces can multiply interruptions, privacy risk and ongoing operator burden.",
+      "required_evidence": [
+        "Named use case and consenting audience",
+        "Channel-specific sender/permission/cost/region/reply-owner evidence",
+        "Real adapter, failure, accessibility and recipient-value qualification"
+      ],
+      "next_action": "Record the exact applicable work-package trigger and qualify VAL-07 plus applicable VAL-02/08 before enabled-channel rollout.",
+      "recovery": "Remain email-led with mandatory native acquisition pages; no unknown-outcome failover or cross-channel permission inference.",
+      "dependencies": [
+        "WP-34",
+        "WP-35",
+        "WP-36",
+        "WP-37",
+        "WP-38",
+        "VAL-07"
+      ]
+    },
+    {
+      "id": "RAIDQ-0021",
+      "type": "dependency",
+      "status": "deferred",
+      "statement": "Commerce, course, event and content-source adapters",
+      "control": "ADR-0008 records this dependency only; sealed gate owners and separate current authority remain controlling. No gate is cleared and no product implementation is claimed.",
+      "owner": "Product Owner and named source-system/integration owner",
+      "blocker": "No specific recurring workflow and authoritative source, access scope or ownership mapping supplied.",
+      "trigger": "A recurring adopted job or WP-18 inventory proves required parity; supplied approved content alone needs no new connector.",
+      "risk": "Speculative integration adds maintenance; deferring an actual required source workflow can block safe Kit retirement.",
+      "required_evidence": [
+        "Authoritative field/event owner and source-health contract",
+        "Data minimization, grant and privacy terms",
+        "Event idempotency, outage/absence, mapping and parity tests"
+      ],
+      "next_action": "Prepare a bounded local amendment for that one required source/job, then qualify its adapter; preserve source programs until required parity or approved retirement is proven.",
+      "recovery": "Use approved offer/content links or directly supplied content; no automatic purchase exits, access entitlements or fabricated revenue.",
+      "dependencies": [
+        "WP-18",
+        "VAL-02",
+        "VAL-08"
+      ]
+    },
+    {
+      "id": "RAIDQ-0022",
+      "type": "dependency",
+      "status": "deferred",
+      "statement": "Experiments, referrals and adaptive recommendations",
+      "control": "ADR-0008 records this dependency only; sealed gate owners and separate current authority remain controlling. No gate is cleared and no product implementation is claimed.",
+      "owner": "Product Owner and analytics/growth owner",
+      "blocker": "No repeated decision, adequate trustworthy observations, qualified outcomes or supportable referral/abuse process.",
+      "trigger": "Demonstrated decision/use-case and suitable evidence outweigh ongoing complexity.",
+      "risk": "False precision or speculative features can obscure missing data and increase burden.",
+      "required_evidence": [
+        "Predeclared objective, stable assignment and honest sparse-data analysis where applicable",
+        "Verified outcome/source coverage",
+        "Bounded reward/abuse/support/financial authority for referrals",
+        "Measured benefit versus simple defaults and correction burden"
+      ],
+      "next_action": "Submit a scoped product amendment and evaluation design for the named capability; research scores do not activate it.",
+      "recovery": "Retain descriptive metrics, understandable recipes and reversible human-reviewed drafts; no forced winner or autonomous optimization.",
+      "dependencies": []
+    },
+    {
+      "id": "RAIDQ-0023",
+      "type": "dependency",
+      "status": "deferred",
+      "statement": "Infrastructure optimization and additional providers",
+      "control": "ADR-0008 records this dependency only; sealed gate owners and separate current authority remain controlling. No gate is cleared and no product implementation is claimed.",
+      "owner": "Engineering/operations owner",
+      "blocker": "No measured bottleneck remains after lower-cost tuning; no replacement compatibility or recovery proof.",
+      "trigger": "The existing WP-43 measured-demand trigger after applicable release/operational evidence.",
+      "risk": "Premature infrastructure introduces second authorities and operational burden; measured constraints remain visible.",
+      "required_evidence": [
+        "Observed workload/cost/reliability baseline",
+        "Lower-cost tuning results",
+        "Semantic-key/permission/history preservation and rollback/forward-recovery tests",
+        "Independent architecture decision"
+      ],
+      "next_action": "Prepare the WP-43 observed-trigger packet and bounded replacement ADR; do not install Temporal, queues, caches or another provider merely from research.",
+      "recovery": "Keep the selected monolith/database/executor/provider adapters; pause uncertain effects rather than fail over blindly.",
+      "dependencies": [
+        "WP-43"
+      ]
+    },
+    {
+      "id": "RAIDQ-0024",
+      "type": "dependency",
+      "status": "gated",
+      "statement": "Exact production activation and post-release operation",
+      "control": "ADR-0008 records this dependency only; sealed gate owners and separate current authority remain controlling. No gate is cleared and no product implementation is claimed.",
+      "owner": "Accountable release owner plus sending, migration, incident/support and restore owners",
+      "blocker": "No implemented exact release, passing applicable real gates or separately authorized activation scope exists.",
+      "trigger": "After initial-production qualification and signed exact release approval, owner explicitly authorizes the bounded activation/canary.",
+      "risk": "Conflating readiness with activation could trigger unauthorized external effects or leave operations unowned.",
+      "required_evidence": [
+        "Exact revision/configuration/artifact and current gate evidence",
+        "Owner activation scope, accounts/domains/cohorts/ceiling and expiry",
+        "Source fencing/negative reconciliation and tested incident/rollback plan",
+        "Reachable independent alert/support/restore ownership and observation evidence"
+      ],
+      "next_action": "Use WP-20's reviewed MigrationUnit/canary packet for first activation, then WP-33/42 as applicable; request the exact external-effect authority only at that boundary.",
+      "recovery": "Remain non-sending/local or qualified nonproduction; pause and repair forward; no public/domain/data change inferred from readiness.",
+      "dependencies": [
+        "WP-17",
+        "WP-20",
+        "WP-33",
+        "WP-42"
+      ]
+    },
+    {
+      "id": "RAIDQ-0025",
+      "type": "dependency",
+      "status": "deferred",
+      "statement": "Plan-bound coding effort downshift or API allocation support",
+      "control": "The initial effective plan conservatively permits max-effort subscription work only; runtime-qualified profiles remain observations, not eligibility for enlarged scope. Product provider/AI budgets are separate.",
+      "owner": "Coordination maintainer and accountable development-budget/routing owner",
+      "blocker": "Historical downshift and paid-work records bind only the sealed catalog; the initial amended-plan implementation refuses their use for enlarged scope.",
+      "trigger": "A future owner-authorized assignment needs lower effort or API-billed coding work and can justify the exact profile, bounded scope and plan-specific evidence.",
+      "risk": "Reusing old attestations could under-route enlarged work or spend outside the effective scope; current max/subscription implementation remains available.",
+      "required_evidence": [
+        "Reviewed effective-plan-bound schema and lifecycle checks",
+        "Fresh exact-profile qualification and bounded deterministic downshift proof or separately authorized API allocation",
+        "Tamper/expiry/history/aggregate-budget/negative tests and independent review"
+      ],
+      "next_action": "Prepare a scoped coordinator successor for plan-bound routing/budget attestations only when that requested route is needed; do not switch billing or reduce effort to bypass this restriction.",
+      "recovery": "Continue qualified max-effort subscription work; checkpoint/pause if that route is unavailable. Never silently downgrade, spend or repurpose product-model budgets.",
       "dependencies": []
     }
   ]

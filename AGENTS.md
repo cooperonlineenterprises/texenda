@@ -30,6 +30,9 @@ the [ordinary-operation amendment](docs/decisions/ADR-0006-clean-ordinary-operat
 and the scoped [standalone operating successor](docs/decisions/ADR-0007-standalone-workspace-operating-contract.md)
 and other records they route to. The scoped [email-editor amendment](docs/decisions/ADR-0005-react-email-editor-reversible-default.md)
 owns only its named reversible editor fields. Preserve the sealed package byte-for-byte.
+The [integrated initial-product amendment](docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md)
+owns its exact plan/release/acceptance deltas. Read the [implementation path](docs/implementation/initial-product.md)
+and use the coordinator's effective-plan-bound context, not the sealed catalog alone.
 Read nested `AGENTS.md` files for affected paths; child instructions may narrow,
 never weaken.
 

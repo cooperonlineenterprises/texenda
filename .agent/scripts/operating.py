@@ -10,6 +10,7 @@ from common import (ROOT, GENERATED_OUTPUT_PATHS, canonical, load_json, loads, r
 
 
 ADR = 'docs/decisions/ADR-0007-standalone-workspace-operating-contract.md'
+INITIAL_PRODUCT_ADR = 'docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md'
 SCHEMA = '.agent/schemas/standalone-operating-contract.v1.schema.json'
 RETENTION = 'project-dossier/registers/workspace-retention.json'
 REMEDIATION = 'project-dossier/conformance/remediation-register.json'
@@ -145,6 +146,11 @@ def owner_reference_sets(root=ROOT):
             expected.append({'kind': 'repository',
                              'path': 'docs/decisions/ADR-0001-quality-first-model-routing.md',
                              'scope': 'local_model_and_effort_overlay_only', 'role': 'scoped_amendment'})
+        if concern in ('product_semantics', 'canonical_definition', 'canonical_requirements',
+                       'canonical_architecture', 'domain_models', 'quality_rubric', 'context_routing'):
+            expected.append({'kind': 'repository', 'path': INITIAL_PRODUCT_ADR,
+                             'scope': 'only_ADR_0008_named_initial_product_plan_release_acceptance_fields',
+                             'role': 'scoped_amendment'})
         if concern == 'standalone_operation':
             for path, scope in (
                 ('docs/decisions/ADR-0004-mapped-project-workspace.md', 'preservation_layout_and_recovery'),

@@ -288,7 +288,8 @@ def validate_extension(root=ROOT):
             and extension['live_roster_copied'] is False,
             'extension can expand authority or copied the live roster')
     allowed = ('tooling/coordination/', 'docs/decisions/ADR-0001-',
-               'docs/decisions/ADR-0004-', 'tooling/workspace/relocate_state.py')
+               'docs/decisions/ADR-0004-', operating.INITIAL_PRODUCT_ADR,
+               'tooling/workspace/relocate_state.py')
     for row in extension['bindings']:
         name = row['path']
         require(any(name.startswith(prefix) for prefix in allowed),
@@ -380,8 +381,20 @@ def validate_registry(root=ROOT):
             'facade check purpose overclaims portable timestamp stability')
     state_check = next((row for row in rows if row['id'] == 'coordination-state-check'), None)
     require(state_check and state_check['argv'][-1] == 'check'
-            and 'init' not in state_check['argv'],
+            and 'init' not in state_check['argv'] and state_check['run_in_check'] is True
+            and state_check['scopes'] == ['control'] and state_check['mode'] == 'read_only',
             'coordination check registry could mutate state')
+    for identifier, script in (
+            ('effective-product-plan', 'tooling/coordination/plan.py'),
+            ('initial-product-records', '.agent/scripts/product.py')):
+        entry = next((row for row in rows if row['id'] == identifier), None)
+        require(entry and entry['argv'] == ['python3', '-B', script, '--check',
+                                           '--root', '{repository_root}']
+                and entry['mode'] == 'read_only' and entry['required'] is True
+                and entry['run_in_check'] is True
+                and entry['scopes'] == ['code', 'control']
+                and entry['context_parameters'] == ['repository_root'],
+                'initial-product validation cannot be skipped or gain control writes')
     interpreter = next((row for row in rows if row['id'] == 'adoption-interpretation'), None)
     require(interpreter and interpreter['argv'] == [
                 'python3', '-B', 'tooling/workspace/interpret_adoption.py',

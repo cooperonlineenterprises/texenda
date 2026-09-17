@@ -28,6 +28,11 @@ env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root 
 Choose the ID explicitly from fresh ready output for the current objective.
 Empty readiness has no fallback; resumption uses the recorded task/fence.
 Context is not admission. Do not copy bindings, ledgers or receipt inputs.
+The [initial-product amendment](../decisions/ADR-0008-integrated-initial-product-and-effective-plan.md)
+and [implementation path](../implementation/initial-product.md) govern amended
+work scope. Bind current effective-plan identity as well as the historical
+sealed catalog and routing digest; old context or attestations cannot authorize
+enlarged work. Synthetic completion is not real model/provider qualification.
 Worktree inspection uses the canonical script and root with the entry point's
 `--read-only` flag. The flag restricts that invocation, not caller identity;
 policy/assignment scope remains a separate prohibition on control mutations.

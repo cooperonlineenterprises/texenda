@@ -1,0 +1,545 @@
+{
+  "schema_version": "texenda.research-dispositions.v1",
+  "id": "RESEARCH-IP-0001",
+  "owner_path": "docs/qualification/analysis/research-impact-dispositions.json",
+  "authority": "Assessment disposition and traceability only; no requirements, task state, permission, gate or product readiness authority.",
+  "assessed_revision": "d3556d0718e558fa3a12cf628add58dd71a0008c",
+  "decision": "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md",
+  "source_packages": [
+    {
+      "location": "project-home:sources/solo_marketing_research",
+      "date": "2026-09-16",
+      "manifest_sha256": "4aea6cd28848a9c7a783e4daee8e018f42361670f53764e66865fd799be036ad",
+      "files": 26
+    },
+    {
+      "location": "project-home:sources/internal_use_refinement",
+      "date": "2026-09-17",
+      "manifest_sha256": "538623baa7671e23268b985bf0ec1c5f635fd6fe43c75bd1a70cdd9d4df36545",
+      "files": 21
+    }
+  ],
+  "limitations": [
+    "Research is advisory desk analysis with shared inherited96-source registry, not independent corroboration.",
+    "108 baseline and16 refinement acceptance specifications were not application tests.",
+    "Scores/complexity budgets are hypotheses.",
+    "Embedded normative/instruction labels never become project authority.",
+    "No private data, account, credential or product implementation was accessed/created."
+  ],
+  "rows": [
+    {
+      "id": "RI-0001",
+      "finding": "Internal email-first product; no external-customer billing/tenancy",
+      "source_locations": "S §§1,18,22; I §A",
+      "original_classification": "Supports the current direction without requiring change",
+      "selected_disposition": "retained",
+      "change_or_retain": "Retain single internal organization, owned brands and no commercial provisioning; new negative acceptance closes absence tests.",
+      "authoritative_owners": [
+        "specs/texenda-handoff/01-foundation/product-and-brand.md",
+        "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md"
+      ],
+      "work_packages": [
+        "WP-01",
+        "WP-03"
+      ],
+      "acceptance_refs": [
+        "AC-IP15"
+      ],
+      "deferred_refs": [],
+      "owner_decision_compatibility": "Final owner decisions control; research is advisory.",
+      "current_evidence": "Sealed package1.1.0 and accepted local ADRs at assessed_revision; no product application exists; current ledger WP00 completed, remaining work planned.",
+      "completion_evidence": {
+        "scope": "Planning/contract coverage only; product evidence remains NOT_RUN.",
+        "contract": "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md",
+        "validation": "initial-product-records + effective-product-plan + independent exact-candidate review"
+      }
+    },
+    {
+      "id": "RI-0002",
+      "finding": "Lightweight brand instead of mandatory workspace per brand",
+      "source_locations": "I §A; 07_domain_model_refined.json workspace",
+      "original_classification": "Conflict requiring an owner decision",
+      "selected_disposition": "resolved_by_owner_retention",
+      "change_or_retain": "Final owner explicitly retains Workspace/Brand isolation; simplify configuration, never collapse data/consent boundaries.",
+      "authoritative_owners": [
+        "specs/texenda-handoff/03-domain-and-architecture/canonical-domain.md",
+        "specs/texenda-handoff/04-security-governance-and-operations/security-and-privacy.md",
+        "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md"
+      ],
+      "work_packages": [
+        "WP-01",
+        "WP-04",
+        "WP-24"
+      ],
+      "acceptance_refs": [
+        "AC-IP15"
+      ],
+      "deferred_refs": [],
+      "owner_decision_compatibility": "Final owner decisions control; research is advisory.",
+      "current_evidence": "Sealed package1.1.0 and accepted local ADRs at assessed_revision; no product application exists; current ledger WP00 completed, remaining work planned.",
+      "completion_evidence": {
+        "scope": "Planning/contract coverage only; product evidence remains NOT_RUN.",
+        "contract": "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md",
+        "validation": "initial-product-records + effective-product-plan + independent exact-candidate review"
+      }
+    },
+    {
+      "id": "RI-0003",
+      "finding": "Research Publication/Audience/Campaign vocabulary",
+      "source_locations": "S 04_domain_model.json; I 07_domain_model_refined.json",
+      "original_classification": "Inapplicable or rejected",
+      "selected_disposition": "rejected_semantic_replacement",
+      "change_or_retain": "Publication remains communication promise; pages use AcquisitionPage revisions; Audience is a view; workflows keep one cursor. Research ontology is not copied.",
+      "authoritative_owners": [
+        "specs/texenda-handoff/03-domain-and-architecture/canonical-domain.md",
+        "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md"
+      ],
+      "work_packages": [
+        "WP-01",
+        "WP-12"
+      ],
+      "acceptance_refs": [
+        "AC-IP02",
+        "AC-IP15"
+      ],
+      "deferred_refs": [],
+      "owner_decision_compatibility": "Final owner decisions control; research is advisory.",
+      "current_evidence": "Sealed package1.1.0 and accepted local ADRs at assessed_revision; no product application exists; current ledger WP00 completed, remaining work planned.",
+      "completion_evidence": {
+        "scope": "Planning/contract coverage only; product evidence remains NOT_RUN.",
+        "contract": "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md",
+        "validation": "initial-product-records + effective-product-plan + independent exact-candidate review"
+      }
+    },
+    {
+      "id": "RI-0004",
+      "finding": "Alternative navigation labels",
+      "source_locations": "S §11; I 08_architecture_contract_refinement.json",
+      "original_classification": "Useful but deferred until a named trigger",
+      "selected_disposition": "retain_pending_measured_trigger",
+      "change_or_retain": "Keep Home/Audience/Messages/Automations/Insights; evaluate task failures and burden before any separately reviewed navigation change.",
+      "authoritative_owners": [
+        "specs/texenda-handoff/02-product-and-ux/operator-workflows.md",
+        "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md"
+      ],
+      "work_packages": [
+        "WP-13",
+        "WP-25"
+      ],
+      "acceptance_refs": [
+        "AC-IP09",
+        "AC-IP10"
+      ],
+      "deferred_refs": [
+        "RAIDQ-0017"
+      ],
+      "owner_decision_compatibility": "Final owner decisions control; research is advisory.",
+      "current_evidence": "Sealed package1.1.0 and accepted local ADRs at assessed_revision; no product application exists; current ledger WP00 completed, remaining work planned.",
+      "completion_evidence": {
+        "scope": "Planning/contract coverage only; product evidence remains NOT_RUN.",
+        "contract": "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md",
+        "validation": "initial-product-records + effective-product-plan + independent exact-candidate review"
+      }
+    },
+    {
+      "id": "RI-0005",
+      "finding": "External-first/deferred embedded assistant recommendation",
+      "source_locations": "I P08/P11; prior assessment recommendation 2",
+      "original_classification": "Proposed product or architectural amendment",
+      "selected_disposition": "superseded_by_final_owner_decision",
+      "change_or_retain": "Integrated contextual built-in AI, external API and deliberately tested computer use are initial usable scope. Keep WP-29's WP-27 dependency; no external-first optional-embedded release.",
+      "authoritative_owners": [
+        "specs/texenda-handoff/02-product-and-ux/interaction-architecture.md",
+        "specs/texenda-handoff/05-implementation/work-packages.json",
+        "specs/texenda-handoff/06-migration-and-production/release-profiles.json",
+        "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md"
+      ],
+      "work_packages": [
+        "WP-01",
+        "WP-13",
+        "WP-26",
+        "WP-27",
+        "WP-28",
+        "WP-29",
+        "WP-31",
+        "WP-32"
+      ],
+      "acceptance_refs": [
+        "AC-IP04",
+        "AC-IP07",
+        "AC-IP08",
+        "AC-IP09"
+      ],
+      "deferred_refs": [
+        "RAIDQ-0012",
+        "RAIDQ-0013"
+      ],
+      "owner_decision_compatibility": "Final owner decisions control; research is advisory.",
+      "current_evidence": "Sealed package1.1.0 and accepted local ADRs at assessed_revision; no product application exists; current ledger WP00 completed, remaining work planned.",
+      "completion_evidence": {
+        "scope": "Planning/contract coverage only; product evidence remains NOT_RUN.",
+        "contract": "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md",
+        "validation": "initial-product-records + effective-product-plan + independent exact-candidate review"
+      }
+    },
+    {
+      "id": "RI-0006",
+      "finding": "Assumed existing agent authorization/availability",
+      "source_locations": "I P08; RF-05",
+      "original_classification": "Unknown pending specified evidence",
+      "selected_disposition": "synthetic_contract_now_real_qualification_gated",
+      "change_or_retain": "Coding profile is not product AI/client/delegation qualification. Deterministic substitutes prove integration only; real model/client and human-approval separation need exact evidence.",
+      "authoritative_owners": [
+        "specs/texenda-handoff/04-security-governance-and-operations/ai-and-agent-authority.md",
+        "specs/texenda-handoff/01-foundation/external-validation-gates.json",
+        "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md"
+      ],
+      "work_packages": [
+        "WP-27",
+        "WP-28",
+        "WP-31",
+        "WP-17"
+      ],
+      "acceptance_refs": [
+        "AC-IP08",
+        "AC-IP09",
+        "AC-IP16",
+        "AC-IP17"
+      ],
+      "deferred_refs": [
+        "RAIDQ-0012",
+        "RAIDQ-0013"
+      ],
+      "owner_decision_compatibility": "Final owner decisions control; research is advisory.",
+      "current_evidence": "Sealed package1.1.0 and accepted local ADRs at assessed_revision; no product application exists; current ledger WP00 completed, remaining work planned.",
+      "completion_evidence": {
+        "scope": "Planning/contract coverage only; product evidence remains NOT_RUN.",
+        "contract": "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md",
+        "validation": "initial-product-records + effective-product-plan + independent exact-candidate review"
+      }
+    },
+    {
+      "id": "RI-0007",
+      "finding": "Native acquisition and requested resources; existing-website-first recommendation",
+      "source_locations": "I P03/P10, WF-06/07; prior assessment recommendation 3 and fallback",
+      "original_classification": "Proposed product or architectural amendment",
+      "selected_disposition": "superseded_by_final_owner_decision",
+      "change_or_retain": "Texenda owns signup/thank-you authoring, preview, versioned publication and operation. Existing-site embedding/linking is optional, never substitute. End-to-end requested fulfillment added; no CMS/archive/scripts.",
+      "authoritative_owners": [
+        "specs/texenda-handoff/03-domain-and-architecture/content.md",
+        "specs/texenda-handoff/03-domain-and-architecture/permission-and-coordination.md",
+        "specs/texenda-handoff/05-implementation/work-packages.json",
+        "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md"
+      ],
+      "work_packages": [
+        "WP-10",
+        "WP-11",
+        "WP-12"
+      ],
+      "acceptance_refs": [
+        "AC-IP02",
+        "AC-IP03"
+      ],
+      "deferred_refs": [
+        "RAIDQ-0014",
+        "RAIDQ-0015",
+        "RAIDQ-0016"
+      ],
+      "owner_decision_compatibility": "Final owner decisions control; research is advisory.",
+      "current_evidence": "Sealed package1.1.0 and accepted local ADRs at assessed_revision; no product application exists; current ledger WP00 completed, remaining work planned.",
+      "completion_evidence": {
+        "scope": "Planning/contract coverage only; product evidence remains NOT_RUN.",
+        "contract": "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md",
+        "validation": "initial-product-records + effective-product-plan + independent exact-candidate review"
+      }
+    },
+    {
+      "id": "RI-0008",
+      "finding": "Fresh draft-only reuse",
+      "source_locations": "I P06; WF-26",
+      "original_classification": "Useful clarification to current documentation",
+      "selected_disposition": "incorporated_into_plan",
+      "change_or_retain": "Clone content/structure to new drafts; never approvals, recipients, active schedules, progress or effects. Fresh approval required.",
+      "authoritative_owners": [
+        "specs/texenda-handoff/03-domain-and-architecture/content.md",
+        "specs/texenda-handoff/03-domain-and-architecture/execution-semantics.md",
+        "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md"
+      ],
+      "work_packages": [
+        "WP-10",
+        "WP-14",
+        "WP-22"
+      ],
+      "acceptance_refs": [
+        "AC-IP05"
+      ],
+      "deferred_refs": [],
+      "owner_decision_compatibility": "Final owner decisions control; research is advisory.",
+      "current_evidence": "Sealed package1.1.0 and accepted local ADRs at assessed_revision; no product application exists; current ledger WP00 completed, remaining work planned.",
+      "completion_evidence": {
+        "scope": "Planning/contract coverage only; product evidence remains NOT_RUN.",
+        "contract": "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md",
+        "validation": "initial-product-records + effective-product-plan + independent exact-candidate review"
+      }
+    },
+    {
+      "id": "RI-0009",
+      "finding": "Newsletter without commerce; linked offer not payment authority",
+      "source_locations": "I P09/P13; IU-04/08",
+      "original_classification": "Already implemented or explicitly addressed",
+      "selected_disposition": "retained_with_explicit_acceptance",
+      "change_or_retain": "No Offer/course/billing setup for newsletter/nurture; external facts remain sourced; Organization scope is still mandatory.",
+      "authoritative_owners": [
+        "specs/texenda-handoff/01-foundation/product-and-brand.md",
+        "specs/texenda-handoff/03-domain-and-architecture/content.md",
+        "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md"
+      ],
+      "work_packages": [
+        "WP-14",
+        "WP-22"
+      ],
+      "acceptance_refs": [
+        "AC-IP06",
+        "AC-IP14",
+        "AC-IP15"
+      ],
+      "deferred_refs": [
+        "RAIDQ-0021"
+      ],
+      "owner_decision_compatibility": "Final owner decisions control; research is advisory.",
+      "current_evidence": "Sealed package1.1.0 and accepted local ADRs at assessed_revision; no product application exists; current ledger WP00 completed, remaining work planned.",
+      "completion_evidence": {
+        "scope": "Planning/contract coverage only; product evidence remains NOT_RUN.",
+        "contract": "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md",
+        "validation": "initial-product-records + effective-product-plan + independent exact-candidate review"
+      }
+    },
+    {
+      "id": "RI-0010",
+      "finding": "Representative welcome, nurture and reviewable hygiene",
+      "source_locations": "I P04/P05/P12",
+      "original_classification": "Implementation-plan or priority adjustment",
+      "selected_disposition": "incorporated_into_plan",
+      "change_or_retain": "Use bounded initial recipes atop existing segments/executor. No unconsented repermission, open-only sunset, automatic erasure or assumed purchaser exit.",
+      "authoritative_owners": [
+        "specs/texenda-handoff/03-domain-and-architecture/execution-semantics.md",
+        "specs/texenda-handoff/03-domain-and-architecture/permission-and-coordination.md",
+        "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md"
+      ],
+      "work_packages": [
+        "WP-06",
+        "WP-22",
+        "WP-23"
+      ],
+      "acceptance_refs": [
+        "AC-IP06",
+        "AC-IP10"
+      ],
+      "deferred_refs": [],
+      "owner_decision_compatibility": "Final owner decisions control; research is advisory.",
+      "current_evidence": "Sealed package1.1.0 and accepted local ADRs at assessed_revision; no product application exists; current ledger WP00 completed, remaining work planned.",
+      "completion_evidence": {
+        "scope": "Planning/contract coverage only; product evidence remains NOT_RUN.",
+        "contract": "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md",
+        "validation": "initial-product-records + effective-product-plan + independent exact-candidate review"
+      }
+    },
+    {
+      "id": "RI-0011",
+      "finding": "Truthful metrics, uncertainty and source explanations",
+      "source_locations": "S §17; I P07/P25",
+      "original_classification": "Already implemented or explicitly addressed",
+      "selected_disposition": "retained_with_explicit_acceptance",
+      "change_or_retain": "Keep metric definitions/denominators/coverage and unavailable explanations; reject fabricated revenue, causal certainty and forced winners.",
+      "authoritative_owners": [
+        "specs/texenda-handoff/04-security-governance-and-operations/observability.md",
+        "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md"
+      ],
+      "work_packages": [
+        "WP-16",
+        "WP-27"
+      ],
+      "acceptance_refs": [
+        "AC-IP14"
+      ],
+      "deferred_refs": [
+        "RAIDQ-0022"
+      ],
+      "owner_decision_compatibility": "Final owner decisions control; research is advisory.",
+      "current_evidence": "Sealed package1.1.0 and accepted local ADRs at assessed_revision; no product application exists; current ledger WP00 completed, remaining work planned.",
+      "completion_evidence": {
+        "scope": "Planning/contract coverage only; product evidence remains NOT_RUN.",
+        "contract": "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md",
+        "validation": "initial-product-records + effective-product-plan + independent exact-candidate review"
+      }
+    },
+    {
+      "id": "RI-0012",
+      "finding": "Returning user and review/correction effort",
+      "source_locations": "S 08_complexity_baseline.json; I IU-16",
+      "original_classification": "New validation, research, or external-gate requirement",
+      "selected_disposition": "incorporated_into_existing_acceptance_route",
+      "change_or_retain": "Extend AC-O07/AC-I with AC-IP10 in WP-25/32 and VAL-06; no new external gate. New/returning, manual/assisted, handoff and recovery included; research numbers remain hypotheses.",
+      "authoritative_owners": [
+        "specs/texenda-handoff/02-product-and-ux/operator-workflows.md",
+        "specs/texenda-handoff/06-migration-and-production/acceptance-plan.md",
+        "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md"
+      ],
+      "work_packages": [
+        "WP-25",
+        "WP-31",
+        "WP-32"
+      ],
+      "acceptance_refs": [
+        "AC-IP09",
+        "AC-IP10"
+      ],
+      "deferred_refs": [
+        "RAIDQ-0017"
+      ],
+      "owner_decision_compatibility": "Final owner decisions control; research is advisory.",
+      "current_evidence": "Sealed package1.1.0 and accepted local ADRs at assessed_revision; no product application exists; current ledger WP00 completed, remaining work planned.",
+      "completion_evidence": {
+        "scope": "Planning/contract coverage only; product evidence remains NOT_RUN.",
+        "contract": "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md",
+        "validation": "initial-product-records + effective-product-plan + independent exact-candidate review"
+      }
+    },
+    {
+      "id": "RI-0013",
+      "finding": "All-state migration, explicit blanks, no triggers, cursor proof",
+      "source_locations": "I RF-14/TV-01–05/IU-06/07",
+      "original_classification": "Useful clarification to current documentation",
+      "selected_disposition": "incorporated_into_plan_real_evidence_gated",
+      "change_or_retain": "Synthetic absent/blank/value and all-status/page fixtures now specified; actual discovery separately triggered. Content/entry time cannot prove next unsent step; required live behavior overrides speculative deferral.",
+      "authoritative_owners": [
+        "specs/texenda-handoff/06-migration-and-production/kit-migration.md",
+        "specs/texenda-handoff/06-migration-and-production/acceptance-plan.md",
+        "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md"
+      ],
+      "work_packages": [
+        "WP-12",
+        "WP-18",
+        "WP-19",
+        "WP-20"
+      ],
+      "acceptance_refs": [
+        "AC-IP11",
+        "AC-IP12"
+      ],
+      "deferred_refs": [
+        "RAIDQ-0011"
+      ],
+      "owner_decision_compatibility": "Final owner decisions control; research is advisory.",
+      "current_evidence": "Sealed package1.1.0 and accepted local ADRs at assessed_revision; no product application exists; current ledger WP00 completed, remaining work planned.",
+      "completion_evidence": {
+        "scope": "Planning/contract coverage only; product evidence remains NOT_RUN.",
+        "contract": "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md",
+        "validation": "initial-product-records + effective-product-plan + independent exact-candidate review"
+      }
+    },
+    {
+      "id": "RI-0014",
+      "finding": "Kit MCP discovery is not qualified access",
+      "source_locations": "I TV-06; dated direct-document observations in prior assessment",
+      "original_classification": "Unknown pending specified evidence",
+      "selected_disposition": "retained_as_unqualified_external_lead",
+      "change_or_retain": "Public documentation was retrieved 2026-09-17 in the preceding assessment; no account/client/runtime test occurred. Availability, client-side write controls and missing MCP-specific audit proof do not establish a safe read-only grant.",
+      "authoritative_owners": [
+        "specs/texenda-handoff/06-migration-and-production/kit-migration.md",
+        "specs/texenda-handoff/01-foundation/external-validation-gates.json",
+        "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md"
+      ],
+      "work_packages": [
+        "WP-18"
+      ],
+      "acceptance_refs": [
+        "AC-IP11",
+        "AC-IP12"
+      ],
+      "deferred_refs": [
+        "RAIDQ-0011",
+        "RAIDQ-0013"
+      ],
+      "owner_decision_compatibility": "Final owner decisions control; research is advisory.",
+      "current_evidence": "Sealed package1.1.0 and accepted local ADRs at assessed_revision; no product application exists; current ledger WP00 completed, remaining work planned.",
+      "completion_evidence": {
+        "scope": "Planning/contract coverage only; product evidence remains NOT_RUN.",
+        "contract": "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md",
+        "validation": "initial-product-records + effective-product-plan + independent exact-candidate review"
+      }
+    },
+    {
+      "id": "RI-0015",
+      "finding": "Speculative integrations/channels/experiments",
+      "source_locations": "I P13–P25/P32; S broader initial scope",
+      "original_classification": "Useful but deferred until a named trigger",
+      "selected_disposition": "deferred_with_precise_triggers",
+      "change_or_retain": "Retain named demand/source/permission/evidence triggers; no broad scope union or automatic score ranking. Required Kit parity must be preserved or explicitly resolved before retirement.",
+      "authoritative_owners": [
+        "specs/texenda-handoff/01-foundation/product-and-brand.md",
+        "specs/texenda-handoff/05-implementation/roadmap.md",
+        "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md"
+      ],
+      "work_packages": [
+        "WP-18",
+        "WP-34",
+        "WP-35",
+        "WP-38",
+        "WP-43"
+      ],
+      "acceptance_refs": [
+        "AC-IP12",
+        "AC-IP14",
+        "AC-IP18"
+      ],
+      "deferred_refs": [
+        "RAIDQ-0019",
+        "RAIDQ-0020",
+        "RAIDQ-0021",
+        "RAIDQ-0022",
+        "RAIDQ-0023"
+      ],
+      "owner_decision_compatibility": "Final owner decisions control; research is advisory.",
+      "current_evidence": "Sealed package1.1.0 and accepted local ADRs at assessed_revision; no product application exists; current ledger WP00 completed, remaining work planned.",
+      "completion_evidence": {
+        "scope": "Planning/contract coverage only; product evidence remains NOT_RUN.",
+        "contract": "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md",
+        "validation": "initial-product-records + effective-product-plan + independent exact-candidate review"
+      }
+    },
+    {
+      "id": "RI-0016",
+      "finding": "Illustrative schemas, library directory and alternative engines",
+      "source_locations": "S 06/12 schemas, §20; I RF-07/08",
+      "original_classification": "Inapplicable or rejected",
+      "selected_disposition": "rejected_wholesale_adoption",
+      "change_or_retain": "Use review prompts only. Preserve closed Texenda commands, ADR-0005 renderer/codec and single executor; exact licenses/versions/compatibility remain qualified later.",
+      "authoritative_owners": [
+        "specs/texenda-handoff/03-domain-and-architecture/schema-and-contract-guide.md",
+        "specs/texenda-handoff/03-domain-and-architecture/technology-baseline.md",
+        "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md"
+      ],
+      "work_packages": [
+        "WP-01",
+        "WP-10",
+        "WP-43"
+      ],
+      "acceptance_refs": [
+        "AC-IP15",
+        "AC-IP17"
+      ],
+      "deferred_refs": [
+        "RAIDQ-0018",
+        "RAIDQ-0023"
+      ],
+      "owner_decision_compatibility": "Final owner decisions control; research is advisory.",
+      "current_evidence": "Sealed package1.1.0 and accepted local ADRs at assessed_revision; no product application exists; current ledger WP00 completed, remaining work planned.",
+      "completion_evidence": {
+        "scope": "Planning/contract coverage only; product evidence remains NOT_RUN.",
+        "contract": "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md",
+        "validation": "initial-product-records + effective-product-plan + independent exact-candidate review"
+      }
+    }
+  ]
+}

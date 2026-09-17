@@ -84,6 +84,12 @@
           "path": "docs/decisions/ADR-0005-react-email-editor-reversible-default.md",
           "scope": "only_ADR_0005_named_editor_fields_WP10_VAL03_retained",
           "role": "scoped_amendment"
+        },
+        {
+          "kind": "repository",
+          "path": "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md",
+          "scope": "only_ADR_0008_named_initial_product_plan_release_acceptance_fields",
+          "role": "scoped_amendment"
         }
       ]
     },
@@ -101,6 +107,12 @@
           "path": "specs/texenda-handoff/01-foundation/product-and-brand.md",
           "scope": "canonical_definition",
           "role": "definition"
+        },
+        {
+          "kind": "repository",
+          "path": "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md",
+          "scope": "only_ADR_0008_named_initial_product_plan_release_acceptance_fields",
+          "role": "scoped_amendment"
         }
       ]
     },
@@ -124,6 +136,12 @@
           "path": "docs/decisions/ADR-0005-react-email-editor-reversible-default.md",
           "scope": "only_ADR_0005_named_editor_fields_WP10_VAL03_retained",
           "role": "scoped_amendment"
+        },
+        {
+          "kind": "repository",
+          "path": "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md",
+          "scope": "only_ADR_0008_named_initial_product_plan_release_acceptance_fields",
+          "role": "scoped_amendment"
         }
       ]
     },
@@ -146,6 +164,12 @@
           "kind": "repository",
           "path": "docs/decisions/ADR-0005-react-email-editor-reversible-default.md",
           "scope": "only_ADR_0005_named_editor_fields_WP10_VAL03_retained",
+          "role": "scoped_amendment"
+        },
+        {
+          "kind": "repository",
+          "path": "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md",
+          "scope": "only_ADR_0008_named_initial_product_plan_release_acceptance_fields",
           "role": "scoped_amendment"
         }
       ]
@@ -635,6 +659,12 @@
           "path": "docs/decisions/ADR-0005-react-email-editor-reversible-default.md",
           "scope": "only_ADR_0005_named_editor_fields_WP10_VAL03_retained",
           "role": "scoped_amendment"
+        },
+        {
+          "kind": "repository",
+          "path": "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md",
+          "scope": "only_ADR_0008_named_initial_product_plan_release_acceptance_fields",
+          "role": "scoped_amendment"
         }
       ]
     },
@@ -743,6 +773,12 @@
           "path": "specs/texenda-handoff/10-validation/",
           "scope": "quality_rubric",
           "role": "definition"
+        },
+        {
+          "kind": "repository",
+          "path": "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md",
+          "scope": "only_ADR_0008_named_initial_product_plan_release_acceptance_fields",
+          "role": "scoped_amendment"
         }
       ]
     },
@@ -760,6 +796,12 @@
           "path": "specs/texenda-handoff/07-agent-orchestration/context-routing.json",
           "scope": "context_routing",
           "role": "definition"
+        },
+        {
+          "kind": "repository",
+          "path": "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md",
+          "scope": "only_ADR_0008_named_initial_product_plan_release_acceptance_fields",
+          "role": "scoped_amendment"
         }
       ]
     },
@@ -873,6 +915,23 @@
           "kind": "repository",
           "path": "project-dossier/registers/workspace-retention.json",
           "scope": "workspace_retention",
+          "role": "definition"
+        }
+      ]
+    },
+    {
+      "concern_id": "effective_implementation_plan",
+      "owner_by_epoch": {
+        "baseline": "specs/texenda-handoff/05-implementation/work-packages.json",
+        "facade": "specs/texenda-handoff/05-implementation/work-packages.json",
+        "external_state": "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md"
+      },
+      "rule": "One effective catalog composes preserved sealed definitions with the accepted ADR-0008 machine delta. No second task ledger; activated effective digest is bound in the existing coordinator.",
+      "owner_refs": [
+        {
+          "kind": "repository",
+          "path": "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md",
+          "scope": "effective_implementation_plan",
           "role": "definition"
         }
       ]
@@ -2324,6 +2383,12 @@
       "id": "ADR-0007",
       "owner_path": "docs/decisions/ADR-0007-standalone-workspace-operating-contract.md",
       "scope": "portable_standalone_operation_code_control_and_retention_references_only",
+      "package_variants_modified": false
+    },
+    {
+      "id": "ADR-0008",
+      "owner_path": "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md",
+      "scope": "integrated_initial_product_scoped_plan_release_and_acceptance_delta_only",
       "package_variants_modified": false
     }
   ],
