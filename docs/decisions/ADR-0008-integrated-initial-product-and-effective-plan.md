@@ -362,10 +362,6 @@ Human summaries are navigation; research and test fixtures cannot change this ow
           "Exported definitions/content and entry timestamps are not per-recipient next-unsent-step evidence; unknown progress stays held.",
           "Kit MCP documentation does not establish read-only enforcement, account access, audit coverage or client/model privacy qualification.",
           "Inventory completion does not claim actual source pause, transfer, canary or observation passed; actual AC-M04/05/06/07/09 remain WP-20/33 obligations."
-        ],
-        "acceptance_ids": [
-          "AC-IP11",
-          "AC-IP12"
         ]
       }
     },
