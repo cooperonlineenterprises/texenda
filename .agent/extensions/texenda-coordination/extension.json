@@ -1,7 +1,7 @@
 {
   "schema_version": "texenda.agent-extension.v1",
   "id": "texenda-coordination",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "core_compatibility": "texenda.agent.v1",
   "authority_effect": "restrictions_only",
   "may_expand_authority": false,
@@ -10,7 +10,7 @@
   "bindings": [
     {
       "path": "tooling/coordination/harness.py",
-      "sha256": "797868f0c130e346939a93e2312fbdedd46cc8ae29b44a7401a997c242a2ce2c",
+      "sha256": "9ee789ce6edd5e8c4426e1eca46c96bf31e6747c4ce829f229f19528b19ee3a7",
       "role": "wp_lifecycle_receipt_and_state_root_adapter"
     },
     {
@@ -20,7 +20,7 @@
     },
     {
       "path": "tooling/coordination/schemas/evidence.schema.json",
-      "sha256": "2f41bb0879ad832c1f8db951924055331506f14ea24208372e8a119e5aba7e3a",
+      "sha256": "3778a64b1414b2824ae3a5a1aa991504ac5d28bdd00eb27d053579070a1def86",
       "role": "existing_coordination_evidence_contract"
     },
     {
@@ -47,6 +47,26 @@
       "path": "docs/decisions/ADR-0004-mapped-project-workspace.md",
       "sha256": "e1594f793c892adecfebbf86ce76c7fb180d79cc66497d936fd215ea773b8b08",
       "role": "accepted_mapped_adoption_and_state_cutover_contract"
+    },
+    {
+      "path": "tooling/coordination/plan.py",
+      "sha256": "301a5279d6bb3eb945f372b8d5b5fa22c4b070d25b8cb8886c8dca5e43065a07",
+      "role": "sole_effective_plan_reader"
+    },
+    {
+      "path": "tooling/coordination/schemas/effective-plan.schema.json",
+      "sha256": "fe580c925274d33e57e9940699bbf66b900953a4b033c4af063e6d8eebc84a8a",
+      "role": "closed_plan_delta_schema"
+    },
+    {
+      "path": "tooling/coordination/schemas/plan-activation.schema.json",
+      "sha256": "e32b323f766211b5b56fd96b23aa77f2516a37e9d5a0de4539820e51e8b80a80",
+      "role": "closed_forward_plan_activation_evidence"
+    },
+    {
+      "path": "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md",
+      "sha256": "9363cf981dee2e6b4889f6e07b44c07d5362dbb88dd803a2e8b81eb9d10bb40b",
+      "role": "accepted_scoped_initial_product_plan_release_acceptance"
     }
   ],
   "validator": {
