@@ -1,12 +1,12 @@
 {
   "schema_version": "texenda.generated-integrity.v1",
-  "generation_id": "725ae10e3ea00995dc5c859aef1a857ffd6eba3f37a761f2223e0ed57b321761",
+  "generation_id": "1541a970b28d9061b55c97fc4eb35c85f0790148b413b35fdb0f5b6eab564a46",
   "generation_id_derivation": "sha256(canonical_json(source_scope_sha256,evidence_scope_sha256,ledger_sha256,receipt_count,receipt_tip))",
-  "generated_at": "2026-09-17T16:07:59+00:00",
+  "generated_at": "2026-09-17T16:26:44+00:00",
   "authority": "generated_non_authoritative",
-  "source_git_revision": "8c14325b9e070975e847b89d13b5960588fceefb",
-  "source_git_tree": "7706ad4848d5e6e2ab0f01f2a006027ccdd7d517",
-  "source_scope_sha256": "3065990f05f8ce4822d2c257cd213e1c8e80ddf991d22d75832bc434d44b5172",
+  "source_git_revision": "f7ae8fd0fbdc081df233c85e376003abe9b527d5",
+  "source_git_tree": "1388e783f3f44d0f75ba45efd4ee636da4d1fe07",
+  "source_scope_sha256": "c40f765ab11112effd87a7bb7686fcd9e66beaed99dc4172431107d23c6a958b",
   "source_scope_exclusions": [
     {
       "path": ".agent/generated/manifest.json",
@@ -84,7 +84,7 @@
     },
     {
       "path": ".agent/extensions/texenda-coordination/extension.json",
-      "sha256": "5a0520d83fe8481f9902141ebffc1f85372f14a4ea5986ec5df3e0839e140104"
+      "sha256": "6427cf94934ff0e472396599b455330db79662ae49346489d827ddbabf36388e"
     },
     {
       "path": ".agent/generated/README.md",
@@ -136,7 +136,7 @@
     },
     {
       "path": ".agent/scripts/product.py",
-      "sha256": "2ac0a9317cea277704819cc2eb0794039a3953030be923c306ebcf7d419c379e"
+      "sha256": "d9269b6991f173e8c5c4201ee13f8c375e55ac0774e5e839eac5375aca9852cd"
     },
     {
       "path": ".agent/scripts/refresh.py",
@@ -168,7 +168,7 @@
     },
     {
       "path": ".agent/tests/test_initial_product.py",
-      "sha256": "9cb852140d51d4ddde6615d28ce68da9b2f4132bbd66a2c532a73bd8eeaaa8c4"
+      "sha256": "08eb16add446caffdc8fc7619e99d34e2d8658d7b847b4dd23fe0723a3518d86"
     },
     {
       "path": ".agent/tests/test_standalone.py",
@@ -260,11 +260,11 @@
     },
     {
       "path": "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md",
-      "sha256": "9363cf981dee2e6b4889f6e07b44c07d5362dbb88dd803a2e8b81eb9d10bb40b"
+      "sha256": "ff0d0d6a16646b772cf99e9c84b363d44fc49a614aa101ce792db96e5abfa135"
     },
     {
       "path": "docs/implementation/initial-product.md",
-      "sha256": "f21995778489cb05504b7a75b7c4e62a3f36053334959d592f5c4c22b8dceb50"
+      "sha256": "759dcc13922c75f4da9ff6905439fc7ab8dca76c84fa7649013cb0ad0c3a7ef2"
     },
     {
       "path": "docs/operations/github-ci-policy.md",
@@ -892,7 +892,7 @@
     },
     {
       "path": "tooling/coordination/plan.py",
-      "sha256": "45de69623b8dec2783ea9221419d112257e0b34b8cf69f6f7d98aa8d474116a2"
+      "sha256": "6bc0cbd4605063bf1b4ba8b322298277b7336ce321ab9085a86e176a67b009eb"
     },
     {
       "path": "tooling/coordination/routing-policy.json",
@@ -900,7 +900,7 @@
     },
     {
       "path": "tooling/coordination/schemas/effective-plan.schema.json",
-      "sha256": "fe580c925274d33e57e9940699bbf66b900953a4b033c4af063e6d8eebc84a8a"
+      "sha256": "bcb5479ccc07e8296c44c47e8e24ed0db3608c571c360182286ac5488b390a4f"
     },
     {
       "path": "tooling/coordination/schemas/evidence.schema.json",
@@ -952,7 +952,7 @@
     },
     {
       "path": "tooling/coordination/tests/test_effective_plan.py",
-      "sha256": "b2539e72344e106d662eb8af3677bdf98da8889f3fe9bb23532e87bd1f4ae317"
+      "sha256": "170652a0b41b614d8d500a89e287a2db1efc13c95c71c3a8f15add4958b332ae"
     },
     {
       "path": "tooling/coordination/tests/test_instruction_contracts.py",
@@ -1003,7 +1003,7 @@
       "sha256": "faca2d70ca7ae67b89b3d23561f9df1df0c9bab219aa8ae4f39e9cc35d573832"
     }
   ],
-  "evidence_scope_sha256": "2ec1384ddbd4defa1e78b64cbf903e30cf56df6b72e2a4d4224b98cefdd5b273",
+  "evidence_scope_sha256": "71008bcc56d9dd90ab90c427f59bae2c3ae340dba756a9a48cea4f546a6b0f6f",
   "evidence_files": [
     {
       "path": "docs/qualification/evidence/2026-09-14-external-state-cutover-author-validation.log",
@@ -1267,7 +1267,11 @@
     },
     {
       "path": "docs/qualification/evidence/2026-09-17-initial-product-contract-review-1131857.md",
-      "sha256": "2c0aaa188eaeaa4b0287c409c74a729553b8e1411ae61e279596a32910a747aa"
+      "sha256": "591db1cc5c00b316c12a88d1c2d782cdfa1af8bca1c98fd4890e49626c691b7b"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-17-initial-product-review-47b241b.md",
+      "sha256": "c07b07679c2c81c55d45c6635db94ce8a43275e41d5e83b5a98894da2df232c0"
     },
     {
       "path": "docs/qualification/evidence/history/2026-09-14-workspace-architecture-review.rejected.json.txt",
