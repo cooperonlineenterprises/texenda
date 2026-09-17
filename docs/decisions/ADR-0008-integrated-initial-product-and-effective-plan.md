@@ -39,6 +39,9 @@ second independently maintained catalog. The effective plan is deterministically
 composed from the hash-pinned sealed catalog/profiles/acceptance plus these exact
 deltas. Unchanged sealed fields retain their owners. The dossier indexes this
 owner; it must not copy requirements or maintain product task status.
+The existing consolidated RAIDQ owner also records the new product qualification
+and deferred-dependency details. Those records reference, never redefine or clear,
+the sealed external gates; existing workspace records remain byte-preserved.
 
 Superseded interpretation is limited to:
 - product-and-brand scope: integrated assistance and bounded native acquisition
@@ -89,6 +92,9 @@ effects retain their existing approvals.
 The initial-production profile carries real AI/agent gates; inherited email-pilot
 cannot bypass it. Optional voice/channels keep their own qualifications. Synthetic
 completion never clears a gate or marks a real-environment acceptance row passed.
+AC-IP18 is post-approval activation/operation evidence owned by WP-20/33/42,
+not a prerequisite for preactivation readiness; AC-IP17 and applicable sealed
+operational criteria require the rehearsed plan and accountable owners first.
 A scoped synthetic analogue may pass while its real qualification remains NOT RUN.
 Actual operator and actual external-agent observations cannot be fabricated by a
 scripted browser driver; record precisely which was exercised.
@@ -655,9 +661,8 @@ Human summaries are navigation; research and test fixtures cannot change this ow
           "All applicable real AC-D/S/L/W/C/A/R/M/P/O and non-voice AC-I criteria need actual required evidence; synthetic analogues alone cannot pass them.",
           "Production activation, public page publication/DNS, paid resources and data access require separate current approvals; VAL-01 or accepted neutral identity applies before public branding."
         ],
-        "acceptance_ids": [
-          "AC-IP17",
-          "AC-IP18"
+      "acceptance_ids": [
+          "AC-IP17"
         ]
       }
     },
@@ -1271,8 +1276,7 @@ Human summaries are navigation; research and test fixtures cannot change this ow
         "AC-I15",
         "AC-I16",
         "AC-I29",
-        "AC-IP17",
-        "AC-IP18"
+        "AC-IP17"
       ],
       "requires_gates": [
         "VAL-02",
@@ -1331,4 +1335,3 @@ Human summaries are navigation; research and test fixtures cannot change this ow
   }
 }
 ```
-
