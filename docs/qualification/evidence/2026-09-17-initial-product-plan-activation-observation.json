@@ -1,0 +1,43 @@
+{
+  "schema_version": "texenda.plan-activation-observation.v1",
+  "authority": "Sanitized local governance observation only; existing live ledger remains receipt/task authority.",
+  "approved_source_revision": "98d14eefe0a662ef88f22b3bcb4166fc307f4190",
+  "approved_evidence_head": "c4b7c12002abe4a5eec887f4f0ceb4f32c0368b5",
+  "reviewer": "/root/integrated_release_reviewer",
+  "reviewer_profile": "gpt-6-astra/max",
+  "integrator": "/root as agent:texenda-integrator",
+  "activation_record": "docs/qualification/evidence/2026-09-17-initial-product-plan-activation.evidence.json",
+  "command": "env GIT_OPTIONAL_LOCKS=0 PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda activate-plan --actor agent:texenda-integrator --record docs/qualification/evidence/2026-09-17-initial-product-plan-activation.evidence.json --apply",
+  "exit_code": 0,
+  "observed_at": "2026-09-17T16:42:32.658677+00:00",
+  "state_version": "2.1",
+  "before_sha256": "b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235",
+  "after_sha256": "fe218fc97325d3c255825d89cc0046e6ea27d38454c2a7dd06e09c0926d19bb0",
+  "before_receipts": 13,
+  "after_receipts": 14,
+  "receipt_tip": "e089594d853bc93a876aef100b779ef416bfaa82e5dacff84d027c6cb3eb8266",
+  "last_operation": "activate-plan",
+  "original_receipts_tasks_roster_budget_gates_unchanged": true,
+  "checkpoint": "state.plan-v2.b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235.json",
+  "effective_plan_digest": "16818d77078879f8e1ede4ca5b01174b3cd3df71fcd1239bb9eea6399c6a9f7e",
+  "leases": 0,
+  "budget_usd": 0,
+  "gates": {},
+  "WP01_context": {
+    "status": "READY",
+    "dispatch_valid": true,
+    "effective_plan_digest": "16818d77078879f8e1ede4ca5b01174b3cd3df71fcd1239bb9eea6399c6a9f7e",
+    "context_digest": "dfc41fb2485f7061a3ff2034b0eebf2ad5c96c69d9bc9b2e2c544c43db456beb",
+    "total_reference_bytes": 225898,
+    "max_bytes": 262144
+  },
+  "ready_work": [
+    "WP-01"
+  ],
+  "source_discovery": "WP-18 deferred until exact read-only discovery trigger/authority; synthetic implementation does not wait for account access.",
+  "no_product_work_admitted": true,
+  "no_gate_cleared": true,
+  "no_private_content_size_or_hash_access": true,
+  "no_external_effect": true,
+  "retention": "Keep exact external preactivation checkpoint and all receipt/evidence/branch history; no destructive rollback. The original binding remains unchanged and validates the13-receipt prefix."
+}
