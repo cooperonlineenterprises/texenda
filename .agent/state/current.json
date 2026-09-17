@@ -1,10 +1,10 @@
 {
   "schema_version": "texenda.generated-current-state.v1",
-  "generation_id": "47a355d965db9aaa8b3325591035921f8a1dbe03f0433cb4455038836d5ee20e",
-  "generated_at": "2026-09-17T16:37:36+00:00",
+  "generation_id": "06297ca7de6c1be00b6df555fdc20420e147e458f4567ea2a2b9c87a62bcf497",
+  "generated_at": "2026-09-17T16:43:59+00:00",
   "authority": "generated_non_authoritative_projection",
-  "source_git_revision": "2cc13e3843c23f602e0af875192a43fbfacdedde",
-  "source_git_tree": "d4ab00be48e9d7fc86d29043a841507fba0fe08e",
+  "source_git_revision": "c60fda2a45656f9ebb6db9ccb462c93fbc21a41e",
+  "source_git_tree": "4a2225332cfe3de3623bff866d3d4452c6599187",
   "source_scope_sha256": "c40f765ab11112effd87a7bb7686fcd9e66beaed99dc4172431107d23c6a958b",
   "source_scope_exclusions": [
     {
@@ -60,17 +60,17 @@
       "reason": "Git internals and nontracked operational/private material are outside the tracked source scope"
     }
   ],
-  "ledger_sha256": "b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235",
-  "receipt_count": 13,
-  "receipt_tip": "f39249184757101b108ea7ec5ea0ffebdd8237315b8ac3cad3ad0cc6ab3e827e",
+  "ledger_sha256": "fe218fc97325d3c255825d89cc0046e6ea27d38454c2a7dd06e09c0926d19bb0",
+  "receipt_count": 14,
+  "receipt_tip": "e089594d853bc93a876aef100b779ef416bfaa82e5dacff84d027c6cb3eb8266",
   "roster_evidence_sha256": "a23705178b39e8d0dd194abd4cf6e42fc20be404739d0e28e0ca9b221c80ddcf",
-  "evidence_scope_sha256": "c887a6e689fe08f9b8d4a3e196729aa6a7a293ebaa6ab2f3af0e56cae63b08c3",
+  "evidence_scope_sha256": "c633b26a8d44e5ff8d49672524bdb45ccb03ba70b326452245186b8be1aa8459",
   "freshness_rule": "Recompute the complete declared source scope, separately indexed evidence, and stable live-ledger snapshot. Any mismatch is stale; current full HEAD/tree are reported separately because generated/evidence-only commits may follow this source revision.",
   "ledger_observation": {
     "state_root": "/Users/jamesryancooper/Projects/texenda/local/agent-state/texenda",
-    "state_version": "2.0",
+    "state_version": "2.1",
     "lease_count": 0,
     "declared_budget_usd": 0.0,
-    "effective_plan_digest": null
+    "effective_plan_digest": "16818d77078879f8e1ede4ca5b01174b3cd3df71fcd1239bb9eea6399c6a9f7e"
   }
 }

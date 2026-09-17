@@ -1,10 +1,10 @@
 {
   "schema_version": "texenda.dossier-evidence-index.generated.v1",
-  "generation_id": "47a355d965db9aaa8b3325591035921f8a1dbe03f0433cb4455038836d5ee20e",
-  "generated_at": "2026-09-17T16:37:36+00:00",
+  "generation_id": "06297ca7de6c1be00b6df555fdc20420e147e458f4567ea2a2b9c87a62bcf497",
+  "generated_at": "2026-09-17T16:43:59+00:00",
   "authority": "generated_hash_index_only",
   "owner_path": "docs/qualification/evidence/",
-  "evidence_scope_sha256": "c887a6e689fe08f9b8d4a3e196729aa6a7a293ebaa6ab2f3af0e56cae63b08c3",
+  "evidence_scope_sha256": "c633b26a8d44e5ff8d49672524bdb45ccb03ba70b326452245186b8be1aa8459",
   "evidence": [
     {
       "path": "docs/qualification/evidence/2026-09-14-external-state-cutover-author-validation.log",
@@ -277,6 +277,10 @@
     {
       "path": "docs/qualification/evidence/2026-09-17-initial-product-contract-review-1131857.md",
       "sha256": "591db1cc5c00b316c12a88d1c2d782cdfa1af8bca1c98fd4890e49626c691b7b"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-17-initial-product-plan-activation-observation.json",
+      "sha256": "ba45f81be2b9d119c38cfc34de6bfc715622b2e77346f50664139c40c4c256f1"
     },
     {
       "path": "docs/qualification/evidence/2026-09-17-initial-product-plan-activation.evidence.json",

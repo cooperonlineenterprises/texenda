@@ -1,11 +1,11 @@
 {
   "schema_version": "texenda.generated-integrity.v1",
-  "generation_id": "47a355d965db9aaa8b3325591035921f8a1dbe03f0433cb4455038836d5ee20e",
+  "generation_id": "06297ca7de6c1be00b6df555fdc20420e147e458f4567ea2a2b9c87a62bcf497",
   "generation_id_derivation": "sha256(canonical_json(source_scope_sha256,evidence_scope_sha256,ledger_sha256,receipt_count,receipt_tip))",
-  "generated_at": "2026-09-17T16:37:36+00:00",
+  "generated_at": "2026-09-17T16:43:59+00:00",
   "authority": "generated_non_authoritative",
-  "source_git_revision": "2cc13e3843c23f602e0af875192a43fbfacdedde",
-  "source_git_tree": "d4ab00be48e9d7fc86d29043a841507fba0fe08e",
+  "source_git_revision": "c60fda2a45656f9ebb6db9ccb462c93fbc21a41e",
+  "source_git_tree": "4a2225332cfe3de3623bff866d3d4452c6599187",
   "source_scope_sha256": "c40f765ab11112effd87a7bb7686fcd9e66beaed99dc4172431107d23c6a958b",
   "source_scope_exclusions": [
     {
@@ -1003,7 +1003,7 @@
       "sha256": "faca2d70ca7ae67b89b3d23561f9df1df0c9bab219aa8ae4f39e9cc35d573832"
     }
   ],
-  "evidence_scope_sha256": "c887a6e689fe08f9b8d4a3e196729aa6a7a293ebaa6ab2f3af0e56cae63b08c3",
+  "evidence_scope_sha256": "c633b26a8d44e5ff8d49672524bdb45ccb03ba70b326452245186b8be1aa8459",
   "evidence_files": [
     {
       "path": "docs/qualification/evidence/2026-09-14-external-state-cutover-author-validation.log",
@@ -1278,6 +1278,10 @@
       "sha256": "591db1cc5c00b316c12a88d1c2d782cdfa1af8bca1c98fd4890e49626c691b7b"
     },
     {
+      "path": "docs/qualification/evidence/2026-09-17-initial-product-plan-activation-observation.json",
+      "sha256": "ba45f81be2b9d119c38cfc34de6bfc715622b2e77346f50664139c40c4c256f1"
+    },
+    {
       "path": "docs/qualification/evidence/2026-09-17-initial-product-plan-activation.evidence.json",
       "sha256": "0242dd08e6839fe9c2483a613292a81c18c7b27d3e733570c335e9796c9f0f35"
     },
@@ -1342,16 +1346,16 @@
       "sha256": "d6f611d2be064c822fe5c4c9c8c507ea01a0c83d117dfa554864a3aab642906f"
     }
   ],
-  "ledger_sha256": "b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235",
-  "receipt_count": 13,
-  "receipt_tip": "f39249184757101b108ea7ec5ea0ffebdd8237315b8ac3cad3ad0cc6ab3e827e",
+  "ledger_sha256": "fe218fc97325d3c255825d89cc0046e6ea27d38454c2a7dd06e09c0926d19bb0",
+  "receipt_count": 14,
+  "receipt_tip": "e089594d853bc93a876aef100b779ef416bfaa82e5dacff84d027c6cb3eb8266",
   "roster_evidence_sha256": "a23705178b39e8d0dd194abd4cf6e42fc20be404739d0e28e0ca9b221c80ddcf",
   "ledger_observation": {
     "state_root": "/Users/jamesryancooper/Projects/texenda/local/agent-state/texenda",
-    "state_version": "2.0",
+    "state_version": "2.1",
     "lease_count": 0,
     "declared_budget_usd": 0.0,
-    "effective_plan_digest": null
+    "effective_plan_digest": "16818d77078879f8e1ede4ca5b01174b3cd3df71fcd1239bb9eea6399c6a9f7e"
   },
   "freshness_rule": "Recompute the complete declared source scope, separately indexed evidence, and stable live-ledger snapshot. Any mismatch is stale; current full HEAD/tree are reported separately because generated/evidence-only commits may follow this source revision.",
   "generated_output_validation": "All eleven generated outputs are byte-reconstructed from validated inputs during check.",
