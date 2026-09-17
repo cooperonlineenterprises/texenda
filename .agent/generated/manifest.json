@@ -1,11 +1,11 @@
 {
   "schema_version": "texenda.generated-integrity.v1",
-  "generation_id": "1541a970b28d9061b55c97fc4eb35c85f0790148b413b35fdb0f5b6eab564a46",
+  "generation_id": "47a355d965db9aaa8b3325591035921f8a1dbe03f0433cb4455038836d5ee20e",
   "generation_id_derivation": "sha256(canonical_json(source_scope_sha256,evidence_scope_sha256,ledger_sha256,receipt_count,receipt_tip))",
-  "generated_at": "2026-09-17T16:26:44+00:00",
+  "generated_at": "2026-09-17T16:37:36+00:00",
   "authority": "generated_non_authoritative",
-  "source_git_revision": "f7ae8fd0fbdc081df233c85e376003abe9b527d5",
-  "source_git_tree": "1388e783f3f44d0f75ba45efd4ee636da4d1fe07",
+  "source_git_revision": "2cc13e3843c23f602e0af875192a43fbfacdedde",
+  "source_git_tree": "d4ab00be48e9d7fc86d29043a841507fba0fe08e",
   "source_scope_sha256": "c40f765ab11112effd87a7bb7686fcd9e66beaed99dc4172431107d23c6a958b",
   "source_scope_exclusions": [
     {
@@ -1003,7 +1003,7 @@
       "sha256": "faca2d70ca7ae67b89b3d23561f9df1df0c9bab219aa8ae4f39e9cc35d573832"
     }
   ],
-  "evidence_scope_sha256": "71008bcc56d9dd90ab90c427f59bae2c3ae340dba756a9a48cea4f546a6b0f6f",
+  "evidence_scope_sha256": "c887a6e689fe08f9b8d4a3e196729aa6a7a293ebaa6ab2f3af0e56cae63b08c3",
   "evidence_files": [
     {
       "path": "docs/qualification/evidence/2026-09-14-external-state-cutover-author-validation.log",
@@ -1262,12 +1262,24 @@
       "sha256": "f8f30a5ffd26c33f2dac2fcfe27c7cd345c77fe00dc65412ef6fd3a6b1c32912"
     },
     {
+      "path": "docs/qualification/evidence/2026-09-17-initial-product-approved-review.evidence.json",
+      "sha256": "e57146e36120f5d8b8307233a8371a494ca48863f0a4dbe271570c6e04a382a6"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-17-initial-product-approved-review.md",
+      "sha256": "20cbbeb36bf93a125c43c5a242177880592b895015e6d288159ef269aa536ff6"
+    },
+    {
       "path": "docs/qualification/evidence/2026-09-17-initial-product-baseline.json",
       "sha256": "efad07791dc2b46f4598c5acb2a75344c7a9b34566827d8b5980cce0ec530858"
     },
     {
       "path": "docs/qualification/evidence/2026-09-17-initial-product-contract-review-1131857.md",
       "sha256": "591db1cc5c00b316c12a88d1c2d782cdfa1af8bca1c98fd4890e49626c691b7b"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-17-initial-product-plan-activation.evidence.json",
+      "sha256": "0242dd08e6839fe9c2483a613292a81c18c7b27d3e733570c335e9796c9f0f35"
     },
     {
       "path": "docs/qualification/evidence/2026-09-17-initial-product-review-47b241b.md",
