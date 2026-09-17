@@ -1,0 +1,71 @@
+{
+  "schema_version": "2.0",
+  "kind": "review",
+  "task_id": "PLAN-IP-0001",
+  "candidate_revision": "98d14eefe0a662ef88f22b3bcb4166fc307f4190",
+  "observed_revision": "98d14eefe0a662ef88f22b3bcb4166fc307f4190",
+  "summary": "Independent Astra/max APPROVE exact integrated initial-product planning/coordinator source candidate; no remaining findings. Not approval of containing evidence head, product or external effect.",
+  "profile_id": "gpt-6-astra-max",
+  "role": "reviewer",
+  "capability_tier": 1,
+  "routing_policy_digest": "61f0db448cf5ac5adad4d9340d568a7558c0369174e30aab92dd0ccf0d24bdf0",
+  "issued_at": "2026-09-17T16:32:47.517194+00:00",
+  "qualifications": [
+    {
+      "profile_id": "gpt-6-astra-max",
+      "capability_tier": 1,
+      "model_id": "gpt-6-astra",
+      "reasoning_effort": "max",
+      "runtime_id": "codex-desktop-collaboration",
+      "client_version": "26.901.41600 (build 7982)",
+      "sign_in_mode": "subscription",
+      "billing_mode": "subscription",
+      "capabilities": [
+        "read",
+        "edit",
+        "test"
+      ],
+      "verified_at": "2026-09-13T21:44:31Z",
+      "expires_at": "2026-10-12T21:44:31Z",
+      "qualification_check_ids": [
+        "desktop-profile-gpt-6-astra-max"
+      ]
+    }
+  ],
+  "scope": "Owner-authorized pre-implementation maintenance; same44WP catalog, scoped ADR8 delta, explicit2.1forward boundary, preserved historic interpretation. No live WP assignment or external authority.",
+  "notes": "Authors /root and /root/effective_plan_engine_author; independent reviewer /root/integrated_release_reviewer; integrator /root. Source tree41f7db686748318f4d6cda6304b262937a0ec798; binary full-index diff540ff5d98499b30d72acdf1e8185a4dec6f04e7f5c059c832f57bb830c2342e8. See hash-bound log for failed candidates, fixes, exact checks, bounds and stop proof.",
+  "checks": [
+    {
+      "id": "independent-source-review",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Review exact base/candidate/diff; reconcile all findings; independent final24-test plan suite and current control check.",
+      "evidence_path": "docs/qualification/evidence/2026-09-17-initial-product-approved-review.md",
+      "sha256": "20cbbeb36bf93a125c43c5a242177880592b895015e6d288159ef269aa536ff6"
+    },
+    {
+      "id": "full-registered-checks",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Integrator executed exact canonical --check --all on98d14ee; thirteen delegated checks exited0, two writers skipped; reviewer consumed the completed result.",
+      "evidence_path": "docs/qualification/evidence/2026-09-17-initial-product-approved-review.md",
+      "sha256": "20cbbeb36bf93a125c43c5a242177880592b895015e6d288159ef269aa536ff6"
+    },
+    {
+      "id": "research-disposition-coverage",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Validate and review every RI-0001–RI-0016 planning disposition,18 acceptance extensions and15 precise product/development-route deferrals.",
+      "evidence_path": "docs/qualification/evidence/2026-09-17-initial-product-approved-review.md",
+      "sha256": "20cbbeb36bf93a125c43c5a242177880592b895015e6d288159ef269aa536ff6"
+    },
+    {
+      "id": "runtime-stop",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Observe completed engine author and independent reviewer runs, reaped test subprocesses, frozen source and sole serial integrator.",
+      "evidence_path": "docs/qualification/evidence/2026-09-17-initial-product-approved-review.md",
+      "sha256": "20cbbeb36bf93a125c43c5a242177880592b895015e6d288159ef269aa536ff6"
+    }
+  ]
+}

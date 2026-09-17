@@ -1,0 +1,101 @@
+{
+  "schema_version": "texenda.plan-activation.v1",
+  "kind": "plan-activation",
+  "summary": "Owner-authorized local forward plan cutover only after exact independent approval and evidence-head audit; original13 receipts/tasks/roster/budget/gates preserved. No product work admitted or external effect authorized.",
+  "actor": "agent:texenda-integrator",
+  "owner_request": "2026-09-17 current owner request: incorporate finalized integrated-AI/native-pages decisions through bounded local planning, governance, harness, review and integration; explicit forward cutover described by accepted ADR-0008, no receipt rewrite or external activation.",
+  "authors": [
+    "/root",
+    "/root/effective_plan_engine_author"
+  ],
+  "reviewer": "/root/integrated_release_reviewer",
+  "reviewer_profile_id": "gpt-6-astra-max",
+  "reviewer_qualification_digest": "bf57d4bcac4fbf260ee664d08ce066a814ad20aac45b936f6ba3b2b891e4e892",
+  "candidate_revision": "98d14eefe0a662ef88f22b3bcb4166fc307f4190",
+  "candidate_tree": "41f7db686748318f4d6cda6304b262937a0ec798",
+  "effective_plan_digest": "16818d77078879f8e1ede4ca5b01174b3cd3df71fcd1239bb9eea6399c6a9f7e",
+  "source_refs": [
+    {
+      "path": "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md",
+      "sha256": "ff0d0d6a16646b772cf99e9c84b363d44fc49a614aa101ce792db96e5abfa135",
+      "bytes": 56295
+    },
+    {
+      "path": "tooling/coordination/schemas/effective-plan.schema.json",
+      "sha256": "bcb5479ccc07e8296c44c47e8e24ed0db3608c571c360182286ac5488b390a4f",
+      "bytes": 10969
+    },
+    {
+      "path": "specs/texenda-handoff/05-implementation/work-packages.json",
+      "sha256": "9ad162070c27e4c765ba145fc8a35d31dc288482453daaa39ec0bb6add8bd8d8",
+      "bytes": 132517
+    },
+    {
+      "path": "specs/texenda-handoff/06-migration-and-production/release-profiles.json",
+      "sha256": "869813ada7d0ea1a829cdad9204b35c67fd2631707fbbfbab50a315a3a3b8b15",
+      "bytes": 5789
+    },
+    {
+      "path": "specs/texenda-handoff/06-migration-and-production/acceptance-catalog.json",
+      "sha256": "e6bf0bb96152e4fbcd9b4da13817f0a06ca4e57cd5502c4b329a4cc216ee7e58",
+      "bytes": 118789
+    },
+    {
+      "path": "tooling/coordination/harness.py",
+      "sha256": "f21727534b3231537e6b22566eded5a9a705190cebc867876f79a4a6e32ed5d0",
+      "bytes": 168566
+    },
+    {
+      "path": "tooling/coordination/plan.py",
+      "sha256": "6bc0cbd4605063bf1b4ba8b322298277b7336ce321ab9085a86e176a67b009eb",
+      "bytes": 21139
+    },
+    {
+      "path": "tooling/coordination/schemas/plan-activation.schema.json",
+      "sha256": "e32b323f766211b5b56fd96b23aa77f2516a37e9d5a0de4539820e51e8b80a80",
+      "bytes": 3691
+    },
+    {
+      "path": "tooling/coordination/schemas/evidence.schema.json",
+      "sha256": "3778a64b1414b2824ae3a5a1aa991504ac5d28bdd00eb27d053579070a1def86",
+      "bytes": 7238
+    },
+    {
+      "path": "tooling/coordination/schemas/state-write-transaction.schema.json",
+      "sha256": "a6533f9b79544def01b737744d9b365be48e402f9ce080f43cfe70be95486878",
+      "bytes": 4409
+    },
+    {
+      "path": "tooling/coordination/schemas/state-location.schema.json",
+      "sha256": "72527a4eddd5071f4a341a508f41f6b910ffacae93cb1e0017232517476fecf3",
+      "bytes": 1354
+    },
+    {
+      "path": "tooling/coordination/routing-policy.json",
+      "sha256": "5ebc903a1bd2d3e1925a01fcb1e556f0ed0a4c50682a3b3d93ccc7d7cdd6e979",
+      "bytes": 44691
+    }
+  ],
+  "source_state_sha256": "b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235",
+  "source_receipt_count": 13,
+  "source_receipt_head": "f39249184757101b108ea7ec5ea0ffebdd8237315b8ac3cad3ad0cc6ab3e827e",
+  "runtime_stopped": true,
+  "checks": [
+    {
+      "id": "independent-review",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Independent Astra/max approves98d14ee and all corrected semantic/engine/metadata findings. Evidence-head audit required before applying.",
+      "evidence_path": "docs/qualification/evidence/2026-09-17-initial-product-approved-review.md",
+      "sha256": "20cbbeb36bf93a125c43c5a242177880592b895015e6d288159ef269aa536ff6"
+    },
+    {
+      "id": "runtime-stop",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Code author and reviewer completed and reaped all subprocesses; source authoring frozen; only serial integrator/root is active, with zero live WP leases or competing writers.",
+      "evidence_path": "docs/qualification/evidence/2026-09-17-initial-product-approved-review.md",
+      "sha256": "20cbbeb36bf93a125c43c5a242177880592b895015e6d288159ef269aa536ff6"
+    }
+  ]
+}
