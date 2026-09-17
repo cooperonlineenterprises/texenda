@@ -241,6 +241,21 @@ class ActivationTests(PlanFixture):
         self.h.activate_plan('agent:integrator', record, apply=True)
         return record
 
+    def test_default_context_fits_complete_initial_contract_and_overflow_cannot_dispatch(self):
+        self.activate()
+        normal = self.h.context('WP-01')
+        self.assertEqual(normal['max_bytes'], 262144)
+        self.assertEqual(normal['status'], 'READY')
+        self.assertTrue(normal['dispatch_valid'])
+        self.assertIn('context_digest', normal)
+        narrow = self.h.context('WP-01', max_bytes=1)
+        self.assertEqual(narrow['status'], 'NEEDS_NARROWING')
+        self.assertFalse(narrow['dispatch_valid'])
+        self.assertNotIn('context_digest', narrow)
+        self.assertEqual(narrow['context_files'], normal['context_files'])
+        self.assertEqual(narrow['project_context_files'], normal['project_context_files'])
+        self.assertEqual(narrow['effective_acceptance'], normal['effective_acceptance'])
+
     def deny(self, call, pattern='.'):
         raw = self.h.statefile.read_bytes()
         with self.assertRaisesRegex((hm.Denied, pm.PlanError, OSError, ValueError), pattern):

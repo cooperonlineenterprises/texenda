@@ -2483,7 +2483,7 @@ class Harness(legacy.Harness):
                         for dependency in self.work[wid]['dependencies'])
                 and self.work[wid]['activation'] != 'DEFER UNTIL TRIGGERED']
 
-    def context(self, wid, out=None, max_bytes=200000):
+    def context(self, wid, out=None, max_bytes=262144):
         self._policy_current()
         if self.statefile.exists():
             self._read()
@@ -2516,6 +2516,9 @@ class Harness(legacy.Harness):
         ]
         pack['total_reference_bytes'] += sum(row['bytes'] for row in pack['project_context_files'])
         pack['status'] = 'NEEDS_NARROWING' if pack['total_reference_bytes'] > max_bytes else 'READY'
+        if pack['status'] != 'READY':
+            pack['dispatch_valid'] = False
+            pack.pop('context_digest', None)
         pack['instructions'] += (' Read the local routing ADR/policy and any effective-plan ADR. '
                                  'Only explicitly amended fields are superseded. Sealed unbound contexts are '
                                  'not valid for effective-plan dispatch; admission and assignment require current digests.')
@@ -2806,7 +2809,7 @@ def main(argv=None):
             command.add_argument('--integrated', required=True)
         if name == 'context':
             command.add_argument('--out')
-            command.add_argument('--max-bytes', type=int, default=200000)
+            command.add_argument('--max-bytes', type=int, default=262144)
     args = parser.parse_args(argv)
     try:
         if args.read_only and (args.cmd not in ('status', 'ready', 'check', 'context', 'plan', 'activate-plan')

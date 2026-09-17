@@ -10,7 +10,7 @@
   "bindings": [
     {
       "path": "tooling/coordination/harness.py",
-      "sha256": "9ee789ce6edd5e8c4426e1eca46c96bf31e6747c4ce829f229f19528b19ee3a7",
+      "sha256": "f21727534b3231537e6b22566eded5a9a705190cebc867876f79a4a6e32ed5d0",
       "role": "wp_lifecycle_receipt_and_state_root_adapter"
     },
     {

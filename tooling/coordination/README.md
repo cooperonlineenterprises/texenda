@@ -101,6 +101,12 @@ or [resumption](templates/RESUME.md) template. The generated `context` manifest
 must be supplemented with the applicable local instruction/template hashes.
 The sealed generic assignment prompt remains package reference.
 
+Context defaults to a bounded 262144-byte reference inventory so the initial
+contract pack can include ADR-0008 without truncation. This is not a token count
+or proof the complete prompt fits. A smaller explicit budget retains every
+reference but returns NEEDS_NARROWING, dispatch_valid=false and no context digest;
+the lead must prepare adequate context before dispatch.
+
 Use Python 3.11+ on a single POSIX host. No dependency installation is needed.
 A code worktree uses repository-only validation:
 
