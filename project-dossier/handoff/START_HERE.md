@@ -24,7 +24,11 @@ Generated navigation only; documentation is not permission or live state.
    [resumption](../../tooling/coordination/templates/RESUME.md) template. Do not
    create dossier tasks or receipts.
 5. Read the [current observed state](../current-state/README.md). Use
+   [the integrated implementation path](../../docs/implementation/initial-product.md)
+   for the initial synthetic product and later external qualification; its
+   [ADR-0008 owner](../../docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md)
+   supersedes only named sealed plan/release/acceptance fields. Use
    [transition](../transition/README.md) or [history](../history/README.md) only
    for maintenance, provenance, or recovery work.
 
-Source revision/tree: `b29286d0343158643d5adacebbc391197910995a` / `3f19034c131d22ee566f0717d2634dc27ae3aa22`. Live ledger hash: `b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235`.
+Source revision/tree: `8c14325b9e070975e847b89d13b5960588fceefb` / `7706ad4848d5e6e2ab0f01f2a006027ccdd7d517`. Live ledger hash: `b993eebdba5d2d8e5597c7205ee58846bf83ecb9d553bc55a687dcf1f7880235`.

@@ -1,7 +1,7 @@
 {
   "schema_version": "texenda.dossier-path-authority.generated.v1",
-  "generation_id": "bcba3bdc9a44be1d21366178a1992226fde0971183d47addf286e0fb17efb879",
-  "generated_at": "2026-09-16T22:59:59+00:00",
+  "generation_id": "725ae10e3ea00995dc5c859aef1a857ffd6eba3f37a761f2223e0ed57b321761",
+  "generated_at": "2026-09-17T16:07:59+00:00",
   "authority": "generated_from_project-dossier/ARTIFACT_CATALOG.json",
   "source_sha256": "121db944b7ef6d373aa38b9317f613dbc7ecb009f0d62e298f421584082f3f53",
   "paths": [
@@ -401,6 +401,12 @@
         "path": "docs/decisions/ADR-0005-react-email-editor-reversible-default.md",
         "scope": "only_ADR_0005_named_editor_fields_WP10_VAL03_retained",
         "role": "scoped_amendment"
+      },
+      {
+        "kind": "repository",
+        "path": "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md",
+        "scope": "only_ADR_0008_named_initial_product_plan_release_acceptance_fields",
+        "role": "scoped_amendment"
       }
     ],
     "canonical_definition": [
@@ -409,6 +415,12 @@
         "path": "specs/texenda-handoff/01-foundation/product-and-brand.md",
         "scope": "canonical_definition",
         "role": "definition"
+      },
+      {
+        "kind": "repository",
+        "path": "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md",
+        "scope": "only_ADR_0008_named_initial_product_plan_release_acceptance_fields",
+        "role": "scoped_amendment"
       }
     ],
     "canonical_requirements": [
@@ -423,6 +435,12 @@
         "path": "docs/decisions/ADR-0005-react-email-editor-reversible-default.md",
         "scope": "only_ADR_0005_named_editor_fields_WP10_VAL03_retained",
         "role": "scoped_amendment"
+      },
+      {
+        "kind": "repository",
+        "path": "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md",
+        "scope": "only_ADR_0008_named_initial_product_plan_release_acceptance_fields",
+        "role": "scoped_amendment"
       }
     ],
     "canonical_architecture": [
@@ -436,6 +454,12 @@
         "kind": "repository",
         "path": "docs/decisions/ADR-0005-react-email-editor-reversible-default.md",
         "scope": "only_ADR_0005_named_editor_fields_WP10_VAL03_retained",
+        "role": "scoped_amendment"
+      },
+      {
+        "kind": "repository",
+        "path": "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md",
+        "scope": "only_ADR_0008_named_initial_product_plan_release_acceptance_fields",
         "role": "scoped_amendment"
       }
     ],
@@ -673,6 +697,12 @@
         "path": "docs/decisions/ADR-0005-react-email-editor-reversible-default.md",
         "scope": "only_ADR_0005_named_editor_fields_WP10_VAL03_retained",
         "role": "scoped_amendment"
+      },
+      {
+        "kind": "repository",
+        "path": "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md",
+        "scope": "only_ADR_0008_named_initial_product_plan_release_acceptance_fields",
+        "role": "scoped_amendment"
       }
     ],
     "security_data": [
@@ -727,6 +757,12 @@
         "path": "specs/texenda-handoff/10-validation/",
         "scope": "quality_rubric",
         "role": "definition"
+      },
+      {
+        "kind": "repository",
+        "path": "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md",
+        "scope": "only_ADR_0008_named_initial_product_plan_release_acceptance_fields",
+        "role": "scoped_amendment"
       }
     ],
     "context_routing": [
@@ -735,6 +771,12 @@
         "path": "specs/texenda-handoff/07-agent-orchestration/context-routing.json",
         "scope": "context_routing",
         "role": "definition"
+      },
+      {
+        "kind": "repository",
+        "path": "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md",
+        "scope": "only_ADR_0008_named_initial_product_plan_release_acceptance_fields",
+        "role": "scoped_amendment"
       }
     ],
     "historical_compatibility": [
@@ -794,6 +836,14 @@
         "kind": "repository",
         "path": "project-dossier/registers/workspace-retention.json",
         "scope": "workspace_retention",
+        "role": "definition"
+      }
+    ],
+    "effective_implementation_plan": [
+      {
+        "kind": "repository",
+        "path": "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md",
+        "scope": "effective_implementation_plan",
         "role": "definition"
       }
     ]

@@ -1,12 +1,12 @@
 {
   "schema_version": "texenda.generated-integrity.v1",
-  "generation_id": "bcba3bdc9a44be1d21366178a1992226fde0971183d47addf286e0fb17efb879",
+  "generation_id": "725ae10e3ea00995dc5c859aef1a857ffd6eba3f37a761f2223e0ed57b321761",
   "generation_id_derivation": "sha256(canonical_json(source_scope_sha256,evidence_scope_sha256,ledger_sha256,receipt_count,receipt_tip))",
-  "generated_at": "2026-09-16T22:59:59+00:00",
+  "generated_at": "2026-09-17T16:07:59+00:00",
   "authority": "generated_non_authoritative",
-  "source_git_revision": "b29286d0343158643d5adacebbc391197910995a",
-  "source_git_tree": "3f19034c131d22ee566f0717d2634dc27ae3aa22",
-  "source_scope_sha256": "ef6447364e48c7cac2125609b6446cfa90e5ff7381c9bbe7b73ccb7bb8b8eec6",
+  "source_git_revision": "8c14325b9e070975e847b89d13b5960588fceefb",
+  "source_git_tree": "7706ad4848d5e6e2ab0f01f2a006027ccdd7d517",
+  "source_scope_sha256": "3065990f05f8ce4822d2c257cd213e1c8e80ddf991d22d75832bc434d44b5172",
   "source_scope_exclusions": [
     {
       "path": ".agent/generated/manifest.json",
@@ -64,7 +64,7 @@
   "source_files": [
     {
       "path": ".agent/START_HERE.md",
-      "sha256": "cf5c521df1d7107a342909386ef33b2367def6f4fd9f8ad90f72f3a9cc08468a"
+      "sha256": "01501512259aca7517fab82c9a976577fd06495bbb1e6fe60e540523e22ea7f5"
     },
     {
       "path": ".agent/context.json",
@@ -84,7 +84,7 @@
     },
     {
       "path": ".agent/extensions/texenda-coordination/extension.json",
-      "sha256": "12cbbfb8623a458fa41970a71286b9dce6ce43209e45f90ca7834c03378e8903"
+      "sha256": "5a0520d83fe8481f9902141ebffc1f85372f14a4ea5986ec5df3e0839e140104"
     },
     {
       "path": ".agent/generated/README.md",
@@ -119,24 +119,32 @@
       "sha256": "937a1ab4485b7ffb83e64fb8efbb338ce4cdc72d8a3e2271b7d63d0344e0b95b"
     },
     {
+      "path": ".agent/schemas/research-dispositions.v1.schema.json",
+      "sha256": "611c222902464da2bbb11ac3c83faa6ed6dc796c013f73285b74ea39ec118aa8"
+    },
+    {
       "path": ".agent/schemas/standalone-operating-contract.v1.schema.json",
       "sha256": "6d30380c2dd4d038a63b233372c09db405a5bb3bf4060353792bf5473dc5d369"
     },
     {
       "path": ".agent/scripts/common.py",
-      "sha256": "b07b7c2bfd1886b9b62dbf490e00d9ace869fd200356bef4c3980990db53d1e6"
+      "sha256": "1ff285ba4dd0bff46c04d5b44c00571b10452e6c8433363a87bc8143ea3de35d"
     },
     {
       "path": ".agent/scripts/operating.py",
-      "sha256": "626d0da59e8589e7ce2baf44e1d10856b1d72008fe75ee30d6fed636a039b7fe"
+      "sha256": "c323efaff877029b9a4227990369e1784736781982e59dafc2f372214f99d574"
+    },
+    {
+      "path": ".agent/scripts/product.py",
+      "sha256": "2ac0a9317cea277704819cc2eb0794039a3953030be923c306ebcf7d419c379e"
     },
     {
       "path": ".agent/scripts/refresh.py",
-      "sha256": "125cfdbf8ec02aca063802a941ad205003f3e4bedec286db879a05184971322d"
+      "sha256": "431230e624da9749cecbe480d728e7f11ec20d5744a466077ac3adc5f093b30e"
     },
     {
       "path": ".agent/scripts/validate.py",
-      "sha256": "47740549b4c52dfb30db1f1634fce3e462e08d4b979b5d00b7eda0375bdab8d2"
+      "sha256": "bf2dddde94c86b18c5a1730b49240c528bf55bbe20d87905a70ad2f4efd9fca6"
     },
     {
       "path": ".agent/tasks/README.md",
@@ -159,8 +167,12 @@
       "sha256": "2f2a409289d2f266e8170ab5533ac9097b99a542881d47bbfec93dd86d0d4818"
     },
     {
+      "path": ".agent/tests/test_initial_product.py",
+      "sha256": "9cb852140d51d4ddde6615d28ce68da9b2f4132bbd66a2c532a73bd8eeaaa8c4"
+    },
+    {
       "path": ".agent/tests/test_standalone.py",
-      "sha256": "69237d9b135b2d1391b81b1e772afdd1db112d1fd0c98712782e67157392716c"
+      "sha256": "6f7431642eca17f1710887df42c4955bc6799e3e5117f63fc82bda273e2739cb"
     },
     {
       "path": ".agent/tests/test_validate.py",
@@ -172,7 +184,7 @@
     },
     {
       "path": ".agent/validators.json",
-      "sha256": "247ef70566a47f800b389595b198571929581548e86f90094a3817bd1eb3c205"
+      "sha256": "5f5638604fccf25ab9a8e29ac2597c28ee389a071c924afc495568c27e85eef5"
     },
     {
       "path": ".codex/config.toml",
@@ -192,11 +204,11 @@
     },
     {
       "path": "AGENTS.md",
-      "sha256": "79541fd16e5b212204277b3f5f8c971954b6c6c05f7976ca724a7ca05270e317"
+      "sha256": "569dc5ccfccca4d8a4537c6a5d534a52a337aa6fa4daa59dd7f8ace7aae87851"
     },
     {
       "path": "docs/agents/operating-guide.md",
-      "sha256": "ddd945e367a713441774878d7952ed19eb0c67ff73fb71a39181230cf8371d99"
+      "sha256": "a03bdf9b614065cba01acd119a0626d094ce9bb4277f23d5319c344ff8c5ccd9"
     },
     {
       "path": "docs/agents/visualization.md",
@@ -247,6 +259,14 @@
       "sha256": "3c811bd57c384cc3cd8f5997b1c80f59bdd1fb1c70d9d42ce4330b94810cb57c"
     },
     {
+      "path": "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md",
+      "sha256": "9363cf981dee2e6b4889f6e07b44c07d5362dbb88dd803a2e8b81eb9d10bb40b"
+    },
+    {
+      "path": "docs/implementation/initial-product.md",
+      "sha256": "f21995778489cb05504b7a75b7c4e62a3f36053334959d592f5c4c22b8dceb50"
+    },
+    {
       "path": "docs/operations/github-ci-policy.md",
       "sha256": "f0709eab96b2f549e2cfb4274ec4db2aa5239368a4222076d95c9b96ae77dce6"
     },
@@ -261,6 +281,10 @@
     {
       "path": "docs/qualification/analysis/2026-09-13-astra-safety-usage-audit.json",
       "sha256": "433685da64af22e42790289a5f977caafcf5234ce0b41e1cf10a8de556274d73"
+    },
+    {
+      "path": "docs/qualification/analysis/research-impact-dispositions.json",
+      "sha256": "e2216006d5a7bf8e64c4b820a08ff5e45f14947c4bd47d2e0930fdcbe267365a"
     },
     {
       "path": "docs/qualification/analysis/routing-v2-test-coverage.json",
@@ -416,7 +440,7 @@
     },
     {
       "path": "project-dossier/AUTHORITY.md",
-      "sha256": "3a5a0718d20bf6900766e054a2fdb070ade6a60f5da397e89d76ffd1decb4e11"
+      "sha256": "3d828f6fe28676beca88cbcf02d9c54c1cf46638b78494a92c7dd59cda4db4ed"
     },
     {
       "path": "project-dossier/README.md",
@@ -460,11 +484,11 @@
     },
     {
       "path": "project-dossier/machine-readable/raidq.json",
-      "sha256": "ef6c2e960e4d7ae99258de7c7b633126a58fadeefbf660caf09295cea72d1f0d"
+      "sha256": "41fed18a187acd2afe107e803d4d2c88db74ae9357872275153b3cb0c7883d1e"
     },
     {
       "path": "project-dossier/plans/README.md",
-      "sha256": "16d295f163ce9bdbc2f1dd475928b645062f70853f3cf36693c21f14efef5f99"
+      "sha256": "bc91e347d6e758e59c72324584a1722669162d7840ce8b22527cdcf530ef750b"
     },
     {
       "path": "project-dossier/provenance/README.md",
@@ -488,7 +512,7 @@
     },
     {
       "path": "project-dossier/transition/blueprint-adoption-crosswalk.json",
-      "sha256": "54bd7fc4c5e5977e5015064bba3f75e311c94ff3835f3f13d12c9ac76d2385b8"
+      "sha256": "fbdfdb97a39c5ca3686fcefd42d343c1cc0b069c45705a8d5e2851faeee53b4c"
     },
     {
       "path": "project-dossier/transition/external-state-relocation-receipt.md",
@@ -860,19 +884,31 @@
     },
     {
       "path": "tooling/coordination/README.md",
-      "sha256": "c25c65201993d114c894d4d924e0420f480727bf904888a1d344569b2f9d6b3c"
+      "sha256": "00a82e318cbf8376adfa149eddd41e20ec1f2a81e2f3a970d61db122574fdfa2"
     },
     {
       "path": "tooling/coordination/harness.py",
-      "sha256": "797868f0c130e346939a93e2312fbdedd46cc8ae29b44a7401a997c242a2ce2c"
+      "sha256": "f21727534b3231537e6b22566eded5a9a705190cebc867876f79a4a6e32ed5d0"
+    },
+    {
+      "path": "tooling/coordination/plan.py",
+      "sha256": "45de69623b8dec2783ea9221419d112257e0b34b8cf69f6f7d98aa8d474116a2"
     },
     {
       "path": "tooling/coordination/routing-policy.json",
       "sha256": "5ebc903a1bd2d3e1925a01fcb1e556f0ed0a4c50682a3b3d93ccc7d7cdd6e979"
     },
     {
+      "path": "tooling/coordination/schemas/effective-plan.schema.json",
+      "sha256": "fe580c925274d33e57e9940699bbf66b900953a4b033c4af063e6d8eebc84a8a"
+    },
+    {
       "path": "tooling/coordination/schemas/evidence.schema.json",
-      "sha256": "2f41bb0879ad832c1f8db951924055331506f14ea24208372e8a119e5aba7e3a"
+      "sha256": "3778a64b1414b2824ae3a5a1aa991504ac5d28bdd00eb27d053579070a1def86"
+    },
+    {
+      "path": "tooling/coordination/schemas/plan-activation.schema.json",
+      "sha256": "e32b323f766211b5b56fd96b23aa77f2516a37e9d5a0de4539820e51e8b80a80"
     },
     {
       "path": "tooling/coordination/schemas/profile-qualification.schema.json",
@@ -888,15 +924,15 @@
     },
     {
       "path": "tooling/coordination/templates/ASSIGNMENT.md",
-      "sha256": "69e9b4dada0a3c2d68e9d803fc9f6afc370436ccb03aa8b629d83f9b71d30d8f"
+      "sha256": "4351ff6b1bd023e7e0ea1eee0b9e52164f5f57d155586a76a032bc8d84bc2255"
     },
     {
       "path": "tooling/coordination/templates/RESUME.md",
-      "sha256": "77c23feaf68590846675cd96cfaface247a5a8b286411381a4bfeb47f97afb0c"
+      "sha256": "4004b8d2c953c29aad83f36ce312b0a3222aa7b9e9ce159b15b9d04868b196ce"
     },
     {
       "path": "tooling/coordination/templates/REVIEW.md",
-      "sha256": "59f94d05414307805a82b0d283dd0903cbd7ba230e8b1bdcfef469301aaf11bf"
+      "sha256": "125f96460199aa633bb22dc1157497825af6f5bb83c25c55a4cf2980005028fa"
     },
     {
       "path": "tooling/coordination/templates/budget.json",
@@ -913,6 +949,10 @@
     {
       "path": "tooling/coordination/templates/routing.json",
       "sha256": "13b2ff4c220821431d469aad3dba1b6e4443c8039ca032195ac3202f4918516c"
+    },
+    {
+      "path": "tooling/coordination/tests/test_effective_plan.py",
+      "sha256": "b2539e72344e106d662eb8af3677bdf98da8889f3fe9bb23532e87bd1f4ae317"
     },
     {
       "path": "tooling/coordination/tests/test_instruction_contracts.py",
@@ -956,14 +996,14 @@
     },
     {
       "path": "tooling/workspace/validate_contract.py",
-      "sha256": "5d5374f58e3053286c4c33b152794edcbb1e31b71310186aa32d6474f1bc046c"
+      "sha256": "c92bf8ee26e7c41e1e5d5fd8f19ab6f58e0b27eb794cd79141942506eb05474f"
     },
     {
       "path": "tooling/workspace/validate_relocation.py",
       "sha256": "faca2d70ca7ae67b89b3d23561f9df1df0c9bab219aa8ae4f39e9cc35d573832"
     }
   ],
-  "evidence_scope_sha256": "57d7d32b7f8ac12452557926e6e46a77c462051c1b3f1a52105e5fe547a25f63",
+  "evidence_scope_sha256": "2ec1384ddbd4defa1e78b64cbf903e30cf56df6b72e2a4d4224b98cefdd5b273",
   "evidence_files": [
     {
       "path": "docs/qualification/evidence/2026-09-14-external-state-cutover-author-validation.log",
@@ -1222,6 +1262,14 @@
       "sha256": "f8f30a5ffd26c33f2dac2fcfe27c7cd345c77fe00dc65412ef6fd3a6b1c32912"
     },
     {
+      "path": "docs/qualification/evidence/2026-09-17-initial-product-baseline.json",
+      "sha256": "efad07791dc2b46f4598c5acb2a75344c7a9b34566827d8b5980cce0ec530858"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-17-initial-product-contract-review-1131857.md",
+      "sha256": "2c0aaa188eaeaa4b0287c409c74a729553b8e1411ae61e279596a32910a747aa"
+    },
+    {
       "path": "docs/qualification/evidence/history/2026-09-14-workspace-architecture-review.rejected.json.txt",
       "sha256": "cdb1b8e0c0ef2b8fddeab39636e4f9d966925ef16c7f5825498e97b88d1785d0"
     },
@@ -1286,7 +1334,8 @@
     "state_root": "/Users/jamesryancooper/Projects/texenda/local/agent-state/texenda",
     "state_version": "2.0",
     "lease_count": 0,
-    "declared_budget_usd": 0.0
+    "declared_budget_usd": 0.0,
+    "effective_plan_digest": null
   },
   "freshness_rule": "Recompute the complete declared source scope, separately indexed evidence, and stable live-ledger snapshot. Any mismatch is stale; current full HEAD/tree are reported separately because generated/evidence-only commits may follow this source revision.",
   "generated_output_validation": "All eleven generated outputs are byte-reconstructed from validated inputs during check.",

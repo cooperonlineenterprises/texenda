@@ -1,10 +1,10 @@
 {
   "schema_version": "texenda.dossier-evidence-index.generated.v1",
-  "generation_id": "bcba3bdc9a44be1d21366178a1992226fde0971183d47addf286e0fb17efb879",
-  "generated_at": "2026-09-16T22:59:59+00:00",
+  "generation_id": "725ae10e3ea00995dc5c859aef1a857ffd6eba3f37a761f2223e0ed57b321761",
+  "generated_at": "2026-09-17T16:07:59+00:00",
   "authority": "generated_hash_index_only",
   "owner_path": "docs/qualification/evidence/",
-  "evidence_scope_sha256": "57d7d32b7f8ac12452557926e6e46a77c462051c1b3f1a52105e5fe547a25f63",
+  "evidence_scope_sha256": "2ec1384ddbd4defa1e78b64cbf903e30cf56df6b72e2a4d4224b98cefdd5b273",
   "evidence": [
     {
       "path": "docs/qualification/evidence/2026-09-14-external-state-cutover-author-validation.log",
@@ -261,6 +261,14 @@
     {
       "path": "docs/qualification/evidence/2026-09-16-implementation-readiness-closeout-review.evidence.json",
       "sha256": "f8f30a5ffd26c33f2dac2fcfe27c7cd345c77fe00dc65412ef6fd3a6b1c32912"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-17-initial-product-baseline.json",
+      "sha256": "efad07791dc2b46f4598c5acb2a75344c7a9b34566827d8b5980cce0ec530858"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-17-initial-product-contract-review-1131857.md",
+      "sha256": "2c0aaa188eaeaa4b0287c409c74a729553b8e1411ae61e279596a32910a747aa"
     },
     {
       "path": "docs/qualification/evidence/history/2026-09-14-workspace-architecture-review.rejected.json.txt",
