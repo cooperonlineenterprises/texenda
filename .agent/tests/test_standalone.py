@@ -256,7 +256,13 @@ class StandaloneContracts(unittest.TestCase):
         # This correction preserves every other RAIDQ record and all closed references.
         prior = common.loads(common.git('show', '486e65dc9fe8331274d00c7fc06685ff1897fafb:'
                                         + operating.RAIDQ, root=ROOT))
-        self.assertEqual([row for row in raidq['items'] if row['id'] not in ('RAIDQ-0007', 'RAIDQ-0008')],
+        # This historical correction freezes prior records, not all future RAIDQ
+        # additions. ADR-0008's new product dependencies have their own closed
+        # coverage/preservation tests in test_initial_product.
+        prior_ids = {row['id'] for row in prior['items']}
+        self.assertTrue(prior_ids <= {row['id'] for row in raidq['items']})
+        self.assertEqual([row for row in raidq['items'] if row['id'] in prior_ids
+                          and row['id'] not in ('RAIDQ-0007', 'RAIDQ-0008')],
                          [row for row in prior['items'] if row['id'] not in ('RAIDQ-0007', 'RAIDQ-0008')])
         # The later status closeout changes current completion metadata only;
         # preserve the exact register retained by the original scope correction.
