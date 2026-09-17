@@ -126,6 +126,11 @@ class InitialProductRecordsTests(unittest.TestCase):
         self.assertFalse({'AC-M04', 'AC-M05', 'AC-M06', 'AC-M07', 'AC-M09'}
                          & set(profiles['initial-production']['required_criteria']))
         self.assertIn('WP-20', profiles['email-pilot']['requires_work_packages'])
+        self.assertEqual(profiles['assisted-workspace']['parents'], ['initial-production'])
+        self.assertEqual(profiles['external-agent']['parents'], ['assisted-workspace'])
+        for identifier in ('assisted-workspace', 'external-agent'):
+            self.assertFalse({'WP-20', 'WP-33'}
+                             & set(plan.profile_closure(identifier)['work_packages']))
         work = {w['id']: w for w in plan.catalog['work_packages']}
         self.assertIn('WP-15', work['WP-12']['dependencies'])
         self.assertEqual(plan.catalog['work_packages'][0]['id'], 'WP-00')

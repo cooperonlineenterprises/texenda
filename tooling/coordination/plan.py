@@ -306,8 +306,9 @@ def load_plan(root):
     if set(additional) != {'initial-synthetic', 'initial-production'} or set(additional) & set(base_profiles):
         raise PlanError('unexpected additional profile IDs')
     profiles['profiles'].extend(copy.deepcopy(contract['additional_profiles']))
-    if [row['id'] for row in contract['profile_updates']] != ['email-pilot']:
-        raise PlanError('only email-pilot is amended')
+    if [row['id'] for row in contract['profile_updates']] != [
+            'email-pilot', 'assisted-workspace', 'external-agent']:
+        raise PlanError('only the three named initial component profiles are amended')
     merged_profiles = patch_rows(profiles['profiles'], contract['profile_updates'], 'profile')
     for row in merged_profiles.values():
         if (not set(row['requires_work_packages']) <= WPS
@@ -320,6 +321,21 @@ def load_plan(root):
     synthetic = plan.profile_closure('initial-synthetic')
     production = plan.profile_closure('initial-production')
     pilot = plan.profile_closure('email-pilot')
+    initial_real_criteria = set().union(*(set(base_profiles[key]['required_criteria'])
+        for key in ('email-pilot', 'mature-email', 'assisted-workspace', 'external-agent')))
+    initial_real_criteria -= POST_ACTIVATION_CRITERIA
+    for identifier, parents in (('assisted-workspace', ['initial-production']),
+                                ('external-agent', ['assisted-workspace'])):
+        component = merged_profiles[identifier]
+        if component['parents'] != parents or any(
+                component[key] != base_profiles[identifier][key]
+                for key in ('required_criteria', 'requires_gates', 'requires_work_packages')):
+            raise PlanError('initial component profile ancestry or own obligations changed')
+        if {'WP-20', 'WP-33'} & set(plan.profile_closure(identifier)['work_packages']):
+            raise PlanError('initial interaction profile depends on later rollout')
+    if (merged_profiles['voice'] != base_profiles['voice']
+            or merged_profiles['mature-email'] != base_profiles['mature-email']):
+        raise PlanError('optional voice or mature-email obligations changed')
     if (set(contract['synthetic_forbidden_dependencies']) != FORBIDDEN_SYNTHETIC
             or set(synthetic['work_packages']) & FORBIDDEN_SYNTHETIC
             or synthetic['requires_gates'] or additional['initial-synthetic']['parents']
@@ -329,7 +345,7 @@ def load_plan(root):
     if (additional['initial-production']['parents'] != ['initial-synthetic']
             or production['evidence_mode'] != 'real-qualified'
             or not (set(base_profiles['email-pilot']['requires_gates']) | {'VAL-09', 'VAL-11'}) <= set(production['requires_gates'])
-            or not (set(base_profiles['email-pilot']['required_criteria']) - POST_ACTIVATION_CRITERIA) <= set(production['required_criteria'])
+            or not initial_real_criteria <= set(production['required_criteria'])
             or POST_ACTIVATION_CRITERIA & set(production['required_criteria'])
             or not set(base_profiles['email-pilot']['required_criteria']) <= set(pilot['required_criteria'])
             or 'WP-20' not in pilot['work_packages']

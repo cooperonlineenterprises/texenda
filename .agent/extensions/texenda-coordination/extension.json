@@ -50,12 +50,12 @@
     },
     {
       "path": "tooling/coordination/plan.py",
-      "sha256": "45de69623b8dec2783ea9221419d112257e0b34b8cf69f6f7d98aa8d474116a2",
+      "sha256": "6bc0cbd4605063bf1b4ba8b322298277b7336ce321ab9085a86e176a67b009eb",
       "role": "sole_effective_plan_reader"
     },
     {
       "path": "tooling/coordination/schemas/effective-plan.schema.json",
-      "sha256": "fe580c925274d33e57e9940699bbf66b900953a4b033c4af063e6d8eebc84a8a",
+      "sha256": "bcb5479ccc07e8296c44c47e8e24ed0db3608c571c360182286ac5488b390a4f",
       "role": "closed_plan_delta_schema"
     },
     {
@@ -65,7 +65,7 @@
     },
     {
       "path": "docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md",
-      "sha256": "9363cf981dee2e6b4889f6e07b44c07d5362dbb88dd803a2e8b81eb9d10bb40b",
+      "sha256": "ff0d0d6a16646b772cf99e9c84b363d44fc49a614aa101ce792db96e5abfa135",
       "role": "accepted_scoped_initial_product_plan_release_acceptance"
     }
   ],

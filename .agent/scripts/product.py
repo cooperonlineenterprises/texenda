@@ -91,6 +91,9 @@ def validate_records(root=ROOT):
             and 'WP-20' in profiles['email-pilot']['requires_work_packages']
             and 'WP-15' in work['WP-12']['dependencies'],
             'reviewed acquisition/activation dependency correction regressed')
+    require(profiles['assisted-workspace']['parents'] == ['initial-production']
+            and profiles['external-agent']['parents'] == ['assisted-workspace'],
+            'legacy interaction profile regained later rollout prerequisites')
     for row in rows:
         require(row['selected_disposition'] in DISPOSITIONS, 'unknown research disposition')
         require(set(row['work_packages']) <= set(work)

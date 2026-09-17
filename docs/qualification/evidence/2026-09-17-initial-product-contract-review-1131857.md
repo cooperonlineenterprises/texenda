@@ -55,4 +55,3 @@ replace/append acceptance delta caught by the strict loader.
 Final source+engine+facade review must recheck both fixes and all negative tests.
 These references preserve failed candidates and do not transfer approval to any
 new revision. No files/state/accounts were changed by the reviewer.
-

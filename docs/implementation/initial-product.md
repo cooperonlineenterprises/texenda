@@ -93,7 +93,12 @@ not this table, owns exact dependencies and allowed paths.
 | Separate activation and sustained operation | WP-20 → applicable WP-33/42 | Authorized canary/cutover, observation, legacy opt-outs, ongoing incidents/support/restore and later scoped releases |
 
 WP-29 retains WP-27 as a dependency: external-first/deferred-built-in advice is
-superseded. WP-26 no longer waits for all later UX work; foundational interaction
+superseded. The assisted-workspace component profile explicitly inherits
+initial-production, not mature-email; external-agent still inherits
+assisted-workspace. Their own checks/gates/WPs are unchanged, so enabled-profile
+selection cannot reintroduce rollout as a prerequisite for initial AI operation.
+Mature-email retains its later rollout; voice remains separately triggered.
+WP-26 no longer waits for all later UX work; foundational interaction
 and accessibility enter WP-01/13. WP-12 now waits for rendering/assets and shared
 delivery. WP-19 no longer requires actual Kit discovery to implement/test synthetic
 mechanics. WP-39/41 implement/exercise local mechanisms; actual infrastructure

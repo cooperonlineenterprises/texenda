@@ -55,6 +55,21 @@ class PlanFixture(unittest.TestCase):
 
 
 class PlanTests(PlanFixture):
+    def test_initial_component_profiles_preserve_evidence_without_rollout_dependency(self):
+        plan = pm.load_plan(self.root)
+        self.assertEqual(plan.release_profiles['assisted-workspace']['parents'], ['initial-production'])
+        self.assertEqual(plan.release_profiles['external-agent']['parents'], ['assisted-workspace'])
+        for identifier in ('assisted-workspace', 'external-agent'):
+            required = plan.profile_closure(identifier)
+            self.assertFalse({'WP-20', 'WP-33'} & set(required['work_packages']))
+            self.assertTrue({'VAL-09', 'VAL-11'} <= set(required['requires_gates']))
+        self.assertIn('WP-33', plan.profile_closure('mature-email')['work_packages'])
+        self.assertIn('WP-30', plan.profile_closure('voice')['work_packages'])
+        self.assertIn('VAL-12', plan.profile_closure('voice')['requires_gates'])
+        self.denies(lambda c: c['profile_updates'][1]['replace'].update(parents=['mature-email']))
+        self.denies(lambda c: c['profile_updates'][2]['replace'].update(parents=['mature-email']))
+        self.denies(lambda c: c['profile_updates'][1]['append'].update(requires_work_packages=['WP-33']))
+
     def test_exact_composition_and_stage_closures(self):
         plan = pm.load_plan(self.root)
         self.assertEqual(plan.digest, pm.load_plan(self.root).digest)
@@ -150,6 +165,8 @@ class PlanTests(PlanFixture):
             lambda c: c['additional_profiles'][1]['requires_gates'].remove('VAL-04'),
             lambda c: c['additional_profiles'][1]['required_criteria'].append('AC-IP18'),
             lambda c: c['additional_profiles'][1]['required_criteria'].remove('AC-D01'),
+            lambda c: c['additional_profiles'][1]['required_criteria'].remove('AC-A01'),
+            lambda c: c['additional_profiles'][1]['required_criteria'].remove('AC-I10'),
             lambda c: c['additional_profiles'][1]['required_criteria'].append('AC-M05'),
             lambda c: c['additional_profiles'][0].update(evidence_mode='real-qualified'),
             lambda c: c['synthetic_forbidden_dependencies'].remove('WP-30'),

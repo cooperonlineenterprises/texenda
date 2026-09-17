@@ -48,7 +48,8 @@ Superseded interpretation is limited to:
   are initial usable scope; site-building exclusion continues outside that slice;
 - operator-workflows/interaction implementation-order statements allowing a
   manual-only email pilot to count as the first usable product;
-- only the listed work-package fields and email-pilot profile parent/scope;
+- only the listed work-package fields and named email-pilot, assisted-workspace
+  and external-agent profile deltas; own component criteria/gates/WPs are retained;
 - acceptance extension rows AC-IP01–AC-IP18 and stage-specific interpretation
   specified here. Existing criteria/invariants are not waived.
 
@@ -90,7 +91,14 @@ effects retain their existing approvals.
    recovery. VAL-01 or an accepted neutral identity precedes public branding.
 
 The initial-production profile carries real AI/agent gates; inherited email-pilot
-cannot bypass it. Optional voice/channels keep their own qualifications. Synthetic
+cannot bypass it. Assisted-workspace is explicitly parented to initial-production,
+not mature-email; external-agent remains parented to assisted-workspace. Thus
+selecting these enabled component profiles cannot reintroduce post-cutover WP-20
+or portfolio-rollout WP-33 as initial AI prerequisites. Their own criteria, gates
+and WPs remain unchanged. Mature-email retains its later rollout requirements.
+Voice remains parented to assisted-workspace, separately triggered by WP-30 and
+VAL-12, and is not required by the initial non-voice profiles. Optional channels
+keep their own qualifications. Synthetic
 completion never clears a gate or marks a real-environment acceptance row passed.
 AC-IP18 is post-approval activation/operation evidence owned by WP-20/33/42,
 not a prerequisite for preactivation readiness; AC-IP17 and applicable sealed
@@ -1317,6 +1325,26 @@ Human summaries are navigation; research and test fixtures cannot change this ow
           "WP-20"
         ]
       }
+    },
+    {
+      "id": "assisted-workspace",
+      "replace": {
+        "parents": [
+          "initial-production"
+        ],
+        "scope": "Built-in contextual assistance required in the initial integrated product; component-profile selection adds no post-cutover or portfolio-rollout prerequisite. All own criteria, gates and WPs remain required."
+      },
+      "append": {}
+    },
+    {
+      "id": "external-agent",
+      "replace": {
+        "parents": [
+          "assisted-workspace"
+        ],
+        "scope": "Registered delegated tools and deliberately qualified computer-use sessions required in the initial integrated product. Retain all own criteria, gates and WPs; no inherited human approval or autonomous effects."
+      },
+      "append": {}
     }
   ],
   "synthetic_forbidden_dependencies": [
