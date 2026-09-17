@@ -50,7 +50,7 @@
     },
     {
       "path": "tooling/coordination/plan.py",
-      "sha256": "301a5279d6bb3eb945f372b8d5b5fa22c4b070d25b8cb8886c8dca5e43065a07",
+      "sha256": "45de69623b8dec2783ea9221419d112257e0b34b8cf69f6f7d98aa8d474116a2",
       "role": "sole_effective_plan_reader"
     },
     {

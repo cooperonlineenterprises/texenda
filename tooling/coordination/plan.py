@@ -249,7 +249,8 @@ class EffectivePlan:
                 'acceptance_extensions': len(self.contract['acceptance_extensions']),
                 'additional_profiles': len(self.contract['additional_profiles']),
                 'profiles': [self.profile_closure(row['id']) for row in self.contract['additional_profiles']],
-                'activation_required': True, 'product_implemented': False}
+                'requires_explicit_activation': True, 'live_state_checked': False,
+                'product_implementation': 'NOT_ASSESSED'}
 
 
 def load_plan(root):

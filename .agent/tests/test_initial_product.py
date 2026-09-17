@@ -109,6 +109,11 @@ class InitialProductRecordsTests(unittest.TestCase):
         # The engine tests exact dependency edges; this independently checks the
         # initial release and its honest distinction from production operation.
         profiles = {p['id']: p for p in plan.profiles['profiles']}
+        summary = plan.summary()
+        self.assertFalse(summary['live_state_checked'])
+        self.assertEqual(summary['product_implementation'], 'NOT_ASSESSED')
+        self.assertNotIn('activation_required', summary)
+        self.assertNotIn('product_implemented', summary)
         synthetic = profiles['initial-synthetic']
         self.assertEqual(synthetic['requires_gates'], [])
         self.assertTrue({'WP-12', 'WP-27', 'WP-29', 'WP-31', 'WP-32'}
