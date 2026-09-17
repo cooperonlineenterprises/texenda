@@ -12,6 +12,7 @@ checkpoint/recovery evidence envelopes; do not invent a new lifecycle state.
 | Goal and authority | <original scoped objective; accepted decisions; pending material decision and owner> |
 | Repository state | <worktree/branch; full candidate and accepted integration revisions; uncommitted paths/hashes> |
 | Coordination state | <receipt tip/integrity; parent lease/fence/owner/expiry; checkpoint reference/hash> |
+| Effective plan | <state version and active digest; unchanged source refs and assignment context; old sealed/unbound context cannot resume amended work> |
 | Runtime state | <agent/process identity; running/stopped/unknown; actual stop/isolation evidence; previous fence> |
 | Exact route | <profile/model/effort/runtime/client/billing mode; qualification ref/hash/expiry; policy digest> |
 | Completed and outstanding | <outputs; actual commands/logs/exits; required NOT RUN checks; review and integration status> |

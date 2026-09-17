@@ -1,0 +1,164 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:texenda:plan-activation:1",
+  "description": "Exact independent candidate and stopped-runtime proof for one explicit forward plan activation. Actor strings attest accountability; the coordinator does not authenticate people or stop runtimes.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "kind",
+    "summary",
+    "actor",
+    "owner_request",
+    "authors",
+    "reviewer",
+    "reviewer_profile_id",
+    "reviewer_qualification_digest",
+    "candidate_revision",
+    "candidate_tree",
+    "effective_plan_digest",
+    "source_refs",
+    "source_state_sha256",
+    "source_receipt_count",
+    "source_receipt_head",
+    "runtime_stopped",
+    "checks"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "texenda.plan-activation.v1"
+    },
+    "kind": {
+      "const": "plan-activation"
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "actor": {
+      "type": "string",
+      "minLength": 1
+    },
+    "owner_request": {
+      "type": "string",
+      "minLength": 1
+    },
+    "authors": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "reviewer": {
+      "type": "string",
+      "minLength": 1
+    },
+    "reviewer_profile_id": {
+      "const": "gpt-6-astra-max"
+    },
+    "reviewer_qualification_digest": {
+      "type": "string",
+      "pattern": "[0-9a-f]{64}"
+    },
+    "candidate_revision": {
+      "type": "string",
+      "pattern": "(?:[0-9a-f]{40}|[0-9a-f]{64})"
+    },
+    "candidate_tree": {
+      "type": "string",
+      "pattern": "(?:[0-9a-f]{40}|[0-9a-f]{64})"
+    },
+    "effective_plan_digest": {
+      "type": "string",
+      "pattern": "[0-9a-f]{64}"
+    },
+    "source_refs": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "sha256",
+          "bytes"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "[0-9a-f]{64}"
+          },
+          "bytes": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "source_state_sha256": {
+      "type": "string",
+      "pattern": "[0-9a-f]{64}"
+    },
+    "source_receipt_count": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "source_receipt_head": {
+      "type": "string",
+      "pattern": "[0-9a-f]{64}"
+    },
+    "runtime_stopped": {
+      "const": true
+    },
+    "checks": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "required",
+          "status"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "status": {
+            "enum": [
+              "PASS",
+              "FAIL",
+              "NOT_RUN",
+              "NOT_APPLICABLE"
+            ]
+          },
+          "command_or_procedure": {
+            "type": "string",
+            "minLength": 1
+          },
+          "evidence_path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "[0-9a-f]{64}"
+          }
+        }
+      }
+    }
+  }
+}

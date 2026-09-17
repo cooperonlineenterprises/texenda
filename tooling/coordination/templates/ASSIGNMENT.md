@@ -13,6 +13,7 @@ does not create a lease, model qualification, budget or external approval.
 | Routing and review | <author/reviewer route slice and canonical policy digest from context; floors and allowed efforts under ADR-0001; distinct reviewer; explicit fallback or downshift evidence if applicable> |
 | Base and fence | <repository/worktree/branch; full base revision; parent lease owner and current fence, or explicit maintenance coordination record> |
 | Context manifest | <kernel and required owners; relevant instructions and this template; paths, hashes and sections; unresolved missing context> |
+| Effective plan | <active effective-plan digest and source refs; current context digest; admission/assignment must supply these; sealed-unbound context is not dispatch authority> |
 | Write scope | <permitted paths; forbidden changes; single-writer/shared integration points> |
 | Outputs and acceptance | <files/interfaces; exact pass conditions and IDs; required commands/procedures; permitted NOT RUN items with reasons> |
 | Bounds and usage | <time/token limits and remaining allocation; API USD; observed subscription windows/reset times or unknown; external/network boundaries> |

@@ -10,6 +10,7 @@ Use the [operating guide](../../../docs/agents/operating-guide.md) and the
 | Candidate and base | <full exact candidate/base revisions; author identity; changed paths/hashes> |
 | Reviewer route | <different actor; required reviewer floor; exact profile/model/effort/runtime/client; current qualification and billing route> |
 | Authority and context | <assignment; accepted contracts/ADRs and hashes; policy digest; applicable instructions; this template hash> |
+| Effective plan | <current effective-plan digest, source refs and bound assignment context; version-2.1 lifecycle evidence binds this digest; preserve historical sealed bindings> |
 | Review scope and oracle | <required checks, negative/concurrent paths and evidence; forbidden writes; bounded independent reproductions> |
 | Bounds and usage | <time/tokens and remaining allocation; API USD; subscription usage availability or unknown> |
 | Decision and stop | <findings with evidence or approval of this exact candidate; NOT RUN checks; limits; actual process/stop state> |

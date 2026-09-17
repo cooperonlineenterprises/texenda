@@ -6,6 +6,95 @@ Python standard-library adapter reuses the sealed lifecycle scaffold. It does
 not launch a model, call a network service, authenticate actors, enforce a
 sandbox, merge Git, meter usage, or grant production authority.
 
+## Effective implementation plan and explicit activation
+
+[ADR-0008](../../docs/decisions/ADR-0008-integrated-initial-product-and-effective-plan.md)
+owns the single marked machine contract. [The plan loader](plan.py) combines its
+scoped deltas with the three exact hash-pinned sealed catalogs. It retains all
+44 work-package IDs and the existing routing policy; no generated JSON becomes
+another plan authority. The closed [contract schema](schemas/effective-plan.schema.json)
+validates the actual ADR block. The checker rejects missing/duplicate blocks,
+duplicate keys or IDs, unknown fields/references, invalid types, path escapes,
+changed sealed hashes, dependency/profile cycles and weakened stage/gate bounds.
+
+Repository-only inspection requires neither a ledger nor a lock:
+
+```sh
+env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/plan.py --check --root .
+env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/plan.py --json --root .
+```
+
+The import API is `load_plan(root)`: its `EffectivePlan` has `contract`, `catalog`
+(`work_packages`), `profiles` (`profiles`), `acceptance` (`criteria`), `digest`,
+`source_refs`, `changed_work_packages`, and `profile_closure(id)`. Closure results
+are requirements, with stage-specific source rows and `NOT_ASSESSED` evidence.
+Initial synthetic exercises of AC-IP11/12 use local mechanics; their references
+to WP-18/20 do not create synthetic dependencies or pass the real portions.
+Initial production inherits synthetic requirements while retaining its own real
+qualification and baseline plus VAL-09/11 gates. AC-IP18 belongs to subsequent
+activation/operation, not preactivation readiness. Nothing here runs product
+tests, passes product acceptance, or clears an external gate.
+Actual-transfer/canary/observation AC-M04/05/06/07/09 remain in email-pilot and
+WP-20/33 execution; readiness carries AC-M01/02/03/08. Email-pilot additionally
+requires WP-20. Discovery and rehearsals do not satisfy completed cutover.
+
+`status` and `context` read the current state without activating anything. A
+2.0 state is explicitly `sealed-unbound`; where the ADR exists, its proposed
+digest/source refs and proposed work-package context are visible separately.
+After activation, both use the same effective dependencies, allowed paths,
+acceptance and gates as admission, leases and completion. Active `context`
+returns `effective_plan_digest` and `context_digest`. New admission requires
+`--plan-digest`; assignment also requires `--context-digest`. Old unbound or stale
+context cannot supply these bindings. Version-2.1 lifecycle evidence must carry
+the same `effective_plan_digest`; original sealed and completed bindings remain
+historical and byte-exact.
+
+Activation is a separately reviewed forward state boundary. Use the canonical
+script/root and the explicitly bound external state directory:
+
+```sh
+env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . --state-root "${TEXENDA_STATE_ROOT:?Set the verified absolute state root}" activate-plan --actor "${TEXENDA_INTEGRATOR:?Use the actual integrating actor}"
+# Only after independent review and actual runtime-stop evidence are retained:
+env PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . --state-root "${TEXENDA_STATE_ROOT:?Set the verified absolute state root}" activate-plan --actor "$TEXENDA_INTEGRATOR" --record path/to/reviewed-plan-activation.json --apply
+```
+
+The first command is a read-only dry run: no checkpoint, lock creation, receipt,
+roster or state mutation. Its exact state hash, receipt tip/count, plan digest
+and source refs populate the closed
+[activation evidence schema](schemas/plan-activation.schema.json). The record
+also binds the exact committed candidate revision/tree (each governed source is
+checked against that commit), all authors, a distinct reviewer, actual integrating
+actor and explicit owner-request basis. The reviewer must retain a fresh exact
+Astra/max qualification, bound by its canonical qualification digest. Required
+`independent-review` and `runtime-stop` checks need actual PASS evidence files,
+hashes and procedures. Actor labels and a boolean cannot themselves authenticate
+reviewers or terminate runtimes; accountable external observation remains required.
+
+Apply refuses every lease, including expired ones; unfinished/uncertain work;
+changed packages in any state other than untouched planned; missing/corrupt
+evidence; stale sources; and corrupt checkpoints. It stores the exact original
+bytes as `state.plan-v2.<sha256>.json` in the selected external state directory,
+preserves all original tasks/history/receipts/roster/budget/gates, appends one
+activation receipt, and advances the state protocol from 2.0 to 2.1. The original
+`work_package_digest` stays sealed; the new `effective_plan_digest` is separate.
+Sources, evidence and checkpoint are rechecked through the existing atomic
+state-write commit boundary. Ordinary checks subsequently revalidate this proof.
+Any interrupted replacement uses `recover-state-write`; no parallel ledger or
+automatic destructive rollback is introduced. Repeated activation is a no-op,
+including after later work. Preserve the checkpoint and repair forward; later
+history must never be removed to undo activation. Old 2.0 lifecycle writers fail
+closed on 2.1, even though their old context-only command may still emit an
+unbound sealed manifest.
+
+The active-plan coding route currently requires **max effort and subscription
+work with zero new API allocation**. Previously qualified high profiles remain
+runtime-qualified, but historical downshift/budget records bind only the sealed
+scope and cannot authorize this enlarged plan. Lower effort or new paid coding
+work needs a separately reviewed effective-bound attestation schema and explicit
+authority. Existing qualifications, author/reviewer budgets and history remain
+intact. This conservative coding restriction is separate from product AI/provider
+qualification and spending authority.
+
 For new dispatch prompts use the [operating guide](../../docs/agents/operating-guide.md)
 and the local [assignment](templates/ASSIGNMENT.md), [review](templates/REVIEW.md)
 or [resumption](templates/RESUME.md) template. The generated `context` manifest

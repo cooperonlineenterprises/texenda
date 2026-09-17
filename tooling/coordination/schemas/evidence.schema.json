@@ -11,7 +11,12 @@
   ],
   "properties": {
     "schema_version": {
-      "const": "2.0"
+      "enum": ["2.0", "2.1"]
+    },
+    "effective_plan_digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "Required on version-2.1 lifecycle evidence. Never replaces the historical sealed catalog digest or qualification policy binding."
     },
     "kind": {
       "enum": [
@@ -203,6 +208,10 @@
     }
   },
   "allOf": [
+    {
+      "if": {"properties": {"schema_version": {"const": "2.1"}}},
+      "then": {"required": ["effective_plan_digest"]}
+    },
     {
       "if": {
         "properties": {

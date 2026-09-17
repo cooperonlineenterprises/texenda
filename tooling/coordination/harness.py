@@ -23,6 +23,7 @@ from pathlib import PurePosixPath
 import re
 import secrets
 import stat
+import subprocess
 import sys
 import tempfile
 import time
@@ -52,6 +53,9 @@ if hashlib.sha256(LEGACY_PATH.read_bytes()).hexdigest() != LEGACY_DIGEST:
 _spec = importlib.util.spec_from_file_location('texenda_sealed_harness_v1', LEGACY_PATH)
 legacy = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(legacy)
+_plan_spec = importlib.util.spec_from_file_location('texenda_effective_plan', Path(__file__).with_name('plan.py'))
+effective_plan = importlib.util.module_from_spec(_plan_spec)
+_plan_spec.loader.exec_module(effective_plan)
 Denied = legacy.Denied
 canonical, digest, file_hash = legacy.canonical, legacy.digest, legacy.file_hash
 utc, parse_time = legacy.utc, legacy.parse_time
@@ -74,6 +78,16 @@ BINDING_FIELDS = {'schema_version', 'migration_id', 'repository_root', 'state_ro
                   'status', 'baseline'}
 BINDING_BASELINE_FIELDS = {'state_sha256', 'receipt_count', 'receipt_tip'}
 MIGRATION_ID_PATTERN = re.compile(r'^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$')
+PLAN_ACTIVATION_SCHEMA = 'tooling/coordination/schemas/plan-activation.schema.json'
+PLAN_ENGINE_PATHS = ('tooling/coordination/harness.py', 'tooling/coordination/plan.py',
+                     PLAN_ACTIVATION_SCHEMA, 'tooling/coordination/schemas/evidence.schema.json',
+                     'tooling/coordination/schemas/state-write-transaction.schema.json',
+                     'tooling/coordination/schemas/state-location.schema.json',
+                     'tooling/coordination/routing-policy.json')
+RUNNING_ENGINE_HASHES = {
+    'tooling/coordination/harness.py': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+    'tooling/coordination/plan.py': hashlib.sha256(Path(__file__).with_name('plan.py').read_bytes()).hexdigest(),
+}
 
 
 def unique_object(pairs):
@@ -484,6 +498,13 @@ class Harness(legacy.Harness):
                  interleave=None, allow_state_recovery=False):
         repository_root = resolved_directory(root, 'repository root')
         super().__init__(repository_root, Path(package), clock)
+        self.sealed_plan = copy.deepcopy(self.plan)
+        self.sealed_work = copy.deepcopy(self.work)
+        self.effective = None
+        self._plan_guards = []
+        self._plan_checkpoint_guard = None
+        self._active_evidence_task = None
+        self._activation_qualification_expiry = None
         self.interleave = interleave
         self.allow_state_recovery = allow_state_recovery
         self.root_identity = inode_identity(self.root)
@@ -726,6 +747,7 @@ class Harness(legacy.Harness):
     def _identity_continuity(self, token):
         self._binding_current()
         self._policy_current()
+        self._plan_current()
         self._validate_state_root_current()
         root_now = os.fstat(token['root_fd'])
         dir_now = os.fstat(token['dir_fd'])
@@ -1067,6 +1089,7 @@ class Harness(legacy.Harness):
         }
 
     def _finish_commit_cleanup(self, token, control, transaction):
+        self._plan_current()
         state_entry = self._entry(token, 'state.json', 'committed state')
         if not self._entry_matches(state_entry, transaction['new_state']):
             raise Denied('commit cleanup cannot validate the exact new state')
@@ -1079,6 +1102,7 @@ class Harness(legacy.Harness):
         elif candidate is not None:
             raise Denied('initialization commit has unexpected candidate material')
         self._interleave('state_write_after_commit_candidate_cleanup', transaction)
+        self._plan_current()
         archived = self._archive_state_transaction(token, control, transaction, 'committed')
         self._interleave('state_write_after_commit_archive', transaction)
         token['state_transaction_started'] = False
@@ -1572,13 +1596,26 @@ class Harness(legacy.Harness):
         path = under(self.root, safe)
         envelope_raw = stable_file_bytes(path, 'coordination evidence')
         envelope = load_json(envelope_raw)
-        if not isinstance(envelope, dict) or envelope.get('schema_version') not in ('1.0', '2.0'):
+        if not isinstance(envelope, dict) or envelope.get('schema_version') not in ('1.0', '2.0', '2.1'):
             raise Denied('invalid evidence envelope')
         fields = self.evidence_fields
-        if envelope['schema_version'] == '2.0':
+        if envelope['schema_version'] in ('2.0', '2.1'):
             fields = fields | {'routing_policy_digest', 'profile_id', 'role', 'capability_tier',
                                'work_package_digest', 'fence', 'rationale', 'reasoning_demand',
                                'owner', 'approved_budget_usd', 'issued_at', 'roles', *CONDITIONS}
+        if envelope['schema_version'] == '2.1':
+            fields = fields | {'effective_plan_digest'}
+        if (self._active_evidence_task is not None and task == self._active_evidence_task
+                and kind in ('submission', 'review', 'integration', 'checkpoint', 'recovery', 'trigger')
+                and (envelope['schema_version'] != '2.1'
+                     or envelope.get('effective_plan_digest') != self.effective.digest)):
+            raise Denied('future lifecycle evidence must bind the active effective plan')
+        if envelope['schema_version'] == '2.1':
+            if (not isinstance(envelope.get('effective_plan_digest'), str)
+                    or re.fullmatch(r'[0-9a-f]{64}', envelope['effective_plan_digest']) is None
+                    or any(key in envelope and type(envelope[key]) is not bool
+                           for key in ('runtime_stopped', 'conflict_resolution_changed_semantics'))):
+                raise Denied('version-2.1 evidence requires an exact digest and boolean stop/merge flags')
         if set(envelope) - fields:
             raise Denied('unknown evidence fields; use the local v2 schema for routing metadata')
         if kind and envelope.get('kind') != kind:
@@ -1617,7 +1654,7 @@ class Harness(legacy.Harness):
 
     def _check(self, state):
         self._policy_current()
-        if (state.get('version') != '2.0'
+        if (state.get('version') not in ('2.0', '2.1')
                 or state.get('work_package_digest') != self.package_hash
                 or state.get('routing_policy_digest') != self.policy_hash):
             raise Denied('state format/baseline/policy changed; use the explicit reviewed migration')
@@ -1632,6 +1669,14 @@ class Harness(legacy.Harness):
                     or boundaries[0]['previous_hash'] != migration['source_receipt_head']
                     or migration['policy_digest'] != self.policy_hash):
                 raise Denied('migration boundary proof missing or inconsistent')
+        if state['version'] == '2.1':
+            self._check_plan_state(state)
+        else:
+            if ('effective_plan_digest' in state or 'plan_activation' in state
+                    or any(event['operation'] == 'activate-plan' for event in state['events'])):
+                raise Denied('base state contains an unactivated effective-plan binding')
+            self.plan, self.work = self.sealed_plan, self.sealed_work
+            self.effective = None
 
     def _check_binding_baseline(self, state, raw):
         if not self.binding:
@@ -1761,6 +1806,8 @@ class Harness(legacy.Harness):
         return q
 
     def _downshift(self, wid, role, tier, profile_id, record, fence, candidate=None):
+        if self.effective:
+            raise Denied('effective-plan work requires max effort until a separately reviewed effective-bound attestation schema exists')
         if not record:
             raise Denied('lower effort requires bounded/reversible/fully specified deterministic routing evidence')
         ref, envelope = self.evidence(record, 'routing', wid, candidate, require_pass=True)
@@ -1793,7 +1840,8 @@ class Harness(legacy.Harness):
             return {'tier': tier, 'capability_floor': floor, 'human': True, 'profile_id': None, 'model': None,
                     'reasoning_effort': None, 'runtime': None, 'qualification': None,
                     'fallback': False, 'fallback_reason': None, 'downshift_evidence': None,
-                    'routing_policy_digest': self.policy_hash}
+                    'routing_policy_digest': self.policy_hash,
+                    **({'effective_plan_digest': self.effective.digest} if self.effective else {})}
         pid = profile_id or self.tiers[tier]['default_profile_id']
         profile = self.profiles.get(pid)
         if not profile:
@@ -1821,9 +1869,12 @@ class Harness(legacy.Harness):
                 'reasoning_effort': profile['reasoning_effort'], 'runtime': q['runtime_id'],
                 'qualification': copy.deepcopy(q), 'fallback': is_fallback,
                 'fallback_reason': fallback_reason if is_fallback else None,
-                'downshift_evidence': downshift, 'routing_policy_digest': self.policy_hash}
+                'downshift_evidence': downshift, 'routing_policy_digest': self.policy_hash,
+                **({'effective_plan_digest': self.effective.digest} if self.effective else {})}
 
     def _recheck_binding(self, state, wid, role, binding, candidate=None):
+        if self.effective and role == 'author' and binding.get('context_digest') != self._context_binding(wid):
+            raise Denied('assigned effective-plan context is stale')
         ref = binding.get('downshift_evidence')
         actual = self._select(
             state, wid, role, binding['tier'], binding['human'], binding['profile_id'],
@@ -1934,6 +1985,8 @@ class Harness(legacy.Harness):
 
     def _allocate(self, state, wid, role, binding, budget_usd, max_tokens, max_seconds):
         requested, approved = amount(budget_usd), amount(state['budget_usd'])
+        if self.effective and (requested or (binding.get('qualification') or {}).get('billing_mode') == 'api'):
+            raise Denied('new paid work requires a separately reviewed effective-bound budget schema')
         if (type(max_tokens) is not int or not 0 < max_tokens <= 1000000
                 or type(max_seconds) is not int or not 0 < max_seconds <= 28800):
             raise Denied('invalid task budget or bounds')
@@ -1952,6 +2005,8 @@ class Harness(legacy.Harness):
         approved = amount(usd)
 
         def apply(state):
+            if self.effective:
+                raise Denied('effective-plan activation preserves historic budget; new authority needs a reviewed effective-bound schema')
             ref, envelope = self.evidence(record, 'budget', require_pass=True)
             self._budget_authorization(envelope, usd, owner=actor)
             if approved < self._declared_spend(state):
@@ -1961,6 +2016,10 @@ class Harness(legacy.Harness):
 
     def change(self, actor, op, fn, task=None):
         def guarded(state):
+            if self.effective and task is not None and op != 'admit':
+                current = self.task(state, task)
+                if current.get('effective_plan_digest') != self.effective.digest:
+                    raise Denied('task has no current effective-plan admission; historical work is immutable')
             if op in ('record-integration', 'complete'):
                 current = self.task(state, task)
                 if self._declared_spend(state) > amount(state['budget_usd']):
@@ -1968,7 +2027,14 @@ class Harness(legacy.Harness):
                 for role, record in (('author', current.get('assignment')), ('reviewer', current.get('review'))):
                     if record:
                         self._recheck_allocation(state, task, role, current['fence'], record)
-            return fn(state)
+            self._active_evidence_task = task if self.effective else None
+            try:
+                result = fn(state)
+            finally:
+                self._active_evidence_task = None
+            if self.effective and task is not None:
+                self.task(state, task)['effective_plan_digest'] = self.effective.digest
+            return result
         with self.locked() as token:
             source_snapshot = self._stable_state_snapshot()
             source = source_snapshot[0]
@@ -1981,11 +2047,35 @@ class Harness(legacy.Harness):
             self._atomic_state_json(token, updated, expected_state=source_snapshot)
             return result
 
+    def _event(self, state, actor, op, task=None):
+        super()._event(state, actor, op, task)
+        if state.get('version') == '2.1':
+            event = state['events'][-1]
+            event['effective_plan_digest'] = state['effective_plan_digest']
+            event['hash'] = digest({key: value for key, value in event.items() if key != 'hash'})
+
+    def admit(self, wid, actor, trigger=None, *, plan_digest=None):
+        def apply(state):
+            task = self.task(state, wid, 'planned')
+            if self.effective and plan_digest != self.effective.digest:
+                raise Denied('admission requires the current effective-plan digest from bound context')
+            if any(state['tasks'][dep]['state'] != 'completed' for dep in self.work[wid]['dependencies']):
+                raise Denied('incomplete prerequisites')
+            if self.work[wid]['activation'] == 'DEFER UNTIL TRIGGERED':
+                if not trigger:
+                    raise Denied('deferred work needs observed trigger evidence')
+                ref, _envelope = self.evidence(trigger, 'trigger', wid, require_pass=True)
+                task['trigger'] = ref
+            task['state'] = 'admitted'
+        return self.change(actor, 'admit', apply, wid)
+
     def assign(self, wid, actor, agent, tier=None, human=False, budget_usd=0,
                max_tokens=50000, max_seconds=3600, *, profile_id=None, fallback=False,
-               fallback_reason=None, routing_record=None):
+               fallback_reason=None, routing_record=None, plan_digest=None, context_digest=None):
         def apply(state):
             task = self.task(state, wid, 'admitted')
+            if self.effective and (plan_digest != self.effective.digest or context_digest != self._context_binding(wid)):
+                raise Denied('assignment requires current plan/context digests; unbound or stale context is invalid')
             if human != agent.startswith('human:'):
                 raise Denied('explicit human assignment must match human: principal')
             binding = self._select(state, wid, 'author', tier, human, profile_id,
@@ -2002,6 +2092,8 @@ class Harness(legacy.Harness):
             task['lease'] = {'paths': paths, 'owner': agent,
                              'expires_at': self.clock() + max_seconds, 'fence': task['fence']}
             task['assignment'] = dict(binding, agent=agent, **allocation)
+            if self.effective:
+                task['assignment']['context_digest'] = context_digest
             task['state'] = 'assigned'
             return dict(binding, task=wid, fence=task['fence'], paths=paths)
         return self.change(actor, 'assign', apply, wid)
@@ -2036,7 +2128,7 @@ class Harness(legacy.Harness):
             self.recheck(task['submission'], kind='submission', task=wid,
                          candidate=candidate, require_pass=approve)
             ref, envelope = self.evidence(record, 'review', wid, candidate, require_pass=approve)
-            if not human and (envelope['schema_version'] != '2.0'
+            if not human and (envelope['schema_version'] not in ('2.0', '2.1')
                               or envelope.get('profile_id') != binding['profile_id']
                               or envelope.get('routing_policy_digest') != self.policy_hash):
                 raise Denied('review evidence must bind the exact reviewer profile and policy')
@@ -2071,6 +2163,271 @@ class Harness(legacy.Harness):
             task['fence'] += 1
         return self.change(actor, 'cancel' if cancel else 'recover', apply, wid)
 
+    def _load_effective(self):
+        try:
+            plan = effective_plan.load_plan(self.root)
+            if self.package_hash != plan.contract['sealed_catalog_sha256']:
+                raise Denied('effective plan requires the exact sealed catalog')
+            for path, expected in RUNNING_ENGINE_HASHES.items():
+                if hashlib.sha256(effective_plan.read_source(self.root, path)).hexdigest() != expected:
+                    raise Denied('executing coordinator differs from repository source: ' + path)
+            return plan
+        except effective_plan.PlanError as exc:
+            raise Denied(str(exc)) from exc
+
+    def _plan_source_refs(self, plan):
+        refs = copy.deepcopy(plan.source_refs)
+        for path in PLAN_ENGINE_PATHS:
+            raw = effective_plan.read_source(self.root, path)
+            refs.append({'path': path, 'sha256': hashlib.sha256(raw).hexdigest(), 'bytes': len(raw)})
+        return refs
+
+    def _plan_current(self):
+        if self._activation_qualification_expiry is not None and self.clock() >= self._activation_qualification_expiry:
+            raise Denied('activation reviewer qualification expired before commit')
+        for ref in self._plan_guards:
+            raw = effective_plan.read_source(self.root, ref['path'])
+            if hashlib.sha256(raw).hexdigest() != ref['sha256']:
+                raise Denied('effective-plan source/evidence changed during operation: ' + ref['path'])
+        if self._plan_checkpoint_guard:
+            name, expected = self._plan_checkpoint_guard
+            raw = stable_file_bytes(self.dir / name, 'effective-plan preactivation checkpoint')
+            if hashlib.sha256(raw).hexdigest() != expected:
+                raise Denied('effective-plan preactivation checkpoint changed')
+
+    def _source_evidence_guards(self, state):
+        """Pin retained state evidence and its logs through the replacement boundary."""
+        refs = {}
+        def collect(value):
+            if isinstance(value, dict):
+                if set(value) == {'path', 'sha256'}:
+                    path = safe_public_rel(value['path'], 'retained state evidence')
+                    if path in refs and refs[path]['sha256'] != value['sha256']:
+                        raise Denied('retained evidence has competing hashes: ' + path)
+                    refs[path] = dict(value)
+                else:
+                    for child in value.values():
+                        collect(child)
+            elif isinstance(value, list):
+                for child in value:
+                    collect(child)
+        collect(state)
+        guards = list(refs.values())
+        for ref in list(guards):
+            envelope = self.recheck(ref)
+            for check in envelope['checks']:
+                if check['status'] in ('PASS', 'FAIL'):
+                    guards.append({'path': safe_public_rel(check['evidence_path'], 'retained evidence log'),
+                                   'sha256': check['sha256']})
+        return guards
+
+    def _plan_evidence(self, record, actor, source, plan, source_refs, *, fresh):
+        safe = safe_public_rel(record, 'plan activation evidence')
+        raw = stable_file_bytes(under(self.root, safe), 'plan activation evidence')
+        envelope = load_json(raw)
+        schema = load_json(effective_plan.read_source(self.root, PLAN_ACTIVATION_SCHEMA))
+        try:
+            effective_plan.validate_schema(envelope, schema)
+        except effective_plan.PlanError as exc:
+            raise Denied(str(exc)) from exc
+        if (envelope['actor'] != actor or envelope['reviewer'] in envelope['authors']
+                or envelope['reviewer'] == actor
+                or envelope['effective_plan_digest'] != plan.digest
+                or envelope['source_refs'] != source_refs
+                or envelope['source_state_sha256'] != hashlib.sha256(source).hexdigest()):
+            raise Denied('activation requires exact independent review of sources, state and plan')
+        old = load_json(source)
+        if (envelope['source_receipt_count'] != len(old['events'])
+                or envelope['source_receipt_head'] != old['events'][-1]['hash']):
+            raise Denied('activation review receipt boundary is stale')
+        candidate = revision(envelope['candidate_revision'])
+        command = ['git', '-C', str(self.root)]
+        env = dict(os.environ, GIT_OPTIONAL_LOCKS='0')
+        tree = subprocess.run([*command, 'rev-parse', candidate + '^{tree}'], env=env,
+                              check=True, capture_output=True, text=True).stdout.strip()
+        if tree != envelope['candidate_tree']:
+            raise Denied('activation candidate tree mismatch')
+        for ref in source_refs:
+            committed = subprocess.run([*command, 'show', candidate + ':' + ref['path']],
+                                       env=env, check=True, capture_output=True).stdout
+            if hashlib.sha256(committed).hexdigest() != ref['sha256']:
+                raise Denied('reviewed candidate source differs: ' + ref['path'])
+        checks, ids = envelope['checks'], set()
+        required = [check for check in checks if check['required']]
+        if not required or any(check['status'] != 'PASS' for check in required):
+            raise Denied('activation requires independent PASS checks and runtime-stop evidence')
+        guards = [{'path': safe, 'sha256': hashlib.sha256(raw).hexdigest()}]
+        for check in checks:
+            if check['id'] in ids:
+                raise Denied('duplicate activation check')
+            ids.add(check['id'])
+            if check['status'] in ('PASS', 'FAIL'):
+                path = safe_public_rel(check.get('evidence_path', ''), 'activation check log')
+                log = stable_file_bytes(under(self.root, path), 'activation check log')
+                if not check.get('command_or_procedure') or hashlib.sha256(log).hexdigest() != check.get('sha256'):
+                    raise Denied('activation evidence log mismatch')
+                guards.append({'path': path, 'sha256': check['sha256']})
+        if not {'independent-review', 'runtime-stop'} <= {check['id'] for check in required}:
+            raise Denied('activation needs named independent-review and runtime-stop PASS checks')
+        if fresh:
+            q = self.qualified(old, envelope['reviewer_profile_id'])
+            if digest(q) != envelope['reviewer_qualification_digest']:
+                raise Denied('activation reviewer exact qualification mismatch')
+            self._activation_qualification_expiry = parse_time(q['expires_at'])
+        self._plan_guards = copy.deepcopy(source_refs) + guards + self._source_evidence_guards(old)
+        self._plan_current()
+        return guards[0], envelope
+
+    def _safe_plan_source(self, state, plan):
+        for wid, task in state['tasks'].items():
+            if task.get('lease') is not None:
+                raise Denied('plan activation refuses every lease, including expired: ' + wid)
+            if task.get('state') not in ('planned', 'completed', 'cancelled'):
+                raise Denied('plan activation refuses unfinished/uncertain work: ' + wid)
+            if wid in plan.changed_work_packages and task['state'] != 'planned':
+                raise Denied('changed scope must still be planned: ' + wid)
+            if task['state'] == 'planned':
+                if (task.get('fence') != 0 or task.get('history')
+                        or any(task.get(key) is not None for key in ('assignment', 'candidate', 'submission',
+                               'review', 'integration', 'checkpoint', 'trigger'))):
+                    raise Denied('planned task contains prior or unfinished work: ' + wid)
+            elif task['state'] == 'completed':
+                if not task.get('integration') or not task.get('assignment') or not task.get('review'):
+                    raise Denied('completed task lacks integration/runtime-stop chain: ' + wid)
+            elif any(task.get(key) is not None for key in ('assignment', 'candidate', 'submission', 'review', 'integration')):
+                raise Denied('cancelled task contains unfinished work: ' + wid)
+        self._validate_retained_evidence(state)
+
+    def _check_plan_state(self, state):
+        plan = self._load_effective()
+        refs = self._plan_source_refs(plan)
+        meta = state.get('plan_activation')
+        fields = {'from_version', 'effective_plan_digest', 'source_refs', 'source_sha256',
+                  'source_receipt_count', 'source_receipt_head', 'checkpoint_name',
+                  'evidence', 'actor', 'reviewer', 'candidate_revision', 'candidate_tree',
+                  'reviewer_qualification_digest', 'owner_request'}
+        if (not isinstance(meta, dict) or set(meta) != fields or meta['from_version'] != '2.0'
+                or state.get('effective_plan_digest') != plan.digest
+                or meta['effective_plan_digest'] != plan.digest or meta['source_refs'] != refs
+                or type(meta['source_receipt_count']) is not int or meta['source_receipt_count'] < 1
+                or re.fullmatch(r'[0-9a-f]{64}', meta['source_sha256']) is None
+                or meta['checkpoint_name'] != 'state.plan-v2.' + meta['source_sha256'] + '.json'):
+            raise Denied('active effective-plan binding is missing, changed or malformed')
+        checkpoint = stable_file_bytes(self.dir / meta['checkpoint_name'], 'effective-plan preactivation checkpoint')
+        if hashlib.sha256(checkpoint).hexdigest() != meta['source_sha256']:
+            raise Denied('preactivation checkpoint hash mismatch')
+        old = load_json(checkpoint)
+        if (old.get('version') != '2.0' or old.get('work_package_digest') != self.package_hash
+                or old.get('routing_policy_digest') != self.policy_hash
+                or set(old.get('tasks', {})) != set(self.sealed_work)):
+            raise Denied('preactivation checkpoint baseline mismatch')
+        check_receipts(old)
+        count = meta['source_receipt_count']
+        boundaries = [event for event in state['events'] if event['operation'] == 'activate-plan']
+        if (len(old['events']) != count or old['events'][-1]['hash'] != meta['source_receipt_head']
+                or state['events'][:count] != old['events'] or len(boundaries) != 1
+                or len(state['events']) <= count or state['events'][count] != boundaries[0]
+                or boundaries[0].get('plan_activation') != meta):
+            raise Denied('effective-plan activation receipt/checkpoint prefix mismatch')
+        self._safe_plan_source(old, plan)
+        projected = copy.deepcopy(old)
+        projected.update(version='2.1', effective_plan_digest=plan.digest, plan_activation=meta)
+        if boundaries[0]['state_digest'] != digest({key: value for key, value in projected.items() if key != 'events'}):
+            raise Denied('activation rewrote source tasks, roster, gates, budget or history')
+        ref, envelope = self._plan_evidence(meta['evidence']['path'], meta['actor'], checkpoint,
+                                          plan, refs, fresh=False)
+        if ref != meta['evidence'] or any(meta[key] != envelope[key] for key in
+                ('reviewer', 'candidate_revision', 'candidate_tree', 'reviewer_qualification_digest', 'owner_request')):
+            raise Denied('activation evidence no longer matches its receipt')
+        self._plan_checkpoint_guard = (meta['checkpoint_name'], meta['source_sha256'])
+        for wid, original in old['tasks'].items():
+            current = state['tasks'][wid]
+            if original['state'] in ('completed', 'cancelled'):
+                if current != original:
+                    raise Denied('historical terminal work cannot be reinterpreted: ' + wid)
+            elif current != original and current.get('effective_plan_digest') != plan.digest:
+                raise Denied('future task lacks its effective-plan binding: ' + wid)
+            for key in ('assignment', 'review'):
+                if current != original and current.get(key) and current[key].get('effective_plan_digest') != plan.digest:
+                    raise Denied('future role binding is stale: ' + wid)
+        self.effective = plan
+        self.plan, self.work = plan.catalog, plan.work
+        self._plan_current()
+
+    def activate_plan(self, actor, record=None, apply=False):
+        """Explicit forward boundary; the dry run is a read-only preview."""
+        def prepare(source_snapshot):
+            raw = source_snapshot[0]
+            old = load_json(raw)
+            self._check(old)
+            self._check_binding_baseline(old, raw)
+            if old['version'] == '2.1':
+                return None, {'activated': False, 'already_current': True, 'version': '2.1',
+                              'effective_plan_digest': old['effective_plan_digest']}
+            plan = self._load_effective()
+            refs = self._plan_source_refs(plan)
+            self._safe_plan_source(old, plan)
+            source_hash = hashlib.sha256(raw).hexdigest()
+            name = 'state.plan-v2.' + source_hash + '.json'
+            existing = stable_file_bytes(self.dir / name, 'preactivation checkpoint', missing_ok=True)
+            if existing is not None and existing != raw:
+                raise Denied('preactivation checkpoint differs; never overwrite')
+            result = {'activated': False, 'dry_run': not apply, 'from_version': '2.0', 'to_version': '2.1',
+                      'effective_plan_digest': plan.digest, 'source_refs': refs,
+                      'source_state_sha256': source_hash, 'source_receipt_count': len(old['events']),
+                      'source_receipt_head': old['events'][-1]['hash'], 'checkpoint': str(self.dir / name)}
+            if not record:
+                if apply:
+                    raise Denied('apply requires exact independent review and runtime-stop evidence')
+                result['review_evidence'] = 'REQUIRED_BEFORE_APPLY'
+                return None, result
+            ref, envelope = self._plan_evidence(record, actor, raw, plan, refs, fresh=True)
+            meta = {'from_version': '2.0', 'effective_plan_digest': plan.digest, 'source_refs': refs,
+                    'source_sha256': source_hash, 'source_receipt_count': len(old['events']),
+                    'source_receipt_head': old['events'][-1]['hash'], 'checkpoint_name': name,
+                    'evidence': ref, **{key: envelope[key] for key in ('actor', 'reviewer',
+                        'candidate_revision', 'candidate_tree', 'reviewer_qualification_digest', 'owner_request')}}
+            updated = copy.deepcopy(old)
+            updated.update(version='2.1', effective_plan_digest=plan.digest, plan_activation=meta)
+            self._event(updated, actor, 'activate-plan')
+            event = updated['events'][-1]
+            event['plan_activation'] = copy.deepcopy(meta)
+            event['hash'] = digest({key: value for key, value in event.items() if key != 'hash'})
+            return (updated, name), result
+        if not apply:
+            try:
+                _candidate, result = prepare(self._stable_state_snapshot())
+                self._binding_current()
+                return result
+            finally:
+                self._activation_qualification_expiry = None
+        try:
+            with self.locked() as token:
+                snapshot = self._stable_state_snapshot()
+                candidate, result = prepare(snapshot)
+                if candidate is None:
+                    return result
+                updated, name = candidate
+                existing = stable_at(token['dir_fd'], name, 'preactivation checkpoint', missing_ok=True)
+                if existing is None:
+                    write_at_exclusive(token['dir_fd'], name, snapshot[0], 'preactivation checkpoint')
+                    os.fsync(token['dir_fd'])
+                elif existing[0] != snapshot[0]:
+                    raise Denied('preactivation checkpoint changed before apply')
+                self._plan_checkpoint_guard = (name, hashlib.sha256(snapshot[0]).hexdigest())
+                self._check(updated)
+                self._atomic_state_json(token, updated, expected_state=snapshot)
+                return dict(result, activated=True, dry_run=False)
+        finally:
+            self._activation_qualification_expiry = None
+
+    def _context_binding(self, wid):
+        if not self.effective:
+            raise Denied('effective dispatch requires explicit plan activation')
+        return digest({'effective_plan_digest': self.effective.digest, 'work_package': self.work[wid],
+                       'source_refs': self.effective.source_refs, 'routing_policy_digest': self.policy_hash,
+                       'routing': self.routes[wid]})
+
     def status(self):
         state = self._read()
         profiles = []
@@ -2098,7 +2455,16 @@ class Harness(legacy.Harness):
                           'reasoning_effort': assignment.get('reasoning_effort'),
                           'fallback': assignment.get('fallback', False),
                           'expired_lease': bool(task['lease'] and task['lease']['expires_at'] <= self.clock())}
-        return {'version': '2.0', 'routing_policy_digest': self.policy_hash,
+        if self.effective:
+            budget_status = {'available_for_new_paid_work': False,
+                             'unavailable_reason': 'Historic budgets do not authorize effective-plan work.'}
+        return {'version': state['version'], 'routing_policy_digest': self.policy_hash,
+                'work_package_digest': self.package_hash,
+                'effective_plan': self._plan_context_status(),
+                'active_plan_coding_limits': ({'reasoning_efforts': ['max'],
+                    'billing_modes': ['subscription'], 'new_api_allocation_usd': 0,
+                    'meaning': 'Execution scope restriction; existing profile qualification is unchanged.'}
+                    if self.effective else None),
                 'budget_usd': state['budget_usd'], 'declared_spend_usd': float(self._declared_spend(state)),
                 'remaining_budget_usd': float(amount(state['budget_usd']) - self._declared_spend(state)),
                 'budget_authorization': budget_status,
@@ -2119,26 +2485,55 @@ class Harness(legacy.Harness):
 
     def context(self, wid, out=None, max_bytes=200000):
         self._policy_current()
+        if self.statefile.exists():
+            self._read()
+        elif self.binding:
+            raise Denied('bound context requires its live state; no sealed fallback')
         if out:
             if self.unbound_external:
                 raise Denied('an unbound explicit state root cannot be used with mutating context output')
             safe_public_rel(out, 'context output')
         pack = super().context(wid, max_bytes=max_bytes)
-        pack.update(schema_version='2.0', routing_policy_digest=self.policy_hash,
+        pack.update(schema_version='2.0', work_package_digest=self.package_hash,
+                    routing_policy_digest=self.policy_hash,
                     routing_policy_path=str(self.policy_path), routing=self.routes[wid],
                     routing_decision=self.policy['decision'])
+        pack['effective_plan'] = self._plan_context_status()
+        pack['dispatch_valid'] = self.effective is not None
+        if self.effective:
+            pack.update(schema_version='2.1', effective_plan_digest=self.effective.digest,
+                        context_digest=self._context_binding(wid),
+                        effective_acceptance=[row for row in self.effective.contract['acceptance_extensions']
+                                              if row['id'] in self.work[wid]['acceptance_ids']])
+        elif pack['effective_plan'].get('proposed_digest'):
+            pack['proposed_work_package'] = self._load_effective().work[wid]
         local_files = [self.policy_path, under(PROJECT, self.policy['decision'])]
+        if self.effective:
+            local_files.append(self.root / effective_plan.DECISION)
         pack['project_context_files'] = [
             {'path': str(path), 'sha256': file_hash(path), 'bytes': path.stat().st_size}
             for path in local_files
         ]
         pack['total_reference_bytes'] += sum(row['bytes'] for row in pack['project_context_files'])
         pack['status'] = 'NEEDS_NARROWING' if pack['total_reference_bytes'] > max_bytes else 'READY'
-        pack['instructions'] += (' Read the local routing ADR and policy. Only the sealed numeric model-tier '
-                                 'recommendations are superseded by this overlay; all other WP contracts remain binding.')
+        pack['instructions'] += (' Read the local routing ADR/policy and any effective-plan ADR. '
+                                 'Only explicitly amended fields are superseded. Sealed unbound contexts are '
+                                 'not valid for effective-plan dispatch; admission and assignment require current digests.')
         if out:
             atomic_write(under(self.root, out, False), pack)
         return pack
+
+    def _plan_context_status(self):
+        if self.effective:
+            return {'mode': 'active', 'digest': self.effective.digest,
+                    'source_refs': self.effective.source_refs, 'activation_required': False}
+        result = {'mode': 'sealed-unbound', 'digest': None, 'source_refs': [],
+                  'activation_required': True,
+                  'meaning': 'Sealed baseline inspection only; invalid for amended-plan dispatch.'}
+        if (self.root / effective_plan.DECISION).exists():
+            proposed = self._load_effective()
+            result.update(proposed_digest=proposed.digest, source_refs=proposed.source_refs)
+        return result
 
     def _retained_review(self, wid, review, candidate=None):
         reviewed = revision(review.get('candidate', ''))
@@ -2357,6 +2752,11 @@ def main(argv=None):
     command = sub.add_parser('migrate-v1')
     command.add_argument('--actor', required=True)
     command.add_argument('--apply', action='store_true')
+    command = sub.add_parser('activate-plan')
+    command.add_argument('--actor', required=True)
+    command.add_argument('--record')
+    command.add_argument('--apply', action='store_true')
+    sub.add_parser('plan', help='read-only effective-plan projection; never activates state')
     command = sub.add_parser('rollback-v2')
     command.add_argument('--actor', required=True)
     command.add_argument('--apply', action='store_true')
@@ -2377,6 +2777,7 @@ def main(argv=None):
         command.add_argument('--actor', default='astra')
         if name == 'admit':
             command.add_argument('--trigger')
+            command.add_argument('--plan-digest')
         if name in ('assign', 'review'):
             command.add_argument('--tier', type=int, choices=[1, 2, 3, 4])
             command.add_argument('--human', action='store_true')
@@ -2389,6 +2790,8 @@ def main(argv=None):
             command.add_argument('--max-seconds', type=int, default=3600)
         if name == 'assign':
             command.add_argument('--agent', required=True)
+            command.add_argument('--plan-digest')
+            command.add_argument('--context-digest')
         if name in ('start', 'checkpoint', 'submit'):
             command.add_argument('--fence', type=int, required=True)
         if name in ('checkpoint', 'submit', 'review', 'integrate', 'block', 'recover', 'cancel'):
@@ -2406,9 +2809,13 @@ def main(argv=None):
             command.add_argument('--max-bytes', type=int, default=200000)
     args = parser.parse_args(argv)
     try:
-        if args.read_only and (args.cmd not in ('status', 'ready', 'check', 'context')
+        if args.read_only and (args.cmd not in ('status', 'ready', 'check', 'context', 'plan', 'activate-plan')
+                              or (args.cmd == 'activate-plan' and args.apply)
                               or getattr(args, 'out', None) is not None):
             raise Denied('read-only inspection rejects mutations and context output')
+        if args.cmd == 'plan':
+            print(json.dumps(effective_plan.load_plan(args.root).summary(), indent=2, sort_keys=True))
+            return 0
         harness = Harness(args.root, args.package, state_root=args.state_root,
                           allow_state_recovery=args.cmd == 'recover-state-write')
         op = args.cmd
@@ -2419,14 +2826,15 @@ def main(argv=None):
             harness.status()
             result = {'integrity': 'PASS', 'meaning': 'local state/receipt/policy integrity only; not production readiness'}
         elif op == 'migrate-v1': result = harness.migrate_v1(args.actor, args.apply)
+        elif op == 'activate-plan': result = harness.activate_plan(args.actor, args.record, args.apply)
         elif op == 'rollback-v2': result = harness.rollback_v2(args.actor, args.apply, args.runtime_stopped)
         elif op == 'recover-state-write': result = harness.recover_state_write(
             args.actor, args.runtime_stopped)
         elif op == 'set-roster': result = harness.roster(args.actor, args.record)
         elif op == 'record-gate': result = harness.gate(args.actor, args.record)
         elif op == 'set-budget': result = harness.budget(args.actor, args.usd, args.record)
-        elif op == 'admit': result = harness.admit(args.task, args.actor, args.trigger)
-        elif op == 'assign': result = harness.assign(args.task, args.actor, args.agent, args.tier, args.human, args.budget_usd, args.max_tokens, args.max_seconds, **options)
+        elif op == 'admit': result = harness.admit(args.task, args.actor, args.trigger, plan_digest=args.plan_digest)
+        elif op == 'assign': result = harness.assign(args.task, args.actor, args.agent, args.tier, args.human, args.budget_usd, args.max_tokens, args.max_seconds, plan_digest=args.plan_digest, context_digest=args.context_digest, **options)
         elif op == 'start': result = harness.start(args.task, args.actor, args.fence)
         elif op == 'checkpoint': result = harness.checkpoint(args.task, args.actor, args.fence, args.record, args.extend_seconds)
         elif op == 'submit': result = harness.submit(args.task, args.actor, args.fence, args.candidate, args.record)
@@ -2439,7 +2847,7 @@ def main(argv=None):
         else: raise Denied('unknown command')
         print(json.dumps(result if result is not None else {'ok': True}, indent=2))
         return 0
-    except (Denied, OSError, ValueError, KeyError, TypeError) as exc:
+    except (Denied, OSError, ValueError, KeyError, TypeError, subprocess.CalledProcessError) as exc:
         print(json.dumps({'ok': False, 'error': str(exc)}, indent=2), file=sys.stderr)
         return 2
 
