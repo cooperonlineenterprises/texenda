@@ -1,11 +1,11 @@
 {
   "schema_version": "texenda.generated-integrity.v1",
-  "generation_id": "255ea68ded71a9bec0abe06caa22eea4c771e3eb716a1bd4a92e1a82b7317ddb",
+  "generation_id": "35fcaaff256473824015319b6afd52cd158d1f7349f89aff3ab2e0065aefde87",
   "generation_id_derivation": "sha256(canonical_json(source_scope_sha256,evidence_scope_sha256,ledger_sha256,receipt_count,receipt_tip))",
-  "generated_at": "2026-09-18T16:19:27+00:00",
+  "generated_at": "2026-09-18T16:24:04+00:00",
   "authority": "generated_non_authoritative",
-  "source_git_revision": "e2c3b059256d0485a970e2a1b9775f36c5e0fb6e",
-  "source_git_tree": "cc05171510b7b9fcc35ebfd62752c7abdc45bb96",
+  "source_git_revision": "109e3f4f5b184ffe75907af86f781c202efd453b",
+  "source_git_tree": "86cb7c8f96a9fefe1a2ba7840323086a28fc2996",
   "source_scope_sha256": "41bc1260d9df67c214687910a7e5bde3a89f6696ef56c47089a8b5799d28d494",
   "source_scope_exclusions": [
     {
@@ -1019,7 +1019,7 @@
       "sha256": "faca2d70ca7ae67b89b3d23561f9df1df0c9bab219aa8ae4f39e9cc35d573832"
     }
   ],
-  "evidence_scope_sha256": "51ad464ea0029efa71d17fa75c71b4b5f02d9b7911ad5d8d093d3d608ca681b0",
+  "evidence_scope_sha256": "a6658d74d8e9cd6b0ee5cd9438ef17bbec2cea79af77471cfe922ddfaa33770e",
   "evidence_files": [
     {
       "path": "docs/qualification/evidence/2026-09-14-external-state-cutover-author-validation.log",
@@ -1306,12 +1306,20 @@
       "sha256": "c07b07679c2c81c55d45c6635db94ce8a43275e41d5e83b5a98894da2df232c0"
     },
     {
+      "path": "docs/qualification/evidence/2026-09-18-desktop-independent-review-v2.md",
+      "sha256": "8d0fe648f11d5d078228a14cfdb3960040aaaf279c2b06a895397fc45cdb6747"
+    },
+    {
       "path": "docs/qualification/evidence/2026-09-18-desktop-independent-review.md",
       "sha256": "9594c009f03160d546119f1d7f203ecb1a88cb294a36169049c993248764fe30"
     },
     {
       "path": "docs/qualification/evidence/2026-09-18-desktop-owner-authorization.md",
       "sha256": "56b02b88d7b5dba9795c58901644e257855ffd8801d88e407f3ededd0600383c"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-18-desktop-review-v2.evidence.json",
+      "sha256": "0b84856d51ee231c424444da5d0347f9dab3a0a5bde98657103a4dd2fa17141f"
     },
     {
       "path": "docs/qualification/evidence/2026-09-18-desktop-review.evidence.json",
