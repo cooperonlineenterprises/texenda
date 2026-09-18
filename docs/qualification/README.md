@@ -8,7 +8,7 @@ The project-local [quality-first routing decision](../decisions/ADR-0001-quality
 
 The four capability tiers default to max reasoning:
 
-| Tier | Default | Qualified downshifts |
+| Tier | Policy default | Policy-listed downshifts (not current availability) |
 |---|---|---|
 | T1 | `gpt-6-astra-max` | `gpt-6-astra-high` |
 | T2 | `gpt-5.6-sol-max` | `gpt-5.6-sol-high` |
@@ -17,10 +17,18 @@ The four capability tiers default to max reasoning:
 
 Sol/max is also the sole explicit T1 fallback. The fallback requires an explicit flag and reason and is never selected automatically. Lower effort requires a current task/role/profile/fence-bound routing record proving bounded, reversible, fully specified work with deterministic verification. No existing whole parent WP has a T4 floor; T4 is reserved for separately fenced mechanical subtasks and future reviewed routes.
 
-Use [model-roster-v2.1.evidence.json](model-roster-v2.1.evidence.json) for the
-current exact-profile roster. It binds every profile to fresh desktop-runtime
-evidence and records the actual Codex desktop version/build rather than the
-separately installed CLI version. See the
+The live ledger selects the active exact-profile record; a policy row or dated
+file is not availability. The [2026-09-18 record](model-roster-v2.2.evidence.json)
+contains only newly demonstrated Astra/max and Terra/max on desktop
+26.908.70816 (build 9275), with seven-day validity and earlier invalidation on
+relevant runtime changes. Independent review and owner-attested installation
+remain separate; inspect live `check`/`status` before use. Sol/max, Luna/max and
+all lower efforts were omitted, not silently carried from the older build.
+The [v2.1 record](model-roster-v2.1.evidence.json) remains immutable historical
+evidence for desktop 26.901.41600 (build 7982), not a current-build qualification.
+The [new observation](runtime-surface-observation-2026-09-18.json) separates
+requested dispatch from unavailable independent provider identity introspection.
+For historical provenance, see the
 [runtime observation](runtime-surface-observation-2026-09-13.json) and
 [correction verification](runtime-surface-correction-verification-2026-09-13.md).
 The [activation receipt](runtime-surface-correction-activation-receipt.md)

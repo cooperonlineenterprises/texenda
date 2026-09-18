@@ -1,0 +1,78 @@
+{
+  "schema_version": "2.0",
+  "kind": "roster",
+  "summary": "Versioned current-desktop exact-profile results for bounded preparation: Astra/max and Terra/max only. Owner conditionally authorized installation after independent review; this file alone does not install or approve its containing candidate.",
+  "routing_policy_digest": "61f0db448cf5ac5adad4d9340d568a7558c0369174e30aab92dd0ccf0d24bdf0",
+  "owner": "human:owner",
+  "issued_at": "2026-09-18T16:07:00Z",
+  "scope": "Codex desktop collaboration26.908.70816(build9275), existing subscription, read/edit/test only; no direct CLI, product-facing AI or external qualification.",
+  "notes": "Owner attestor is the current human user through the 2026-09-18 authorization. Actual evidence author/operator/integrator is /root, an AI actor. CLI --actor human:owner attributes that conditional attestation, not AI identity or personal command execution. A distinct bootstrap-demonstrated Astra/max reviewer must approve the exact source and evidence-bearing head before set-roster. Preserve all historical evidence. Replace old Astra/max and Terra/max rows; omit old Astra/high, Sol/max/high, Terra/high/medium, Luna/max/high/medium/low because this desktop build is not covered. Sol/max and Luna/max were unnecessary and not probed, not failed. All lower efforts are out of scope. Max/subscription restriction remains; API allocation0. Qualification expires earlier if runtime/client/account/model/permissions/policy change. No affected leases or active product work were observed.",
+  "checks": [
+    {
+      "id": "desktop-runtime-observation-20260918",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Read desktop bundle identifier/version/build independently of CLI; inspect current route/permissions/subscription and baseline without credentials; preserve observation limits.",
+      "evidence_path": "docs/qualification/runtime-surface-observation-2026-09-18.json",
+      "sha256": "205533c07d20ca41c3a59dfbe65c026b0b0022b60f4e883def9fd441c7ee008b"
+    },
+    {
+      "id": "desktop-profile-gpt-6-astra-max-20260918",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Explicit exact-model/max collaboration dispatch; isolated README/test read, single apply_patch implementation, expected stub failure then5tests PASS; parent reran exact final fixtures. No profile retry.",
+      "evidence_path": "docs/qualification/probes/2026-09-18/gpt-6-astra-max-desktop.json",
+      "sha256": "a7d7f4d3b652ba77b2524ebade64152dcea912151c3f599c805fd16a9ff42c65"
+    },
+    {
+      "id": "desktop-profile-gpt-5.6-terra-max-20260918",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Explicit exact-model/max collaboration dispatch; isolated README/test read, single apply_patch implementation, expected stub failure then5tests PASS; parent reran exact final fixtures. No profile retry.",
+      "evidence_path": "docs/qualification/probes/2026-09-18/gpt-5.6-terra-max-desktop.json",
+      "sha256": "e7c6c42ebe725830a8562e0d1decb3b7fcdb75608190c0d8de405ced3f68704d"
+    }
+  ],
+  "qualifications": [
+    {
+      "profile_id": "gpt-6-astra-max",
+      "capability_tier": 1,
+      "model_id": "gpt-6-astra",
+      "reasoning_effort": "max",
+      "runtime_id": "codex-desktop-collaboration",
+      "client_version": "26.908.70816 (build 9275)",
+      "sign_in_mode": "subscription",
+      "billing_mode": "subscription",
+      "capabilities": [
+        "read",
+        "edit",
+        "test"
+      ],
+      "verified_at": "2026-09-18T16:04:05Z",
+      "expires_at": "2026-09-25T16:04:05Z",
+      "qualification_check_ids": [
+        "desktop-profile-gpt-6-astra-max-20260918"
+      ]
+    },
+    {
+      "profile_id": "gpt-5.6-terra-max",
+      "capability_tier": 3,
+      "model_id": "gpt-5.6-terra",
+      "reasoning_effort": "max",
+      "runtime_id": "codex-desktop-collaboration",
+      "client_version": "26.908.70816 (build 9275)",
+      "sign_in_mode": "subscription",
+      "billing_mode": "subscription",
+      "capabilities": [
+        "read",
+        "edit",
+        "test"
+      ],
+      "verified_at": "2026-09-18T16:03:50Z",
+      "expires_at": "2026-09-25T16:03:50Z",
+      "qualification_check_ids": [
+        "desktop-profile-gpt-5.6-terra-max-20260918"
+      ]
+    }
+  ]
+}

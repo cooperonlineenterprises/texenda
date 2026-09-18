@@ -1,0 +1,151 @@
+{
+  "schema_version": "1.0",
+  "kind": "runtime-surface-observation",
+  "observed_at": "2026-09-18T16:05:44Z",
+  "source_revision": "09b77007fc3049b2f391aa0b8f800356990e718e",
+  "desktop_runtime": {
+    "runtime_id": "codex-desktop-collaboration",
+    "bundle_path": "/Applications/ChatGPT.app",
+    "bundle_identifier": "com.openai.codex",
+    "version": "26.908.70816",
+    "build": "9275",
+    "client_version_for_qualification": "26.908.70816 (build 9275)",
+    "observation_procedure": [
+      "/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' /Applications/ChatGPT.app/Contents/Info.plist",
+      "/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' /Applications/ChatGPT.app/Contents/Info.plist",
+      "/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' /Applications/ChatGPT.app/Contents/Info.plist"
+    ]
+  },
+  "direct_cli": {
+    "version": "NOT_OBSERVED_IN_THIS_PHASE",
+    "qualified": false,
+    "reason": "Separate runtime; no direct CLI model invocation or qualification. The dated 2026-09-13 CLI observation is preserved, not presented as today's version."
+  },
+  "authority": {
+    "basis": "Current owner message: Authorization: qualify current desktop profiles and resume preparation, 2026-09-18.",
+    "owner_attestor": "human:owner",
+    "operator": "/root (AI integrator)",
+    "conditional_approval": "Install only successfully demonstrated and independently reviewed required max profiles through the existing coordinator; preserve all other live fields/history.",
+    "bootstrap": "Only isolated deterministic probes and independent verification before new qualification installation.",
+    "identity_limit": "human:owner names the actual user supplying conditional attestation, not the AI command runner. The CLI actor string is not authentication; evidence identifies the separate actual AI operator.",
+    "forbidden": [
+      "product admission or implementation",
+      "plan/routing/permission changes",
+      "API spending, credits, resets or upgrades",
+      "push, deployment, provisioning or account connection",
+      "private input contents, sizes or hashes",
+      "history or receipt rewriting"
+    ]
+  },
+  "scope_and_bounds": {
+    "id": "QUAL-DESKTOP-0001",
+    "selected_profiles": [
+      "gpt-6-astra-max",
+      "gpt-5.6-terra-max"
+    ],
+    "omitted_max_profiles": [
+      "gpt-5.6-sol-max",
+      "gpt-5.6-luna-max"
+    ],
+    "selection": "Manual Model Reasoning Router; no separate callable router was found. T1 author/review for consequence; T3 read-only inventory. No extra tier is needed.",
+    "phase_started_at": "2026-09-18T15:58:25Z",
+    "phase_deadline": "2026-09-18T16:58:25Z",
+    "max_concurrent_probes_or_writers": 2,
+    "initial_probes_per_profile": 1,
+    "transient_retry_limit_per_profile": 1,
+    "probe_max_seconds": 600,
+    "probe_token_limit": 6000,
+    "independent_verifier_fixture_max_seconds": 600,
+    "independent_verifier_fixture_token_limit": 8000,
+    "independent_candidate_review_max_seconds": 1200,
+    "independent_candidate_review_token_limit": 16000,
+    "evidence_head_audit_max_seconds": 600,
+    "evidence_head_audit_token_limit": 8000,
+    "integrated_audit_max_seconds": 300,
+    "integrated_audit_token_limit": 5000,
+    "lead_phase_token_limit": 24000,
+    "token_measurement_and_enforcement": "Unavailable; declared limits tracked as planning bounds, not provider-enforced telemetry.",
+    "api_usd": 0
+  },
+  "effective_permissions": {
+    "source": "Current platform instructions plus explicit task scope; not inferred from repository config.",
+    "sandbox": "workspace-write with configured project/tmp roots",
+    "approval_mode": "auto_review",
+    "network_available": true,
+    "network_use": "Initial probes and verifier use no network. Lead read public official documentation only; no account/product integration.",
+    "qualification_does_not_prove": "Adversarial sandbox isolation, provider identity, future billing, production safety or product AI quality."
+  },
+  "usage": {
+    "observed_at": "2026-09-18 16:02:13 UTC",
+    "ordinaryUsageAllowed": true,
+    "windows": {
+      "primary": {
+        "usedPercent": 34,
+        "windowDurationMins": 10080,
+        "resetsAt": 1790203253
+      },
+      "secondary": null
+    },
+    "plan": "pro",
+    "api_budget_usd": 0,
+    "credits_used": false,
+    "reset_used": false,
+    "limitations": "Account/reset identifiers omitted. Missing windows and per-agent/provider token measurements are unknown."
+  },
+  "preservation_baseline": {
+    "state_sha256": "fe218fc97325d3c255825d89cc0046e6ea27d38454c2a7dd06e09c0926d19bb0",
+    "binding_sha256": "a92b6137856b7f9c2b3f13f69f4e6dc92ed4da1be82eec1ddf21188ebdde0365",
+    "state_version": "2.1",
+    "receipt_count": 14,
+    "receipt_tip": "e089594d853bc93a876aef100b779ef416bfaa82e5dacff84d027c6cb3eb8266",
+    "roster_sha256": "a23705178b39e8d0dd194abd4cf6e42fc20be404739d0e28e0ca9b221c80ddcf",
+    "other_state_fields_sha256": "6d6b4d70ecaf5e135668422f6fc71f3a40364ac3f9250a2be457b3eef0da04d8",
+    "leases": 0,
+    "budget_usd": 0,
+    "gates": {},
+    "ready": [
+      "WP-01"
+    ],
+    "protected_baseline": "docs/qualification/evidence/2026-09-17-initial-product-baseline.json",
+    "protected": {
+      "repo/specs/texenda-handoff": {
+        "files": 86,
+        "aggregate_sha256": "378b6fefcc61c929dd6818858adc68c478b8ca01b8840519533f0c395ea3f969",
+        "per_file_verified_unchanged": true
+      },
+      "sources/handoff-1.1.0-20260914": {
+        "files": 88,
+        "aggregate_sha256": "3c941fe46d23801c65c185c8a2bed23942782c9d94ef81f081132dd0806b998b",
+        "per_file_verified_unchanged": true
+      },
+      "sources/solo_marketing_research": {
+        "files": 26,
+        "aggregate_sha256": "a4dddc45664f5ff8d0806d700271e73413881080d2dee9b0d3035e26bb641c72",
+        "per_file_verified_unchanged": true
+      },
+      "sources/internal_use_refinement": {
+        "files": 21,
+        "aggregate_sha256": "ec7dab70e21c5879dadc8c2250a64a2673afb7d97369b09a74478c4b04c84fcc",
+        "per_file_verified_unchanged": true
+      }
+    }
+  },
+  "limitations": [
+    "Explicit collaboration model/effort request accepted; independent executing-model and effort introspection unavailable.",
+    "No account identifiers, credentials or reset identifiers recorded.",
+    "Current roster expiry alone did not cover a changed desktop client. Earlier unqualified preparation inventory was interrupted; none of its work supplies this qualification.",
+    "File reads may advance OS-managed access time; portable atime stability is not claimed."
+  ],
+  "advisory_sources": [
+    {
+      "url": "https://learn.chatgpt.com/docs/models",
+      "retrieved_on": "2026-09-18",
+      "use": "Official model/effort selection guidance; availability depends on client and sign-in, not proof of this account's access."
+    },
+    {
+      "url": "https://developers.openai.com/api/docs/models/gpt-6-astra",
+      "retrieved_on": "2026-09-18",
+      "use": "Documents max effort. API documentation does not qualify desktop access or authorize API use."
+    }
+  ]
+}

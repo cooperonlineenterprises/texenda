@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0",
+  "kind": "independent-qualification-bootstrap-verification",
+  "reviewer": "/root/desktop_qualification_reviewer_20260918",
+  "requested_model": "gpt-6-astra",
+  "requested_reasoning_effort": "max",
+  "dispatch_surface": "collaboration.spawn_agent explicit gpt-6-astra/max, fork_turns=none",
+  "runtime_id": "codex-desktop-collaboration",
+  "observed_client": "26.908.70816 (build 9275)",
+  "observed_bundle": "com.openai.codex",
+  "verification_started_at": "2026-09-18T16:07:06Z",
+  "verification_completed_at": "2026-09-18T16:07:51Z",
+  "max_seconds": 600,
+  "max_tokens": 8000,
+  "api_usd": 0,
+  "billing_mode": "subscription",
+  "independent_provider_identity": "UNKNOWN",
+  "token_use": "UNKNOWN",
+  "verification": {
+    "author_fixtures": "Both unchanged original fixtures independently passed5tests at16:07:20Z.",
+    "reviewer_fixture": "Separate expected5-error baseline then single apply_patch edit and5tests PASS; evidence verification only, not a repeat initial profile attempt.",
+    "command": "env PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest -v test_probe.py",
+    "baseline_exit_code": 1,
+    "post_edit_exit_code": 0,
+    "profile_retries": 0,
+    "fixture": {
+      "README.md": {
+        "content": "# Isolated qualification fixture\n\nThis invented fixture is not Texenda product code. Edit only probe.py.\nImplement canonical_labels(values): accept exactly a list of strings; return\nthe sorted unique nonempty strings after strip() and lower(). Reject any other\ncontainer or element with TypeError; do not change the input list.\nRead this file and test_probe.py; run the tests before and after the edit.\nUse apply_patch. No network, accounts, private data, package installs or Git changes.\n",
+        "sha256": "89bc761e002bb022b32105d3cb45bd5b1f54d7d22cdc799084c33c578d844133"
+      },
+      "test_probe.py": {
+        "content": "import unittest\nfrom probe import canonical_labels\n\n\nclass ProbeTests(unittest.TestCase):\n    def test_normalize_and_deduplicate(self):\n        self.assertEqual(canonical_labels([\" Beta \", \"ALPHA\", \"beta\"]), [\"alpha\", \"beta\"])\n\n    def test_empty(self):\n        self.assertEqual(canonical_labels([\"\", \"  \"]), [])\n        self.assertEqual(canonical_labels([]), [])\n\n    def test_preserves_input(self):\n        values = [\" Z \", \"a\"]\n        self.assertEqual(canonical_labels(values), [\"a\", \"z\"])\n        self.assertEqual(values, [\" Z \", \"a\"])\n\n    def test_rejects_container(self):\n        for value in (None, \"abc\", (\"a\",), {\"a\"}):\n            with self.assertRaises(TypeError):\n                canonical_labels(value)\n\n    def test_rejects_element(self):\n        for value in ([1], [True], [None], [\"a\", []]):\n            with self.assertRaises(TypeError):\n                canonical_labels(value)\n\n\nif __name__ == \"__main__\":\n    unittest.main()\n",
+        "sha256": "b7c51a73898d17588981a75abe8c02f7b2fdca41b5cfceaa2d1060a8bad60c0e"
+      },
+      "probe.py": {
+        "content": "def canonical_labels(values):\n    if type(values) is not list:\n        raise TypeError(\"values must be a list of strings\")\n    result = set()\n    for value in values:\n        if type(value) is not str:\n            raise TypeError(\"values must contain only strings\")\n        normalized = value.strip().lower()\n        if normalized:\n            result.add(normalized)\n    return sorted(result)\n",
+        "sha256": "39348bf17bcc375c4e7072f0648924445e93557ffc88d7a844917912a20ebb89"
+      }
+    }
+  },
+  "owner_attestation_interpretation": "human:owner may identify the actual authorizing user if evidence separately names the AI operator and preserves the explicit conditional authority. It must not claim human command execution or authenticate identity from a string.",
+  "runtime_stopped": true,
+  "scope": "Only independent evidence verification; no exact roster candidate was approved at this stage.",
+  "limitations": [
+    "Original probe baseline/edit chronology remains author/tool-record evidence; reviewer reproduced final artifacts independently.",
+    "No product tests, credential access, account connection, network, repo writes or state writes."
+  ]
+}

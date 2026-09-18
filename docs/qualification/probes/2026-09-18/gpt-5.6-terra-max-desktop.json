@@ -1,0 +1,88 @@
+{
+  "schema_version": "1.0",
+  "kind": "desktop-exact-profile-qualification-probe",
+  "profile_id": "gpt-5.6-terra-max",
+  "requested_model": "gpt-5.6-terra",
+  "requested_reasoning_effort": "max",
+  "capability_tier": 3,
+  "runtime_id": "codex-desktop-collaboration",
+  "client_version": "26.908.70816 (build 9275)",
+  "agent": "/root/desktop_terra_probe_20260918",
+  "started_at": "2026-09-18T16:02:03Z",
+  "verified_at": "2026-09-18T16:03:50Z",
+  "base_revision": "09b77007fc3049b2f391aa0b8f800356990e718e",
+  "dispatch_surface": "collaboration.spawn_agent with explicit model and reasoning_effort=max; fork_turns=none",
+  "bootstrap_permission": "Current owner message: Authorization: qualify current desktop profiles and resume preparation, 2026-09-18.",
+  "read_sources": [
+    "AGENTS.md",
+    ".agent/START_HERE.md",
+    "isolated README.md",
+    "isolated test_probe.py"
+  ],
+  "fixture": {
+    "root": "/private/tmp/texenda-desktop-qualification-20260918.kCkXtR/terra",
+    "files": {
+      "README.md": {
+        "content": "# Isolated qualification fixture\n\nThis invented fixture is not Texenda product code. Edit only probe.py.\nImplement canonical_labels(values): accept exactly a list of strings; return\nthe sorted unique nonempty strings after strip() and lower(). Reject any other\ncontainer or element with TypeError; do not change the input list.\nRead this file and test_probe.py; run the tests before and after the edit.\nUse apply_patch. No network, accounts, private data, package installs or Git changes.\n",
+        "sha256": "89bc761e002bb022b32105d3cb45bd5b1f54d7d22cdc799084c33c578d844133"
+      },
+      "probe.py": {
+        "content": "def canonical_labels(values):\n    if type(values) is not list:\n        raise TypeError(\"values must be a list of strings\")\n\n    labels = []\n    for value in values:\n        if type(value) is not str:\n            raise TypeError(\"values must be a list of strings\")\n        label = value.strip().lower()\n        if label:\n            labels.append(label)\n\n    return sorted(set(labels))\n",
+        "sha256": "cc52c494bdbcbdd136dc5ebc00b962929b9c5b6e3329663eaf4f216cad48f4a7"
+      },
+      "test_probe.py": {
+        "content": "import unittest\nfrom probe import canonical_labels\n\n\nclass ProbeTests(unittest.TestCase):\n    def test_normalize_and_deduplicate(self):\n        self.assertEqual(canonical_labels([\" Beta \", \"ALPHA\", \"beta\"]), [\"alpha\", \"beta\"])\n\n    def test_empty(self):\n        self.assertEqual(canonical_labels([\"\", \"  \"]), [])\n        self.assertEqual(canonical_labels([]), [])\n\n    def test_preserves_input(self):\n        values = [\" Z \", \"a\"]\n        self.assertEqual(canonical_labels(values), [\"a\", \"z\"])\n        self.assertEqual(values, [\" Z \", \"a\"])\n\n    def test_rejects_container(self):\n        for value in (None, \"abc\", (\"a\",), {\"a\"}):\n            with self.assertRaises(TypeError):\n                canonical_labels(value)\n\n    def test_rejects_element(self):\n        for value in ([1], [True], [None], [\"a\", []]):\n            with self.assertRaises(TypeError):\n                canonical_labels(value)\n\n\nif __name__ == \"__main__\":\n    unittest.main()\n",
+        "sha256": "b7c51a73898d17588981a75abe8c02f7b2fdca41b5cfceaa2d1060a8bad60c0e"
+      }
+    },
+    "parent_verification": {
+      "command": "env PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest -v test_probe.py",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_empty (test_probe.ProbeTests.test_empty) ... ok\ntest_normalize_and_deduplicate (test_probe.ProbeTests.test_normalize_and_deduplicate) ... ok\ntest_preserves_input (test_probe.ProbeTests.test_preserves_input) ... ok\ntest_rejects_container (test_probe.ProbeTests.test_rejects_container) ... ok\ntest_rejects_element (test_probe.ProbeTests.test_rejects_element) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.000s\n\nOK\n"
+    }
+  },
+  "before_edit": {
+    "probe_py": "def canonical_labels(values):\n    raise NotImplementedError(\"qualification fixture; implement the documented contract\")\n",
+    "sha256": "9ecab2bb95ded5cade806e8fa0dcfc315f9c00c7a7ae101a61d6ef86beafbb0d",
+    "test_exit_code": 1,
+    "tests": 5,
+    "result": "Expected NotImplementedError stub baseline; not a failed model probe."
+  },
+  "edit": {
+    "method": "apply_patch",
+    "only_path": "/private/tmp/texenda-desktop-qualification-20260918.kCkXtR/terra/probe.py"
+  },
+  "post_edit": {
+    "test_exit_code": 0,
+    "tests": 5,
+    "result": "PASS"
+  },
+  "capabilities_demonstrated": [
+    "read",
+    "edit",
+    "test"
+  ],
+  "profile_retries": 0,
+  "diagnostic_observations": [
+    "Initial /Applications/Codex.app path absent; corrected to /Applications/ChatGPT.app, whose three plist fields matched."
+  ],
+  "billing_mode": "subscription",
+  "sign_in_mode": "subscription",
+  "billing_basis": "Current owner authorization, authenticated desktop surface and parent usage observation; credentials not inspected.",
+  "api_budget_usd": 0,
+  "api_used": false,
+  "independent_executing_model_introspection": "UNAVAILABLE",
+  "independent_reasoning_effort_introspection": "UNAVAILABLE",
+  "token_consumption": "UNKNOWN",
+  "max_seconds": 600,
+  "declared_max_tokens": 6000,
+  "runtime_stopped": true,
+  "runtime_stop_basis": "Agent completed, reported every subprocess exited; parent independently reran unchanged fixture tests.",
+  "limitations": [
+    "A deterministic fixture proves bounded tool capability, not product correctness or security competence.",
+    "No qualification transfers to another model/effort/client/runtime/account.",
+    "Model self-identification is not used as proof; no product gate or external authority is created."
+  ],
+  "disposition": "Probe PASS evidence only; independent review and explicit owner-attested roster installation remain separate."
+}
