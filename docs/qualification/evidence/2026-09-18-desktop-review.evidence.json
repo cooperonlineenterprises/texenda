@@ -1,0 +1,70 @@
+{
+  "schema_version": "2.0",
+  "kind": "review",
+  "task_id": "QUAL-DESKTOP-0001",
+  "candidate_revision": "975d207f469834622810cc623d01a409c80c273e",
+  "observed_revision": "975d207f469834622810cc623d01a409c80c273e",
+  "summary": "Independent bootstrap-demonstrated Astra/max approval of exact current-desktop qualification candidate; timing finding resolved by preserved successor. Containing evidence head and roster installation remain separate.",
+  "profile_id": "gpt-6-astra-max",
+  "role": "reviewer",
+  "capability_tier": 1,
+  "routing_policy_digest": "61f0db448cf5ac5adad4d9340d568a7558c0369174e30aab92dd0ccf0d24bdf0",
+  "qualifications": [
+    {
+      "profile_id": "gpt-6-astra-max",
+      "capability_tier": 1,
+      "model_id": "gpt-6-astra",
+      "reasoning_effort": "max",
+      "runtime_id": "codex-desktop-collaboration",
+      "client_version": "26.908.70816 (build 9275)",
+      "sign_in_mode": "subscription",
+      "billing_mode": "subscription",
+      "capabilities": [
+        "read",
+        "edit",
+        "test"
+      ],
+      "verified_at": "2026-09-18T16:04:05Z",
+      "expires_at": "2026-09-25T16:04:05Z",
+      "qualification_check_ids": [
+        "desktop-profile-gpt-6-astra-max-20260918"
+      ]
+    }
+  ],
+  "scope": "Owner-authorized qualification/forward roster update only; not a WP lease or product gate.",
+  "notes": "Source author/operator /root; distinct reviewer /root/desktop_qualification_reviewer_20260918. Current owner provides conditional human attestation; AI executes only after independent evidence-head review. Historical evidence preserved; no CLI transfer.",
+  "checks": [
+    {
+      "id": "exact-source-review",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "See exact commands, immutable candidate/diff, bootstrap limitations, sole finding/resolution and process-stop observations in the bound independent review.",
+      "evidence_path": "docs/qualification/evidence/2026-09-18-desktop-independent-review.md",
+      "sha256": "9594c009f03160d546119f1d7f203ecb1a88cb294a36169049c993248764fe30"
+    },
+    {
+      "id": "probe-and-roster-integrity",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "See exact commands, immutable candidate/diff, bootstrap limitations, sole finding/resolution and process-stop observations in the bound independent review.",
+      "evidence_path": "docs/qualification/evidence/2026-09-18-desktop-independent-review.md",
+      "sha256": "9594c009f03160d546119f1d7f203ecb1a88cb294a36169049c993248764fe30"
+    },
+    {
+      "id": "required-validation",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "See exact commands, immutable candidate/diff, bootstrap limitations, sole finding/resolution and process-stop observations in the bound independent review.",
+      "evidence_path": "docs/qualification/evidence/2026-09-18-desktop-independent-review.md",
+      "sha256": "9594c009f03160d546119f1d7f203ecb1a88cb294a36169049c993248764fe30"
+    },
+    {
+      "id": "runtime-stop-and-boundaries",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "See exact commands, immutable candidate/diff, bootstrap limitations, sole finding/resolution and process-stop observations in the bound independent review.",
+      "evidence_path": "docs/qualification/evidence/2026-09-18-desktop-independent-review.md",
+      "sha256": "9594c009f03160d546119f1d7f203ecb1a88cb294a36169049c993248764fe30"
+    }
+  ]
+}
