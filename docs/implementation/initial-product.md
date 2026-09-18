@@ -7,6 +7,14 @@ owns the exact deltas, acceptance extensions and release profiles. Unchanged
 remain controlling. Product implementation and all acceptance results are still
 unperformed; this planning update builds no application.
 
+For concrete design and testing inputs, start with the linked
+[journey preparation packet](preparation/journeys.md), its
+[synthetic case specifications](preparation/synthetic-cases.md), and the
+[prepared WP-01 assignment](preparation/wp01-assignment.md). These explain the
+existing owners; product tests remain **NOT EXECUTED**, and the assignment is
+not admitted or dispatched. The [Kit discovery checklist](../migration/kit-discovery-preparation.md)
+is for a later, separately authorized inventory and does not block synthetic foundations.
+
 ## Ordinary entry
 
 Start at canonical `repo/` with [AGENTS.md](../../AGENTS.md). Read the active
