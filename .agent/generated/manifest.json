@@ -1,11 +1,11 @@
 {
   "schema_version": "texenda.generated-integrity.v1",
-  "generation_id": "565a5a940bcab1a87b2a08e74786f742ecee10bdd92ec7edc409c539905c111f",
+  "generation_id": "0a3c09c535e99e3534ed8e20809f0ec3602ba73d783b883f527c422bf3818c42",
   "generation_id_derivation": "sha256(canonical_json(source_scope_sha256,evidence_scope_sha256,ledger_sha256,receipt_count,receipt_tip))",
-  "generated_at": "2026-09-18T16:11:28+00:00",
+  "generated_at": "2026-09-18T16:14:56+00:00",
   "authority": "generated_non_authoritative",
-  "source_git_revision": "82c51a338ceacff0c4b7f688c6c34e8a1494a899",
-  "source_git_tree": "f584de3282477ab636a68db3dc563b30acae9ee7",
+  "source_git_revision": "2c96699dadd4318df28c3ff1254b0ca1f903e817",
+  "source_git_tree": "2560c943617576ed7b4a4686d29981a3ac3483fc",
   "source_scope_sha256": "41bc1260d9df67c214687910a7e5bde3a89f6696ef56c47089a8b5799d28d494",
   "source_scope_exclusions": [
     {
@@ -1019,7 +1019,7 @@
       "sha256": "faca2d70ca7ae67b89b3d23561f9df1df0c9bab219aa8ae4f39e9cc35d573832"
     }
   ],
-  "evidence_scope_sha256": "2ae2f3238e98e2a17d22103b1e0b98daae4d5da5ac474ed27e2a290b8c1b61b9",
+  "evidence_scope_sha256": "d1d060ebbd2542c7d11c934b93e41c590f99a0d8beabcd62432599ce82bfd37a",
   "evidence_files": [
     {
       "path": "docs/qualification/evidence/2026-09-14-external-state-cutover-author-validation.log",
@@ -1308,6 +1308,10 @@
     {
       "path": "docs/qualification/evidence/2026-09-18-desktop-owner-authorization.md",
       "sha256": "56b02b88d7b5dba9795c58901644e257855ffd8801d88e407f3ededd0600383c"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-18-desktop-reviewer-bootstrap-v2.json",
+      "sha256": "e4e89359c4103e7c99c7d9c498f33821072c6d88e3e5333dd128310caacfb7cc"
     },
     {
       "path": "docs/qualification/evidence/2026-09-18-desktop-reviewer-bootstrap.json",

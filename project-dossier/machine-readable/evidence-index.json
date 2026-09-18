@@ -1,10 +1,10 @@
 {
   "schema_version": "texenda.dossier-evidence-index.generated.v1",
-  "generation_id": "565a5a940bcab1a87b2a08e74786f742ecee10bdd92ec7edc409c539905c111f",
-  "generated_at": "2026-09-18T16:11:28+00:00",
+  "generation_id": "0a3c09c535e99e3534ed8e20809f0ec3602ba73d783b883f527c422bf3818c42",
+  "generated_at": "2026-09-18T16:14:56+00:00",
   "authority": "generated_hash_index_only",
   "owner_path": "docs/qualification/evidence/",
-  "evidence_scope_sha256": "2ae2f3238e98e2a17d22103b1e0b98daae4d5da5ac474ed27e2a290b8c1b61b9",
+  "evidence_scope_sha256": "d1d060ebbd2542c7d11c934b93e41c590f99a0d8beabcd62432599ce82bfd37a",
   "evidence": [
     {
       "path": "docs/qualification/evidence/2026-09-14-external-state-cutover-author-validation.log",
@@ -293,6 +293,10 @@
     {
       "path": "docs/qualification/evidence/2026-09-18-desktop-owner-authorization.md",
       "sha256": "56b02b88d7b5dba9795c58901644e257855ffd8801d88e407f3ededd0600383c"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-18-desktop-reviewer-bootstrap-v2.json",
+      "sha256": "e4e89359c4103e7c99c7d9c498f33821072c6d88e3e5333dd128310caacfb7cc"
     },
     {
       "path": "docs/qualification/evidence/2026-09-18-desktop-reviewer-bootstrap.json",
