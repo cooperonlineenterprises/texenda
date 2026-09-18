@@ -10,7 +10,8 @@ Bound source revision: `79db6081dd929af3f46a1cc8e1eec5f8ac09e9cc`;
 preparation base: `efaa8fa9772d332dd3bfb2b40bbae2110b06a5fa`.
 After any governing-source change, invalidate affected mappings, regenerate and
 recheck before reuse. Preserve prior evidence. No account, model, provider,
-browser product session or private input was exercised to prepare these cases.
+browser product session or private input belonging to the product was exercised
+to prepare these cases; the development author/reviewer route is separate.
 
 ## Reuse and evidence rules
 
@@ -29,6 +30,25 @@ not prove isolation; future synthetic runtime tests must deny real transport and
 credentials. Use captured fake effects, not real mail. `newsletter-A`, `page-A`,
 `resource-A`, `proposal-A`, `run-A` are local explanatory labels for opaque IDs.
 Fixture grants are deliberately scoped examples, not a new universal policy.
+
+<a id="shared-seeds"></a>
+### Shared invented seeds
+
+The following fixed values are test-only proposals, **NOT EXECUTED**: not
+production schemas/records, policy defaults, thresholds, real facts or approved
+disclosure wording. Each case runs in an isolated variant; later withdrawal,
+safety-hold and failure inputs explicitly modify its own starting fixture.
+
+| Seed | Concrete example and use |
+|---|---|
+| Linked newsletter draft | OHW Campaign `newsletter-A` revision 17, titled “Friday kitchen notes,” references Communication `brief-A` revision 4 and email representation `email-A` revision 9. These are separate revision bindings for cases 0002/0003, not one replacement aggregate. |
+| Concurrent proposal | `proposal-A` revision 2 binds Campaign 17, Communication 4 and representation 9. The human's timing edit creates Campaign revision 18 while the content bindings stay 4/9; the old proposal is stale. |
+| Approved fact / wrong output | Fixture source `fact-A` revision 1 says “The planning session is October 2, 2026.” Contrasting fake-model output says “The planning session is October 9, 2026.” The operator corrects or rejects that date in cases 0002/0005; neither date describes a real event. |
+| Ambiguous draft names | Alongside “Friday kitchen notes,” OHW Campaign `newsletter-B` revision 2 is titled “Friday recipe notes.” “Send the Friday notes” does not select an exact object or approved schedule. |
+| Resource | `resource-A` revision 3 is the approved synthetic “Three kitchen-planning prompts” text resource, available in fake storage. A case variant makes that resource unavailable; its old approval cannot fabricate available bytes or justify unrelated content. |
+| Page / choices | `page-A` revision 2 at `ohw.example.invalid` pins test disclosure `disclosure-A` revision 1: “Email me the three kitchen-planning prompts.” A separate, initially unchecked choice says “Also subscribe me to OHW Weekly: one email each week; unsubscribe any time.” The resource-request purpose and recurring Publication promise remain distinct. |
+| Request-only recipient | `reader.one@example.invalid` has verified request `request-A` for resource revision 3 and no OHW or HP marketing grant. Resource fulfillment is evaluated under that particular request; it cannot create the separate subscription. |
+| Marketing-authorized recipient | `reader.two@example.invalid` explicitly selected the separate recurring opt-in and confirmed OHW Weekly/email permission bound to test disclosure revision 1, with no HP grant or starting safety hold. This supplies the FX-01 scope variant; cases can later add an explicit withdrawal or independent safety hold. |
 
 Source keys used below:
 
@@ -80,7 +100,7 @@ Owners: WP-01/10/13/14/15/26/27/29; WP-25/31 observation.
 
 | Field | Prepared scenario |
 |---|---|
-| Preconditions / inputs | OHW editor has C1 draft and relevant C2 configuration capability; human approver has bounded approval capability. Synthetic newsletter has no Offer/commerce object. Fake AI suggests a wrong date against an approved source fact. |
+| Preconditions / inputs | OHW editor has C1 draft and relevant C2 configuration capability; human approver has bounded approval capability. Use the [shared newsletter and fact seeds](#shared-seeds), with no Offer/commerce object. Fake AI substitutes October 9 for the source's October 2. |
 | Actor / action | Run two creation variants: direct controls, and contextual fake AI through the same draft commands. In each, keep one resulting newsletter, alternate manual/assisted edits, reject/correct the date, save, preview, test/preflight and request human review. |
 | Visible / persistent result | One campaign with linked communication/representation revisions, sources, diff and attributed commands survives handoff. Draft save/accepting copy is not C3 approval. Human approval binds the exact immutable content, audience/timing and ceilings; explicit authorized scheduling is a separate result. |
 | Denial / recovery | Draft-only actor cannot approve/publish/schedule. Cancel suggestion/review retains saved work. Changed bound content invalidates approval. With AI disabled, repeat the complete manual path; deterministic approved work remains operable. |
@@ -95,7 +115,7 @@ AC-IP04/07, AC-I02/03/08/19/27. Owners: WP-01/13/15/26/27.
 
 | Field | Prepared scenario |
 |---|---|
-| Preconditions / inputs | Reuse FX-10: proposal references campaign revision 17; human saves revision 18. Also retain an unsaved local patch and a prior approval envelope. |
+| Preconditions / inputs | Reuse FX-10 and the [shared proposal bindings](#shared-seeds): proposal references Campaign 17; human saves Campaign 18 while Communication 4/representation 9 stay separately bound. Also retain an unsaved local patch and a prior approval envelope. |
 | Actor / action | Assistant attempts the old patch while the human edits. Interrupt the response stream, change workspace, reconnect and reopen the object through its stable reference. |
 | Visible / persistent result | Stale result and both intended edits remain inspectable; revision 18 is not overwritten. Unsaved patch is explicitly saved, reconciled or cancelled. Provisional text does not mutate state. Old scope referents/approval cannot carry across changed scope or meaning. |
 | Denial / recovery | Deny stale expected revision/digest. Human chooses merge into a new draft or discard; re-preview/reapprove if consequential. Cancel proposal preserves existing authoritative content. |
@@ -128,7 +148,7 @@ Owners: WP-15/26/27/29/40.
 
 | Field | Prepared scenario |
 |---|---|
-| Preconditions / inputs | Same saved newsletter. Fake AI variants: false protected fact; two plausible targets for “send that Friday”; unsupported schema/operator; unavailable response; untrusted text saying to disclose another brand or ignore approval. |
+| Preconditions / inputs | Same saved newsletter and [shared fact/ambiguous-name seeds](#shared-seeds). Fake AI variants: false protected date; “send the Friday notes” with two plausible targets; unsupported schema/operator; unavailable response; untrusted text saying to disclose another brand or ignore approval. |
 | Actor / action | Operator requests bounded drafting/explanation; adapter feeds each response through normal authorized context, typed validation and consequence preview. Operator corrects a fact, clarifies target/time or cancels and resumes manually. |
 | Visible / persistent result | Known inputs, assumptions and unresolved critical choices are separate. Invalid/manipulated output makes no mutation, grant, credential retrieval, provider call or hidden policy. Valid corrected draft is saved as a revision with provenance. Outage leaves full manual work and approved deterministic execution intact. |
 | Denial / recovery | Bound correction attempts; exhausted limit surfaces error/manual path without model/budget/authority expansion. Ambiguity pauses consequential work. Stream cancellation cannot convert unfinished text to a command. |
@@ -143,7 +163,7 @@ AC-IP02/15, AC-S01/02/03/04. Owners: WP-01 contracts; WP-03/10/12/15/40.
 
 | Field | Prepared scenario |
 |---|---|
-| Preconditions / inputs | OHW Property/publication/disclosure/resource revisions, fixed signup/thank-you blocks, synthetic local origin; authorized operator and separate recipient capability. |
+| Preconditions / inputs | Use the [shared page/disclosure/resource seeds](#shared-seeds), with OHW Property/publication references, fixed signup/thank-you blocks and synthetic local origin; authorized operator and separate recipient capability. |
 | Actor / action | Author/preview, human-review and simulate publication; edit a new revision, remove an asset, fail publication, then unpublish through the approved path. Try script/unsafe URL, cross-brand reference and public operator provisioning. |
 | Visible / persistent result | Page lifecycle/version and current last-good publication are explicit. Brand/purpose/disclosure/resource are pinned. Failed new revision never partially replaces the good page. Native standalone page remains supported, independent of optional embedding. |
 | Denial / recovery | Invalid or removed resource holds/invalidate affected stale/unpublished revision. Unsafe content and unauthorized effects deny. Correct/review a new revision or cancel it; unpublishing preserves prior evidence and reports actual state. Recipient signup cannot establish operator membership. |
@@ -158,7 +178,7 @@ AC-IP03, AC-D03, AC-L06/07. Owners: WP-05/10/11/12.
 
 | Field | Prepared scenario |
 |---|---|
-| Preconditions / inputs | Resource-only verified request plus a separate explicitly disclosed OHW signup variant. Reuse FX-02/03 for later withdrawal and independent safety hold; use fake storage/mail with success, definite failure and unknown acceptance. |
+| Preconditions / inputs | Use the [shared request-only and marketing-authorized seeds](#shared-seeds), keeping the resource request and explicitly chosen OHW signup distinct. Reuse FX-02/03 for later withdrawal and independent safety hold; use fake storage/mail with success, definite failure and unknown acceptance. |
 | Actor / action | Recipient submits, confirms where required, repeats same request key/confirmation, expires a link, requests a missing asset and exceeds a bounded abuse limit. Operator observes fulfillment and tries a safe reconciliation after failure. |
 | Visible / persistent result | Request/pending/confirmed/resource and per-effect outcomes are truthful/non-enumerating. Same-key replay yields one outcome; valid confirmation creates only its scoped grant and no duplicate welcome. Resource-only access creates no unrelated marketing grant. |
 | Denial / recovery | Stale confirmation after withdrawal cannot revive authority; narrow reconsent does not clear safety Suppression. Missing/changed asset holds. Expired-link recovery uses the approved verified-request path. Known safe retries retain identity; unknown acceptance retains claim and reconciles without new payload/key or provider/channel. |
