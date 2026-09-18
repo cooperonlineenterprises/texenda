@@ -1,0 +1,40 @@
+{
+  "schema_version": "2.0",
+  "kind": "review",
+  "task_id": "QUAL-DESKTOP-0001",
+  "candidate_revision": "975d207f469834622810cc623d01a409c80c273e",
+  "observed_revision": "975d207f469834622810cc623d01a409c80c273e",
+  "summary": "Corrected hash-bound evidence of independent exact-source approval. Supersedes v1 review transcript/embedded-qualification metadata; containing-head installation audit remains separate.",
+  "profile_id": "gpt-6-astra-max",
+  "role": "reviewer",
+  "capability_tier": 1,
+  "routing_policy_digest": "61f0db448cf5ac5adad4d9340d568a7558c0369174e30aab92dd0ccf0d24bdf0",
+  "scope": "Bounded owner-authorized desktop qualification and forward roster update only.",
+  "notes": "Actual source/evidence author/operator /root; distinct reviewer /root/desktop_qualification_reviewer_20260918. No redundant qualification row; the active qualification owner remains the existing roster mechanism. See v2 log for predecessor hashes, failed candidate9063919, exact actual commands and corrected-source975d207 approval.",
+  "checks": [
+    {
+      "id": "independent-source-review",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Independent review approved exact975d207 after bootstrap timing successor; see bound log.",
+      "evidence_path": "docs/qualification/evidence/2026-09-18-desktop-independent-review-v2.md",
+      "sha256": "8d0fe648f11d5d078228a14cfdb3960040aaaf279c2b06a895397fc45cdb6747"
+    },
+    {
+      "id": "reviewer-bootstrap-read-edit-test",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Distinct explicitly dispatched Astra/max reviewer independently reran both originalfixtures and completed isolated verifier read/edit/test at16:07:51Z.",
+      "evidence_path": "docs/qualification/evidence/2026-09-18-desktop-reviewer-bootstrap-v2.json",
+      "sha256": "e4e89359c4103e7c99c7d9c498f33821072c6d88e3e5333dd128310caacfb7cc"
+    },
+    {
+      "id": "required-validation-and-preservation",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "Exact historical commands and separate integrator fullregisteredchecks, state baseline and preservation observations are recorded in the v2 log.",
+      "evidence_path": "docs/qualification/evidence/2026-09-18-desktop-independent-review-v2.md",
+      "sha256": "8d0fe648f11d5d078228a14cfdb3960040aaaf279c2b06a895397fc45cdb6747"
+    }
+  ]
+}
