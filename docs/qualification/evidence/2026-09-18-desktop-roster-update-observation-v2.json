@@ -1,0 +1,119 @@
+{
+  "schema_version": "1.0",
+  "kind": "desktop-roster-forward-update-observation",
+  "observed_at": "2026-09-18T16:27:58.933804+00:00",
+  "authority_basis": "docs/qualification/evidence/2026-09-18-desktop-owner-authorization.md",
+  "owner_attestor": "human:owner (current user)",
+  "actual_operator": "/root (AI integrator)",
+  "independent_reviewer": "/root/desktop_qualification_reviewer_20260918",
+  "approved_source_revision": "975d207f469834622810cc623d01a409c80c273e",
+  "approved_evidence_head": "8c1a1cdcf3faccdcef1478d616cc5457960761b6",
+  "approved_evidence_tree": "e5a14285b5baa4e4ba7a9a373d3c7243f7aee594",
+  "approved_evidence_diff_sha256": "936c2e71337dd5aafa891677654f835cbe26da0c707a99110a584a494bbd3a22",
+  "review_record": "docs/qualification/evidence/2026-09-18-desktop-review-v2.evidence.json",
+  "review_record_sha256": "0b84856d51ee231c424444da5d0347f9dab3a0a5bde98657103a4dd2fa17141f",
+  "command": "env GIT_OPTIONAL_LOCKS=0 PYTHONDONTWRITEBYTECODE=1 python3 -B tooling/coordination/harness.py --root . --state-root /Users/jamesryancooper/Projects/texenda/local/agent-state/texenda set-roster --actor human:owner --record docs/qualification/model-roster-v2.2.evidence.json",
+  "exit_code": 0,
+  "roster_record": "docs/qualification/model-roster-v2.2.evidence.json",
+  "roster_record_sha256": "287301864a074adbf920ea83756e40adcb1368cee1a9bf8a18cbe6c221b627a6",
+  "before": {
+    "state_sha256": "fe218fc97325d3c255825d89cc0046e6ea27d38454c2a7dd06e09c0926d19bb0",
+    "receipt_count": 14,
+    "receipt_tip": "e089594d853bc93a876aef100b779ef416bfaa82e5dacff84d027c6cb3eb8266",
+    "roster_sha256": "a23705178b39e8d0dd194abd4cf6e42fc20be404739d0e28e0ca9b221c80ddcf",
+    "profile_count": 11
+  },
+  "after": {
+    "state_sha256": "43531481205f0d410bdf12a242033823d1c66edef035e3bb0f4bd4e0d7592906",
+    "receipt_count": 15,
+    "receipt_tip": "0a01ea216c946654105b4eb23a1b312ca45694ecbc27e9fecf1877cc3548605d",
+    "roster_sha256": "0026cf88a4ecf03d1af1dd0fc4b51e28aab627d4cbf0a71176f5f03c227103c6",
+    "profile_count": 2
+  },
+  "allowed_changes": [
+    "Replace active roster only",
+    "Append exactly one normal set-roster receipt",
+    "Normal atomic-state-write recovery artifacts and generated projections"
+  ],
+  "preservation": {
+    "all_original_receipts_unchanged": true,
+    "all_non_roster_non_events_state_fields_unchanged": true,
+    "original_events_sha256": "9dd9902cbb22cdaef647a3948db43187ac4cfc4e6251ee199279c3161cac8589",
+    "other_fields_sha256": "6d6b4d70ecaf5e135668422f6fc71f3a40364ac3f9250a2be457b3eef0da04d8",
+    "binding_sha256": "a92b6137856b7f9c2b3f13f69f4e6dc92ed4da1be82eec1ddf21188ebdde0365",
+    "effective_plan_digest": "16818d77078879f8e1ede4ca5b01174b3cd3df71fcd1239bb9eea6399c6a9f7e",
+    "routing_policy_digest": "61f0db448cf5ac5adad4d9340d568a7558c0369174e30aab92dd0ccf0d24bdf0",
+    "leases": 0,
+    "budget_usd": 0,
+    "gates": {},
+    "product_tasks": "WP-00 remains completed; all others unchanged planned. No product admission/assignment/start/completion."
+  },
+  "profile_disposition": [
+    {
+      "profile_id": "gpt-6-astra-max",
+      "disposition": "replaced_by_current_build_probe"
+    },
+    {
+      "profile_id": "gpt-6-astra-high",
+      "disposition": "omitted_not_qualified_for_current_build"
+    },
+    {
+      "profile_id": "gpt-5.6-sol-max",
+      "disposition": "omitted_not_qualified_for_current_build"
+    },
+    {
+      "profile_id": "gpt-5.6-sol-high",
+      "disposition": "omitted_not_qualified_for_current_build"
+    },
+    {
+      "profile_id": "gpt-5.6-terra-max",
+      "disposition": "replaced_by_current_build_probe"
+    },
+    {
+      "profile_id": "gpt-5.6-terra-high",
+      "disposition": "omitted_not_qualified_for_current_build"
+    },
+    {
+      "profile_id": "gpt-5.6-terra-medium",
+      "disposition": "omitted_not_qualified_for_current_build"
+    },
+    {
+      "profile_id": "gpt-5.6-luna-max",
+      "disposition": "omitted_not_qualified_for_current_build"
+    },
+    {
+      "profile_id": "gpt-5.6-luna-high",
+      "disposition": "omitted_not_qualified_for_current_build"
+    },
+    {
+      "profile_id": "gpt-5.6-luna-medium",
+      "disposition": "omitted_not_qualified_for_current_build"
+    },
+    {
+      "profile_id": "gpt-5.6-luna-low",
+      "disposition": "omitted_not_qualified_for_current_build"
+    }
+  ],
+  "limits": [
+    "No private-input contents,size,hash inspected.",
+    "No direct CLI qualification, product-facing AI qualification, product gate clearance or external effect.",
+    "No claim of portable OS-managed atime stability.",
+    "Containing evidence head and final integrated main receive separate read-only review/checks; this observation is not their approval.",
+    "After qualification closeout, the preparation's no-state-mutation boundary resumes."
+  ],
+  "verification": {
+    "coordinator_integrity": "PASS",
+    "ready": [
+      "WP-01"
+    ],
+    "prefix_and_nonroster_comparison": "PASS",
+    "prewrite_lock_holder_check": "lsof -t exact state.lock returned1 with no holder output at16:26:59Z.",
+    "runtime_stop": "Both initial probes and independent reviewer completed; all owned subprocesses exited; prior preparation inventory interrupted with no remaining Python process observed."
+  },
+  "supersedes": {
+    "git_revision": "089e672",
+    "original_path": "docs/qualification/evidence/2026-09-18-desktop-roster-update-observation.json",
+    "preserved_path": "docs/qualification/evidence/history/2026-09-18-desktop-roster-update-observation.rejected.json.txt",
+    "reason": "Unaccepted observation used reserved checks member as a dictionary. Existing validator expects checks rows; initial refresh failed during prevalidation with AttributeError before generated writes. Corrected record uses verification. No source/harness/ledger behavior changed; rejected bytes and Git commit preserved."
+  }
+}
