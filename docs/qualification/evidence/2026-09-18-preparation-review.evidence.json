@@ -1,0 +1,56 @@
+{
+  "schema_version": "2.0",
+  "kind": "review",
+  "task_id": "PREP-INITIAL-0001",
+  "candidate_revision": "0e4c85560d1f1074616b4ab0b6c34774f7f43529",
+  "observed_revision": "0e4c85560d1f1074616b4ab0b6c34774f7f43529",
+  "summary": "Independent Astra/max APPROVE exact corrected preparation source; S4 approval-where-required finding resolved. No product admission, implementation, acceptance or external effect.",
+  "profile_id": "gpt-6-astra-max",
+  "role": "reviewer",
+  "capability_tier": 1,
+  "routing_policy_digest": "61f0db448cf5ac5adad4d9340d568a7558c0369174e30aab92dd0ccf0d24bdf0",
+  "scope": "Owner-authorized preparation/maintenance only; existing tasks, receipts, roster, budgets, gates and effective plan unchanged.",
+  "notes": "Authors /root/preparation_packet_author and /root; distinct reviewer /root/desktop_qualification_reviewer_20260918; integrator /root. Active desktop qualification is referenced in bound log, not copied as a second qualification. Containing evidence head requires separate read-only approval.",
+  "checks": [
+    {
+      "id": "exact-independent-source-review",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "See the bound review log for exact candidate/base/diff, actors/routes/bounds, actual commands/results, original finding/correction, NOT EXECUTED product limits, state preservation and stopped source runtimes.",
+      "evidence_path": "docs/qualification/evidence/2026-09-18-preparation-independent-review.md",
+      "sha256": "bd170d2ce3edc2e82d8e37faf24722be42582f32f0b458b2f7d947f3fb462322"
+    },
+    {
+      "id": "five-journey-and-safety-coverage",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "See the bound review log for exact candidate/base/diff, actors/routes/bounds, actual commands/results, original finding/correction, NOT EXECUTED product limits, state preservation and stopped source runtimes.",
+      "evidence_path": "docs/qualification/evidence/2026-09-18-preparation-independent-review.md",
+      "sha256": "bd170d2ce3edc2e82d8e37faf24722be42582f32f0b458b2f7d947f3fb462322"
+    },
+    {
+      "id": "prepared-assignment-and-discovery-boundaries",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "See the bound review log for exact candidate/base/diff, actors/routes/bounds, actual commands/results, original finding/correction, NOT EXECUTED product limits, state preservation and stopped source runtimes.",
+      "evidence_path": "docs/qualification/evidence/2026-09-18-preparation-independent-review.md",
+      "sha256": "bd170d2ce3edc2e82d8e37faf24722be42582f32f0b458b2f7d947f3fb462322"
+    },
+    {
+      "id": "registered-and-supplemental-validation",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "See the bound review log for exact candidate/base/diff, actors/routes/bounds, actual commands/results, original finding/correction, NOT EXECUTED product limits, state preservation and stopped source runtimes.",
+      "evidence_path": "docs/qualification/evidence/2026-09-18-preparation-independent-review.md",
+      "sha256": "bd170d2ce3edc2e82d8e37faf24722be42582f32f0b458b2f7d947f3fb462322"
+    },
+    {
+      "id": "preservation-and-runtime-stop",
+      "required": true,
+      "status": "PASS",
+      "command_or_procedure": "See the bound review log for exact candidate/base/diff, actors/routes/bounds, actual commands/results, original finding/correction, NOT EXECUTED product limits, state preservation and stopped source runtimes.",
+      "evidence_path": "docs/qualification/evidence/2026-09-18-preparation-independent-review.md",
+      "sha256": "bd170d2ce3edc2e82d8e37faf24722be42582f32f0b458b2f7d947f3fb462322"
+    }
+  ]
+}
