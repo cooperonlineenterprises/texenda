@@ -2,11 +2,11 @@
 
 Generated, non-authoritative projection. Documentation is not permission.
 
-- Generation: `35fcaaff256473824015319b6afd52cd158d1f7349f89aff3ab2e0065aefde87` at `2026-09-18T16:24:04+00:00`
-- Source revision/tree: `109e3f4f5b184ffe75907af86f781c202efd453b` / `86cb7c8f96a9fefe1a2ba7840323086a28fc2996`
+- Generation: `9f4c2e709b6f26322c5619ea91e788136f148289fb1f04af52139761608e76a9` at `2026-09-18T16:29:57+00:00`
+- Source revision/tree: `317799fbb3ff41fa5212874a738d119846a7fa39` / `7e1b80c384943770f0f91a1d540292ae27c4fbb3`
 - Source-scope SHA-256: `41bc1260d9df67c214687910a7e5bde3a89f6696ef56c47089a8b5799d28d494`
-- Live-ledger SHA-256: `fe218fc97325d3c255825d89cc0046e6ea27d38454c2a7dd06e09c0926d19bb0`
-- Receipt count/tip: `14` / `e089594d853bc93a876aef100b779ef416bfaa82e5dacff84d027c6cb3eb8266`
+- Live-ledger SHA-256: `43531481205f0d410bdf12a242033823d1c66edef035e3bb0f4bd4e0d7592906`
+- Receipt count/tip: `15` / `0a01ea216c946654105b4eb23a1b312ca45694ecbc27e9fecf1877cc3548605d`
 - Live task/receipt/roster authority: `/Users/jamesryancooper/Projects/texenda/local/agent-state/texenda/state.json`
 
 For intended product scope and stage separation, use the

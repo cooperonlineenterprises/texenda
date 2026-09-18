@@ -1,10 +1,10 @@
 {
   "schema_version": "texenda.dossier-evidence-index.generated.v1",
-  "generation_id": "35fcaaff256473824015319b6afd52cd158d1f7349f89aff3ab2e0065aefde87",
-  "generated_at": "2026-09-18T16:24:04+00:00",
+  "generation_id": "9f4c2e709b6f26322c5619ea91e788136f148289fb1f04af52139761608e76a9",
+  "generated_at": "2026-09-18T16:29:57+00:00",
   "authority": "generated_hash_index_only",
   "owner_path": "docs/qualification/evidence/",
-  "evidence_scope_sha256": "a6658d74d8e9cd6b0ee5cd9438ef17bbec2cea79af77471cfe922ddfaa33770e",
+  "evidence_scope_sha256": "a2b624156006de9d410bcf43c3c64a292deb1e55cad8ad14becdd90650d74507",
   "evidence": [
     {
       "path": "docs/qualification/evidence/2026-09-14-external-state-cutover-author-validation.log",
@@ -319,8 +319,16 @@
       "sha256": "eafc1b6a7e56fd06b7e2a4c6afe82047a05dfc81ad7d0c1b21f4051238a2fa1b"
     },
     {
+      "path": "docs/qualification/evidence/2026-09-18-desktop-roster-update-observation-v2.json",
+      "sha256": "ac4a61aa373a00b6782b43a2f7c372a09d4a510c42239f3d9813632fc0f737a9"
+    },
+    {
       "path": "docs/qualification/evidence/history/2026-09-14-workspace-architecture-review.rejected.json.txt",
       "sha256": "cdb1b8e0c0ef2b8fddeab39636e4f9d966925ef16c7f5825498e97b88d1785d0"
+    },
+    {
+      "path": "docs/qualification/evidence/history/2026-09-18-desktop-roster-update-observation.rejected.json.txt",
+      "sha256": "62a7d84e2e07caa128fa03e996d1baeaecbada137f2c46e9c5feb8b79437d43a"
     },
     {
       "path": "docs/qualification/evidence/routing-v2-author-verification.log",
