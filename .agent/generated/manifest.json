@@ -1,12 +1,12 @@
 {
   "schema_version": "texenda.generated-integrity.v1",
-  "generation_id": "06297ca7de6c1be00b6df555fdc20420e147e458f4567ea2a2b9c87a62bcf497",
+  "generation_id": "565a5a940bcab1a87b2a08e74786f742ecee10bdd92ec7edc409c539905c111f",
   "generation_id_derivation": "sha256(canonical_json(source_scope_sha256,evidence_scope_sha256,ledger_sha256,receipt_count,receipt_tip))",
-  "generated_at": "2026-09-17T16:43:59+00:00",
+  "generated_at": "2026-09-18T16:11:28+00:00",
   "authority": "generated_non_authoritative",
-  "source_git_revision": "c60fda2a45656f9ebb6db9ccb462c93fbc21a41e",
-  "source_git_tree": "4a2225332cfe3de3623bff866d3d4452c6599187",
-  "source_scope_sha256": "c40f765ab11112effd87a7bb7686fcd9e66beaed99dc4172431107d23c6a958b",
+  "source_git_revision": "82c51a338ceacff0c4b7f688c6c34e8a1494a899",
+  "source_git_tree": "f584de3282477ab636a68db3dc563b30acae9ee7",
+  "source_scope_sha256": "41bc1260d9df67c214687910a7e5bde3a89f6696ef56c47089a8b5799d28d494",
   "source_scope_exclusions": [
     {
       "path": ".agent/generated/manifest.json",
@@ -272,7 +272,7 @@
     },
     {
       "path": "docs/qualification/README.md",
-      "sha256": "76a6bf7859f1b47da64c3e34aefbafbf39cced6aded453d7cb3bbbafe919cf5b"
+      "sha256": "58bc5efc59beb21b1ec0ffffc36774d16e46005dec38d0bdb8baab40d58d75bb"
     },
     {
       "path": "docs/qualification/analysis/2026-09-13-astra-instruction-scope-audit.json",
@@ -309,6 +309,10 @@
     {
       "path": "docs/qualification/model-roster-v2.1.evidence.json",
       "sha256": "8e44034e6247ea47b3f0002100e6a343cfa6685d56138a24f55e8a13054173c0"
+    },
+    {
+      "path": "docs/qualification/model-roster-v2.2.evidence.json",
+      "sha256": "287301864a074adbf920ea83756e40adcb1368cee1a9bf8a18cbe6c221b627a6"
     },
     {
       "path": "docs/qualification/model-roster-v2.evidence.json",
@@ -361,6 +365,14 @@
     {
       "path": "docs/qualification/probes/2026-09-13/gpt-6-astra-max-desktop.json",
       "sha256": "e62f78f3930ffd840c0d5d596a910a87187fe26bdad314b925711a0d39ab8df0"
+    },
+    {
+      "path": "docs/qualification/probes/2026-09-18/gpt-5.6-terra-max-desktop.json",
+      "sha256": "e7c6c42ebe725830a8562e0d1decb3b7fcdb75608190c0d8de405ced3f68704d"
+    },
+    {
+      "path": "docs/qualification/probes/2026-09-18/gpt-6-astra-max-desktop.json",
+      "sha256": "a7d7f4d3b652ba77b2524ebade64152dcea912151c3f599c805fd16a9ff42c65"
     },
     {
       "path": "docs/qualification/probes/gpt-5.6-luna-high.json",
@@ -433,6 +445,10 @@
     {
       "path": "docs/qualification/runtime-surface-observation-2026-09-13.json",
       "sha256": "35995674a989b1b77233eafdc80ed092d0a8f8622b88990e8f7b3f8336978091"
+    },
+    {
+      "path": "docs/qualification/runtime-surface-observation-2026-09-18.json",
+      "sha256": "205533c07d20ca41c3a59dfbe65c026b0b0022b60f4e883def9fd441c7ee008b"
     },
     {
       "path": "project-dossier/ARTIFACT_CATALOG.json",
@@ -1003,7 +1019,7 @@
       "sha256": "faca2d70ca7ae67b89b3d23561f9df1df0c9bab219aa8ae4f39e9cc35d573832"
     }
   ],
-  "evidence_scope_sha256": "c633b26a8d44e5ff8d49672524bdb45ccb03ba70b326452245186b8be1aa8459",
+  "evidence_scope_sha256": "2ae2f3238e98e2a17d22103b1e0b98daae4d5da5ac474ed27e2a290b8c1b61b9",
   "evidence_files": [
     {
       "path": "docs/qualification/evidence/2026-09-14-external-state-cutover-author-validation.log",
@@ -1288,6 +1304,14 @@
     {
       "path": "docs/qualification/evidence/2026-09-17-initial-product-review-47b241b.md",
       "sha256": "c07b07679c2c81c55d45c6635db94ce8a43275e41d5e83b5a98894da2df232c0"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-18-desktop-owner-authorization.md",
+      "sha256": "56b02b88d7b5dba9795c58901644e257855ffd8801d88e407f3ededd0600383c"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-18-desktop-reviewer-bootstrap.json",
+      "sha256": "eafc1b6a7e56fd06b7e2a4c6afe82047a05dfc81ad7d0c1b21f4051238a2fa1b"
     },
     {
       "path": "docs/qualification/evidence/history/2026-09-14-workspace-architecture-review.rejected.json.txt",

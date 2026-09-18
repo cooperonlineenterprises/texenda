@@ -1,10 +1,10 @@
 {
   "schema_version": "texenda.dossier-evidence-index.generated.v1",
-  "generation_id": "06297ca7de6c1be00b6df555fdc20420e147e458f4567ea2a2b9c87a62bcf497",
-  "generated_at": "2026-09-17T16:43:59+00:00",
+  "generation_id": "565a5a940bcab1a87b2a08e74786f742ecee10bdd92ec7edc409c539905c111f",
+  "generated_at": "2026-09-18T16:11:28+00:00",
   "authority": "generated_hash_index_only",
   "owner_path": "docs/qualification/evidence/",
-  "evidence_scope_sha256": "c633b26a8d44e5ff8d49672524bdb45ccb03ba70b326452245186b8be1aa8459",
+  "evidence_scope_sha256": "2ae2f3238e98e2a17d22103b1e0b98daae4d5da5ac474ed27e2a290b8c1b61b9",
   "evidence": [
     {
       "path": "docs/qualification/evidence/2026-09-14-external-state-cutover-author-validation.log",
@@ -289,6 +289,14 @@
     {
       "path": "docs/qualification/evidence/2026-09-17-initial-product-review-47b241b.md",
       "sha256": "c07b07679c2c81c55d45c6635db94ce8a43275e41d5e83b5a98894da2df232c0"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-18-desktop-owner-authorization.md",
+      "sha256": "56b02b88d7b5dba9795c58901644e257855ffd8801d88e407f3ededd0600383c"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-18-desktop-reviewer-bootstrap.json",
+      "sha256": "eafc1b6a7e56fd06b7e2a4c6afe82047a05dfc81ad7d0c1b21f4051238a2fa1b"
     },
     {
       "path": "docs/qualification/evidence/history/2026-09-14-workspace-architecture-review.rejected.json.txt",
