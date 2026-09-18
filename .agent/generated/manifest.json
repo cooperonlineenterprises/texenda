@@ -1,11 +1,11 @@
 {
   "schema_version": "texenda.generated-integrity.v1",
-  "generation_id": "521eafd18627fd69b59e9692bad506f1ca2e4393c0624290bdb4e8799a0b259d",
+  "generation_id": "38d5dde278cbf8d94172c58022e698b33abfb31adbbd5cc4e53df75bc8321d45",
   "generation_id_derivation": "sha256(canonical_json(source_scope_sha256,evidence_scope_sha256,ledger_sha256,receipt_count,receipt_tip))",
-  "generated_at": "2026-09-18T17:28:16+00:00",
+  "generated_at": "2026-09-18T17:33:18+00:00",
   "authority": "generated_non_authoritative",
-  "source_git_revision": "837433a69e585baf59f4a692491dde27850059d4",
-  "source_git_tree": "f6eeeade06a0196cd43ac4c054a8db49ce162431",
+  "source_git_revision": "07684aeb166c4be236300c61569f416d7ecb5abb",
+  "source_git_tree": "baadb93d6ebb505a19ea721bf84a37bf77e09aff",
   "source_scope_sha256": "927e3e5a4c4b2550864d68b0579ba9a05534135b594606d2f81d3d4dc674a655",
   "source_scope_exclusions": [
     {
@@ -1035,7 +1035,7 @@
       "sha256": "faca2d70ca7ae67b89b3d23561f9df1df0c9bab219aa8ae4f39e9cc35d573832"
     }
   ],
-  "evidence_scope_sha256": "c73c434449de751e2fb18be40dffeb51f24dcc1db6c3a65e485c074b4aab6ef3",
+  "evidence_scope_sha256": "8e829578a0fe6ca75d82d569802b215a9c1c623d1fdd73259e6989423bf29f72",
   "evidence_files": [
     {
       "path": "docs/qualification/evidence/2026-09-14-external-state-cutover-author-validation.log",
@@ -1354,8 +1354,16 @@
       "sha256": "ac4a61aa373a00b6782b43a2f7c372a09d4a510c42239f3d9813632fc0f737a9"
     },
     {
+      "path": "docs/qualification/evidence/2026-09-18-preparation-independent-review.md",
+      "sha256": "bd170d2ce3edc2e82d8e37faf24722be42582f32f0b458b2f7d947f3fb462322"
+    },
+    {
       "path": "docs/qualification/evidence/2026-09-18-preparation-plan.md",
       "sha256": "907cbc30defac23ff1e4299661370e320d65af5836c179cc6675dc8901cbf2b9"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-18-preparation-review.evidence.json",
+      "sha256": "bbb760421a9c02925bfeaa31820e381882635d756986ad59e81a76cc5ddf7faa"
     },
     {
       "path": "docs/qualification/evidence/history/2026-09-14-workspace-architecture-review.rejected.json.txt",
