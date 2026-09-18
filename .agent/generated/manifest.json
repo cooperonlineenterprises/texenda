@@ -1,11 +1,11 @@
 {
   "schema_version": "texenda.generated-integrity.v1",
-  "generation_id": "0a3c09c535e99e3534ed8e20809f0ec3602ba73d783b883f527c422bf3818c42",
+  "generation_id": "255ea68ded71a9bec0abe06caa22eea4c771e3eb716a1bd4a92e1a82b7317ddb",
   "generation_id_derivation": "sha256(canonical_json(source_scope_sha256,evidence_scope_sha256,ledger_sha256,receipt_count,receipt_tip))",
-  "generated_at": "2026-09-18T16:14:56+00:00",
+  "generated_at": "2026-09-18T16:19:27+00:00",
   "authority": "generated_non_authoritative",
-  "source_git_revision": "2c96699dadd4318df28c3ff1254b0ca1f903e817",
-  "source_git_tree": "2560c943617576ed7b4a4686d29981a3ac3483fc",
+  "source_git_revision": "e2c3b059256d0485a970e2a1b9775f36c5e0fb6e",
+  "source_git_tree": "cc05171510b7b9fcc35ebfd62752c7abdc45bb96",
   "source_scope_sha256": "41bc1260d9df67c214687910a7e5bde3a89f6696ef56c47089a8b5799d28d494",
   "source_scope_exclusions": [
     {
@@ -1019,7 +1019,7 @@
       "sha256": "faca2d70ca7ae67b89b3d23561f9df1df0c9bab219aa8ae4f39e9cc35d573832"
     }
   ],
-  "evidence_scope_sha256": "d1d060ebbd2542c7d11c934b93e41c590f99a0d8beabcd62432599ce82bfd37a",
+  "evidence_scope_sha256": "51ad464ea0029efa71d17fa75c71b4b5f02d9b7911ad5d8d093d3d608ca681b0",
   "evidence_files": [
     {
       "path": "docs/qualification/evidence/2026-09-14-external-state-cutover-author-validation.log",
@@ -1306,8 +1306,16 @@
       "sha256": "c07b07679c2c81c55d45c6635db94ce8a43275e41d5e83b5a98894da2df232c0"
     },
     {
+      "path": "docs/qualification/evidence/2026-09-18-desktop-independent-review.md",
+      "sha256": "9594c009f03160d546119f1d7f203ecb1a88cb294a36169049c993248764fe30"
+    },
+    {
       "path": "docs/qualification/evidence/2026-09-18-desktop-owner-authorization.md",
       "sha256": "56b02b88d7b5dba9795c58901644e257855ffd8801d88e407f3ededd0600383c"
+    },
+    {
+      "path": "docs/qualification/evidence/2026-09-18-desktop-review.evidence.json",
+      "sha256": "dc9ff2303051314ab3b090e8bca552d8cb675133081747efb99a963f9d000182"
     },
     {
       "path": "docs/qualification/evidence/2026-09-18-desktop-reviewer-bootstrap-v2.json",

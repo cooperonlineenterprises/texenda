@@ -31,4 +31,4 @@ Generated navigation only; documentation is not permission or live state.
    [transition](../transition/README.md) or [history](../history/README.md) only
    for maintenance, provenance, or recovery work.
 
-Source revision/tree: `2c96699dadd4318df28c3ff1254b0ca1f903e817` / `2560c943617576ed7b4a4686d29981a3ac3483fc`. Live ledger hash: `fe218fc97325d3c255825d89cc0046e6ea27d38454c2a7dd06e09c0926d19bb0`.
+Source revision/tree: `e2c3b059256d0485a970e2a1b9775f36c5e0fb6e` / `cc05171510b7b9fcc35ebfd62752c7abdc45bb96`. Live ledger hash: `fe218fc97325d3c255825d89cc0046e6ea27d38454c2a7dd06e09c0926d19bb0`.

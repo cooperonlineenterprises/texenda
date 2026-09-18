@@ -1,7 +1,7 @@
 {
   "schema_version": "texenda.dossier-path-authority.generated.v1",
-  "generation_id": "0a3c09c535e99e3534ed8e20809f0ec3602ba73d783b883f527c422bf3818c42",
-  "generated_at": "2026-09-18T16:14:56+00:00",
+  "generation_id": "255ea68ded71a9bec0abe06caa22eea4c771e3eb716a1bd4a92e1a82b7317ddb",
+  "generated_at": "2026-09-18T16:19:27+00:00",
   "authority": "generated_from_project-dossier/ARTIFACT_CATALOG.json",
   "source_sha256": "121db944b7ef6d373aa38b9317f613dbc7ecb009f0d62e298f421584082f3f53",
   "paths": [

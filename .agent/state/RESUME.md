@@ -2,8 +2,8 @@
 
 Generated, non-authoritative projection. Documentation is not permission.
 
-- Generation: `0a3c09c535e99e3534ed8e20809f0ec3602ba73d783b883f527c422bf3818c42` at `2026-09-18T16:14:56+00:00`
-- Source revision/tree: `2c96699dadd4318df28c3ff1254b0ca1f903e817` / `2560c943617576ed7b4a4686d29981a3ac3483fc`
+- Generation: `255ea68ded71a9bec0abe06caa22eea4c771e3eb716a1bd4a92e1a82b7317ddb` at `2026-09-18T16:19:27+00:00`
+- Source revision/tree: `e2c3b059256d0485a970e2a1b9775f36c5e0fb6e` / `cc05171510b7b9fcc35ebfd62752c7abdc45bb96`
 - Source-scope SHA-256: `41bc1260d9df67c214687910a7e5bde3a89f6696ef56c47089a8b5799d28d494`
 - Live-ledger SHA-256: `fe218fc97325d3c255825d89cc0046e6ea27d38454c2a7dd06e09c0926d19bb0`
 - Receipt count/tip: `14` / `e089594d853bc93a876aef100b779ef416bfaa82e5dacff84d027c6cb3eb8266`
