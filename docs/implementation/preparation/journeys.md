@@ -123,20 +123,30 @@ An agent never supplies the human challenge or inherits the human session.
 ### S4: result, explanation and recovery
 
 ```text
-OHW / object revision    command ID + original request key    receipt link
-Drafted -> Proposed -> Approved by [human] -> Committed -> execution/outcomes
-Current result: committed / held / denied / failed / acceptance unknown
+OHW / authorized object reference + revision / actor
+When no approval is required: authorized read -> query result
+                             authorized draft edit -> saved revision/result
+When exact approval is required: proposal/configuration -> required human approval
+                                -> authorized commit -> execution/outcomes
+Command ID / original request key / receipt links only where applicable
+Result: read data / saved draft / committed / held / denied / failed / unknown
 Why: recorded rule, inputs, actor, coverage, revision and safe next action
 Pending / in-flight / accepted / observed delivery shown separately
 [Refresh authoritative result] [Inspect conflict] [authorized pause/cancel]
 ```
 
-Text equivalent: each command and effect has its own outcome; the timeline does
-not imply remote atomicity. Lost responses are resolved with the original
-command/request identity. Uncertain acceptance retains the effect claim and
-conservative reservation. Recovery never offers a blind new-key retry or another
-provider/channel as an escape. A pause/cancel stops future permits and reports
-the in-flight limitation; it cannot recall accepted mail.
+Text equivalent: these are alternative views of existing results, not a new
+lifecycle. Command-specific metadata and current policy determine authorization,
+approval and evidence requirements. Authorized reads and reversible drafts can
+return directly where no approval is required; queries add no new durable
+command-receipt or request-idempotency-key requirement. Consequence-bound actions
+requiring exact approval show that approval separately from authorized commit
+and execution. Each command/effect retains its own outcome, without implying
+remote atomicity. A lost mutation response is resolved using its applicable
+original command/request identity. Uncertain acceptance retains the effect claim
+and conservative reservation. Recovery never offers a blind new-key retry or
+another provider/channel as an escape. A pause/cancel stops future permits and
+reports the in-flight limitation; it cannot recall accepted mail.
 
 <a id="s5"></a>
 ### S5: native recipient page
